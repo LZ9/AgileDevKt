@@ -1,0 +1,76 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 27
+    defaultConfig {
+        applicationId "com.lodz.android.agiledevkt"
+        minSdkVersion 19
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+//        ndk {
+//            abiFilters "armeabi"
+//        }
+    }
+
+
+    //日志开关
+    def LOG_DEBUG = "LOG_DEBUG"
+    defaultConfig {
+        buildConfigField "boolean", LOG_DEBUG, "true"
+    }
+
+    // 程序在编译的时候会检查lint，有任何错误提示会停止build，我们可以关闭这个开关
+    lintOptions {
+        abortOnError false
+        checkReleaseBuilds false
+    }
+
+    buildTypes {
+
+        debug {//debug版本的配置
+            minifyEnabled false // 是否进行混淆
+            zipAlignEnabled false // 是否支持zip
+            debuggable true // 是否支持调试
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        release {
+            buildConfigField "boolean", LOG_DEBUG, "false"
+            minifyEnabled false // 是否进行混淆
+            zipAlignEnabled true // 是否支持zip
+            debuggable false // 是否支持调试
+            jniDebuggable false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def newName
+            if (variant.baseName.endsWith('release')) {
+                def formattedDate = new Date().format('yyyyMMddHHmm')
+                newName = "AgileDevKt-v" + defaultConfig.versionName + "-" + variant.baseName + "-" + formattedDate + ".apk"
+            } else {
+                newName = "AgileDevKt-v" + defaultConfig.versionName + "-" + variant.baseName + ".apk"
+            }
+            outputFileName = newName
+        }
+    }
+}
+
+dependencies {
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.anko:anko-commons:0.10.5"
+
+    // butterknife
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    kapt 'com.jakewharton:butterknife-compiler:8.8.1'
+
+}
