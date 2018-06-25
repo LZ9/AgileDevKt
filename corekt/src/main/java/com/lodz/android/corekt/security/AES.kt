@@ -1,0 +1,70 @@
+package com.lodz.android.corekt.security
+
+import android.util.Base64
+import javax.crypto.Cipher
+import javax.crypto.spec.IvParameterSpec
+import javax.crypto.spec.SecretKeySpec
+
+/**
+ * AES加密
+ * Created by zhouL on 2018/6/22.
+ */
+object AES {
+
+    /** AES java-javascript 只支持部填充摸索 */
+    private const val FORMAT = "AES/CBC/NoPadding"
+    /** AES 加密key，必须为16位 */
+    const val KEY = "com.lodz.android"
+    /** AES 偏移量，必须为16位 */
+    private const val IV = "123456abc2345678"
+
+    /** 加密原始数据[dataBytes]，秘钥[key]必须为16位 */
+    fun encrypt(data: String, key: String): String? = encrypt(data.toByteArray(), key)
+
+    /** 加密原始数据[dataBytes]，秘钥[key]必须为16位 */
+    fun encrypt(dataBytes: ByteArray, key: String): String? {
+        try {
+            val cipher = Cipher.getInstance(FORMAT)
+            val blockSize = cipher.blockSize
+
+            var plaintextLength = dataBytes.size
+            if (plaintextLength % blockSize != 0) {
+                plaintextLength = plaintextLength + (blockSize - (plaintextLength % blockSize))
+            }
+
+            val plaintext = ByteArray(plaintextLength)
+            System.arraycopy(dataBytes, 0, plaintext, 0, dataBytes.size)
+
+            val keyspec = SecretKeySpec(key.toByteArray(), "AES")
+            val ivspec = IvParameterSpec(IV.toByteArray())
+
+            cipher.init(Cipher.ENCRYPT_MODE, keyspec, ivspec)
+            val encrypted = cipher.doFinal(plaintext)
+            return Base64.encodeToString(encrypted, Base64.NO_WRAP)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return null
+    }
+
+    /** 解密密文[data]，秘钥[key]必须为16位 */
+    fun decrypt(data: String, key: String): String? {
+        try {
+            val decrypt = Base64.decode(data, Base64.NO_WRAP)
+
+            val cipher = Cipher.getInstance(FORMAT)
+            val keyspec = SecretKeySpec(key.toByteArray(), "AES")
+            val ivspec = IvParameterSpec(IV.toByteArray())
+
+            cipher.init(Cipher.DECRYPT_MODE, keyspec, ivspec)
+
+            val originalString : String? = String(cipher.doFinal(decrypt))
+            return originalString?.trim { it <= ' ' } ?: ""
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return null
+    }
+
+
+}
