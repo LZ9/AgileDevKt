@@ -1,11 +1,14 @@
 package com.lodz.android.componentkt.base.activity
 
 import android.os.Bundle
+import android.support.annotation.IdRes
 import android.support.annotation.LayoutRes
 import android.support.v4.app.Fragment
+import com.lodz.android.componentkt.base.application.BaseApplication
 import com.lodz.android.componentkt.base.fragment.IFragmentBackPressed
 import com.lodz.android.componentkt.base.fragment.LazyFragment
 import com.lodz.android.componentkt.event.ActivityFinishEvent
+import com.lodz.android.corekt.utils.ReflectUtils
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -92,9 +95,18 @@ abstract class AbsActivity : RxAppCompatActivity() {
                     return false
                 }
             }
-            if (fragment is LazyFragment){
-                val lazyFragment : LazyFragment = fragment
-                TODO("需要使用反射")
+            if (fragment is LazyFragment) {
+                val lazyFragment: LazyFragment = fragment
+                val c: Class<*>? = ReflectUtils.getClassForName("com.lodz.android.component.base.fragment.LazyFragment")
+                if (c != null) {
+                    val obj: Any? = ReflectUtils.getFieldValue(c, lazyFragment, "isAlreadyPause")// 通过反射取到该fragment是否已经进入暂停状态
+                    if (obj != null && obj is Boolean) {
+                        val isAlreadyPause: Boolean = obj
+                        if (isAlreadyPause) {
+                            return false
+                        }
+                    }
+                }
             }
             val itf = fragment as IFragmentBackPressed
             return itf.onPressBack()// fragment是否消耗返回按钮事件
@@ -102,13 +114,77 @@ abstract class AbsActivity : RxAppCompatActivity() {
         return false;
     }
 
+    /** 点击返回按钮 */
     protected open fun onPressBack() = false
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public fun onMessageEvent(event: ActivityFinishEvent) {
+    fun onMessageEvent(event: ActivityFinishEvent) {
         if (!isFinishing) {
             finish()
         }
+    }
+
+    /** 当APP处于后台被系统回收时回调 */
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+        val bundle = getSaveBundle()
+        if (BaseApplication.get() != null && bundle != null) {
+            BaseApplication.get()!!.putSaveInstanceState(bundle)
+        }
+    }
+
+    /** 获取回收前需要被保存的数据 */
+    protected open fun getSaveBundle(): Bundle? = null
+
+    /** 被回收后从后台回到前台调用 */
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        super.onRestoreInstanceState(savedInstanceState)
+        if (BaseApplication.get() == null) {
+            return
+        }
+
+        val bundle: Bundle? = BaseApplication.get()!!.getSaveInstanceState()
+        if (bundle != null) {
+            onRestore(bundle)
+        }
+    }
+
+    /** 被回收后从后台回到前台调用，返回之前保存的数据[bundle] */
+    protected open fun onRestore(bundle: Bundle) {}
+
+    /** 添加[fragment]，传入父控件id[containerViewId]和fragment的[tag]标签 */
+    protected fun addFragment(@IdRes containerViewId: Int, fragment: Fragment, tag: String) {
+        supportFragmentManager.beginTransaction().add(containerViewId, fragment, tag).commit()
+    }
+
+    /** 替换[fragment]，传入父控件id[containerViewId]和fragment的[tag]标签 */
+    protected fun replaceFragment(@IdRes containerViewId: Int, fragment: Fragment, tag: String) {
+        supportFragmentManager.beginTransaction().replace(containerViewId, fragment, tag).commit()
+    }
+
+    /** 显示[fragment] */
+    protected fun showFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction().show(fragment).commit()
+    }
+
+    /** 隐藏[fragment] */
+    protected fun hideFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction().hide(fragment).commit()
+    }
+
+    /** 获取所有的fragment */
+    protected fun getFragments() = supportFragmentManager.fragments
+
+
+    /** 根据[tag]标签找到对应的fragment */
+    protected fun findFragmentByTag(tag: String): Fragment? = supportFragmentManager.findFragmentByTag(tag)
+
+    /** 根据[id]找到对应的fragment */
+    protected fun findFragmentById(@IdRes id: Int): Fragment? = supportFragmentManager.findFragmentById(id)
+
+    /** 添加到回退堆栈，回退堆栈的名称[name]可为null */
+    protected fun addToBackStack(name: String?) {
+        supportFragmentManager.beginTransaction().addToBackStack(name).commit()
     }
 
 }
