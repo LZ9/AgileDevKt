@@ -2,7 +2,6 @@ package com.lodz.android.corekt.log
 
 import android.annotation.SuppressLint
 import android.support.annotation.IntDef
-import android.text.TextUtils
 import android.util.Log
 
 /**
@@ -41,7 +40,7 @@ object PrintLog {
         if (!isPrint) {
             return
         }
-        if (TextUtils.isEmpty(log)) {
+        if (log.isNullOrEmpty()) {
             logByType(LOG_I, tag, log)
         } else {
             logSegmented(LOG_I, tag, log!!)
@@ -60,7 +59,7 @@ object PrintLog {
         if (!isPrint) {
             return
         }
-        if (TextUtils.isEmpty(log)) {
+        if (log.isNullOrEmpty()) {
             logByType(LOG_V, tag, log)
         } else {
             logSegmented(LOG_V, tag, log!!)
@@ -79,7 +78,7 @@ object PrintLog {
         if (!isPrint) {
             return
         }
-        if (TextUtils.isEmpty(log)) {
+        if (log.isNullOrEmpty()) {
             logByType(LOG_D, tag, log)
         } else {
             logSegmented(LOG_D, tag, log!!)
@@ -98,7 +97,7 @@ object PrintLog {
         if (!isPrint) {
             return
         }
-        if (TextUtils.isEmpty(log)) {
+        if (log.isNullOrEmpty()) {
             logByType(LOG_W, tag, log)
         } else {
             logSegmented(LOG_W, tag, log!!)
@@ -117,7 +116,7 @@ object PrintLog {
         if (!isPrint) {
             return
         }
-        if (TextUtils.isEmpty(log)) {
+        if (log.isNullOrEmpty()) {
             logByType(LOG_E, tag, log)
         } else {
             logSegmented(LOG_E, tag, log!!)
@@ -129,7 +128,7 @@ object PrintLog {
         if (!isPrint) {
             return
         }
-        if (TextUtils.isEmpty(log)) {
+        if (log.isNullOrEmpty()) {
             logByType(LOG_E, tag, log)
         }else{
             Log.e(tag, log, t)
