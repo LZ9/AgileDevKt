@@ -6,7 +6,6 @@ import android.content.res.TypedArray
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.support.annotation.*
-import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -17,6 +16,7 @@ import com.lodz.android.componentkt.R
 import com.lodz.android.componentkt.base.application.BaseApplication
 import com.lodz.android.componentkt.base.application.config.TitleBarLayoutConfig
 import com.lodz.android.corekt.anko.dp2px
+import com.lodz.android.corekt.anko.getColorCompat
 import com.lodz.android.corekt.anko.px2dp
 import com.lodz.android.corekt.anko.px2sp
 
@@ -73,10 +73,10 @@ open class TitleBarLayout : LinearLayout {
             mConfig = BaseApplication.get()!!.getBaseLayoutConfig().getTitleBarLayoutConfig()
         }
         LayoutInflater.from(context).inflate(R.layout.componentkt_view_title_layout, this)
-        config(attrs)
+        configLayout(attrs)
     }
 
-    private fun config(attrs: AttributeSet?) {
+    private fun configLayout(attrs: AttributeSet?) {
         var typedArray: TypedArray? = null
         if (attrs != null) {
             typedArray = context.obtainStyledAttributes(attrs, R.styleable.TitleBarLayout)
@@ -166,9 +166,9 @@ open class TitleBarLayout : LinearLayout {
         } else if (mConfig.backgroundResId != 0) {
             setBackgroundResource(mConfig.backgroundResId)
         } else if (mConfig.backgroundColor != 0) {
-            setBackgroundColor(ContextCompat.getColor(context, mConfig.backgroundColor))
+            setBackgroundColor(context.getColorCompat(mConfig.backgroundColor))
         } else {
-            setBackgroundColor(ContextCompat.getColor(context, android.R.color.holo_blue_light))
+            setBackgroundColor(context.getColorCompat(android.R.color.holo_blue_light))
         }
 
         // 是否需要阴影
@@ -236,7 +236,7 @@ open class TitleBarLayout : LinearLayout {
 
     /** 设置返回按钮文字颜色资源[colorRes] */
     fun setBackBtnTextColor(@ColorRes colorRes: Int) {
-        mBackBtn.setTextColor(ContextCompat.getColor(context, colorRes))
+        mBackBtn.setTextColor(context.getColorCompat(colorRes))
     }
 
     /** 设置返回按钮文字颜色[color] */
@@ -251,9 +251,9 @@ open class TitleBarLayout : LinearLayout {
         }
     }
 
-    /** 设置返回按钮文字大小[size]，单位sp */
-    fun setBackBtnTextSize(size: Float) {
-        mBackBtn.setTextSize(TypedValue.COMPLEX_UNIT_SP, size)
+    /** 设置返回按钮文字大小[sp] */
+    fun setBackBtnTextSize(sp: Float) {
+        mBackBtn.setTextSize(TypedValue.COMPLEX_UNIT_SP, sp)
     }
 
     /** 设置标题[title] */
@@ -268,7 +268,7 @@ open class TitleBarLayout : LinearLayout {
 
     /** 设置标题文字颜色资源[colorRes] */
     fun setTitleTextColor(@ColorRes colorRes: Int) {
-        mTitleTv.setTextColor(ContextCompat.getColor(context, colorRes))
+        mTitleTv.setTextColor(context.getColorCompat(colorRes))
     }
 
     /** 设置标题文字颜色[color] */
@@ -283,9 +283,9 @@ open class TitleBarLayout : LinearLayout {
         }
     }
 
-    /** 设置标题文字大小[size] */
-    fun setTitleTextSize(size: Float) {
-        mTitleTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, size)
+    /** 设置标题文字大小[sp] */
+    fun setTitleTextSize(sp: Float) {
+        mTitleTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, sp)
     }
 
     /** 设置标题的透明度[alpha] */
@@ -326,7 +326,7 @@ open class TitleBarLayout : LinearLayout {
 
     /** 设置分割线颜色资源[colorRes] */
     fun setDivideLineColor(@ColorRes colorRes: Int) {
-        mDivideLineView.setBackgroundColor(ContextCompat.getColor(context, colorRes))
+        mDivideLineView.setBackgroundColor(context.getColorCompat(colorRes))
     }
 
     /** 设置分割线颜色[color] */

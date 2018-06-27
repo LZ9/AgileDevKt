@@ -8,11 +8,9 @@ import android.widget.LinearLayout
  * Created by zhouL on 2018/6/25.
  */
 class BaseLayoutConfig {
-    companion object {
-        @IntDef(LinearLayout.HORIZONTAL, LinearLayout.VERTICAL)
-        @Retention(AnnotationRetention.SOURCE)
-        annotation class OrientationType
-    }
+    @IntDef(LinearLayout.HORIZONTAL, LinearLayout.VERTICAL)
+    @Retention(AnnotationRetention.SOURCE)
+    annotation class OrientationType
 
     /** 异常页面配置  */
     private var mErrorLayoutConfig: ErrorLayoutConfig
