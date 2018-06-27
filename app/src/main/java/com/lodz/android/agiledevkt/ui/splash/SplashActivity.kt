@@ -5,7 +5,9 @@ import android.os.Build
 import android.os.Bundle
 import butterknife.ButterKnife
 import com.lodz.android.agiledevkt.R
+import com.lodz.android.agiledevkt.ui.main.MainActivity
 import com.lodz.android.componentkt.base.activity.AbsActivity
+import com.lodz.android.corekt.anko.goAppDetailSetting
 import com.lodz.android.corekt.utils.UiHandler
 import com.lodz.android.corekt.utils.isPermissionGranted
 import com.lodz.android.corekt.utils.toastShort
@@ -82,13 +84,17 @@ class SplashActivity : AbsActivity() {
     fun onNeverAskAgain() {
         toastShort(R.string.splash_check_permission_tips)
         // todo checkdialog
-
+        goAppDetailSetting()
     }
 
     /** 初始化 */
     fun init() {
+        // todo 各种初始化
+        goMianActivity()
+    }
 
-
-
+    private fun goMianActivity() {
+        MainActivity.start(getContext())
+        finish()
     }
 }

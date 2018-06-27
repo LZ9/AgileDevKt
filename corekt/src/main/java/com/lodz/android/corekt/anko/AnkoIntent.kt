@@ -2,6 +2,7 @@
 
 package com.lodz.android.corekt.anko
 
+import android.annotation.SuppressLint
 import android.app.admin.DevicePolicyManager
 import android.content.ActivityNotFoundException
 import android.content.ComponentName
@@ -20,61 +21,6 @@ import java.io.File
  * Intent扩展方法
  * Created by zhouL on 2018/6/26.
  */
-
-/**
- * Add the [Intent.FLAG_ACTIVITY_CLEAR_TASK] flag to the [Intent].
- * @return the same intent with the flag applied.
- */
-inline fun Intent.clearTask(): Intent = apply { addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK) }
-
-/**
- * Add the [Intent.FLAG_ACTIVITY_CLEAR_TOP] flag to the [Intent].
- * @return the same intent with the flag applied.
- */
-inline fun Intent.clearTop(): Intent = apply { addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP) }
-
-/**
- * Add the [Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET] flag to the [Intent].
- * @return the same intent with the flag applied.
- */
-inline fun Intent.clearWhenTaskReset(): Intent = apply { addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET) }
-
-/**
- * Add the [Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS] flag to the [Intent].
- * @return the same intent with the flag applied.
- */
-inline fun Intent.excludeFromRecents(): Intent = apply { addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS) }
-
-/**
- * Add the [Intent.FLAG_ACTIVITY_MULTIPLE_TASK] flag to the [Intent].
- * @return the same intent with the flag applied.
- */
-inline fun Intent.multipleTask(): Intent = apply { addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK) }
-
-/**
- * Add the [Intent.FLAG_ACTIVITY_NEW_TASK] flag to the [Intent].
- * @return the same intent with the flag applied.
- */
-inline fun Intent.newTask(): Intent = apply { addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) }
-
-/**
- * Add the [Intent.FLAG_ACTIVITY_NO_ANIMATION] flag to the [Intent].
- * @return the same intent with the flag applied.
- */
-inline fun Intent.noAnimation(): Intent = apply { addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION) }
-
-/**
- * Add the [Intent.FLAG_ACTIVITY_NO_HISTORY] flag to the [Intent].
- * @return the same intent with the flag applied.
- */
-inline fun Intent.noHistory(): Intent = apply { addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY) }
-
-/**
- * Add the [Intent.FLAG_ACTIVITY_SINGLE_TOP] flag to the [Intent].
- * @return the same intent with the flag applied.
- */
-inline fun Intent.singleTop(): Intent = apply { addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP) }
-
 
 /** 安装akp文件 */
 fun Context.installApk(apkPath: String, authority: String, newTask: Boolean = true) {
@@ -188,7 +134,7 @@ fun Context.goSetPswdSetting() {
 
 /** 打开浏览器访问[url] */
 fun Context.browse(url: String, newTask: Boolean = true) {
-    if (url.isEmpty()){
+    if (url.isEmpty()) {
         throw IllegalArgumentException("url is null")
     }
     val intent = Intent(Intent.ACTION_VIEW)
@@ -199,40 +145,42 @@ fun Context.browse(url: String, newTask: Boolean = true) {
     startActivity(intent)
 }
 
-/** 分享标题为[subject]，内容为[text]的文字 */
-fun Context.share(text: String, subject: String = "") {
-    if (text.isEmpty()){
-        throw IllegalArgumentException("text is null")
-    }
-
+/** 分享标题为[subject]，内容为[text]的文字，应用选择框提示[tips] */
+fun Context.share(text: String, subject: String = "", tips: String = "") {
     val intent = Intent(android.content.Intent.ACTION_SEND)
     intent.type = "text/plain"
-    intent.putExtra(android.content.Intent.EXTRA_SUBJECT, subject)
-    intent.putExtra(android.content.Intent.EXTRA_TEXT, text)
-    startActivity(Intent.createChooser(intent, null))
-
-    // todo 待完善 
-
-////系统邮件系统的动作为android.content.Intent.ACTION_SEND
-//    Intent email = new Intent(android.content.Intent.ACTION_SEND);
-//    email.setType("text/plain");
-//    emailReciver = new String[]{"pop1030123@163.com", "fulon@163.com"};
-//    emailSubject = "你有一条短信";
-//    emailBody = sb.toString();
-
-
-//
-////设置邮件默认地址
-//    email.putExtra(android.content.Intent.EXTRA_EMAIL, emailReciver);
-////设置邮件默认标题
-//    email.putExtra(android.content.Intent.EXTRA_SUBJECT, emailSubject);
-////设置要默认发送的内容
-//    email.putExtra(android.content.Intent.EXTRA_TEXT, emailBody);
-////调用系统的邮件系统
-//    startActivity(Intent.createChooser(email, "请选择邮件发送软件"));
+    intent.putExtra(android.content.Intent.EXTRA_SUBJECT, subject)// 主题
+    intent.putExtra(android.content.Intent.EXTRA_TEXT, text)// 内容
+    var title: String? = null// 应用选择框提示
+    if (!tips.isEmpty()) {
+        title = tips
+    }
+    startActivity(Intent.createChooser(intent, title))
 }
 
+/** 发送标题为[subject]，内容为[text]的邮件到[email]邮箱 */
+fun Context.email(email: String, subject: String = "", text: String = "") {
+    val intent = Intent(Intent.ACTION_SENDTO)
+    intent.data = Uri.parse("mailto:")
+    intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(email))//邮箱
+    if (subject.isNotEmpty())
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject)//标题
+    if (text.isNotEmpty())
+        intent.putExtra(Intent.EXTRA_TEXT, text)// 内容
+    if (intent.resolveActivity(packageManager) != null) {
+        startActivity(intent)
+    }
+}
 
+/** 拨打号码[number] */
+@SuppressLint("MissingPermission")
+fun Context.makeCall(number: String) {
+    startActivity(Intent(Intent.ACTION_CALL, Uri.parse("tel:$number")))
+}
 
-
-
+/** 发送短信[text]到号码[number] */
+fun Context.sendSMS(number: String, text: String = "") {
+    val intent = Intent(Intent.ACTION_VIEW, Uri.parse("sms:$number"))
+    intent.putExtra("sms_body", text)
+    startActivity(intent)
+}
