@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="false"
+    android:visible="true" >
+
+    <item android:duration="100" android:drawable="@drawable/componentkt_ic_progress_loading_64_1">
+    </item>
+    <item android:duration="100" android:drawable="@drawable/componentkt_ic_progress_loading_64_2">
+    </item>
+    <item android:duration="100" android:drawable="@drawable/componentkt_ic_progress_loading_64_3">
+    </item>
+    <item android:duration="100" android:drawable="@drawable/componentkt_ic_progress_loading_64_4">
+    </item>
+    <item android:duration="100" android:drawable="@drawable/componentkt_ic_progress_loading_64_5">
+    </item>
+    <item android:duration="100" android:drawable="@drawable/componentkt_ic_progress_loading_64_6">
+    </item>
+
+</animation-list>

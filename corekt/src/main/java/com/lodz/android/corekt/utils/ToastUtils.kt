@@ -182,37 +182,13 @@ fun Context.toastLong(@StringRes strResId: Int) {
 }
 
 /** 显示文字为[text]的短时间的Toast */
-fun Fragment.toastShort(text: String) {
-    val ctx = context
-    if (ctx == null){
-        return
-    }
-    ToastUtils.showShort(ctx, text)
-}
+fun Fragment.toastShort(text: String) = context?.toastShort(text)
 
 /** 显示文字资源为[strResId]的短时间的Toast */
-fun Fragment.toastShort(@StringRes strResId: Int) {
-    val ctx = context
-    if (ctx == null){
-        return
-    }
-    ToastUtils.showShort(ctx, strResId)
-}
+fun Fragment.toastShort(@StringRes strResId: Int) = context?.toastShort(strResId)
 
 /** 显示文字为[text]的长时间的Toast */
-fun Fragment.toastLong(text: String) {
-    val ctx = context
-    if (ctx == null){
-        return
-    }
-    ToastUtils.showShort(ctx, text)
-}
+fun Fragment.toastLong(text: String) = context?.toastLong(text)
 
 /** 显示文字资源为[strResId]的长时间的Toast */
-fun Fragment.toastLong(@StringRes strResId: Int) {
-    val ctx = context
-    if (ctx == null){
-        return
-    }
-    ToastUtils.showShort(ctx, strResId)
-}
+fun Fragment.toastLong(@StringRes strResId: Int) = context?.toastLong(strResId)

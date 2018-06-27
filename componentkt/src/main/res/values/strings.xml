@@ -1,3 +1,36 @@
 <resources>
     <string name="app_name">ComponentKt</string>
+
+    <!-- 数据状态提示语 -->
+    <string name="componentkt_loading">加载中…</string>
+    <string name="componentkt_no_data">暂无数据…</string>
+    <string name="componentkt_load_fail">加载失败…</string>
+
+    <!-- 加载更多 -->
+    <string name="componentkt_load_finish_tips">已经全部加载完毕了哟~</string>
+    <string name="componentkt_loading_more_tips">努力为您加载中~</string>
+    <string name="componentkt_load_fail_tips">加载失败，请点击重试~</string>
+
+    <!-- 图片预览/选择 -->
+    <string name="componentkt_photo_loader_unset">您尚未设置图片加载器</string>
+    <string name="componentkt_preview_loader_unset">您尚未设置图片预览器</string>
+    <string name="componentkt_preview_source_list_empty">图片数据为空</string>
+    <string name="componentkt_photo_source_list_empty">您没有可以选择的图片</string>
+    <string name="componentkt_photo_selected_listener_unset">您尚未设置图片选中监听器</string>
+    <string name="componentkt_picker_title">图片选择</string>
+    <string name="componentkt_picker_confirm">确定</string>
+    <string name="componentkt_picker_confirm_num">确定(%1$s/%2$s)</string>
+    <string name="componentkt_picker_preview">预览</string>
+    <string name="componentkt_picker_preview_num">预览(%s)</string>
+    <string name="componentkt_picker_all_photo">所有图片</string>
+    <string name="componentkt_picker_custom_photo">指定图片</string>
+    <string name="componentkt_picker_photo_count_tips">您最多可以选择%s张图片</string>
+    <string name="componentkt_picker_folder_num">%s张</string>
+    <string name="componentkt_no_camera">没有系统相机</string>
+    <string name="componentkt_photo_temp_file_fail">文件创建失败</string>
+    <string name="componentkt_photo_folder_fail">文件夹创建失败</string>
+    <string name="componentkt_photo_authority_empty">您尚未配置FileProvider</string>
+
+    <!-- 搜索标题栏 -->
+    <string name="componentkt_search_title_hint">请输入查询关键字</string>
 </resources>

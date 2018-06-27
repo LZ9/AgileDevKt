@@ -66,7 +66,7 @@ fun Context.isMainProcess(): Boolean {
 
 
 /** 获取进程名称 */
-fun Context.getProcessName(): String? {
+fun Context.getProcessName(): String {
     val pid = android.os.Process.myPid()
     val am: ActivityManager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
 

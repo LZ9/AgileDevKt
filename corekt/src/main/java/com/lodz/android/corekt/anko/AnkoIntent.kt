@@ -152,7 +152,7 @@ fun Context.share(text: String, subject: String = "", tips: String = "") {
     intent.putExtra(android.content.Intent.EXTRA_SUBJECT, subject)// 主题
     intent.putExtra(android.content.Intent.EXTRA_TEXT, text)// 内容
     var title: String? = null// 应用选择框提示
-    if (!tips.isEmpty()) {
+    if (tips.isNotEmpty()) {
         title = tips
     }
     startActivity(Intent.createChooser(intent, title))
