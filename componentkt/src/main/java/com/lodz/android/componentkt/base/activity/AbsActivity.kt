@@ -20,14 +20,15 @@ import org.greenrobot.eventbus.ThreadMode
  */
 abstract class AbsActivity : RxAppCompatActivity() {
 
-    /** 使用Anko Layouts */
-    protected val USE_ANKO_LAYOUTS = 0
+    /** 是否使用Anko Layout */
+    private var isUseAnko = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        isUseAnko = injectAnko()
         EventBus.getDefault().register(this)
         startCreate()
-        if (getAbsLayoutId() != USE_ANKO_LAYOUTS) {
+        if (!isUseAnko) {//不使用AnkoLayout再加载布局
             setContentView(getAbsLayoutId())
         }
         afterSetContentView()
@@ -187,4 +188,21 @@ abstract class AbsActivity : RxAppCompatActivity() {
         supportFragmentManager.beginTransaction().addToBackStack(name).commit()
     }
 
+    /** 是否使用AnkoLayout */
+    protected fun isUseAnkoLayout() = isUseAnko
+
+    /** 解析AnkoLayout注解 */
+    private fun injectAnko(): Boolean {
+        try {
+            if (!javaClass.isAnnotationPresent(UseAnkoLayout::class.java)) {
+                return false
+            }
+            // 进行了UseAnkoLayout注解
+            val inject = javaClass.getAnnotation(UseAnkoLayout::class.java)
+            return inject.value
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return false
+    }
 }

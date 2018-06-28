@@ -6,18 +6,19 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <ProgressBar
-        android:id="@+id/loading_progressbar"
+    <ImageView
+        android:id="@+id/no_data_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:indeterminate="true"
-        android:padding="10dp" />
+        android:contentDescription="@string/app_name"
+        android:padding="10dp"
+        android:scaleType="center"
+        android:src="@drawable/componentkt_ic_no_data" />
 
     <TextView
-        android:id="@+id/loading_tips_tv"
+        android:id="@+id/no_data_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/componentkt_loading"
-        android:textSize="17sp" />
+        android:text="@string/componentkt_no_data" />
 
 </LinearLayout>

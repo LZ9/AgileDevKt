@@ -39,7 +39,7 @@ open class TitleBarLayout : LinearLayout {
     }
     /** 标题 */
     private val mTitleTv: TextView by lazy {
-        findViewById(R.id.title_textview) as TextView
+        findViewById(R.id.title_tv) as TextView
     }
     /** 扩展区布局 */
     private val mExpandLayout: LinearLayout by lazy {
@@ -47,7 +47,7 @@ open class TitleBarLayout : LinearLayout {
     }
     /** 分割线 */
     private val mDivideLineView: View by lazy {
-        findViewById(R.id.divide_line) as View
+        findViewById(R.id.divide_line_view) as View
     }
 
     constructor(context: Context?) : super(context) {
@@ -214,7 +214,7 @@ open class TitleBarLayout : LinearLayout {
     }
 
     /** 设置返回按钮监听[listener] */
-    fun setOnBackBtnClickListener(listener: OnClickListener) {
+    fun setOnBackBtnClickListener(listener: (View) -> Unit) {
         mBackLayout.setOnClickListener(listener)
     }
 

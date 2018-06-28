@@ -71,6 +71,13 @@
 
         </activity>
 
+        <activity
+            android:name=".ui.anko.AnkoLayoutActivity"
+            android:label="AnkoLayout测试类"
+            android:screenOrientation="portrait">
+
+        </activity>
+
     </application>
 
 </manifest>

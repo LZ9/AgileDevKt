@@ -4,9 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.lodz.android.agiledevkt.R
-import com.lodz.android.componentkt.base.activity.AbsActivity
+import com.lodz.android.componentkt.base.activity.BaseActivity
 
-class MainActivity : AbsActivity() {
+class MainActivity : BaseActivity() {
 
     companion object {
         /** 通过上下文[context]启动Activity */
@@ -16,12 +16,14 @@ class MainActivity : AbsActivity() {
         }
     }
 
-    override fun getAbsLayoutId() = R.layout.activity_main
+    override fun getLayoutId() = R.layout.activity_main
 
     override fun findViews(savedInstanceState: Bundle?) {
 
 
+
     }
+
 
 
 }

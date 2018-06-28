@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/root_view"
+    android:id="@+id/error_root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical">
 
-    <ProgressBar
-        android:id="@+id/loading_progressbar"
+    <ImageView
+        android:id="@+id/error_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:indeterminate="true"
-        android:padding="10dp" />
+        android:contentDescription="@string/app_name"
+        android:padding="10dp"
+        android:scaleType="center"
+        android:src="@drawable/componentkt_ic_data_fail" />
 
     <TextView
-        android:id="@+id/loading_tips_tv"
+        android:id="@+id/error_tips_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/componentkt_loading"
-        android:textSize="17sp" />
+        android:text="@string/componentkt_load_fail" />
 
 </LinearLayout>
