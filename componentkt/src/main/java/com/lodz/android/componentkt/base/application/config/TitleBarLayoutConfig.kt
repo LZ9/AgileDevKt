@@ -32,7 +32,7 @@ class TitleBarLayoutConfig {
     @ColorRes
     var divideLineColor = 0
     /** 分割线高度（单位dp） */
-    var divideLineHeight = 0
+    var divideLineHeightDp = 0
     /** 背景颜色 */
     @ColorRes
     var backgroundColor = 0

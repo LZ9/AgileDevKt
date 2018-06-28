@@ -134,7 +134,7 @@ abstract class BaseActivity : AbsActivity() {
         if (isUseAnkoLayout()){
             throw RuntimeException("you already use anko layout do not use base widget")
         }
-        mContentLayout.visibility = View.GONE
+        mContentLayout.visibility = View.VISIBLE
         if (mLoadingLayout != null){
             mLoadingLayout!!.visibility = View.GONE
         }

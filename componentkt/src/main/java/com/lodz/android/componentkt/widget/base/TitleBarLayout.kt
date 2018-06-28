@@ -155,8 +155,8 @@ open class TitleBarLayout : LinearLayout {
         val divideLineHeight: Int = typedArray?.getDimensionPixelSize(R.styleable.TitleBarLayout_divideLineHeight, 0) ?: 0
         if (divideLineHeight > 0) {
             setDivideLineHeight(px2dp(divideLineHeight).toInt())
-        } else if (mConfig.divideLineHeight > 0) {
-            setDivideLineHeight(mConfig.divideLineHeight)
+        } else if (mConfig.divideLineHeightDp > 0) {
+            setDivideLineHeight(mConfig.divideLineHeightDp)
         }
 
         // 标题背景

@@ -123,8 +123,8 @@ class LoadingLayout : LinearLayout {
 
         // 设置ProgressBar宽高
         val layoutParams = mLoadingProgressBar.layoutParams
-        val pbWidth: Int = typedArray?.getDimensionPixelSize(R.styleable.LoadingLayout_pbWidth, mConfig.pbWidth) ?: mConfig.pbWidth
-        val pbHeight: Int = typedArray?.getDimensionPixelSize(R.styleable.LoadingLayout_pbHeight, mConfig.pbHeight) ?: mConfig.pbHeight
+        val pbWidth: Int = typedArray?.getDimensionPixelSize(R.styleable.LoadingLayout_pbWidth, mConfig.pbWidthPx) ?: mConfig.pbWidthPx
+        val pbHeight: Int = typedArray?.getDimensionPixelSize(R.styleable.LoadingLayout_pbHeight, mConfig.pbHeightPx) ?: mConfig.pbHeightPx
         if (pbWidth != 0) {
             layoutParams.width = pbWidth
         }

@@ -35,7 +35,7 @@ class LoadingLayoutConfig {
             }
         }
     /** 进度条高度  */
-    var pbHeight = 0
+    var pbHeightPx = 0
     /** 进度条宽度  */
-    var pbWidth = 0
+    var pbWidthPx = 0
 }
