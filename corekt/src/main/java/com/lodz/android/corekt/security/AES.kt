@@ -23,6 +23,13 @@ object AES {
 
     /** 加密原始数据[dataBytes]，秘钥[key]必须为16位 */
     fun encrypt(dataBytes: ByteArray, key: String): String? {
+        if (dataBytes.isEmpty() || key.isEmpty()) {
+            return null
+        }
+        if (key.length != 16) {
+            return null
+        }
+
         try {
             val cipher = Cipher.getInstance(FORMAT)
             val blockSize = cipher.blockSize
@@ -49,6 +56,12 @@ object AES {
 
     /** 解密密文[data]，秘钥[key]必须为16位 */
     fun decrypt(data: String, key: String): String? {
+        if (data.isEmpty() || key.isEmpty()) {
+            return null
+        }
+        if (key.length != 16) {
+            return null
+        }
         try {
             val decrypt = Base64.decode(data, Base64.NO_WRAP)
 
@@ -58,7 +71,7 @@ object AES {
 
             cipher.init(Cipher.DECRYPT_MODE, keyspec, ivspec)
 
-            val originalString : String? = String(cipher.doFinal(decrypt))
+            val originalString: String? = String(cipher.doFinal(decrypt))
             return originalString?.trim { it <= ' ' } ?: ""
         } catch (e: Exception) {
             e.printStackTrace()

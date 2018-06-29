@@ -85,6 +85,13 @@
 
         </activity>
 
+        <activity
+            android:name=".ui.security.EncryptTestActivity"
+            android:label="加密测试类"
+            android:screenOrientation="portrait">
+
+        </activity>
+
 
     </application>
 

@@ -28,4 +28,15 @@
     <string name="file_save_by_bytes">将文件保存为byte数组并保存到其他路径</string>
     <string name="file_save_bitmap">bitmap转文件</string>
 
+    <!-- 加密测试 -->
+    <string name="security_hint">请输入加密内容</string>
+    <string name="security_AES_encrypt">AES加密</string>
+    <string name="security_AES_decrypt">AES解密</string>
+    <string name="security_AES_init">AES秘钥初始化</string>
+    <string name="security_RSA_encrypt">RSA公钥加密</string>
+    <string name="security_RSA_decrypt">RSA私钥解密</string>
+    <string name="security_RSA_init">RSA秘钥初始化</string>
+    <string name="security_MD5_btn">MD5信息摘要</string>
+    <string name="security_SHA1_btn">SHA1信息摘要</string>
+    <string name="security_clean">清空</string>
 </resources>
