@@ -173,12 +173,12 @@ fun Context.toastShort(@StringRes strResId: Int) {
 
 /** 显示文字为[text]的长时间的Toast */
 fun Context.toastLong(text: String) {
-    ToastUtils.showShort(this, text)
+    ToastUtils.showLong(this, text)
 }
 
 /** 显示文字资源为[strResId]的长时间的Toast */
 fun Context.toastLong(@StringRes strResId: Int) {
-    ToastUtils.showShort(this, strResId)
+    ToastUtils.showLong(this, strResId)
 }
 
 /** 显示文字为[text]的短时间的Toast */

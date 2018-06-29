@@ -1,8 +1,8 @@
 package com.lodz.android.corekt.utils
 
-import java.io.File
-import java.io.FileInputStream
-import java.io.FileOutputStream
+import android.graphics.Bitmap
+import android.support.annotation.IntRange
+import java.io.*
 import java.nio.channels.FileChannel
 import java.text.DecimalFormat
 
@@ -109,47 +109,83 @@ object FileUtils {
         return false
     }
 
-    /** 移动指定文件[fromPath]到指定的路径[toPath] */
-    fun moveFile(fromPath: String, toPath: String): Boolean {
-        val fromFile: File? = create(fromPath)
+    /** 移动文件[fileName]从[fromPath]到[toPath] */
+    fun moveFile(fromPath: String, toPath: String, fileName: String): Boolean {
+        if (fromPath.isEmpty() || toPath.isEmpty() || fileName.isEmpty()) {
+            return false
+        }
+        var newFromPath = fromPath
+        if (!fromPath.endsWith(File.separator)) {
+            newFromPath = fromPath + File.separator
+        }
+        val fromFile: File? = create(newFromPath + fileName)
         if (fromFile == null || !isFileExists(fromFile)) {
             return false
         }
-        val toFile: File? = create(fromPath)
-        return toFile != null && !toFile.exists() && fromFile.renameTo(toFile)
+        var newToPath = toPath
+        if (!toPath.endsWith(File.separator)) {
+            newToPath = toPath + File.separator
+        }
+        val toDirectoryFile: File? = create(newToPath)
+        if (toDirectoryFile == null) {
+            return false
+        }
+        if (!toDirectoryFile.exists()) {
+            toDirectoryFile.mkdirs()
+        }
+        if (!toDirectoryFile.isDirectory) {
+            return false
+        }
+        val toFile: File? = create(newToPath + fileName)
+        if (toFile == null) {
+            return false
+        }
+        return fromFile.renameTo(toFile)
     }
 
-    /** 复制文件[fromPath]到指定路径[toPath] */
-    fun copyFile(fromPath: String, toPath: String): Boolean {
-        val fromFile: File? = create(fromPath)
-        val toFile: File? = create(toPath)
-        if (fromFile == null || toFile == null) {
-            return false;
+    /** 复制文件[fileName]从[fromPath]到[toPath] */
+    fun copyFile(fromPath: String, toPath: String, fileName: String): Boolean {
+        if (fromPath.isEmpty() || toPath.isEmpty() || fileName.isEmpty()) {
+            return false
+        }
+        var newFromPath = fromPath
+        if (!fromPath.endsWith(File.separator)) {
+            newFromPath = fromPath + File.separator
+        }
+        val fromFile: File? = create(newFromPath + fileName)
+        if (fromFile == null || !isFileExists(fromFile)) {
+            return false
+        }
+        var newToPath = toPath
+        if (!toPath.endsWith(File.separator)) {
+            newToPath = toPath + File.separator
+        }
+        val toDirectoryFile: File? = create(newToPath)
+        if (toDirectoryFile == null) {
+            return false
+        }
+        if (!toDirectoryFile.exists()) {
+            toDirectoryFile.mkdirs()
+        }
+        if (!toDirectoryFile.isDirectory) {
+            return false
+        }
+        val toFile: File? = create(newToPath + fileName)
+        if (toFile == null) {
+            return false
         }
 
-        var inStream: FileInputStream? = null
-        var outStream: FileOutputStream? = null
-        var inChannel: FileChannel? = null
-        var outChannel: FileChannel? = null
-
-        try {
-            inStream = FileInputStream(fromFile)
-            outStream = FileOutputStream(toFile)
-            inChannel = inStream.channel
-            outChannel = outStream.channel
-            inChannel.transferTo(0, inChannel.size(), outChannel)
-
-            inStream.close()
-            outStream.close()
-            inChannel?.close()
-            outChannel?.close()
-            return true
-        } catch (e: Exception) {
-            e.printStackTrace()
-            inStream?.close()
-            outStream?.close()
-            inChannel?.close()
-            outChannel?.close()
+        FileInputStream(fromFile).use { fis: FileInputStream ->
+            FileOutputStream(toFile).use { fos: FileOutputStream ->
+                fis.channel.use { inChannel: FileChannel? ->
+                    fos.channel.use { outChannel: FileChannel? ->
+                        if (inChannel != null && outChannel != null) {
+                            inChannel.transferTo(0, inChannel.size(), outChannel)
+                            return true
+                        }
+                    }
+                }
+            }
         }
         return false
     }
@@ -220,21 +256,22 @@ object FileUtils {
         }
 
         try {
-            if (file.isDirectory){
+            if (file.isDirectory) {
                 val files: Array<File>? = file.listFiles()
-                if (files == null || files.size == 0){
+                if (files == null || files.size == 0) {
                     file.delete()
                     return
                 }
 
-                for (f in files){
+                for (f in files) {
                     if (f.isFile()) {
                         f.delete()
                     } else if (f.isDirectory) {
                         delFile(f.absolutePath)
                     }
                 }
-            }else if (file.isFile){
+                file.delete()
+            } else if (file.isFile) {
                 file.delete()
             }
         } catch (e: Exception) {
@@ -242,31 +279,98 @@ object FileUtils {
         }
     }
 
-    // todo 待完善
+    /** 文件路径[filePath]转byte数组 */
+    fun fileToByte(filePath: String): ByteArray? {
+        if (filePath.isEmpty()) {
+            return null
+        }
+        val file: File? = create(filePath)
+        if (file == null) {
+            return null
+        }
+        FileInputStream(file).use { fis: FileInputStream ->
+            ByteArrayOutputStream().use { baos: ByteArrayOutputStream ->
+                val b = ByteArray(1024)
+                var n: Int
+                while (true) {
+                    n = fis.read(b)
+                    if (n != -1) {
+                        baos.write(b, 0, n)
+                    } else {
+                        break
+                    }
+                }
+                return baos.toByteArray()
+            }
+        }
+    }
 
+    /** 将[bytes]数组保存为文件，文件保存路径[savePath]，文件名称[fileName] */
+    fun byteToFile(bytes: ByteArray, savePath: String, fileName: String) {
+        if (bytes.isEmpty() || savePath.isEmpty() || fileName.isEmpty()) {
+            return
+        }
+        var newFilePath = savePath
+        if (!savePath.endsWith(File.separator)) {
+            newFilePath += File.separator
+        }
+        val directory: File? = create(savePath)
+        if (directory == null) {
+            return
+        }
+        if (!directory.exists()) {
+            directory.mkdirs()
+        }
+        if (!directory.isDirectory) {
+            return
+        }
+        val file: File? = create(newFilePath + fileName)
+        if (file == null) {
+            return
+        }
+        FileOutputStream(file).use { fos: FileOutputStream ->
+            BufferedOutputStream(fos).use { bos: BufferedOutputStream ->
+                bos.write(bytes)
+            }
+        }
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    /** 将[bitmap]保存为图片文件，保存路径[savePath]，文件名[fileName]，后缀[suffix]例如png或者.jpg，保存质量[quality] */
+    fun bitmapToPath(bitmap: Bitmap, savePath: String, fileName: String, suffix: String, @IntRange(from = 0, to = 100) quality: Int) {
+        if (savePath.isEmpty() || fileName.isEmpty() || suffix.isEmpty()) {
+            return
+        }
+        var newFilePath = savePath
+        if (!savePath.endsWith(File.separator)) {
+            newFilePath += File.separator
+        }
+        val directory: File? = create(savePath)
+        if (directory == null) {
+            return
+        }
+        if (!directory.exists()) {
+            directory.mkdirs()
+        }
+        if (!directory.isDirectory) {
+            return
+        }
+        var newSuffix = suffix
+        if (!suffix.startsWith(".")){
+            newSuffix = "." + suffix
+        }
+        val file: File? = create(newFilePath + fileName + newSuffix)
+        if (file == null) {
+            return
+        }
+        if (file.exists()){
+            file.delete()
+        }
+        file.createNewFile()
+        FileOutputStream(file).use { fos: FileOutputStream ->
+            bitmap.compress(Bitmap.CompressFormat.JPEG, quality, fos)
+        }
+        if (!bitmap.isRecycled) {
+            bitmap.recycle()
+        }
+    }
 }

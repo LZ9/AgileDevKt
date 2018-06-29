@@ -11,6 +11,7 @@ import butterknife.ButterKnife
 import com.lodz.android.agiledevkt.App
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.ui.anko.AnkoLayoutActivity
+import com.lodz.android.agiledevkt.ui.file.FileTestActivity
 import com.lodz.android.componentkt.base.activity.BaseActivity
 import com.lodz.android.componentkt.widget.base.TitleBarLayout
 import com.lodz.android.corekt.anko.dp2px
@@ -19,6 +20,9 @@ import com.lodz.android.corekt.anko.getColorCompat
 class MainActivity : BaseActivity() {
 
     companion object {
+        /** 标题名称 */
+        const val EXTRA_TITLE_NAME = "extra_title_name"
+
         /** 通过上下文[context]启动Activity */
         fun start(context: Context) {
             val intent = Intent(context, MainActivity::class.java)
@@ -26,17 +30,14 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    /** 标题名称 */
-    private val EXTRA_TITLE_NAME = "extra_title_name"
-
     /** 功能名称 */
     private val NAME_LIST = arrayListOf(
-            "AnkoLayout测试类"
+            "AnkoLayout测试类", "文件测试类"
     )
 
     /** 功能的activity */
     private val CLASS_LIST = arrayListOf(
-            AnkoLayoutActivity::class.java
+            AnkoLayoutActivity::class.java, FileTestActivity::class.java
     )
 
     /** 列表 */

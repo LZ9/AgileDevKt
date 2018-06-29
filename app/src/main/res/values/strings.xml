@@ -15,4 +15,17 @@
     <string name="test_author">作者：%s</string>
     <string name="test_alert">我的名字叫%1$s，我来自%2$s</string>
 
+    <!-- 文件测试 -->
+    <string name="file_create_new_file">创建一个文件</string>
+    <string name="file_create_directory">创建一个文件夹</string>
+    <string name="file_exists">文件（文件夹）是否存在</string>
+    <string name="file_rename">重命名文件（文件夹）</string>
+    <string name="file_delete_suffix_jpg">删除jpg后缀文件</string>
+    <string name="file_move">移动文件</string>
+    <string name="file_copy">复制文件</string>
+    <string name="file_get_length">获取路径下的文件总大小</string>
+    <string name="file_delete_path">删除路径下文件</string>
+    <string name="file_save_by_bytes">将文件保存为byte数组并保存到其他路径</string>
+    <string name="file_save_bitmap">bitmap转文件</string>
+
 </resources>

@@ -79,13 +79,13 @@ abstract class BaseActivity : AbsActivity() {
     }
 
     /** 点击标题栏的返回按钮 */
-    protected fun clickBackBtn() {}
+    protected open fun clickBackBtn() {}
 
     /** 点击错误页面的重试按钮 */
-    protected fun clickReload() {}
+    protected open fun clickReload() {}
 
     /** 显示无数据页面 */
-    protected fun showStatusNoData() {
+    protected open fun showStatusNoData() {
         if (isUseAnkoLayout()){
             throw RuntimeException("you already use anko layout do not use base widget")
         }
@@ -100,7 +100,7 @@ abstract class BaseActivity : AbsActivity() {
     }
 
     /** 显示错误页面 */
-    protected fun showStatusError() {
+    protected open fun showStatusError() {
         if (isUseAnkoLayout()){
             throw RuntimeException("you already use anko layout do not use base widget")
         }
@@ -115,7 +115,7 @@ abstract class BaseActivity : AbsActivity() {
     }
 
     /** 显示加载页面 */
-    protected fun showStatusLoading(){
+    protected open fun showStatusLoading(){
         if (isUseAnkoLayout()){
             throw RuntimeException("you already use anko layout do not use base widget")
         }
@@ -130,7 +130,7 @@ abstract class BaseActivity : AbsActivity() {
     }
 
     /** 显示内容页面 */
-    protected fun showStatusCompleted(){
+    protected open fun showStatusCompleted(){
         if (isUseAnkoLayout()){
             throw RuntimeException("you already use anko layout do not use base widget")
         }
