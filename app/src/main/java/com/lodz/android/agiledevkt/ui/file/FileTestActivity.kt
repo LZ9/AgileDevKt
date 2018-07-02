@@ -176,7 +176,7 @@ class FileTestActivity : BaseActivity() {
 
     override fun initData() {
         super.initData()
-        mRootPathTv.text = StringBuilder().append("根目录地址：").append(ROOT_PATH)
+        mRootPathTv.text = ("根目录地址：" + ROOT_PATH)
         showStatusCompleted()
     }
 
