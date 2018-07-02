@@ -7,6 +7,8 @@ import android.content.pm.PackageManager
 import android.os.Looper
 import android.provider.Settings
 import android.support.v4.app.ActivityCompat
+import java.io.BufferedReader
+import java.io.InputStreamReader
 import java.util.*
 
 /**
@@ -58,7 +60,7 @@ fun Context.getVersionCode(): Int {
 /** 当前上下文是不是在主进程 */
 fun Context.isMainProcess(): Boolean {
     val processName: String? = getProcessName()
-    if (processName.isNullOrEmpty()){
+    if (processName.isNullOrEmpty()) {
         return false
     }
     return processName!!.contains(":")
@@ -141,4 +143,19 @@ fun Context.getMetaData(key: String): Any? {
 fun Context.isGpsOpen(): Boolean {
     val state = Settings.Secure.getInt(contentResolver, Settings.Secure.LOCATION_MODE, Settings.Secure.LOCATION_MODE_OFF)
     return state != Settings.Secure.LOCATION_MODE_OFF
+}
+
+/** 获取Assets下的文件内容 */
+fun Context.getAssetsFileContent(fileName: String): String {
+    InputStreamReader(assets.open(fileName), "UTF-8").use { isr: InputStreamReader ->
+        BufferedReader(isr).use { br: BufferedReader ->
+            var line: String?
+            val builder = StringBuilder()
+            while (true) {
+                line = br.readLine() ?: break
+                builder.append(line)
+            }
+            return builder.toString()
+        }
+    }
 }

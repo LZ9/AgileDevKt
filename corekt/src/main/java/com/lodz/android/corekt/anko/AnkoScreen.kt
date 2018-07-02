@@ -14,10 +14,7 @@ import android.view.WindowManager
 
 /** 获得屏幕宽度 */
 fun Context.getScreenWidth(): Int {
-    val wm: WindowManager? = getSystemService(Context.WINDOW_SERVICE) as WindowManager
-    if (wm == null) {
-        return 0
-    }
+    val wm = getSystemService(Context.WINDOW_SERVICE) as WindowManager
 
     val dm = DisplayMetrics()
     wm.defaultDisplay.getMetrics(dm)
@@ -26,10 +23,7 @@ fun Context.getScreenWidth(): Int {
 
 /** 获得屏幕高度 */
 fun Context.getScreenHeight(): Int {
-    val wm: WindowManager? = getSystemService(Context.WINDOW_SERVICE) as WindowManager
-    if (wm == null) {
-        return 0
-    }
+    val wm = getSystemService(Context.WINDOW_SERVICE) as WindowManager
 
     val dm = DisplayMetrics()
     wm.defaultDisplay.getMetrics(dm)

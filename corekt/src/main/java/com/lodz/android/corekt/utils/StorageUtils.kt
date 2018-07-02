@@ -25,10 +25,7 @@ object StorageUtils {
     /** 获取存储路径，first为内置存储路径，second为外置存储路径 */
     fun getStoragePath(context: Context): Pair<String?, String?> {
         try {
-            val storageManager: StorageManager? = context.getSystemService(Context.STORAGE_SERVICE) as StorageManager
-            if (storageManager == null) {
-                return Pair(null, null)
-            }
+            val storageManager = context.getSystemService(Context.STORAGE_SERVICE) as StorageManager
             val storageVolumeClass = Class.forName("android.os.storage.StorageVolume")
             if (storageVolumeClass == null) {
                 return Pair(null, null)
@@ -42,9 +39,9 @@ object StorageUtils {
                 val storageVolumeElement = Array.get(result, i)
                 val path: String? = getPath.invoke(storageVolumeElement) as String
                 val removable: Boolean = isRemovable.invoke(storageVolumeElement) as Boolean
-                if (!removable){
+                if (!removable) {
                     return Pair(path, null)// 内置路径
-                }else{
+                } else {
                     return Pair(null, path)// 外置路径
                 }
             }

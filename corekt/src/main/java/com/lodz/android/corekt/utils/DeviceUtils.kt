@@ -86,10 +86,7 @@ object DeviceUtils {
 @SuppressLint("MissingPermission", "HardwareIds")
 fun Context.getIMSI(): String {
     try {
-        val tm: TelephonyManager? = applicationContext.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-        if (tm == null) {
-            return ""
-        }
+        val tm = applicationContext.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
         return tm.subscriberId ?: ""
     } catch (e: Exception) {
         e.printStackTrace()
@@ -101,10 +98,7 @@ fun Context.getIMSI(): String {
 @SuppressLint("MissingPermission", "HardwareIds")
 fun Context.getIMEI(): String {
     try {
-        val tm: TelephonyManager? = applicationContext.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-        if (tm == null) {
-            return ""
-        }
+        val tm = applicationContext.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
         var imei: String? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) tm.imei else tm.deviceId
         if (imei.isNullOrEmpty()) {
             imei = tm.deviceId
@@ -119,10 +113,7 @@ fun Context.getIMEI(): String {
 /** 获取APN */
 @SuppressLint("MissingPermission")
 fun Context.getAPN(): String {
-    val manager: ConnectivityManager? = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-    if (manager == null) {
-        return ""
-    }
+    val manager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     val info: NetworkInfo? = manager.activeNetworkInfo
     if (info == null) {
         return ""
