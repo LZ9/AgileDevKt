@@ -133,18 +133,12 @@ class NoDataLayout : LinearLayout {
 
     /** 是否需要[isNeed]提示图片 */
     fun needImg(isNeed: Boolean) {
-        mNoDataImg.visibility = when (isNeed) {
-            true -> View.VISIBLE
-            false -> View.GONE
-        }
+        mNoDataImg.visibility = if(isNeed) View.VISIBLE else View.GONE
     }
 
     /** 是否需要[isNeed]提示文字 */
     fun needTips(isNeed: Boolean) {
-        mNoDataTv.visibility = when (isNeed) {
-            true -> View.VISIBLE
-            false -> View.GONE
-        }
+        mNoDataTv.visibility = if(isNeed) View.VISIBLE else View.GONE
     }
 
     /** 设置无数据图片资源[drawableResId] */

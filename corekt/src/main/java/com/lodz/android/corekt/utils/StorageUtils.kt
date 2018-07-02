@@ -35,7 +35,7 @@ object StorageUtils {
             val isRemovable = storageVolumeClass.getMethod("isRemovable")
             val result = getVolumeList.invoke(storageManager)
             val length = Array.getLength(result)
-            for (i in 0..length - 1) {
+            for (i in 0 until length) {
                 val storageVolumeElement = Array.get(result, i)
                 val path: String? = getPath.invoke(storageVolumeElement) as String
                 val removable: Boolean = isRemovable.invoke(storageVolumeElement) as Boolean

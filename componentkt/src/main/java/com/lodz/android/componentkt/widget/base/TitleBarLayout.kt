@@ -202,10 +202,7 @@ open class TitleBarLayout : LinearLayout {
 
     /** 是否需要[isNeed]显示返回按钮 */
     fun needBackButton(isNeed: Boolean) {
-        mBackLayout.visibility = when (isNeed) {
-            true -> View.VISIBLE
-            false -> View.GONE
-        }
+        mBackLayout.visibility = if(isNeed) View.VISIBLE else View.GONE
     }
 
     /** 设置返回按钮的透明度[alpha] */
@@ -295,10 +292,7 @@ open class TitleBarLayout : LinearLayout {
 
     /** 是否需要[isNeed]右侧扩展区 */
     fun needExpandView(isNeed: Boolean) {
-        mExpandLayout.visibility = when (isNeed) {
-            true -> View.VISIBLE
-            false -> View.GONE
-        }
+        mExpandLayout.visibility = if(isNeed) View.VISIBLE else View.GONE
     }
 
     /** 添加扩展区域的[view] */
@@ -313,10 +307,7 @@ open class TitleBarLayout : LinearLayout {
 
     /** 是否需[isNeed]要分割线 */
     fun needDivideLine(isNeed: Boolean) {
-        mDivideLineView.visibility = when (isNeed) {
-            true -> View.VISIBLE
-            false -> View.GONE
-        }
+        mDivideLineView.visibility = if(isNeed) View.VISIBLE else View.GONE
     }
 
     /** 隐藏分割线 */

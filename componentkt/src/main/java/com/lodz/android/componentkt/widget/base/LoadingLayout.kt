@@ -149,10 +149,7 @@ class LoadingLayout : LinearLayout {
 
     /** 是否需要[isNeed]提示文字 */
     fun needTips(isNeed: Boolean) {
-        mLoadingTipsTv.visibility = when (isNeed) {
-            true -> View.VISIBLE
-            false -> View.GONE
-        }
+        mLoadingTipsTv.visibility = if(isNeed) View.VISIBLE else View.GONE
     }
 
     /** 设置提示文字[str] */

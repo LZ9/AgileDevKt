@@ -142,7 +142,7 @@ object PrintLog {
             return
         }
         val index = Math.ceil(log.length / 3000.0).toInt()
-        for (i in 0..(index - 1)){
+        for (i in 0 until index){
             val start = i * 3000
             var end = 3000 + i * 3000
             if (end >= log.length){

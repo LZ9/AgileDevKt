@@ -133,18 +133,12 @@ class ErrorLayout : LinearLayout {
 
     /** 是否需要[isNeed]提示图片 */
     fun needImg(isNeed: Boolean) {
-        mErrorImg.visibility = when (isNeed) {
-            true -> View.VISIBLE
-            false -> View.GONE
-        }
+        mErrorImg.visibility = if(isNeed) View.VISIBLE else View.GONE
     }
 
     /** 是否需要[isNeed]提示文字 */
     fun needTips(isNeed: Boolean) {
-        mErrorTipsTv.visibility = when (isNeed) {
-            true -> View.VISIBLE
-            false -> View.GONE
-        }
+        mErrorTipsTv.visibility = if(isNeed) View.VISIBLE else View.GONE
     }
 
     /** 设置界面错误图片资源[drawableResId] */
