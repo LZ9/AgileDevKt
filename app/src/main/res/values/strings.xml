@@ -39,4 +39,9 @@
     <string name="security_MD5_btn">MD5信息摘要</string>
     <string name="security_SHA1_btn">SHA1信息摘要</string>
     <string name="security_clean">清空</string>
+
+    <!-- Bitmap测试 -->
+    <string name="bitmap_src_name">原图片</string>
+    <string name="bitmap_src_base64">Base64编码图片</string>
+
 </resources>

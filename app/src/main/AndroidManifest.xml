@@ -92,6 +92,14 @@
 
         </activity>
 
+        <activity
+            android:name=".ui.bitmap.BitmapTestActivity"
+            android:label="Bitmap图片测试类"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+
 
     </application>
 
