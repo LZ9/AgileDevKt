@@ -11,13 +11,12 @@ import butterknife.ButterKnife
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.ui.main.MainActivity
 import com.lodz.android.componentkt.base.activity.BaseActivity
+import com.lodz.android.componentkt.rx.utils.RxUtils
 import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.corekt.utils.BitmapUtils
 import com.lodz.android.corekt.utils.toastShort
 import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Function
-import io.reactivex.schedulers.Schedulers
 
 /**
  * Bitmap图片测试类
@@ -85,8 +84,7 @@ class BitmapTestActivity :BaseActivity(){
                         return bitmap
                     }
                 })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .compose(RxUtils.ioToMainObservable())
                 .subscribe({ bitmap ->
                     mBase64Img.setImageBitmap(bitmap)
                 }, { e ->

@@ -123,7 +123,7 @@ class NetworkManager private constructor() {
 
     /** 更新网络信息 */
     @SuppressLint("MissingPermission")
-    protected fun updateNet(manager: ConnectivityManager) {
+    internal fun updateNet(manager: ConnectivityManager) {
         mNetInfo.type = NetInfo.NETWORK_TYPE_NONE
         mNetInfo.standard = NetInfo.NETWORK_TYPE_NONE
         var netInfo: NetworkInfo? = null
@@ -208,7 +208,7 @@ class NetworkManager private constructor() {
     }
 
     /** 通知监听器回调 */
-    protected fun notifyNetworkListeners() {
+    internal fun notifyNetworkListeners() {
         val iterator = mNetworkListeners.iterator()
         while (iterator.hasNext()) {
             val listener: NetworkListener? = iterator.next()

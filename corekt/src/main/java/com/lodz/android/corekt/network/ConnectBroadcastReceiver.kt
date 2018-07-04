@@ -9,7 +9,7 @@ import android.net.ConnectivityManager
  * 网络广播
  * Created by zhouL on 2018/7/3.
  */
-class ConnectBroadcastReceiver : BroadcastReceiver {
+class ConnectBroadcastReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
         if (context == null || intent == null){
