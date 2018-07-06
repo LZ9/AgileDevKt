@@ -3,6 +3,8 @@ package com.lodz.android.agiledevkt
 import android.widget.LinearLayout
 import com.lodz.android.componentkt.base.application.BaseApplication
 import com.lodz.android.corekt.log.PrintLog
+import com.lodz.android.corekt.network.NetworkManager
+import com.lodz.android.corekt.threadpool.ThreadPoolManager
 import com.lodz.android.corekt.utils.UiHandler
 
 /**
@@ -18,8 +20,8 @@ class App : BaseApplication() {
     override fun onStartCreate() {
         // todo 待完善
         PrintLog.setPrint(BuildConfig.LOG_DEBUG)// 配置日志开关
-
-
+        NetworkManager.get().init(this)
+        ThreadPoolManager.get().newBuilder().setAwaitTime(30).build()//配置线程池参数
         configBaseLayout()
     }
 
@@ -91,6 +93,9 @@ class App : BaseApplication() {
     override fun onExit() {
         // todo 待完善
         UiHandler.destroy()
+        ThreadPoolManager.get().releaseAll()
+        NetworkManager.get().release(this)
+        NetworkManager.get().clearNetworkListener()
     }
 
 }
