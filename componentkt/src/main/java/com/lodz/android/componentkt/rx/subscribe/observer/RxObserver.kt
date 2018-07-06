@@ -26,24 +26,24 @@ abstract class RxObserver<T> : BaseObserver<T>() {
         onErrorEnd()
     }
 
-    final override fun onBaseNext(t: T) {
+    final override fun onBaseNext(any: T) {
         try {
-            checkError(t)
-            onRxNext(t)
+            checkError(any)
+            onRxNext(any)
         } catch (e: Exception) {
             onError(e)
         }
     }
 
     /** 核对数据 */
-    private fun checkError(t: T) {
-        if (t == null) {
+    private fun checkError(any: T) {
+        if (any == null) {
             throw NullPointerException("数据是空的")
         }
-        if (t is ResponseStatus) {
-            if (!t.isSuccess()) {//服务端返回接口失败
+        if (any is ResponseStatus) {
+            if (!any.isSuccess()) {//服务端返回接口失败
                 val exception = DataException("response fail")
-                exception.setData(t)
+                exception.setData(any)
                 throw exception
             }
         }
@@ -51,7 +51,7 @@ abstract class RxObserver<T> : BaseObserver<T>() {
 
     open fun onRxSubscribe(d: Disposable) {}
 
-    abstract fun onRxNext(t: T)
+    abstract fun onRxNext(any: T)
 
     abstract fun onRxError(e: Throwable, isNetwork: Boolean)
 

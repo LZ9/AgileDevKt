@@ -22,8 +22,8 @@ abstract class ProgressSubscriber<T> : RxSubscriber<T>() {
         onPgSubscribe(s)
     }
 
-    final override fun onRxNext(t: T) {
-        onPgNext(t)
+    final override fun onRxNext(any: T) {
+        onPgNext(any)
     }
 
     final override fun onRxError(e: Throwable, isNetwork: Boolean) {
@@ -134,7 +134,7 @@ abstract class ProgressSubscriber<T> : RxSubscriber<T>() {
 
     open fun onPgSubscribe(s: Subscription) {}
 
-    abstract fun onPgNext(t: T)
+    abstract fun onPgNext(any: T)
 
     abstract fun onPgError(e: Throwable, isNetwork: Boolean)
 

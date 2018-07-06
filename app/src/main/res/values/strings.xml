@@ -43,5 +43,26 @@
     <!-- Bitmap测试 -->
     <string name="bitmap_src_name">原图片</string>
     <string name="bitmap_src_base64">Base64编码图片</string>
+    <string name="bitmap_drawable_name">drawable图片</string>
+    <string name="bitmap_drawable_to">drawable转bitmap</string>
+    <string name="bitmap_view_name">view图片</string>
+    <string name="bitmap_view_to">view转bitmap</string>
+    <string name="bitmap_combine">合并图片</string>
+    <string name="bitmap_grey">灰度图</string>
+    <string name="bitmap_rounded_corner">圆角图</string>
+    <string name="bitmap_rounded">圆形图</string>
+    <string name="bitmap_reflection">倒影图</string>
+    <string name="bitmap_rotate_45">旋转45°</string>
+    <string name="bitmap_reverse_horizontal">水平翻转</string>
+    <string name="bitmap_reverse_vertical">垂直翻转</string>
+    <string name="bitmap_tone">色调调整</string>
+    <string name="bitmap_saturation">饱和度调整</string>
+    <string name="bitmap_luminance">亮度值调整</string>
+    <string name="bitmap_hue">色相值调整</string>
+    <string name="bitmap_nostalgic">怀旧效果图片</string>
+    <string name="bitmap_sunshine">光照强度调整</string>
+    <string name="bitmap_film">底片效果图片</string>
+    <string name="bitmap_sharpen">锐化效果图片</string>
+    <string name="bitmap_emboss">浮雕效果图片</string>
 
 </resources>

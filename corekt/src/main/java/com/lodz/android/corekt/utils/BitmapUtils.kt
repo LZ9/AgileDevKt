@@ -91,21 +91,6 @@ object BitmapUtils {
         }
     }
 
-    /** 合并前景图[fg]和背景图[bgd] */
-    fun combineBitmap(fg: Bitmap, bgd: Bitmap): Bitmap {
-        val width = if (bgd.width > fg.width) bgd.width else fg.width
-        val height = if (bgd.height > fg.height) bgd.height else fg.height
-
-        val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-        val paint = Paint()
-        paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_ATOP)
-
-        val canvas = Canvas(bitmap)
-        canvas.drawBitmap(bgd, 0f, 0f, null)
-        canvas.drawBitmap(fg, 0f, 0f, paint)
-        return bitmap
-    }
-
     /** 左上  */
     const val LEFT_TOP = 1
     /** 左下  */
@@ -114,6 +99,60 @@ object BitmapUtils {
     const val RIGHT_TOP = 3
     /** 右下  */
     const val RIGHT_BOTTOM = 4
+    /** 中间  */
+    const val CENTER = 5
+
+    @IntDef(LEFT_TOP, LEFT_BOTTOM, RIGHT_TOP, RIGHT_BOTTOM, CENTER)
+    @Retention(AnnotationRetention.SOURCE)
+    annotation class CombinekLocationType
+
+    /** 合并前景图[fg]和背景图[bgd] */
+    @SuppressLint("SwitchIntDef")
+    fun combineBitmap(fg: Bitmap, bg: Bitmap, @CombinekLocationType location: Int, marginPx: Int = 0): Bitmap {
+        var newMargin = 0f
+        if (marginPx > 0) {
+            newMargin = marginPx.toFloat()
+        }
+
+        val bgWidth: Int// 背景宽
+        val bgHeight: Int// 背景高
+
+        val fgWidth: Int// 前景宽
+        val fgHeight: Int// 前景高
+
+        if (bg.width > fg.width) {
+            bgWidth = bg.width
+            fgWidth = fg.width
+        } else {
+            bgWidth = fg.width
+            fgWidth = bg.width
+        }
+
+        if (bg.height > fg.height) {
+            bgHeight = bg.height
+            fgHeight = fg.height
+        } else {
+            bgHeight = fg.height
+            fgHeight = bg.height
+        }
+
+        val bitmap = Bitmap.createBitmap(bgWidth, bgHeight, Bitmap.Config.ARGB_8888)
+        val paint = Paint()
+        paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_ATOP)
+
+        val canvas = Canvas(bitmap)
+        canvas.drawBitmap(bg, 0f, 0f, null)
+
+        when (location) {
+            LEFT_TOP -> canvas.drawBitmap(fg, newMargin, newMargin, paint)
+            LEFT_BOTTOM -> canvas.drawBitmap(fg, newMargin, bgHeight - fgHeight - newMargin, paint)
+            RIGHT_TOP -> canvas.drawBitmap(fg, bgWidth - fgWidth - newMargin, newMargin, paint)
+            RIGHT_BOTTOM -> canvas.drawBitmap(fg, bgWidth - fgWidth - newMargin, bgHeight - fgHeight - newMargin, paint)
+            CENTER -> canvas.drawBitmap(fg, (bgWidth / 2.0 - fgWidth / 2.0).toFloat(), (bgHeight / 2.0 - fgHeight / 2.0).toFloat(), paint)
+            else -> throw IllegalArgumentException("please use location in @CombinekLocationType")
+        }
+        return bitmap
+    }
 
     @IntDef(LEFT_TOP, LEFT_BOTTOM, RIGHT_TOP, RIGHT_BOTTOM)
     @Retention(AnnotationRetention.SOURCE)
@@ -122,7 +161,12 @@ object BitmapUtils {
 
     /** 将水印图片[watermark]放置在原图片[src]上，水印位置[location]，间距[margin] */
     @SuppressLint("SwitchIntDef")
-    fun createWatermarkBitmap(src: Bitmap, watermark: Bitmap, @WatermarkLocationType location: Int, margin: Int): Bitmap {
+    fun createWatermarkBitmap(src: Bitmap, watermark: Bitmap, @WatermarkLocationType location: Int, marginPx: Int): Bitmap {
+        var newMargin = 0f
+        if (marginPx > 0) {
+            newMargin = marginPx.toFloat()
+        }
+
         val width = src.width
         val height = src.height
         val watermarkWidth = watermark.width
@@ -132,10 +176,10 @@ object BitmapUtils {
         canvas.drawBitmap(src, 0f, 0f, null)// 在 0，0坐标开始画入src
 
         when (location) {
-            LEFT_TOP -> canvas.drawBitmap(watermark, margin.toFloat(), margin.toFloat(), null)// 在src的左上角画入水印
-            LEFT_BOTTOM -> canvas.drawBitmap(watermark, margin.toFloat(), (height - watermarkHeight - margin).toFloat(), null)// 在src的左下角画入水印
-            RIGHT_TOP -> canvas.drawBitmap(watermark, (width - watermarkWidth - margin).toFloat(), margin.toFloat(), null)// 在src的右上角画入水印
-            RIGHT_BOTTOM -> canvas.drawBitmap(watermark, (width - watermarkWidth - margin).toFloat(), (height - watermarkHeight - margin).toFloat(), null)// 在src的右下角画入水印
+            LEFT_TOP -> canvas.drawBitmap(watermark, newMargin, newMargin, null)// 在src的左上角画入水印
+            LEFT_BOTTOM -> canvas.drawBitmap(watermark, newMargin, height - watermarkHeight - newMargin, null)// 在src的左下角画入水印
+            RIGHT_TOP -> canvas.drawBitmap(watermark, width - watermarkWidth - newMargin, newMargin, null)// 在src的右上角画入水印
+            RIGHT_BOTTOM -> canvas.drawBitmap(watermark, width - watermarkWidth - newMargin, height - watermarkHeight - newMargin, null)// 在src的右下角画入水印
             else -> throw IllegalArgumentException("please use location in @WatermarkLocationType")
         }
 
@@ -173,12 +217,12 @@ object BitmapUtils {
     }
 
     /** 将图片[bitmap]转为圆角[roundPx]图 */
-    fun createRoundedCornerBitmap(bitmap: Bitmap, roundPx: Float): Bitmap {
+    fun createRoundedCornerBitmap(bitmap: Bitmap, roundPx: Float = 12f): Bitmap {
 
         val output = Bitmap.createBitmap(bitmap.width, bitmap.height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(output)
 
-        val color = 0x424242
+        val color = Color.parseColor("#424242")
         val paint = Paint()
         val rect = Rect(0, 0, bitmap.width, bitmap.height)
         val rectF = RectF(rect)
@@ -196,7 +240,7 @@ object BitmapUtils {
 
     /** 将图片[bitmap]增加倒影 */
     fun createReflectionBitmap(bitmap: Bitmap): Bitmap {
-        val reflectionGap = 4
+        val reflectionGap = 0
         val width = bitmap.width
         val height = bitmap.height
 
@@ -270,7 +314,7 @@ object BitmapUtils {
         val output = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(output)
 
-        val color = 0x424242
+        val color = Color.parseColor("#424242")
         val paint = Paint()
         val src = Rect(left.toInt(), top.toInt(), right.toInt(), bottom.toInt())
         val dst = Rect(dst_left.toInt(), dst_top.toInt(), dst_right.toInt(), dst_bottom.toInt())
@@ -308,14 +352,14 @@ object BitmapUtils {
         return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, false)
     }
 
-    /** 更改图片[bitmap]色系，图片的亮暗程度值[delta]越小图片会越亮，取值范围(0,23) */
-    fun setBitmapTone(bitmap: Bitmap, @IntRange(from = 0, to = 23) delta: Int): Bitmap {
+    /** 更改图片[bitmap]色系，图片的亮暗程度值[delta]越小图片会越亮，取值范围(1,23) */
+    fun setBitmapTone(bitmap: Bitmap, @IntRange(from = 1, to = 23) delta: Int): Bitmap {
         var newDelta = delta
         if (delta >= 23) {
             newDelta = 23
         }
-        if (delta <= 0) {
-            newDelta = 0
+        if (delta <= 1) {
+            newDelta = 1
         }
 
         // 设置高斯矩阵
@@ -339,7 +383,7 @@ object BitmapUtils {
                 var idx = 0
                 for (m in -1..1) {
                     for (n in -1..1) {
-                        pixColor = Color.red(pixColor)
+                        pixColor = pixels[(i + m) * width + k + n]
 
                         newR += Color.red(pixColor) * gauss[idx]
                         newG += Color.green(pixColor) * gauss[idx]
@@ -472,12 +516,12 @@ object BitmapUtils {
     fun createSoftenBitmap(bitmap: Bitmap) = setBitmapTone(bitmap, 16)
 
     /** 对图片[bitmap]进行光照效果处理，光源位置为X轴[centerX]和Y轴[centerY]，光照强度[strength] */
-    fun createSunshineBitmap(bitmap: Bitmap, centerX: Int, centerY: Int, @FloatRange(from = 100.0, to = 150.0) strength: Float = 150f): Bitmap {
-        var newStrength = strength
-        if (strength >= 150f) {
-            newStrength = 150f
+    fun createSunshineBitmap(bitmap: Bitmap, centerX: Int, centerY: Int, @FloatRange(from = 0.0, to = 100.0) strength: Float = 50f): Bitmap {
+        var newStrength = strength + 100
+        if (newStrength >= 200f) {
+            newStrength = 200f
         }
-        if (strength <= 100f) {
+        if (newStrength <= 100f) {
             newStrength = 100f
         }
 

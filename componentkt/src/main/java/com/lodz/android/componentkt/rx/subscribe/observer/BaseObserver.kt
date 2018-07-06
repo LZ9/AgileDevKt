@@ -21,8 +21,8 @@ abstract class BaseObserver<T> : Observer<T> {
         onBaseSubscribe(d)
     }
 
-    final override fun onNext(t: T) {
-        onBaseNext(t)
+    final override fun onNext(any: T) {
+        onBaseNext(any)
     }
 
     final override fun onError(t: Throwable) {
@@ -66,7 +66,7 @@ abstract class BaseObserver<T> : Observer<T> {
 
     open fun onBaseSubscribe(d: Disposable) {}
 
-    abstract fun onBaseNext(t: T)
+    abstract fun onBaseNext(any: T)
 
     abstract fun onBaseError(e: Throwable)
 

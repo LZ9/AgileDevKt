@@ -24,8 +24,8 @@ abstract class BaseSubscriber<T> : Subscriber<T> {
         onBaseSubscribe(s)
     }
 
-    final override fun onNext(t: T) {
-        onBaseNext(t)
+    final override fun onNext(any: T) {
+        onBaseNext(any)
     }
 
     final override fun onError(t: Throwable) {
@@ -74,7 +74,7 @@ abstract class BaseSubscriber<T> : Subscriber<T> {
 
     open fun onBaseSubscribe(s: Subscription) {}
 
-    abstract fun onBaseNext(t: T)
+    abstract fun onBaseNext(any: T)
 
     abstract fun onBaseError(e: Throwable)
 
