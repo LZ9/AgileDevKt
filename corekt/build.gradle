@@ -33,5 +33,5 @@ dependencies {
     api 'com.android.support:support-annotations:27.1.1'
     api 'com.android.support.constraint:constraint-layout:1.1.2'
     api 'com.google.android:flexbox:1.0.0'
-    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.2.50"
+    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.2.51"
 }
