@@ -68,10 +68,10 @@ dependencies {
     implementation project(':imageloaderkt')
 
     // 权限申请
-    implementation('com.github.hotchemi:permissionsdispatcher:3.2.0') {
+    implementation('com.github.hotchemi:permissionsdispatcher:3.3.1') {
         exclude module: "support-v13"
     }
-    kapt 'com.github.hotchemi:permissionsdispatcher-processor:3.2.0'
+    kapt 'com.github.hotchemi:permissionsdispatcher-processor:3.3.1'
     // butterknife
     implementation 'com.jakewharton:butterknife:8.8.1'
     kapt 'com.jakewharton:butterknife-compiler:8.8.1'
