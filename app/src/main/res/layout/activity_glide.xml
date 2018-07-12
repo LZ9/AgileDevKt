@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/custom_notification_button"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="1dp"
+                android:text="@string/glide_custom_notify" />
+
+            <Button
+                android:id="@+id/notification_button"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="1dp"
+                android:text="@string/glide_system_notify" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!--本地图片-->
+            <ImageView
+                android:id="@+id/base64_img"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_weight="1"
+                android:contentDescription="@string/app_name"
+                android:padding="1dp"
+                android:scaleType="center" />
+
+            <!--本地居中剪切图片-->
+            <ImageView
+                android:id="@+id/local_crop_img"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_weight="1"
+                android:contentDescription="@string/app_name"
+                android:padding="1dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!--网络图片-->
+            <ImageView
+                android:id="@+id/url_img"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_weight="1"
+                android:contentDescription="@string/app_name"
+                android:padding="1dp" />
+
+            <!--动画显示-->
+            <ImageView
+                android:id="@+id/anim_img"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_weight="1"
+                android:contentDescription="@string/app_name"
+                android:padding="1dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!--网络gif-->
+            <ImageView
+                android:id="@+id/url_gif_img"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_weight="1"
+                android:contentDescription="@string/app_name"
+                android:padding="1dp" />
+
+            <!--本地gif-->
+            <ImageView
+                android:id="@+id/local_gif_img"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_weight="1"
+                android:contentDescription="@string/app_name"
+                android:padding="1dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!--毛玻璃-->
+            <ImageView
+                android:id="@+id/blur_img"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_weight="1"
+                android:contentDescription="@string/app_name"
+                android:padding="1dp" />
+
+            <!--覆盖颜色-->
+            <ImageView
+                android:id="@+id/filter_color_img"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_weight="1"
+                android:contentDescription="@string/app_name"
+                android:padding="1dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!--全圆角-->
+            <ImageView
+                android:id="@+id/corners_all_img"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_weight="1"
+                android:contentDescription="@string/app_name"
+                android:padding="1dp" />
+
+            <!--顶部圆角-->
+            <ImageView
+                android:id="@+id/corners_top_img"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_weight="1"
+                android:contentDescription="@string/app_name"
+                android:padding="1dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!--灰度化-->
+            <ImageView
+                android:id="@+id/grayscale_img"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_weight="1"
+                android:contentDescription="@string/app_name"
+                android:padding="1dp" />
+
+            <!--圆角/灰度化-->
+            <ImageView
+                android:id="@+id/corners_grayscale_img"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_weight="1"
+                android:contentDescription="@string/app_name"
+                android:padding="1dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!--圆形-->
+            <ImageView
+                android:id="@+id/circle_img"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_weight="1"
+                android:contentDescription="@string/app_name"
+                android:padding="1dp" />
+
+            <!--圆形/毛玻璃-->
+            <ImageView
+                android:id="@+id/circle_blur_img"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_weight="1"
+                android:contentDescription="@string/app_name"
+                android:padding="1dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!--圆形/灰度化/毛玻璃-->
+            <ImageView
+                android:id="@+id/circle_grayscale_blur_img"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_weight="1"
+                android:contentDescription="@string/app_name"
+                android:padding="1dp" />
+
+            <!--蒙板效果-->
+            <ImageView
+                android:id="@+id/mask_img"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_weight="1"
+                android:contentDescription="@string/app_name"
+                android:padding="1dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!--正方形-->
+            <ImageView
+                android:id="@+id/square_img"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_weight="1"
+                android:contentDescription="@string/app_name"
+                android:padding="1dp" />
+
+
+            <!--正方形/毛玻璃-->
+            <ImageView
+                android:id="@+id/square_blur_img"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_weight="1"
+                android:contentDescription="@string/app_name"
+                android:padding="1dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!--本地webp-->
+            <ImageView
+                android:id="@+id/local_webp_img"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_weight="1"
+                android:contentDescription="@string/app_name"
+                android:padding="1dp" />
+
+            <!--本地视频-->
+            <ImageView
+                android:id="@+id/local_video_img"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_weight="1"
+                android:contentDescription="@string/app_name"
+                android:padding="1dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

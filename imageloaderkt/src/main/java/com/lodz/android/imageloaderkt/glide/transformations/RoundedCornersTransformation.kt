@@ -16,16 +16,17 @@ package com.lodz.android.imageloaderkt.glide.transformations
  * limitations under the License.
  */
 
+import android.content.Context
 import android.graphics.*
+import com.bumptech.glide.load.Key
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool
-import com.bumptech.glide.load.resource.bitmap.BitmapTransformation
 import java.security.MessageDigest
 
 class RoundedCornersTransformation : BitmapTransformation {
 
     private val VERSION = 1
     private val ID = "jp.wasabeef.glide.transformations.RoundedCornersTransformation.$VERSION"
-    private val ID_BYTES = ID.toByteArray(CHARSET)
+    private val ID_BYTES = ID.toByteArray(Key.CHARSET)
 
     enum class CornerType {
         ALL,
@@ -49,8 +50,7 @@ class RoundedCornersTransformation : BitmapTransformation {
         this.mCornerType = cornerType
     }
 
-
-    override fun transform(pool: BitmapPool, toTransform: Bitmap, outWidth: Int, outHeight: Int): Bitmap {
+    override fun transform(context: Context, pool: BitmapPool, toTransform: Bitmap, outWidth: Int, outHeight: Int): Bitmap {
         val width = toTransform.width
         val height = toTransform.height
 

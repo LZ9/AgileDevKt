@@ -99,6 +99,12 @@
 
         </activity>
 
+        <activity
+            android:name=".ui.image.GlideActivity"
+            android:label="Glide测试"
+            android:screenOrientation="portrait">
+
+        </activity>
 
 
     </application>

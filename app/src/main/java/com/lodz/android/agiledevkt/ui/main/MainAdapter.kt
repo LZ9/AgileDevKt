@@ -27,7 +27,7 @@ class MainAdapter(context: Context) : BaseRecyclerViewAdapter<String>(context) {
             0x1F62A, 0x1F62B, 0x1F62D, 0x1F630, 0x1F631, 0x1F632, 0x1F633, 0x1F634, 0x1F635, 0x1F637, 0x1F638,
             0x1F639, 0x1F63A, 0x1F63B, 0x1F63C, 0x1F63D, 0x1F63E, 0x1F63F)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MainViewHolder(getLayoutView(parent, R.layout.item_main))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MainViewHolder(getLayoutView(parent, R.layout.rv_item_main))
 
     override fun onBind(holder: RecyclerView.ViewHolder, position: Int) {
         val name: String? = getItem(position)

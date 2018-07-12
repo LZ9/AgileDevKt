@@ -7,6 +7,7 @@ import android.support.annotation.ColorInt
 import android.support.annotation.DrawableRes
 import android.support.annotation.IntRange
 import android.widget.ImageView
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.gif.GifDrawable
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.SimpleTarget
@@ -28,8 +29,8 @@ interface ImageLoaderContract {
     /** 设置加载失败图资源[errorResId] */
     fun setError(@DrawableRes errorResId: Int): ImageLoaderContract
 
-    /** 设置图片宽[width]高[height] */
-    fun setImageSize(width: Int, height: Int): ImageLoaderContract
+    /** 设置图片宽[widthPx]高[heightPx] */
+    fun setImageSize(widthPx: Int, heightPx: Int): ImageLoaderContract
 
     /** 使用高斯模糊 */
     fun useBlur(): ImageLoaderContract
@@ -50,7 +51,7 @@ interface ImageLoaderContract {
     fun skipMemoryCache(): ImageLoaderContract
 
     /** 设置磁盘缓存方式[diskCacheStrategy] */
-    fun diskCacheStrategy(diskCacheStrategy: Int): ImageLoaderContract
+    fun diskCacheStrategy(diskCacheStrategy: DiskCacheStrategy): ImageLoaderContract
 
     /** 设置居中裁切 */
     fun setCenterCrop(): ImageLoaderContract
@@ -101,7 +102,7 @@ interface ImageLoaderContract {
     fun setVideo(): ImageLoaderContract
 
     /** 添加图片请求监听器[listener]  */
-    fun <R> setRequestListener(listener: RequestListener<R>): ImageLoaderContract
+    fun setRequestListener(listener: RequestListener<*>): ImageLoaderContract
 
     /** 将图片装载进[imageView] */
     fun into(imageView: ImageView)
