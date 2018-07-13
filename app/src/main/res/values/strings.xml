@@ -70,4 +70,13 @@
     <string name="glide_system_notify">原生通知栏</string>
     <string name="glide_video_file_unexists">文件不存在</string>
 
+    <!-- 通知测试 -->
+    <string name="notify_base">基本通知</string>
+    <string name="notify_intent">带意图通知</string>
+    <string name="notify_progress">带进度条</string>
+    <string name="notify_single_txt">单行大文本样式</string>
+    <string name="notify_multi_txt">多行大文本样式</string>
+    <string name="notify_large_img">大图文本样式</string>
+    <string name="notify_custom">自定义内容样式</string>
+
 </resources>
