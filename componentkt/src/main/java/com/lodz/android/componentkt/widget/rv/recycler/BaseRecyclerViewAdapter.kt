@@ -183,6 +183,9 @@ abstract class BaseRecyclerViewAdapter<T>(protected val context: Context) : Recy
         this.mData = data
     }
 
+    /** 获取数据列表[data] */
+    fun getData(): MutableList<T>? = mData
+
     /** 在onCreateViewHolder方法中根据[layoutId]获取View */
     protected fun getLayoutView(parent: ViewGroup, @LayoutRes layoutId: Int, attachToRoot: Boolean = false) = LayoutInflater.from(context).inflate(layoutId, parent, attachToRoot)
 
