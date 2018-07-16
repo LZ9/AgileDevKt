@@ -12,6 +12,7 @@ import com.lodz.android.agiledevkt.App
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.ui.anko.AnkoLayoutActivity
 import com.lodz.android.agiledevkt.ui.bitmap.BitmapTestActivity
+import com.lodz.android.agiledevkt.ui.color.ColorTestActivity
 import com.lodz.android.agiledevkt.ui.file.FileTestActivity
 import com.lodz.android.agiledevkt.ui.image.GlideActivity
 import com.lodz.android.agiledevkt.ui.notification.NotificationActivity
@@ -40,14 +41,14 @@ class MainActivity : BaseActivity() {
     private val NAME_LIST = arrayListOf(
             "AnkoLayout测试类", "文件测试类", "加密测试类",
             "Bitmap图片测试类", "Glide测试", "通知测试类",
-            "Toast测试类", "反射测试类"
+            "Toast测试类", "反射测试类", "颜色测试"
     )
 
     /** 功能的activity */
     private val CLASS_LIST = arrayListOf(
             AnkoLayoutActivity::class.java, FileTestActivity::class.java, EncryptTestActivity::class.java,
             BitmapTestActivity::class.java, GlideActivity::class.java, NotificationActivity::class.java,
-            ToastTestActivity::class.java, ReflectActivity::class.java
+            ToastTestActivity::class.java, ReflectActivity::class.java, ColorTestActivity::class.java
     )
 
     /** 列表 */

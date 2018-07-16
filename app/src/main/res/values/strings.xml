@@ -98,6 +98,9 @@
     <string name="reflect_unfind_class">找不到该类</string>
     <string name="reflect_unfind_no_param_constructor">没有无参构造函数</string>
 
+    <!-- 颜色测试 -->
+    <string name="color_alpha">透明度：</string>
+    <string name="color_input_hint">请输入颜色的透明度1~100</string>
 
 
 </resources>
