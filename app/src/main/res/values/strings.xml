@@ -87,4 +87,17 @@
     <string name="toast_custom">完全自定义</string>
     <string name="toast_custom_title">注意</string>
     <string name="toast_custom_content">我是内容</string>
+
+    <!-- toast测试 -->
+    <string name="reflect_get_constructor_name">获取所有构造函数名称</string>
+    <string name="reflect_get_field_name">获取对象里的变量名称</string>
+    <string name="reflect_get_method_name">获取方法名</string>
+    <string name="reflect_get_field_value">获取对象里变量的值</string>
+    <string name="reflect_execute_function">执行函数</string>
+    <string name="reflect_set_value">设置值并读取测试</string>
+    <string name="reflect_unfind_class">找不到该类</string>
+    <string name="reflect_unfind_no_param_constructor">没有无参构造函数</string>
+
+
+
 </resources>
