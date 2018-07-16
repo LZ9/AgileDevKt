@@ -79,4 +79,12 @@
     <string name="notify_large_img">大图文本样式</string>
     <string name="notify_custom">自定义内容样式</string>
 
+    <!-- toast测试 -->
+    <string name="toast_short_time">短时间</string>
+    <string name="toast_long_time">长时间</string>
+    <string name="toast_gravity_center">自定义位置（中间）</string>
+    <string name="toast_top_drawable">带顶部图片</string>
+    <string name="toast_custom">完全自定义</string>
+    <string name="toast_custom_title">注意</string>
+    <string name="toast_custom_content">我是内容</string>
 </resources>

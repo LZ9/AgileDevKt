@@ -113,6 +113,13 @@
 
         </activity>
 
+        <activity
+            android:name=".ui.toast.ToastTestActivity"
+            android:label="Toast测试类"
+            android:screenOrientation="portrait">
+
+        </activity>
+
 
     </application>
 
