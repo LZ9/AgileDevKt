@@ -52,7 +52,7 @@
         </provider>
 
         <activity
-            android:name=".ui.splash.SplashActivity"
+            android:name=".modules.splash.SplashActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Splash">
@@ -64,7 +64,7 @@
         </activity>
 
         <activity
-            android:name=".ui.main.MainActivity"
+            android:name=".modules.main.MainActivity"
             android:label="主页面"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
@@ -72,49 +72,49 @@
         </activity>
 
         <activity
-            android:name=".ui.anko.AnkoLayoutActivity"
+            android:name=".modules.anko.AnkoLayoutActivity"
             android:label="AnkoLayout测试类"
             android:screenOrientation="portrait">
 
         </activity>
 
         <activity
-            android:name=".ui.file.FileTestActivity"
+            android:name=".modules.file.FileTestActivity"
             android:label="文件测试类"
             android:screenOrientation="portrait">
 
         </activity>
 
         <activity
-            android:name=".ui.security.EncryptTestActivity"
+            android:name=".modules.security.EncryptTestActivity"
             android:label="加密测试类"
             android:screenOrientation="portrait">
 
         </activity>
 
         <activity
-            android:name=".ui.bitmap.BitmapTestActivity"
+            android:name=".modules.bitmap.BitmapTestActivity"
             android:label="Bitmap图片测试类"
             android:screenOrientation="portrait">
 
         </activity>
 
         <activity
-            android:name=".ui.image.GlideActivity"
+            android:name=".modules.image.GlideActivity"
             android:label="Glide测试"
             android:screenOrientation="portrait">
 
         </activity>
 
         <activity
-            android:name=".ui.notification.NotificationActivity"
+            android:name=".modules.notification.NotificationActivity"
             android:label="通知测试类"
             android:screenOrientation="portrait">
 
         </activity>
 
         <activity
-            android:name=".ui.toast.ToastTestActivity"
+            android:name=".modules.toast.ToastTestActivity"
             android:label="Toast测试类"
             android:screenOrientation="portrait">
 
@@ -122,14 +122,14 @@
 
 
         <activity
-            android:name=".ui.reflect.ReflectActivity"
+            android:name=".modules.reflect.ReflectActivity"
             android:label="反射测试类"
             android:screenOrientation="portrait">
 
         </activity>
 
         <activity
-            android:name=".ui.color.ColorAlphaTestActivity"
+            android:name=".modules.color.ColorAlphaTestActivity"
             android:label="颜色透明度测试"
             android:screenOrientation="portrait">
 

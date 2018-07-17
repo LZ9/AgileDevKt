@@ -1,4 +1,4 @@
-package com.lodz.android.agiledevkt.ui.image
+package com.lodz.android.agiledevkt.modules.image
 
 import android.animation.ObjectAnimator
 import android.app.Notification
@@ -28,7 +28,7 @@ import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
 import com.bumptech.glide.request.transition.ViewPropertyTransition
 import com.lodz.android.agiledevkt.R
-import com.lodz.android.agiledevkt.ui.main.MainActivity
+import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.agiledevkt.utils.file.FileManager
 import com.lodz.android.componentkt.base.activity.BaseActivity
 import com.lodz.android.corekt.log.PrintLog

@@ -1,4 +1,4 @@
-package com.lodz.android.agiledevkt.ui.bitmap
+package com.lodz.android.agiledevkt.modules.bitmap
 
 import android.content.Context
 import android.content.Intent
@@ -12,7 +12,7 @@ import android.widget.SeekBar
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.lodz.android.agiledevkt.R
-import com.lodz.android.agiledevkt.ui.main.MainActivity
+import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.componentkt.base.activity.BaseActivity
 import com.lodz.android.componentkt.rx.subscribe.observer.BaseObserver
 import com.lodz.android.componentkt.rx.utils.RxUtils

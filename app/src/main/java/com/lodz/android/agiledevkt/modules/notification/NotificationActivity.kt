@@ -1,4 +1,4 @@
-package com.lodz.android.agiledevkt.ui.notification
+package com.lodz.android.agiledevkt.modules.notification
 
 import android.app.*
 import android.content.Context
@@ -13,7 +13,7 @@ import android.widget.RemoteViews
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.lodz.android.agiledevkt.R
-import com.lodz.android.agiledevkt.ui.main.MainActivity
+import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.componentkt.base.activity.BaseActivity
 import com.lodz.android.componentkt.rx.subscribe.observer.BaseObserver
 import com.lodz.android.corekt.utils.NotificationUtils

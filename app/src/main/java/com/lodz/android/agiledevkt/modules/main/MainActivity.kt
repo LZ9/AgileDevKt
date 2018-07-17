@@ -1,4 +1,4 @@
-package com.lodz.android.agiledevkt.ui.main
+package com.lodz.android.agiledevkt.modules.main
 
 import android.content.Context
 import android.content.Intent
@@ -10,15 +10,15 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import com.lodz.android.agiledevkt.App
 import com.lodz.android.agiledevkt.R
-import com.lodz.android.agiledevkt.ui.anko.AnkoLayoutActivity
-import com.lodz.android.agiledevkt.ui.bitmap.BitmapTestActivity
-import com.lodz.android.agiledevkt.ui.color.ColorAlphaTestActivity
-import com.lodz.android.agiledevkt.ui.file.FileTestActivity
-import com.lodz.android.agiledevkt.ui.image.GlideActivity
-import com.lodz.android.agiledevkt.ui.notification.NotificationActivity
-import com.lodz.android.agiledevkt.ui.reflect.ReflectActivity
-import com.lodz.android.agiledevkt.ui.security.EncryptTestActivity
-import com.lodz.android.agiledevkt.ui.toast.ToastTestActivity
+import com.lodz.android.agiledevkt.modules.anko.AnkoLayoutActivity
+import com.lodz.android.agiledevkt.modules.bitmap.BitmapTestActivity
+import com.lodz.android.agiledevkt.modules.color.ColorAlphaTestActivity
+import com.lodz.android.agiledevkt.modules.file.FileTestActivity
+import com.lodz.android.agiledevkt.modules.image.GlideActivity
+import com.lodz.android.agiledevkt.modules.notification.NotificationActivity
+import com.lodz.android.agiledevkt.modules.reflect.ReflectActivity
+import com.lodz.android.agiledevkt.modules.security.EncryptTestActivity
+import com.lodz.android.agiledevkt.modules.toast.ToastTestActivity
 import com.lodz.android.componentkt.base.activity.BaseActivity
 import com.lodz.android.componentkt.widget.base.TitleBarLayout
 import com.lodz.android.corekt.anko.dp2px

@@ -1,4 +1,4 @@
-package com.lodz.android.agiledevkt.ui.anko
+package com.lodz.android.agiledevkt.modules.anko
 
 import android.content.Context
 import android.content.Intent

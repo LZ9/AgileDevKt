@@ -1,11 +1,11 @@
-package com.lodz.android.agiledevkt.ui.splash
+package com.lodz.android.agiledevkt.modules.splash
 
 import android.Manifest
 import android.os.Build
 import android.os.Bundle
 import butterknife.ButterKnife
 import com.lodz.android.agiledevkt.R
-import com.lodz.android.agiledevkt.ui.main.MainActivity
+import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.agiledevkt.utils.file.FileManager
 import com.lodz.android.componentkt.base.activity.AbsActivity
 import com.lodz.android.corekt.anko.goAppDetailSetting
