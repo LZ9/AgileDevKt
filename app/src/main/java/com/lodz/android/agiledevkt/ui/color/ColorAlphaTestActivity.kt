@@ -14,14 +14,14 @@ import com.lodz.android.componentkt.base.activity.BaseActivity
 import com.lodz.android.corekt.utils.ColorUtils
 
 /**
- * 颜色测试
+ * 颜色透明度测试
  * Created by zhouL on 2018/7/16.
  */
-class ColorTestActivity : BaseActivity() {
+class ColorAlphaTestActivity : BaseActivity() {
 
     companion object {
         fun start(context: Context){
-            val intent = Intent(context, ColorTestActivity::class.java)
+            val intent = Intent(context, ColorAlphaTestActivity::class.java)
             context.startActivity(intent)
         }
     }
@@ -35,7 +35,6 @@ class ColorTestActivity : BaseActivity() {
     /** 封面颜色控件 */
     @BindView(R.id.cover_view)
     lateinit var mCoverView: View
-
 
     override fun getLayoutId() = R.layout.activity_color_test
 

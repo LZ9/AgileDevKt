@@ -129,8 +129,8 @@
         </activity>
 
         <activity
-            android:name=".ui.color.ColorTestActivity"
-            android:label="颜色测试"
+            android:name=".ui.color.ColorAlphaTestActivity"
+            android:label="颜色透明度测试"
             android:screenOrientation="portrait">
 
         </activity>
