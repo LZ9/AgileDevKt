@@ -107,7 +107,20 @@
     <string name="thread_pool_close">关闭线程池</string>
     <string name="thread_pool_clear">清空信息</string>
 
-
-
+    <!-- 身份证测试类 -->
+    <string name="idcard_input_title">身份证号：</string>
+    <string name="idcard_input_hint">请输入身份证号</string>
+    <string name="idcard_check">校验</string>
+    <string name="idcard_empty_tips">请输入身份证号</string>
+    <string name="idcard_length_error">请输入18位身份证号</string>
+    <string name="idcard_illegal">您输入的不是身份证号</string>
+    <string name="idcard_check_success">身份证号校验成功</string>
+    <string name="idcard_province">省份：</string>
+    <string name="idcard_sex">性别：</string>
+    <string name="idcard_birth">出生年月日：</string>
+    <string name="idcard_year">年：</string>
+    <string name="idcard_month">月：</string>
+    <string name="idcard_day">日：</string>
+    <string name="idcard_age">年龄：</string>
 
 </resources>

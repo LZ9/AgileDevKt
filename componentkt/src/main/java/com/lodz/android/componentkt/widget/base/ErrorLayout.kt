@@ -47,16 +47,16 @@ class ErrorLayout : LinearLayout {
     }
 
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
-        initialization(null)
+        initialization(attrs)
     }
 
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        initialization(null)
+        initialization(attrs)
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
-        initialization(null)
+        initialization(attrs)
     }
 
     fun initialization(attrs: AttributeSet?) {
@@ -172,10 +172,8 @@ class ErrorLayout : LinearLayout {
     }
 
     /** 设置文字颜色[colorStateList] */
-    fun setTipsTextColor(colorStateList: ColorStateList?) {
-        if (colorStateList != null) {
-            mErrorTipsTv.setTextColor(colorStateList)
-        }
+    fun setTipsTextColor(colorStateList: ColorStateList) {
+        mErrorTipsTv.setTextColor(colorStateList)
     }
 
     /** 设置文字大小[sp] */

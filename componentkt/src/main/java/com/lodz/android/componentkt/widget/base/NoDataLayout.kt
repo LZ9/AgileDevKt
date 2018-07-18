@@ -173,10 +173,8 @@ class NoDataLayout : LinearLayout {
     }
 
     /** 设置文字颜色[colorStateList] */
-    fun setTipsTextColor(colorStateList: ColorStateList?) {
-        if (colorStateList != null) {
-            mNoDataTv.setTextColor(colorStateList)
-        }
+    fun setTipsTextColor(colorStateList: ColorStateList) {
+        mNoDataTv.setTextColor(colorStateList)
     }
 
     /** 设置文字大小[sp] */

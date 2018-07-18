@@ -173,10 +173,8 @@ class LoadingLayout : LinearLayout {
     }
 
     /** 设置文字颜色[colorStateList] */
-    fun setTipsTextColor(colorStateList: ColorStateList?) {
-        if (colorStateList != null) {
-            mLoadingTipsTv.setTextColor(colorStateList)
-        }
+    fun setTipsTextColor(colorStateList: ColorStateList) {
+        mLoadingTipsTv.setTextColor(colorStateList)
     }
 
     /** 设置文字大小[sp] */

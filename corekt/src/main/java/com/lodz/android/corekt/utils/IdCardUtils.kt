@@ -71,7 +71,7 @@ object IdCardUtils {
         val intArray = IntArray(array.size)
         try {
             for ((i, c) in array.withIndex()) {
-                intArray[i] = c.toInt()
+                intArray[i] = c.toString().toInt()
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -86,7 +86,7 @@ object IdCardUtils {
             for (i in array.indices) {
                 for (j in POWER.indices) {
                     if (i == j) {
-                        sum += sum + array[i] * POWER[j]
+                        sum += array[i] * POWER[j]
                     }
                 }
             }
@@ -131,8 +131,8 @@ object IdCardUtils {
         return ""
     }
 
-    /** 根据日期格式[dateFormat]从身份证[idCard]获取出生年月 */
-    fun getBirth(idCard: String, dateFormat: String): String {
+    /** 根据日期格式[dateFormat]（默认格式yyyyMMdd）从身份证[idCard]获取出生年月 */
+    fun getBirth(idCard: String, dateFormat: String = DateUtils.TYPE_5): String {
         if (!validateIdCard(idCard)) {
             return ""
         }
@@ -142,9 +142,6 @@ object IdCardUtils {
         val original = idCard.substring(6, 14)
         return if (DateUtils.TYPE_5.equals(dateFormat, true)) original else DateUtils.changeFormatString(DateUtils.TYPE_5, dateFormat, original)
     }
-
-    /** 从身份证[idCard]获取出生年月（格式yyyyMMdd） */
-    fun getBirth(idCard: String) = getBirth(idCard, DateUtils.TYPE_5)
 
     /** 从身份证[idCard]获取年 */
     fun getYear(idCard: String): String {

@@ -14,6 +14,7 @@ import com.lodz.android.agiledevkt.modules.anko.AnkoLayoutActivity
 import com.lodz.android.agiledevkt.modules.bitmap.BitmapTestActivity
 import com.lodz.android.agiledevkt.modules.color.ColorAlphaTestActivity
 import com.lodz.android.agiledevkt.modules.file.FileTestActivity
+import com.lodz.android.agiledevkt.modules.idcard.IdcardTestActivity
 import com.lodz.android.agiledevkt.modules.image.GlideActivity
 import com.lodz.android.agiledevkt.modules.notification.NotificationActivity
 import com.lodz.android.agiledevkt.modules.reflect.ReflectActivity
@@ -43,7 +44,7 @@ class MainActivity : BaseActivity() {
             "AnkoLayout测试类", "文件测试类", "加密测试类",
             "Bitmap图片测试类", "Glide测试", "通知测试类",
             "Toast测试类", "反射测试类", "颜色透明度测试",
-            "线程池测试类"
+            "线程池测试类", "身份证号码测试类"
     )
 
     /** 功能的activity */
@@ -51,7 +52,7 @@ class MainActivity : BaseActivity() {
             AnkoLayoutActivity::class.java, FileTestActivity::class.java, EncryptTestActivity::class.java,
             BitmapTestActivity::class.java, GlideActivity::class.java, NotificationActivity::class.java,
             ToastTestActivity::class.java, ReflectActivity::class.java, ColorAlphaTestActivity::class.java,
-            ThreadPoolActivity::class.java
+            ThreadPoolActivity::class.java, IdcardTestActivity::class.java
     )
 
     /** 列表 */

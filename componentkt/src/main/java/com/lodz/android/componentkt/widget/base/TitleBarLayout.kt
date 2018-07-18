@@ -242,10 +242,8 @@ open class TitleBarLayout : LinearLayout {
     }
 
     /** 设置返回按钮文字颜色[colorStateList] */
-    fun setBackBtnTextColor(colorStateList: ColorStateList?) {
-        if (colorStateList != null) {
-            mBackBtn.setTextColor(colorStateList)
-        }
+    fun setBackBtnTextColor(colorStateList: ColorStateList) {
+        mBackBtn.setTextColor(colorStateList)
     }
 
     /** 设置返回按钮文字大小[sp] */
@@ -274,10 +272,8 @@ open class TitleBarLayout : LinearLayout {
     }
 
     /** 设置标题文字颜色资源[colorStateList] */
-    fun setTitleTextColor(colorStateList: ColorStateList?) {
-        if (colorStateList != null) {
-            mTitleTv.setTextColor(colorStateList)
-        }
+    fun setTitleTextColor(colorStateList: ColorStateList) {
+        mTitleTv.setTextColor(colorStateList)
     }
 
     /** 设置标题文字大小[sp] */

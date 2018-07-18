@@ -168,7 +168,7 @@ class FileTestActivity : BaseActivity() {
 
         // bitmap转文件
         mSaveBitmapBtn.setOnClickListener {
-            val bitmap = BitmapFactory.decodeResource(resources, R.drawable.componentk_ic_search)
+            val bitmap = BitmapFactory.decodeResource(resources, R.drawable.componentkt_ic_search)
             FileUtils.bitmapToPath(bitmap, SAVE_PATH, "12sdaww","png", 100)
             toastShort("保存完成")
         }
