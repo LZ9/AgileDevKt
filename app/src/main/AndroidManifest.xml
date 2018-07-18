@@ -135,6 +135,13 @@
 
         </activity>
 
+        <activity
+            android:name=".modules.threadpool.ThreadPoolActivity"
+            android:label="线程池测试类"
+            android:screenOrientation="portrait">
+
+        </activity>
+
 
     </application>
 

@@ -21,7 +21,6 @@ class App : BaseApplication() {
         // todo 待完善
         PrintLog.setPrint(BuildConfig.LOG_DEBUG)// 配置日志开关
         NetworkManager.get().init(this)
-        ThreadPoolManager.get().newBuilder().setAwaitTime(30).build()//配置线程池参数
         configBaseLayout()
     }
 

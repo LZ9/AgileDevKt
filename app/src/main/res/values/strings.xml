@@ -102,5 +102,12 @@
     <string name="color_alpha">透明度：</string>
     <string name="color_input_hint">请输入颜色的透明度1~100</string>
 
+    <!-- 线程池测试类 -->
+    <string name="thread_pool_start">开始线程池</string>
+    <string name="thread_pool_close">关闭线程池</string>
+    <string name="thread_pool_clear">清空信息</string>
+
+
+
 
 </resources>
