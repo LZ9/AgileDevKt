@@ -123,4 +123,11 @@
     <string name="idcard_day">日：</string>
     <string name="idcard_age">年龄：</string>
 
+    <!-- 数字格式化测试类 -->
+    <string name="format_num_one">18.49382716</string>
+    <string name="format_num_two">9.51839461</string>
+    <string name="format_num_three">0.45179283</string>
+
+
+
 </resources>

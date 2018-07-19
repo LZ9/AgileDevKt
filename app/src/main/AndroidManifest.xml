@@ -149,6 +149,12 @@
 
         </activity>
 
+        <activity
+            android:name=".modules.format.NumFormatTestActivity"
+            android:label="数字格式化测试类"
+            android:screenOrientation="portrait">
+
+        </activity>
 
 
     </application>

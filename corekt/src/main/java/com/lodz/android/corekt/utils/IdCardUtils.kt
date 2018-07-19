@@ -131,7 +131,7 @@ object IdCardUtils {
         return ""
     }
 
-    /** 根据日期格式[dateFormat]（默认格式yyyyMMdd）从身份证[idCard]获取出生年月 */
+    /** 根据日期格式[dateFormat]从身份证[idCard]获取出生年月（默认格式yyyyMMdd） */
     fun getBirth(idCard: String, dateFormat: String = DateUtils.TYPE_5): String {
         if (!validateIdCard(idCard)) {
             return ""
