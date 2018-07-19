@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Switch
+            android:id="@+id/unable_switch_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:switchPadding="5dp"
+            android:text="@string/selector_unable_switch">
+
+        </Switch>
+
+        <Switch
+            android:id="@+id/select_switch_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:switchPadding="5dp"
+            android:text="@string/selector_select_switch">
+
+        </Switch>
+
+        <Switch
+            android:id="@+id/focused_switch_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:switchPadding="5dp"
+            android:text="@string/selector_focused_switch">
+
+        </Switch>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/pressed_btn"
+            style="?android:attr/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:padding="5dp"
+            android:text="@string/selector_pressed" />
+
+        <Button
+            android:id="@+id/selected_btn"
+            style="?android:attr/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:padding="5dp"
+            android:text="@string/selector_selected" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/unable_btn"
+            style="?android:attr/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:padding="5dp"
+            android:text="@string/selector_unable" />
+
+        <Button
+            android:id="@+id/focused_btn"
+            style="?android:attr/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:padding="5dp"
+            android:text="@string/selector_focused" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/pressed_unable_btn"
+            style="?android:attr/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:padding="5dp"
+            android:text="@string/selector_pressed_unable" />
+
+        <Button
+            android:id="@+id/pressed_selected_btn"
+            style="?android:attr/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:padding="5dp"
+            android:text="@string/selector_pressed_selected" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/pressed_focused_btn"
+            style="?android:attr/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:padding="5dp"
+            android:text="@string/selector_pressed_focused" />
+
+        <Button
+            android:id="@+id/unable_selected_btn"
+            style="?android:attr/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:padding="5dp"
+            android:text="@string/selector_unable_selected" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/unable_focused_btn"
+            style="?android:attr/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:padding="5dp"
+            android:text="@string/selector_unable_focused" />
+
+        <Button
+            android:id="@+id/selected_focused_btn"
+            style="?android:attr/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:padding="5dp"
+            android:text="@string/selector_selected_focused" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/pressed_unable_selected_btn"
+            style="?android:attr/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:padding="5dp"
+            android:text="@string/selector_pressed_unable_selected" />
+
+        <Button
+            android:id="@+id/pressed_unable_focused_btn"
+            style="?android:attr/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:padding="5dp"
+            android:text="@string/selector_pressed_unable_focused" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/unable_selected_focused_btn"
+            style="?android:attr/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:padding="5dp"
+            android:text="@string/selector_unable_selected_focused" />
+
+        <Button
+            android:id="@+id/pressed_selected_focused_btn"
+            style="?android:attr/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:padding="5dp"
+            android:text="@string/selector_pressed_selected_focused" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/pressed_unable_selected_focused_btn"
+        style="?android:attr/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        android:padding="5dp"
+        android:text="@string/selector_pressed_unable_selected_focused" />
+
+</LinearLayout>

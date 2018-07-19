@@ -87,7 +87,7 @@ object FastBlur {
             dv[i] = i / divsum
         }
 
-        val stack = Array(div) { IntArray(3) }//div个长度为3的Int数组的二维数组
+        val stack = Array(div) { IntArray(3) }//div个长度为3的Int数组的二维数组，int[][] stack = new int[div][3];
 
         var stackpointer: Int
         var stackstart: Int

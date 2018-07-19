@@ -156,6 +156,12 @@
 
         </activity>
 
+        <activity
+            android:name=".modules.selector.SelectorTestActivity"
+            android:label="背景选择器测试类"
+            android:screenOrientation="portrait">
+
+        </activity>
 
     </application>
 

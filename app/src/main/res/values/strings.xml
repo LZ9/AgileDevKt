@@ -128,6 +128,33 @@
     <string name="format_num_two">9.51839461</string>
     <string name="format_num_three">0.45179283</string>
 
+    <!-- 背景选择器测试类 -->
+    <string name="selector_unable_switch">禁用开关</string>
+    <string name="selector_select_switch">选中开关</string>
+    <string name="selector_focused_switch">焦点开关</string>
+    <string name="selector_pressed">正常+按压</string>
+    <string name="selector_selected">正常+选中</string>
+    <string name="selector_unable">正常+不可用</string>
+    <string name="selector_focused">正常+焦点</string>
+    <string name="selector_pressed_unable">正常+按压+不可用</string>
+    <string name="selector_pressed_selected">正常+按压+选中</string>
+    <string name="selector_pressed_focused">正常+按压+焦点</string>
+    <string name="selector_unable_selected">正常+不可用+选中</string>
+    <string name="selector_unable_focused">正常+不可用+焦点</string>
+    <string name="selector_selected_focused">正常+选中+焦点</string>
+    <string name="selector_pressed_unable_selected">正常+按压+不可用+选中</string>
+    <string name="selector_pressed_unable_focused">正常+按压+不可用+焦点</string>
+    <string name="selector_unable_selected_focused">正常+不可用+选中+焦点</string>
+    <string name="selector_pressed_selected_focused">正常+按压+选中+焦点</string>
+    <string name="selector_pressed_unable_selected_focused">正常+按压+不可用+选中+焦点</string>
+
+
+
+
+
+
+
+
 
 
 </resources>
