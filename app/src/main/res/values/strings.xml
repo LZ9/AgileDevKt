@@ -148,9 +148,11 @@
     <string name="selector_pressed_selected_focused">正常+按压+选中+焦点</string>
     <string name="selector_pressed_unable_selected_focused">正常+按压+不可用+选中+焦点</string>
 
-
-
-
+    <!-- 设置测试类 -->
+    <string name="setting_request_permission_tips">请您打开系统设置权限</string>
+    <string name="setting_brightness_mode">设置亮度模式：</string>
+    <string name="setting_brightness_mode_automatic">自动</string>
+    <string name="setting_brightness_mode_manual">手动</string>
 
 
 

@@ -21,6 +21,7 @@ import com.lodz.android.agiledevkt.modules.notification.NotificationActivity
 import com.lodz.android.agiledevkt.modules.reflect.ReflectActivity
 import com.lodz.android.agiledevkt.modules.security.EncryptTestActivity
 import com.lodz.android.agiledevkt.modules.selector.SelectorTestActivity
+import com.lodz.android.agiledevkt.modules.setting.SettingTestActivity
 import com.lodz.android.agiledevkt.modules.threadpool.ThreadPoolActivity
 import com.lodz.android.agiledevkt.modules.toast.ToastTestActivity
 import com.lodz.android.componentkt.base.activity.BaseActivity
@@ -47,7 +48,7 @@ class MainActivity : BaseActivity() {
             "Bitmap图片测试类", "Glide测试", "通知测试类",
             "Toast测试类", "反射测试类", "颜色透明度测试",
             "线程池测试类", "身份证号码测试类", "数字格式化测试类",
-            "背景选择器测试类"
+            "背景选择器测试类", "设置测试类"
     )
 
     /** 功能的activity */
@@ -56,7 +57,7 @@ class MainActivity : BaseActivity() {
             BitmapTestActivity::class.java, GlideActivity::class.java, NotificationActivity::class.java,
             ToastTestActivity::class.java, ReflectActivity::class.java, ColorAlphaTestActivity::class.java,
             ThreadPoolActivity::class.java, IdcardTestActivity::class.java, NumFormatTestActivity::class.java,
-            SelectorTestActivity::class.java
+            SelectorTestActivity::class.java, SettingTestActivity::class.java
     )
 
     /** 列表 */

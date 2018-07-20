@@ -9,6 +9,9 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!-- 震动 -->
     <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- 写入设置 -->
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
 
     <!-- ********************* 需要申请（只要同组有一个授权整组的权限都可以使用） ********************* -->
     <!-- 相机 -->
@@ -163,6 +166,12 @@
 
         </activity>
 
+        <activity
+            android:name=".modules.setting.SettingTestActivity"
+            android:label="设置测试类"
+            android:screenOrientation="portrait">
+
+        </activity>
     </application>
 
 </manifest>
