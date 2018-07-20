@@ -58,15 +58,27 @@ fun Context.isScreenBrightnessModeAutomatic() = getScreenBrightnessModeState() =
 /** 设置系统屏幕亮度模式[mode]（手动：Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL ； 自动：Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC） */
 fun Context.setScreenBrightnessMode(@SettingUtils.ScreenBrightnessMode mode: Int) = Settings.System.putInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS_MODE, mode)
 
-/** 获取系统亮度值，范围0-255（默认值255） */
+/** 获取手动模式下的系统亮度值，范围0-255（默认值255） */
 fun Context.getScreenBrightness(def: Int = 255) = Settings.System.getInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS, def)
 
-/** 设置系统亮度[brightness]（0-255）此方法只是更改了系统的亮度属性，并不能看到效果。要想看到效果可以使用setWindowBrightness()方法设置窗口的亮度 */
+/** 设置手动模式下的系统亮度[brightness]（0-255）亮度显示的优先级：窗口>系统 */
 fun Context.setScreenBrightness(@IntRange(from = 1, to = 255) brightness: Int) {
     Settings.System.putInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS, brightness)
 }
 
-/** 设置给定Activity的窗口的亮度[brightness]（0-255）可以看到效果，但系统的亮度属性不会改变 */
+/** 获取给定Activity的窗口的亮度（0-255），如果当前未设置则返回系统的亮度值 */
+fun Activity.getWindowBrightness(): Int {
+    if (window == null) {
+        return 255
+    }
+    val localLayoutParams = window.attributes
+    if (localLayoutParams.screenBrightness < 0){// 小于0表示使用默认系统亮度
+        return getScreenBrightness()
+    }
+    return (localLayoutParams.screenBrightness * 255).toInt()
+}
+
+/** 设置给定Activity的窗口的亮度[brightness]（0-255）可以看到效果，但系统的亮度属性不会改变，退出Activity后亮度恢复系统亮度值 */
 fun Activity.setWindowBrightness(@IntRange(from = 1, to = 255) brightness: Int) {
     if (window == null) {
         return

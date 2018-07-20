@@ -153,9 +153,10 @@
     <string name="setting_brightness_mode">设置亮度模式：</string>
     <string name="setting_brightness_mode_automatic">自动</string>
     <string name="setting_brightness_mode_manual">手动</string>
-
-
-
+    <string name="setting_system_brightness_value">系统亮度值：</string>
+    <string name="setting_set_system_brightness_value">设置系统亮度值：</string>
+    <string name="setting_window_brightness_value">窗口亮度值：</string>
+    <string name="setting_set_window_brightness_value">设置窗口亮度值：</string>
 
 
 
