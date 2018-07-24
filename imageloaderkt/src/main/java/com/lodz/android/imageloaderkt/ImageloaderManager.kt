@@ -34,27 +34,20 @@ class ImageloaderManager private constructor() {
         return mBuilder!!
     }
 
-    /** 清除内存缓存 */
+    /** 清除内存缓存（必须在主线程） */
     fun clearMemoryCaches(context: Context) {
         GlideApp.get(context).clearMemory()
     }
 
-    /** 清除内存缓存（包括手动GC内存） */
+    /** 清除内存缓存（包括手动GC内存，必须在主线程） */
     fun clearMemoryCachesWithGC(context: Context) {
         GlideApp.get(context).clearMemory()
         System.gc()
     }
 
-    /** 清除磁盘缓存 */
+    /** 清除磁盘缓存（必须异步线程） */
     fun clearDiskCaches(context: Context) {
         GlideApp.get(context).clearDiskCache()
-    }
-
-    /** 清除所有缓存（内存+磁盘） */
-    fun clearCaches(context: Context) {
-        GlideApp.get(context).clearMemory()
-        GlideApp.get(context).clearDiskCache()
-        System.gc()
     }
 
     /** 暂停加载 */
