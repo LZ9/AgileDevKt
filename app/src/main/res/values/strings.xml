@@ -162,7 +162,8 @@
     <string name="setting_screen_dormant_time">屏幕休眠时间：</string>
     <string name="setting_screen_dormant_time_hint">请输入屏幕休眠时间（15–600秒）</string>
     <string name="setting_screen_dormant_time_error">请输入正确的屏幕休眠时间</string>
-
+    <string name="setting_ring_volume">铃声音量：</string>
+    <string name="setting_set_ring_volume_value">设置铃声音量</string>
 
 
 </resources>

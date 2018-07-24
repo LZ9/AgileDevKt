@@ -64,14 +64,19 @@ class SettingTestActivity : BaseActivity() {
     @BindView(R.id.screen_dormant_time_setting_btn)
     lateinit var mScreenDdormantTimeSettingBtn: Button
 
-
-
-
+    /** 铃声音量值 */
+    @BindView(R.id.ring_volume_tv)
+    lateinit var mRingVolumeTv: TextView
+    /** 铃声音量值拖拽条 */
+    @BindView(R.id.ring_volume_sb)
+    lateinit var mRingVolumeSeekBar: SeekBar
 
     /** 亮度监听器 */
     private val mBrightnessObserver = BrightnessObserver()
     /** 屏幕休眠时间变化监听器 */
     private val mScreenDdormantTimeObserver = ScreenDdormantTimeObserver()
+    /** 铃声音量变化监听器 */
+    private val mRingVolumeObserver = RingVolumeObserver()
 
     override fun getLayoutId() = R.layout.activity_setting_test
 
@@ -133,18 +138,36 @@ class SettingTestActivity : BaseActivity() {
         }
 
         mScreenDdormantTimeSettingBtn.setOnClickListener {
-            if (mScreenDdormantTimeEdit.text.isEmpty()){
+            if (mScreenDdormantTimeEdit.text.isEmpty()) {
                 toastShort(R.string.setting_screen_dormant_time_error)
                 return@setOnClickListener
             }
             val second = mScreenDdormantTimeEdit.text.toString().toInt()
-            if (second !in 15..600){
+            if (second !in 15..600) {
                 toastShort(R.string.setting_screen_dormant_time_error)
                 return@setOnClickListener
             }
             setScreenDormantTime(second * 1000)
             showScreenDdormantTime()
         }
+
+        // 铃声音量值拖拽条
+        mRingVolumeSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                mRingVolumeSeekBar.progress = progress
+                if (fromUser) {
+                    mRingVolumeTv.text = progress.toString()
+                    setRingVolume(progress)
+                    return
+                }
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+            }
+        })
     }
 
     /** 亮度变化监听器 */
@@ -171,9 +194,26 @@ class SettingTestActivity : BaseActivity() {
             super.onChange(selfChange, uri)
             Observable.just(getScreenDormantTime())
                     .compose(RxUtils.ioToMainObservable())
-                    .subscribe(object :BaseObserver<Int>(){
+                    .subscribe(object : BaseObserver<Int>() {
                         override fun onBaseNext(any: Int) {
                             showScreenDdormantTime()
+                        }
+
+                        override fun onBaseError(e: Throwable) {
+                        }
+                    })
+        }
+    }
+
+    /** 铃声音量变化监听器 */
+    inner class RingVolumeObserver : ContentObserver(null) {
+        override fun onChange(selfChange: Boolean, uri: Uri?) {
+            super.onChange(selfChange, uri)
+            Observable.just(getScreenDormantTime())
+                    .compose(RxUtils.ioToMainObservable())
+                    .subscribe(object : BaseObserver<Int>() {
+                        override fun onBaseNext(any: Int) {
+                            showRingVolume()
                         }
 
                         override fun onBaseError(e: Throwable) {
@@ -220,8 +260,13 @@ class SettingTestActivity : BaseActivity() {
     private fun initLogic() {
         contentResolver.registerContentObserver(Settings.System.getUriFor(Settings.System.SCREEN_BRIGHTNESS), true, mBrightnessObserver)
         mBrightnessRadioGroup.check(if (isScreenBrightnessModeAutomatic()) R.id.automatic_rb else R.id.manual_rb)// 根据当前亮度模式设置按钮选中
+
         contentResolver.registerContentObserver(Settings.System.getUriFor(Settings.System.SCREEN_OFF_TIMEOUT), true, mScreenDdormantTimeObserver)
         showScreenDdormantTime()
+
+        contentResolver.registerContentObserver(Settings.System.CONTENT_URI, true, mRingVolumeObserver)
+        initRingVolume()
+
         showStatusCompleted()
     }
 
@@ -247,14 +292,28 @@ class SettingTestActivity : BaseActivity() {
         mWindowBrightnessSeekBar.progress = windowValue
     }
 
-    private fun showScreenDdormantTime(){
+    private fun showScreenDdormantTime() {
         val time = getScreenDormantTime() / 1000.0f
         mScreenDdormantTimeTv.text = (time.toString() + "秒")
+    }
+
+    /** 初始化铃音 */
+    private fun initRingVolume() {
+        mRingVolumeSeekBar.max = getMaxRingVolume()
+        showRingVolume()
+    }
+
+    /** 显示铃音 */
+    private fun showRingVolume() {
+        val volume = getRingVolume()
+        mRingVolumeTv.text = volume.toString()
+        mRingVolumeSeekBar.progress = volume
     }
 
     override fun finish() {
         contentResolver.unregisterContentObserver(mBrightnessObserver)
         contentResolver.unregisterContentObserver(mScreenDdormantTimeObserver)
+        contentResolver.unregisterContentObserver(mRingVolumeObserver)
         super.finish()
     }
 }

@@ -103,24 +103,35 @@ fun Context.setScreenDormantTime(millis: Int) {
 }
 
 /** 获取飞行模式的状态 1：打开；0：关闭 */
+@RequiresPermission(Manifest.permission.WRITE_SECURE_SETTINGS)
 fun Context.getAirplaneModeState(def: Int = 0) = Settings.Global.getInt(contentResolver, Settings.Global.AIRPLANE_MODE_ON, def)
 
 /** 判断飞行模式是否打开 */
+@RequiresPermission(Manifest.permission.WRITE_SECURE_SETTINGS)
 fun Context.isAirplaneModeOpen() = getAirplaneModeState() == 1
 
 /** 设置飞行模式的状态是否启用[enable] */
+@RequiresPermission(Manifest.permission.WRITE_SECURE_SETTINGS)
 fun Context.setAirplaneMode(enable: Boolean) {
-    val flag = if (enable) 1 else 0
-    Settings.Global.putInt(contentResolver, Settings.Global.AIRPLANE_MODE_ON, flag)
-    // 发送飞行模式已经改变广播
-    sendBroadcast(Intent(Intent.ACTION_AIRPLANE_MODE_CHANGED))
+    Settings.Global.putInt(contentResolver, Settings.Global.AIRPLANE_MODE_ON, if (enable) 1 else 0)
+    sendBroadcast(Intent(Intent.ACTION_AIRPLANE_MODE_CHANGED))// 发送飞行模式已经改变广播
 }
 
-/** 获取铃声音量（取值范围为0-7） */
+/** 获取铃声音量（一般取值范围为0-7） */
 fun Context.getRingVolume() = (getSystemService(Context.AUDIO_SERVICE) as AudioManager).getStreamVolume(AudioManager.STREAM_RING)
 
-/** 设置铃声音量[vloume] */
-fun Context.setRingVolume(@IntRange(from = 0, to = 7) vloume: Int) {
+/** 获取铃声音量最大值（一般是7） */
+fun Context.getMaxRingVolume() = (getSystemService(Context.AUDIO_SERVICE) as AudioManager).getStreamMaxVolume(AudioManager.STREAM_RING)
+
+/** 设置铃声音量[volume] */
+fun Context.setRingVolume(volume: Int) {
+    var fixVolume = volume
+    if (fixVolume < 0){
+        fixVolume = 0
+    }
+    if (fixVolume > getMaxRingVolume()){
+        fixVolume = getMaxRingVolume()
+    }
     val audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
-    audioManager.setStreamVolume(AudioManager.STREAM_RING, vloume, AudioManager.FLAG_PLAY_SOUND)
+    audioManager.setStreamVolume(AudioManager.STREAM_RING, fixVolume, AudioManager.FLAG_PLAY_SOUND)
 }
