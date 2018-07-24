@@ -8,9 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.support.annotation.RequiresApi
-import android.widget.RadioGroup
-import android.widget.SeekBar
-import android.widget.TextView
+import android.widget.*
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.lodz.android.agiledevkt.R
@@ -53,8 +51,27 @@ class SettingTestActivity : BaseActivity() {
     @BindView(R.id.window_brightness_sb)
     lateinit var mWindowBrightnessSeekBar: SeekBar
 
+    /** 屏幕休眠时间 */
+    @BindView(R.id.screen_dormant_time_tv)
+    lateinit var mScreenDdormantTimeTv: TextView
+    /** 刷新屏幕休眠时间 */
+    @BindView(R.id.refresh_screen_dormant_time_btn)
+    lateinit var mRefreshScreenDdormantTimeBtn: Button
+    /** 屏幕休眠时间输入框 */
+    @BindView(R.id.screen_dormant_time_edit)
+    lateinit var mScreenDdormantTimeEdit: EditText
+    /** 屏幕休眠时间设置按钮 */
+    @BindView(R.id.screen_dormant_time_setting_btn)
+    lateinit var mScreenDdormantTimeSettingBtn: Button
+
+
+
+
+
     /** 亮度监听器 */
     private val mBrightnessObserver = BrightnessObserver()
+    /** 屏幕休眠时间变化监听器 */
+    private val mScreenDdormantTimeObserver = ScreenDdormantTimeObserver()
 
     override fun getLayoutId() = R.layout.activity_setting_test
 
@@ -109,6 +126,25 @@ class SettingTestActivity : BaseActivity() {
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
+
+        // 刷新屏幕休眠时间
+        mRefreshScreenDdormantTimeBtn.setOnClickListener {
+            showScreenDdormantTime()
+        }
+
+        mScreenDdormantTimeSettingBtn.setOnClickListener {
+            if (mScreenDdormantTimeEdit.text.isEmpty()){
+                toastShort(R.string.setting_screen_dormant_time_error)
+                return@setOnClickListener
+            }
+            val second = mScreenDdormantTimeEdit.text.toString().toInt()
+            if (second !in 15..600){
+                toastShort(R.string.setting_screen_dormant_time_error)
+                return@setOnClickListener
+            }
+            setScreenDormantTime(second * 1000)
+            showScreenDdormantTime()
+        }
     }
 
     /** 亮度变化监听器 */
@@ -121,6 +157,23 @@ class SettingTestActivity : BaseActivity() {
                         override fun onBaseNext(any: Int) {
                             mSystemBrightnessTv.setText(any.toString())
                             mSystemBrightnessSeekBar.progress = any
+                        }
+
+                        override fun onBaseError(e: Throwable) {
+                        }
+                    })
+        }
+    }
+
+    /** 屏幕休眠时间变化监听器 */
+    inner class ScreenDdormantTimeObserver : ContentObserver(null) {
+        override fun onChange(selfChange: Boolean, uri: Uri?) {
+            super.onChange(selfChange, uri)
+            Observable.just(getScreenDormantTime())
+                    .compose(RxUtils.ioToMainObservable())
+                    .subscribe(object :BaseObserver<Int>(){
+                        override fun onBaseNext(any: Int) {
+                            showScreenDdormantTime()
                         }
 
                         override fun onBaseError(e: Throwable) {
@@ -167,16 +220,19 @@ class SettingTestActivity : BaseActivity() {
     private fun initLogic() {
         contentResolver.registerContentObserver(Settings.System.getUriFor(Settings.System.SCREEN_BRIGHTNESS), true, mBrightnessObserver)
         mBrightnessRadioGroup.check(if (isScreenBrightnessModeAutomatic()) R.id.automatic_rb else R.id.manual_rb)// 根据当前亮度模式设置按钮选中
+        contentResolver.registerContentObserver(Settings.System.getUriFor(Settings.System.SCREEN_OFF_TIMEOUT), true, mScreenDdormantTimeObserver)
+        showScreenDdormantTime()
         showStatusCompleted()
     }
 
-    /** 设置自动模式 */
+    /** 设置亮度自动模式 */
     private fun setAutomaticMode() {
         setScreenBrightnessMode(Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC)
         mSystemBrightnessSeekBar.isEnabled = false
         mWindowBrightnessSeekBar.isEnabled = false
     }
 
+    /** 设置亮度手动模式 */
     private fun setManualMode() {
         setScreenBrightnessMode(Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL)
 
@@ -191,8 +247,14 @@ class SettingTestActivity : BaseActivity() {
         mWindowBrightnessSeekBar.progress = windowValue
     }
 
+    private fun showScreenDdormantTime(){
+        val time = getScreenDormantTime() / 1000.0f
+        mScreenDdormantTimeTv.text = (time.toString() + "秒")
+    }
+
     override fun finish() {
         contentResolver.unregisterContentObserver(mBrightnessObserver)
+        contentResolver.unregisterContentObserver(mScreenDdormantTimeObserver)
         super.finish()
     }
 }

@@ -1,133 +1,198 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="8dp">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:padding="8dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/setting_brightness_mode"
-            android:textColor="@color/color_00a0e9"
-            android:textSize="16sp" />
 
-        <RadioGroup
-            android:id="@+id/brightness_rg"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <RadioButton
-                android:id="@+id/automatic_rb"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/setting_brightness_mode_automatic" />
+                android:text="@string/setting_brightness_mode"
+                android:textColor="@color/color_00a0e9"
+                android:textSize="16sp" />
 
-            <RadioButton
-                android:id="@+id/manual_rb"
+            <RadioGroup
+                android:id="@+id/brightness_rg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/automatic_rb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/setting_brightness_mode_automatic" />
+
+                <RadioButton
+                    android:id="@+id/manual_rb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/setting_brightness_mode_manual" />
+            </RadioGroup>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:text="@string/setting_brightness_mode_manual" />
-        </RadioGroup>
-    </LinearLayout>
+                android:text="@string/setting_system_brightness_value"
+                android:textColor="@color/color_00a0e9"
+                android:textSize="16sp" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+            <TextView
+                android:id="@+id/system_brightness_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_5a5a5a"
+                android:textSize="16sp"
+                tools:text="12" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/setting_system_brightness_value"
-            android:textColor="@color/color_00a0e9"
-            android:textSize="16sp" />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/system_brightness_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/color_5a5a5a"
-            android:textSize="16sp"
-            tools:text="12" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/setting_set_system_brightness_value"
-            android:textColor="@color/color_00a0e9"
-            android:textSize="16sp" />
-
-        <SeekBar
-            android:id="@+id/system_brightness_sb"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
-            android:layout_marginStart="5dp"
-            android:max="255"
-            tools:progress="50" />
-    </LinearLayout>
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/setting_set_system_brightness_value"
+                android:textColor="@color/color_00a0e9"
+                android:textSize="16sp" />
+
+            <SeekBar
+                android:id="@+id/system_brightness_sb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:max="255"
+                tools:progress="50" />
+        </LinearLayout>
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/setting_window_brightness_value"
-            android:textColor="@color/color_ea5e5e"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/window_brightness_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/color_5a5a5a"
-            android:textSize="16sp"
-            tools:text="12" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/setting_set_window_brightness_value"
-            android:textColor="@color/color_ea5e5e"
-            android:textSize="16sp" />
-
-        <SeekBar
-            android:id="@+id/window_brightness_sb"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
-            android:layout_marginStart="5dp"
-            android:max="255"
-            tools:progress="50" />
-    </LinearLayout>
+            android:orientation="horizontal">
 
-</LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/setting_window_brightness_value"
+                android:textColor="@color/color_ea5e5e"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/window_brightness_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_5a5a5a"
+                android:textSize="16sp"
+                tools:text="12" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/setting_set_window_brightness_value"
+                android:textColor="@color/color_ea5e5e"
+                android:textSize="16sp" />
+
+            <SeekBar
+                android:id="@+id/window_brightness_sb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:max="255"
+                tools:progress="50" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/orange" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/setting_screen_dormant_time"
+                android:textColor="@color/color_00a0e9"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/screen_dormant_time_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/color_5a5a5a"
+                android:textSize="16sp"
+                tools:text="12" />
+
+            <Button
+                android:id="@+id/refresh_screen_dormant_time_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/setting_refresh" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/screen_dormant_time_edit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/setting_screen_dormant_time_hint"
+                android:inputType="number"
+                android:textSize="15sp" />
+
+            <Button
+                android:id="@+id/screen_dormant_time_setting_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/setting_confirm" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

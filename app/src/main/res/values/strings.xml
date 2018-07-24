@@ -149,6 +149,8 @@
     <string name="selector_pressed_unable_selected_focused">正常+按压+不可用+选中+焦点</string>
 
     <!-- 设置测试类 -->
+    <string name="setting_refresh">刷新</string>
+    <string name="setting_confirm">设置</string>
     <string name="setting_request_permission_tips">请您打开系统设置权限</string>
     <string name="setting_brightness_mode">设置亮度模式：</string>
     <string name="setting_brightness_mode_automatic">自动</string>
@@ -157,6 +159,9 @@
     <string name="setting_set_system_brightness_value">设置系统亮度值：</string>
     <string name="setting_window_brightness_value">窗口亮度值：</string>
     <string name="setting_set_window_brightness_value">设置窗口亮度值：</string>
+    <string name="setting_screen_dormant_time">屏幕休眠时间：</string>
+    <string name="setting_screen_dormant_time_hint">请输入屏幕休眠时间（15–600秒）</string>
+    <string name="setting_screen_dormant_time_error">请输入正确的屏幕休眠时间</string>
 
 
 
