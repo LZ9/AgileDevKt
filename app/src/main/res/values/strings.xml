@@ -165,5 +165,11 @@
     <string name="setting_ring_volume">铃声音量：</string>
     <string name="setting_set_ring_volume_value">设置铃声音量</string>
 
+    <!-- 字符测试类 -->
+    <string name="str_original">原始字符：</string>
+    <string name="str_encode">UTF-8编码：</string>
+    <string name="str_decode">UTF-8解码：</string>
+    <string name="str_separator_to_list">分隔符字符串转数组：</string>
+    <string name="str_list_to_separator">数组转分隔符字符串：</string>
 
 </resources>
