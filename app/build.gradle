@@ -12,6 +12,7 @@ android {
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 //        ndk {
 //            abiFilters "armeabi"
 //        }
@@ -78,4 +79,9 @@ dependencies {
     // anko layout
     implementation 'org.jetbrains.anko:anko-sdk25:0.10.5'
     implementation 'org.jetbrains.anko:anko-appcompat-v7:0.10.5'
+
+    // 单元测试
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }
