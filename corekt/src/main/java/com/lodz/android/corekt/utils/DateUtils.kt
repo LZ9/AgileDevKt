@@ -1,7 +1,6 @@
 package com.lodz.android.corekt.utils
 
 import android.support.annotation.StringDef
-import android.text.format.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -67,7 +66,6 @@ object DateUtils {
             cal.time = parseFormatDate(formatType, source)
             cal.set(Calendar.DATE, cal.get(Calendar.DATE) + n)
             return parseFormatCalendar(formatType, cal)
-
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -90,7 +88,7 @@ object DateUtils {
     /** 根据日历[calendar]获取对应格式[formatType]的时间 */
     fun parseFormatCalendar(formatType: String, calendar: Calendar): String {
         try {
-            return DateFormat.format(formatType, calendar).toString()
+            return getFormatString(formatType, Date(calendar.timeInMillis))
         } catch (e: Exception) {
             e.printStackTrace()
         }
