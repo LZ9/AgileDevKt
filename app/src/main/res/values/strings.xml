@@ -172,4 +172,26 @@
     <string name="str_separator_to_list">分隔符字符串转数组：</string>
     <string name="str_list_to_separator">数组转分隔符字符串：</string>
 
+    <!-- 信息测试类 -->
+    <string name="info_phone_ua">手机UA：%s</string>
+    <string name="info_phone_language">语言：%s</string>
+    <string name="info_phone_country">国家：%s</string>
+    <string name="info_phone_brand">品牌：%s</string>
+    <string name="info_phone_model">型号：%s</string>
+    <string name="info_phone_board">版本：%s</string>
+    <string name="info_phone_cpu_abi">CPU1：%s</string>
+    <string name="info_phone_cpu_abi2">CPU2：%s</string>
+    <string name="info_phone_manufacturer">制造商：%s</string>
+    <string name="info_phone_product">产品：%s</string>
+    <string name="info_phone_device">设备：%s</string>
+    <string name="info_phone_imei1">IMEI1：%s</string>
+    <string name="info_phone_imei2">IMEI2：%s</string>
+    <string name="info_is_dual_sim">是否双卡双待：%s</string>
+    <string name="info_phone_imsi1">IMSI1：%s</string>
+    <string name="info_phone_imsi2">IMSI2：%s</string>
+    <string name="info_phone_sim1_ready">sim1可用：%s</string>
+    <string name="info_phone_sim2_ready">sim2可用：%s</string>
+    <string name="info_phone_sim_data_state">sim卡数据连接状态：%s</string>
+    <string name="info_phone_is_connected_data">是否已连接数据：%s</string>
+    <string name="info_apn_name">APN名称：%s</string>
 </resources>

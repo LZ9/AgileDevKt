@@ -40,7 +40,7 @@ object ReflectUtils {
         return null
     }
 
-    /** 执行类[c]的某个函数，需要类的对象[obj]，函数名字[functionName]，函数的参数类型[paramClassTypes]和具体入参[params] */
+    /** 执行类[c]的某个函数，需要类的对象[constructor]，函数名字[functionName]，函数的参数类型[paramClassTypes]和具体入参[params] */
     fun executeFunction(c: Class<*>, constructor: Any, functionName: String, paramClassTypes: Array<Class<*>>? = null, params: Array<Any>? = null): Any? {
         try {
             val method = if (paramClassTypes == null) c.getDeclaredMethod(functionName) else c.getDeclaredMethod(functionName, *paramClassTypes)// 方法名和参数类型
@@ -52,7 +52,7 @@ object ReflectUtils {
         return null
     }
 
-    /** 从类[c]的对象[obj]里去获取变量名为[typeName]的值 */
+    /** 从类[c]的对象[constructor]里去获取变量名为[typeName]的值 */
     fun getFieldValue(c: Class<*>, constructor: Any, typeName: String): Any? {
         try {
             val field = c.getDeclaredField(typeName) // privategetField不能获取private
@@ -76,7 +76,7 @@ object ReflectUtils {
         return null
     }
 
-    /** 在类[c]的对象[obj]里去设置变量名为[typeName]的[value]值 */
+    /** 在类[c]的对象[constructor]里去设置变量名为[typeName]的[value]值 */
     fun setFieldValue(c: Class<*>, constructor: Any, typeName: String, value: Any): Boolean {
         try {
             val field = c.getDeclaredField(typeName)

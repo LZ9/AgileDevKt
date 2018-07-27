@@ -181,6 +181,13 @@
 
         </activity>
 
+        <activity
+            android:name=".modules.info.InfoTestActivity"
+            android:label="信息展示测试类"
+            android:screenOrientation="portrait">
+
+        </activity>
+
     </application>
 
 </manifest>

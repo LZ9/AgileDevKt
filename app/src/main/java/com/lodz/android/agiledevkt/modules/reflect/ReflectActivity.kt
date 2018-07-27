@@ -19,11 +19,13 @@ import com.lodz.android.corekt.utils.ReflectUtils
 class ReflectActivity : BaseActivity() {
 
     companion object {
-        fun start(context: Context){
+        fun start(context: Context) {
             val intent = Intent(context, ReflectActivity::class.java)
             context.startActivity(intent)
         }
     }
+
+    private val BEAN_PATH = "com.lodz.android.agiledevkt.modules.reflect.ReflectBean"
 
     /** 消息展示 */
     @BindView(R.id.text_msg)
@@ -84,7 +86,7 @@ class ReflectActivity : BaseActivity() {
 
         // 执行函数
         mExecuteFunctionBtn.setOnClickListener {
-//            executeFunction()
+            //            executeFunction()
             executeParamFunction()
         }
 
@@ -97,7 +99,7 @@ class ReflectActivity : BaseActivity() {
 
     /** 获取所有构造函数名称 */
     private fun getConstructorName() {
-        val c = ReflectUtils.getClassForName("com.lodz.android.agiledevkt.ui.reflect.ReflectBean")
+        val c = ReflectUtils.getClassForName(BEAN_PATH)
         if (c == null) {
             mMsgTv.setText(R.string.reflect_unfind_class)
             return
@@ -108,8 +110,8 @@ class ReflectActivity : BaseActivity() {
 
     /** 获取对象里的变量名称 */
     private fun getFieldName() {
-        val c = ReflectUtils.getClassForName("com.lodz.android.agiledevkt.ui.reflect.ReflectBean")
-        if (c == null){
+        val c = ReflectUtils.getClassForName(BEAN_PATH)
+        if (c == null) {
             mMsgTv.setText(R.string.reflect_unfind_class)
             return
         }
@@ -119,8 +121,8 @@ class ReflectActivity : BaseActivity() {
 
     /** 获取方法名 */
     private fun getMethodName() {
-        val c = ReflectUtils.getClassForName("com.lodz.android.agiledevkt.ui.reflect.ReflectBean")
-        if (c == null){
+        val c = ReflectUtils.getClassForName(BEAN_PATH)
+        if (c == null) {
             mMsgTv.setText(R.string.reflect_unfind_class)
             return
         }
@@ -130,13 +132,13 @@ class ReflectActivity : BaseActivity() {
 
     /** 获取对象里变量的值 */
     private fun getFieldValue() {
-        val c = ReflectUtils.getClassForName("com.lodz.android.agiledevkt.ui.reflect.ReflectBean")
-        if (c == null){
+        val c = ReflectUtils.getClassForName(BEAN_PATH)
+        if (c == null) {
             mMsgTv.setText(R.string.reflect_unfind_class)
             return
         }
         val constructor = ReflectUtils.getConstructor(c)
-        if (constructor == null){
+        if (constructor == null) {
             mMsgTv.setText(R.string.reflect_unfind_no_param_constructor)
             return
         }
@@ -144,8 +146,8 @@ class ReflectActivity : BaseActivity() {
         val list = ReflectUtils.getFieldName(c)
         for (name in list) {
             val value = ReflectUtils.getFieldValue(c, constructor, name)
-            if (value != null){
-                result += value.toString() + "\n"
+            if (value != null) {
+                result += name + " : " + value.toString() + "\n"
             }
         }
         mMsgTv.text = result
@@ -153,13 +155,13 @@ class ReflectActivity : BaseActivity() {
 
     /** 执行某个函数 */
     private fun executeFunction() {
-        val c = ReflectUtils.getClassForName("com.lodz.android.agiledevkt.ui.reflect.ReflectBean")
-        if (c == null){
+        val c = ReflectUtils.getClassForName(BEAN_PATH)
+        if (c == null) {
             mMsgTv.setText(R.string.reflect_unfind_class)
             return
         }
         val constructor = ReflectUtils.getConstructor(c)
-        if (constructor == null){
+        if (constructor == null) {
             mMsgTv.setText(R.string.reflect_unfind_no_param_constructor)
             return
         }
@@ -167,7 +169,7 @@ class ReflectActivity : BaseActivity() {
         val list = ReflectUtils.getMethodName(c)
         for (name in list) {
             val method = ReflectUtils.executeFunction(c, constructor, name)
-            if (method != null){
+            if (method != null) {
                 result += method.toString() + "\n"
             }
         }
@@ -176,19 +178,19 @@ class ReflectActivity : BaseActivity() {
 
     /** 执行某个有参函数 */
     private fun executeParamFunction() {
-        val c = ReflectUtils.getClassForName("com.lodz.android.agiledevkt.ui.reflect.ReflectBean")
-        if (c == null){
+        val c = ReflectUtils.getClassForName(BEAN_PATH)
+        if (c == null) {
             mMsgTv.setText(R.string.reflect_unfind_class)
             return
         }
         val constructor = ReflectUtils.getConstructor(c, arrayOf(Int::class.java, String::class.java), arrayOf(21, "Japan"))
-        if (constructor == null){
+        if (constructor == null) {
             mMsgTv.setText(R.string.reflect_unfind_no_param_constructor)
             return
         }
         var result = c.simpleName + "\n"
         val method = ReflectUtils.executeFunction(c, constructor, "getAgeTest", arrayOf(Int::class.java), arrayOf(5))
-        if (method != null){
+        if (method != null) {
             result += method.toString() + "\n"
         }
         mMsgTv.text = result
@@ -196,26 +198,26 @@ class ReflectActivity : BaseActivity() {
 
     /** 设置值 */
     private fun setValue() {
-        val c = ReflectUtils.getClassForName("com.lodz.android.agiledevkt.ui.reflect.ReflectBean")
-        if (c == null){
+        val c = ReflectUtils.getClassForName(BEAN_PATH)
+        if (c == null) {
             mMsgTv.setText(R.string.reflect_unfind_class)
             return
         }
         val constructor = ReflectUtils.getConstructor(c)
-        if (constructor == null){
+        if (constructor == null) {
             mMsgTv.setText(R.string.reflect_unfind_no_param_constructor)
             return
         }
         var result = c.simpleName + "\n"
         val valueOld = ReflectUtils.getFieldValue(c, constructor, "name")
-        if (valueOld != null){
-            result += valueOld.toString() + "\n"
+        if (valueOld != null) {
+            result += "old name : " + valueOld.toString() + "\n"
         }
         val isSuccess = ReflectUtils.setFieldValue(c, constructor, "name", "Shaw")
-        result += isSuccess.toString() + "\n"
+        result += "is success : " + isSuccess.toString() + "\n"
         val valueNew = ReflectUtils.getFieldValue(c, constructor, "name")
-        if (valueNew != null){
-            result += valueNew.toString() + "\n"
+        if (valueNew != null) {
+            result += "new name : " + valueNew.toString() + "\n"
         }
         mMsgTv.text = result
     }
