@@ -2,6 +2,7 @@ package com.lodz.android.corekt.anko
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.Point
 import android.support.v4.app.Fragment
 import android.util.DisplayMetrics
 import android.view.View
@@ -42,11 +43,13 @@ fun View.getScreenHeight() = context.getScreenHeight()
 
 /** 判断是否存在NavigationBar */
 fun Activity.hasNavigationBar(): Boolean {
-    val decorViewHeight = window.decorView.height
-    val dm = DisplayMetrics()
-    windowManager.defaultDisplay.getMetrics(dm)
-    val useableScreenHeight = dm.heightPixels
-    return decorViewHeight != useableScreenHeight
+    val point = Point()
+    windowManager.defaultDisplay.getRealSize(point)
+    val realHeight = point.y//获取真实屏幕高度
+    if (getScreenHeight() < realHeight){//可用屏幕高度小于真实屏幕高度
+        return true
+    }
+    return false
 }
 
 /** 获取虚拟按键高度 */

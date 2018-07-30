@@ -220,7 +220,6 @@
                 android:textColor="@color/white"
                 android:textSize="16sp" />
 
-
             <TextView
                 android:id="@+id/apn_name_tv"
                 android:layout_width="wrap_content"
@@ -228,10 +227,56 @@
                 android:text="@string/info_apn_name"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
-
-
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_deb887_corners_8"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/screen_height_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/info_screen_height"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/screen_width_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/info_screen_width"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/status_bar_height_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/info_status_bar_height"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/has_navigation_bar_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/info_has_navigation_bar"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/navigation_bar_height_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/info_navigation_bar_height"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+        </LinearLayout>
 
     </LinearLayout>
 

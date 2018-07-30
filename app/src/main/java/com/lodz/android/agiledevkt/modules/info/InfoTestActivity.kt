@@ -9,6 +9,7 @@ import butterknife.ButterKnife
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.componentkt.base.activity.BaseActivity
+import com.lodz.android.corekt.anko.*
 import com.lodz.android.corekt.network.NetInfo
 import com.lodz.android.corekt.network.NetworkManager
 import com.lodz.android.corekt.utils.*
@@ -93,6 +94,22 @@ class InfoTestActivity : BaseActivity() {
     @BindView(R.id.apn_name_tv)
     lateinit var mApnNameTv: TextView
 
+    /** 屏幕高度 */
+    @BindView(R.id.screen_height_tv)
+    lateinit var mScreenHeightTv: TextView
+    /** 屏幕宽度 */
+    @BindView(R.id.screen_width_tv)
+    lateinit var mScreenWidthTv: TextView
+    /** 状态栏高度 */
+    @BindView(R.id.status_bar_height_tv)
+    lateinit var StatusBarHeightTv: TextView
+    /** 是否存在虚拟按键 */
+    @BindView(R.id.has_navigation_bar_tv)
+    lateinit var mHasNavigationBarTv: TextView
+    /** 虚拟按键高度 */
+    @BindView(R.id.navigation_bar_height_tv)
+    lateinit var mNavigationBarHeightTv: TextView
+
 
     override fun getLayoutId() = R.layout.activity_info_test
 
@@ -108,6 +125,13 @@ class InfoTestActivity : BaseActivity() {
 
     override fun initData() {
         super.initData()
+        showDeviceInfo()
+        showScreenInfo()
+        showStatusCompleted()
+    }
+
+    /** 显示设备信息 */
+    private fun showDeviceInfo() {
         NetworkManager.get().addNetworkListener(mNetworkListener)
         mUaTv.text = getString(R.string.info_phone_ua).format(DeviceUtils.getUserAgent())
         mLanguageTv.text = getString(R.string.info_phone_language).format(DeviceUtils.getLanguage())
@@ -132,14 +156,23 @@ class InfoTestActivity : BaseActivity() {
         mSimDataStateTv.text = getString(R.string.info_phone_sim_data_state).format(getSimDataState())
         mSimConnectedDataTv.text = getString(R.string.info_phone_is_connected_data).format(isSimDataConnected())
         mApnNameTv.text = getString(R.string.info_apn_name).format(getApnName())
+    }
 
-        showStatusCompleted()
+    /** 显示屏幕信息 */
+    private fun showScreenInfo() {
+        mScreenHeightTv.text = getString(R.string.info_screen_height).format(getScreenHeight())
+        mScreenWidthTv.text = getString(R.string.info_screen_width).format(getScreenWidth())
+
+        StatusBarHeightTv.text = getString(R.string.info_status_bar_height).format(getStatusBarHeight())
+        mHasNavigationBarTv.text = getString(R.string.info_has_navigation_bar).format(hasNavigationBar())
+        mNavigationBarHeightTv.text = getString(R.string.info_navigation_bar_height).format(getNavigationBarHeight())
     }
 
     override fun finish() {
         NetworkManager.get().removeNetworkListener(mNetworkListener)
         super.finish()
     }
+
     /** 网络监听器 */
     private val mNetworkListener = object : NetworkManager.NetworkListener {
         override fun onNetworkStatusChanged(isNetworkAvailable: Boolean, netInfo: NetInfo) {
