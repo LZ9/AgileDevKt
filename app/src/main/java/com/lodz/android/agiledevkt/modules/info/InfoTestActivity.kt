@@ -1,7 +1,10 @@
 package com.lodz.android.agiledevkt.modules.info
 
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.location.LocationManager
 import android.os.Bundle
 import android.widget.TextView
 import butterknife.BindView
@@ -9,10 +12,14 @@ import butterknife.ButterKnife
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.componentkt.base.activity.BaseActivity
+import com.lodz.android.componentkt.rx.subscribe.observer.BaseObserver
+import com.lodz.android.componentkt.rx.utils.RxUtils
 import com.lodz.android.corekt.anko.*
 import com.lodz.android.corekt.network.NetInfo
 import com.lodz.android.corekt.network.NetworkManager
 import com.lodz.android.corekt.utils.*
+import io.reactivex.Observable
+import io.reactivex.functions.Function
 
 /**
  * 信息展示测试类
@@ -110,6 +117,46 @@ class InfoTestActivity : BaseActivity() {
     @BindView(R.id.navigation_bar_height_tv)
     lateinit var mNavigationBarHeightTv: TextView
 
+    /** 是否主线程 */
+    @BindView(R.id.main_thread_tv)
+    lateinit var mMainThreadTv: TextView
+    /** 随机UUID */
+    @BindView(R.id.uuid_tv)
+    lateinit var mUuidTv: TextView
+    /** 应用名称 */
+    @BindView(R.id.app_name_tv)
+    lateinit var mAppNameTv: TextView
+    /** 版本名称 */
+    @BindView(R.id.version_name_tv)
+    lateinit var mVersionNameTv: TextView
+    /** 版本号 */
+    @BindView(R.id.version_code_tv)
+    lateinit var mVersionCodeTv: TextView
+    /** 是否在主进程 */
+    @BindView(R.id.main_process_tv)
+    lateinit var mMainProcessTv: TextView
+    /** 当前进程名称 */
+    @BindView(R.id.process_name_tv)
+    lateinit var mProcessNameTv: TextView
+    /** 是否安装QQ */
+    @BindView(R.id.qq_installed_tv)
+    lateinit var mQQInstalledTv: TextView
+    /** 是否安装微信 */
+    @BindView(R.id.wechat_installed_tv)
+    lateinit var mWechatInstalledTv: TextView
+    /** 安装的应用数量 */
+    @BindView(R.id.installed_app_num_tv)
+    lateinit var mInstalledAppNumTv: TextView
+    /** GPS是否打开 */
+    @BindView(R.id.is_gps_open_tv)
+    lateinit var mGpsOpenTv: TextView
+    /** assets内文本内容 */
+    @BindView(R.id.assets_text_tv)
+    lateinit var mAssetsTextTv: TextView
+
+
+    /** GPS开关广播接收器*/
+    private val mGpsBroadcastReceiver = GpsBroadcastReceiver()
 
     override fun getLayoutId() = R.layout.activity_info_test
 
@@ -127,6 +174,7 @@ class InfoTestActivity : BaseActivity() {
         super.initData()
         showDeviceInfo()
         showScreenInfo()
+        showAppInfo()
         showStatusCompleted()
     }
 
@@ -168,8 +216,58 @@ class InfoTestActivity : BaseActivity() {
         mNavigationBarHeightTv.text = getString(R.string.info_navigation_bar_height).format(getNavigationBarHeight())
     }
 
+    /** 显示应用信息 */
+    private fun showAppInfo() {
+        mMainThreadTv.text = getString(R.string.info_is_main_thread).format(AppUtils.isMainThread())
+        mUuidTv.text = getString(R.string.info_uuid).format(AppUtils.getUUID())
+        mAppNameTv.text = getString(R.string.info_app_name).format(getAppName())
+        mVersionNameTv.text = getString(R.string.info_version_name).format(getVersionName())
+        mVersionCodeTv.text = getString(R.string.info_version_code).format(getVersionCode())
+        mMainProcessTv.text = getString(R.string.info_is_main_process).format(isMainProcess())
+        mProcessNameTv.text = getString(R.string.info_process_name).format(getProcessName())
+        mQQInstalledTv.text = getString(R.string.info_is_qq_installed).format(isPkgInstalled("com.tencent.mobileqq"))
+        mWechatInstalledTv.text = getString(R.string.info_is_wechat_installed).format(isPkgInstalled("com.tencent.mm"))
+        mInstalledAppNumTv.text = getString(R.string.info_installed_app_num).format(getInstalledPackages().size.toString())
+
+        registerGpsReceiver()
+        mGpsOpenTv.text = getString(R.string.info_is_gps_open).format(isGpsOpen())
+
+        Observable.just("test.txt")
+                .map(object : Function<String, String> {
+                    override fun apply(fileName: String): String {
+                        return getAssetsFileContent(fileName)
+                    }
+                })
+                .compose(RxUtils.ioToMainObservable())
+                .subscribe(object : BaseObserver<String>() {
+                    override fun onBaseNext(any: String) {
+                        mAssetsTextTv.text = getString(R.string.info_get_assets_text).format(any)
+                    }
+
+                    override fun onBaseError(e: Throwable) {
+                        mAssetsTextTv.text = getString(R.string.info_get_assets_text).format(e.cause)
+                    }
+
+                })
+    }
+
+    private fun registerGpsReceiver() {
+        try {
+            val fileter = IntentFilter()
+            fileter.addAction(LocationManager.PROVIDERS_CHANGED_ACTION)
+            registerReceiver(mGpsBroadcastReceiver, fileter)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
     override fun finish() {
-        NetworkManager.get().removeNetworkListener(mNetworkListener)
+        try {
+            NetworkManager.get().removeNetworkListener(mNetworkListener)
+            unregisterReceiver(mGpsBroadcastReceiver)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
         super.finish()
     }
 
@@ -181,4 +279,19 @@ class InfoTestActivity : BaseActivity() {
             mApnNameTv.text = getString(R.string.info_apn_name).format(getApnName())
         }
     }
+
+    /** 铃声音量变化监听器 */
+    inner class GpsBroadcastReceiver : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            if (intent == null) {
+                return
+            }
+            val action = intent.action
+            if (action.equals(LocationManager.PROVIDERS_CHANGED_ACTION)) {
+                mGpsOpenTv.text = getString(R.string.info_is_gps_open).format(isGpsOpen())
+            }
+        }
+
+    }
+
 }

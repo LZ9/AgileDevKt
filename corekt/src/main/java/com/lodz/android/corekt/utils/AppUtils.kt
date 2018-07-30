@@ -57,13 +57,13 @@ fun Context.getVersionCode(): Int {
     return -1
 }
 
-/** 当前上下文是不是在主进程 */
+/** 是否在主进程 */
 fun Context.isMainProcess(): Boolean {
-    val processName: String? = getProcessName()
-    if (processName.isNullOrEmpty()) {
+    val processName = getProcessName()
+    if (processName.isEmpty()) {
         return false
     }
-    return processName!!.contains(":")
+    return !processName.contains(":")
 }
 
 
