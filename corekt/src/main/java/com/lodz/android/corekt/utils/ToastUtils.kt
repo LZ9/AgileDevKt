@@ -113,6 +113,16 @@ class ToastUtils private constructor(val mContext: Context) {
 
     /** 显示Toast */
     fun show() {
+        if (AppUtils.isMainThread()) {//主线程直接显示
+            assembleShowToast()
+        }
+        UiHandler.post(Runnable {
+            assembleShowToast()//非主线程post到主线程显示
+        })
+    }
+
+    /** 组装并显示Toast */
+    private fun assembleShowToast() {
         var toast: Toast? = null
         if (!mText.isNullOrEmpty()) {
             toast = getDefaultToast()
@@ -134,11 +144,7 @@ class ToastUtils private constructor(val mContext: Context) {
             imageCodeProject.setImageResource(mImgResId)
             toastView.addView(imageCodeProject, 0)
         }
-
-        if (AppUtils.isMainThread()) {//主线程直接显示
-            toast.show()
-        }
-        showPost(toast)//非主线程post到主线程显示
+        toast.show()
     }
 
     /** 获取默认的toast */
@@ -149,13 +155,6 @@ class ToastUtils private constructor(val mContext: Context) {
         val toast = Toast(mContext)
         toast.view = mCustomView
         return toast
-    }
-
-    /** 将[toast]转到UI线程显示 */
-    private fun showPost(toast: Toast) {
-        UiHandler.post(Runnable {
-            toast.show()
-        })
     }
 }
 

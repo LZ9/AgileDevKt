@@ -5,38 +5,44 @@
     android:orientation="vertical">
 
     <Button
-        android:id="@+id/short_duration"
+        android:id="@+id/short_duration_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/toast_short_time"
         android:textAllCaps="false" />
 
     <Button
-        android:id="@+id/long_duration"
+        android:id="@+id/long_duration_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/toast_long_time"
         android:textAllCaps="false" />
 
     <Button
-        android:id="@+id/custom_position"
+        android:id="@+id/custom_position_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/toast_gravity_center"
         android:textAllCaps="false" />
 
     <Button
-        android:id="@+id/top_img"
+        android:id="@+id/top_img_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/toast_top_drawable"
         android:textAllCaps="false" />
 
     <Button
-        android:id="@+id/custom_view"
+        android:id="@+id/custom_view_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/toast_custom"
         android:textAllCaps="false" />
 
+    <Button
+        android:id="@+id/io_thread_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/toast_io_thread"
+        android:textAllCaps="false" />
 </LinearLayout>

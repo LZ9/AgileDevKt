@@ -12,9 +12,12 @@ import butterknife.ButterKnife
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.componentkt.base.activity.BaseActivity
+import com.lodz.android.componentkt.rx.utils.RxUtils
 import com.lodz.android.corekt.utils.ToastUtils
 import com.lodz.android.corekt.utils.toastLong
 import com.lodz.android.corekt.utils.toastShort
+import io.reactivex.Observable
+import io.reactivex.functions.Function
 
 /**
  * Toast测试类
@@ -30,20 +33,23 @@ class ToastTestActivity :BaseActivity(){
     }
 
     /** 短时间 */
-    @BindView(R.id.short_duration)
-    lateinit var mShortDuration: Button
+    @BindView(R.id.short_duration_btn)
+    lateinit var mShortDurationBtn: Button
     /** 长时间 */
-    @BindView(R.id.long_duration)
-    lateinit var mLongDuration: Button
+    @BindView(R.id.long_duration_btn)
+    lateinit var mLongDurationBtn: Button
     /** 自定义位置（中间） */
-    @BindView(R.id.custom_position)
-    lateinit var mCustomPosition: Button
+    @BindView(R.id.custom_position_btn)
+    lateinit var mCustomPositionBtn: Button
     /** 带顶部图片 */
-    @BindView(R.id.top_img)
-    lateinit var mTopImg: Button
+    @BindView(R.id.top_img_btn)
+    lateinit var mTopImgBtn: Button
     /** 完全自定义 */
-    @BindView(R.id.custom_view)
-    lateinit var mCustomView: Button
+    @BindView(R.id.custom_view_btn)
+    lateinit var mCustomViewBtn: Button
+    /** 异步线程 */
+    @BindView(R.id.io_thread_btn)
+    lateinit var mIoThreadBtn: Button
 
     override fun getLayoutId() = R.layout.activity_toast_test
 
@@ -61,27 +67,27 @@ class ToastTestActivity :BaseActivity(){
         super.setListeners()
 
         // 短时间
-        mShortDuration.setOnClickListener {
+        mShortDurationBtn.setOnClickListener {
             toastShort(R.string.toast_short_time)
         }
 
         // 长时间
-        mLongDuration.setOnClickListener {
+        mLongDurationBtn.setOnClickListener {
             toastLong(R.string.toast_long_time)
         }
 
         // 自定义位置（中间）
-        mCustomPosition.setOnClickListener {
+        mCustomPositionBtn.setOnClickListener {
             ToastUtils.create(getContext()).setText(R.string.toast_gravity_center).setShort().setGravity(Gravity.CENTER).show()
         }
 
         // 带顶部图片
-        mTopImg.setOnClickListener {
+        mTopImgBtn.setOnClickListener {
             ToastUtils.create(getContext()).setText(R.string.toast_top_drawable).setShort().setTopImg(R.drawable.ic_launcher).show()
         }
 
         // 完全自定义
-        mCustomView.setOnClickListener {
+        mCustomViewBtn.setOnClickListener {
             val layout = layoutInflater.inflate(R.layout.toast_custom, null)
             val title = layout.findViewById<TextView>(R.id.title)
             title.setText(R.string.toast_custom)
@@ -93,6 +99,20 @@ class ToastTestActivity :BaseActivity(){
             content.setText(R.string.toast_custom_content)
 
             ToastUtils.create(getContext()).setView(layout).setShort().setGravity(Gravity.TOP, 100, 500).show()
+        }
+
+        // 异步线程
+        mIoThreadBtn.setOnClickListener {
+            Observable.just("")
+                    .map(object :Function<String, String>{
+                        override fun apply(str: String): String {
+                            val threadName = Thread.currentThread().name
+                            toastShort(threadName)
+                            return str
+                        }
+                    })
+                    .compose(RxUtils.ioToMainObservable())
+                    .subscribe()
         }
     }
 
