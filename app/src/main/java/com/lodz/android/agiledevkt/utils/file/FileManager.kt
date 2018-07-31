@@ -1,8 +1,8 @@
 package com.lodz.android.agiledevkt.utils.file
 
 import com.lodz.android.agiledevkt.App
+import com.lodz.android.corekt.anko.getStoragePath
 import com.lodz.android.corekt.utils.FileUtils
-import com.lodz.android.corekt.utils.StorageUtils
 import java.io.File
 
 /**
@@ -44,7 +44,7 @@ object FileManager {
 
     /** 初始化路径 */
     private fun initPath() {
-        val storagePathPair = StorageUtils.getStoragePath(App.get())
+        val storagePathPair = App.get().getStoragePath()
         var rootPath: String? = storagePathPair.first // 先获取内置存储路径
         if (rootPath.isNullOrEmpty()) {// 内置为空再获取外置
             rootPath = storagePathPair.second

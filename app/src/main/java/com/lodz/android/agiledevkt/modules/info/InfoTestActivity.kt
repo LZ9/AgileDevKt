@@ -154,6 +154,13 @@ class InfoTestActivity : BaseActivity() {
     @BindView(R.id.assets_text_tv)
     lateinit var mAssetsTextTv: TextView
 
+    /** 内部存储路径 */
+    @BindView(R.id.internal_storage_path_tv)
+    lateinit var mInternalStoragePathTv: TextView
+    /** 外部存储路径 */
+    @BindView(R.id.external_storage_path_tv)
+    lateinit var mExternalStoragePathTv: TextView
+
 
     /** GPS开关广播接收器*/
     private val mGpsBroadcastReceiver = GpsBroadcastReceiver()
@@ -175,6 +182,7 @@ class InfoTestActivity : BaseActivity() {
         showDeviceInfo()
         showScreenInfo()
         showAppInfo()
+        showStorage()
         showStatusCompleted()
     }
 
@@ -251,6 +259,17 @@ class InfoTestActivity : BaseActivity() {
                 })
     }
 
+    /** 显示存储信息 */
+    private fun showStorage() {
+        val pathPair = getStoragePath()
+        val internal = pathPair.first ?: ""
+        val external = pathPair.second ?: ""
+
+        mInternalStoragePathTv.text = getString(R.string.info_internal_storage_path).format(internal)
+        mExternalStoragePathTv.text = getString(R.string.info_external_storage_path).format(external)
+    }
+
+    /** 注册GPS广播接收器 */
     private fun registerGpsReceiver() {
         try {
             val fileter = IntentFilter()
@@ -280,7 +299,7 @@ class InfoTestActivity : BaseActivity() {
         }
     }
 
-    /** 铃声音量变化监听器 */
+    /** GPS广播接收器 */
     inner class GpsBroadcastReceiver : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             if (intent == null) {
