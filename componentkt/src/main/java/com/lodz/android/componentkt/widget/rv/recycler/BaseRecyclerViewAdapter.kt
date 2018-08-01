@@ -39,9 +39,9 @@ abstract class BaseRecyclerViewAdapter<T>(protected val context: Context) : Recy
     /** 数据列表 */
     private var mData: MutableList<T>? = null
     /** item点击 */
-    private var mOnItemClickListener: ((RecyclerView.ViewHolder, T?, Int) -> Unit)? = null
+    private var mOnItemClickListener: ((RecyclerView.ViewHolder, T, Int) -> Unit)? = null
     /** item长按 */
-    private var mOnItemLongClickListener: ((RecyclerView.ViewHolder, T?, Int) -> Unit)? = null
+    private var mOnItemLongClickListener: ((RecyclerView.ViewHolder, T, Int) -> Unit)? = null
 
     /** 动画加速器 */
     private val mInterpolator = LinearInterpolator()
@@ -82,8 +82,9 @@ abstract class BaseRecyclerViewAdapter<T>(protected val context: Context) : Recy
     /** 设置点击事件 */
     protected fun setItemLongClick(holder: RecyclerView.ViewHolder, position: Int) {
         holder.itemView.setOnClickListener {
-            if (position >= 0 && mOnItemClickListener != null) {
-                mOnItemClickListener!!.invoke(holder, getItem(position), position)
+            val item = getItem(position)
+            if (position >= 0 && mOnItemClickListener != null && item != null) {
+                mOnItemClickListener!!.invoke(holder, item, position)
             }
         }
     }
@@ -91,8 +92,9 @@ abstract class BaseRecyclerViewAdapter<T>(protected val context: Context) : Recy
     /** 设置长按事件 */
     protected fun setItemClick(holder: RecyclerView.ViewHolder, position: Int) {
         holder.itemView.setOnClickListener {
-            if (position >= 0 && mOnItemLongClickListener != null) {
-                mOnItemLongClickListener!!.invoke(holder, getItem(position), position)
+            val item = getItem(position)
+            if (position >= 0 && mOnItemLongClickListener != null && item != null) {
+                mOnItemLongClickListener!!.invoke(holder, item, position)
             }
         }
     }
@@ -216,12 +218,12 @@ abstract class BaseRecyclerViewAdapter<T>(protected val context: Context) : Recy
     }
 
     /** 设置点击事件监听器 */
-    fun setOnItemClickListener(listener: (viewHolder: RecyclerView.ViewHolder, item: T?, position: Int) -> Unit) {
+    fun setOnItemClickListener(listener: (viewHolder: RecyclerView.ViewHolder, item: T, position: Int) -> Unit) {
         mOnItemClickListener = listener
     }
 
     /** 设置长按事件监听器 */
-    fun setOnItemLongClickListener(listener: (viewHolder: RecyclerView.ViewHolder, item: T?, position: Int) -> Unit) {
+    fun setOnItemLongClickListener(listener: (viewHolder: RecyclerView.ViewHolder, item: T, position: Int) -> Unit) {
         mOnItemLongClickListener = listener
     }
 

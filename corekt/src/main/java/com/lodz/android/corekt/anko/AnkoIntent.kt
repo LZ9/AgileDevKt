@@ -132,6 +132,11 @@ fun Context.goSetPswdSetting() {
     startActivity(Intent(DevicePolicyManager.ACTION_SET_NEW_PASSWORD))
 }
 
+/** 跳转到蓝牙设置页 */
+fun Context.goBluetoothSetting() {
+    startActivity(Intent(Settings.ACTION_BLUETOOTH_SETTINGS))
+}
+
 /** 打开浏览器访问[url] */
 fun Context.browse(url: String, newTask: Boolean = true) {
     if (url.isEmpty()) {

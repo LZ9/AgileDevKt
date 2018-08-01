@@ -216,4 +216,22 @@
     <string name="info_internal_storage_path">内部存储路径：%s</string>
     <string name="info_external_storage_path">外部存储路径：%s</string>
 
+    <!-- 蓝牙测试类 -->
+    <string name="ble_go_setting">前往蓝牙设置页</string>
+    <string name="ble_status">蓝牙状态：%s</string>
+    <string name="ble_switch">蓝牙开关</string>
+    <string name="ble_unknown">未知</string>
+    <string name="ble_off">已关闭</string>
+    <string name="ble_turning_off">正在关闭</string>
+    <string name="ble_on">已打开</string>
+    <string name="ble_turning_on">正在打开</string>
+    <string name="ble_not_find_bluetooth_device">未获取到手机蓝牙信息</string>
+    <string name="ble_bluetooth_unopen">蓝牙未打开</string>
+    <string name="ble_scanning">正在扫描</string>
+    <string name="ble_finish_discovery">结束扫描</string>
+    <string name="ble_device_disconnected">设备断开</string>
+    <string name="ble_start_disconnected">开始扫描</string>
+    <string name="ble_stop_disconnected">停止扫描</string>
+    <string name="ble_scan_fail">无法扫描设备</string>
+
 </resources>

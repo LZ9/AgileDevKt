@@ -44,7 +44,7 @@ class MainAdapter(context: Context) : BaseRecyclerViewAdapter<String>(context) {
         holder.nameTv.text = str
     }
 
-    class MainViewHolder(itemview: View) : RecyclerView.ViewHolder(itemview) {
+    inner class MainViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         /** 名称 */
         @BindView(R.id.name)

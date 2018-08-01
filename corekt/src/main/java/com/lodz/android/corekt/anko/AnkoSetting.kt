@@ -1,13 +1,11 @@
-package com.lodz.android.corekt.utils
+package com.lodz.android.corekt.anko
 
 import android.Manifest
 import android.app.Activity
-import android.bluetooth.BluetoothAdapter
 import android.content.Context
 import android.content.Intent
 import android.media.AudioManager
 import android.provider.Settings
-import android.support.annotation.IntDef
 import android.support.annotation.IntRange
 import android.support.annotation.RequiresPermission
 
@@ -15,39 +13,6 @@ import android.support.annotation.RequiresPermission
  * 系统设置帮助类
  * Created by zhouL on 2018/7/19.
  */
-object SettingUtils {
-
-    @IntDef(Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL, Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC)
-    @Retention(AnnotationRetention.SOURCE)
-    annotation class ScreenBrightnessMode
-
-    /**
-     * 获取蓝牙的状态
-     * 关闭：BluetoothAdapter.STATE_OFF
-     * 关闭中：BluetoothAdapter.STATE_TURNING_OFF
-     * 打开：BluetoothAdapter.STATE_ON
-     * 打开中：BluetoothAdapter.STATE_TURNING_ON
-     */
-    @RequiresPermission(Manifest.permission.BLUETOOTH)
-    fun getBluetoothState(): Int {
-        val bluetoothAdapter: BluetoothAdapter? = BluetoothAdapter.getDefaultAdapter()
-        if (bluetoothAdapter != null) {
-            bluetoothAdapter.state
-        }
-        return BluetoothAdapter.STATE_OFF
-    }
-
-    /** 设置蓝牙状态是否启用[enable] */
-    @RequiresPermission(allOf = arrayOf(Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_ADMIN))
-    fun setBluetoothState(enable: Boolean) {
-        if (getBluetoothState() == BluetoothAdapter.STATE_ON && !enable) {
-            BluetoothAdapter.getDefaultAdapter().disable()
-        }
-        if (getBluetoothState() == BluetoothAdapter.STATE_OFF && enable) {
-            BluetoothAdapter.getDefaultAdapter().enable()
-        }
-    }
-}
 
 /** 获取系统屏幕亮度模式的状态（手动：Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL ； 自动：Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC） */
 fun Context.getScreenBrightnessModeState() = Settings.System.getInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL)
@@ -56,7 +21,7 @@ fun Context.getScreenBrightnessModeState() = Settings.System.getInt(contentResol
 fun Context.isScreenBrightnessModeAutomatic() = getScreenBrightnessModeState() == Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC
 
 /** 设置系统屏幕亮度模式[mode]（手动：Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL ； 自动：Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC） */
-fun Context.setScreenBrightnessMode(@SettingUtils.ScreenBrightnessMode mode: Int) = Settings.System.putInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS_MODE, mode)
+fun Context.setScreenBrightnessMode(mode: Int) = Settings.System.putInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS_MODE, mode)
 
 /** 获取手动模式下的系统亮度值，范围0-255（默认值255） */
 fun Context.getScreenBrightness(def: Int = 255) = Settings.System.getInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS, def)
@@ -72,7 +37,7 @@ fun Activity.getWindowBrightness(): Int {
         return 255
     }
     val localLayoutParams = window.attributes
-    if (localLayoutParams.screenBrightness < 0){// 小于0表示使用默认系统亮度
+    if (localLayoutParams.screenBrightness < 0) {// 小于0表示使用默认系统亮度
         return getScreenBrightness()
     }
     return (localLayoutParams.screenBrightness * 255).toInt()
@@ -126,10 +91,10 @@ fun Context.getMaxRingVolume() = (getSystemService(Context.AUDIO_SERVICE) as Aud
 /** 设置铃声音量[volume] */
 fun Context.setRingVolume(volume: Int) {
     var fixVolume = volume
-    if (fixVolume < 0){
+    if (fixVolume < 0) {
         fixVolume = 0
     }
-    if (fixVolume > getMaxRingVolume()){
+    if (fixVolume > getMaxRingVolume()) {
         fixVolume = getMaxRingVolume()
     }
     val audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager

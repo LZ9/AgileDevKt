@@ -13,6 +13,9 @@
     <uses-permission
         android:name="android.permission.WRITE_SETTINGS"
         tools:ignore="ProtectedPermissions" />
+    <!-- 蓝牙 -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
     <!-- ********************* 需要申请（只要同组有一个授权整组的权限都可以使用） ********************* -->
     <!-- 相机 -->
@@ -187,6 +190,14 @@
             android:screenOrientation="portrait">
 
         </activity>
+
+        <activity
+            android:name=".modules.bluetooth.BluetoothTestActivity"
+            android:label="蓝牙测试类"
+            android:screenOrientation="portrait">
+
+        </activity>
+
 
     </application>
 
