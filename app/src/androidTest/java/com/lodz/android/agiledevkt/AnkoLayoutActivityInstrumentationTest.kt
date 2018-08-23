@@ -1,14 +1,13 @@
 package com.lodz.android.agiledevkt
 
-import android.support.test.InstrumentationRegistry
 import android.support.test.espresso.Espresso
 import android.support.test.espresso.action.ViewActions
 import android.support.test.espresso.assertion.ViewAssertions
 import android.support.test.espresso.matcher.ViewMatchers
+import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
-import android.test.ActivityInstrumentationTestCase2
 import com.lodz.android.agiledevkt.modules.anko.AnkoLayoutActivity
-import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -17,13 +16,10 @@ import org.junit.runner.RunWith
  * Created by zhouL on 2018/7/25.
  */
 @RunWith(AndroidJUnit4::class)
-class AnkoLayoutActivityInstrumentationTest : ActivityInstrumentationTestCase2<AnkoLayoutActivity>(AnkoLayoutActivity::class.java) {
+class AnkoLayoutActivityInstrumentationTest {
 
-    @Before
-    fun init(){
-        injectInstrumentation(InstrumentationRegistry.getInstrumentation())
-        activity
-    }
+    @get:Rule
+    val mActivityRule = ActivityTestRule<AnkoLayoutActivity>(AnkoLayoutActivity::class.java)
 
     @Test
     fun UItest() {
@@ -46,8 +42,5 @@ class AnkoLayoutActivityInstrumentationTest : ActivityInstrumentationTestCase2<A
         val expectedText = "123-q"
         Espresso.onView(ViewMatchers.withId(android.R.id.text1))
                 .check(ViewAssertions.matches(ViewMatchers.withText(expectedText)))
-
-
-
     }
 }
