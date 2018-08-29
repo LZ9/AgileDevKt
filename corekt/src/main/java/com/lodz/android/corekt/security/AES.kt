@@ -19,10 +19,10 @@ object AES {
     private const val IV = "123456abc2345678"
 
     /** 加密原始数据[dataBytes]，秘钥[key]必须为16位 */
-    fun encrypt(data: String, key: String): String? = encrypt(data.toByteArray(), key)
+    fun encrypt(data: String, key: String, transformation: String = FORMAT, iv: String = IV): String? = encrypt(data.toByteArray(), key, transformation, iv)
 
-    /** 加密原始数据[dataBytes]，秘钥[key]必须为16位 */
-    fun encrypt(dataBytes: ByteArray, key: String): String? {
+    /** 加密原始数据[dataBytes]，秘钥[key]必须为16位，填充方式[transformation]，偏移量[iv] */
+    fun encrypt(dataBytes: ByteArray, key: String, transformation: String = FORMAT, iv: String = IV): String? {
         if (dataBytes.isEmpty() || key.isEmpty()) {
             return null
         }
@@ -31,7 +31,7 @@ object AES {
         }
 
         try {
-            val cipher = Cipher.getInstance(FORMAT)
+            val cipher = Cipher.getInstance(transformation)
             val blockSize = cipher.blockSize
 
             var plaintextLength = dataBytes.size
@@ -43,7 +43,7 @@ object AES {
             System.arraycopy(dataBytes, 0, plaintext, 0, dataBytes.size)
 
             val keyspec = SecretKeySpec(key.toByteArray(), "AES")
-            val ivspec = IvParameterSpec(IV.toByteArray())
+            val ivspec = IvParameterSpec(iv.toByteArray())
 
             cipher.init(Cipher.ENCRYPT_MODE, keyspec, ivspec)
             val encrypted = cipher.doFinal(plaintext)
@@ -55,7 +55,7 @@ object AES {
     }
 
     /** 解密密文[data]，秘钥[key]必须为16位 */
-    fun decrypt(data: String, key: String): String? {
+    fun decrypt(data: String, key: String, transformation: String = FORMAT, iv: String = IV): String? {
         if (data.isEmpty() || key.isEmpty()) {
             return null
         }
@@ -65,9 +65,9 @@ object AES {
         try {
             val decrypt = Base64.decode(data, Base64.NO_WRAP)
 
-            val cipher = Cipher.getInstance(FORMAT)
+            val cipher = Cipher.getInstance(transformation)
             val keyspec = SecretKeySpec(key.toByteArray(), "AES")
-            val ivspec = IvParameterSpec(IV.toByteArray())
+            val ivspec = IvParameterSpec(iv.toByteArray())
 
             cipher.init(Cipher.DECRYPT_MODE, keyspec, ivspec)
 
