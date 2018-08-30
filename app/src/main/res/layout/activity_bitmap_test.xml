@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:contentDescription="@string/app_name" />
+            android:contentDescription="@string/app_img_name" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:contentDescription="@string/app_name" />
+            android:contentDescription="@string/app_img_name" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -65,14 +65,14 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:contentDescription="@string/app_name" />
+                android:contentDescription="@string/app_img_name" />
 
             <ImageView
                 android:id="@+id/drawable_bitmap_img"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:contentDescription="@string/app_name" />
+                android:contentDescription="@string/app_img_name" />
         </LinearLayout>
 
         <LinearLayout
@@ -116,7 +116,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="1dp"
                 android:layout_weight="1"
-                android:contentDescription="@string/app_name"
+                android:contentDescription="@string/app_img_name"
                 android:src="@drawable/ic_regret" />
 
             <ImageView
@@ -125,7 +125,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="1dp"
                 android:layout_weight="1"
-                android:contentDescription="@string/app_name" />
+                android:contentDescription="@string/app_img_name" />
         </LinearLayout>
 
         <LinearLayout
@@ -162,7 +162,7 @@
             android:layout_width="wrap_content"
             android:layout_height="200dp"
             android:layout_gravity="center_horizontal"
-            android:contentDescription="@string/app_name"
+            android:contentDescription="@string/app_img_name"
             android:scaleType="centerInside" />
 
         <TextView
@@ -192,7 +192,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginEnd="1dp"
                 android:layout_weight="1"
-                android:contentDescription="@string/app_name" />
+                android:contentDescription="@string/app_img_name" />
 
             <ImageView
                 android:id="@+id/rounded_corner_img"
@@ -201,7 +201,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginStart="1dp"
                 android:layout_weight="1"
-                android:contentDescription="@string/app_name" />
+                android:contentDescription="@string/app_img_name" />
 
         </LinearLayout>
 
@@ -243,7 +243,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:contentDescription="@string/app_name" />
+            android:contentDescription="@string/app_img_name" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -265,7 +265,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:contentDescription="@string/app_name" />
+            android:contentDescription="@string/app_img_name" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -287,7 +287,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:contentDescription="@string/app_name" />
+            android:contentDescription="@string/app_img_name" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -316,7 +316,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginEnd="1dp"
                 android:layout_weight="1"
-                android:contentDescription="@string/app_name" />
+                android:contentDescription="@string/app_img_name" />
 
             <ImageView
                 android:id="@+id/reverse_vertical_img"
@@ -325,7 +325,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginStart="1dp"
                 android:layout_weight="1"
-                android:contentDescription="@string/app_name" />
+                android:contentDescription="@string/app_img_name" />
         </LinearLayout>
 
 
@@ -367,7 +367,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:contentDescription="@string/app_name" />
+            android:contentDescription="@string/app_img_name" />
 
         <SeekBar
             android:id="@+id/tone_seekbar"
@@ -397,7 +397,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:contentDescription="@string/app_name" />
+            android:contentDescription="@string/app_img_name" />
 
         <SeekBar
             android:id="@+id/saturation_seekbar"
@@ -427,7 +427,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:contentDescription="@string/app_name" />
+            android:contentDescription="@string/app_img_name" />
 
         <SeekBar
             android:id="@+id/luminance_seekbar"
@@ -457,7 +457,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:contentDescription="@string/app_name" />
+            android:contentDescription="@string/app_img_name" />
 
         <SeekBar
             android:id="@+id/hue_seekbar"
@@ -487,7 +487,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:contentDescription="@string/app_name" />
+            android:contentDescription="@string/app_img_name" />
 
         <SeekBar
             android:id="@+id/sunshine_seekbar"
@@ -524,7 +524,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginEnd="1dp"
                 android:layout_weight="1"
-                android:contentDescription="@string/app_name" />
+                android:contentDescription="@string/app_img_name" />
 
             <ImageView
                 android:id="@+id/film_img"
@@ -533,7 +533,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginStart="1dp"
                 android:layout_weight="1"
-                android:contentDescription="@string/app_name" />
+                android:contentDescription="@string/app_img_name" />
 
         </LinearLayout>
 
@@ -582,7 +582,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginEnd="1dp"
                 android:layout_weight="1"
-                android:contentDescription="@string/app_name" />
+                android:contentDescription="@string/app_img_name" />
 
             <ImageView
                 android:id="@+id/emboss_img"
@@ -591,7 +591,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginStart="1dp"
                 android:layout_weight="1"
-                android:contentDescription="@string/app_name" />
+                android:contentDescription="@string/app_img_name" />
 
         </LinearLayout>
 

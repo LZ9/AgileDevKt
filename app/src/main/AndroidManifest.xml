@@ -198,6 +198,13 @@
 
         </activity>
 
+        <activity
+            android:name=".modules.statusbar.StatusBarTestActivity"
+            android:label="状态栏透明颜色测试类"
+            android:screenOrientation="portrait">
+
+        </activity>
+
 
     </application>
 

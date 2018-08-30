@@ -44,7 +44,7 @@
                 android:layout_width="0dp"
                 android:layout_height="150dp"
                 android:layout_weight="1"
-                android:contentDescription="@string/app_name"
+                android:contentDescription="@string/app_img_name"
                 android:padding="1dp"
                 android:scaleType="center" />
 
@@ -54,7 +54,7 @@
                 android:layout_width="0dp"
                 android:layout_height="150dp"
                 android:layout_weight="1"
-                android:contentDescription="@string/app_name"
+                android:contentDescription="@string/app_img_name"
                 android:padding="1dp" />
         </LinearLayout>
 
@@ -69,7 +69,7 @@
                 android:layout_width="0dp"
                 android:layout_height="150dp"
                 android:layout_weight="1"
-                android:contentDescription="@string/app_name"
+                android:contentDescription="@string/app_img_name"
                 android:padding="1dp" />
 
             <!--动画显示-->
@@ -78,7 +78,7 @@
                 android:layout_width="0dp"
                 android:layout_height="150dp"
                 android:layout_weight="1"
-                android:contentDescription="@string/app_name"
+                android:contentDescription="@string/app_img_name"
                 android:padding="1dp" />
 
         </LinearLayout>
@@ -94,7 +94,7 @@
                 android:layout_width="0dp"
                 android:layout_height="150dp"
                 android:layout_weight="1"
-                android:contentDescription="@string/app_name"
+                android:contentDescription="@string/app_img_name"
                 android:padding="1dp" />
 
             <!--本地gif-->
@@ -103,7 +103,7 @@
                 android:layout_width="0dp"
                 android:layout_height="150dp"
                 android:layout_weight="1"
-                android:contentDescription="@string/app_name"
+                android:contentDescription="@string/app_img_name"
                 android:padding="1dp" />
         </LinearLayout>
 
@@ -118,7 +118,7 @@
                 android:layout_width="0dp"
                 android:layout_height="150dp"
                 android:layout_weight="1"
-                android:contentDescription="@string/app_name"
+                android:contentDescription="@string/app_img_name"
                 android:padding="1dp" />
 
             <!--覆盖颜色-->
@@ -127,7 +127,7 @@
                 android:layout_width="0dp"
                 android:layout_height="150dp"
                 android:layout_weight="1"
-                android:contentDescription="@string/app_name"
+                android:contentDescription="@string/app_img_name"
                 android:padding="1dp" />
         </LinearLayout>
 
@@ -142,7 +142,7 @@
                 android:layout_width="0dp"
                 android:layout_height="150dp"
                 android:layout_weight="1"
-                android:contentDescription="@string/app_name"
+                android:contentDescription="@string/app_img_name"
                 android:padding="1dp" />
 
             <!--顶部圆角-->
@@ -151,7 +151,7 @@
                 android:layout_width="0dp"
                 android:layout_height="150dp"
                 android:layout_weight="1"
-                android:contentDescription="@string/app_name"
+                android:contentDescription="@string/app_img_name"
                 android:padding="1dp" />
 
         </LinearLayout>
@@ -167,7 +167,7 @@
                 android:layout_width="0dp"
                 android:layout_height="150dp"
                 android:layout_weight="1"
-                android:contentDescription="@string/app_name"
+                android:contentDescription="@string/app_img_name"
                 android:padding="1dp" />
 
             <!--圆角/灰度化-->
@@ -176,7 +176,7 @@
                 android:layout_width="0dp"
                 android:layout_height="150dp"
                 android:layout_weight="1"
-                android:contentDescription="@string/app_name"
+                android:contentDescription="@string/app_img_name"
                 android:padding="1dp" />
 
         </LinearLayout>
@@ -192,7 +192,7 @@
                 android:layout_width="0dp"
                 android:layout_height="150dp"
                 android:layout_weight="1"
-                android:contentDescription="@string/app_name"
+                android:contentDescription="@string/app_img_name"
                 android:padding="1dp" />
 
             <!--圆形/毛玻璃-->
@@ -201,7 +201,7 @@
                 android:layout_width="0dp"
                 android:layout_height="150dp"
                 android:layout_weight="1"
-                android:contentDescription="@string/app_name"
+                android:contentDescription="@string/app_img_name"
                 android:padding="1dp" />
 
         </LinearLayout>
@@ -217,7 +217,7 @@
                 android:layout_width="0dp"
                 android:layout_height="150dp"
                 android:layout_weight="1"
-                android:contentDescription="@string/app_name"
+                android:contentDescription="@string/app_img_name"
                 android:padding="1dp" />
 
             <!--蒙板效果-->
@@ -226,7 +226,7 @@
                 android:layout_width="0dp"
                 android:layout_height="150dp"
                 android:layout_weight="1"
-                android:contentDescription="@string/app_name"
+                android:contentDescription="@string/app_img_name"
                 android:padding="1dp" />
 
         </LinearLayout>
@@ -242,7 +242,7 @@
                 android:layout_width="0dp"
                 android:layout_height="150dp"
                 android:layout_weight="1"
-                android:contentDescription="@string/app_name"
+                android:contentDescription="@string/app_img_name"
                 android:padding="1dp" />
 
 
@@ -252,7 +252,7 @@
                 android:layout_width="0dp"
                 android:layout_height="150dp"
                 android:layout_weight="1"
-                android:contentDescription="@string/app_name"
+                android:contentDescription="@string/app_img_name"
                 android:padding="1dp" />
 
         </LinearLayout>
@@ -268,7 +268,7 @@
                 android:layout_width="0dp"
                 android:layout_height="150dp"
                 android:layout_weight="1"
-                android:contentDescription="@string/app_name"
+                android:contentDescription="@string/app_img_name"
                 android:padding="1dp" />
 
             <!--本地视频-->
@@ -277,7 +277,7 @@
                 android:layout_width="0dp"
                 android:layout_height="150dp"
                 android:layout_weight="1"
-                android:contentDescription="@string/app_name"
+                android:contentDescription="@string/app_img_name"
                 android:padding="1dp" />
         </LinearLayout>
 

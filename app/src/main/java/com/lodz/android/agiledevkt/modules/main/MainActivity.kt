@@ -24,6 +24,7 @@ import com.lodz.android.agiledevkt.modules.reflect.ReflectActivity
 import com.lodz.android.agiledevkt.modules.security.EncryptTestActivity
 import com.lodz.android.agiledevkt.modules.selector.SelectorTestActivity
 import com.lodz.android.agiledevkt.modules.setting.SettingTestActivity
+import com.lodz.android.agiledevkt.modules.statusbar.StatusBarTestActivity
 import com.lodz.android.agiledevkt.modules.str.StrTestActivity
 import com.lodz.android.agiledevkt.modules.threadpool.ThreadPoolActivity
 import com.lodz.android.agiledevkt.modules.toast.ToastTestActivity
@@ -52,7 +53,7 @@ class MainActivity : BaseActivity() {
             "Toast测试类", "反射测试类", "颜色透明度测试",
             "线程池测试类", "身份证号码测试类", "数字格式化测试类",
             "背景选择器测试类", "设置测试类", "字符测试类",
-            "信息展示测试类", "蓝牙测试类"
+            "信息展示测试类", "蓝牙测试类", "状态栏透明颜色测试类"
     )
 
     /** 功能的activity */
@@ -62,7 +63,7 @@ class MainActivity : BaseActivity() {
             ToastTestActivity::class.java, ReflectActivity::class.java, ColorAlphaTestActivity::class.java,
             ThreadPoolActivity::class.java, IdcardTestActivity::class.java, NumFormatTestActivity::class.java,
             SelectorTestActivity::class.java, SettingTestActivity::class.java, StrTestActivity::class.java,
-            InfoTestActivity::class.java, BluetoothTestActivity::class.java
+            InfoTestActivity::class.java, BluetoothTestActivity::class.java, StatusBarTestActivity::class.java
     )
 
     /** 列表 */

@@ -10,7 +10,7 @@
         android:id="@+id/error_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/app_name"
+        android:contentDescription="@string/componentkt_app_img_name"
         android:padding="10dp"
         android:scaleType="center"
         android:src="@drawable/componentkt_ic_data_fail" />

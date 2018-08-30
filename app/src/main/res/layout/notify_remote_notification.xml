@@ -12,7 +12,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginEnd="2dp"
-        android:contentDescription="@string/app_name"
+        android:contentDescription="@string/app_img_name"
         android:scaleType="centerCrop" />
 
     <LinearLayout
