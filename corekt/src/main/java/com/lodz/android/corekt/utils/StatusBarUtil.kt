@@ -6,14 +6,18 @@ import android.content.Context
 import android.graphics.Color
 import android.os.Build
 import android.support.annotation.ColorInt
+import android.support.annotation.ColorRes
 import android.support.annotation.IntRange
+import android.support.annotation.RequiresApi
 import android.support.design.widget.CoordinatorLayout
 import android.support.v4.widget.DrawerLayout
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.view.WindowManager
 import android.widget.LinearLayout
 import com.lodz.android.corekt.R
+import com.lodz.android.corekt.anko.getColorCompat
 
 /**
  * 状态栏帮助类
@@ -193,6 +197,40 @@ object StatusBarUtil {
     fun getStatusBarHeight(context: Context): Int {
         val resourceId = context.resources.getIdentifier("status_bar_height", "dimen", "android")
         return context.resources.getDimensionPixelSize(resourceId)
+    }
+
+    /** 设置状态栏颜色[color] */
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    fun setStatusBarColorRes(context: Context, window: Window, @ColorRes color: Int) {
+        setStatusBarColor(window, context.getColorCompat(color))
+    }
+
+    /** 设置状态栏颜色[color] */
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    fun setStatusBarColor(window: Window, @ColorInt color: Int) {
+        try {
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.statusBarColor = color
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    /** 设置导航栏颜色[color] */
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    fun setNavigationBarColorRes(context: Context, window: Window, @ColorRes color: Int) {
+        setNavigationBarColor(window, context.getColorCompat(color))
+    }
+
+    /** 设置导航栏颜色[color] */
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    fun setNavigationBarColor(window: Window, @ColorInt color: Int) {
+        try {
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.navigationBarColor = color
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     /** 设置[activity]的根布局参数 */
