@@ -1,111 +1,89 @@
 package com.lodz.android.agiledevkt.modules.statusbar
 
+import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.support.annotation.ColorInt
-import android.widget.ImageView
-import android.widget.RadioGroup
+import android.widget.Button
 import android.widget.SeekBar
 import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.lodz.android.agiledevkt.R
-import com.lodz.android.componentkt.base.activity.AbsActivity
+import com.lodz.android.agiledevkt.modules.main.MainActivity
+import com.lodz.android.componentkt.base.activity.BaseActivity
 import com.lodz.android.corekt.utils.StatusBarUtil
-import com.lodz.android.corekt.utils.toastShort
 
 /**
  * 状态栏透明颜色测试类
  * Created by zhouL on 2018/8/30.
  */
-class StatusBarTestActivity : AbsActivity() {
+class StatusBarTestActivity : BaseActivity() {
 
-    /** 状态栏背景色 */
-    @ColorInt
-    private val BG_COLOR = Color.BLUE
+    companion object {
 
-    /** 返回按钮 */
-    @BindView(R.id.back_btn)
-    lateinit var mBackBtn: ImageView
-    /** 描述按钮 */
-    @BindView(R.id.desc_btn)
-    lateinit var mDescBtn: ImageView
-    /** 状态栏设置类型单选组 */
-    @BindView(R.id.type_rg)
-    lateinit var mTypeRadioGroup: RadioGroup
+        /** 默认颜色 */
+        const val DEFAULT_COLOR = Color.DKGRAY
+
+        fun start(context: Context) {
+            val intent = Intent(context, StatusBarTestActivity::class.java)
+            context.startActivity(intent)
+        }
+    }
+
     /** 透明度滚动条 */
     @BindView(R.id.alpha_sb)
     lateinit var mAlphaSeekBar: SeekBar
     /** 透明度值 */
     @BindView(R.id.alpha_value_tv)
     lateinit var mAlphaValueTv: TextView
+    /** 测试带图片的状态栏按钮 */
+    @BindView(R.id.test_img_btn)
+    lateinit var mTestImgBtn: Button
 
-    /** 是否设置颜色并调整透明度 */
-    private var isColorAlpha = false
-
-    override fun getAbsLayoutId() = R.layout.activity_statusbar_test
+    override fun getLayoutId() = R.layout.activity_statusbar_test
 
     override fun findViews(savedInstanceState: Bundle?) {
         ButterKnife.bind(this)
+        getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME))
+        getTitleBarLayout().setBackgroundColor(DEFAULT_COLOR)
+    }
+
+    override fun clickBackBtn() {
+        super.clickBackBtn()
+        finish()
     }
 
     override fun setListeners() {
         super.setListeners()
-        mBackBtn.setOnClickListener {
-            finish()
-        }
-
-        mDescBtn.setOnClickListener {
-            toastShort(R.string.status_bar_old_trafford)
-        }
-
-        mTypeRadioGroup.setOnCheckedChangeListener { group, checkedId ->
-            when (checkedId) {
-                R.id.alpha_rb -> configAlpha()
-                R.id.color_alpha_rb -> configColorAlpha()
-            }
+        mTestImgBtn.setOnClickListener {
+            StatusBarImgTestActivity.start(getContext())
         }
 
         mAlphaSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                if (!fromUser){
+                if (!fromUser) {
                     return
                 }
-                if (isColorAlpha){
-                    StatusBarUtil.setColor(getContext(), BG_COLOR, progress)
-                }else{
-                    StatusBarUtil.setTranslucent(getContext(), progress)
-                }
-                mAlphaValueTv.text = getAlpha().toString()
+                StatusBarUtil.setColor(window, DEFAULT_COLOR, progress / 100.0f)
+                updateAlphaValue()
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
     }
 
-    private fun configAlpha() {
-        isColorAlpha = false
-        StatusBarUtil.setTranslucent(this, getAlpha())
-        mAlphaValueTv.text = getAlpha().toString()
+    override fun initData() {
+        super.initData()
+        StatusBarUtil.setColor(window, DEFAULT_COLOR, mAlphaSeekBar.progress / 100.0f)
+        updateAlphaValue()
+        showStatusCompleted()
     }
 
-    private fun configColorAlpha() {
-        isColorAlpha = true
-        StatusBarUtil.setColor(this, BG_COLOR, getAlpha())
-        mAlphaValueTv.text = getAlpha().toString()
+    /** 更新透明度 */
+    private fun updateAlphaValue() {
+        mAlphaValueTv.text = mAlphaSeekBar.progress.toString()
     }
 
-    /** 获取透明度 */
-    private fun getAlpha(): Int {
-        val alpha = mAlphaSeekBar.progress
-        if (alpha < 0) {
-            return 0
-        }
-        if (alpha > 255) {
-            return 255
-        }
-        return alpha
-    }
 }

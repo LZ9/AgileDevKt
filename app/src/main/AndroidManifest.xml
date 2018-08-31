@@ -205,6 +205,13 @@
 
         </activity>
 
+        <activity
+            android:name=".modules.statusbar.StatusBarImgTestActivity"
+            android:label="带ImageView的状态栏颜色测试"
+            android:screenOrientation="portrait">
+
+        </activity>
+
 
     </application>
 

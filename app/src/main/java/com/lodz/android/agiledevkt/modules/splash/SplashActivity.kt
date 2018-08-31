@@ -26,7 +26,7 @@ class SplashActivity : AbsActivity() {
 
     override fun findViews(savedInstanceState: Bundle?) {
         ButterKnife.bind(this)
-        StatusBarUtil.setTransparent(this)
+        StatusBarUtil.setTransparentFully(window)
     }
 
     override fun initData() {
