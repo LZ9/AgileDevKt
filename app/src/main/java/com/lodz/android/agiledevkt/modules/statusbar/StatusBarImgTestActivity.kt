@@ -66,7 +66,7 @@ class StatusBarImgTestActivity :AbsActivity(){
                 if (!fromUser) {
                     return
                 }
-                StatusBarUtil.setTransparentForImageView(getContext(), mTitleLayout, progress / 100.0f, Color.DKGRAY)
+                StatusBarUtil.setTransparentForOffsetView(getContext(), mTitleLayout, progress / 100.0f, Color.DKGRAY)
                 updateAlphaValue()
             }
 
@@ -77,7 +77,7 @@ class StatusBarImgTestActivity :AbsActivity(){
 
     override fun initData() {
         super.initData()
-        StatusBarUtil.setTransparentForImageView(getContext(), mTitleLayout, mAlphaSeekBar.progress / 100.0f, Color.DKGRAY)
+        StatusBarUtil.setTransparentForOffsetView(getContext(), mTitleLayout, mAlphaSeekBar.progress / 100.0f, Color.DKGRAY)
         updateAlphaValue()
     }
 

@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Build
 import android.support.annotation.ColorInt
 import android.support.annotation.FloatRange
+import android.support.v4.widget.DrawerLayout
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
@@ -33,7 +34,7 @@ object StatusBarUtil {
         return Color.BLACK
     }
 
-    /** 设置状态栏颜色[color] */
+    /** 设置状态栏颜色[color]和透明度[alpha]（默认不透明） */
     fun setColor(window: Window, @ColorInt color: Int, @FloatRange(from = 0.0, to = 1.0) alpha: Float = 1.0f) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
@@ -42,6 +43,7 @@ object StatusBarUtil {
         }
     }
 
+    /** 获取导航栏颜色 */
     @ColorInt
     fun getNavigationBarColor(window: Window): Int {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -64,19 +66,19 @@ object StatusBarUtil {
         setTransparent(window, 0.0f)
     }
 
-    /** 设置状态栏透明度[alpha]，默认45% */
+    /** 设置状态栏透明度[alpha]（默认45%） */
     fun setTransparent(window: Window, @FloatRange(from = 0.0, to = 1.0) alpha: Float = DEFAULT_ALPHA) {
         val color = getColor(window)
         setColor(window, color, alpha)
     }
 
-    /** 为头部是 ImageView 的界面设置状态栏全透明，[needOffsetView]是需要向下偏移的View */
-    fun setTransparentFullyForImageView(activity: Activity, needOffsetView :View, @ColorInt colorBg : Int = Color.BLACK){
-        setTransparentForImageView(activity, needOffsetView, 0.0f, colorBg)
+    /** 为需要向下偏移的[needOffsetView]的界面设置状态栏全透明 */
+    fun setTransparentFullyForOffsetView(activity: Activity, needOffsetView :View){
+        setTransparentForOffsetView(activity, needOffsetView, 0.0f)
     }
 
-    /** 为头部是 ImageView 的界面设置状态栏透明度为[alpha]，默认45%，[needOffsetView]是需要向下偏移的View */
-    fun setTransparentForImageView(activity: Activity, needOffsetView :View, @FloatRange(from = 0.0, to = 1.0) alpha: Float = DEFAULT_ALPHA, @ColorInt colorBg : Int = Color.BLACK){
+    /** 为需要向下偏移的[needOffsetView]的界面设置状态栏透明度为[alpha]（默认45%），颜色为[colorBg]（默认黑色） */
+    fun setTransparentForOffsetView(activity: Activity, needOffsetView :View, @FloatRange(from = 0.0, to = 1.0) alpha: Float = DEFAULT_ALPHA, @ColorInt colorBg : Int = Color.BLACK){
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             return
         }
@@ -85,7 +87,25 @@ object StatusBarUtil {
         configOffsetView(needOffsetView)
     }
 
+    /** 为侧滑栏[drawerLayout]布局设置状态栏全透明，需要向下偏移的控件为[needOffsetView]（不需要传null） */
+    fun setTransparentFullyForDrawerLayout(activity: Activity, drawerLayout: DrawerLayout, needOffsetView :View){
+        setTransparentForDrawerLayout(activity, drawerLayout, needOffsetView, 0.0f)
+    }
 
+    /** 为侧滑栏[drawerLayout]布局设置状态栏透明度[alpha]（默认45%），需要向下偏移的控件为[needOffsetView]（不需要传null），状态栏颜色为[colorBg]（默认黑色） */
+    fun setTransparentForDrawerLayout(activity: Activity, drawerLayout: DrawerLayout, needOffsetView :View, @FloatRange(from = 0.0, to = 1.0) alpha: Float = DEFAULT_ALPHA, @ColorInt colorBg : Int = Color.BLACK){
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            return
+        }
+        val drawer = drawerLayout.getChildAt(1)
+        if (drawer == null || !(drawer is ViewGroup)){
+            return
+        }
+
+        setTransparentForOffsetView(activity, needOffsetView, alpha, colorBg)
+        drawerLayout.fitsSystemWindows = false
+        drawer.fitsSystemWindows = false
+    }
 
 
 
@@ -111,7 +131,7 @@ object StatusBarUtil {
         needOffsetView.setTag(TAG_KEY_HAVE_SET_OFFSET, true)
     }
 
-    /** 添加透明度为[alpha]的矩形条 */
+    /** 添加透明度为[alpha]，颜色为[colorBg]的矩形条 */
     private fun addStatusBarView(activity: Activity, @FloatRange(from = 0.0, to = 1.0) alpha: Float, @ColorInt colorBg : Int) {
         val contentView = activity.findViewById<ViewGroup>(android.R.id.content)
         val view = contentView.findViewById<View>(FAKE_TRANSLUCENT_VIEW_ID)

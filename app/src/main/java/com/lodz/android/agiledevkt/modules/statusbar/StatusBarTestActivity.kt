@@ -37,9 +37,14 @@ class StatusBarTestActivity : BaseActivity() {
     /** 透明度值 */
     @BindView(R.id.alpha_value_tv)
     lateinit var mAlphaValueTv: TextView
+
     /** 测试带图片的状态栏按钮 */
     @BindView(R.id.test_img_btn)
     lateinit var mTestImgBtn: Button
+    /** 测试带DrawerLayout的状态栏 */
+    @BindView(R.id.test_drawer_btn)
+    lateinit var mTestDrawerBtn: Button
+
 
     override fun getLayoutId() = R.layout.activity_statusbar_test
 
@@ -56,9 +61,6 @@ class StatusBarTestActivity : BaseActivity() {
 
     override fun setListeners() {
         super.setListeners()
-        mTestImgBtn.setOnClickListener {
-            StatusBarImgTestActivity.start(getContext())
-        }
 
         mAlphaSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
@@ -72,6 +74,14 @@ class StatusBarTestActivity : BaseActivity() {
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
+
+        mTestImgBtn.setOnClickListener {
+            StatusBarImgTestActivity.start(getContext())
+        }
+
+        mTestDrawerBtn.setOnClickListener {
+            StatusBarDrawerTestActivity.start(getContext())
+        }
     }
 
     override fun initData() {
