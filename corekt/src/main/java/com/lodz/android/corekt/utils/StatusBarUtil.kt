@@ -67,21 +67,21 @@ object StatusBarUtil {
     /** 设置状态栏透明度[alpha]，默认45% */
     fun setTransparent(window: Window, @FloatRange(from = 0.0, to = 1.0) alpha: Float = DEFAULT_ALPHA) {
         val color = getColor(window)
-        setColor(window, ColorUtils.getColorAlphaInt(color, alpha))
+        setColor(window, color, alpha)
     }
 
     /** 为头部是 ImageView 的界面设置状态栏全透明，[needOffsetView]是需要向下偏移的View */
-    fun setTransparentFullyForImageView(activity: Activity, needOffsetView :View){
-        setTransparentForImageView(activity, needOffsetView, 0.0f)
+    fun setTransparentFullyForImageView(activity: Activity, needOffsetView :View, @ColorInt colorBg : Int = Color.BLACK){
+        setTransparentForImageView(activity, needOffsetView, 0.0f, colorBg)
     }
 
     /** 为头部是 ImageView 的界面设置状态栏透明度为[alpha]，默认45%，[needOffsetView]是需要向下偏移的View */
-    fun setTransparentForImageView(activity: Activity, needOffsetView :View, @FloatRange(from = 0.0, to = 1.0) alpha: Float = DEFAULT_ALPHA){
+    fun setTransparentForImageView(activity: Activity, needOffsetView :View, @FloatRange(from = 0.0, to = 1.0) alpha: Float = DEFAULT_ALPHA, @ColorInt colorBg : Int = Color.BLACK){
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             return
         }
         configStatusBarTransparent(activity.window)
-        addStatusBarView(activity, alpha)
+        addStatusBarView(activity, alpha, colorBg)
         configOffsetView(needOffsetView)
     }
 
@@ -112,17 +112,17 @@ object StatusBarUtil {
     }
 
     /** 添加透明度为[alpha]的矩形条 */
-    private fun addStatusBarView(activity: Activity, @FloatRange(from = 0.0, to = 1.0) alpha: Float) {
+    private fun addStatusBarView(activity: Activity, @FloatRange(from = 0.0, to = 1.0) alpha: Float, @ColorInt colorBg : Int) {
         val contentView = activity.findViewById<ViewGroup>(android.R.id.content)
         val view = contentView.findViewById<View>(FAKE_TRANSLUCENT_VIEW_ID)
         if (view != null) {
             view.visibility = View.VISIBLE
-            view.setBackgroundColor(ColorUtils.getColorAlphaInt(Color.BLACK, alpha))
+            view.setBackgroundColor(ColorUtils.getColorAlphaInt(colorBg, alpha))
             return
         }
         val statusBarView = View(activity)
         statusBarView.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, activity.getStatusBarHeight())
-        statusBarView.setBackgroundColor(ColorUtils.getColorAlphaInt(Color.BLACK, alpha))
+        statusBarView.setBackgroundColor(ColorUtils.getColorAlphaInt(colorBg, alpha))
         statusBarView.id = FAKE_TRANSLUCENT_VIEW_ID
         contentView.addView(statusBarView)
     }

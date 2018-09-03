@@ -237,8 +237,6 @@
 
     <!-- 状态栏颜色透明度 -->
     <string name="status_bar_old_trafford">老特拉福德</string>
-    <string name="status_bar_rb_alpha">只调整透明度</string>
-    <string name="status_bar_rb_color_alpha">设置颜色并调整透明度</string>
     <string name="status_bar_alpha">透明度：</string>
     <string name="status_bar_test_img">测试带ImageView的状态栏</string>
 

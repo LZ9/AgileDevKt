@@ -31,7 +31,22 @@ object ColorUtils {
             newAlpha = 1f
         }
 
-        val colorHex = Integer.toHexString(color)
+        var colorHex = Integer.toHexString(color)
+        val length = colorHex.length
+        if (length == 7){
+            colorHex = "0" + colorHex
+        }
+
+        if (length == 6){
+            colorHex = "ff" + colorHex
+        }
+
+        if (length < 6) {
+            for (i in 0 until (6 - length)) {
+                colorHex = "0" + colorHex;
+            }
+            colorHex = "ff" + colorHex
+        }
 
         val alphaInt = newAlpha * MAX// 获取alpha对应的十进制数值
         var hex = Integer.toHexString(alphaInt.toInt())//把十进制转为16进制
@@ -41,10 +56,6 @@ object ColorUtils {
 
         if (colorHex.length == 8) {
             return Color.parseColor("#" + hex + colorHex.substring(2, colorHex.length))
-        }
-
-        if (colorHex.length == 6) {
-            return Color.parseColor("#" + hex + colorHex)
         }
         return color
     }
