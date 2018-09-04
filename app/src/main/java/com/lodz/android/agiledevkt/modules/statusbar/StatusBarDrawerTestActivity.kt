@@ -7,6 +7,7 @@ import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.SeekBar
 import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -45,6 +46,12 @@ class StatusBarDrawerTestActivity : AbsActivity() {
     /** 标题栏 */
     @BindView(R.id.title_bar_layout)
     lateinit var mTitleBarLayout: TitleBarLayout
+    /** 透明度滚动条 */
+    @BindView(R.id.alpha_sb)
+    lateinit var mAlphaSeekBar: SeekBar
+    /** 透明度值 */
+    @BindView(R.id.alpha_value_tv)
+    lateinit var mAlphaValueTv: TextView
     /** 结果 */
     @BindView(R.id.result)
     lateinit var mResultTv: TextView
@@ -80,7 +87,7 @@ class StatusBarDrawerTestActivity : AbsActivity() {
         ButterKnife.bind(this)
         mTitleBarLayout.setTitleName(R.string.status_bar_test_drawer)
         mTitleTv.text = getString(R.string.status_bar_test_drawer_title, TITLES.get(Random().nextInt(TITLES.size)))
-        StatusBarUtil.setTransparentFullyForDrawerLayout(getContext(), mDrawerLayout, mContentLayout)
+        StatusBarUtil.setTransparentForDrawerLayout(getContext(), mDrawerLayout, mContentLayout, mAlphaSeekBar.progress / 100.0f)
     }
 
     override fun onPressBack(): Boolean {
@@ -99,6 +106,19 @@ class StatusBarDrawerTestActivity : AbsActivity() {
                 mDrawerLayout.openDrawer(GravityCompat.START)
             }
         }
+
+        mAlphaSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                if (!fromUser) {
+                    return
+                }
+                StatusBarUtil.setTransparentForDrawerLayout(getContext(), mDrawerLayout, mContentLayout, progress / 100.0f)
+                updateAlphaValue()
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+        })
 
         // 搜索
         mSearchBtn.setOnClickListener {
@@ -163,5 +183,8 @@ class StatusBarDrawerTestActivity : AbsActivity() {
                 }.create(getContext(), R.string.status_bar_test_drawer_refreshing, false))
     }
 
-
+    /** 更新透明度 */
+    private fun updateAlphaValue() {
+        mAlphaValueTv.text = mAlphaSeekBar.progress.toString()
+    }
 }

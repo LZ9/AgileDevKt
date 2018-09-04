@@ -2,6 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+//apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 28
@@ -10,7 +11,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 28
         versionCode 1
-        versionName "1.0.0"// 未上传
+        versionName "1.0.0"// 已上传
     }
 
     buildTypes {
@@ -35,3 +36,12 @@ dependencies {
     kapt 'com.github.bumptech.glide:compiler:4.8.0'
     implementation "com.github.bumptech.glide:okhttp3-integration:4.8.0"
 }
+
+//publish {
+//    userOrg = 'lz9'//bintray.com用户名
+//    groupId = 'com.lodz'//jcenter上的路径
+//    artifactId = 'image-loader-kt'//项目名称
+//    publishVersion = '1.0.0'//版本号
+//    desc = 'Hi, this is a image loader for kotlin'//描述，不重要
+//    website = 'https://github.com/LZ9/AgileDevKt'//网站，不重要
+//}
