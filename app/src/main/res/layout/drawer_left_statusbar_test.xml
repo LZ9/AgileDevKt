@@ -35,7 +35,7 @@
                         android:layout_width="65dp"
                         android:layout_height="65dp"
                         android:layout_margin="10dp"
-                        android:contentDescription="@string/app_name"
+                        android:contentDescription="@string/app_img_name"
                         android:scaleType="centerCrop"
                         tools:src="@drawable/bg_pokemon" />
 
@@ -100,7 +100,7 @@
                         android:layout_width="28dp"
                         android:layout_height="28dp"
                         android:layout_marginEnd="15dp"
-                        android:contentDescription="@string/app_name"
+                        android:contentDescription="@string/app_img_name"
                         android:src="@drawable/ic_search" />
 
                     <ImageView
@@ -108,7 +108,7 @@
                         android:layout_width="28dp"
                         android:layout_height="28dp"
                         android:layout_marginEnd="15dp"
-                        android:contentDescription="@string/app_name"
+                        android:contentDescription="@string/app_img_name"
                         android:src="@drawable/ic_update" />
 
                 </LinearLayout>
@@ -217,7 +217,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
-                    android:contentDescription="@string/app_name"
+                    android:contentDescription="@string/app_img_name"
                     android:src="@android:drawable/ic_menu_camera" />
 
                 <TextView
@@ -245,7 +245,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
-                    android:contentDescription="@string/app_name"
+                    android:contentDescription="@string/app_img_name"
                     android:src="@android:drawable/ic_menu_compass" />
 
                 <TextView
@@ -273,7 +273,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
-                    android:contentDescription="@string/app_name"
+                    android:contentDescription="@string/app_img_name"
                     android:src="@android:drawable/ic_menu_gallery" />
 
                 <TextView
@@ -301,7 +301,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
-                    android:contentDescription="@string/app_name"
+                    android:contentDescription="@string/app_img_name"
                     android:src="@android:drawable/ic_menu_send" />
 
                 <TextView
@@ -334,7 +334,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
-                    android:contentDescription="@string/app_name"
+                    android:contentDescription="@string/app_img_name"
                     android:src="@android:drawable/ic_menu_share" />
 
                 <TextView
@@ -367,7 +367,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
-                    android:contentDescription="@string/app_name"
+                    android:contentDescription="@string/app_img_name"
                     android:src="@android:drawable/ic_menu_call" />
 
                 <TextView
@@ -395,7 +395,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
-                    android:contentDescription="@string/app_name"
+                    android:contentDescription="@string/app_img_name"
                     android:src="@android:drawable/ic_menu_always_landscape_portrait" />
 
                 <TextView
@@ -423,7 +423,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
-                    android:contentDescription="@string/app_name"
+                    android:contentDescription="@string/app_img_name"
                     android:src="@android:drawable/ic_menu_delete" />
 
                 <TextView
@@ -451,7 +451,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
-                    android:contentDescription="@string/app_name"
+                    android:contentDescription="@string/app_img_name"
                     android:src="@android:drawable/ic_menu_mylocation" />
 
                 <TextView
@@ -500,7 +500,7 @@
                 <ImageView
                     android:layout_width="26dp"
                     android:layout_height="26dp"
-                    android:contentDescription="@string/app_name"
+                    android:contentDescription="@string/app_img_name"
                     android:src="@drawable/ic_collect" />
 
                 <TextView
@@ -528,7 +528,7 @@
                 <ImageView
                     android:layout_width="26dp"
                     android:layout_height="26dp"
-                    android:contentDescription="@string/app_name"
+                    android:contentDescription="@string/app_img_name"
                     android:src="@drawable/ic_wallet" />
 
                 <TextView
@@ -556,7 +556,7 @@
                 <ImageView
                     android:layout_width="26dp"
                     android:layout_height="26dp"
-                    android:contentDescription="@string/app_name"
+                    android:contentDescription="@string/app_img_name"
                     android:src="@drawable/ic_setting" />
 
                 <TextView

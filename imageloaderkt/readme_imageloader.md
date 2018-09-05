@@ -3,7 +3,7 @@
 
 ## 目录
  - [1、内部引用](https://github.com/LZ9/AgileDevKt/blob/master/imageloaderkt/readme_imageloader.md#1内部引用)
- - [2、AppGlideModule实现](https://github.com/LZ9/AgileDevKt/blob/master/imageloaderkt/readme_imageloader.md#2AppGlideModule实现)
+ - [2、AppGlideModule实现](https://github.com/LZ9/AgileDevKt/blob/master/imageloaderkt/readme_imageloader.md#2appglidemodule实现)
  - [3、初始化](https://github.com/LZ9/AgileDevKt/blob/master/imageloaderkt/readme_imageloader.md#3初始化)
  - [4、缓存操作](https://github.com/LZ9/AgileDevKt/blob/master/imageloaderkt/readme_imageloader.md#4缓存操作)
  - [5、使用方法](https://github.com/LZ9/AgileDevKt/blob/master/imageloaderkt/readme_imageloader.md#5使用方法)

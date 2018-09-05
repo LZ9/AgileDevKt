@@ -219,6 +219,15 @@
 
         </activity>
 
+        <activity
+            android:name=".modules.statusbar.StatusBarCoordinatorTestActivity"
+            android:label="带CoordinatorLayout的状态栏测试类"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+
+
 
 
     </application>

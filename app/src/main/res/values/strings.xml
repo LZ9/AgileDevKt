@@ -266,6 +266,6 @@
     <string name="status_bar_test_drawer_rotate">旋转</string>
     <string name="status_bar_test_drawer_delete">删除</string>
     <string name="status_bar_test_drawer_location">定位</string>
-
+    <string name="status_bar_test_coordinator">带CoordinatorLayout的状态栏测试类</string>
 
 </resources>

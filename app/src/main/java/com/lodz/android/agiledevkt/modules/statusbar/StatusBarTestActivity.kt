@@ -44,7 +44,9 @@ class StatusBarTestActivity : BaseActivity() {
     /** 测试带DrawerLayout的状态栏 */
     @BindView(R.id.test_drawer_btn)
     lateinit var mTestDrawerBtn: Button
-
+    /** 带CoordinatorLayout的状态栏测试类 */
+    @BindView(R.id.test_coordinator_btn)
+    lateinit var mTestCoordinatorBtn: Button
 
     override fun getLayoutId() = R.layout.activity_statusbar_test
 
@@ -81,6 +83,10 @@ class StatusBarTestActivity : BaseActivity() {
 
         mTestDrawerBtn.setOnClickListener {
             StatusBarDrawerTestActivity.start(getContext())
+        }
+
+        mTestCoordinatorBtn.setOnClickListener {
+            StatusBarCoordinatorTestActivity.start(getContext())
         }
     }
 
