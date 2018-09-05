@@ -1,4 +1,4 @@
-package com.lodz.android.agiledevkt.modules.statusbar
+package com.lodz.android.agiledevkt.modules.drawer
 
 import android.content.Context
 import android.content.Intent
@@ -12,6 +12,7 @@ import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.lodz.android.agiledevkt.R
+import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.componentkt.base.activity.AbsActivity
 import com.lodz.android.componentkt.rx.subscribe.observer.ProgressObserver
 import com.lodz.android.componentkt.rx.utils.RxUtils
@@ -24,14 +25,15 @@ import io.reactivex.Observable
 import java.util.*
 
 /**
- * 带DrawerLayout的状态栏测试类
+ * 侧滑栏测试类
  * Created by zhouL on 2018/9/3.
  */
-class StatusBarDrawerTestActivity : AbsActivity() {
+class DrawerTestActivity : AbsActivity() {
 
     companion object {
-        fun start(context: Context) {
-            val intent = Intent(context, StatusBarDrawerTestActivity::class.java)
+        fun start(context: Context, title: String) {
+            val intent = Intent(context, DrawerTestActivity::class.java)
+            intent.putExtra(MainActivity.EXTRA_TITLE_NAME, title)
             context.startActivity(intent)
         }
     }
@@ -80,12 +82,12 @@ class StatusBarDrawerTestActivity : AbsActivity() {
     @BindView(R.id.setting_btn)
     lateinit var mSettingBtn: ViewGroup
 
-    override fun getAbsLayoutId() = R.layout.activity_statusbar_drawer_test
+    override fun getAbsLayoutId() = R.layout.activity_drawer_test
 
     override fun findViews(savedInstanceState: Bundle?) {
         ButterKnife.bind(this)
-        mTitleBarLayout.setTitleName(R.string.status_bar_test_drawer)
-        mTitleTv.text = getString(R.string.status_bar_test_drawer_title, TITLES.get(Random().nextInt(TITLES.size)))
+        mTitleBarLayout.setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME))
+        mTitleTv.text = getString(R.string.drawer_title, TITLES.get(Random().nextInt(TITLES.size)))
         StatusBarUtil.setTransparentForDrawerLayout(getContext(), mDrawerLayout, mContentLayout, mAlphaSeekBar.progress / 100.0f)
     }
 
@@ -121,7 +123,7 @@ class StatusBarDrawerTestActivity : AbsActivity() {
 
         // 搜索
         mSearchBtn.setOnClickListener {
-            mResultTv.text = getString(R.string.status_bar_test_drawer_search)
+            mResultTv.text = getString(R.string.drawer_search)
             mDrawerLayout.closeDrawer(GravityCompat.START)
         }
 
@@ -132,19 +134,19 @@ class StatusBarDrawerTestActivity : AbsActivity() {
 
         // 关注
         mCollectBtn.setOnClickListener {
-            mResultTv.text = getString(R.string.status_bar_test_drawer_collect)
+            mResultTv.text = getString(R.string.drawer_collect)
             mDrawerLayout.closeDrawer(GravityCompat.START)
         }
 
         // 钱包
         mWalletBtn.setOnClickListener {
-            mResultTv.text = getString(R.string.status_bar_test_drawer_wallet)
+            mResultTv.text = getString(R.string.drawer_wallet)
             mDrawerLayout.closeDrawer(GravityCompat.START)
         }
 
         // 设置
         mSettingBtn.setOnClickListener {
-            mResultTv.text = getString(R.string.status_bar_test_drawer_setting)
+            mResultTv.text = getString(R.string.drawer_setting)
             mDrawerLayout.closeDrawer(GravityCompat.START)
         }
     }
@@ -169,15 +171,15 @@ class StatusBarDrawerTestActivity : AbsActivity() {
                 .compose(bindUntilEvent(ActivityEvent.DESTROY))
                 .subscribe(object : ProgressObserver<String>() {
                     override fun onPgNext(any: String) {
-                        mTitleTv.text = getString(R.string.status_bar_test_drawer_title, any)
-                        toastShort(R.string.status_bar_test_drawer_refresh_complete)
+                        mTitleTv.text = getString(R.string.drawer_title, any)
+                        toastShort(R.string.drawer_refresh_complete)
                     }
 
                     override fun onPgError(e: Throwable, isNetwork: Boolean) {
-                        toastShort(R.string.status_bar_test_drawer_refresh_fail)
+                        toastShort(R.string.drawer_refresh_fail)
                     }
 
-                }.create(getContext(), R.string.status_bar_test_drawer_refreshing, false))
+                }.create(getContext(), R.string.drawer_refreshing, false))
     }
 
     /** 更新透明度 */

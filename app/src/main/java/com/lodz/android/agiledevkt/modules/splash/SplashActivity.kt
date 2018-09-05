@@ -95,7 +95,7 @@ class SplashActivity : AbsActivity() {
     fun init() {
         // todo 各种初始化
         FileManager.init()
-        initImageLoader();
+        initImageLoader()
         goMianActivity()
     }
 

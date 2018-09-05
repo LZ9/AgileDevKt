@@ -152,10 +152,10 @@ class BleSimpleHelper private constructor() {
     /** 蓝牙广播接收器 */
     inner class BleReceiver : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
-            if (intent == null) {
+            if (intent == null || intent.action.isNullOrEmpty()) {
                 return
             }
-            val action = intent.action
+            val action = intent.action!!
 
             if (action.equals(BluetoothAdapter.ACTION_STATE_CHANGED)) {// 蓝牙状态变化
                 val state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.STATE_OFF)

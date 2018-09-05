@@ -40,7 +40,7 @@ object DeviceUtils {
     /** 获取手机的UA信息 */
     fun getUserAgent(): String {
         try {
-            return System.getProperty("http.agent")
+            return System.getProperty("http.agent") ?: ""
         } catch (e: Exception) {
             e.printStackTrace()
         }

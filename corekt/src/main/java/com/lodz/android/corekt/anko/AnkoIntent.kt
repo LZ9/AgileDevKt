@@ -93,7 +93,7 @@ fun Context.openAppByActionMain(packageName: String, newTask: Boolean = true) {
         throw ActivityNotFoundException("no found packageName")
     }
 
-    intent.setComponent(ComponentName(packageName, mainActivityName))
+    intent.setComponent(ComponentName(packageName, mainActivityName!!))
     if (newTask) {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
     }

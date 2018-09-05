@@ -240,32 +240,37 @@
     <string name="status_bar_alpha">透明度：</string>
     <string name="status_bar_test_img">测试带ImageView的状态栏</string>
     <string name="status_bar_test_drawer">测试带DrawerLayout的状态栏</string>
-    <string name="status_bar_test_drawer_title">称号：%s</string>
-    <string name="status_bar_test_drawer_search">搜索</string>
-    <string name="status_bar_test_drawer_collect">关注</string>
-    <string name="status_bar_test_drawer_wallet">钱包</string>
-    <string name="status_bar_test_drawer_setting">设置</string>
-    <string name="status_bar_test_drawer_refresh_complete">已为您刷新称号</string>
-    <string name="status_bar_test_drawer_refresh_fail">刷新失败</string>
-    <string name="status_bar_test_drawer_refreshing">正在为您刷新称号</string>
-    <string name="status_bar_test_drawer_user_name">洛天依</string>
-    <string name="status_bar_test_drawer_level">LV6</string>
-    <string name="status_bar_test_drawer_vip_name">大会员</string>
-    <string name="status_bar_test_drawer_activity">动态</string>
-    <string name="status_bar_test_drawer_activity_num">98945</string>
-    <string name="status_bar_test_drawer_msg">消息</string>
-    <string name="status_bar_test_drawer_msg_num">4512</string>
-    <string name="status_bar_test_drawer_fans">粉丝</string>
-    <string name="status_bar_test_drawer_fans_num">78459875</string>
-    <string name="status_bar_test_drawer_take_photo">拍照</string>
-    <string name="status_bar_test_drawer_comment">评价</string>
-    <string name="status_bar_test_drawer_album">相册</string>
-    <string name="status_bar_test_drawer_send">发送</string>
-    <string name="status_bar_test_drawer_share">分享</string>
-    <string name="status_bar_test_drawer_call">拨号</string>
-    <string name="status_bar_test_drawer_rotate">旋转</string>
-    <string name="status_bar_test_drawer_delete">删除</string>
-    <string name="status_bar_test_drawer_location">定位</string>
     <string name="status_bar_test_coordinator">带CoordinatorLayout的状态栏测试类</string>
+
+    <!-- 侧滑栏测试类 -->
+    <string name="drawer_title">称号：%s</string>
+    <string name="drawer_search">搜索</string>
+    <string name="drawer_collect">关注</string>
+    <string name="drawer_wallet">钱包</string>
+    <string name="drawer_setting">设置</string>
+    <string name="drawer_refresh_complete">已为您刷新称号</string>
+    <string name="drawer_refresh_fail">刷新失败</string>
+    <string name="drawer_refreshing">正在为您刷新称号</string>
+    <string name="drawer_user_name">洛天依</string>
+    <string name="drawer_level">LV6</string>
+    <string name="drawer_vip_name">大会员</string>
+    <string name="drawer_activity">动态</string>
+    <string name="drawer_activity_num">98945</string>
+    <string name="drawer_msg">消息</string>
+    <string name="drawer_msg_num">4512</string>
+    <string name="drawer_fans">粉丝</string>
+    <string name="drawer_fans_num">78459875</string>
+    <string name="drawer_take_photo">拍照</string>
+    <string name="drawer_comment">评价</string>
+    <string name="drawer_album">相册</string>
+    <string name="drawer_send">发送</string>
+    <string name="drawer_share">分享</string>
+    <string name="drawer_call">拨号</string>
+    <string name="drawer_rotate">旋转</string>
+    <string name="drawer_delete">删除</string>
+    <string name="drawer_location">定位</string>
+
+
+
 
 </resources>

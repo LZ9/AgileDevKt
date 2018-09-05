@@ -10,6 +10,7 @@ import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.lodz.android.agiledevkt.R
+import com.lodz.android.agiledevkt.modules.drawer.DrawerTestActivity
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.componentkt.base.activity.BaseActivity
 import com.lodz.android.corekt.utils.StatusBarUtil
@@ -82,7 +83,7 @@ class StatusBarTestActivity : BaseActivity() {
         }
 
         mTestDrawerBtn.setOnClickListener {
-            StatusBarDrawerTestActivity.start(getContext())
+            DrawerTestActivity.start(getContext(), getString(R.string.status_bar_test_drawer))
         }
 
         mTestCoordinatorBtn.setOnClickListener {

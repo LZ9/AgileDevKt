@@ -213,7 +213,7 @@
         </activity>
 
         <activity
-            android:name=".modules.statusbar.StatusBarDrawerTestActivity"
+            android:name=".modules.drawer.DrawerTestActivity"
             android:label="带DrawerLayout的状态栏测试类"
             android:screenOrientation="portrait">
 

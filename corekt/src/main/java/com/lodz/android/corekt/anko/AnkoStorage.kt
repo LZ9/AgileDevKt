@@ -14,9 +14,6 @@ fun Context.getStoragePath(): Pair<String?, String?> {
     try {
         val storageManager = getSystemService(Context.STORAGE_SERVICE) as StorageManager
         val storageVolumeClass = Class.forName("android.os.storage.StorageVolume")
-        if (storageVolumeClass == null) {
-            return Pair(null, null)
-        }
         val getVolumeList = storageManager.javaClass.getMethod("getVolumeList")
         val getPath = storageVolumeClass.getMethod("getPath")
         val isRemovable = storageVolumeClass.getMethod("isRemovable")

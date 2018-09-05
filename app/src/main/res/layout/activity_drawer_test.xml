@@ -63,7 +63,7 @@
     </LinearLayout>
 
     <include
-        layout="@layout/drawer_left_statusbar_test"
+        layout="@layout/drawer_left_test"
         android:layout_width="@dimen/componentkt_nav_width"
         android:layout_height="match_parent"
         android:layout_gravity="start"

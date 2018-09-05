@@ -78,7 +78,7 @@ abstract class AbsActivity : RxAppCompatActivity() {
 
     private fun isFragmentConsumeBackPressed(fragment: Fragment): Boolean {
         // fragment底下还有子fragment
-        if (fragment.childFragmentManager.fragments != null && fragment.childFragmentManager.fragments.size > 0) {
+        if (fragment.childFragmentManager.fragments.size > 0) {
             val list = fragment.childFragmentManager.fragments
             for (f in list) {
                 if (isFragmentConsumeBackPressed(f)) {
@@ -199,6 +199,9 @@ abstract class AbsActivity : RxAppCompatActivity() {
             }
             // 进行了UseAnkoLayout注解
             val inject = javaClass.getAnnotation(UseAnkoLayout::class.java)
+            if (inject == null){
+                return false
+            }
             return inject.value
         } catch (e: Exception) {
             e.printStackTrace()

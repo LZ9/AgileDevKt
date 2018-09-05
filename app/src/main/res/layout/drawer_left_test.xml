@@ -47,7 +47,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/status_bar_test_drawer_user_name"
+                            android:text="@string/drawer_user_name"
                             android:textColor="@color/white"
                             android:textSize="14sp" />
 
@@ -59,7 +59,7 @@
                             android:background="@drawable/bg_00000000_corner_4_stroke_ffffff"
                             android:paddingEnd="5dp"
                             android:paddingStart="5dp"
-                            android:text="@string/status_bar_test_drawer_level"
+                            android:text="@string/drawer_level"
                             android:textColor="@color/white"
                             android:textSize="12sp" />
 
@@ -71,7 +71,7 @@
                             android:paddingEnd="6dp"
                             android:paddingStart="6dp"
                             android:paddingTop="2dp"
-                            android:text="@string/status_bar_test_drawer_vip_name"
+                            android:text="@string/drawer_vip_name"
                             android:textColor="@color/color_00a0e9"
                             android:textSize="12sp" />
 
@@ -84,7 +84,7 @@
                         android:layout_marginTop="5dp"
                         android:textColor="@color/white"
                         android:textSize="14sp"
-                        tools:text="@string/status_bar_test_drawer_title" />
+                        tools:text="@string/drawer_title" />
 
                 </LinearLayout>
 
@@ -131,7 +131,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/status_bar_test_drawer_activity_num"
+                        android:text="@string/drawer_activity_num"
                         android:textColor="@color/color_666666"
                         android:textSize="15sp"
                         android:textStyle="bold" />
@@ -140,7 +140,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="3dp"
-                        android:text="@string/status_bar_test_drawer_activity"
+                        android:text="@string/drawer_activity"
                         android:textColor="@color/color_333333"
                         android:textSize="14sp" />
 
@@ -156,7 +156,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/status_bar_test_drawer_msg_num"
+                        android:text="@string/drawer_msg_num"
                         android:textColor="@color/color_666666"
                         android:textSize="15sp"
                         android:textStyle="bold" />
@@ -165,7 +165,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="3dp"
-                        android:text="@string/status_bar_test_drawer_msg"
+                        android:text="@string/drawer_msg"
                         android:textColor="@color/color_333333"
                         android:textSize="14sp" />
 
@@ -181,7 +181,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/status_bar_test_drawer_fans_num"
+                        android:text="@string/drawer_fans_num"
                         android:textColor="@color/color_666666"
                         android:textSize="15sp"
                         android:textStyle="bold" />
@@ -190,7 +190,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="3dp"
-                        android:text="@string/status_bar_test_drawer_fans"
+                        android:text="@string/drawer_fans"
                         android:textColor="@color/color_333333"
                         android:textSize="14sp" />
 
@@ -225,7 +225,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="30dp"
                     android:gravity="center"
-                    android:text="@string/status_bar_test_drawer_take_photo"
+                    android:text="@string/drawer_take_photo"
                     android:textColor="@color/color_333333"
                     android:textSize="16sp" />
 
@@ -253,7 +253,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="30dp"
                     android:gravity="center"
-                    android:text="@string/status_bar_test_drawer_comment"
+                    android:text="@string/drawer_comment"
                     android:textColor="@color/color_333333"
                     android:textSize="16sp" />
 
@@ -281,7 +281,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="30dp"
                     android:gravity="center"
-                    android:text="@string/status_bar_test_drawer_album"
+                    android:text="@string/drawer_album"
                     android:textColor="@color/color_333333"
                     android:textSize="16sp" />
 
@@ -309,7 +309,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="30dp"
                     android:gravity="center"
-                    android:text="@string/status_bar_test_drawer_send"
+                    android:text="@string/drawer_send"
                     android:textColor="@color/color_333333"
                     android:textSize="16sp" />
 
@@ -342,7 +342,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="30dp"
                     android:gravity="center"
-                    android:text="@string/status_bar_test_drawer_share"
+                    android:text="@string/drawer_share"
                     android:textColor="@color/color_333333"
                     android:textSize="16sp" />
 
@@ -375,7 +375,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="30dp"
                     android:gravity="center"
-                    android:text="@string/status_bar_test_drawer_call"
+                    android:text="@string/drawer_call"
                     android:textColor="@color/color_333333"
                     android:textSize="16sp" />
 
@@ -403,7 +403,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="30dp"
                     android:gravity="center"
-                    android:text="@string/status_bar_test_drawer_rotate"
+                    android:text="@string/drawer_rotate"
                     android:textColor="@color/color_333333"
                     android:textSize="16sp" />
 
@@ -431,7 +431,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="30dp"
                     android:gravity="center"
-                    android:text="@string/status_bar_test_drawer_delete"
+                    android:text="@string/drawer_delete"
                     android:textColor="@color/color_333333"
                     android:textSize="16sp" />
 
@@ -459,7 +459,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="30dp"
                     android:gravity="center"
-                    android:text="@string/status_bar_test_drawer_location"
+                    android:text="@string/drawer_location"
                     android:textColor="@color/color_333333"
                     android:textSize="16sp" />
 
@@ -508,7 +508,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="6dp"
                     android:gravity="center"
-                    android:text="@string/status_bar_test_drawer_collect"
+                    android:text="@string/drawer_collect"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
             </LinearLayout>
@@ -536,7 +536,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="6dp"
                     android:gravity="center"
-                    android:text="@string/status_bar_test_drawer_wallet"
+                    android:text="@string/drawer_wallet"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
             </LinearLayout>
@@ -564,7 +564,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="6dp"
                     android:gravity="center"
-                    android:text="@string/status_bar_test_drawer_setting"
+                    android:text="@string/drawer_setting"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
             </LinearLayout>
