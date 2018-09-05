@@ -17,7 +17,6 @@ import com.lodz.android.corekt.utils.ToastUtils
 import com.lodz.android.corekt.utils.toastLong
 import com.lodz.android.corekt.utils.toastShort
 import io.reactivex.Observable
-import io.reactivex.functions.Function
 
 /**
  * Toast测试类
@@ -104,13 +103,11 @@ class ToastTestActivity :BaseActivity(){
         // 异步线程
         mIoThreadBtn.setOnClickListener {
             Observable.just("")
-                    .map(object :Function<String, String>{
-                        override fun apply(str: String): String {
-                            val threadName = Thread.currentThread().name
-                            toastShort(threadName)
-                            return str
-                        }
-                    })
+                    .map {str ->
+                        val threadName = Thread.currentThread().name
+                        toastShort(threadName)
+                        str
+                    }
                     .compose(RxUtils.ioToMainObservable())
                     .subscribe()
         }

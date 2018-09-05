@@ -19,7 +19,6 @@ import com.lodz.android.corekt.network.NetInfo
 import com.lodz.android.corekt.network.NetworkManager
 import com.lodz.android.corekt.utils.*
 import io.reactivex.Observable
-import io.reactivex.functions.Function
 
 /**
  * 信息展示测试类
@@ -241,11 +240,9 @@ class InfoTestActivity : BaseActivity() {
         mGpsOpenTv.text = getString(R.string.info_is_gps_open).format(isGpsOpen())
 
         Observable.just("test.txt")
-                .map(object : Function<String, String> {
-                    override fun apply(fileName: String): String {
-                        return getAssetsFileContent(fileName)
-                    }
-                })
+                .map { fileName ->
+                    getAssetsFileContent(fileName)
+                }
                 .compose(RxUtils.ioToMainObservable())
                 .subscribe(object : BaseObserver<String>() {
                     override fun onBaseNext(any: String) {
@@ -306,7 +303,10 @@ class InfoTestActivity : BaseActivity() {
                 return
             }
             val action = intent.action
-            if (action.equals(LocationManager.PROVIDERS_CHANGED_ACTION)) {
+            if (action.isNullOrEmpty()){
+                return
+            }
+            if (action!!.equals(LocationManager.PROVIDERS_CHANGED_ACTION)) {
                 mGpsOpenTv.text = getString(R.string.info_is_gps_open).format(isGpsOpen())
             }
         }

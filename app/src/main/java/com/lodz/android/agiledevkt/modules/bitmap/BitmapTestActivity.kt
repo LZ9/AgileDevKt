@@ -4,9 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.view.View
 import android.widget.ImageView
 import android.widget.SeekBar
 import butterknife.BindView
@@ -21,7 +19,6 @@ import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.corekt.utils.BitmapUtils
 import com.lodz.android.corekt.utils.toastShort
 import io.reactivex.Observable
-import io.reactivex.functions.Function
 import java.util.concurrent.TimeUnit
 
 /**
@@ -303,9 +300,9 @@ class BitmapTestActivity : BaseActivity() {
     /** 显示原始图片 */
     private fun showSrcImg() {
         Observable.just(R.drawable.ic_regret)
-                .map(object : Function<Int, Bitmap> {
-                    override fun apply(id: Int) = BitmapFactory.decodeResource(resources, id)
-                })
+                .map { id ->
+                    BitmapFactory.decodeResource(resources, id)
+                }
                 .compose(RxUtils.ioToMainObservable())
                 .subscribe(object : BaseObserver<Bitmap>() {
                     override fun onBaseNext(any: Bitmap) {
@@ -313,32 +310,28 @@ class BitmapTestActivity : BaseActivity() {
                     }
 
                     override fun onBaseError(e: Throwable) {
-                        mSrcImg.setImageResource(R.drawable.componentkt_ic_launcher)
+                        mSrcImg.setImageResource(R.drawable.ic_launcher)
                     }
                 })
-
     }
 
     /** 显示原始图片的base64 */
     private fun showSrcBase64() {
         Observable.just(R.drawable.ic_regret)
-                .map(object : Function<Int, String> {
-                    override fun apply(id: Int): String {
-                        val bitmap = BitmapFactory.decodeResource(resources, id)
-                        val base64 = BitmapUtils.bitmapToBase64(bitmap, 10)
-                        PrintLog.dS("testtag", "base64 : " + base64)
-                        return base64
+                .map { id ->
+                    val bitmap = BitmapFactory.decodeResource(resources, id)
+                    val base64 = BitmapUtils.bitmapToBase64(bitmap, 10)
+                    PrintLog.dS("testtag", "base64 : " + base64)
+                    base64
+                }
+                .map { base64 ->
+                    val bitmap = BitmapUtils.base64ToBitmap(base64)
+                    if (bitmap == null) {
+                        throw KotlinNullPointerException("bitmap is null")
+                    } else {
+                        bitmap
                     }
-                })
-                .map(object : Function<String, Bitmap> {
-                    override fun apply(base64: String): Bitmap {
-                        val bitmap = BitmapUtils.base64ToBitmap(base64)
-                        if (bitmap == null) {
-                            throw KotlinNullPointerException("bitmap is null")
-                        }
-                        return bitmap
-                    }
-                })
+                }
                 .compose(RxUtils.ioToMainObservable())
                 .subscribe(object : BaseObserver<Bitmap>() {
                     override fun onBaseNext(any: Bitmap) {
@@ -354,28 +347,26 @@ class BitmapTestActivity : BaseActivity() {
     /** 显示Drawable转Bitmap */
     private fun showDrawableAndBitmap() {
         Observable.just(R.drawable.ic_regret)
-                .map(object : Function<Int, Drawable> {
-                    override fun apply(id: Int) = getDrawableCompat(id)
-                })
-                .map(object : Function<Drawable, Bitmap?> {
-                    override fun apply(drawable: Drawable): Bitmap? {
-                        mDrawableImg.setImageDrawable(drawable)
-                        return BitmapUtils.drawableToBitmap(drawable, 331, 162)
+                .map { id ->
+                    getDrawableCompat(id)
+                }
+                .map { drawable ->
+                    mDrawableImg.setImageDrawable(drawable)
+                    val bitmap = BitmapUtils.drawableToBitmap(drawable, 331, 162)
+                    if (bitmap == null) {
+                        throw KotlinNullPointerException("bitmap is null")
+                    } else {
+                        bitmap
                     }
-                })
+                }
                 .compose(RxUtils.ioToMainObservable())
-                .subscribe(object : BaseObserver<Bitmap?>() {
-                    override fun onBaseNext(any: Bitmap?) {
-                        if (any != null) {
-                            mDrawableBitmapImg.setImageBitmap(any)
-                        } else {
-                            mDrawableBitmapImg.setImageResource(R.drawable.componentkt_ic_launcher)
-                        }
-
+                .subscribe(object : BaseObserver<Bitmap>() {
+                    override fun onBaseNext(any: Bitmap) {
+                        mDrawableBitmapImg.setImageBitmap(any)
                     }
 
                     override fun onBaseError(e: Throwable) {
-                        mDrawableBitmapImg.setImageResource(R.drawable.componentkt_ic_launcher)
+                        mDrawableBitmapImg.setImageResource(R.drawable.ic_launcher)
                     }
                 })
     }
@@ -384,48 +375,42 @@ class BitmapTestActivity : BaseActivity() {
     private fun showViewBitmap() {
         Observable.just(mViewImg)
                 .delay(500, TimeUnit.MILLISECONDS)
-                .map(object : Function<View, Bitmap?> {
-                    override fun apply(view: View) = BitmapUtils.viewToBitmap(view)
-                })
+                .map { view ->
+                    val bitmap = BitmapUtils.viewToBitmap(view)
+                    if (bitmap == null) {
+                        throw KotlinNullPointerException("bitmap is null")
+                    } else {
+                        bitmap
+                    }
+                }
                 .compose(RxUtils.ioToMainObservable())
-                .subscribe(object : BaseObserver<Bitmap?>() {
-                    override fun onBaseNext(any: Bitmap?) {
-                        if (any != null) {
-                            mViewBitmapImg.setImageBitmap(any)
-                        } else {
-                            mViewBitmapImg.setImageResource(R.drawable.componentkt_ic_launcher)
-                        }
+                .subscribe(object : BaseObserver<Bitmap>() {
+                    override fun onBaseNext(any: Bitmap) {
+                        mViewBitmapImg.setImageBitmap(any)
                     }
 
                     override fun onBaseError(e: Throwable) {
-                        mViewBitmapImg.setImageResource(R.drawable.componentkt_ic_launcher)
+                        mViewBitmapImg.setImageResource(R.drawable.ic_launcher)
                     }
                 })
-
     }
 
     /** 显示合并图片Bitmap */
     private fun showCombineBitmap() {
         Observable.just("")
-                .map(object : Function<String, Bitmap?> {
-                    override fun apply(t: String): Bitmap? {
-                        val fg = BitmapFactory.decodeResource(resources, R.drawable.ic_regret)
-                        val bgd = BitmapFactory.decodeResource(resources, R.drawable.bg_pokemon)
-                        return BitmapUtils.combineBitmap(fg, bgd, BitmapUtils.CENTER)
-                    }
-                })
+                .map { any ->
+                    val fg = BitmapFactory.decodeResource(resources, R.drawable.ic_regret)
+                    val bgd = BitmapFactory.decodeResource(resources, R.drawable.bg_pokemon)
+                    BitmapUtils.combineBitmap(fg, bgd, BitmapUtils.CENTER)
+                }
                 .compose(RxUtils.ioToMainObservable())
-                .subscribe(object : BaseObserver<Bitmap?>() {
-                    override fun onBaseNext(any: Bitmap?) {
-                        if (any != null) {
-                            mCombineImg.setImageBitmap(any)
-                        } else {
-                            mCombineImg.setImageResource(R.drawable.componentkt_ic_launcher)
-                        }
+                .subscribe(object : BaseObserver<Bitmap>() {
+                    override fun onBaseNext(any: Bitmap) {
+                        mCombineImg.setImageBitmap(any)
                     }
 
                     override fun onBaseError(e: Throwable) {
-                        mCombineImg.setImageResource(R.drawable.componentkt_ic_launcher)
+                        mCombineImg.setImageResource(R.drawable.ic_launcher)
                     }
                 })
     }
@@ -433,44 +418,35 @@ class BitmapTestActivity : BaseActivity() {
     /** 显示灰度图Bitmap */
     private fun showGreyBitmap() {
         Observable.just(R.drawable.ic_regret)
-                .map(object : Function<Int, Bitmap?> {
-                    override fun apply(id: Int) = BitmapUtils.createGreyBitmap(BitmapFactory.decodeResource(resources, id))
-                })
+                .map { id ->
+                    BitmapUtils.createGreyBitmap(BitmapFactory.decodeResource(resources, id))
+                }
                 .compose(RxUtils.ioToMainObservable())
-                .subscribe(object : BaseObserver<Bitmap?>() {
-                    override fun onBaseNext(any: Bitmap?) {
-                        if (any != null) {
-                            mGreyImg.setImageBitmap(any)
-                        } else {
-                            mGreyImg.setImageResource(R.drawable.componentkt_ic_launcher)
-                        }
+                .subscribe(object : BaseObserver<Bitmap>() {
+                    override fun onBaseNext(any: Bitmap) {
+                        mGreyImg.setImageBitmap(any)
                     }
 
                     override fun onBaseError(e: Throwable) {
-                        mGreyImg.setImageResource(R.drawable.componentkt_ic_launcher)
+                        mGreyImg.setImageResource(R.drawable.ic_launcher)
                     }
                 })
-
     }
 
     /** 显示圆角图Bitmap */
     private fun showRoundedCornerBitmap() {
         Observable.just(R.drawable.ic_regret)
-                .map(object : Function<Int, Bitmap?> {
-                    override fun apply(id: Int) = BitmapUtils.createRoundedCornerBitmap(BitmapFactory.decodeResource(resources, id), 12f)
-                })
+                .map { id ->
+                    BitmapUtils.createRoundedCornerBitmap(BitmapFactory.decodeResource(resources, id), 12f)
+                }
                 .compose(RxUtils.ioToMainObservable())
-                .subscribe(object : BaseObserver<Bitmap?>() {
-                    override fun onBaseNext(any: Bitmap?) {
-                        if (any != null) {
-                            mRoundedCornerImg.setImageBitmap(any)
-                        } else {
-                            mRoundedCornerImg.setImageResource(R.drawable.componentkt_ic_launcher)
-                        }
+                .subscribe(object : BaseObserver<Bitmap>() {
+                    override fun onBaseNext(any: Bitmap) {
+                        mRoundedCornerImg.setImageBitmap(any)
                     }
 
                     override fun onBaseError(e: Throwable) {
-                        mRoundedCornerImg.setImageResource(R.drawable.componentkt_ic_launcher)
+                        mRoundedCornerImg.setImageResource(R.drawable.ic_launcher)
                     }
                 })
     }
@@ -478,21 +454,17 @@ class BitmapTestActivity : BaseActivity() {
     /** 显示圆形图Bitmap */
     private fun showRoundedBitmap() {
         Observable.just(R.drawable.ic_regret)
-                .map(object : Function<Int, Bitmap?> {
-                    override fun apply(id: Int) = BitmapUtils.createRoundBitmap(BitmapFactory.decodeResource(resources, id))
-                })
+                .map { id ->
+                    BitmapUtils.createRoundBitmap(BitmapFactory.decodeResource(resources, id))
+                }
                 .compose(RxUtils.ioToMainObservable())
-                .subscribe(object : BaseObserver<Bitmap?>() {
-                    override fun onBaseNext(any: Bitmap?) {
-                        if (any != null) {
-                            mRoundedImg.setImageBitmap(any)
-                        } else {
-                            mRoundedImg.setImageResource(R.drawable.componentkt_ic_launcher)
-                        }
+                .subscribe(object : BaseObserver<Bitmap>() {
+                    override fun onBaseNext(any: Bitmap) {
+                        mRoundedImg.setImageBitmap(any)
                     }
 
                     override fun onBaseError(e: Throwable) {
-                        mRoundedImg.setImageResource(R.drawable.componentkt_ic_launcher)
+                        mRoundedImg.setImageResource(R.drawable.ic_launcher)
                     }
                 })
     }
@@ -500,21 +472,17 @@ class BitmapTestActivity : BaseActivity() {
     /** 显示倒影图Bitmap */
     private fun showReflectionBitmap() {
         Observable.just(R.drawable.ic_regret)
-                .map(object : Function<Int, Bitmap?> {
-                    override fun apply(id: Int) = BitmapUtils.createReflectionBitmap(BitmapFactory.decodeResource(resources, id))
-                })
+                .map { id ->
+                    BitmapUtils.createReflectionBitmap(BitmapFactory.decodeResource(resources, id))
+                }
                 .compose(RxUtils.ioToMainObservable())
-                .subscribe(object : BaseObserver<Bitmap?>() {
-                    override fun onBaseNext(any: Bitmap?) {
-                        if (any != null) {
-                            mReflectionImg.setImageBitmap(any)
-                        } else {
-                            mReflectionImg.setImageResource(R.drawable.componentkt_ic_launcher)
-                        }
+                .subscribe(object : BaseObserver<Bitmap>() {
+                    override fun onBaseNext(any: Bitmap) {
+                        mReflectionImg.setImageBitmap(any)
                     }
 
                     override fun onBaseError(e: Throwable) {
-                        mReflectionImg.setImageResource(R.drawable.componentkt_ic_launcher)
+                        mReflectionImg.setImageResource(R.drawable.ic_launcher)
                     }
                 })
     }
@@ -522,21 +490,17 @@ class BitmapTestActivity : BaseActivity() {
     /** 显示旋转90度Bitmap */
     private fun showRotateBitmap() {
         Observable.just(R.drawable.ic_regret)
-                .map(object : Function<Int, Bitmap?> {
-                    override fun apply(id: Int) = BitmapUtils.rotateBitmap(BitmapFactory.decodeResource(resources, id), 45)
-                })
+                .map { id ->
+                    BitmapUtils.rotateBitmap(BitmapFactory.decodeResource(resources, id), 45)
+                }
                 .compose(RxUtils.ioToMainObservable())
-                .subscribe(object : BaseObserver<Bitmap?>() {
-                    override fun onBaseNext(any: Bitmap?) {
-                        if (any != null) {
-                            mRotateImg.setImageBitmap(any)
-                        } else {
-                            mRotateImg.setImageResource(R.drawable.componentkt_ic_launcher)
-                        }
+                .subscribe(object : BaseObserver<Bitmap>() {
+                    override fun onBaseNext(any: Bitmap) {
+                        mRotateImg.setImageBitmap(any)
                     }
 
                     override fun onBaseError(e: Throwable) {
-                        mRotateImg.setImageResource(R.drawable.componentkt_ic_launcher)
+                        mRotateImg.setImageResource(R.drawable.ic_launcher)
                     }
                 })
     }
@@ -544,21 +508,17 @@ class BitmapTestActivity : BaseActivity() {
     /** 显示水平翻转Bitmap */
     private fun showReverseHorizontalBitmap() {
         Observable.just(R.drawable.ic_regret)
-                .map(object : Function<Int, Bitmap?> {
-                    override fun apply(id: Int) = BitmapUtils.reverseBitmapHorizontal(BitmapFactory.decodeResource(resources, id))
-                })
+                .map { id ->
+                    BitmapUtils.reverseBitmapHorizontal(BitmapFactory.decodeResource(resources, id))
+                }
                 .compose(RxUtils.ioToMainObservable())
-                .subscribe(object : BaseObserver<Bitmap?>() {
-                    override fun onBaseNext(any: Bitmap?) {
-                        if (any != null) {
-                            mReverseHorizontalImg.setImageBitmap(any)
-                        } else {
-                            mReverseHorizontalImg.setImageResource(R.drawable.componentkt_ic_launcher)
-                        }
+                .subscribe(object : BaseObserver<Bitmap>() {
+                    override fun onBaseNext(any: Bitmap) {
+                        mReverseHorizontalImg.setImageBitmap(any)
                     }
 
                     override fun onBaseError(e: Throwable) {
-                        mReverseHorizontalImg.setImageResource(R.drawable.componentkt_ic_launcher)
+                        mReverseHorizontalImg.setImageResource(R.drawable.ic_launcher)
                     }
                 })
     }
@@ -566,21 +526,17 @@ class BitmapTestActivity : BaseActivity() {
     /** 显示垂直翻转Bitmap */
     private fun showReverseVerticalBitmap() {
         Observable.just(R.drawable.ic_regret)
-                .map(object : Function<Int, Bitmap?> {
-                    override fun apply(id: Int) = BitmapUtils.reverseBitmapVertical(BitmapFactory.decodeResource(resources, id))
-                })
+                .map { id ->
+                    BitmapUtils.reverseBitmapVertical(BitmapFactory.decodeResource(resources, id))
+                }
                 .compose(RxUtils.ioToMainObservable())
-                .subscribe(object : BaseObserver<Bitmap?>() {
-                    override fun onBaseNext(any: Bitmap?) {
-                        if (any != null) {
-                            mReverseVerticalImg.setImageBitmap(any)
-                        } else {
-                            mReverseVerticalImg.setImageResource(R.drawable.componentkt_ic_launcher)
-                        }
+                .subscribe(object : BaseObserver<Bitmap>() {
+                    override fun onBaseNext(any: Bitmap) {
+                        mReverseVerticalImg.setImageBitmap(any)
                     }
 
                     override fun onBaseError(e: Throwable) {
-                        mReverseVerticalImg.setImageResource(R.drawable.componentkt_ic_launcher)
+                        mReverseVerticalImg.setImageResource(R.drawable.ic_launcher)
                     }
                 })
     }
@@ -588,21 +544,17 @@ class BitmapTestActivity : BaseActivity() {
     /** 显示色调调整Bitmap */
     private fun showToneBitmap(progress: Int) {
         Observable.just(progress)
-                .map(object : Function<Int, Bitmap?> {
-                    override fun apply(progress: Int) = BitmapUtils.setBitmapTone(BitmapFactory.decodeResource(resources, R.drawable.ic_regret), progress)
-                })
+                .map { value ->
+                    BitmapUtils.setBitmapTone(BitmapFactory.decodeResource(resources, R.drawable.ic_regret), value)
+                }
                 .compose(RxUtils.ioToMainObservable())
-                .subscribe(object : BaseObserver<Bitmap?>() {
-                    override fun onBaseNext(any: Bitmap?) {
-                        if (any != null) {
-                            mToneImg.setImageBitmap(any)
-                        } else {
-                            mToneImg.setImageResource(R.drawable.componentkt_ic_launcher)
-                        }
+                .subscribe(object : BaseObserver<Bitmap>() {
+                    override fun onBaseNext(any: Bitmap) {
+                        mToneImg.setImageBitmap(any)
                     }
 
                     override fun onBaseError(e: Throwable) {
-                        mToneImg.setImageResource(R.drawable.componentkt_ic_launcher)
+                        mToneImg.setImageResource(R.drawable.ic_launcher)
                     }
                 })
     }
@@ -610,21 +562,17 @@ class BitmapTestActivity : BaseActivity() {
     /** 显示饱和度调整Bitmap */
     private fun showSaturationBitmap(progress: Float) {
         Observable.just(progress)
-                .map(object : Function<Float, Bitmap?> {
-                    override fun apply(progress: Float) = BitmapUtils.setBitmapSaturation(BitmapFactory.decodeResource(resources, R.drawable.ic_regret), progress)
-                })
+                .map { value ->
+                    BitmapUtils.setBitmapSaturation(BitmapFactory.decodeResource(resources, R.drawable.ic_regret), progress)
+                }
                 .compose(RxUtils.ioToMainObservable())
-                .subscribe(object : BaseObserver<Bitmap?>() {
-                    override fun onBaseNext(any: Bitmap?) {
-                        if (any != null) {
-                            mSaturationImg.setImageBitmap(any)
-                        } else {
-                            mSaturationImg.setImageResource(R.drawable.componentkt_ic_launcher)
-                        }
+                .subscribe(object : BaseObserver<Bitmap>() {
+                    override fun onBaseNext(any: Bitmap) {
+                        mSaturationImg.setImageBitmap(any)
                     }
 
                     override fun onBaseError(e: Throwable) {
-                        mSaturationImg.setImageResource(R.drawable.componentkt_ic_launcher)
+                        mSaturationImg.setImageResource(R.drawable.ic_launcher)
                     }
                 })
     }
@@ -632,21 +580,17 @@ class BitmapTestActivity : BaseActivity() {
     /** 显示亮度值调整Bitmap */
     private fun showLuminanceBitmap(progress: Float) {
         Observable.just(progress)
-                .map(object : Function<Float, Bitmap?> {
-                    override fun apply(progress: Float) = BitmapUtils.setBitmapLuminance(BitmapFactory.decodeResource(resources, R.drawable.ic_regret), progress)
-                })
+                .map { value ->
+                    BitmapUtils.setBitmapLuminance(BitmapFactory.decodeResource(resources, R.drawable.ic_regret), progress)
+                }
                 .compose(RxUtils.ioToMainObservable())
-                .subscribe(object : BaseObserver<Bitmap?>() {
-                    override fun onBaseNext(any: Bitmap?) {
-                        if (any != null) {
-                            mLuminanceImg.setImageBitmap(any)
-                        } else {
-                            mLuminanceImg.setImageResource(R.drawable.componentkt_ic_launcher)
-                        }
+                .subscribe(object : BaseObserver<Bitmap>() {
+                    override fun onBaseNext(any: Bitmap) {
+                        mLuminanceImg.setImageBitmap(any)
                     }
 
                     override fun onBaseError(e: Throwable) {
-                        mLuminanceImg.setImageResource(R.drawable.componentkt_ic_launcher)
+                        mLuminanceImg.setImageResource(R.drawable.ic_launcher)
                     }
                 })
     }
@@ -654,21 +598,17 @@ class BitmapTestActivity : BaseActivity() {
     /** 显示色相值调整Bitmap */
     private fun showHueBitmap(progress: Float) {
         Observable.just(progress)
-                .map(object : Function<Float, Bitmap?> {
-                    override fun apply(progress: Float) = BitmapUtils.setBitmapHue(BitmapFactory.decodeResource(resources, R.drawable.ic_regret), progress)
-                })
+                .map { value ->
+                    BitmapUtils.setBitmapHue(BitmapFactory.decodeResource(resources, R.drawable.ic_regret), progress)
+                }
                 .compose(RxUtils.ioToMainObservable())
-                .subscribe(object : BaseObserver<Bitmap?>() {
-                    override fun onBaseNext(any: Bitmap?) {
-                        if (any != null) {
-                            mHueImg.setImageBitmap(any)
-                        } else {
-                            mHueImg.setImageResource(R.drawable.componentkt_ic_launcher)
-                        }
+                .subscribe(object : BaseObserver<Bitmap>() {
+                    override fun onBaseNext(any: Bitmap) {
+                        mHueImg.setImageBitmap(any)
                     }
 
                     override fun onBaseError(e: Throwable) {
-                        mHueImg.setImageResource(R.drawable.componentkt_ic_launcher)
+                        mHueImg.setImageResource(R.drawable.ic_launcher)
                     }
                 })
     }
@@ -677,21 +617,17 @@ class BitmapTestActivity : BaseActivity() {
     /** 显示怀旧效果Bitmap */
     private fun showNostalgicBitmap() {
         Observable.just(R.drawable.ic_regret)
-                .map(object : Function<Int, Bitmap?> {
-                    override fun apply(id: Int) = BitmapUtils.createNostalgicBitmap(BitmapFactory.decodeResource(resources, id))
-                })
+                .map { id ->
+                    BitmapUtils.createNostalgicBitmap(BitmapFactory.decodeResource(resources, id))
+                }
                 .compose(RxUtils.ioToMainObservable())
-                .subscribe(object : BaseObserver<Bitmap?>() {
-                    override fun onBaseNext(any: Bitmap?) {
-                        if (any != null) {
-                            mNostalgicImg.setImageBitmap(any)
-                        } else {
-                            mNostalgicImg.setImageResource(R.drawable.componentkt_ic_launcher)
-                        }
+                .subscribe(object : BaseObserver<Bitmap>() {
+                    override fun onBaseNext(any: Bitmap) {
+                        mNostalgicImg.setImageBitmap(any)
                     }
 
                     override fun onBaseError(e: Throwable) {
-                        mNostalgicImg.setImageResource(R.drawable.componentkt_ic_launcher)
+                        mNostalgicImg.setImageResource(R.drawable.ic_launcher)
                     }
                 })
     }
@@ -699,21 +635,17 @@ class BitmapTestActivity : BaseActivity() {
     /** 显示光照强度Bitmap */
     private fun showSunshineBitmap(progress: Float) {
         Observable.just(progress)
-                .map(object : Function<Float, Bitmap?> {
-                    override fun apply(progress: Float) = BitmapUtils.createSunshineBitmap(BitmapFactory.decodeResource(resources, R.drawable.ic_regret), 150, 150, progress)
-                })
+                .map { value ->
+                    BitmapUtils.createSunshineBitmap(BitmapFactory.decodeResource(resources, R.drawable.ic_regret), 150, 150, progress)
+                }
                 .compose(RxUtils.ioToMainObservable())
-                .subscribe(object : BaseObserver<Bitmap?>() {
-                    override fun onBaseNext(any: Bitmap?) {
-                        if (any != null) {
-                            mSunshineImg.setImageBitmap(any)
-                        } else {
-                            mSunshineImg.setImageResource(R.drawable.componentkt_ic_launcher)
-                        }
+                .subscribe(object : BaseObserver<Bitmap>() {
+                    override fun onBaseNext(any: Bitmap) {
+                        mSunshineImg.setImageBitmap(any)
                     }
 
                     override fun onBaseError(e: Throwable) {
-                        mSunshineImg.setImageResource(R.drawable.componentkt_ic_launcher)
+                        mSunshineImg.setImageResource(R.drawable.ic_launcher)
                     }
                 })
     }
@@ -721,21 +653,17 @@ class BitmapTestActivity : BaseActivity() {
     /** 显示底片效果Bitmap */
     private fun showFilmBitmap() {
         Observable.just(R.drawable.ic_regret)
-                .map(object : Function<Int, Bitmap?> {
-                    override fun apply(id: Int) = BitmapUtils.createFilmBitmap(BitmapFactory.decodeResource(resources, id))
-                })
+                .map { id ->
+                    BitmapUtils.createFilmBitmap(BitmapFactory.decodeResource(resources, id))
+                }
                 .compose(RxUtils.ioToMainObservable())
-                .subscribe(object : BaseObserver<Bitmap?>() {
-                    override fun onBaseNext(any: Bitmap?) {
-                        if (any != null) {
-                            mFilmImg.setImageBitmap(any)
-                        } else {
-                            mFilmImg.setImageResource(R.drawable.componentkt_ic_launcher)
-                        }
+                .subscribe(object : BaseObserver<Bitmap>() {
+                    override fun onBaseNext(any: Bitmap) {
+                        mFilmImg.setImageBitmap(any)
                     }
 
                     override fun onBaseError(e: Throwable) {
-                        mFilmImg.setImageResource(R.drawable.componentkt_ic_launcher)
+                        mFilmImg.setImageResource(R.drawable.ic_launcher)
                     }
                 })
     }
@@ -743,21 +671,17 @@ class BitmapTestActivity : BaseActivity() {
     /** 显示锐化效果Bitmap */
     private fun showSharpenBitmap() {
         Observable.just(R.drawable.ic_regret)
-                .map(object : Function<Int, Bitmap?> {
-                    override fun apply(id: Int) = BitmapUtils.createSharpenBitmap(BitmapFactory.decodeResource(resources, id))
-                })
+                .map { id ->
+                    BitmapUtils.createSharpenBitmap(BitmapFactory.decodeResource(resources, id))
+                }
                 .compose(RxUtils.ioToMainObservable())
-                .subscribe(object : BaseObserver<Bitmap?>() {
-                    override fun onBaseNext(any: Bitmap?) {
-                        if (any != null) {
-                            mSharpenImg.setImageBitmap(any)
-                        } else {
-                            mSharpenImg.setImageResource(R.drawable.componentkt_ic_launcher)
-                        }
+                .subscribe(object : BaseObserver<Bitmap>() {
+                    override fun onBaseNext(any: Bitmap) {
+                        mSharpenImg.setImageBitmap(any)
                     }
 
                     override fun onBaseError(e: Throwable) {
-                        mSharpenImg.setImageResource(R.drawable.componentkt_ic_launcher)
+                        mSharpenImg.setImageResource(R.drawable.ic_launcher)
                     }
                 })
     }
@@ -765,21 +689,17 @@ class BitmapTestActivity : BaseActivity() {
     /** 显示浮雕效果Bitmap */
     private fun showEmbossBitmap() {
         Observable.just(R.drawable.ic_regret)
-                .map(object : Function<Int, Bitmap?> {
-                    override fun apply(id: Int) = BitmapUtils.createEmbossBitmap(BitmapFactory.decodeResource(resources, id))
-                })
+                .map { id ->
+                    BitmapUtils.createEmbossBitmap(BitmapFactory.decodeResource(resources, id))
+                }
                 .compose(RxUtils.ioToMainObservable())
-                .subscribe(object : BaseObserver<Bitmap?>() {
-                    override fun onBaseNext(any: Bitmap?) {
-                        if (any != null) {
-                            mEmbossImg.setImageBitmap(any)
-                        } else {
-                            mEmbossImg.setImageResource(R.drawable.componentkt_ic_launcher)
-                        }
+                .subscribe(object : BaseObserver<Bitmap>() {
+                    override fun onBaseNext(any: Bitmap) {
+                        mEmbossImg.setImageBitmap(any)
                     }
 
                     override fun onBaseError(e: Throwable) {
-                        mEmbossImg.setImageResource(R.drawable.componentkt_ic_launcher)
+                        mEmbossImg.setImageResource(R.drawable.ic_launcher)
                     }
                 })
     }

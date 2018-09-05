@@ -21,7 +21,6 @@ import com.lodz.android.corekt.utils.toastShort
 import com.lodz.android.imageloaderkt.ImageLoader
 import com.trello.rxlifecycle2.android.ActivityEvent
 import io.reactivex.Observable
-import io.reactivex.functions.Function
 import java.util.*
 
 /**
@@ -162,12 +161,10 @@ class StatusBarDrawerTestActivity : AbsActivity() {
     private fun refreshTitle() {
         val random = Random().nextInt(TITLES.size)
         Observable.just(TITLES.get(random))
-                .map(object : Function<String, String> {
-                    override fun apply(title: String): String {
-                        Thread.sleep(1000)
-                        return title
-                    }
-                })
+                .map {title ->
+                    Thread.sleep(1000)
+                    title
+                }
                 .compose(RxUtils.ioToMainObservable())
                 .compose(bindUntilEvent(ActivityEvent.DESTROY))
                 .subscribe(object : ProgressObserver<String>() {
