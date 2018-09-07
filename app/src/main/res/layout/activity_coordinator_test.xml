@@ -52,7 +52,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:titleBarBackground="@color/transparent"
-                        app:titleText="@string/status_bar_test_coordinator"
                         app:titleTextColor="@color/white">
 
                     </com.lodz.android.componentkt.widget.base.TitleBarLayout>

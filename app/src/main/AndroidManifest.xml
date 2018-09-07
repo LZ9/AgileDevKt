@@ -214,14 +214,14 @@
 
         <activity
             android:name=".modules.drawer.DrawerTestActivity"
-            android:label="带DrawerLayout的状态栏测试类"
+            android:label="侧滑栏测试类"
             android:screenOrientation="portrait">
 
         </activity>
 
         <activity
-            android:name=".modules.statusbar.StatusBarCoordinatorTestActivity"
-            android:label="带CoordinatorLayout的状态栏测试类"
+            android:name=".modules.coordinator.CoordinatorTestActivity"
+            android:label="Coordinator测试类"
             android:screenOrientation="portrait">
 
         </activity>

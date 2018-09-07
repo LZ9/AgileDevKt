@@ -10,6 +10,7 @@ import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.lodz.android.agiledevkt.R
+import com.lodz.android.agiledevkt.modules.coordinator.CoordinatorTestActivity
 import com.lodz.android.agiledevkt.modules.drawer.DrawerTestActivity
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.componentkt.base.activity.BaseActivity
@@ -87,7 +88,7 @@ class StatusBarTestActivity : BaseActivity() {
         }
 
         mTestCoordinatorBtn.setOnClickListener {
-            StatusBarCoordinatorTestActivity.start(getContext())
+            CoordinatorTestActivity.start(getContext(), getString(R.string.status_bar_test_coordinator))
         }
     }
 

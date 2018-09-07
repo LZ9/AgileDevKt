@@ -1,4 +1,4 @@
-package com.lodz.android.agiledevkt.modules.statusbar
+package com.lodz.android.agiledevkt.modules.coordinator
 
 import android.content.Context
 import android.content.Intent
@@ -13,6 +13,8 @@ import android.widget.ImageView
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.lodz.android.agiledevkt.R
+import com.lodz.android.agiledevkt.modules.main.MainActivity
+import com.lodz.android.agiledevkt.modules.statusbar.CoordinatorDataAdapter
 import com.lodz.android.componentkt.base.activity.AbsActivity
 import com.lodz.android.componentkt.widget.base.TitleBarLayout
 import com.lodz.android.componentkt.widget.contract.OnAppBarStateChangeListener
@@ -23,11 +25,12 @@ import java.util.*
  * 带CoordinatorLayout的状态栏测试类
  * Created by zhouL on 2018/9/5.
  */
-class StatusBarCoordinatorTestActivity :AbsActivity(){
+class CoordinatorTestActivity :AbsActivity(){
 
     companion object {
-        fun start(context: Context){
-            val intent = Intent(context, StatusBarCoordinatorTestActivity::class.java)
+        fun start(context: Context, title: String) {
+            val intent = Intent(context, CoordinatorTestActivity::class.java)
+            intent.putExtra(MainActivity.EXTRA_TITLE_NAME, title)
             context.startActivity(intent)
         }
     }
@@ -54,10 +57,11 @@ class StatusBarCoordinatorTestActivity :AbsActivity(){
     /** 列表适配器 */
     private lateinit var mAdapter: CoordinatorDataAdapter
 
-    override fun getAbsLayoutId() = R.layout.activity_statusbar_coordinator_test
+    override fun getAbsLayoutId() = R.layout.activity_coordinator_test
 
     override fun findViews(savedInstanceState: Bundle?) {
         ButterKnife.bind(this)
+        mTitleBarLayout.setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME))
         initRecyclerView()
         StatusBarUtil.setTransparentFullyForOffsetView(getContext(), mToolbar)
     }
