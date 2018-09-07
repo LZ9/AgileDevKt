@@ -270,7 +270,9 @@
     <string name="drawer_delete">删除</string>
     <string name="drawer_location">定位</string>
 
-
+    <!--Snackbar-->
+    <string name="snackbar_title">您有一条消息，请注意查收</string>
+    <string name="snackbar_sign">签收</string>
 
 
 </resources>

@@ -2,6 +2,7 @@ package com.lodz.android.agiledevkt.modules.coordinator
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.FloatingActionButton
@@ -18,7 +19,11 @@ import com.lodz.android.agiledevkt.modules.statusbar.CoordinatorDataAdapter
 import com.lodz.android.componentkt.base.activity.AbsActivity
 import com.lodz.android.componentkt.widget.base.TitleBarLayout
 import com.lodz.android.componentkt.widget.contract.OnAppBarStateChangeListener
+import com.lodz.android.corekt.anko.dp2px
+import com.lodz.android.corekt.anko.getColorCompat
+import com.lodz.android.corekt.utils.SnackbarUtils
 import com.lodz.android.corekt.utils.StatusBarUtil
+import com.lodz.android.corekt.utils.toastShort
 import java.util.*
 
 /**
@@ -89,7 +94,15 @@ class CoordinatorTestActivity :AbsActivity(){
 
         // 浮动按钮
         mFloatingActionBtn.setOnClickListener {
-
+            SnackbarUtils.createShort(mRecyclerView, getString(R.string.snackbar_title))
+                    .setTextColor(Color.WHITE)
+                    .addLeftImage(R.drawable.ic_launcher, dp2px(5).toInt())
+                    .getSnackbar()
+                    .setActionTextColor(getColorCompat(R.color.color_ea5e5e))
+                    .setAction(getString(R.string.snackbar_sign), { view ->
+                        toastShort(R.string.snackbar_sign)
+                    })
+                    .show()
         }
 
         mAppBarLayout.addOnOffsetChangedListener(object : OnAppBarStateChangeListener(){
