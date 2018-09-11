@@ -30,11 +30,11 @@ import java.util.*
  * 带CoordinatorLayout的状态栏测试类
  * Created by zhouL on 2018/9/5.
  */
-class CoordinatorTestActivity :AbsActivity(){
+class CoorStatusBarTestActivity :AbsActivity(){
 
     companion object {
         fun start(context: Context, title: String) {
-            val intent = Intent(context, CoordinatorTestActivity::class.java)
+            val intent = Intent(context, CoorStatusBarTestActivity::class.java)
             intent.putExtra(MainActivity.EXTRA_TITLE_NAME, title)
             context.startActivity(intent)
         }

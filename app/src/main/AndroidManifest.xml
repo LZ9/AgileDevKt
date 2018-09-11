@@ -220,7 +220,7 @@
         </activity>
 
         <activity
-            android:name=".modules.coordinator.CoordinatorTestActivity"
+            android:name=".modules.coordinator.CoorStatusBarTestActivity"
             android:label="Coordinator测试类"
             android:screenOrientation="portrait">
 

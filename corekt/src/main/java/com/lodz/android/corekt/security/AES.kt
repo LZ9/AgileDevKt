@@ -18,10 +18,10 @@ object AES {
     /** AES 偏移量，必须为16位 */
     private const val IV = "123456abc2345678"
 
-    /** 加密原始数据[dataBytes]，秘钥[key]必须为16位 */
+    /** 加密原始数据[dataBytes]，秘钥[key]必须为16位，填充方式[transformation]默认"AES/CBC/NoPadding"，偏移量[iv]默认"123456abc2345678" */
     fun encrypt(data: String, key: String, transformation: String = FORMAT, iv: String = IV): String? = encrypt(data.toByteArray(), key, transformation, iv)
 
-    /** 加密原始数据[dataBytes]，秘钥[key]必须为16位，填充方式[transformation]，偏移量[iv] */
+    /** 加密原始数据[dataBytes]，秘钥[key]必须为16位，填充方式[transformation]默认"AES/CBC/NoPadding"，偏移量[iv]默认"123456abc2345678" */
     fun encrypt(dataBytes: ByteArray, key: String, transformation: String = FORMAT, iv: String = IV): String? {
         if (dataBytes.isEmpty() || key.isEmpty()) {
             return null
@@ -54,7 +54,7 @@ object AES {
         return null
     }
 
-    /** 解密密文[data]，秘钥[key]必须为16位 */
+    /** 解密密文[data]，秘钥[key]必须为16位，填充方式[transformation]默认"AES/CBC/NoPadding"，偏移量[iv]默认"123456abc2345678" */
     fun decrypt(data: String, key: String, transformation: String = FORMAT, iv: String = IV): String? {
         if (data.isEmpty() || key.isEmpty()) {
             return null
