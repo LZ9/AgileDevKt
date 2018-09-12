@@ -62,7 +62,7 @@ class CoorStatusBarTestActivity :AbsActivity(){
     /** 列表适配器 */
     private lateinit var mAdapter: CoordinatorDataAdapter
 
-    override fun getAbsLayoutId() = R.layout.activity_coordinator_test
+    override fun getAbsLayoutId() = R.layout.activity_coor_status_bar_test
 
     override fun findViews(savedInstanceState: Bundle?) {
         ButterKnife.bind(this)
@@ -94,7 +94,7 @@ class CoorStatusBarTestActivity :AbsActivity(){
 
         // 浮动按钮
         mFloatingActionBtn.setOnClickListener {
-            SnackbarUtils.createShort(mRecyclerView, getString(R.string.snackbar_title))
+            SnackbarUtils.createShort(mRecyclerView, getString(R.string.snackbar_sign_title))
                     .setTextColor(Color.WHITE)
                     .addLeftImage(R.drawable.ic_launcher, dp2px(5).toInt())
                     .getSnackbar()

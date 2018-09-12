@@ -3,6 +3,7 @@ package com.lodz.android.corekt.utils
 import android.support.annotation.ColorInt
 import android.support.annotation.DrawableRes
 import android.support.annotation.LayoutRes
+import android.support.annotation.StringRes
 import android.support.design.widget.Snackbar
 import android.util.TypedValue
 import android.view.Gravity
@@ -29,6 +30,13 @@ class SnackbarUtils private constructor() {
             return utils
         }
 
+        /** 创建一个短时Snackbar，控件容器[view]，内容文字[textRes] */
+        fun createShort(view: View, @StringRes textRes: Int): SnackbarUtils {
+            val utils = SnackbarUtils()
+            utils.mSnackbar = Snackbar.make(view, textRes, Snackbar.LENGTH_SHORT)
+            return utils
+        }
+
         /** 创建一个长时Snackbar，控件容器[view]，内容文字[text] */
         fun createLong(view: View, text: String): SnackbarUtils {
             val utils = SnackbarUtils()
@@ -36,10 +44,24 @@ class SnackbarUtils private constructor() {
             return utils
         }
 
+        /** 创建一个长时Snackbar，控件容器[view]，内容文字[textRes] */
+        fun createLong(view: View, @StringRes textRes: Int): SnackbarUtils {
+            val utils = SnackbarUtils()
+            utils.mSnackbar = Snackbar.make(view, textRes, Snackbar.LENGTH_LONG)
+            return utils
+        }
+
         /** 创建一个自定义时长Snackbar，控件容器[view]，内容文字[text]，时长[duration]以毫秒为单位 */
         fun createCustom(view: View, text: String, duration: Int): SnackbarUtils {
             val utils = SnackbarUtils()
             utils.mSnackbar = Snackbar.make(view, text, Snackbar.LENGTH_INDEFINITE).setDuration(duration)
+            return utils
+        }
+
+        /** 创建一个自定义时长Snackbar，控件容器[view]，内容文字[textRes]，时长[duration]以毫秒为单位 */
+        fun createCustom(view: View, @StringRes textRes: Int, duration: Int): SnackbarUtils {
+            val utils = SnackbarUtils()
+            utils.mSnackbar = Snackbar.make(view, textRes, Snackbar.LENGTH_INDEFINITE).setDuration(duration)
             return utils
         }
     }
@@ -51,7 +73,7 @@ class SnackbarUtils private constructor() {
     }
 
     /** 设置文字大小[sizeSp]（单位SP） */
-    fun setTextSize(sizeSp:Int): SnackbarUtils{
+    fun setTextSize(sizeSp: Int): SnackbarUtils {
         mSnackbar.view.findViewById<TextView>(R.id.snackbar_text).setTextSize(TypedValue.COMPLEX_UNIT_SP, sizeSp.toFloat())
         return this
     }
@@ -80,14 +102,25 @@ class SnackbarUtils private constructor() {
         return this
     }
 
-    /** 替换内容布局[layoutId] */
-    fun replaceLayoutView(@LayoutRes layoutId: Int): SnackbarUtils {
+    /** 替换内容布局[layoutId]，布局宽度[width]（默认LinearLayout.LayoutParams.MATCH_PARENT），布局高度[height]（默认LinearLayout.LayoutParams.MATCH_PARENT） */
+    fun replaceLayoutView(@LayoutRes layoutId: Int, width: Int = LinearLayout.LayoutParams.MATCH_PARENT, height: Int = LinearLayout.LayoutParams.MATCH_PARENT): SnackbarUtils {
         val snackbarLayout = mSnackbar.view as Snackbar.SnackbarLayout
         snackbarLayout.removeAllViews()
-        val layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
+        val layoutParams = LinearLayout.LayoutParams(width, height)
         layoutParams.gravity = Gravity.CENTER_VERTICAL
         snackbarLayout.setPadding(0, 0, 0, 0)
         snackbarLayout.addView(LayoutInflater.from(snackbarLayout.context).inflate(layoutId, null), 0, layoutParams)
+        return this
+    }
+
+    /** 替换内容布局[view]，布局宽度[width]（默认LinearLayout.LayoutParams.MATCH_PARENT），布局高度[height]（默认LinearLayout.LayoutParams.MATCH_PARENT） */
+    fun replaceLayoutView(view: View, width: Int = LinearLayout.LayoutParams.MATCH_PARENT, height: Int = LinearLayout.LayoutParams.MATCH_PARENT): SnackbarUtils {
+        val snackbarLayout = mSnackbar.view as Snackbar.SnackbarLayout
+        snackbarLayout.removeAllViews()
+        val layoutParams = LinearLayout.LayoutParams(width, height)
+        layoutParams.gravity = Gravity.CENTER_VERTICAL
+        snackbarLayout.setPadding(0, 0, 0, 0)
+        snackbarLayout.addView(view, 0, layoutParams)
         return this
     }
 
@@ -95,7 +128,7 @@ class SnackbarUtils private constructor() {
     fun getSnackbar() = mSnackbar
 
     /** 显示Snackbar */
-    fun show(){
+    fun show() {
         mSnackbar.show()
     }
 }

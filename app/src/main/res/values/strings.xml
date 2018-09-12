@@ -271,8 +271,13 @@
     <string name="drawer_location">定位</string>
 
     <!--Snackbar-->
-    <string name="snackbar_title">您有一条消息，请注意查收</string>
     <string name="snackbar_sign">签收</string>
-
+    <string name="snackbar_sign_title">您有一条消息，请注意查收</string>
+    <string name="snackbar_attention">关注</string>
+    <string name="snackbar_cancel_attention">取关</string>
+    <string name="snackbar_attention_title">您已关注小姐姐了~</string>
+    <string name="snackbar_custom_img">自定义图片</string>
+    <string name="snackbar_custom_layout">自定义布局</string>
+    <string name="snackbar_detail">详情</string>
 
 </resources>
