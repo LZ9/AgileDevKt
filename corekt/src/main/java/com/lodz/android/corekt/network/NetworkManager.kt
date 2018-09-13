@@ -164,7 +164,9 @@ class NetworkManager private constructor() {
             TelephonyManager.NETWORK_TYPE_TD_SCDMA,
             TelephonyManager.NETWORK_TYPE_IWLAN
             -> NetInfo.NETWORK_TYPE_3G
-            TelephonyManager.NETWORK_TYPE_LTE -> NetInfo.NETWORK_TYPE_4G
+            TelephonyManager.NETWORK_TYPE_LTE,
+            19
+            -> NetInfo.NETWORK_TYPE_4G
             else -> NetInfo.NETWORK_TYPE_UNKNOWN
         }
         mNetInfo.type = type
@@ -175,7 +177,25 @@ class NetworkManager private constructor() {
     /** 从网络信息[info]中获取网络类型 */
     private fun getType(info: NetworkInfo): Int {
         try {
-            return info.type //这里做异常捕获防止一些ROM被修改这个类型不是int型
+            //这里做类型判断防止一些ROM被修改这个类型不是int型
+            val type: Any? = info.type
+            if (type == null){
+                return NetInfo.NETWORK_TYPE_UNKNOWN
+            }
+            if (type is Int) {
+                return type.toInt()
+            }
+            if (type is String) {
+                if (type.isNotEmpty()){
+                    return type.toInt()
+                }
+            }
+            if (type is Double){
+                return type.toInt()
+            }
+            if (type is Float){
+                return type.toInt()
+            }
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -185,7 +205,25 @@ class NetworkManager private constructor() {
     /** 从网络信息[info]中获取网络制式 */
     private fun getSubType(info: NetworkInfo): Int {
         try {
-            return info.subtype//这里做异常捕获防止一些ROM被修改这个类型不是int型
+            //这里做类型判断防止一些ROM被修改这个类型不是int型
+            val type: Any? = info.subtype
+            if (type == null){
+                return TelephonyManager.NETWORK_TYPE_UNKNOWN
+            }
+            if (type is Int) {
+                return type.toInt()
+            }
+            if (type is String) {
+                if (type.isNotEmpty()){
+                    return type.toInt()
+                }
+            }
+            if (type is Double){
+                return type.toInt()
+            }
+            if (type is Float){
+                return type.toInt()
+            }
         } catch (e: Exception) {
             e.printStackTrace()
         }
