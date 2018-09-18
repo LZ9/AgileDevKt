@@ -15,7 +15,7 @@
     dependencies {
         implementation 'com.android.support:appcompat-v7:28.0.0-rc01'
         implementation 'com.android.support:support-annotations:28.0.0-rc01'
-        implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.2.61"
+        implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.2.70"
 
         api 'com.github.bumptech.glide:glide:4.8.0'
         kapt 'com.github.bumptech.glide:compiler:4.8.0'
