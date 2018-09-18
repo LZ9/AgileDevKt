@@ -241,6 +241,14 @@
         </activity>
 
 
+        <activity
+            android:name=".modules.crash.CrashTestActivity"
+            android:label="崩溃测试类"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+
 
     </application>
 

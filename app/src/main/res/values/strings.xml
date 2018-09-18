@@ -280,4 +280,9 @@
     <string name="snackbar_custom_layout">自定义布局</string>
     <string name="snackbar_detail">详情</string>
 
+    <!-- 崩溃测试 -->
+    <string name="crash_txt">硬气！知名主播反击质疑，声称开挂死全家！</string>
+    <string name="crash_tips">粉丝就是我家人，全家就是你家！</string>
+
+
 </resources>
