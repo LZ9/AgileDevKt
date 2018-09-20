@@ -29,7 +29,7 @@ dependencies {
     api project(':corekt')
 
     // RxJava
-    api ('io.reactivex.rxjava2:rxjava:2.2.1'){
+    api ('io.reactivex.rxjava2:rxjava:2.2.2'){
         exclude group: 'android.arch.core'
     }
     api 'io.reactivex.rxjava2:rxandroid:2.1.0'
