@@ -284,5 +284,11 @@
     <string name="crash_txt">硬气！知名主播反击质疑，声称开挂死全家！</string>
     <string name="crash_tips">粉丝就是我家人，全家就是你家！</string>
 
+    <!-- Coordinator测试 -->
+    <string name="coordinator_user_name">夏洛克的猫</string>
+    <string name="coordinator_subscribe">订阅</string>
+    <string name="coordinator_subscribe_tips">您已订阅</string>
+
+
 
 </resources>

@@ -13,6 +13,7 @@
         <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:minHeight="?actionBarSize"
             app:collapsedTitleGravity="center"
             app:contentScrim="@color/color_00a0e9"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"

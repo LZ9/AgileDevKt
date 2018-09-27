@@ -10,10 +10,10 @@ import android.support.design.widget.AppBarLayout
 abstract class OnAppBarStateChangeListener : AppBarLayout.OnOffsetChangedListener {
 
     companion object {
-        /** 完全展开 */
-        const val EXPANDED = 0
         /** 完全折叠 */
-        const val COLLAPSED = 1
+        const val COLLAPSED = 0
+        /** 完全展开 */
+        const val EXPANDED = 1
         /** 滑动中 */
         const val SCROLLING = 2
     }
@@ -28,13 +28,13 @@ abstract class OnAppBarStateChangeListener : AppBarLayout.OnOffsetChangedListene
         }
         if (verticalOffset == 0) {
             // 张开
-            onStateChanged(appBarLayout, EXPANDED, 0.0)
+            onStateChanged(appBarLayout, EXPANDED, 1.0)
         }else if (Math.abs(verticalOffset) >= appBarLayout.totalScrollRange){
             //收缩
-            onStateChanged(appBarLayout, COLLAPSED, 1.0)
+            onStateChanged(appBarLayout, COLLAPSED, 0.0)
         }else{
             val delta = Math.abs(verticalOffset) / appBarLayout.totalScrollRange.toDouble()
-            onStateChanged(appBarLayout, SCROLLING, delta)
+            onStateChanged(appBarLayout, SCROLLING, 1.0 - delta)
         }
 
     }

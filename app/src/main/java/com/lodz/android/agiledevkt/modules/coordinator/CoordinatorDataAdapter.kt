@@ -1,4 +1,4 @@
-package com.lodz.android.agiledevkt.modules.statusbar
+package com.lodz.android.agiledevkt.modules.coordinator
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView

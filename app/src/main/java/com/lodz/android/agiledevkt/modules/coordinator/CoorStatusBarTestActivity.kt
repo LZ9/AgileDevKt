@@ -15,7 +15,6 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
-import com.lodz.android.agiledevkt.modules.statusbar.CoordinatorDataAdapter
 import com.lodz.android.componentkt.base.activity.AbsActivity
 import com.lodz.android.componentkt.widget.base.TitleBarLayout
 import com.lodz.android.componentkt.widget.contract.OnAppBarStateChangeListener
@@ -119,8 +118,8 @@ class CoorStatusBarTestActivity :AbsActivity(){
                     mTitleBarLayout.alpha = 1f
                 }else{
                     // 滑动中
-                    mRightBtn.alpha = (1 - delta).toFloat()
-                    mTitleBarLayout.alpha = delta.toFloat()
+                    mRightBtn.alpha = delta.toFloat()
+                    mTitleBarLayout.alpha = (1 - delta).toFloat()
                     mRightBtn.visibility = View.VISIBLE
                     mTitleBarLayout.visibility = View.VISIBLE
                 }
