@@ -56,8 +56,8 @@ class StrTestActivity : BaseActivity() {
         getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME))
     }
 
-    override fun clickBackBtn() {
-        super.clickBackBtn()
+    override fun onClickBackBtn() {
+        super.onClickBackBtn()
         finish()
     }
 

@@ -78,8 +78,8 @@ class BluetoothTestActivity : BaseActivity() {
         mRecyclerView.adapter = mAdapter
     }
 
-    override fun clickBackBtn() {
-        super.clickBackBtn()
+    override fun onClickBackBtn() {
+        super.onClickBackBtn()
         finish()
     }
 

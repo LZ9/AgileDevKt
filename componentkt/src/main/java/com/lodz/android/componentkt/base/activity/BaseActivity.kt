@@ -73,16 +73,16 @@ abstract class BaseActivity : AbsActivity() {
         super.setListeners()
         if (!isUseAnkoLayout()){
             getTitleBarLayout().setOnBackBtnClickListener { view ->
-                clickBackBtn()
+                onClickBackBtn()
             }
         }
     }
 
     /** 点击标题栏的返回按钮 */
-    protected open fun clickBackBtn() {}
+    protected open fun onClickBackBtn() {}
 
     /** 点击错误页面的重试按钮 */
-    protected open fun clickReload() {}
+    protected open fun onClickReload() {}
 
     /** 显示无数据页面 */
     protected open fun showStatusNoData() {
@@ -206,7 +206,7 @@ abstract class BaseActivity : AbsActivity() {
             mErrorLayout = mErrorViewStub.inflate() as ErrorLayout
             mErrorLayout!!.visibility = View.GONE
             mErrorLayout!!.setReloadListener {
-                clickReload()
+                onClickReload()
             }
         }
         return mErrorLayout!!

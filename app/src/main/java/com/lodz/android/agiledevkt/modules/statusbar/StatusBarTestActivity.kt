@@ -58,8 +58,8 @@ class StatusBarTestActivity : BaseActivity() {
         getTitleBarLayout().setBackgroundColor(DEFAULT_COLOR)
     }
 
-    override fun clickBackBtn() {
-        super.clickBackBtn()
+    override fun onClickBackBtn() {
+        super.onClickBackBtn()
         finish()
     }
 
