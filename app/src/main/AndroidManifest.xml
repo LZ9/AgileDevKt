@@ -220,6 +220,13 @@
         </activity>
 
         <activity
+            android:name=".modules.coordinator.CoordinatorTestActivity"
+            android:label="CoordinatorLayout测试类"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity
             android:name=".modules.coordinator.CoorStatusBarTestActivity"
             android:label="带CoordinatorLayout的状态栏测试类"
             android:screenOrientation="portrait">
@@ -228,7 +235,7 @@
 
         <activity
             android:name=".modules.coordinator.CoorTranslationActivity"
-            android:label="Coordinator测试类"
+            android:label="带CoordinatorLayout的位移测试类"
             android:screenOrientation="portrait">
 
         </activity>

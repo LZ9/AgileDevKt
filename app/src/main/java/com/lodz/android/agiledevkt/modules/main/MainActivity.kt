@@ -14,7 +14,7 @@ import com.lodz.android.agiledevkt.modules.anko.AnkoLayoutActivity
 import com.lodz.android.agiledevkt.modules.bitmap.BitmapTestActivity
 import com.lodz.android.agiledevkt.modules.bluetooth.BluetoothTestActivity
 import com.lodz.android.agiledevkt.modules.color.ColorAlphaTestActivity
-import com.lodz.android.agiledevkt.modules.coordinator.CoorTranslationActivity
+import com.lodz.android.agiledevkt.modules.coordinator.CoordinatorTestActivity
 import com.lodz.android.agiledevkt.modules.crash.CrashTestActivity
 import com.lodz.android.agiledevkt.modules.drawer.DrawerTestActivity
 import com.lodz.android.agiledevkt.modules.file.FileTestActivity
@@ -70,7 +70,7 @@ class MainActivity : BaseActivity() {
             ThreadPoolActivity::class.java, IdcardTestActivity::class.java, NumFormatTestActivity::class.java,
             SelectorTestActivity::class.java, SettingTestActivity::class.java, StrTestActivity::class.java,
             InfoTestActivity::class.java, BluetoothTestActivity::class.java, StatusBarTestActivity::class.java,
-            DrawerTestActivity::class.java, CoorTranslationActivity::class.java, SnackbarTestActivity::class.java,
+            DrawerTestActivity::class.java, CoordinatorTestActivity::class.java, SnackbarTestActivity::class.java,
             CrashTestActivity::class.java
     )
 
