@@ -75,9 +75,6 @@ dependencies {
         exclude module: "support-v13"
     }
     kapt 'com.github.hotchemi:permissionsdispatcher-processor:3.3.1'
-    // butterknife
-    implementation 'com.jakewharton:butterknife:8.8.1'
-    kapt 'com.jakewharton:butterknife-compiler:8.8.1'
     // anko layout
     implementation 'org.jetbrains.anko:anko-sdk25:0.10.6'
     implementation 'org.jetbrains.anko:anko-appcompat-v7:0.10.6'

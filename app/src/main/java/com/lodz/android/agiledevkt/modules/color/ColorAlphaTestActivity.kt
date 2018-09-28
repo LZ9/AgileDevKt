@@ -6,11 +6,10 @@ import android.os.Bundle
 import android.view.View
 import android.widget.SeekBar
 import android.widget.TextView
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.componentkt.base.activity.BaseActivity
+import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.utils.ColorUtils
 
 /**
@@ -27,19 +26,15 @@ class ColorAlphaTestActivity : BaseActivity() {
     }
 
     /** 透明度拖动条 */
-    @BindView(R.id.seek_bar)
-    lateinit var mSeekBar: SeekBar
+    private val mSeekBar by bindView<SeekBar>(R.id.seek_bar)
     /** 颜色百分比文字 */
-    @BindView(R.id.percentage_tv)
-    lateinit var mPercentageTv: TextView
+    private val mPercentageTv by bindView<TextView>(R.id.percentage_tv)
     /** 封面颜色控件 */
-    @BindView(R.id.cover_view)
-    lateinit var mCoverView: View
+    private val mCoverView by bindView<View>(R.id.cover_view)
 
     override fun getLayoutId() = R.layout.activity_color_test
 
     override fun findViews(savedInstanceState: Bundle?) {
-        ButterKnife.bind(this)
         getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME))
     }
 

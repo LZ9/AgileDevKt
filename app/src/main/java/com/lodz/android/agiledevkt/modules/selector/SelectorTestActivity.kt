@@ -6,11 +6,10 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.CompoundButton
 import android.widget.Switch
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.componentkt.base.activity.BaseActivity
+import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.utils.SelectorUtils
 
 /**
@@ -49,69 +48,50 @@ class SelectorTestActivity : BaseActivity() {
     private val TEXT_FOCUSED = R.color.color_ffa630
 
     /** 禁用开关 */
-    @BindView(R.id.unable_switch_btn)
-    lateinit var mUnableSwitchBtn: Switch
+    private val mUnableSwitchBtn by bindView<Switch>(R.id.unable_switch_btn)
     /** 选中开关 */
-    @BindView(R.id.select_switch_btn)
-    lateinit var mSelectSwitchBtn: Switch
+    private val mSelectSwitchBtn by bindView<Switch>(R.id.select_switch_btn)
     /** 焦点开关 */
-    @BindView(R.id.focused_switch_btn)
-    lateinit var mFocusedSwitchBtn: Switch
+    private val mFocusedSwitchBtn by bindView<Switch>(R.id.focused_switch_btn)
 
     /** 正常+按压 */
-    @BindView(R.id.pressed_btn)
-    lateinit var mPressedBtn: Button
+    private val mPressedBtn by bindView<Button>(R.id.pressed_btn)
     /** 正常+选中 */
-    @BindView(R.id.selected_btn)
-    lateinit var mSelectedBtn: Button
+    private val mSelectedBtn by bindView<Button>(R.id.selected_btn)
     /** 正常+不可用 */
-    @BindView(R.id.unable_btn)
-    lateinit var mUnableBtn: Button
+    private val mUnableBtn by bindView<Button>(R.id.unable_btn)
     /** 正常+焦点 */
-    @BindView(R.id.focused_btn)
-    lateinit var mFocusedBtn: Button
+    private val mFocusedBtn by bindView<Button>(R.id.focused_btn)
 
     /** 正常+按压+不可用 */
-    @BindView(R.id.pressed_unable_btn)
-    lateinit var mPressedUnableBtn: Button
+    private val mPressedUnableBtn by bindView<Button>(R.id.pressed_unable_btn)
     /** 正常+按压+选中 */
-    @BindView(R.id.pressed_selected_btn)
-    lateinit var mPressedSelectedBtn: Button
+    private val mPressedSelectedBtn by bindView<Button>(R.id.pressed_selected_btn)
     /** 正常+按压+焦点 */
-    @BindView(R.id.pressed_focused_btn)
-    lateinit var mPressedFocusedBtn: Button
+    private val mPressedFocusedBtn by bindView<Button>(R.id.pressed_focused_btn)
     /** 正常+不可用+选中 */
-    @BindView(R.id.unable_selected_btn)
-    lateinit var mUnableSelectedBtn: Button
+    private val mUnableSelectedBtn by bindView<Button>(R.id.unable_selected_btn)
     /** 正常+不可用+焦点 */
-    @BindView(R.id.unable_focused_btn)
-    lateinit var mUnableFocusedBtn: Button
+    private val mUnableFocusedBtn by bindView<Button>(R.id.unable_focused_btn)
     /** 正常+选中+焦点 */
-    @BindView(R.id.selected_focused_btn)
-    lateinit var mSelectedFocusedBtn: Button
+    private val mSelectedFocusedBtn by bindView<Button>(R.id.selected_focused_btn)
 
     /** 正常+按压+不可用+选中 */
-    @BindView(R.id.pressed_unable_selected_btn)
-    lateinit var mPressedUnableSelectedBtn: Button
+    private val mPressedUnableSelectedBtn by bindView<Button>(R.id.pressed_unable_selected_btn)
     /** 正常+按压+不可用+焦点 */
-    @BindView(R.id.pressed_unable_focused_btn)
-    lateinit var mPressedUnableFocusedBtn: Button
+    private val mPressedUnableFocusedBtn by bindView<Button>(R.id.pressed_unable_focused_btn)
     /** 正常+不可用+选中+焦点 */
-    @BindView(R.id.unable_selected_focused_btn)
-    lateinit var mUnableSelectedFocusedBtn: Button
+    private val mUnableSelectedFocusedBtn by bindView<Button>(R.id.unable_selected_focused_btn)
     /** 正常+按压+选中+焦点 */
-    @BindView(R.id.pressed_selected_focused_btn)
-    lateinit var mPressedSelectedFocusedBtn: Button
+    private val mPressedSelectedFocusedBtn by bindView<Button>(R.id.pressed_selected_focused_btn)
 
     /** 正常+按压+不可用+选中+焦点 */
-    @BindView(R.id.pressed_unable_selected_focused_btn)
-    lateinit var mPressedUnableSelectedFocusedBtn: Button
+    private val mPressedUnableSelectedFocusedBtn by bindView<Button>(R.id.pressed_unable_selected_focused_btn)
 
 
     override fun getLayoutId() = R.layout.activity_selector_test
 
     override fun findViews(savedInstanceState: Bundle?) {
-        ButterKnife.bind(this)
         getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME))
     }
 

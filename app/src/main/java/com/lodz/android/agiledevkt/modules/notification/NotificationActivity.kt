@@ -10,12 +10,11 @@ import android.os.Bundle
 import android.support.v4.app.NotificationCompat
 import android.widget.Button
 import android.widget.RemoteViews
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.componentkt.base.activity.BaseActivity
 import com.lodz.android.componentkt.rx.subscribe.observer.BaseObserver
+import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.utils.NotificationUtils
 import io.reactivex.Observable
 import java.util.*
@@ -42,31 +41,23 @@ class NotificationActivity : BaseActivity() {
     private val NOTIFI_CHANNEL_DOWNLOAD_ID = "c0002"
 
     /** 基本通知 */
-    @BindView(R.id.base_btn)
-    lateinit var mBbaseBtn: Button
+    private val mBbaseBtn by bindView<Button>(R.id.base_btn)
     /** 带意图通知 */
-    @BindView(R.id.intent_btn)
-    lateinit var mIntentBtn: Button
+    private val mIntentBtn by bindView<Button>(R.id.intent_btn)
     /** 带进度条 */
-    @BindView(R.id.progress_btn)
-    lateinit var mProgressBtn: Button
+    private val mProgressBtn by bindView<Button>(R.id.progress_btn)
     /** 单行大文本样式 */
-    @BindView(R.id.single_txt_btn)
-    lateinit var mSingleTxtBtn: Button
+    private val mSingleTxtBtn by bindView<Button>(R.id.single_txt_btn)
     /** 多行大文本样式 */
-    @BindView(R.id.multi_txt_btn)
-    lateinit var mMultiTxtBtn: Button
+    private val mMultiTxtBtn by bindView<Button>(R.id.multi_txt_btn)
     /** 大图文本样式 */
-    @BindView(R.id.large_img_btn)
-    lateinit var mLargeImgBtn: Button
+    private val mLargeImgBtn by bindView<Button>(R.id.large_img_btn)
     /** 自定义内容样式 */
-    @BindView(R.id.custom_btn)
-    lateinit var mCustomBtn: Button
+    private val mCustomBtn by bindView<Button>(R.id.custom_btn)
 
     override fun getLayoutId() = R.layout.activity_notification
 
     override fun findViews(savedInstanceState: Bundle?) {
-        ButterKnife.bind(this)
         getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME))
     }
 

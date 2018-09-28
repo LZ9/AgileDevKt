@@ -7,13 +7,12 @@ import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.SeekBar
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.componentkt.base.activity.BaseActivity
 import com.lodz.android.componentkt.rx.subscribe.observer.BaseObserver
 import com.lodz.android.componentkt.rx.utils.RxUtils
+import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.getDrawableCompat
 import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.corekt.utils.BitmapUtils
@@ -35,116 +34,87 @@ class BitmapTestActivity : BaseActivity() {
     }
 
     /** 原始图片 */
-    @BindView(R.id.src_img)
-    lateinit var mSrcImg: ImageView
+    private val mSrcImg by bindView<ImageView>(R.id.src_img)
 
     /** Base64编码的图片 */
-    @BindView(R.id.base64_img)
-    lateinit var mBase64Img: ImageView
+    private val mBase64Img by bindView<ImageView>(R.id.base64_img)
 
     /** drawable图片 */
-    @BindView(R.id.drawable_img)
-    lateinit var mDrawableImg: ImageView
+    private val mDrawableImg by bindView<ImageView>(R.id.drawable_img)
 
     /** drawable转bitmap */
-    @BindView(R.id.drawable_bitmap_img)
-    lateinit var mDrawableBitmapImg: ImageView
+    private val mDrawableBitmapImg by bindView<ImageView>(R.id.drawable_bitmap_img)
 
     /** view图片 */
-    @BindView(R.id.view_img)
-    lateinit var mViewImg: ImageView
+    private val mViewImg by bindView<ImageView>(R.id.view_img)
 
     /** view转bitmap */
-    @BindView(R.id.view_bitmap_img)
-    lateinit var mViewBitmapImg: ImageView
+    private val mViewBitmapImg by bindView<ImageView>(R.id.view_bitmap_img)
 
     /** 合并图片 */
-    @BindView(R.id.combine_img)
-    lateinit var mCombineImg: ImageView
+    private val mCombineImg by bindView<ImageView>(R.id.combine_img)
 
     /** 灰度图 */
-    @BindView(R.id.grey_img)
-    lateinit var mGreyImg: ImageView
+    private val mGreyImg by bindView<ImageView>(R.id.grey_img)
 
     /** 圆角图 */
-    @BindView(R.id.rounded_corner_img)
-    lateinit var mRoundedCornerImg: ImageView
+    private val mRoundedCornerImg by bindView<ImageView>(R.id.rounded_corner_img)
 
     /** 圆形图 */
-    @BindView(R.id.rounded_img)
-    lateinit var mRoundedImg: ImageView
+    private val mRoundedImg by bindView<ImageView>(R.id.rounded_img)
 
     /** 倒影图 */
-    @BindView(R.id.reflection_img)
-    lateinit var mReflectionImg: ImageView
+    private val mReflectionImg by bindView<ImageView>(R.id.reflection_img)
 
     /** 旋转90度图片 */
-    @BindView(R.id.rotate_img)
-    lateinit var mRotateImg: ImageView
+    private val mRotateImg by bindView<ImageView>(R.id.rotate_img)
 
     /** 水平翻转 */
-    @BindView(R.id.reverse_horizontal_img)
-    lateinit var mReverseHorizontalImg: ImageView
+    private val mReverseHorizontalImg by bindView<ImageView>(R.id.reverse_horizontal_img)
 
     /** 垂直翻转 */
-    @BindView(R.id.reverse_vertical_img)
-    lateinit var mReverseVerticalImg: ImageView
+    private val mReverseVerticalImg by bindView<ImageView>(R.id.reverse_vertical_img)
 
     /** 色调调整图片 */
-    @BindView(R.id.tone_img)
-    lateinit var mToneImg: ImageView
+    private val mToneImg by bindView<ImageView>(R.id.tone_img)
     /** 色调调整栏 */
-    @BindView(R.id.tone_seekbar)
-    lateinit var mToneSeekBar: SeekBar
+    private val mToneSeekBar by bindView<SeekBar>(R.id.tone_seekbar)
 
     /** 饱和度调整图片 */
-    @BindView(R.id.saturation_img)
-    lateinit var mSaturationImg: ImageView
+    private val mSaturationImg by bindView<ImageView>(R.id.saturation_img)
     /** 饱和度调整栏 */
-    @BindView(R.id.saturation_seekbar)
-    lateinit var mSaturationSeekBar: SeekBar
+    private val mSaturationSeekBar by bindView<SeekBar>(R.id.saturation_seekbar)
 
     /** 亮度值调整图片 */
-    @BindView(R.id.luminance_img)
-    lateinit var mLuminanceImg: ImageView
+    private val mLuminanceImg by bindView<ImageView>(R.id.luminance_img)
     /** 亮度值调整栏 */
-    @BindView(R.id.luminance_seekbar)
-    lateinit var mLuminanceSeekBar: SeekBar
+    private val mLuminanceSeekBar by bindView<SeekBar>(R.id.luminance_seekbar)
 
     /** 色相值调整图片 */
-    @BindView(R.id.hue_img)
-    lateinit var mHueImg: ImageView
+    private val mHueImg by bindView<ImageView>(R.id.hue_img)
     /** 色相值调整栏 */
-    @BindView(R.id.hue_seekbar)
-    lateinit var mHueSeekBar: SeekBar
+    private val mHueSeekBar by bindView<SeekBar>(R.id.hue_seekbar)
 
     /** 怀旧效果图片 */
-    @BindView(R.id.nostalgic_img)
-    lateinit var mNostalgicImg: ImageView
+    private val mNostalgicImg by bindView<ImageView>(R.id.nostalgic_img)
 
     /** 光照强度调整图片 */
-    @BindView(R.id.sunshine_img)
-    lateinit var mSunshineImg: ImageView
+    private val mSunshineImg by bindView<ImageView>(R.id.sunshine_img)
     /** 光照强度调整栏 */
-    @BindView(R.id.sunshine_seekbar)
-    lateinit var mSunshineSeekBar: SeekBar
+    private val mSunshineSeekBar by bindView<SeekBar>(R.id.sunshine_seekbar)
 
     /** 底片效果图片 */
-    @BindView(R.id.film_img)
-    lateinit var mFilmImg: ImageView
+    private val mFilmImg by bindView<ImageView>(R.id.film_img)
 
     /** 锐化效果图片 */
-    @BindView(R.id.sharpen_img)
-    lateinit var mSharpenImg: ImageView
+    private val mSharpenImg by bindView<ImageView>(R.id.sharpen_img)
 
     /** 浮雕效果图片 */
-    @BindView(R.id.emboss_img)
-    lateinit var mEmbossImg: ImageView
+    private val mEmbossImg by bindView<ImageView>(R.id.emboss_img)
 
     override fun getLayoutId() = R.layout.activity_bitmap_test
 
     override fun findViews(savedInstanceState: Bundle?) {
-        ButterKnife.bind(this)
         getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME))
     }
 

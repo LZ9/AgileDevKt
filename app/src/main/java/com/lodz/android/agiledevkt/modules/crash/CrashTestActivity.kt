@@ -5,13 +5,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.agiledevkt.modules.splash.SplashActivity
 import com.lodz.android.agiledevkt.utils.crash.CrashManager
 import com.lodz.android.componentkt.base.activity.BaseActivity
+import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.utils.UiHandler
 
 /**
@@ -28,16 +27,13 @@ class CrashTestActivity : BaseActivity() {
     }
 
     /** 崩溃按钮 */
-    @BindView(R.id.crash_btn)
-    lateinit var mCrashBtn: TextView
+    private val mCrashBtn by bindView<TextView>(R.id.crash_btn)
     /** 崩溃提示语 */
-    @BindView(R.id.crash_tips)
-    lateinit var mCrashTips: TextView
+    private val mCrashTips by bindView<TextView>(R.id.crash_tips)
 
     override fun getLayoutId() = R.layout.activity_crash_test
 
     override fun findViews(savedInstanceState: Bundle?) {
-        ButterKnife.bind(this)
         getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME))
     }
 

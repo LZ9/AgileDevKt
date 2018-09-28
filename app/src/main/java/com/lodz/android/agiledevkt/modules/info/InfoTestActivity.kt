@@ -7,8 +7,6 @@ import android.content.IntentFilter
 import android.location.LocationManager
 import android.os.Bundle
 import android.widget.TextView
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.componentkt.base.activity.BaseActivity
@@ -34,131 +32,91 @@ class InfoTestActivity : BaseActivity() {
     }
 
     /** 手机UA */
-    @BindView(R.id.ua_tv)
-    lateinit var mUaTv: TextView
+    private val mUaTv by bindView<TextView>(R.id.ua_tv)
 
     /** 语言 */
-    @BindView(R.id.language_tv)
-    lateinit var mLanguageTv: TextView
+    private val mLanguageTv by bindView<TextView>(R.id.language_tv)
     /** 国家 */
-    @BindView(R.id.country_tv)
-    lateinit var mCountryTv: TextView
+    private val mCountryTv by bindView<TextView>(R.id.country_tv)
 
     /** 品牌 */
-    @BindView(R.id.brand_tv)
-    lateinit var mBrandTv: TextView
+    private val mBrandTv by bindView<TextView>(R.id.brand_tv)
     /** 型号 */
-    @BindView(R.id.model_tv)
-    lateinit var mModelTv: TextView
+    private val mModelTv by bindView<TextView>(R.id.model_tv)
     /** 版本 */
-    @BindView(R.id.board_tv)
-    lateinit var mBoardTv: TextView
+    private val mBoardTv by bindView<TextView>(R.id.board_tv)
     /** CPU1 */
-    @BindView(R.id.cpu_abi_tv)
-    lateinit var mCpuAbiTv: TextView
+    private val mCpuAbiTv by bindView<TextView>(R.id.cpu_abi_tv)
     /** CPU2 */
-    @BindView(R.id.cpu_abi2_tv)
-    lateinit var mCpuAbi2Tv: TextView
+    private val mCpuAbi2Tv by bindView<TextView>(R.id.cpu_abi2_tv)
     /** 制造商 */
-    @BindView(R.id.manufacturer_tv)
-    lateinit var mManufacturerTv: TextView
+    private val mManufacturerTv by bindView<TextView>(R.id.manufacturer_tv)
     /** 产品 */
-    @BindView(R.id.product_tv)
-    lateinit var mProductTv: TextView
+    private val mProductTv by bindView<TextView>(R.id.product_tv)
     /** 设备 */
-    @BindView(R.id.device_tv)
-    lateinit var mDeviceTv: TextView
+    private val mDeviceTv by bindView<TextView>(R.id.device_tv)
 
     /** IMEI1 */
-    @BindView(R.id.imei1_tv)
-    lateinit var mImei1Tv: TextView
+    private val mImei1Tv by bindView<TextView>(R.id.imei1_tv)
     /** IMEI2 */
-    @BindView(R.id.imei2_tv)
-    lateinit var mImei2Tv: TextView
+    private val mImei2Tv by bindView<TextView>(R.id.imei2_tv)
     /** 双卡双待 */
-    @BindView(R.id.dual_sim_tv)
-    lateinit var mDualSimTv: TextView
+    private val mDualSimTv by bindView<TextView>(R.id.dual_sim_tv)
     /** IMSI1 */
-    @BindView(R.id.imsi1_tv)
-    lateinit var mImsi1Tv: TextView
+    private val mImsi1Tv by bindView<TextView>(R.id.imsi1_tv)
     /** sim1可用 */
-    @BindView(R.id.sim1_ready_tv)
-    lateinit var mSim1ReadyTv: TextView
+    private val mSim1ReadyTv by bindView<TextView>(R.id.sim1_ready_tv)
     /** IMSI2 */
-    @BindView(R.id.imsi2_tv)
-    lateinit var mImsi2Tv: TextView
+    private val mImsi2Tv by bindView<TextView>(R.id.imsi2_tv)
     /** sim2可用 */
-    @BindView(R.id.sim2_ready_tv)
-    lateinit var mSim2ReadyTv: TextView
+    private val mSim2ReadyTv by bindView<TextView>(R.id.sim2_ready_tv)
     /** sim卡数据连接状态 */
-    @BindView(R.id.sim_data_state_tv)
-    lateinit var mSimDataStateTv: TextView
+    private val mSimDataStateTv by bindView<TextView>(R.id.sim_data_state_tv)
     /** sim卡是否已连接数据 */
-    @BindView(R.id.sim_connected_data_tv)
-    lateinit var mSimConnectedDataTv: TextView
+    private val mSimConnectedDataTv by bindView<TextView>(R.id.sim_connected_data_tv)
     /** APN名称 */
-    @BindView(R.id.apn_name_tv)
-    lateinit var mApnNameTv: TextView
+    private val mApnNameTv by bindView<TextView>(R.id.apn_name_tv)
 
     /** 屏幕高度 */
-    @BindView(R.id.screen_height_tv)
-    lateinit var mScreenHeightTv: TextView
+    private val mScreenHeightTv by bindView<TextView>(R.id.screen_height_tv)
     /** 屏幕宽度 */
-    @BindView(R.id.screen_width_tv)
-    lateinit var mScreenWidthTv: TextView
+    private val mScreenWidthTv by bindView<TextView>(R.id.screen_width_tv)
     /** 状态栏高度 */
-    @BindView(R.id.status_bar_height_tv)
-    lateinit var StatusBarHeightTv: TextView
+    private val StatusBarHeightTv by bindView<TextView>(R.id.status_bar_height_tv)
     /** 是否存在虚拟按键 */
-    @BindView(R.id.has_navigation_bar_tv)
-    lateinit var mHasNavigationBarTv: TextView
+    private val mHasNavigationBarTv by bindView<TextView>(R.id.has_navigation_bar_tv)
     /** 虚拟按键高度 */
-    @BindView(R.id.navigation_bar_height_tv)
-    lateinit var mNavigationBarHeightTv: TextView
+    private val mNavigationBarHeightTv by bindView<TextView>(R.id.navigation_bar_height_tv)
 
     /** 是否主线程 */
-    @BindView(R.id.main_thread_tv)
-    lateinit var mMainThreadTv: TextView
+    private val mMainThreadTv by bindView<TextView>(R.id.main_thread_tv)
     /** 随机UUID */
-    @BindView(R.id.uuid_tv)
-    lateinit var mUuidTv: TextView
+    private val mUuidTv by bindView<TextView>(R.id.uuid_tv)
     /** 应用名称 */
-    @BindView(R.id.app_name_tv)
-    lateinit var mAppNameTv: TextView
+    private val mAppNameTv by bindView<TextView>(R.id.app_name_tv)
     /** 版本名称 */
-    @BindView(R.id.version_name_tv)
-    lateinit var mVersionNameTv: TextView
+    private val mVersionNameTv by bindView<TextView>(R.id.version_name_tv)
     /** 版本号 */
-    @BindView(R.id.version_code_tv)
-    lateinit var mVersionCodeTv: TextView
+    private val mVersionCodeTv by bindView<TextView>(R.id.version_code_tv)
     /** 是否在主进程 */
-    @BindView(R.id.main_process_tv)
-    lateinit var mMainProcessTv: TextView
+    private val mMainProcessTv by bindView<TextView>(R.id.main_process_tv)
     /** 当前进程名称 */
-    @BindView(R.id.process_name_tv)
-    lateinit var mProcessNameTv: TextView
+    private val mProcessNameTv by bindView<TextView>(R.id.process_name_tv)
     /** 是否安装QQ */
-    @BindView(R.id.qq_installed_tv)
-    lateinit var mQQInstalledTv: TextView
+    private val mQQInstalledTv by bindView<TextView>(R.id.qq_installed_tv)
     /** 是否安装微信 */
-    @BindView(R.id.wechat_installed_tv)
-    lateinit var mWechatInstalledTv: TextView
+    private val mWechatInstalledTv by bindView<TextView>(R.id.wechat_installed_tv)
     /** 安装的应用数量 */
-    @BindView(R.id.installed_app_num_tv)
-    lateinit var mInstalledAppNumTv: TextView
+    private val mInstalledAppNumTv by bindView<TextView>(R.id.installed_app_num_tv)
     /** GPS是否打开 */
-    @BindView(R.id.is_gps_open_tv)
-    lateinit var mGpsOpenTv: TextView
+    private val mGpsOpenTv by bindView<TextView>(R.id.is_gps_open_tv)
     /** assets内文本内容 */
-    @BindView(R.id.assets_text_tv)
-    lateinit var mAssetsTextTv: TextView
+    private val mAssetsTextTv by bindView<TextView>(R.id.assets_text_tv)
 
     /** 内部存储路径 */
-    @BindView(R.id.internal_storage_path_tv)
-    lateinit var mInternalStoragePathTv: TextView
+    private val mInternalStoragePathTv by bindView<TextView>(R.id.internal_storage_path_tv)
     /** 外部存储路径 */
-    @BindView(R.id.external_storage_path_tv)
-    lateinit var mExternalStoragePathTv: TextView
+    private val mExternalStoragePathTv by bindView<TextView>(R.id.external_storage_path_tv)
 
 
     /** GPS开关广播接收器*/
@@ -167,7 +125,6 @@ class InfoTestActivity : BaseActivity() {
     override fun getLayoutId() = R.layout.activity_info_test
 
     override fun findViews(savedInstanceState: Bundle?) {
-        ButterKnife.bind(this)
         getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME))
     }
 

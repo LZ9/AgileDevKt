@@ -5,10 +5,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.componentkt.widget.rv.recycler.BaseRecyclerViewAdapter
+import com.lodz.android.corekt.anko.bindView
 
 /**
  * 简单数据适配器
@@ -31,13 +30,7 @@ class CoordinatorDataAdapter(context: Context) :BaseRecyclerViewAdapter<String>(
     }
 
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
         /** 数据 */
-        @BindView(R.id.data_tv)
-        lateinit var dataTv: TextView
-
-        init {
-            ButterKnife.bind(this, itemView)
-        }
+        internal val dataTv by bindView<TextView>(R.id.data_tv)
     }
 }

@@ -9,14 +9,13 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.componentkt.base.activity.AbsActivity
 import com.lodz.android.componentkt.rx.subscribe.observer.ProgressObserver
 import com.lodz.android.componentkt.rx.utils.RxUtils
 import com.lodz.android.componentkt.widget.base.TitleBarLayout
+import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.utils.StatusBarUtil
 import com.lodz.android.corekt.utils.toastShort
 import com.lodz.android.imageloaderkt.ImageLoader
@@ -42,50 +41,36 @@ class DrawerTestActivity : AbsActivity() {
             "苍之风云", "摇曳的金星", "欢喜的慈雨", "蕴含的太阳", "敬畏的寂静", "无尽星空")
 
     /** 内容 */
-    @BindView(R.id.content_layout)
-    lateinit var mContentLayout: ViewGroup
+    private val mContentLayout by bindView<ViewGroup>(R.id.content_layout)
     /** 标题栏 */
-    @BindView(R.id.title_bar_layout)
-    lateinit var mTitleBarLayout: TitleBarLayout
+    private val mTitleBarLayout by bindView<TitleBarLayout>(R.id.title_bar_layout)
     /** 透明度滚动条 */
-    @BindView(R.id.alpha_sb)
-    lateinit var mAlphaSeekBar: SeekBar
+    private val mAlphaSeekBar by bindView<SeekBar>(R.id.alpha_sb)
     /** 透明度值 */
-    @BindView(R.id.alpha_value_tv)
-    lateinit var mAlphaValueTv: TextView
+    private val mAlphaValueTv by bindView<TextView>(R.id.alpha_value_tv)
     /** 结果 */
-    @BindView(R.id.result)
-    lateinit var mResultTv: TextView
+    private val mResultTv by bindView<TextView>(R.id.result)
 
     /** 侧滑栏 */
-    @BindView(R.id.drawer_layout)
-    lateinit var mDrawerLayout: DrawerLayout
+    private val mDrawerLayout by bindView<DrawerLayout>(R.id.drawer_layout)
     /** 用户头像 */
-    @BindView(R.id.user_logo)
-    lateinit var mUserLogoImg: ImageView
+    private val mUserLogoImg by bindView<ImageView>(R.id.user_logo)
     /** 称号 */
-    @BindView(R.id.title)
-    lateinit var mTitleTv: TextView
+    private val mTitleTv by bindView<TextView>(R.id.title)
     /** 搜索按钮 */
-    @BindView(R.id.search_btn)
-    lateinit var mSearchBtn: ImageView
+    private val mSearchBtn by bindView<ImageView>(R.id.search_btn)
     /** 刷新按钮 */
-    @BindView(R.id.refresh_btn)
-    lateinit var mRefreshBtn: ImageView
+    private val mRefreshBtn by bindView<ImageView>(R.id.refresh_btn)
     /** 关注按钮 */
-    @BindView(R.id.collect_btn)
-    lateinit var mCollectBtn: ViewGroup
+    private val mCollectBtn by bindView<ViewGroup>(R.id.collect_btn)
     /** 钱包按钮 */
-    @BindView(R.id.wallet_btn)
-    lateinit var mWalletBtn: ViewGroup
+    private val mWalletBtn by bindView<ViewGroup>(R.id.wallet_btn)
     /** 设置按钮 */
-    @BindView(R.id.setting_btn)
-    lateinit var mSettingBtn: ViewGroup
+    private val mSettingBtn by bindView<ViewGroup>(R.id.setting_btn)
 
     override fun getAbsLayoutId() = R.layout.activity_drawer_test
 
     override fun findViews(savedInstanceState: Bundle?) {
-        ButterKnife.bind(this)
         mTitleBarLayout.setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME))
         mTitleTv.text = getString(R.string.drawer_title, TITLES.get(Random().nextInt(TITLES.size)))
         StatusBarUtil.setTransparentForDrawerLayout(getContext(), mDrawerLayout, mContentLayout, mAlphaSeekBar.progress / 100.0f)

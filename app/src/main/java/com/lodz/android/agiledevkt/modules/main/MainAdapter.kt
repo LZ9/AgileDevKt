@@ -5,10 +5,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.componentkt.widget.rv.recycler.BaseRecyclerViewAdapter
+import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.getColorCompat
 import java.util.*
 
@@ -45,13 +44,7 @@ class MainAdapter(context: Context) : BaseRecyclerViewAdapter<String>(context) {
     }
 
     inner class MainViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
         /** 名称 */
-        @BindView(R.id.name)
-        lateinit var nameTv: TextView
-
-        init {
-            ButterKnife.bind(this, itemView)
-        }
+        internal val nameTv by bindView<TextView>(R.id.name)
     }
 }

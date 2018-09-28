@@ -7,12 +7,11 @@ import android.view.Gravity
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.componentkt.base.activity.BaseActivity
 import com.lodz.android.componentkt.rx.utils.RxUtils
+import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.utils.ToastUtils
 import com.lodz.android.corekt.utils.toastLong
 import com.lodz.android.corekt.utils.toastShort
@@ -32,28 +31,21 @@ class ToastTestActivity :BaseActivity(){
     }
 
     /** 短时间 */
-    @BindView(R.id.short_duration_btn)
-    lateinit var mShortDurationBtn: Button
+    private val mShortDurationBtn by bindView<Button>(R.id.short_duration_btn)
     /** 长时间 */
-    @BindView(R.id.long_duration_btn)
-    lateinit var mLongDurationBtn: Button
+    private val mLongDurationBtn by bindView<Button>(R.id.long_duration_btn)
     /** 自定义位置（中间） */
-    @BindView(R.id.custom_position_btn)
-    lateinit var mCustomPositionBtn: Button
+    private val mCustomPositionBtn by bindView<Button>(R.id.custom_position_btn)
     /** 带顶部图片 */
-    @BindView(R.id.top_img_btn)
-    lateinit var mTopImgBtn: Button
+    private val mTopImgBtn by bindView<Button>(R.id.top_img_btn)
     /** 完全自定义 */
-    @BindView(R.id.custom_view_btn)
-    lateinit var mCustomViewBtn: Button
+    private val mCustomViewBtn by bindView<Button>(R.id.custom_view_btn)
     /** 异步线程 */
-    @BindView(R.id.io_thread_btn)
-    lateinit var mIoThreadBtn: Button
+    private val mIoThreadBtn by bindView<Button>(R.id.io_thread_btn)
 
     override fun getLayoutId() = R.layout.activity_toast_test
 
     override fun findViews(savedInstanceState: Bundle?) {
-        ButterKnife.bind(this)
         getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME))
     }
 

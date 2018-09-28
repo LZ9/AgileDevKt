@@ -17,8 +17,6 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.RemoteViews
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
@@ -31,6 +29,7 @@ import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.agiledevkt.utils.file.FileManager
 import com.lodz.android.componentkt.base.activity.BaseActivity
+import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.corekt.utils.BitmapUtils
 import com.lodz.android.corekt.utils.FileUtils
@@ -62,77 +61,54 @@ class GlideActivity : BaseActivity() {
     private val PIC_BASE64 = "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"
 
     /** 自定义通知栏 */
-    @BindView(R.id.custom_notification_button)
-    lateinit var mCustomNotifyBtn: Button
+    private val mCustomNotifyBtn by bindView<Button>(R.id.custom_notification_button)
     /** 原生通知栏 */
-    @BindView(R.id.notification_button)
-    lateinit var mSystemNotifyBtn: Button
+    private val mSystemNotifyBtn by bindView<Button>(R.id.notification_button)
 
     /** BASE64图片 */
-    @BindView(R.id.base64_img)
-    lateinit var mBase64Img: ImageView
+    private val mBase64Img by bindView<ImageView>(R.id.base64_img)
     /** 本地居中剪切图片 */
-    @BindView(R.id.local_crop_img)
-    lateinit var mLocalCropImg: ImageView
+    private val mLocalCropImg by bindView<ImageView>(R.id.local_crop_img)
     /** 网络图片 */
-    @BindView(R.id.url_img)
-    lateinit var mUrlImg: ImageView
+    private val mUrlImg by bindView<ImageView>(R.id.url_img)
     /** 动画显示 */
-    @BindView(R.id.anim_img)
-    lateinit var mAnimImg: ImageView
+    private val mAnimImg by bindView<ImageView>(R.id.anim_img)
     /** 网络gif */
-    @BindView(R.id.url_gif_img)
-    lateinit var mUrlGifImg: ImageView
+    private val mUrlGifImg by bindView<ImageView>(R.id.url_gif_img)
     /** 本地gif */
-    @BindView(R.id.local_gif_img)
-    lateinit var mLocalGifImg: ImageView
+    private val mLocalGifImg by bindView<ImageView>(R.id.local_gif_img)
     /** 毛玻璃 */
-    @BindView(R.id.blur_img)
-    lateinit var mBlurImg: ImageView
+    private val mBlurImg by bindView<ImageView>(R.id.blur_img)
     /** 覆盖颜色 */
-    @BindView(R.id.filter_color_img)
-    lateinit var mFilterColorImg: ImageView
+    private val mFilterColorImg by bindView<ImageView>(R.id.filter_color_img)
     /** 全圆角 */
-    @BindView(R.id.corners_all_img)
-    lateinit var mCornersAllImg: ImageView
+    private val mCornersAllImg by bindView<ImageView>(R.id.corners_all_img)
     /** 顶部圆角 */
-    @BindView(R.id.corners_top_img)
-    lateinit var mCornersTopImg: ImageView
+    private val mCornersTopImg by bindView<ImageView>(R.id.corners_top_img)
     /** 灰度化 */
-    @BindView(R.id.grayscale_img)
-    lateinit var mGrayscaleImg: ImageView
+    private val mGrayscaleImg by bindView<ImageView>(R.id.grayscale_img)
     /** 圆角/灰度化 */
-    @BindView(R.id.corners_grayscale_img)
-    lateinit var mCornersGrayscaleImg: ImageView
+    private val mCornersGrayscaleImg by bindView<ImageView>(R.id.corners_grayscale_img)
     /** 圆形 */
-    @BindView(R.id.circle_img)
-    lateinit var mCircleImg: ImageView
+    private val mCircleImg by bindView<ImageView>(R.id.circle_img)
     /** 圆形/毛玻璃 */
-    @BindView(R.id.circle_blur_img)
-    lateinit var mCircleBlurImg: ImageView
+    private val mCircleBlurImg by bindView<ImageView>(R.id.circle_blur_img)
     /** 圆形/灰度化/毛玻璃 */
-    @BindView(R.id.circle_grayscale_blur_img)
-    lateinit var mCircleGrayscaleBlurImg: ImageView
+    private val mCircleGrayscaleBlurImg by bindView<ImageView>(R.id.circle_grayscale_blur_img)
     /** 蒙板效果 */
-    @BindView(R.id.mask_img)
-    lateinit var mMaskImg: ImageView
+    private val mMaskImg by bindView<ImageView>(R.id.mask_img)
     /** 正方形 */
-    @BindView(R.id.square_img)
-    lateinit var mSquareImg: ImageView
+    private val mSquareImg by bindView<ImageView>(R.id.square_img)
     /** 正方形/毛玻璃 */
-    @BindView(R.id.square_blur_img)
-    lateinit var mSquareBlurImg: ImageView
+    private val mSquareBlurImg by bindView<ImageView>(R.id.square_blur_img)
     /** 本地webp */
-    @BindView(R.id.local_webp_img)
-    lateinit var mLocalWebpImg: ImageView
+    private val mLocalWebpImg by bindView<ImageView>(R.id.local_webp_img)
     /** 本地视频 */
-    @BindView(R.id.local_video_img)
-    lateinit var mLocalVideoImg: ImageView
+    private val mLocalVideoImg by bindView<ImageView>(R.id.local_video_img)
 
     override fun getLayoutId() = R.layout.activity_glide
 
     override fun findViews(savedInstanceState: Bundle?) {
-        ButterKnife.bind(this)
         getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME))
     }
 

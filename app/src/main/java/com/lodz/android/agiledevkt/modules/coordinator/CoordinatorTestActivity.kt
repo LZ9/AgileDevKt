@@ -4,11 +4,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.componentkt.base.activity.BaseActivity
+import com.lodz.android.corekt.anko.bindView
 
 /**
  * CoordinatorLayout测试类
@@ -24,17 +23,13 @@ class CoordinatorTestActivity : BaseActivity(){
     }
 
     /** 位移按钮 */
-    @BindView(R.id.translation_btn)
-    lateinit var mTranslationBtn: Button
+    private val mTranslationBtn by bindView<Button>(R.id.translation_btn)
     /** 状态栏按钮 */
-    @BindView(R.id.status_bar_btn)
-    lateinit var mStatusBarBtn: Button
-
+    private val mStatusBarBtn by bindView<Button>(R.id.status_bar_btn)
 
     override fun getLayoutId() = R.layout.activity_coordinator_test
 
     override fun findViews(savedInstanceState: Bundle?) {
-        ButterKnife.bind(this)
         getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME))
     }
 

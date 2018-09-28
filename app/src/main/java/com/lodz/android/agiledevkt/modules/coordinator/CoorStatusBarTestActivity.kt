@@ -11,13 +11,12 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.view.View
 import android.widget.ImageView
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.componentkt.base.activity.AbsActivity
 import com.lodz.android.componentkt.widget.base.TitleBarLayout
 import com.lodz.android.componentkt.widget.contract.OnAppBarStateChangeListener
+import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.dp2px
 import com.lodz.android.corekt.anko.getColorCompat
 import com.lodz.android.corekt.utils.SnackbarUtils
@@ -40,23 +39,17 @@ class CoorStatusBarTestActivity :AbsActivity(){
     }
 
     /** AppBarLayout */
-    @BindView(R.id.app_bar_layout)
-    lateinit var mAppBarLayout: AppBarLayout
+    private val mAppBarLayout by bindView<AppBarLayout>(R.id.app_bar_layout)
     /** Toolbar */
-    @BindView(R.id.toolbar)
-    lateinit var mToolbar: Toolbar
+    private val mToolbar by bindView<Toolbar>(R.id.toolbar)
     /** 标题栏 */
-    @BindView(R.id.title_bar_layout)
-    lateinit var mTitleBarLayout: TitleBarLayout
+    private val mTitleBarLayout by bindView<TitleBarLayout>(R.id.title_bar_layout)
     /** 右侧按钮 */
-    @BindView(R.id.right_btn)
-    lateinit var mRightBtn: ImageView
+    private val mRightBtn by bindView<ImageView>(R.id.right_btn)
     /** 浮动按钮 */
-    @BindView(R.id.fa_btn)
-    lateinit var mFloatingActionBtn: FloatingActionButton
+    private val mFloatingActionBtn by bindView<FloatingActionButton>(R.id.fa_btn)
     /** 数据列表 */
-    @BindView(R.id.recycler_view)
-    lateinit var mRecyclerView: RecyclerView
+    private val mRecyclerView by bindView<RecyclerView>(R.id.recycler_view)
 
     /** 列表适配器 */
     private lateinit var mAdapter: CoordinatorDataAdapter
@@ -64,7 +57,6 @@ class CoorStatusBarTestActivity :AbsActivity(){
     override fun getAbsLayoutId() = R.layout.activity_coor_status_bar_test
 
     override fun findViews(savedInstanceState: Bundle?) {
-        ButterKnife.bind(this)
         mTitleBarLayout.setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME))
         initRecyclerView()
         StatusBarUtil.setTransparentFullyForOffsetView(getContext(), mToolbar)

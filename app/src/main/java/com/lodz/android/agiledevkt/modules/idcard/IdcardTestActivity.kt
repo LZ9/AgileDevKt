@@ -5,11 +5,10 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.widget.TextView
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.componentkt.base.activity.AbsActivity
 import com.lodz.android.componentkt.widget.base.SearchTitleBarLayout
+import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.utils.DateUtils
 import com.lodz.android.corekt.utils.IdCardUtils
 
@@ -27,16 +26,13 @@ class IdcardTestActivity : AbsActivity() {
     }
 
     /** 搜索标题框 */
-    @BindView(R.id.search_title_layout)
-    lateinit var mSearchTitleBarLayout: SearchTitleBarLayout
+    private val mSearchTitleBarLayout by bindView<SearchTitleBarLayout>(R.id.search_title_layout)
     /** 结果 */
-    @BindView(R.id.result)
-    lateinit var mResultTv: TextView
+    private val mResultTv by bindView<TextView>(R.id.result)
 
     override fun getAbsLayoutId() = R.layout.activity_id_card_test
 
     override fun findViews(savedInstanceState: Bundle?) {
-        ButterKnife.bind(this)
     }
 
     override fun setListeners() {

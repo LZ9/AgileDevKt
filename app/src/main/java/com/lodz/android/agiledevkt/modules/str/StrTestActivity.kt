@@ -4,11 +4,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.componentkt.base.activity.BaseActivity
+import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.utils.StringUtils
 
 /**
@@ -25,20 +24,15 @@ class StrTestActivity : BaseActivity() {
     }
 
     /** 原始字符 */
-    @BindView(R.id.original_tv)
-    lateinit var mOriginalTv: TextView
+    private val mOriginalTv by bindView<TextView>(R.id.original_tv)
     /** UTF-8编码 */
-    @BindView(R.id.encode_tv)
-    lateinit var mEncodeTv: TextView
+    private val mEncodeTv by bindView<TextView>(R.id.encode_tv)
     /** UTF-8解码 */
-    @BindView(R.id.decode_tv)
-    lateinit var mDecodeTv: TextView
+    private val mDecodeTv by bindView<TextView>(R.id.decode_tv)
     /** 分隔符字符串转数组 */
-    @BindView(R.id.separator_to_list_tv)
-    lateinit var mSeparatorToListTv: TextView
+    private val mSeparatorToListTv by bindView<TextView>(R.id.separator_to_list_tv)
     /** 数组转分隔符字符串 */
-    @BindView(R.id.list_to_separator_tv)
-    lateinit var mListToSeparatorTv: TextView
+    private val mListToSeparatorTv by bindView<TextView>(R.id.list_to_separator_tv)
 
     /** 原始字符 */
     private val mOriginalStr = "测试asdqw123@#!$%<>?}*/-{}:"
@@ -52,7 +46,6 @@ class StrTestActivity : BaseActivity() {
     override fun getLayoutId() = R.layout.activity_str_test
 
     override fun findViews(savedInstanceState: Bundle?) {
-        ButterKnife.bind(this)
         getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME))
     }
 

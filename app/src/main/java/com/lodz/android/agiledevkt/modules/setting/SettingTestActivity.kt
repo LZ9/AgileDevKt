@@ -9,15 +9,13 @@ import android.os.Bundle
 import android.provider.Settings
 import android.support.annotation.RequiresApi
 import android.widget.*
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.componentkt.base.activity.BaseActivity
 import com.lodz.android.componentkt.rx.subscribe.observer.BaseObserver
 import com.lodz.android.componentkt.rx.utils.RxUtils
 import com.lodz.android.corekt.anko.*
-import com.lodz.android.corekt.utils.*
+import com.lodz.android.corekt.utils.toastShort
 import io.reactivex.Observable
 
 /**
@@ -37,40 +35,29 @@ class SettingTestActivity : BaseActivity() {
     private val REQUEST_CODE_WRITE_SETTINGS = 77
 
     /** 亮度模式单选组 */
-    @BindView(R.id.brightness_rg)
-    lateinit var mBrightnessRadioGroup: RadioGroup
+    private val mBrightnessRadioGroup by bindView<RadioGroup>(R.id.brightness_rg)
     /** 系统亮度值 */
-    @BindView(R.id.system_brightness_tv)
-    lateinit var mSystemBrightnessTv: TextView
+    private val mSystemBrightnessTv by bindView<TextView>(R.id.system_brightness_tv)
     /** 系统亮度值拖拽条 */
-    @BindView(R.id.system_brightness_sb)
-    lateinit var mSystemBrightnessSeekBar: SeekBar
+    private val mSystemBrightnessSeekBar by bindView<SeekBar>(R.id.system_brightness_sb)
     /** 窗口亮度值 */
-    @BindView(R.id.window_brightness_tv)
-    lateinit var mWindowBrightnessTv: TextView
+    private val mWindowBrightnessTv by bindView<TextView>(R.id.window_brightness_tv)
     /** 窗口亮度值拖拽条 */
-    @BindView(R.id.window_brightness_sb)
-    lateinit var mWindowBrightnessSeekBar: SeekBar
+    private val mWindowBrightnessSeekBar by bindView<SeekBar>(R.id.window_brightness_sb)
 
     /** 屏幕休眠时间 */
-    @BindView(R.id.screen_dormant_time_tv)
-    lateinit var mScreenDdormantTimeTv: TextView
+    private val mScreenDdormantTimeTv by bindView<TextView>(R.id.screen_dormant_time_tv)
     /** 刷新屏幕休眠时间 */
-    @BindView(R.id.refresh_screen_dormant_time_btn)
-    lateinit var mRefreshScreenDdormantTimeBtn: Button
+    private val mRefreshScreenDdormantTimeBtn by bindView<Button>(R.id.refresh_screen_dormant_time_btn)
     /** 屏幕休眠时间输入框 */
-    @BindView(R.id.screen_dormant_time_edit)
-    lateinit var mScreenDdormantTimeEdit: EditText
+    private val mScreenDdormantTimeEdit by bindView<EditText>(R.id.screen_dormant_time_edit)
     /** 屏幕休眠时间设置按钮 */
-    @BindView(R.id.screen_dormant_time_setting_btn)
-    lateinit var mScreenDdormantTimeSettingBtn: Button
+    private val mScreenDdormantTimeSettingBtn by bindView<Button>(R.id.screen_dormant_time_setting_btn)
 
     /** 铃声音量值 */
-    @BindView(R.id.ring_volume_tv)
-    lateinit var mRingVolumeTv: TextView
+    private val mRingVolumeTv by bindView<TextView>(R.id.ring_volume_tv)
     /** 铃声音量值拖拽条 */
-    @BindView(R.id.ring_volume_sb)
-    lateinit var mRingVolumeSeekBar: SeekBar
+    private val mRingVolumeSeekBar by bindView<SeekBar>(R.id.ring_volume_sb)
 
     /** 亮度监听器 */
     private val mBrightnessObserver = BrightnessObserver()
@@ -82,7 +69,6 @@ class SettingTestActivity : BaseActivity() {
     override fun getLayoutId() = R.layout.activity_setting_test
 
     override fun findViews(savedInstanceState: Bundle?) {
-        ButterKnife.bind(this)
         getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME))
     }
 

@@ -8,12 +8,11 @@ import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.FloatingActionButton
 import android.widget.Button
 import android.widget.ImageView
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.componentkt.base.activity.AbsActivity
 import com.lodz.android.componentkt.widget.base.TitleBarLayout
+import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.dp2px
 import com.lodz.android.corekt.anko.getColorCompat
 import com.lodz.android.corekt.utils.SnackbarUtils
@@ -33,28 +32,21 @@ class SnackbarTestActivity : AbsActivity() {
     }
 
     /** 根布局 */
-    @BindView(R.id.root_view)
-    lateinit var mRootView: CoordinatorLayout
+    private val mRootView by bindView<CoordinatorLayout>(R.id.root_view)
     /** 标题栏 */
-    @BindView(R.id.title_bar_layout)
-    lateinit var mTitleBarLayout: TitleBarLayout
+    private val mTitleBarLayout by bindView<TitleBarLayout>(R.id.title_bar_layout)
     /** 显示短的snackbar按钮 */
-    @BindView(R.id.short_btn)
-    lateinit var mShortBtn: FloatingActionButton
+    private val mShortBtn by bindView<FloatingActionButton>(R.id.short_btn)
     /** 关注按钮 */
-    @BindView(R.id.attention_btn)
-    lateinit var mAttentionBtn: Button
+    private val mAttentionBtn by bindView<Button>(R.id.attention_btn)
     /** 自定义图片按钮 */
-    @BindView(R.id.custom_img_btn)
-    lateinit var mCustomImgBtn: Button
+    private val mCustomImgBtn by bindView<Button>(R.id.custom_img_btn)
     /** 自定义布局按钮 */
-    @BindView(R.id.custom_layout_btn)
-    lateinit var mCustomLayoutBtn: Button
+    private val mCustomLayoutBtn by bindView<Button>(R.id.custom_layout_btn)
 
     override fun getAbsLayoutId() = R.layout.activity_snackbar_test
 
     override fun findViews(savedInstanceState: Bundle?) {
-        ButterKnife.bind(this)
         mTitleBarLayout.setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME))
     }
 

@@ -6,12 +6,11 @@ import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.agiledevkt.utils.file.FileManager
 import com.lodz.android.componentkt.base.activity.BaseActivity
+import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.utils.FileUtils
 import com.lodz.android.corekt.utils.toastShort
 import java.io.File
@@ -40,57 +39,44 @@ class FileTestActivity : BaseActivity() {
 
 
     /** 根目录地址 */
-    @BindView(R.id.root_path_tv)
-    lateinit var mRootPathTv: TextView
+    private val mRootPathTv by bindView<TextView>(R.id.root_path_tv)
 
     /** 创建一个文件按钮 */
-    @BindView(R.id.create_new_file_btn)
-    lateinit var mCreateNewFileBtn: Button
+    private val mCreateNewFileBtn by bindView<Button>(R.id.create_new_file_btn)
 
     /** 创建一个文件夹按钮 */
-    @BindView(R.id.create_directory_btn)
-    lateinit var mCreateDirectoryBtn: Button
+    private val mCreateDirectoryBtn by bindView<Button>(R.id.create_directory_btn)
 
     /** 文件（文件夹）是否存在 */
-    @BindView(R.id.file_exists_btn)
-    lateinit var mFileExists: Button
+    private val mFileExists by bindView<Button>(R.id.file_exists_btn)
 
     /** 重命名文件（文件夹） */
-    @BindView(R.id.file_rename_btn)
-    lateinit var mFileRenameBtn: Button
+    private val mFileRenameBtn by bindView<Button>(R.id.file_rename_btn)
 
     /** 删除jpg后缀文件 */
-    @BindView(R.id.file_delete_suffix_jpg_btn)
-    lateinit var mFileDeleteSuffixJpgBtn: Button
+    private val mFileDeleteSuffixJpgBtn by bindView<Button>(R.id.file_delete_suffix_jpg_btn)
 
     /** 移动文件 */
-    @BindView(R.id.move_file_btn)
-    lateinit var mMoveFileBtn: Button
+    private val mMoveFileBtn by bindView<Button>(R.id.move_file_btn)
 
     /** 复制文件 */
-    @BindView(R.id.copy_file_btn)
-    lateinit var mCopyFileBtn: Button
+    private val mCopyFileBtn by bindView<Button>(R.id.copy_file_btn)
 
     /** 获取路径下的文件总大小 */
-    @BindView(R.id.get_file_length)
-    lateinit var mGetFileLengthBtn: Button
+    private val mGetFileLengthBtn by bindView<Button>(R.id.get_file_length)
 
     /** 删除路径下文件 */
-    @BindView(R.id.delete_file_btn)
-    lateinit var mDeleteFileBtn: Button
+    private val mDeleteFileBtn by bindView<Button>(R.id.delete_file_btn)
 
     /** 将文件保存为byte数组并保存到其他路径 */
-    @BindView(R.id.save_by_bytes_btn)
-    lateinit var mSaveByBytesBtn: Button
+    private val mSaveByBytesBtn by bindView<Button>(R.id.save_by_bytes_btn)
 
     /** bitmap转文件 */
-    @BindView(R.id.save_bitmap_btn)
-    lateinit var mSaveBitmapBtn: Button
+    private val mSaveBitmapBtn by bindView<Button>(R.id.save_bitmap_btn)
 
     override fun getLayoutId() = R.layout.activity_file_test
 
     override fun findViews(savedInstanceState: Bundle?) {
-        ButterKnife.bind(this)
         getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME))
     }
 

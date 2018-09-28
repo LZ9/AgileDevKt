@@ -6,11 +6,10 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.ScrollView
 import android.widget.TextView
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.componentkt.base.activity.BaseActivity
+import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.getScreenHeight
 import com.lodz.android.corekt.anko.getScreenWidth
 import com.lodz.android.corekt.threadpool.ThreadPoolManager
@@ -32,26 +31,20 @@ class ThreadPoolActivity : BaseActivity() {
     }
 
     /** 开始按钮 */
-    @BindView(R.id.start_btn)
-    lateinit var mStartBtn: Button
+    private val mStartBtn by bindView<Button>(R.id.start_btn)
     /** 关闭按钮 */
-    @BindView(R.id.close_btn)
-    lateinit var mCloseBtn: Button
+    private val mCloseBtn by bindView<Button>(R.id.close_btn)
     /** 清空按钮 */
-    @BindView(R.id.clear_btn)
-    lateinit var mClearBtn: Button
+    private val mClearBtn by bindView<Button>(R.id.clear_btn)
 
     /** 滚动控件 */
-    @BindView(R.id.scroll_view)
-    lateinit var mScrollView: ScrollView
+    private val mScrollView by bindView<ScrollView>(R.id.scroll_view)
     /** 结果 */
-    @BindView(R.id.result_tv)
-    lateinit var mResultTv: TextView
+    private val mResultTv by bindView<TextView>(R.id.result_tv)
 
     override fun getLayoutId() = R.layout.activity_thread_pool
 
     override fun findViews(savedInstanceState: Bundle?) {
-        ButterKnife.bind(this)
         getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME))
     }
 

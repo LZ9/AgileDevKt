@@ -11,11 +11,10 @@ import android.widget.Button
 import android.widget.CompoundButton
 import android.widget.Switch
 import android.widget.TextView
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.componentkt.base.activity.BaseActivity
+import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.goBluetoothSetting
 import com.lodz.android.corekt.ble.BleDiscoveryListener
 import com.lodz.android.corekt.ble.BleSimpleHelper
@@ -36,25 +35,20 @@ class BluetoothTestActivity : BaseActivity() {
     }
 
     /** 蓝牙状态 */
-    @BindView(R.id.ble_status_tv)
-    lateinit var mBleStatusTv: TextView
+    private val mBleStatusTv by bindView<TextView>(R.id.ble_status_tv)
     /** 蓝牙开关 */
-    @BindView(R.id.ble_switch_btn)
-    lateinit var mBleSwitchBtn: Switch
+    private val mBleSwitchBtn by bindView<Switch>(R.id.ble_switch_btn)
 
     /** 跳转蓝牙设置页 */
-    @BindView(R.id.go_setting_btn)
-    lateinit var mGoSettingBtn: Button
+    private val mGoSettingBtn by bindView<Button>(R.id.go_setting_btn)
+
     /** 开始扫描 */
-    @BindView(R.id.start_disconnected_btn)
-    lateinit var mStartDisconnectedBtn: Button
+    private val mStartDisconnectedBtn by bindView<Button>(R.id.start_disconnected_btn)
     /** 停止扫描 */
-    @BindView(R.id.stop_disconnected_btn)
-    lateinit var mStopDisconnectedBtn: Button
+    private val mStopDisconnectedBtn by bindView<Button>(R.id.stop_disconnected_btn)
 
     /** 设备列表 */
-    @BindView(R.id.recycler_view)
-    lateinit var mRecyclerView: RecyclerView
+    private val mRecyclerView by bindView<RecyclerView>(R.id.recycler_view)
     /** 蓝牙设备适配器 */
     private lateinit var mAdapter: BleDeviceAdapter
 
@@ -64,7 +58,6 @@ class BluetoothTestActivity : BaseActivity() {
     override fun getLayoutId() = R.layout.activity_bluetooth_test
 
     override fun findViews(savedInstanceState: Bundle?) {
-        ButterKnife.bind(this)
         getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME))
         initRecyclerView()
     }

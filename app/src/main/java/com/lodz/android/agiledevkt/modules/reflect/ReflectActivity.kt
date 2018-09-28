@@ -5,11 +5,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.componentkt.base.activity.BaseActivity
+import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.utils.ReflectUtils
 
 /**
@@ -28,31 +27,23 @@ class ReflectActivity : BaseActivity() {
     private val BEAN_PATH = "com.lodz.android.agiledevkt.modules.reflect.ReflectBean"
 
     /** 消息展示 */
-    @BindView(R.id.text_msg)
-    lateinit var mMsgTv: TextView
+    private val mMsgTv by bindView<TextView>(R.id.text_msg)
     /** 获取所有构造函数名称 */
-    @BindView(R.id.get_constructor_name)
-    lateinit var mConstructorNameBtn: Button
+    private val mConstructorNameBtn by bindView<Button>(R.id.get_constructor_name)
     /** 获取对象里的变量名称 */
-    @BindView(R.id.get_field_name)
-    lateinit var mFieldNameBtn: Button
+    private val mFieldNameBtn by bindView<Button>(R.id.get_field_name)
     /** 获取方法名 */
-    @BindView(R.id.get_method_name)
-    lateinit var mMethodNameButton: Button
+    private val mMethodNameButton by bindView<Button>(R.id.get_method_name)
     /** 获取对象里变量的值 */
-    @BindView(R.id.get_field_value)
-    lateinit var mFieldValueBtn: Button
+    private val mFieldValueBtn by bindView<Button>(R.id.get_field_value)
     /** 执行函数 */
-    @BindView(R.id.execute_function)
-    lateinit var mExecuteFunctionBtn: Button
+    private val mExecuteFunctionBtn by bindView<Button>(R.id.execute_function)
     /** 设置值并读取测试 */
-    @BindView(R.id.set_value)
-    lateinit var mSetValueBtn: Button
+    private val mSetValueBtn by bindView<Button>(R.id.set_value)
 
     override fun getLayoutId() = R.layout.activity_reflect
 
     override fun findViews(savedInstanceState: Bundle?) {
-        ButterKnife.bind(this)
         getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME))
     }
 

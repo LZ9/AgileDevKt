@@ -4,12 +4,11 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.componentkt.base.activity.BaseActivity
 import com.lodz.android.corekt.anko.AnkoNumFormat
+import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.format
 
 /**
@@ -26,23 +25,18 @@ class NumFormatTestActivity : BaseActivity() {
     }
 
     /** 按钮1 */
-    @BindView(R.id.one_btn)
-    lateinit var mOneBtn: TextView
+    private val mOneBtn by bindView<TextView>(R.id.one_btn)
     /** 按钮2 */
-    @BindView(R.id.two_btn)
-    lateinit var mTwoBtn: TextView
+    private val mTwoBtn by bindView<TextView>(R.id.two_btn)
     /** 按钮3 */
-    @BindView(R.id.three_btn)
-    lateinit var mThreeBtn: TextView
+    private val mThreeBtn by bindView<TextView>(R.id.three_btn)
 
     /** 结果 */
-    @BindView(R.id.result_tv)
-    lateinit var mResultTv: TextView
+    private val mResultTv by bindView<TextView>(R.id.result_tv)
 
     override fun getLayoutId() = R.layout.activity_num_format_test
 
     override fun findViews(savedInstanceState: Bundle?) {
-        ButterKnife.bind(this)
         getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME))
     }
 

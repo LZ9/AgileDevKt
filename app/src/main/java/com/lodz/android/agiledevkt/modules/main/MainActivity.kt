@@ -6,8 +6,6 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.widget.TextView
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.lodz.android.agiledevkt.App
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.anko.AnkoLayoutActivity
@@ -34,6 +32,7 @@ import com.lodz.android.agiledevkt.modules.threadpool.ThreadPoolActivity
 import com.lodz.android.agiledevkt.modules.toast.ToastTestActivity
 import com.lodz.android.componentkt.base.activity.BaseActivity
 import com.lodz.android.componentkt.widget.base.TitleBarLayout
+import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.dp2px
 import com.lodz.android.corekt.anko.getColorCompat
 
@@ -75,15 +74,13 @@ class MainActivity : BaseActivity() {
     )
 
     /** 列表 */
-    @BindView(R.id.recycler_view)
-    lateinit var mRecyclerView: RecyclerView
+    private val mRecyclerView by bindView<RecyclerView>(R.id.recycler_view)
 
     private lateinit var mAdapter: MainAdapter
 
     override fun getLayoutId() = R.layout.activity_main
 
     override fun findViews(savedInstanceState: Bundle?) {
-        ButterKnife.bind(this)
         initTitleBar(getTitleBarLayout())
         initRecyclerView()
     }

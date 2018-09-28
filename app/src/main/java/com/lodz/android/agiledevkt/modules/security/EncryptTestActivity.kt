@@ -7,11 +7,10 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ScrollView
 import android.widget.TextView
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.componentkt.base.activity.BaseActivity
+import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.getScreenHeight
 import com.lodz.android.corekt.anko.getScreenWidth
 import com.lodz.android.corekt.security.AES
@@ -36,45 +35,33 @@ class EncryptTestActivity : BaseActivity() {
     }
 
     /** 滚动控件 */
-    @BindView(R.id.scroll_view)
-    lateinit var mScrollView: ScrollView
+    private val mScrollView by bindView<ScrollView>(R.id.scroll_view)
     /** 结果 */
-    @BindView(R.id.result)
-    lateinit var mResultTv: TextView
+    private val mResultTv by bindView<TextView>(R.id.result)
 
     /** 输入框  */
-    @BindView(R.id.input_edit)
-    lateinit var mInputEdit: EditText
+    private val mInputEdit by bindView<EditText>(R.id.input_edit)
 
     /** AES秘钥初始化  */
-    @BindView(R.id.aes_init_btn)
-    lateinit var mAESInitBtn: Button
+    private val mAESInitBtn by bindView<Button>(R.id.aes_init_btn)
     /** AES加密  */
-    @BindView(R.id.aes_encrypt_btn)
-    lateinit var mAESEncryptBtn: Button
+    private val mAESEncryptBtn by bindView<Button>(R.id.aes_encrypt_btn)
     /** AES解密  */
-    @BindView(R.id.aes_decrypt_btn)
-    lateinit var mAESDecryptBtn: Button
+    private val mAESDecryptBtn by bindView<Button>(R.id.aes_decrypt_btn)
     /** RSA秘钥初始化  */
-    @BindView(R.id.rsa_init_btn)
-    lateinit var mRsaInitBtn: Button
+    private val mRsaInitBtn by bindView<Button>(R.id.rsa_init_btn)
     /** RSA公钥加密  */
-    @BindView(R.id.rsa_encrypt_btn)
-    lateinit var mRsaEncryptBtn: Button
+    private val mRsaEncryptBtn by bindView<Button>(R.id.rsa_encrypt_btn)
     /** RSA私钥解密  */
-    @BindView(R.id.rsa_decrypt_btn)
-    lateinit var mRsaDecryptBtn: Button
+    private val mRsaDecryptBtn by bindView<Button>(R.id.rsa_decrypt_btn)
 
     /** MD5信息摘要  */
-    @BindView(R.id.md5_btn)
-    lateinit var mMD5Btn: Button
+    private val mMD5Btn by bindView<Button>(R.id.md5_btn)
     /** SHA1信息摘要  */
-    @BindView(R.id.sha1_btn)
-    lateinit var mSHA1Btn: Button
+    private val mSHA1Btn by bindView<Button>(R.id.sha1_btn)
 
     /** 清空  */
-    @BindView(R.id.clean_btn)
-    lateinit var mCleanBtn: Button
+    private val mCleanBtn by bindView<Button>(R.id.clean_btn)
 
     /** AES秘钥  */
     private var mAESKey = ""
@@ -89,7 +76,6 @@ class EncryptTestActivity : BaseActivity() {
     override fun getLayoutId() = R.layout.activity_encrypt
 
     override fun findViews(savedInstanceState: Bundle?) {
-        ButterKnife.bind(this)
         getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME))
     }
 

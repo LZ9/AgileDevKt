@@ -9,11 +9,10 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.widget.ImageView
 import android.widget.TextView
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.componentkt.base.activity.AbsActivity
 import com.lodz.android.componentkt.widget.contract.OnAppBarStateChangeListener
+import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.dp2px
 import com.lodz.android.corekt.anko.getScreenWidth
 import com.lodz.android.corekt.utils.toastShort
@@ -37,30 +36,23 @@ class CoorTranslationActivity : AbsActivity() {
     private val BTN_MARGIN_END_DP = 10
 
     /** 返回按钮 */
-    @BindView(R.id.back_btn)
-    lateinit var mBackBtn: ImageView
+    private val mBackBtn by bindView<ImageView>(R.id.back_btn)
 
     /** 头像 */
-    @BindView(R.id.head_img)
-    lateinit var mHeadImg: ImageView
+    private val mHeadImg by bindView<ImageView>(R.id.head_img)
     /** 用户名 */
-    @BindView(R.id.user_name_tv)
-    lateinit var mUserNameTv: TextView
+    private val mUserNameTv by bindView<TextView>(R.id.user_name_tv)
     /** 订阅按钮 */
-    @BindView(R.id.subscribe_btn)
-    lateinit var mSubscribeBtn: TextView
+    private val mSubscribeBtn by bindView<TextView>(R.id.subscribe_btn)
 
     /** 数据列表 */
-    @BindView(R.id.recycler_view)
-    lateinit var mRecyclerView: RecyclerView
+    private val mRecyclerView by bindView<RecyclerView>(R.id.recycler_view)
     private lateinit var mAdapter: CoordinatorDataAdapter
 
     /** AppBarLayout */
-    @BindView(R.id.app_bar_layout)
-    lateinit var mAppBarLayout: AppBarLayout
+    private val mAppBarLayout by bindView<AppBarLayout>(R.id.app_bar_layout)
     /** Toolbar */
-    @BindView(R.id.toolbar)
-    lateinit var mToolbar: Toolbar
+    private val mToolbar by bindView<Toolbar>(R.id.toolbar)
 
     /** 标题栏中心Y坐标 */
     private var mToolbarCenterY: Float = 0f
@@ -76,7 +68,6 @@ class CoorTranslationActivity : AbsActivity() {
     override fun getAbsLayoutId() = R.layout.activity_coor_translation
 
     override fun findViews(savedInstanceState: Bundle?) {
-        ButterKnife.bind(this)
         initRecyclerView()
     }
 

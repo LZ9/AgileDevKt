@@ -8,10 +8,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.componentkt.base.activity.AbsActivity
+import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.utils.StatusBarUtil
 import com.lodz.android.corekt.utils.toastShort
 
@@ -29,26 +28,20 @@ class StatusBarImgTestActivity :AbsActivity(){
     }
 
     /** 标题布局 */
-    @BindView(R.id.title_layout)
-    lateinit var mTitleLayout: ViewGroup
+    private val mTitleLayout by bindView<ViewGroup>(R.id.title_layout)
     /** 返回按钮 */
-    @BindView(R.id.back_btn)
-    lateinit var mBackBtn: ImageView
+    private val mBackBtn by bindView<ImageView>(R.id.back_btn)
     /** 描述按钮 */
-    @BindView(R.id.desc_btn)
-    lateinit var mDescBtn: ImageView
+    private val mDescBtn by bindView<ImageView>(R.id.desc_btn)
 
     /** 透明度滚动条 */
-    @BindView(R.id.alpha_sb)
-    lateinit var mAlphaSeekBar: SeekBar
+    private val mAlphaSeekBar by bindView<SeekBar>(R.id.alpha_sb)
     /** 透明度值 */
-    @BindView(R.id.alpha_value_tv)
-    lateinit var mAlphaValueTv: TextView
+    private val mAlphaValueTv by bindView<TextView>(R.id.alpha_value_tv)
 
     override fun getAbsLayoutId() = R.layout.activity_statusbar_img_test
 
     override fun findViews(savedInstanceState: Bundle?) {
-        ButterKnife.bind(this)
     }
 
     override fun setListeners() {

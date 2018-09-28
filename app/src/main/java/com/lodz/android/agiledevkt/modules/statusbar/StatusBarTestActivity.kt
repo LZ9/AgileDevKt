@@ -7,13 +7,12 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.SeekBar
 import android.widget.TextView
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.coordinator.CoorStatusBarTestActivity
 import com.lodz.android.agiledevkt.modules.drawer.DrawerTestActivity
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.componentkt.base.activity.BaseActivity
+import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.utils.StatusBarUtil
 
 /**
@@ -34,26 +33,20 @@ class StatusBarTestActivity : BaseActivity() {
     }
 
     /** 透明度滚动条 */
-    @BindView(R.id.alpha_sb)
-    lateinit var mAlphaSeekBar: SeekBar
+    private val mAlphaSeekBar by bindView<SeekBar>(R.id.alpha_sb)
     /** 透明度值 */
-    @BindView(R.id.alpha_value_tv)
-    lateinit var mAlphaValueTv: TextView
+    private val mAlphaValueTv by bindView<TextView>(R.id.alpha_value_tv)
 
     /** 测试带图片的状态栏按钮 */
-    @BindView(R.id.test_img_btn)
-    lateinit var mTestImgBtn: Button
+    private val mTestImgBtn by bindView<Button>(R.id.test_img_btn)
     /** 测试带DrawerLayout的状态栏 */
-    @BindView(R.id.test_drawer_btn)
-    lateinit var mTestDrawerBtn: Button
+    private val mTestDrawerBtn by bindView<Button>(R.id.test_drawer_btn)
     /** 带CoordinatorLayout的状态栏测试类 */
-    @BindView(R.id.test_coordinator_btn)
-    lateinit var mTestCoordinatorBtn: Button
+    private val mTestCoordinatorBtn by bindView<Button>(R.id.test_coordinator_btn)
 
     override fun getLayoutId() = R.layout.activity_statusbar_test
 
     override fun findViews(savedInstanceState: Bundle?) {
-        ButterKnife.bind(this)
         getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME))
         getTitleBarLayout().setBackgroundColor(DEFAULT_COLOR)
     }
