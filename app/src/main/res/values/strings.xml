@@ -291,6 +291,9 @@
     <string name="coordinator_subscribe">订阅</string>
     <string name="coordinator_subscribe_tips">您已订阅</string>
 
-
+    <!-- 定位测试 -->
+    <string name="location_denied_permission_tips">你拒绝了此权限，该功能不可用</string>
+    <string name="location_check_permission_tips">请在设置页打开定位权限打开定位权限</string>
+    <string name="location_check_permission_title">请确认已打开定位权限</string>
 
 </resources>

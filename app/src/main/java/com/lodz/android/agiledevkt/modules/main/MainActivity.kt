@@ -20,6 +20,7 @@ import com.lodz.android.agiledevkt.modules.format.NumFormatTestActivity
 import com.lodz.android.agiledevkt.modules.idcard.IdcardTestActivity
 import com.lodz.android.agiledevkt.modules.image.GlideActivity
 import com.lodz.android.agiledevkt.modules.info.InfoTestActivity
+import com.lodz.android.agiledevkt.modules.location.LocationTestActivity
 import com.lodz.android.agiledevkt.modules.notification.NotificationActivity
 import com.lodz.android.agiledevkt.modules.reflect.ReflectActivity
 import com.lodz.android.agiledevkt.modules.security.EncryptTestActivity
@@ -58,7 +59,7 @@ class MainActivity : BaseActivity() {
             "背景选择器测试类", "设置测试类", "字符测试类",
             "信息展示测试类", "蓝牙测试类", "状态栏透明颜色测试类",
             "侧滑栏测试类", "Coordinator测试类", "Snackbar测试类",
-            "崩溃测试类"
+            "崩溃测试类", "定位测试"
     )
 
     /** 功能的activity */
@@ -70,7 +71,7 @@ class MainActivity : BaseActivity() {
             SelectorTestActivity::class.java, SettingTestActivity::class.java, StrTestActivity::class.java,
             InfoTestActivity::class.java, BluetoothTestActivity::class.java, StatusBarTestActivity::class.java,
             DrawerTestActivity::class.java, CoordinatorTestActivity::class.java, SnackbarTestActivity::class.java,
-            CrashTestActivity::class.java
+            CrashTestActivity::class.java, LocationTestActivity::class.java
     )
 
     /** 列表 */
