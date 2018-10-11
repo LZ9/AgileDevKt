@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.support.annotation.StringRes
 import android.support.v7.app.AlertDialog
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
@@ -86,6 +87,10 @@ abstract class ProgressSubscriber<T> : RxSubscriber<T>() {
         progressDialog.setCancelable(cancelable)
         progressDialog.setOnCancelListener {
             cancelDialog()
+        }
+        val wd = progressDialog.window
+        if (wd != null){
+            wd.setGravity(Gravity.CENTER)
         }
         return progressDialog
     }

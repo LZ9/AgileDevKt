@@ -2,6 +2,7 @@ package com.lodz.android.componentkt.widget.dialog
 
 import android.content.Context
 import android.support.annotation.StyleRes
+import android.view.Gravity
 import com.lodz.android.componentkt.R
 
 /**
@@ -14,5 +15,21 @@ abstract class BaseCenterDialog : BaseDialog {
 
     constructor(context: Context, @StyleRes themeResId: Int) : super(context, themeResId)
 
-    override fun getAnimations() = R.style.animation_center_in_center_out
+    override fun getAnimations(): Int {
+        if (isNeedAnimations()) {
+            return R.style.animation_center_in_center_out
+        }
+        return super.getAnimations()
+    }
+
+    /** 是否使用动画 */
+    open fun isNeedAnimations() = true
+
+    override fun show() {
+        val wd = window
+        if (wd != null) {
+            wd.setGravity(Gravity.CENTER)
+        }
+        super.show()
+    }
 }

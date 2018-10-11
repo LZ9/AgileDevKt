@@ -22,7 +22,7 @@ import java.io.File
  * Created by zhouL on 2018/6/26.
  */
 
-/** 安装akp文件 */
+/** 安装apk文件 */
 fun Context.installApk(apkPath: String, authority: String, newTask: Boolean = true) {
     val file: File? = FileUtils.create(apkPath)
     if (file == null || !FileUtils.isFileExists(file)) {
@@ -31,6 +31,15 @@ fun Context.installApk(apkPath: String, authority: String, newTask: Boolean = tr
 
     if (authority.isEmpty()) {
         throw IllegalArgumentException("authority is null")
+    }
+
+    // 系统大于8.0且没有“安装未知应用”权限，则跳转到设置页面
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (!packageManager.canRequestPackageInstalls()){
+            //跳转至“安装未知应用”权限界面，引导用户开启权限
+            startActivity(Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, Uri.parse("package:" + packageName)))
+            return
+        }
     }
 
     val intent = Intent(Intent.ACTION_VIEW)
