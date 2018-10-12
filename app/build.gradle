@@ -76,8 +76,8 @@ dependencies {
     }
     kapt 'com.github.hotchemi:permissionsdispatcher-processor:3.3.1'
     // anko layout
-    implementation 'org.jetbrains.anko:anko-sdk25:0.10.6'
-    implementation 'org.jetbrains.anko:anko-appcompat-v7:0.10.6'
+    implementation 'org.jetbrains.anko:anko-sdk25:0.10.7'
+    implementation 'org.jetbrains.anko:anko-appcompat-v7:0.10.7'
 
     // 单元测试
     testImplementation 'junit:junit:4.12'
