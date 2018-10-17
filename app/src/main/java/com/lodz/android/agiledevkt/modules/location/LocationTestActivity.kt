@@ -6,11 +6,16 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.support.design.button.MaterialButton
+import android.widget.ScrollView
+import android.widget.TextView
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.agiledevkt.modules.splash.CheckDialog
 import com.lodz.android.componentkt.base.activity.BaseActivity
+import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.goAppDetailSetting
+import com.lodz.android.corekt.utils.UiHandler
 import com.lodz.android.corekt.utils.isPermissionGranted
 import com.lodz.android.corekt.utils.toastShort
 import permissions.dispatcher.*
@@ -20,14 +25,42 @@ import permissions.dispatcher.*
  * Created by zhouL on 2018/9/28.
  */
 @RuntimePermissions
-class LocationTestActivity :BaseActivity(){
-    
+class LocationTestActivity : BaseActivity() {
+
     companion object {
-        fun start(context: Context){
+        fun start(context: Context) {
             val intent = Intent(context, LocationTestActivity::class.java)
             context.startActivity(intent)
         }
     }
+
+
+    /** 间隔时间 */
+    private val mIntervalTv by bindView<TextView>(R.id.interval_tv)
+    /** 更新时间 */
+    private val mUpdateTimeTv by bindView<TextView>(R.id.update_time_tv)
+    /** 经度 */
+    private val mLongitudeTv by bindView<TextView>(R.id.longitude_tv)
+    /** 纬度 */
+    private val mLatitudeTv by bindView<TextView>(R.id.latitude_tv)
+    /** 基站信息mcc */
+    private val mMccTv by bindView<TextView>(R.id.mcc_tv)
+    /** 基站信息mnc */
+    private val mMncTv by bindView<TextView>(R.id.mnc_tv)
+    /** 基站信息lac */
+    private val mLacTv by bindView<TextView>(R.id.lac_tv)
+    /** 基站信息cid */
+    private val mCidTv by bindView<TextView>(R.id.cid_tv)
+
+    /** 滚动控件 */
+    private val mScrollView by bindView<ScrollView>(R.id.scroll_view)
+    /** 日志信息 */
+    private val mLogTv by bindView<TextView>(R.id.log_tv)
+
+    /** 绑定定位服务 */
+    private val mBindServerBtn by bindView<MaterialButton>(R.id.bind_server_btn)
+    /** 解绑定位服务 */
+    private val mUnbindServerBtn by bindView<MaterialButton>(R.id.unbind_server_btn)
 
     override fun getLayoutId() = R.layout.activity_location_test
 
@@ -66,10 +99,10 @@ class LocationTestActivity :BaseActivity(){
             Manifest.permission.ACCESS_COARSE_LOCATION// 定位
     )
     fun onRequestPermission() {
-        if (!isPermissionGranted(Manifest.permission.ACCESS_FINE_LOCATION)){
+        if (!isPermissionGranted(Manifest.permission.ACCESS_FINE_LOCATION)) {
             return
         }
-        if (!isPermissionGranted(Manifest.permission.ACCESS_COARSE_LOCATION)){
+        if (!isPermissionGranted(Manifest.permission.ACCESS_COARSE_LOCATION)) {
             return
         }
         initLogic()
@@ -106,7 +139,7 @@ class LocationTestActivity :BaseActivity(){
     }
 
     /** 显示权限核对弹框 */
-    private fun showPermissionCheckDialog(){
+    private fun showPermissionCheckDialog() {
         val checkDialog = CheckDialog(getContext())
         checkDialog.setContentMsg(R.string.location_check_permission_title)
         checkDialog.setPositiveText(R.string.splash_check_permission_confirm, DialogInterface.OnClickListener { dialog, which ->
@@ -123,8 +156,27 @@ class LocationTestActivity :BaseActivity(){
         checkDialog.show()
     }
 
+    override fun setListeners() {
+        super.setListeners()
+        mBindServerBtn.setOnClickListener {
+
+        }
+
+        mUnbindServerBtn.setOnClickListener {
+
+        }
+    }
+
     /** 初始化 */
     fun initLogic() {
         showStatusCompleted()
+    }
+
+    /** 打印信息[result] */
+    private fun printResult(result: String) {
+        mLogTv.text = (mLogTv.text.toString() + "\n" + result)
+        UiHandler.postDelayed(Runnable {
+            mScrollView.fullScroll(ScrollView.FOCUS_DOWN)
+        }, 100)
     }
 }

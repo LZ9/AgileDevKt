@@ -11,8 +11,6 @@ import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.componentkt.base.activity.BaseActivity
 import com.lodz.android.corekt.anko.bindView
-import com.lodz.android.corekt.anko.getScreenHeight
-import com.lodz.android.corekt.anko.getScreenWidth
 import com.lodz.android.corekt.security.AES
 import com.lodz.android.corekt.security.MD5
 import com.lodz.android.corekt.security.RSA
@@ -203,10 +201,10 @@ class EncryptTestActivity : BaseActivity() {
 
 
     private fun printResult(result: String) {
-        UiHandler.post(Runnable {
-            mResultTv.text = (mResultTv.text.toString() + "\n" + result)
-            mScrollView.scrollTo(getScreenWidth(), getScreenHeight())
-        })
+        mResultTv.text = (mResultTv.text.toString() + "\n" + result)
+        UiHandler.postDelayed(Runnable {
+            mScrollView.fullScroll(ScrollView.FOCUS_DOWN)
+        }, 100)
     }
 
 }
