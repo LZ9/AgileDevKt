@@ -295,8 +295,8 @@
     <string name="location_denied_permission_tips">你拒绝了此权限，该功能不可用</string>
     <string name="location_check_permission_tips">请在设置页打开定位权限打开定位权限</string>
     <string name="location_check_permission_title">请确认已打开定位权限</string>
-    <string name="location_bind_server">绑定定位服务</string>
-    <string name="location_unbind_server">解绑定位服务</string>
+    <string name="location_bind_service">绑定定位服务</string>
+    <string name="location_unbind_service">解绑定位服务</string>
     <string name="location_interval">更新间隔：%s秒</string>
     <string name="location_update_time">更新时间：%s</string>
     <string name="location_coordinates_info">坐标信息：</string>

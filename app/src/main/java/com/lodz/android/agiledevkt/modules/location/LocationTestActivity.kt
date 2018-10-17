@@ -58,9 +58,9 @@ class LocationTestActivity : BaseActivity() {
     private val mLogTv by bindView<TextView>(R.id.log_tv)
 
     /** 绑定定位服务 */
-    private val mBindServerBtn by bindView<MaterialButton>(R.id.bind_server_btn)
+    private val mBindServiceBtn by bindView<MaterialButton>(R.id.bind_service_btn)
     /** 解绑定位服务 */
-    private val mUnbindServerBtn by bindView<MaterialButton>(R.id.unbind_server_btn)
+    private val mUnbindServiceBtn by bindView<MaterialButton>(R.id.unbind_service_btn)
 
     override fun getLayoutId() = R.layout.activity_location_test
 
@@ -158,11 +158,11 @@ class LocationTestActivity : BaseActivity() {
 
     override fun setListeners() {
         super.setListeners()
-        mBindServerBtn.setOnClickListener {
+        mBindServiceBtn.setOnClickListener {
 
         }
 
-        mUnbindServerBtn.setOnClickListener {
+        mUnbindServiceBtn.setOnClickListener {
 
         }
     }

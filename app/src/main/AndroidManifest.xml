@@ -61,6 +61,11 @@
                 android:resource="@xml/file_provider_paths" />
         </provider>
 
+        <service
+            android:name=".modules.location.LocationService"
+            android:exported="false"
+            android:label="定位服务" />
+
         <activity
             android:name=".modules.splash.SplashActivity"
             android:label="@string/app_name"
