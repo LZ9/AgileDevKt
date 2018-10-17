@@ -1,16 +1,16 @@
 package com.lodz.android.agiledevkt.modules.notification
 
-import android.app.*
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
-import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.NotificationCompat
 import android.widget.Button
 import android.widget.RemoteViews
 import com.lodz.android.agiledevkt.R
+import com.lodz.android.agiledevkt.config.Constant
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.componentkt.base.activity.BaseActivity
 import com.lodz.android.componentkt.rx.subscribe.observer.BaseObserver
@@ -33,12 +33,7 @@ class NotificationActivity : BaseActivity() {
         }
     }
 
-    /** 通知组id  */
-    private val NOTIFI_GROUP_ID = "g0001"
-    /** 主频道id  */
-    private val NOTIFI_CHANNEL_MAIN_ID = "c0001"
-    /** 下载频道id  */
-    private val NOTIFI_CHANNEL_DOWNLOAD_ID = "c0002"
+
 
     /** 基本通知 */
     private val mBbaseBtn by bindView<Button>(R.id.base_btn)
@@ -107,7 +102,7 @@ class NotificationActivity : BaseActivity() {
 
     /** 显示基础通知 */
     private fun showBaseNotify() {
-        val builder = NotificationCompat.Builder(getContext(), NOTIFI_CHANNEL_MAIN_ID)// 获取构造器
+        val builder = NotificationCompat.Builder(getContext(), Constant.NOTIFI_CHANNEL_MAIN_ID)// 获取构造器
         builder.setTicker("震惊！拉玛西亚竟然是这个意思") // 通知栏显示的文字
         builder.setContentTitle("拉玛西亚由来") // 通知栏通知的标题
         builder.setContentText("拉玛西亚足球学校始建于1979年，位于巴塞罗那阿里斯蒂德斯大街左侧。当时的球场非常简陋，都是人工草皮，巴萨四个年龄梯队的使用这片拥挤的训练空间。") // 通知栏通知的详细内容（只有一行）
@@ -120,7 +115,7 @@ class NotificationActivity : BaseActivity() {
 
     /** 显示带意图的通知 */
     private fun showIntentNotify() {
-        val builder = NotificationCompat.Builder(getContext(), NOTIFI_CHANNEL_MAIN_ID)// 获取构造器
+        val builder = NotificationCompat.Builder(getContext(), Constant.NOTIFI_CHANNEL_MAIN_ID)// 获取构造器
         builder.setTicker("希尔斯堡惨案真相")// 通知栏显示的文字
         builder.setContentTitle("希尔斯堡惨案")// 通知栏通知的标题
         builder.setContentText("因在场警官的谎言、媒体的恶意报道与政府的失公处理，迄今还没有人为希尔斯堡惨案负起应有的责任。")// 通知栏通知的详细内容（只有一行）
@@ -158,7 +153,7 @@ class NotificationActivity : BaseActivity() {
 
     /** 显示带进度[progress]的通知，[isComplete]是否完成 */
     private fun showProgressNotify(progress: Int, isComplete: Boolean) {
-        val builder = NotificationCompat.Builder(getContext(), NOTIFI_CHANNEL_DOWNLOAD_ID)// 获取构造器
+        val builder = NotificationCompat.Builder(getContext(), if (isComplete) Constant.NOTIFI_CHANNEL_MAIN_ID else Constant.NOTIFI_CHANNEL_DOWNLOAD_ID)
         builder.setTicker(if (isComplete) "下载完成" else "下载支付宝")// 通知栏显示的文字
         builder.setContentTitle("支付宝V8.8.12")// 通知栏通知的标题
         builder.setContentText(if (isComplete) "支付宝下载完成" else "正在为您下载支付宝")// 通知栏通知的详细内容（只有一行）
@@ -166,8 +161,10 @@ class NotificationActivity : BaseActivity() {
         builder.setSmallIcon(R.mipmap.ic_launcher)//通知上面的小图标（必传）
         if (isComplete) {
             builder.setProgress(0, 0, false)
-            builder.setDefaults(NotificationCompat.DEFAULT_ALL)//通知默认的声音 震动 呼吸灯
+            builder.setDefaults(NotificationCompat.FLAG_ONLY_ALERT_ONCE)//通知默认的声音 震动 呼吸灯
             builder.priority = NotificationCompat.PRIORITY_DEFAULT//设置优先级，级别高的排在前面
+            builder.setVibrate(longArrayOf(0))
+            builder.setSound(null)
         } else {
             builder.setProgress(100, progress, false)
         }
@@ -176,7 +173,7 @@ class NotificationActivity : BaseActivity() {
 
     /** 显示单行大文本样式通知 */
     private fun showSingleTxtNotify() {
-        val builder = NotificationCompat.Builder(getContext(), NOTIFI_CHANNEL_MAIN_ID)// 获取构造器
+        val builder = NotificationCompat.Builder(getContext(), Constant.NOTIFI_CHANNEL_MAIN_ID)// 获取构造器
         builder.setTicker("桑切斯加盟梦剧场")// 通知栏显示的文字
         builder.setContentTitle("官宣！智利C罗加盟曼联")// 通知栏通知的标题
         builder.setContentText("北京时间1月23日，桑切斯加盟曼联，身披7号球衣。")// 通知栏通知的详细内容（只有一行）
@@ -196,7 +193,7 @@ class NotificationActivity : BaseActivity() {
 
     /** 显示多行大文本样式通知 */
     private fun showMultiTxtNotify() {
-        val builder = NotificationCompat.Builder(getContext(), NOTIFI_CHANNEL_MAIN_ID)// 获取构造器
+        val builder = NotificationCompat.Builder(getContext(), Constant.NOTIFI_CHANNEL_MAIN_ID)// 获取构造器
         builder.setTicker("你懂鬼畜吗")// 通知栏显示的文字
         builder.setContentTitle("带你了解鬼畜全明星")// 通知栏通知的标题
         builder.setContentText("鬼畜是人类进步的阶梯，你今天进步了吗")// 通知栏通知的详细内容（只有一行）
@@ -219,7 +216,7 @@ class NotificationActivity : BaseActivity() {
 
     /** 大图文本样式 */
     private fun showLargeImgNotify() {
-        val builder = NotificationCompat.Builder(getContext(), NOTIFI_CHANNEL_MAIN_ID)// 获取构造器
+        val builder = NotificationCompat.Builder(getContext(), Constant.NOTIFI_CHANNEL_MAIN_ID)// 获取构造器
         builder.setTicker("阿森纳の梗")// 通知栏显示的文字
         builder.setContentTitle("阿森纳与4的不解之缘")// 通知栏通知的标题
         builder.setContentText("争4狂魔，没4找4")// 通知栏通知的详细内容（只有一行）
@@ -239,7 +236,7 @@ class NotificationActivity : BaseActivity() {
 
     /** 自定义内容样式 */
     private fun showCustomNotify() {
-        val builder = NotificationCompat.Builder(getContext(), NOTIFI_CHANNEL_MAIN_ID)// 获取构造器
+        val builder = NotificationCompat.Builder(getContext(), Constant.NOTIFI_CHANNEL_MAIN_ID)// 获取构造器
         builder.setTicker("电影头文字D即将上映")// 通知栏显示的文字
         builder.setAutoCancel(true)// 设置为true，点击该条通知会自动删除，false时只能通过滑动来删除（一般都是true）
         builder.setSmallIcon(R.mipmap.ic_launcher)//通知上面的小图标（必传）
@@ -257,63 +254,7 @@ class NotificationActivity : BaseActivity() {
 
     override fun initData() {
         super.initData()
-        initNotificationChannel()
         showStatusCompleted()
     }
 
-    /** 初始化通知通道 */
-    private fun initNotificationChannel() {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            val group = NotificationChannelGroup(NOTIFI_GROUP_ID, "通知组")
-            NotificationUtils.create(getContext()).createNotificationChannelGroup(group)// 设置通知组
-
-            val channels = ArrayList<NotificationChannel>()
-            val mainChannel = getMainChannel()
-            if (mainChannel != null){
-                channels.add(mainChannel)
-            }
-            val downloadChannel = getDownloadChannel()
-            if (downloadChannel != null) {
-                channels.add(downloadChannel)
-            }
-            NotificationUtils.create(getContext()).createNotificationChannels(channels)// 设置频道
-        }
-    }
-
-    /** 获取主通道 */
-    private fun getMainChannel(): NotificationChannel? {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(NOTIFI_CHANNEL_MAIN_ID, "主通知", NotificationManager.IMPORTANCE_DEFAULT)
-            channel.enableLights(true)// 开启指示灯，如果设备有的话。
-            channel.lightColor = Color.GREEN// 设置指示灯颜色
-            channel.description = "应用主通知频道"// 通道描述
-            channel.enableVibration(true)// 开启震动
-            channel.vibrationPattern = longArrayOf(100, 200, 400, 300, 100)// 设置震动频率
-            channel.group = NOTIFI_GROUP_ID
-            channel.canBypassDnd()// 检测是否绕过免打扰模式
-            channel.setBypassDnd(true)// 设置绕过免打扰模式
-            channel.lockscreenVisibility = Notification.VISIBILITY_PRIVATE
-            channel.canShowBadge()// 检测是否显示角标
-            channel.setShowBadge(true)// 设置是否显示角标
-            return channel
-        }
-        return null
-    }
-
-    /** 获取下载通道 */
-    private fun getDownloadChannel(): NotificationChannel? {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(NOTIFI_CHANNEL_DOWNLOAD_ID, "下载通知", NotificationManager.IMPORTANCE_DEFAULT)
-            channel.enableLights(true)// 开启指示灯，如果设备有的话。
-            channel.lightColor = Color.GREEN// 设置指示灯颜色
-            channel.description = "应用下载通知频道"// 通道描述
-            channel.enableVibration(false)// 开启震动
-            channel.group = NOTIFI_GROUP_ID
-            channel.setBypassDnd(true)// 设置绕过免打扰模式
-            channel.lockscreenVisibility = Notification.VISIBILITY_PRIVATE
-            channel.setShowBadge(false)// 设置是否显示角标
-            return channel
-        }
-        return null
-    }
 }
