@@ -13,9 +13,9 @@
 在图片库里已经为大家加入了Glide的依赖，小伙伴不需要再重复添加，我在图片库里也已经集成了图片变换，可以直接通过链式来调用。
 ```
     dependencies {
-        implementation 'com.android.support:appcompat-v7:28.0.0-rc01'
-        implementation 'com.android.support:support-annotations:28.0.0-rc01'
-        implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.2.70"
+        implementation 'com.android.support:appcompat-v7:28.0.0'
+        implementation 'com.android.support:support-annotations:28.0.0'
+        implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.0"
 
         api 'com.github.bumptech.glide:glide:4.8.0'
         kapt 'com.github.bumptech.glide:compiler:4.8.0'

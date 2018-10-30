@@ -113,7 +113,6 @@ class LocationService : Service() {
     }
 
     override fun onDestroy() {
-        // todo 销毁有异常
         if (mLocationManager != null) {
             mLocationManager!!.removeUpdates(mLocationListener)//销毁时先移除监听器
         }

@@ -68,7 +68,7 @@ dependencies {
     implementation project(':componentkt')
 
     implementation project(':imageloaderkt')
-//    implementation 'com.lodz:image-loader-kt:1.0.0'
+//    implementation 'com.lodz:imageloader-kt:1.0.1'
 
     // 权限申请
     implementation('com.github.hotchemi:permissionsdispatcher:3.3.1') {
