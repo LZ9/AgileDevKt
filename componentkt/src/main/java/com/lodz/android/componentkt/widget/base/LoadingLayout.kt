@@ -5,10 +5,6 @@ import android.content.res.ColorStateList
 import android.content.res.TypedArray
 import android.graphics.drawable.Drawable
 import android.os.Build
-import android.support.annotation.ColorInt
-import android.support.annotation.ColorRes
-import android.support.annotation.RequiresApi
-import android.support.annotation.StringRes
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -16,6 +12,10 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.annotation.ColorInt
+import androidx.annotation.ColorRes
+import androidx.annotation.RequiresApi
+import androidx.annotation.StringRes
 import com.lodz.android.componentkt.R
 import com.lodz.android.componentkt.base.application.BaseApplication
 import com.lodz.android.componentkt.base.application.config.BaseLayoutConfig

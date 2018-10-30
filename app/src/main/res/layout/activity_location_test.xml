@@ -140,7 +140,7 @@
         android:paddingStart="10dp"
         android:paddingEnd="10dp">
 
-        <android.support.design.button.MaterialButton
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/bind_service_btn"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="0dp"
@@ -151,7 +151,7 @@
             android:text="@string/location_bind_service"
             android:textColor="@color/white" />
 
-        <android.support.design.button.MaterialButton
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/unbind_service_btn"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="0dp"

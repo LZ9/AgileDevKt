@@ -4,11 +4,11 @@ import android.annotation.SuppressLint
 import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.os.Build
-import android.support.annotation.FloatRange
-import android.support.annotation.IntDef
-import android.support.annotation.IntRange
 import android.util.Base64
 import android.view.View
+import androidx.annotation.FloatRange
+import androidx.annotation.IntDef
+import androidx.annotation.IntRange
 import java.io.ByteArrayOutputStream
 import java.io.FileInputStream
 

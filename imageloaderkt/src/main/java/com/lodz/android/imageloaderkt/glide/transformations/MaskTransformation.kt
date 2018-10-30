@@ -18,8 +18,8 @@ package com.lodz.android.imageloaderkt.glide.transformations
 
 import android.content.Context
 import android.graphics.*
-import android.support.annotation.DrawableRes
-import android.support.v4.content.ContextCompat
+import androidx.annotation.DrawableRes
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.load.Key
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool
 import java.security.MessageDigest

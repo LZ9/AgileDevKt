@@ -10,7 +10,7 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0.0"// 未上传
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -29,22 +29,19 @@ dependencies {
     api project(':corekt')
 
     // RxJava
-    api ('io.reactivex.rxjava2:rxjava:2.2.2'){
-        exclude group: 'android.arch.core'
-    }
+    api 'io.reactivex.rxjava2:rxjava:2.2.3'
     api 'io.reactivex.rxjava2:rxandroid:2.1.0'
     // Retrofit
     api 'com.squareup.retrofit2:retrofit:2.4.0'
     api 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
-    api 'com.alibaba:fastjson:1.2.49'
+    api 'com.alibaba:fastjson:1.2.51'
     // RxJava生命周期
-    api 'com.trello.rxlifecycle2:rxlifecycle-android:2.2.2'
-    api 'com.trello.rxlifecycle2:rxlifecycle-components:2.2.2'
+    api 'com.trello.rxlifecycle3:rxlifecycle-components:3.0.0'
     // EventBus
     api 'org.greenrobot:eventbus:3.1.1'
 
     // 单元测试
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    androidTestImplementation 'androidx.test:runner:1.1.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
 }

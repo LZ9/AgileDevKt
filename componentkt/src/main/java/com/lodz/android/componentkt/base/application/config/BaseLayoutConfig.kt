@@ -1,7 +1,7 @@
 package com.lodz.android.componentkt.base.application.config
 
-import android.support.annotation.IntDef
 import android.widget.LinearLayout
+import androidx.annotation.IntDef
 
 /**
  * 基类配置

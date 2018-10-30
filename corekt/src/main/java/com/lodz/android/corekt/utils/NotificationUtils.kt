@@ -6,10 +6,10 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.net.Uri
-import android.support.annotation.DrawableRes
-import android.support.annotation.LayoutRes
-import android.support.v4.app.NotificationCompat
 import android.widget.RemoteViews
+import androidx.annotation.DrawableRes
+import androidx.annotation.LayoutRes
+import androidx.core.app.NotificationCompat
 import java.util.*
 
 /**

@@ -2,11 +2,11 @@ package com.lodz.android.imageloaderkt.contract
 
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
-import android.support.annotation.AnimRes
-import android.support.annotation.ColorInt
-import android.support.annotation.DrawableRes
-import android.support.annotation.IntRange
 import android.widget.ImageView
+import androidx.annotation.AnimRes
+import androidx.annotation.ColorInt
+import androidx.annotation.DrawableRes
+import androidx.annotation.IntRange
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.gif.GifDrawable
 import com.bumptech.glide.request.RequestListener

@@ -1,8 +1,8 @@
 package com.lodz.android.corekt.log
 
 import android.annotation.SuppressLint
-import android.support.annotation.IntDef
 import android.util.Log
+import androidx.annotation.IntDef
 
 /**
  * 日志打印

@@ -1,6 +1,6 @@
 package com.lodz.android.corekt.utils
 
-import android.support.annotation.StringDef
+import androidx.annotation.StringDef
 import java.text.SimpleDateFormat
 import java.util.*
 

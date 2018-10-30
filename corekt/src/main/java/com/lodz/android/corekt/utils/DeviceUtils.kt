@@ -4,9 +4,9 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.Build
-import android.support.annotation.RequiresPermission
-import android.support.annotation.StringDef
 import android.telephony.TelephonyManager
+import androidx.annotation.RequiresPermission
+import androidx.annotation.StringDef
 import java.util.*
 import kotlin.collections.HashMap
 

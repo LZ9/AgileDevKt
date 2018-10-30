@@ -5,7 +5,6 @@ import android.content.res.ColorStateList
 import android.content.res.TypedArray
 import android.graphics.drawable.Drawable
 import android.os.Build
-import android.support.annotation.*
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
@@ -14,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.annotation.*
 import com.lodz.android.componentkt.R
 import com.lodz.android.componentkt.base.application.BaseApplication
 import com.lodz.android.componentkt.base.application.config.TitleBarLayoutConfig

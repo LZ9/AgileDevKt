@@ -2,10 +2,10 @@ package com.lodz.android.agiledevkt.modules.bluetooth
 
 import android.bluetooth.BluetoothDevice
 import android.content.Context
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.componentkt.widget.rv.recycler.BaseRecyclerViewAdapter
 import com.lodz.android.corekt.anko.bindView

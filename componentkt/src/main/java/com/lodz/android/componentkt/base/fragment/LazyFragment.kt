@@ -1,6 +1,7 @@
 package com.lodz.android.componentkt.base.fragment
 
-import com.trello.rxlifecycle2.components.support.RxFragment
+import com.trello.rxlifecycle3.components.support.RxFragment
+
 
 /**
  * 懒加载的fragment

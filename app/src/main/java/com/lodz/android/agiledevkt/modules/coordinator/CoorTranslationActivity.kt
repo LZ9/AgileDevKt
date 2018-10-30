@@ -3,12 +3,12 @@ package com.lodz.android.agiledevkt.modules.coordinator
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.AppBarLayout
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.Toolbar
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.widget.Toolbar
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.appbar.AppBarLayout
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.componentkt.base.activity.AbsActivity
 import com.lodz.android.componentkt.widget.contract.OnAppBarStateChangeListener
@@ -73,7 +73,7 @@ class CoorTranslationActivity : AbsActivity() {
 
     private fun initRecyclerView() {
         val layoutManager = LinearLayoutManager(getContext())
-        layoutManager.orientation = LinearLayoutManager.VERTICAL
+        layoutManager.orientation = RecyclerView.VERTICAL
         mAdapter = CoordinatorDataAdapter(getContext())
         mRecyclerView.layoutManager = layoutManager
         mRecyclerView.setHasFixedSize(true)

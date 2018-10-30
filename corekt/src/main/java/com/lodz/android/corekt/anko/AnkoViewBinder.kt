@@ -2,10 +2,10 @@ package com.lodz.android.corekt.anko
 
 import android.app.Activity
 import android.app.Dialog
-import android.support.v4.app.Fragment
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 
 /**
  * 控件绑定

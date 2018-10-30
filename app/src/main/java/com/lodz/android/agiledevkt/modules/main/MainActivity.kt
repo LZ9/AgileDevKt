@@ -3,9 +3,9 @@ package com.lodz.android.agiledevkt.modules.main
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.agiledevkt.App
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.anko.AnkoLayoutActivity
@@ -101,7 +101,7 @@ class MainActivity : BaseActivity() {
 
     private fun initRecyclerView() {
         val layoutManager = LinearLayoutManager(getContext())
-        layoutManager.orientation = LinearLayoutManager.VERTICAL
+        layoutManager.orientation = RecyclerView.VERTICAL
         mAdapter = MainAdapter(getContext())
         mRecyclerView.layoutManager = layoutManager
         mRecyclerView.setHasFixedSize(true)

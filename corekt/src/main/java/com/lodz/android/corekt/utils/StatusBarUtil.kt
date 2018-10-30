@@ -3,14 +3,14 @@ package com.lodz.android.corekt.utils
 import android.app.Activity
 import android.graphics.Color
 import android.os.Build
-import android.support.annotation.ColorInt
-import android.support.annotation.FloatRange
-import android.support.v4.widget.DrawerLayout
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
 import android.widget.LinearLayout
+import androidx.annotation.ColorInt
+import androidx.annotation.FloatRange
+import androidx.drawerlayout.widget.DrawerLayout
 import com.lodz.android.corekt.R
 import com.lodz.android.corekt.anko.getStatusBarHeight
 

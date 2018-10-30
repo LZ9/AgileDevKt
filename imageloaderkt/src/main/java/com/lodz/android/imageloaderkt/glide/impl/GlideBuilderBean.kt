@@ -1,9 +1,9 @@
 package com.lodz.android.imageloaderkt.glide.impl
 
 import android.graphics.Color
-import android.support.annotation.AnimRes
-import android.support.annotation.ColorInt
-import android.support.annotation.DrawableRes
+import androidx.annotation.AnimRes
+import androidx.annotation.ColorInt
+import androidx.annotation.DrawableRes
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.transition.ViewPropertyTransition

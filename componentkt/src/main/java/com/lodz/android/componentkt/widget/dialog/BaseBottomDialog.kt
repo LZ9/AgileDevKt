@@ -1,9 +1,9 @@
 package com.lodz.android.componentkt.widget.dialog
 
 import android.content.Context
-import android.support.annotation.StyleRes
 import android.view.Gravity
 import android.view.WindowManager
+import androidx.annotation.StyleRes
 import com.lodz.android.componentkt.R
 
 /**

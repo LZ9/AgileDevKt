@@ -1,15 +1,15 @@
 package com.lodz.android.componentkt.base.activity
 
 import android.os.Bundle
-import android.support.annotation.IdRes
-import android.support.annotation.LayoutRes
-import android.support.v4.app.Fragment
+import androidx.annotation.IdRes
+import androidx.annotation.LayoutRes
+import androidx.fragment.app.Fragment
 import com.lodz.android.componentkt.base.application.BaseApplication
 import com.lodz.android.componentkt.base.fragment.IFragmentBackPressed
 import com.lodz.android.componentkt.base.fragment.LazyFragment
 import com.lodz.android.componentkt.event.ActivityFinishEvent
 import com.lodz.android.corekt.utils.ReflectUtils
-import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
+import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode

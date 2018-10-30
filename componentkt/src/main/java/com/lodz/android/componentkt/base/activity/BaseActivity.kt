@@ -1,11 +1,11 @@
 package com.lodz.android.componentkt.base.activity
 
-import android.support.annotation.LayoutRes
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewStub
 import android.widget.LinearLayout
+import androidx.annotation.LayoutRes
 import com.lodz.android.componentkt.R
 import com.lodz.android.componentkt.widget.base.ErrorLayout
 import com.lodz.android.componentkt.widget.base.LoadingLayout

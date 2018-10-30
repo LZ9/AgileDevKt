@@ -5,10 +5,10 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.net.Uri
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentActivity
 import android.view.View
 import android.widget.ImageView
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import com.bumptech.glide.GenericTransitionOptions
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.load.Transformation

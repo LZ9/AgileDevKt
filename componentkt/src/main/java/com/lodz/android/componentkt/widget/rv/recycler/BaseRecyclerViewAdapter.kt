@@ -3,14 +3,14 @@ package com.lodz.android.componentkt.widget.rv.recycler
 import android.animation.Animator
 import android.annotation.SuppressLint
 import android.content.Context
-import android.support.annotation.IntDef
-import android.support.annotation.IntRange
-import android.support.annotation.LayoutRes
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
+import androidx.annotation.IntDef
+import androidx.annotation.IntRange
+import androidx.annotation.LayoutRes
+import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.componentkt.widget.rv.animation.*
 
 /**

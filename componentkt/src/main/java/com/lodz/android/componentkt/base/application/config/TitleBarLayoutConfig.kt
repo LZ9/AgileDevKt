@@ -1,7 +1,7 @@
 package com.lodz.android.componentkt.base.application.config
 
-import android.support.annotation.ColorRes
-import android.support.annotation.DrawableRes
+import androidx.annotation.ColorRes
+import androidx.annotation.DrawableRes
 
 /**
  * 标题栏配置

@@ -6,7 +6,7 @@ import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.os.Looper
 import android.provider.Settings
-import android.support.v4.app.ActivityCompat
+import androidx.core.app.ActivityCompat
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.util.*

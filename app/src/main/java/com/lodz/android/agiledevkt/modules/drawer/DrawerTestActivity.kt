@@ -3,12 +3,12 @@ package com.lodz.android.agiledevkt.modules.drawer
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.view.GravityCompat
-import android.support.v4.widget.DrawerLayout
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.componentkt.base.activity.AbsActivity
@@ -19,7 +19,7 @@ import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.utils.StatusBarUtil
 import com.lodz.android.corekt.utils.toastShort
 import com.lodz.android.imageloaderkt.ImageLoader
-import com.trello.rxlifecycle2.android.ActivityEvent
+import com.trello.rxlifecycle3.android.ActivityEvent
 import io.reactivex.Observable
 import java.util.*
 

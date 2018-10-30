@@ -1,7 +1,7 @@
 package com.lodz.android.corekt.utils
 
 import android.graphics.Bitmap
-import android.support.annotation.IntRange
+import androidx.annotation.IntRange
 import java.io.*
 import java.nio.channels.FileChannel
 import java.text.DecimalFormat

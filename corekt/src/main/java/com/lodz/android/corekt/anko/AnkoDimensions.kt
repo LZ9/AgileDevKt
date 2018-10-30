@@ -1,10 +1,10 @@
 package com.lodz.android.corekt.anko
 
 import android.content.Context
-import android.support.annotation.DimenRes
-import android.support.v4.app.Fragment
 import android.util.TypedValue
 import android.view.View
+import androidx.annotation.DimenRes
+import androidx.fragment.app.Fragment
 
 /**
  * 单位转换扩展类

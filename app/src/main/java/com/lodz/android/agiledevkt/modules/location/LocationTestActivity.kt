@@ -6,9 +6,9 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.support.design.button.MaterialButton
 import android.widget.ScrollView
 import android.widget.TextView
+import com.google.android.material.button.MaterialButton
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.agiledevkt.modules.splash.CheckDialog

@@ -1,7 +1,7 @@
 package com.lodz.android.componentkt.widget.contract
 
-import android.support.annotation.IntDef
-import android.support.design.widget.AppBarLayout
+import androidx.annotation.IntDef
+import com.google.android.material.appbar.AppBarLayout
 
 /**
  * AppBarLayout的滑动偏移监听器

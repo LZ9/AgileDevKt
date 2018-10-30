@@ -1,7 +1,7 @@
 package com.lodz.android.imageloaderkt
 
 import android.content.Context
-import android.support.annotation.DrawableRes
+import androidx.annotation.DrawableRes
 import com.lodz.android.imageloaderkt.glide.config.GlideApp
 import com.lodz.android.imageloaderkt.utils.CompileUtils
 import java.io.File

@@ -7,7 +7,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.support.annotation.RequiresPermission
+import androidx.annotation.RequiresPermission
 
 /**
  * 简单的蓝牙辅助类

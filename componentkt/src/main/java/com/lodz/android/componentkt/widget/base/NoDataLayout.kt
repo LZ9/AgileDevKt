@@ -5,7 +5,6 @@ import android.content.res.ColorStateList
 import android.content.res.TypedArray
 import android.graphics.drawable.Drawable
 import android.os.Build
-import android.support.annotation.*
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -13,6 +12,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.*
 import com.lodz.android.componentkt.R
 import com.lodz.android.componentkt.base.application.BaseApplication
 import com.lodz.android.componentkt.base.application.config.BaseLayoutConfig

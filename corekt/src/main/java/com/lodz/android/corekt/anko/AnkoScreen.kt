@@ -3,10 +3,10 @@ package com.lodz.android.corekt.anko
 import android.app.Activity
 import android.content.Context
 import android.graphics.Point
-import android.support.v4.app.Fragment
 import android.util.DisplayMetrics
 import android.view.View
 import android.view.WindowManager
+import androidx.fragment.app.Fragment
 
 /**
  * 屏幕信息扩展类

@@ -2,9 +2,9 @@ package com.lodz.android.agiledevkt.modules.splash
 
 import android.content.Context
 import android.content.DialogInterface
-import android.support.annotation.StringRes
 import android.view.View
 import android.widget.TextView
+import androidx.annotation.StringRes
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.componentkt.widget.dialog.BaseDialog
 import com.lodz.android.corekt.anko.bindView

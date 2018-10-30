@@ -1,6 +1,6 @@
 package com.lodz.android.corekt.threadpool
 
-import android.support.annotation.IntRange
+import androidx.annotation.IntRange
 import java.util.concurrent.*
 
 /**

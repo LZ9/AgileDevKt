@@ -1,6 +1,6 @@
 package com.lodz.android.corekt.network
 
-import android.support.annotation.IntDef
+import androidx.annotation.IntDef
 
 /**
  * 手机网络信息

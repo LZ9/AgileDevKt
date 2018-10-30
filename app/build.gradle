@@ -12,7 +12,7 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 //        ndk {
 //            abiFilters "armeabi"
 //        }
@@ -71,17 +71,15 @@ dependencies {
 //    implementation 'com.lodz:imageloader-kt:1.0.1'
 
     // 权限申请
-    implementation('com.github.hotchemi:permissionsdispatcher:3.3.1') {
-        exclude module: "support-v13"
-    }
-    kapt 'com.github.hotchemi:permissionsdispatcher-processor:3.3.1'
+    implementation 'com.github.hotchemi:permissionsdispatcher:4.0.0'
+    kapt 'com.github.hotchemi:permissionsdispatcher-processor:4.0.0'
     // anko layout
     implementation 'org.jetbrains.anko:anko-sdk25:0.10.7'
     implementation 'org.jetbrains.anko:anko-appcompat-v7:0.10.7'
 
     // 单元测试
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation ('com.android.support.test:runner:1.0.2')
-    androidTestImplementation ('com.android.support.test:rules:1.0.2')
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    androidTestImplementation ('androidx.test:runner:1.1.0')
+    androidTestImplementation ('androidx.test:rules:1.1.0')
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
 }
