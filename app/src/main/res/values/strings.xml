@@ -308,4 +308,8 @@
     <string name="location_lac">lac：%s</string>
     <string name="location_cid">cid：%s</string>
     <string name="location_log_info">日志信息：</string>
+    <string name="location_foreground_service_title">AgileDevKt定位</string>
+    <string name="location_foreground_service_tips">后台定位正在为您服务</string>
+    <string name="location_open_gps">请打开GPS</string>
+
 </resources>

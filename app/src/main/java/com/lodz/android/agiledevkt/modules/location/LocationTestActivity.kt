@@ -15,9 +15,10 @@ import com.lodz.android.agiledevkt.modules.splash.CheckDialog
 import com.lodz.android.componentkt.base.activity.BaseActivity
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.goAppDetailSetting
-import com.lodz.android.corekt.utils.UiHandler
-import com.lodz.android.corekt.utils.isPermissionGranted
-import com.lodz.android.corekt.utils.toastShort
+import com.lodz.android.corekt.anko.goLocationSetting
+import com.lodz.android.corekt.utils.*
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import permissions.dispatcher.*
 
 /**
@@ -33,7 +34,6 @@ class LocationTestActivity : BaseActivity() {
             context.startActivity(intent)
         }
     }
-
 
     /** 间隔时间 */
     private val mIntervalTv by bindView<TextView>(R.id.interval_tv)
@@ -159,24 +159,84 @@ class LocationTestActivity : BaseActivity() {
     override fun setListeners() {
         super.setListeners()
         mBindServiceBtn.setOnClickListener {
-
+            if (!isGpsOpen()){
+                toastShort(R.string.location_open_gps)
+                goLocationSetting()
+                return@setOnClickListener
+            }
+            bind()
         }
 
         mUnbindServiceBtn.setOnClickListener {
-
+            unbind()
         }
     }
 
     /** 初始化 */
     fun initLogic() {
+        mIntervalTv.text = getString(R.string.location_interval, (LocationService.INTERVAL_TIME / 1000).toString())
+        mUpdateTimeTv.text = getString(R.string.location_update_time, "无")
+        mLongitudeTv.text = getString(R.string.location_longitude, "无")
+        mLatitudeTv.text = getString(R.string.location_latitude, "无")
+        mMccTv.text = getString(R.string.location_mcc, "无")
+        mMncTv.text = getString(R.string.location_mnc, "无")
+        mLacTv.text = getString(R.string.location_lac, "无")
+        mCidTv.text = getString(R.string.location_cid, "无")
         showStatusCompleted()
     }
 
     /** 打印信息[result] */
     private fun printResult(result: String) {
-        mLogTv.text = (mLogTv.text.toString() + "\n" + result)
+        mLogTv.text = (mLogTv.text.toString() + result + "\n")
         UiHandler.postDelayed(Runnable {
             mScrollView.fullScroll(ScrollView.FOCUS_DOWN)
         }, 100)
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onLocationUpdateEvent(event: LocationUpdateEvent) {
+        if (event.isLocationData){
+            val time = DateUtils.getCurrentFormatString(DateUtils.TYPE_2)
+            mUpdateTimeTv.text = getString(R.string.location_update_time, time)
+            mLongitudeTv.text = getString(R.string.location_longitude, event.longitude)
+            mLatitudeTv.text = getString(R.string.location_latitude, event.latitude)
+            mMccTv.text = getString(R.string.location_mcc, event.mcc)
+            mMncTv.text = getString(R.string.location_mnc, event.mnc)
+            mLacTv.text = getString(R.string.location_lac, event.lac)
+            mCidTv.text = getString(R.string.location_cid, event.cid)
+            printResult(event.log + "    " + time)
+        }else{
+            printResult(event.log)
+        }
+    }
+
+    private fun bind(){
+        try {
+            val intent = Intent(getContext(), LocationService::class.java)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                startForegroundService(intent)
+            }else{
+                startService(intent)
+            }
+            printResult("已绑定，请到室外无遮蔽处进行测试")
+        } catch (e: Exception) {
+            e.printStackTrace()
+            printResult("绑定服务失败，${e.cause}")
+        }
+    }
+
+    private fun unbind(){
+        try {
+            stopService(Intent(getContext(), LocationService::class.java))
+            printResult("已解绑")
+        } catch (e: Exception) {
+            e.printStackTrace()
+            printResult("解绑服务失败，${e.cause}")
+        }
+    }
+
+    override fun finish() {
+        unbind()
+        super.finish()
     }
 }
