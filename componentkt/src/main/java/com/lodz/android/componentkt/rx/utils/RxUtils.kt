@@ -20,23 +20,23 @@ import java.util.concurrent.TimeUnit
 object RxUtils {
 
     /** 在异步线程发起，在主线程订阅 */
-    fun <T> ioToMainObservable() = object : ObservableTransformer<T, T> {
-        override fun apply(upstream: Observable<T>) = upstream.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+    fun <T> ioToMainObservable(): ObservableTransformer<T, T> = object : ObservableTransformer<T, T> {
+        override fun apply(upstream: Observable<T>): Observable<T> = upstream.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
     /** 在异步线程发起，在主线程订阅 */
-    fun <T> ioToMainFlowable() = object : FlowableTransformer<T, T> {
-        override fun apply(upstream: Flowable<T>) = upstream.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+    fun <T> ioToMainFlowable(): FlowableTransformer<T, T> = object : FlowableTransformer<T, T> {
+        override fun apply(upstream: Flowable<T>): Flowable<T> = upstream.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
     /** 在异步线程发起，在主线程订阅 */
-    fun <T> ioToMainMaybe() = object : MaybeTransformer<T, T> {
-        override fun apply(upstream: Maybe<T>) = upstream.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+    fun <T> ioToMainMaybe(): MaybeTransformer<T, T> = object : MaybeTransformer<T, T> {
+        override fun apply(upstream: Maybe<T>): Maybe<T> = upstream.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
     /** 在异步线程发起，在主线程订阅 */
-    fun <T> ioToMainSingle() = object : SingleTransformer<T, T> {
-        override fun apply(upstream: Single<T>) = upstream.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+    fun <T> ioToMainSingle(): SingleTransformer<T, T> = object : SingleTransformer<T, T> {
+        override fun apply(upstream: Single<T>): Single<T> = upstream.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
     /** 获取异常[e]的提示语（配合订阅者使用），是否网络异常[isNetwork]，默认提示语[defaultTips] */

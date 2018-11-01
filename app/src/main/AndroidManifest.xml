@@ -270,6 +270,13 @@
 
         </activity>
 
+        <activity
+            android:name=".modules.dialog.DialogActivity"
+            android:label="弹框测试类"
+            android:screenOrientation="portrait">
+
+        </activity>
+
     </application>
 
 </manifest>

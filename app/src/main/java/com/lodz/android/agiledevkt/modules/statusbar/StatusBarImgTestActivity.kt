@@ -18,10 +18,10 @@ import com.lodz.android.corekt.utils.toastShort
  * 带ImageView的状态栏颜色测试
  * Created by zhouL on 2018/8/31.
  */
-class StatusBarImgTestActivity :AbsActivity(){
+class StatusBarImgTestActivity : AbsActivity() {
 
     companion object {
-        fun start(context: Context){
+        fun start(context: Context) {
             val intent = Intent(context, StatusBarImgTestActivity::class.java)
             context.startActivity(intent)
         }
@@ -59,7 +59,7 @@ class StatusBarImgTestActivity :AbsActivity(){
                 if (!fromUser) {
                     return
                 }
-                StatusBarUtil.setTransparentForOffsetView(getContext(), mTitleLayout, progress / 100.0f, Color.DKGRAY)
+                StatusBarUtil.setTransparentForOffsetView(this@StatusBarImgTestActivity, mTitleLayout, progress / 100.0f, Color.DKGRAY)
                 updateAlphaValue()
             }
 
@@ -70,7 +70,7 @@ class StatusBarImgTestActivity :AbsActivity(){
 
     override fun initData() {
         super.initData()
-        StatusBarUtil.setTransparentForOffsetView(getContext(), mTitleLayout, mAlphaSeekBar.progress / 100.0f, Color.DKGRAY)
+        StatusBarUtil.setTransparentForOffsetView(this@StatusBarImgTestActivity, mTitleLayout, mAlphaSeekBar.progress / 100.0f, Color.DKGRAY)
         updateAlphaValue()
     }
 

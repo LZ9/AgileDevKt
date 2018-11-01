@@ -10,7 +10,7 @@ import android.view.View
  */
 class SlideInLeftAnimation(private val duration: Int = 300) : BaseAnimation {
 
-    override fun getAnimators(view: View) = arrayOf<Animator>(ObjectAnimator.ofFloat(view, "translationX", -view.rootView.width.toFloat(), 0f))
+    override fun getAnimators(view: View): Array<Animator> = arrayOf(ObjectAnimator.ofFloat(view, "translationX", -view.rootView.width.toFloat(), 0f))
 
-    override fun getDuration() = duration
+    override fun getDuration(): Int = duration
 }

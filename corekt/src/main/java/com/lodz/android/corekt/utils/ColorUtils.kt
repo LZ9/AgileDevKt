@@ -15,7 +15,7 @@ object ColorUtils {
 
     /** 设置颜色资源[color]的透明度[alpha] */
     @ColorInt
-    fun getColorAlphaRes(context: Context, @ColorRes color: Int, @FloatRange(from = 0.0, to = 1.0) alpha: Float) = getColorAlphaInt(context.getColorCompat(color), alpha)
+    fun getColorAlphaRes(context: Context, @ColorRes color: Int, @FloatRange(from = 0.0, to = 1.0) alpha: Float): Int = getColorAlphaInt(context.getColorCompat(color), alpha)
 
     /** 设置颜色[color]的透明度[alpha] */
     @ColorInt
@@ -33,11 +33,11 @@ object ColorUtils {
 
         var colorHex = Integer.toHexString(color)
         val length = colorHex.length
-        if (length == 7){
+        if (length == 7) {
             colorHex = "0" + colorHex
         }
 
-        if (length == 6){
+        if (length == 6) {
             colorHex = "ff" + colorHex
         }
 

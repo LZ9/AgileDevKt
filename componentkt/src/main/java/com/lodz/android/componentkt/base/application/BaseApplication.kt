@@ -14,7 +14,7 @@ abstract class BaseApplication : Application() {
 
     companion object {
         private var sInstance: BaseApplication? = null
-        fun get() = sInstance
+        fun get(): BaseApplication? = sInstance
     }
 
     /** 基础控件配置 */
@@ -30,7 +30,7 @@ abstract class BaseApplication : Application() {
     }
 
     /** 获取基础控件配置 */
-    fun getBaseLayoutConfig() = mBaseLayoutConfig
+    fun getBaseLayoutConfig(): BaseLayoutConfig = mBaseLayoutConfig
 
     /** 初始化回调 */
     abstract fun onStartCreate()

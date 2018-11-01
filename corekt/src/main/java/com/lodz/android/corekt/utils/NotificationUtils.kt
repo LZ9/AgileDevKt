@@ -72,7 +72,7 @@ class NotificationUtils private constructor(context: Context) {
         return this
     }
 
-    private fun getRandomId() = Random().nextInt(999998) + 1
+    private fun getRandomId(): Int = Random().nextInt(999998) + 1
 
     /** 如何创建一个NotificationChannel */
     private fun notificationChannelBuild() {

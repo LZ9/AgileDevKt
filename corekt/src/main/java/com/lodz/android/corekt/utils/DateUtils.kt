@@ -26,7 +26,7 @@ object DateUtils {
     annotation class FormatType
 
     /** 格式化[formatType]当前时间 */
-    fun getCurrentFormatString(formatType: String) = getFormatString(formatType, Date(System.currentTimeMillis()))
+    fun getCurrentFormatString(formatType: String): String = getFormatString(formatType, Date(System.currentTimeMillis()))
 
     /** 格式化[formatType]当前时间 */
     fun getFormatString(formatType: String, date: Date): String {

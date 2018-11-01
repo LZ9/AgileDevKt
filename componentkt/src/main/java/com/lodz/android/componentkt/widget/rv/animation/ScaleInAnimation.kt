@@ -16,5 +16,5 @@ class ScaleInAnimation(private val from: Float = 0.5f, private val duration: Int
         return arrayOf(scaleX, scaleY)
     }
 
-    override fun getDuration() = duration
+    override fun getDuration(): Int = duration
 }

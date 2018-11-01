@@ -18,7 +18,7 @@ class NetworkManager private constructor() {
 
     companion object {
         private val sInstance = NetworkManager()
-        fun get() = sInstance
+        fun get(): NetworkManager = sInstance
     }
 
     /** 网络广播 */
@@ -51,14 +51,14 @@ class NetworkManager private constructor() {
     }
 
     /** 网络是否可用 */
-    fun isNetworkAvailable() = mNetInfo.type != NetInfo.NETWORK_TYPE_NONE
+    fun isNetworkAvailable(): Boolean = mNetInfo.type != NetInfo.NETWORK_TYPE_NONE
 
     /** 是否在wifi下 */
-    fun isWifi() = mNetInfo.type == NetInfo.NETWORK_TYPE_WIFI
+    fun isWifi(): Boolean = mNetInfo.type == NetInfo.NETWORK_TYPE_WIFI
 
     /** 获取当前网络类型（未连接/WIFI/4G/3G/2G） */
     @NetInfo.NetType
-    fun getNetType() = mNetInfo.type
+    fun getNetType(): Int = mNetInfo.type
 
     /** 获取运营商代号（0：未知 1：移动 2：联通 3：电信） */
     @OperatorInfo.OperatorType
@@ -137,7 +137,7 @@ class NetworkManager private constructor() {
         }
 
         var type = getType(netInfo)
-        if (type == ConnectivityManager.TYPE_WIFI){// wifi下
+        if (type == ConnectivityManager.TYPE_WIFI) {// wifi下
             mNetInfo.type = NetInfo.NETWORK_TYPE_WIFI
             mNetInfo.standard = NetInfo.NETWORK_TYPE_WIFI
             return
@@ -179,21 +179,21 @@ class NetworkManager private constructor() {
         try {
             //这里做类型判断防止一些ROM被修改这个类型不是int型
             val type: Any? = info.type
-            if (type == null){
+            if (type == null) {
                 return NetInfo.NETWORK_TYPE_UNKNOWN
             }
             if (type is Int) {
                 return type.toInt()
             }
             if (type is String) {
-                if (type.isNotEmpty()){
+                if (type.isNotEmpty()) {
                     return type.toInt()
                 }
             }
-            if (type is Double){
+            if (type is Double) {
                 return type.toInt()
             }
-            if (type is Float){
+            if (type is Float) {
                 return type.toInt()
             }
         } catch (e: Exception) {
@@ -207,21 +207,21 @@ class NetworkManager private constructor() {
         try {
             //这里做类型判断防止一些ROM被修改这个类型不是int型
             val type: Any? = info.subtype
-            if (type == null){
+            if (type == null) {
                 return TelephonyManager.NETWORK_TYPE_UNKNOWN
             }
             if (type is Int) {
                 return type.toInt()
             }
             if (type is String) {
-                if (type.isNotEmpty()){
+                if (type.isNotEmpty()) {
                     return type.toInt()
                 }
             }
-            if (type is Double){
+            if (type is Double) {
                 return type.toInt()
             }
-            if (type is Float){
+            if (type is Float) {
                 return type.toInt()
             }
         } catch (e: Exception) {

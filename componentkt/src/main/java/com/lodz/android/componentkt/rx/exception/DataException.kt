@@ -18,7 +18,7 @@ class DataException : RxException {
     constructor(message: String?, cause: Throwable?, enableSuppression: Boolean, writableStackTrace: Boolean, errorMsg: String) : super(message, cause, enableSuppression, writableStackTrace, errorMsg)
 
     /** 获取数据 */
-    fun getData() = mData
+    fun getData(): ResponseStatus? = mData
 
     /** 设置数据[data] */
     fun setData(data: ResponseStatus?) {

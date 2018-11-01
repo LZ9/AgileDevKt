@@ -312,4 +312,13 @@
     <string name="location_foreground_service_tips">后台定位正在为您服务</string>
     <string name="location_open_gps">请打开GPS</string>
 
+    <!-- 弹框测试 -->
+    <string name="dialog_normal">普通弹框</string>
+    <string name="dialog_center">中间弹框</string>
+    <string name="dialog_left">左侧弹框</string>
+    <string name="dialog_right">右侧弹框</string>
+    <string name="dialog_bottom">底部弹框</string>
+    <string name="dialog_top">顶部弹框</string>
+
+
 </resources>

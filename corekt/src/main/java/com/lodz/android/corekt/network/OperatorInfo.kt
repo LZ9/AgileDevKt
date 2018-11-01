@@ -39,5 +39,5 @@ class OperatorInfo {
     var cid = ""
 
     /** 是否获取成功 */
-    fun isSuccess() = type != OPERATOR_UNKNOWN
+    fun isSuccess(): Boolean = type != OPERATOR_UNKNOWN
 }

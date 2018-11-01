@@ -23,16 +23,16 @@ abstract class OnAppBarStateChangeListener : AppBarLayout.OnOffsetChangedListene
     annotation class OffsetStatus
 
     override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
-        if (appBarLayout == null){
+        if (appBarLayout == null) {
             return
         }
         if (verticalOffset == 0) {
             // 张开
             onStateChanged(appBarLayout, EXPANDED, 1.0)
-        }else if (Math.abs(verticalOffset) >= appBarLayout.totalScrollRange){
+        } else if (Math.abs(verticalOffset) >= appBarLayout.totalScrollRange) {
             //收缩
             onStateChanged(appBarLayout, COLLAPSED, 0.0)
-        }else{
+        } else {
             val delta = Math.abs(verticalOffset) / appBarLayout.totalScrollRange.toDouble()
             onStateChanged(appBarLayout, SCROLLING, 1.0 - delta)
         }

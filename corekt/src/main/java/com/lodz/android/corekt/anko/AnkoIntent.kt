@@ -35,7 +35,7 @@ fun Context.installApk(apkPath: String, authority: String, newTask: Boolean = tr
 
     // 系统大于8.0且没有“安装未知应用”权限，则跳转到设置页面
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        if (!packageManager.canRequestPackageInstalls()){
+        if (!packageManager.canRequestPackageInstalls()) {
             //跳转至“安装未知应用”权限界面，引导用户开启权限
             startActivity(Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, Uri.parse("package:" + packageName)))
             return
@@ -102,7 +102,7 @@ fun Context.openAppByActionMain(packageName: String, newTask: Boolean = true) {
         throw ActivityNotFoundException("no found packageName")
     }
 
-    intent.setComponent(ComponentName(packageName, mainActivityName!!))
+    intent.setComponent(ComponentName(packageName, mainActivityName))
     if (newTask) {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
     }

@@ -17,10 +17,7 @@ import androidx.annotation.*
 import com.lodz.android.componentkt.R
 import com.lodz.android.componentkt.base.application.BaseApplication
 import com.lodz.android.componentkt.base.application.config.TitleBarLayoutConfig
-import com.lodz.android.corekt.anko.dp2px
-import com.lodz.android.corekt.anko.getColorCompat
-import com.lodz.android.corekt.anko.px2dp
-import com.lodz.android.corekt.anko.px2sp
+import com.lodz.android.corekt.anko.*
 
 /**
  * 搜索标题栏
@@ -31,38 +28,22 @@ class SearchTitleBarLayout : FrameLayout {
     /** 标题栏配置 */
     private var mConfig = TitleBarLayoutConfig()
 
-    /** 返回按钮布局 */
-    private val mBackLayout: LinearLayout by lazy {
-        findViewById(R.id.back_layout) as LinearLayout
-    }
-    /** 返回按钮 */
-    private val mBackBtn: TextView by lazy {
-        findViewById(R.id.back_btn) as TextView
-    }
-    /** 输入框布局 */
-    private val mInputLayout: ViewGroup by lazy {
-        findViewById(R.id.input_layout) as ViewGroup
-    }
-    /** 输入框 */
-    private val mInputEdit: EditText by lazy {
-        findViewById(R.id.input_edit) as EditText
-    }
-    /** 扩展区清空按钮布局 */
-    private val mClearBtn: ImageView by lazy {
-        findViewById(R.id.clear_btn) as ImageView
-    }
-    /** 竖线 */
-    private val mVerticalLineView: View by lazy {
-        findViewById(R.id.vertical_line) as View
-    }
-    /** 返回按钮 */
-    private val mSearchBtn: ImageView by lazy {
-        findViewById(R.id.search_btn) as ImageView
-    }
-    /** 分割线 */
-    private val mDivideLineView: View by lazy {
-        findViewById(R.id.divide_line) as View
-    }
+    /** 返回按钮布局  */
+    private val mBackLayout by bindView<LinearLayout>(R.id.back_layout)
+    /** 返回按钮  */
+    private val mBackBtn by bindView<TextView>(R.id.back_btn)
+    /** 输入框布局  */
+    private val mInputLayout by bindView<ViewGroup>(R.id.input_layout)
+    /** 输入框  */
+    private val mInputEdit by bindView<EditText>(R.id.input_edit)
+    /** 扩展区清空按钮布局  */
+    private val mClearBtn by bindView<ImageView>(R.id.clear_btn)
+    /** 竖线  */
+    private val mVerticalLineView by bindView<View>(R.id.vertical_line)
+    /** 搜索按钮  */
+    private val mSearchBtn by bindView<ImageView>(R.id.search_btn)
+    /** 分割线  */
+    private val mDivideLineView by bindView<View>(R.id.divide_line)
 
     /** 是否需要清空按钮 */
     private var isNeedCleanBtn = true
@@ -72,23 +53,23 @@ class SearchTitleBarLayout : FrameLayout {
     private var mCleanClickListener: ((View) -> Unit)? = null
 
     constructor(context: Context) : super(context) {
-        initialization(null)
+        init(null)
     }
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-        initialization(attrs)
+        init(attrs)
     }
 
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        initialization(attrs)
+        init(attrs)
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
-        initialization(attrs)
+        init(attrs)
     }
 
-    fun initialization(attrs: AttributeSet?) {
+    private fun init(attrs: AttributeSet?) {
         if (BaseApplication.get() != null) {
             mConfig = BaseApplication.get()!!.getBaseLayoutConfig().getTitleBarLayoutConfig()
         }
@@ -408,7 +389,7 @@ class SearchTitleBarLayout : FrameLayout {
     }
 
     /** 获取输入框内容 */
-    fun getInputText() = mInputEdit.getText().toString()
+    fun getInputText(): String = mInputEdit.getText().toString()
 
     /** 设置输入框背景[drawable] */
     fun setInputBackground(drawable: Drawable) {
@@ -481,7 +462,7 @@ class SearchTitleBarLayout : FrameLayout {
     }
 
     /** 获取输入框控件 */
-    fun getInputEdit() = mInputEdit
+    fun getInputEdit(): EditText = mInputEdit
 
     /** 是否显示[isShow]竖线 */
     fun setShowVerticalLine(isShow: Boolean) {

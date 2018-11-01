@@ -10,7 +10,7 @@ import android.view.View
  */
 class AlphaInAnimation(private val from: Float = 0f, private val duration: Int = 300) : BaseAnimation {
 
-    override fun getAnimators(view: View) = arrayOf<Animator>(ObjectAnimator.ofFloat(view, "alpha", from, 1f))
+    override fun getAnimators(view: View): Array<Animator> = arrayOf(ObjectAnimator.ofFloat(view, "alpha", from, 1f))
 
-    override fun getDuration() = duration
+    override fun getDuration(): Int = duration
 }

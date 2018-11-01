@@ -140,7 +140,7 @@ abstract class BaseRecyclerViewAdapter<T>(protected val context: Context) : Recy
     }
 
     /** 是否打开item加载动画 */
-    fun isOpenItemAnim() = isOpenItemAnim
+    fun isOpenItemAnim(): Boolean = isOpenItemAnim
 
     /** 设置是否打开item加载动画 */
     fun setOpenItemAnim(isOpen: Boolean) {

@@ -21,7 +21,7 @@ class ConnectBroadcastReceiver : BroadcastReceiver() {
         }
 
         try {
-            if (action!!.equals(ConnectivityManager.CONNECTIVITY_ACTION)){
+            if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION)){
                 val manager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
                 NetworkManager.get().updateNet(manager)
                 NetworkManager.get().notifyNetworkListeners()

@@ -13,7 +13,7 @@ import android.os.Vibrator
  */
 
 /** 手机硬件是否有震动器 */
-fun Context.hasVibrator() = (getSystemService(Service.VIBRATOR_SERVICE) as Vibrator).hasVibrator()
+fun Context.hasVibrator(): Boolean = (getSystemService(Service.VIBRATOR_SERVICE) as Vibrator).hasVibrator()
 
 /** 创建一个手机震动器对象，震动时长[milliseconds]毫秒 */
 @SuppressLint("MissingPermission")

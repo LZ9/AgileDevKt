@@ -73,7 +73,7 @@ class DrawerTestActivity : AbsActivity() {
     override fun findViews(savedInstanceState: Bundle?) {
         mTitleBarLayout.setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME))
         mTitleTv.text = getString(R.string.drawer_title, TITLES.get(Random().nextInt(TITLES.size)))
-        StatusBarUtil.setTransparentForDrawerLayout(getContext(), mDrawerLayout, mContentLayout, mAlphaSeekBar.progress / 100.0f)
+        StatusBarUtil.setTransparentForDrawerLayout(this@DrawerTestActivity, mDrawerLayout, mContentLayout, mAlphaSeekBar.progress / 100.0f)
     }
 
     override fun onPressBack(): Boolean {
@@ -98,7 +98,7 @@ class DrawerTestActivity : AbsActivity() {
                 if (!fromUser) {
                     return
                 }
-                StatusBarUtil.setTransparentForDrawerLayout(getContext(), mDrawerLayout, mContentLayout, progress / 100.0f)
+                StatusBarUtil.setTransparentForDrawerLayout(this@DrawerTestActivity, mDrawerLayout, mContentLayout, progress / 100.0f)
                 updateAlphaValue()
             }
 
@@ -148,7 +148,7 @@ class DrawerTestActivity : AbsActivity() {
     private fun refreshTitle() {
         val random = Random().nextInt(TITLES.size)
         Observable.just(TITLES.get(random))
-                .map {title ->
+                .map { title ->
                     Thread.sleep(1000)
                     title
                 }

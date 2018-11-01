@@ -18,7 +18,7 @@ import java.lang.reflect.Type
 class FastJsonConverterFactory private constructor() : Converter.Factory() {
 
     companion object {
-        fun create() = FastJsonConverterFactory()
+        fun create(): FastJsonConverterFactory = FastJsonConverterFactory()
     }
 
     private var mParserConfig = ParserConfig.getGlobalInstance()
@@ -37,35 +37,35 @@ class FastJsonConverterFactory private constructor() : Converter.Factory() {
         return FastJsonRequestBodyConverter<ResponseBody>(serializeConfig, *serializerFeatures)
     }
 
-    fun getParserConfig() = mParserConfig
+    fun getParserConfig(): ParserConfig = mParserConfig
 
     fun setParserConfig(config: ParserConfig?): FastJsonConverterFactory {
         this.mParserConfig = config
         return this
     }
 
-    fun getParserFeatureValues() = featureValues
+    fun getParserFeatureValues(): Int = featureValues
 
     fun setParserFeatureValues(featureValues: Int): FastJsonConverterFactory {
         this.featureValues = featureValues
         return this
     }
 
-    fun getParserFeatures() = features
+    fun getParserFeatures(): Array<Feature?> = features
 
     fun setParserFeatures(features: Array<Feature?>): FastJsonConverterFactory {
         this.features = features
         return this
     }
 
-    fun getSerializeConfig() = serializeConfig
+    fun getSerializeConfig(): SerializeConfig? = serializeConfig
 
     fun setSerializeConfig(serializeConfig: SerializeConfig): FastJsonConverterFactory {
         this.serializeConfig = serializeConfig
         return this
     }
 
-    fun getSerializerFeatures() = serializerFeatures
+    fun getSerializerFeatures(): Array<SerializerFeature> = serializerFeatures
 
     fun setSerializerFeatures(features: Array<SerializerFeature>): FastJsonConverterFactory {
         this.serializerFeatures = features

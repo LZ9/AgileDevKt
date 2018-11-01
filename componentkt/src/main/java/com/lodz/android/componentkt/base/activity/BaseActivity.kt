@@ -11,6 +11,7 @@ import com.lodz.android.componentkt.widget.base.ErrorLayout
 import com.lodz.android.componentkt.widget.base.LoadingLayout
 import com.lodz.android.componentkt.widget.base.NoDataLayout
 import com.lodz.android.componentkt.widget.base.TitleBarLayout
+import com.lodz.android.corekt.anko.bindView
 
 /**
  * 基类Activity（带基础状态控件）
@@ -18,18 +19,14 @@ import com.lodz.android.componentkt.widget.base.TitleBarLayout
  */
 abstract class BaseActivity : AbsActivity() {
 
-    private val mTitleBarViewStub: ViewStub by lazy {
-        findViewById(R.id.view_stub_title_bar_layout) as ViewStub
-    }
-    private val mLoadingViewStub: ViewStub by lazy {
-        findViewById(R.id.view_stub_loading_layout) as ViewStub
-    }
-    private val mNoDataViewStub: ViewStub by lazy {
-        findViewById(R.id.view_stub_no_data_layout) as ViewStub
-    }
-    private val mErrorViewStub: ViewStub by lazy {
-        findViewById(R.id.view_stub_error_layout) as ViewStub
-    }
+    /** 标题栏 */
+    private val mTitleBarViewStub by bindView<ViewStub>(R.id.view_stub_title_bar_layout)
+    /** 加载页 */
+    private val mLoadingViewStub by bindView<ViewStub>(R.id.view_stub_loading_layout)
+    /** 无数据页 */
+    private val mNoDataViewStub by bindView<ViewStub>(R.id.view_stub_no_data_layout)
+    /** 失败页 */
+    private val mErrorViewStub by bindView<ViewStub>(R.id.view_stub_error_layout)
 
     /** 顶部标题布局  */
     private var mTitleBarLayout: TitleBarLayout? = null
@@ -41,15 +38,14 @@ abstract class BaseActivity : AbsActivity() {
     private var mErrorLayout: ErrorLayout? = null
 
     /** 内容布局  */
-    private val mContentLayout: LinearLayout by lazy {
-        findViewById(R.id.content_layout) as LinearLayout
-    }
+    private val mContentLayout by bindView<LinearLayout>(R.id.content_layout)
 
-    override fun getAbsLayoutId() = R.layout.componentkt_activity_base_layout
+    @LayoutRes
+    override fun getAbsLayoutId(): Int = R.layout.componentkt_activity_base_layout
 
     final override fun afterSetContentView() {
         super.afterSetContentView()
-        if (!isUseAnkoLayout()){
+        if (!isUseAnkoLayout()) {
             showStatusLoading()
             setContainerView()
         }
@@ -71,7 +67,7 @@ abstract class BaseActivity : AbsActivity() {
 
     override fun setListeners() {
         super.setListeners()
-        if (!isUseAnkoLayout()){
+        if (!isUseAnkoLayout()) {
             getTitleBarLayout().setOnBackBtnClickListener { view ->
                 onClickBackBtn()
             }
@@ -86,14 +82,14 @@ abstract class BaseActivity : AbsActivity() {
 
     /** 显示无数据页面 */
     protected open fun showStatusNoData() {
-        if (isUseAnkoLayout()){
+        if (isUseAnkoLayout()) {
             throw RuntimeException("you already use anko layout do not use base widget")
         }
         mContentLayout.visibility = View.GONE
-        if (mLoadingLayout != null){
+        if (mLoadingLayout != null) {
             mLoadingLayout!!.visibility = View.GONE
         }
-        if (mErrorLayout != null){
+        if (mErrorLayout != null) {
             mErrorLayout!!.visibility = View.GONE
         }
         getNoDataLayout().visibility = View.VISIBLE
@@ -101,54 +97,54 @@ abstract class BaseActivity : AbsActivity() {
 
     /** 显示错误页面 */
     protected open fun showStatusError() {
-        if (isUseAnkoLayout()){
+        if (isUseAnkoLayout()) {
             throw RuntimeException("you already use anko layout do not use base widget")
         }
         mContentLayout.visibility = View.GONE
-        if (mLoadingLayout != null){
+        if (mLoadingLayout != null) {
             mLoadingLayout!!.visibility = View.GONE
         }
         getErrorLayout().visibility = View.VISIBLE
-        if (mNoDataLayout != null){
+        if (mNoDataLayout != null) {
             mNoDataLayout!!.visibility = View.GONE
         }
     }
 
     /** 显示加载页面 */
-    protected open fun showStatusLoading(){
-        if (isUseAnkoLayout()){
+    protected open fun showStatusLoading() {
+        if (isUseAnkoLayout()) {
             throw RuntimeException("you already use anko layout do not use base widget")
         }
         mContentLayout.visibility = View.GONE
         getLoadingLayout().visibility = View.VISIBLE
-        if (mErrorLayout != null){
+        if (mErrorLayout != null) {
             mErrorLayout!!.visibility = View.GONE
         }
-        if (mNoDataLayout != null){
+        if (mNoDataLayout != null) {
             mNoDataLayout!!.visibility = View.GONE
         }
     }
 
     /** 显示内容页面 */
-    protected open fun showStatusCompleted(){
-        if (isUseAnkoLayout()){
+    protected open fun showStatusCompleted() {
+        if (isUseAnkoLayout()) {
             throw RuntimeException("you already use anko layout do not use base widget")
         }
         mContentLayout.visibility = View.VISIBLE
-        if (mLoadingLayout != null){
+        if (mLoadingLayout != null) {
             mLoadingLayout!!.visibility = View.GONE
         }
-        if (mErrorLayout != null){
+        if (mErrorLayout != null) {
             mErrorLayout!!.visibility = View.GONE
         }
-        if (mNoDataLayout != null){
+        if (mNoDataLayout != null) {
             mNoDataLayout!!.visibility = View.GONE
         }
     }
 
     /** 隐藏TitleBar */
-    protected fun goneTitleBar(){
-        if (isUseAnkoLayout()){
+    protected fun goneTitleBar() {
+        if (isUseAnkoLayout()) {
             throw RuntimeException("you already use anko layout do not use base widget")
         }
         getTitleBarLayout().visibility = View.GONE
@@ -156,29 +152,29 @@ abstract class BaseActivity : AbsActivity() {
 
     /** 显示TitleBar */
     protected fun showTitleBar() {
-        if (isUseAnkoLayout()){
+        if (isUseAnkoLayout()) {
             throw RuntimeException("you already use anko layout do not use base widget")
         }
         getTitleBarLayout().visibility = View.VISIBLE
     }
 
     /** 获取顶部标题栏控件 */
-    protected fun getTitleBarLayout() : TitleBarLayout{
-        if (isUseAnkoLayout()){
+    protected fun getTitleBarLayout(): TitleBarLayout {
+        if (isUseAnkoLayout()) {
             throw RuntimeException("you already use anko layout do not use base widget")
         }
-        if (mTitleBarLayout == null){
+        if (mTitleBarLayout == null) {
             mTitleBarLayout = mTitleBarViewStub.inflate() as TitleBarLayout
         }
         return mTitleBarLayout!!
     }
 
     /** 获取加载控件 */
-    protected fun getLoadingLayout() : LoadingLayout{
-        if (isUseAnkoLayout()){
+    protected fun getLoadingLayout(): LoadingLayout {
+        if (isUseAnkoLayout()) {
             throw RuntimeException("you already use anko layout do not use base widget")
         }
-        if (mLoadingLayout == null){
+        if (mLoadingLayout == null) {
             mLoadingLayout = mLoadingViewStub.inflate() as LoadingLayout
             mLoadingLayout!!.visibility = View.GONE
         }
@@ -186,11 +182,11 @@ abstract class BaseActivity : AbsActivity() {
     }
 
     /** 获取无数据控件 */
-    protected fun getNoDataLayout() : NoDataLayout{
-        if (isUseAnkoLayout()){
+    protected fun getNoDataLayout(): NoDataLayout {
+        if (isUseAnkoLayout()) {
             throw RuntimeException("you already use anko layout do not use base widget")
         }
-        if (mNoDataLayout == null){
+        if (mNoDataLayout == null) {
             mNoDataLayout = mNoDataViewStub.inflate() as NoDataLayout
             mNoDataLayout!!.visibility = View.GONE
         }
@@ -198,11 +194,11 @@ abstract class BaseActivity : AbsActivity() {
     }
 
     /** 获取加载失败界面 */
-    protected fun getErrorLayout() : ErrorLayout{
-        if (isUseAnkoLayout()){
+    protected fun getErrorLayout(): ErrorLayout {
+        if (isUseAnkoLayout()) {
             throw RuntimeException("you already use anko layout do not use base widget")
         }
-        if (mErrorLayout == null){
+        if (mErrorLayout == null) {
             mErrorLayout = mErrorViewStub.inflate() as ErrorLayout
             mErrorLayout!!.visibility = View.GONE
             mErrorLayout!!.setReloadListener {

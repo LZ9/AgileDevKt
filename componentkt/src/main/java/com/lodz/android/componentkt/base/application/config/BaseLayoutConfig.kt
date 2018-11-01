@@ -29,14 +29,14 @@ class BaseLayoutConfig {
     }
 
     /** 获取异常页面配置 */
-    fun getErrorLayoutConfig() = mErrorLayoutConfig
+    fun getErrorLayoutConfig(): ErrorLayoutConfig = mErrorLayoutConfig
 
     /** 获取加载页面配置 */
-    fun getLoadingLayoutConfig() = mLoadingLayoutConfig
+    fun getLoadingLayoutConfig(): LoadingLayoutConfig = mLoadingLayoutConfig
 
     /** 获取无数据页面配置 */
-    fun getNoDataLayoutConfig() = mNoDataLayoutConfig
+    fun getNoDataLayoutConfig(): NoDataLayoutConfig = mNoDataLayoutConfig
 
     /** 获取标题栏配置 */
-    fun getTitleBarLayoutConfig() = mTitleBarLayoutConfig
+    fun getTitleBarLayoutConfig(): TitleBarLayoutConfig = mTitleBarLayoutConfig
 }

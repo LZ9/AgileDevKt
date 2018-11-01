@@ -33,7 +33,7 @@ object IdCardUtils {
     }
 
     /** 身份证[idCard]的省份是否存在 */
-    private fun isProvinceExist(idCard: String) = !getProvinceMap().get(idCard.substring(0, 2)).isNullOrEmpty()
+    private fun isProvinceExist(idCard: String): Boolean = !getProvinceMap().get(idCard.substring(0, 2)).isNullOrEmpty()
 
     /** 校验身份证[idCard]的出生日期是否正确 */
     private fun validateBirth(idCard: String): Boolean {
@@ -64,7 +64,7 @@ object IdCardUtils {
     }
 
     /** 校验文本[str]是否是纯数字 */
-    private fun isNum(str: String) = str.isNotEmpty() && str.matches(Regex("^[0-9]*$"))
+    private fun isNum(str: String): Boolean = str.isNotEmpty() && str.matches(Regex("^[0-9]*$"))
 
     /** 将字符数组[array]转换成数字数组 */
     private fun converCharToInt(array: CharArray): IntArray {
@@ -188,7 +188,7 @@ object IdCardUtils {
     }
 
     /** 获取省份代码 */
-    private fun getProvinceMap() = mapOf(
+    private fun getProvinceMap(): Map<String, String> = mapOf(
             "11" to "北京",
             "12" to "天津",
             "13" to "河北",

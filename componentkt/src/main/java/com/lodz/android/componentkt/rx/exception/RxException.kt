@@ -30,5 +30,5 @@ open class RxException : Exception {
     }
 
     /** 获取自定义异常信息 */
-    fun getErrorMsg() = mErrorMsg
+    fun getErrorMsg(): String = mErrorMsg
 }

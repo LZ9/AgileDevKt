@@ -48,10 +48,10 @@ object DeviceUtils {
     }
 
     /** 获取语言 */
-    fun getLanguage() = Locale.getDefault().language ?: ""
+    fun getLanguage(): String = Locale.getDefault().language ?: ""
 
     /** 获取国家 */
-    fun getCountry() = Locale.getDefault().country ?: ""
+    fun getCountry(): String = Locale.getDefault().country ?: ""
 
     /** 获取设备信息 */
     fun getDeviceInfo(): Map<String, String> {
@@ -97,24 +97,24 @@ fun Context.getApnName(): String {
 }
 
 /** 获取手机的IMSI1 */
-fun Context.getIMSI1() = getOperatorBySlot("getSubscriberId", 0)
+fun Context.getIMSI1(): String = getOperatorBySlot("getSubscriberId", 0)
 
 /** Sim卡1是否可用 */
 fun Context.isSim1Ready(): Boolean {
     var type = getOperatorBySlot("getSimState", 0)
-    if (type.isEmpty()){
+    if (type.isEmpty()) {
         type = getOperatorBySlot("getSimStateGemini", 0)
     }
     return type.isNotEmpty() && type.toInt() == TelephonyManager.SIM_STATE_READY
 }
 
 /** 获取手机的IMSI2 */
-fun Context.getIMSI2() = getOperatorBySlot("getSubscriberId", 1)
+fun Context.getIMSI2(): String = getOperatorBySlot("getSubscriberId", 1)
 
 /** Sim卡2是否可用 */
 fun Context.isSim2Ready(): Boolean {
     var type = getOperatorBySlot("getSimState", 1)
-    if (type.isEmpty()){
+    if (type.isEmpty()) {
         type = getOperatorBySlot("getSimStateGemini", 1)
     }
     return type.isNotEmpty() && type.toInt() == TelephonyManager.SIM_STATE_READY
@@ -132,7 +132,7 @@ fun Context.getSimDataState(): Int {
 }
 
 /** sim卡数据是否已连接 */
-fun Context.isSimDataConnected() =getSimDataState() == TelephonyManager.DATA_CONNECTED
+fun Context.isSimDataConnected(): Boolean = getSimDataState() == TelephonyManager.DATA_CONNECTED
 
 /** 获取手机的IMEI1 */
 fun Context.getIMEI1(): String {
@@ -153,7 +153,7 @@ fun Context.getIMEI2(): String {
 }
 
 /** 手机是否双卡双待 */
-fun Context.isDualSim() = getIMEI2().isNotEmpty()
+fun Context.isDualSim(): Boolean = getIMEI2().isNotEmpty()
 
 /** 通过方法名[predictedMethodName]获取对应序号[slotId]下的设备信息 */
 private fun Context.getOperatorBySlot(predictedMethodName: String, slotId: Int): String {

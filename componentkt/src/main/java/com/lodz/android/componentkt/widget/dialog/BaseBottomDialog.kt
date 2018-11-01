@@ -16,6 +16,7 @@ abstract class BaseBottomDialog : BaseDialog {
 
     constructor(context: Context, @StyleRes themeResId: Int) : super(context, themeResId)
 
+    @StyleRes
     override fun getAnimations(): Int {
         return R.style.animation_bottom_in_bottom_out
     }
@@ -34,6 +35,6 @@ abstract class BaseBottomDialog : BaseDialog {
     }
 
     /** 是否需要填满宽度 */
-    protected open fun isMatchWidth() = true
+    protected open fun isMatchWidth(): Boolean = true
 
 }

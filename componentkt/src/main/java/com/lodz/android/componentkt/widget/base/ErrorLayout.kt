@@ -17,6 +17,7 @@ import com.lodz.android.componentkt.R
 import com.lodz.android.componentkt.base.application.BaseApplication
 import com.lodz.android.componentkt.base.application.config.BaseLayoutConfig
 import com.lodz.android.componentkt.base.application.config.ErrorLayoutConfig
+import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.getColorCompat
 import com.lodz.android.corekt.anko.px2sp
 
@@ -29,37 +30,32 @@ class ErrorLayout : LinearLayout {
     /** 异常界面配置 */
     private var mConfig = ErrorLayoutConfig()
 
-    /** 根布局 */
-    private val mRootView: LinearLayout by lazy {
-        findViewById(R.id.error_root_layout) as LinearLayout
-    }
-    /** 失败图片 */
-    private val mErrorImg: ImageView by lazy {
-        findViewById(R.id.error_img) as ImageView
-    }
-    /** 提示语 */
-    private val mErrorTipsTv: TextView by lazy {
-        findViewById(R.id.error_tips_tv) as TextView
-    }
+    /** 根布局  */
+    private val mRootView by bindView<LinearLayout>(R.id.error_root_layout)
+    /** 失败图片  */
+    private val mErrorImg by bindView<ImageView>(R.id.error_img)
+    /** 提示语  */
+    private val mErrorTipsTv by bindView<TextView>(R.id.error_tips_tv)
 
     constructor(context: Context?) : super(context) {
-        initialization(null)
+        init(null)
     }
 
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
-        initialization(attrs)
+        init(attrs)
     }
 
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        initialization(attrs)
+        init(attrs)
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
-        initialization(attrs)
+        init(attrs)
     }
 
-    fun initialization(attrs: AttributeSet?) {
+
+    private fun init(attrs: AttributeSet?) {
         if (BaseApplication.get() != null) {
             mConfig = BaseApplication.get()!!.getBaseLayoutConfig().getErrorLayoutConfig()
         }
@@ -74,7 +70,8 @@ class ErrorLayout : LinearLayout {
         }
 
         // 布局方向
-        val orientation: Int = typedArray?.getInt(R.styleable.ErrorLayout_contentOrientation, mConfig.orientation) ?: mConfig.orientation
+        val orientation: Int = typedArray?.getInt(R.styleable.ErrorLayout_contentOrientation, mConfig.orientation)
+                ?: mConfig.orientation
         setLayoutOrientation(orientation)
 
         // 是否需要图片
@@ -83,7 +80,8 @@ class ErrorLayout : LinearLayout {
         needImg(isNeedImg)
 
         // 是否需要提示语
-        val isNeedTips: Boolean = typedArray?.getBoolean(R.styleable.ErrorLayout_isNeedTips, mConfig.isNeedTips) ?: mConfig.isNeedTips
+        val isNeedTips: Boolean = typedArray?.getBoolean(R.styleable.ErrorLayout_isNeedTips, mConfig.isNeedTips)
+                ?: mConfig.isNeedTips
         needTips(isNeedTips)
 
         val src: Drawable? = typedArray?.getDrawable(R.styleable.ErrorLayout_src)
@@ -109,7 +107,8 @@ class ErrorLayout : LinearLayout {
         }
 
         // 提示语大小
-        val tipsSize: Int = typedArray?.getDimensionPixelSize(R.styleable.ErrorLayout_tipsSize, 0) ?: 0
+        val tipsSize: Int = typedArray?.getDimensionPixelSize(R.styleable.ErrorLayout_tipsSize, 0)
+                ?: 0
         if (tipsSize != 0) {
             setTipsTextSize(px2sp(tipsSize))
         } else if (mConfig.textSize != 0) {
@@ -133,12 +132,12 @@ class ErrorLayout : LinearLayout {
 
     /** 是否需要[isNeed]提示图片 */
     fun needImg(isNeed: Boolean) {
-        mErrorImg.visibility = if(isNeed) View.VISIBLE else View.GONE
+        mErrorImg.visibility = if (isNeed) View.VISIBLE else View.GONE
     }
 
     /** 是否需要[isNeed]提示文字 */
     fun needTips(isNeed: Boolean) {
-        mErrorTipsTv.visibility = if(isNeed) View.VISIBLE else View.GONE
+        mErrorTipsTv.visibility = if (isNeed) View.VISIBLE else View.GONE
     }
 
     /** 设置界面错误图片资源[drawableResId] */

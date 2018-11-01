@@ -14,5 +14,5 @@ abstract class RxObservableOnSubscribe<T>(vararg args: Any?) : ObservableOnSubsc
         mArgs = args
     }
 
-    fun getArgs() = mArgs
+    fun getArgs(): Array<out Any?> = mArgs
 }

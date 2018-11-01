@@ -31,7 +31,7 @@ class ThreadPoolManager private constructor() {
     }
 
     /** 重新配置 */
-    fun newBuilder() = mBuilder
+    fun newBuilder(): ThreadPoolManager.Builder = mBuilder
 
     /** 执行一个高优先级线程[runnable] */
     fun executeHighest(runnable: Runnable) {
@@ -241,7 +241,7 @@ class ThreadPoolManager private constructor() {
         }
 
         /** 设置完成配置  */
-        fun build() = this@ThreadPoolManager
+        fun build(): ThreadPoolManager = this@ThreadPoolManager
     }
 
 }

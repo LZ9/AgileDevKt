@@ -43,7 +43,7 @@ object FileUtils {
     fun isFileExists(file: File?): Boolean = file != null && file.exists()
 
     /** 根据路径[filePath]对文件重命名[newName] */
-    fun renameFile(filePath: String, newName: String) = renameFile(create(filePath), newName)
+    fun renameFile(filePath: String, newName: String): Boolean = renameFile(create(filePath), newName)
 
     /** 对文件[file]重命名[newName] */
     fun renameFile(file: File?, newName: String): Boolean {
@@ -355,14 +355,14 @@ object FileUtils {
             return
         }
         var newSuffix = suffix
-        if (!suffix.startsWith(".")){
+        if (!suffix.startsWith(".")) {
             newSuffix = "." + suffix
         }
         val file: File? = create(newFilePath + fileName + newSuffix)
         if (file == null) {
             return
         }
-        if (file.exists()){
+        if (file.exists()) {
             file.delete()
         }
         file.createNewFile()

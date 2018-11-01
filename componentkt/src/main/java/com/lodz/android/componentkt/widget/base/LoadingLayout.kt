@@ -20,6 +20,7 @@ import com.lodz.android.componentkt.R
 import com.lodz.android.componentkt.base.application.BaseApplication
 import com.lodz.android.componentkt.base.application.config.BaseLayoutConfig
 import com.lodz.android.componentkt.base.application.config.LoadingLayoutConfig
+import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.getColorCompat
 import com.lodz.android.corekt.anko.getDrawableCompat
 import com.lodz.android.corekt.anko.px2sp
@@ -33,35 +34,31 @@ class LoadingLayout : LinearLayout {
     /** 加载页配置 */
     private var mConfig = LoadingLayoutConfig()
 
-    /** 根布局 */
-    private val mRootView: LinearLayout by lazy {
-        findViewById(R.id.root_view) as LinearLayout
-    }
+    /** 根布局  */
+    private val mRootView by bindView<LinearLayout>(R.id.root_view)
+    /** 提示语  */
+    private val mLoadingTipsTv by bindView<TextView>(R.id.loading_tips_tv)
     /** 进度条 */
     private lateinit var mLoadingProgressBar: ProgressBar
-    /** 提示语 */
-    private val mLoadingTipsTv: TextView by lazy {
-        findViewById(R.id.loading_tips_tv) as TextView
-    }
 
     constructor(context: Context?) : super(context) {
-        initialization(null)
+        init(null)
     }
 
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
-        initialization(attrs)
+        init(attrs)
     }
 
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        initialization(attrs)
+        init(attrs)
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
-        initialization(attrs)
+        init(attrs)
     }
 
-    fun initialization(attrs: AttributeSet?) {
+    private fun init(attrs: AttributeSet?) {
         if (BaseApplication.get() != null) {
             mConfig = BaseApplication.get()!!.getBaseLayoutConfig().getLoadingLayoutConfig()
         }

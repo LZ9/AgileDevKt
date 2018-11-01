@@ -15,16 +15,16 @@ import androidx.annotation.RequiresPermission
  */
 
 /** 获取系统屏幕亮度模式的状态（手动：Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL ； 自动：Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC） */
-fun Context.getScreenBrightnessModeState() = Settings.System.getInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL)
+fun Context.getScreenBrightnessModeState(): Int = Settings.System.getInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL)
 
 /** 系统屏幕亮度是否为自动模式 */
-fun Context.isScreenBrightnessModeAutomatic() = getScreenBrightnessModeState() == Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC
+fun Context.isScreenBrightnessModeAutomatic(): Boolean = getScreenBrightnessModeState() == Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC
 
 /** 设置系统屏幕亮度模式[mode]（手动：Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL ； 自动：Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC） */
-fun Context.setScreenBrightnessMode(mode: Int) = Settings.System.putInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS_MODE, mode)
+fun Context.setScreenBrightnessMode(mode: Int): Boolean = Settings.System.putInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS_MODE, mode)
 
 /** 获取手动模式下的系统亮度值，范围0-255（默认值255） */
-fun Context.getScreenBrightness(def: Int = 255) = Settings.System.getInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS, def)
+fun Context.getScreenBrightness(def: Int = 255): Int = Settings.System.getInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS, def)
 
 /** 设置手动模式下的系统亮度[brightness]（0-255）亮度显示的优先级：窗口>系统 */
 fun Context.setScreenBrightness(@IntRange(from = 1, to = 255) brightness: Int) {
@@ -60,7 +60,7 @@ fun Activity.setScreenAndWindowBrightness(@IntRange(from = 1, to = 255) brightne
 }
 
 /** 获取屏幕休眠时间（单位毫秒，默认30秒） */
-fun Context.getScreenDormantTime(def: Int = 30000) = Settings.System.getInt(contentResolver, Settings.System.SCREEN_OFF_TIMEOUT, def)
+fun Context.getScreenDormantTime(def: Int = 30000): Int = Settings.System.getInt(contentResolver, Settings.System.SCREEN_OFF_TIMEOUT, def)
 
 /** 设置屏幕休眠时间[millis]（毫秒） */
 fun Context.setScreenDormantTime(millis: Int) {
@@ -69,11 +69,11 @@ fun Context.setScreenDormantTime(millis: Int) {
 
 /** 获取飞行模式的状态 1：打开；0：关闭 */
 @RequiresPermission(Manifest.permission.WRITE_SECURE_SETTINGS)
-fun Context.getAirplaneModeState(def: Int = 0) = Settings.Global.getInt(contentResolver, Settings.Global.AIRPLANE_MODE_ON, def)
+fun Context.getAirplaneModeState(def: Int = 0): Int = Settings.Global.getInt(contentResolver, Settings.Global.AIRPLANE_MODE_ON, def)
 
 /** 判断飞行模式是否打开 */
 @RequiresPermission(Manifest.permission.WRITE_SECURE_SETTINGS)
-fun Context.isAirplaneModeOpen() = getAirplaneModeState() == 1
+fun Context.isAirplaneModeOpen(): Boolean = getAirplaneModeState() == 1
 
 /** 设置飞行模式的状态是否启用[enable] */
 @RequiresPermission(Manifest.permission.WRITE_SECURE_SETTINGS)
@@ -83,10 +83,10 @@ fun Context.setAirplaneMode(enable: Boolean) {
 }
 
 /** 获取铃声音量（一般取值范围为0-7） */
-fun Context.getRingVolume() = (getSystemService(Context.AUDIO_SERVICE) as AudioManager).getStreamVolume(AudioManager.STREAM_RING)
+fun Context.getRingVolume(): Int = (getSystemService(Context.AUDIO_SERVICE) as AudioManager).getStreamVolume(AudioManager.STREAM_RING)
 
 /** 获取铃声音量最大值（一般是7） */
-fun Context.getMaxRingVolume() = (getSystemService(Context.AUDIO_SERVICE) as AudioManager).getStreamMaxVolume(AudioManager.STREAM_RING)
+fun Context.getMaxRingVolume(): Int = (getSystemService(Context.AUDIO_SERVICE) as AudioManager).getStreamMaxVolume(AudioManager.STREAM_RING)
 
 /** 设置铃声音量[volume] */
 fun Context.setRingVolume(volume: Int) {

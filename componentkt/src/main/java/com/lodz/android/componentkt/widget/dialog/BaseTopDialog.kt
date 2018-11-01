@@ -16,7 +16,8 @@ abstract class BaseTopDialog : BaseDialog {
 
     constructor(context: Context, @StyleRes themeResId: Int) : super(context, themeResId)
 
-    override fun getAnimations() = R.style.animation_top_in_top_out
+    @StyleRes
+    override fun getAnimations(): Int = R.style.animation_top_in_top_out
 
     override fun show() {
         val wd = window
@@ -32,5 +33,5 @@ abstract class BaseTopDialog : BaseDialog {
     }
 
     /** 是否需要填满宽度 */
-    protected open fun isMatchWidth() = true
+    protected open fun isMatchWidth(): Boolean = true
 }

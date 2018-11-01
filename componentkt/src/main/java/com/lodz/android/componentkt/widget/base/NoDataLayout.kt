@@ -17,6 +17,7 @@ import com.lodz.android.componentkt.R
 import com.lodz.android.componentkt.base.application.BaseApplication
 import com.lodz.android.componentkt.base.application.config.BaseLayoutConfig
 import com.lodz.android.componentkt.base.application.config.NoDataLayoutConfig
+import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.getColorCompat
 import com.lodz.android.corekt.anko.px2sp
 
@@ -29,37 +30,31 @@ class NoDataLayout : LinearLayout {
     /** 加载页配置 */
     private var mConfig = NoDataLayoutConfig()
 
-    /** 根布局 */
-    private val mRootView: LinearLayout by lazy {
-        findViewById(R.id.root_view) as LinearLayout
-    }
-    /** 无数据图片 */
-    private val mNoDataImg: ImageView by lazy {
-        findViewById(R.id.no_data_img) as ImageView
-    }
-    /** 无数据提示语 */
-    private val mNoDataTv: TextView by lazy {
-        findViewById(R.id.no_data_tv) as TextView
-    }
+    /** 根布局  */
+    private val mRootView by bindView<LinearLayout>(R.id.root_view)
+    /** 无数据图片  */
+    private val mNoDataImg by bindView<ImageView>(R.id.no_data_img)
+    /** 无数据提示语  */
+    private val mNoDataTv by bindView<TextView>(R.id.no_data_tv)
 
     constructor(context: Context?) : super(context) {
-        initialization(null)
+        init(null)
     }
 
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
-        initialization(attrs)
+        init(attrs)
     }
 
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        initialization(attrs)
+        init(attrs)
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
-        initialization(attrs)
+        init(attrs)
     }
 
-    fun initialization(attrs: AttributeSet?) {
+    private fun init(attrs: AttributeSet?) {
         if (BaseApplication.get() != null) {
             mConfig = BaseApplication.get()!!.getBaseLayoutConfig().getNoDataLayoutConfig()
         }

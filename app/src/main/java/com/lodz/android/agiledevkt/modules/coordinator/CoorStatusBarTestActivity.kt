@@ -28,7 +28,7 @@ import java.util.*
  * 带CoordinatorLayout的状态栏测试类
  * Created by zhouL on 2018/9/5.
  */
-class CoorStatusBarTestActivity :AbsActivity(){
+class CoorStatusBarTestActivity : AbsActivity() {
 
     companion object {
         fun start(context: Context, title: String) {
@@ -59,7 +59,7 @@ class CoorStatusBarTestActivity :AbsActivity(){
     override fun findViews(savedInstanceState: Bundle?) {
         mTitleBarLayout.setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME))
         initRecyclerView()
-        StatusBarUtil.setTransparentFullyForOffsetView(getContext(), mToolbar)
+        StatusBarUtil.setTransparentFullyForOffsetView(this@CoorStatusBarTestActivity, mToolbar)
     }
 
     private fun initRecyclerView() {
@@ -96,19 +96,19 @@ class CoorStatusBarTestActivity :AbsActivity(){
                     .show()
         }
 
-        mAppBarLayout.addOnOffsetChangedListener(object : OnAppBarStateChangeListener(){
+        mAppBarLayout.addOnOffsetChangedListener(object : OnAppBarStateChangeListener() {
             override fun onStateChanged(appBarLayout: AppBarLayout, state: Int, delta: Double) {
-                if (state == OnAppBarStateChangeListener.EXPANDED){
+                if (state == OnAppBarStateChangeListener.EXPANDED) {
                     // 完全展开
                     mRightBtn.visibility = View.VISIBLE
                     mRightBtn.alpha = 1f
                     mTitleBarLayout.visibility = View.GONE
-                }else if (state == OnAppBarStateChangeListener.COLLAPSED){
+                } else if (state == OnAppBarStateChangeListener.COLLAPSED) {
                     // 完全折叠
                     mRightBtn.visibility = View.GONE
                     mTitleBarLayout.visibility = View.VISIBLE
                     mTitleBarLayout.alpha = 1f
-                }else{
+                } else {
                     // 滑动中
                     mRightBtn.alpha = delta.toFloat()
                     mTitleBarLayout.alpha = (1 - delta).toFloat()

@@ -15,10 +15,7 @@ import androidx.annotation.*
 import com.lodz.android.componentkt.R
 import com.lodz.android.componentkt.base.application.BaseApplication
 import com.lodz.android.componentkt.base.application.config.TitleBarLayoutConfig
-import com.lodz.android.corekt.anko.dp2px
-import com.lodz.android.corekt.anko.getColorCompat
-import com.lodz.android.corekt.anko.px2dp
-import com.lodz.android.corekt.anko.px2sp
+import com.lodz.android.corekt.anko.*
 
 /**
  * 标题栏布局
@@ -29,46 +26,36 @@ open class TitleBarLayout : LinearLayout {
     /** 标题栏配置 */
     private var mConfig = TitleBarLayoutConfig()
 
-    /** 返回按钮布局 */
-    private val mBackLayout: LinearLayout by lazy {
-        findViewById(R.id.back_layout) as LinearLayout
-    }
-    /** 返回按钮 */
-    private val mBackBtn: TextView by lazy {
-        findViewById(R.id.back_btn) as TextView
-    }
-    /** 标题 */
-    private val mTitleTv: TextView by lazy {
-        findViewById(R.id.title_tv) as TextView
-    }
-    /** 扩展区布局 */
-    private val mExpandLayout: LinearLayout by lazy {
-        findViewById(R.id.expand_layout) as LinearLayout
-    }
-    /** 分割线 */
-    private val mDivideLineView: View by lazy {
-        findViewById(R.id.divide_line_view) as View
-    }
+    /** 返回按钮布局  */
+    private val mBackLayout by bindView<LinearLayout>(R.id.back_layout)
+    /** 返回按钮  */
+    private val mBackBtn by bindView<TextView>(R.id.back_btn)
+    /** 标题  */
+    private val mTitleTv by bindView<TextView>(R.id.title_tv)
+    /** 扩展区布局  */
+    private val mExpandLayout by bindView<LinearLayout>(R.id.expand_layout)
+    /** 分割线  */
+    private val mDivideLineView by bindView<View>(R.id.divide_line_view)
 
     constructor(context: Context?) : super(context) {
-        initialization(null)
+        init(null)
     }
 
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
-        initialization(attrs)
+        init(attrs)
     }
 
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        initialization(attrs)
+        init(attrs)
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
-        initialization(attrs)
+        init(attrs)
     }
 
 
-    fun initialization(attrs: AttributeSet?) {
+    private fun init(attrs: AttributeSet?) {
         if (BaseApplication.get() != null) {
             mConfig = BaseApplication.get()!!.getBaseLayoutConfig().getTitleBarLayoutConfig()
         }
@@ -83,7 +70,8 @@ open class TitleBarLayout : LinearLayout {
         }
 
         // 返回按钮
-        needBackButton(typedArray?.getBoolean(R.styleable.TitleBarLayout_isNeedBackBtn, mConfig.isNeedBackBtn) ?: mConfig.isNeedBackBtn)
+        needBackButton(typedArray?.getBoolean(R.styleable.TitleBarLayout_isNeedBackBtn, mConfig.isNeedBackBtn)
+                ?: mConfig.isNeedBackBtn)
 
         // 返回按钮图标
         val backDrawable: Drawable? = typedArray?.getDrawable(R.styleable.TitleBarLayout_backDrawable)
@@ -110,7 +98,8 @@ open class TitleBarLayout : LinearLayout {
         }
 
         // 返回按钮文字大小
-        val backTextSize: Int = typedArray?.getDimensionPixelSize(R.styleable.TitleBarLayout_backTextSize, 0) ?: 0
+        val backTextSize: Int = typedArray?.getDimensionPixelSize(R.styleable.TitleBarLayout_backTextSize, 0)
+                ?: 0
         if (backTextSize != 0) {
             setBackBtnTextSize(px2sp(backTextSize))
         } else if (mConfig.backBtnTextSize != 0) {
@@ -132,7 +121,8 @@ open class TitleBarLayout : LinearLayout {
         }
 
         // 标题文字大小
-        val titleTextSize: Int = typedArray?.getDimensionPixelSize(R.styleable.TitleBarLayout_titleTextSize, 0) ?: 0
+        val titleTextSize: Int = typedArray?.getDimensionPixelSize(R.styleable.TitleBarLayout_titleTextSize, 0)
+                ?: 0
         if (titleTextSize != 0) {
             setTitleTextSize(px2sp(titleTextSize))
         } else if (mConfig.titleTextSize != 0) {
@@ -140,7 +130,8 @@ open class TitleBarLayout : LinearLayout {
         }
 
         // 是否显示分割线
-        val isShowDivideLine: Boolean = typedArray?.getBoolean(R.styleable.TitleBarLayout_isShowDivideLine, mConfig.isShowDivideLine) ?: mConfig.isShowDivideLine
+        val isShowDivideLine: Boolean = typedArray?.getBoolean(R.styleable.TitleBarLayout_isShowDivideLine, mConfig.isShowDivideLine)
+                ?: mConfig.isShowDivideLine
         needDivideLine(isShowDivideLine)
 
         // 分割线背景色
@@ -152,7 +143,8 @@ open class TitleBarLayout : LinearLayout {
         }
 
         // 分割线高度
-        val divideLineHeight: Int = typedArray?.getDimensionPixelSize(R.styleable.TitleBarLayout_divideLineHeight, 0) ?: 0
+        val divideLineHeight: Int = typedArray?.getDimensionPixelSize(R.styleable.TitleBarLayout_divideLineHeight, 0)
+                ?: 0
         if (divideLineHeight > 0) {
             setDivideLineHeight(px2dp(divideLineHeight).toInt())
         } else if (mConfig.divideLineHeightDp > 0) {
@@ -172,9 +164,11 @@ open class TitleBarLayout : LinearLayout {
         }
 
         // 是否需要阴影
-        val isNeedElevation: Boolean = typedArray?.getBoolean(R.styleable.TitleBarLayout_isNeedElevation, mConfig.isNeedElevation) ?: mConfig.isNeedElevation
+        val isNeedElevation: Boolean = typedArray?.getBoolean(R.styleable.TitleBarLayout_isNeedElevation, mConfig.isNeedElevation)
+                ?: mConfig.isNeedElevation
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && isNeedElevation) {
-            val elevationVale: Int = typedArray?.getDimensionPixelSize(R.styleable.TitleBarLayout_elevationVale, 0) ?: 0
+            val elevationVale: Int = typedArray?.getDimensionPixelSize(R.styleable.TitleBarLayout_elevationVale, 0)
+                    ?: 0
             if (elevationVale != 0) {
                 elevation = elevationVale.toFloat()
             } else {
@@ -183,11 +177,13 @@ open class TitleBarLayout : LinearLayout {
         }
 
         // 是否需要右侧扩展区域
-        val isNeedExpandView: Boolean = typedArray?.getBoolean(R.styleable.TitleBarLayout_isNeedExpandView, false) ?: false
+        val isNeedExpandView: Boolean = typedArray?.getBoolean(R.styleable.TitleBarLayout_isNeedExpandView, false)
+                ?: false
         needExpandView(isNeedExpandView)
 
         // 加载扩展区布局
-        val expandViewId: Int = typedArray?.getResourceId(R.styleable.TitleBarLayout_expandViewId, 0) ?: 0
+        val expandViewId: Int = typedArray?.getResourceId(R.styleable.TitleBarLayout_expandViewId, 0)
+                ?: 0
         if (expandViewId > 0) {
             val view: View? = LayoutInflater.from(context).inflate(expandViewId, null)
             if (view != null) {
@@ -202,7 +198,7 @@ open class TitleBarLayout : LinearLayout {
 
     /** 是否需要[isNeed]显示返回按钮 */
     fun needBackButton(isNeed: Boolean) {
-        mBackLayout.visibility = if(isNeed) View.VISIBLE else View.GONE
+        mBackLayout.visibility = if (isNeed) View.VISIBLE else View.GONE
     }
 
     /** 设置返回按钮的透明度[alpha] */
@@ -288,7 +284,7 @@ open class TitleBarLayout : LinearLayout {
 
     /** 是否需要[isNeed]右侧扩展区 */
     fun needExpandView(isNeed: Boolean) {
-        mExpandLayout.visibility = if(isNeed) View.VISIBLE else View.GONE
+        mExpandLayout.visibility = if (isNeed) View.VISIBLE else View.GONE
     }
 
     /** 添加扩展区域的[view] */
@@ -303,7 +299,7 @@ open class TitleBarLayout : LinearLayout {
 
     /** 是否需[isNeed]要分割线 */
     fun needDivideLine(isNeed: Boolean) {
-        mDivideLineView.visibility = if(isNeed) View.VISIBLE else View.GONE
+        mDivideLineView.visibility = if (isNeed) View.VISIBLE else View.GONE
     }
 
     /** 隐藏分割线 */

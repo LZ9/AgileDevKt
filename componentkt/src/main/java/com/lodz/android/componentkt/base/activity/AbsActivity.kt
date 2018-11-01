@@ -1,5 +1,6 @@
 package com.lodz.android.componentkt.base.activity
 
+import android.content.Context
 import android.os.Bundle
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
@@ -53,7 +54,7 @@ abstract class AbsActivity : RxAppCompatActivity() {
 
     protected open fun endCreate() {}
 
-    protected open fun getContext() = this
+    protected open fun getContext(): Context = this
 
     override fun finish() {
         EventBus.getDefault().unregister(this)
@@ -116,7 +117,7 @@ abstract class AbsActivity : RxAppCompatActivity() {
     }
 
     /** 点击返回按钮 */
-    protected open fun onPressBack() = false
+    protected open fun onPressBack(): Boolean = false
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onMessageEvent(event: ActivityFinishEvent) {
@@ -174,7 +175,7 @@ abstract class AbsActivity : RxAppCompatActivity() {
     }
 
     /** 获取所有的fragment */
-    protected fun getFragments() = supportFragmentManager.fragments
+    protected fun getFragments(): List<Fragment> = supportFragmentManager.fragments
 
 
     /** 根据[tag]标签找到对应的fragment */
@@ -189,7 +190,7 @@ abstract class AbsActivity : RxAppCompatActivity() {
     }
 
     /** 是否使用AnkoLayout */
-    protected fun isUseAnkoLayout() = isUseAnko
+    protected fun isUseAnkoLayout(): Boolean = isUseAnko
 
     /** 解析AnkoLayout注解 */
     private fun injectAnko(): Boolean {
@@ -199,7 +200,7 @@ abstract class AbsActivity : RxAppCompatActivity() {
             }
             // 进行了UseAnkoLayout注解
             val inject = javaClass.getAnnotation(UseAnkoLayout::class.java)
-            if (inject == null){
+            if (inject == null) {
                 return false
             }
             return inject.value

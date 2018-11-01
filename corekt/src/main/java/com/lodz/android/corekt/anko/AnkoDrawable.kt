@@ -13,10 +13,10 @@ import androidx.annotation.ColorRes
  */
 
 /** 用颜色资源[color]创建Drawable */
-fun Context.createColorDrawable(@ColorRes color: Int) = ColorDrawable(getColorCompat(color))
+fun Context.createColorDrawable(@ColorRes color: Int): ColorDrawable = ColorDrawable(getColorCompat(color))
 
 /** 用颜色[color]创建Drawable */
-fun Context.createColorIntDrawable(@ColorInt color: Int) = ColorDrawable(color)
+fun Context.createColorIntDrawable(@ColorInt color: Int): ColorDrawable = ColorDrawable(color)
 
 /** 用[bitmap]创建Drawable */
-fun Context.createBitmapDrawable(bitmap: Bitmap) = BitmapDrawable(resources, bitmap)
+fun Context.createBitmapDrawable(bitmap: Bitmap): BitmapDrawable = BitmapDrawable(resources, bitmap)

@@ -43,7 +43,7 @@ object PrintLog {
         if (log.isNullOrEmpty()) {
             logByType(LOG_I, tag, log)
         } else {
-            logSegmented(LOG_I, tag, log!!)
+            logSegmented(LOG_I, tag, log)
         }
     }
 
@@ -62,11 +62,11 @@ object PrintLog {
         if (log.isNullOrEmpty()) {
             logByType(LOG_V, tag, log)
         } else {
-            logSegmented(LOG_V, tag, log!!)
+            logSegmented(LOG_V, tag, log)
         }
     }
 
-     /** 打印DEBUG类型日志。[tag]为日志标签，[log]为日志内容 */
+    /** 打印DEBUG类型日志。[tag]为日志标签，[log]为日志内容 */
     fun d(tag: String, log: String?) {
         if (isPrint) {
             logByType(LOG_D, tag, log)
@@ -81,7 +81,7 @@ object PrintLog {
         if (log.isNullOrEmpty()) {
             logByType(LOG_D, tag, log)
         } else {
-            logSegmented(LOG_D, tag, log!!)
+            logSegmented(LOG_D, tag, log)
         }
     }
 
@@ -100,7 +100,7 @@ object PrintLog {
         if (log.isNullOrEmpty()) {
             logByType(LOG_W, tag, log)
         } else {
-            logSegmented(LOG_W, tag, log!!)
+            logSegmented(LOG_W, tag, log)
         }
     }
 
@@ -119,18 +119,18 @@ object PrintLog {
         if (log.isNullOrEmpty()) {
             logByType(LOG_E, tag, log)
         } else {
-            logSegmented(LOG_E, tag, log!!)
+            logSegmented(LOG_E, tag, log)
         }
     }
 
     /** 打印ERROR类型日志。[tag]为日志标签，[log]为日志内容 */
-    fun e(tag: String, log: String?, t : Throwable) {
+    fun e(tag: String, log: String?, t: Throwable) {
         if (!isPrint) {
             return
         }
         if (log.isNullOrEmpty()) {
             logByType(LOG_E, tag, log)
-        }else{
+        } else {
             Log.e(tag, log, t)
         }
     }
@@ -142,14 +142,14 @@ object PrintLog {
             return
         }
         val index = Math.ceil(log.length / 3000.0).toInt()
-        for (i in 0 until index){
+        for (i in 0 until index) {
             val start = i * 3000
             var end = 3000 + i * 3000
-            if (end >= log.length){
+            if (end >= log.length) {
                 end = log.length
             }
             logByType(type, tag, log.substring(start, end))
-            if (end == log.length){
+            if (end == log.length) {
                 return
             }
         }

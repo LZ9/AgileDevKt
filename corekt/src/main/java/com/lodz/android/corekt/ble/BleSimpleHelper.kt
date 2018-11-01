@@ -17,7 +17,7 @@ class BleSimpleHelper private constructor() {
 
     companion object {
         private val sInstance = BleSimpleHelper()
-        fun get() = sInstance
+        fun get(): BleSimpleHelper = sInstance
     }
 
     /** 蓝牙适配器 */
@@ -29,7 +29,7 @@ class BleSimpleHelper private constructor() {
     /** 蓝牙广播接收器 */
     private val mBleReceiver = BleReceiver()
 
-    fun getBluetoothAdapter() = mBluetoothAdapter
+    fun getBluetoothAdapter(): BluetoothAdapter? = mBluetoothAdapter
 
     /** 注册蓝牙广播接收器 */
     fun registerBleReceiver(context: Context) {
@@ -83,7 +83,7 @@ class BleSimpleHelper private constructor() {
 
     /** 蓝牙是否打开 */
     @RequiresPermission(Manifest.permission.BLUETOOTH)
-    fun isBluetoothEnabled() = mBluetoothAdapter?.isEnabled ?: false
+    fun isBluetoothEnabled(): Boolean = mBluetoothAdapter?.isEnabled ?: false
 
     /** 开始扫描 */
     @RequiresPermission(allOf = arrayOf(Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_ADMIN))
@@ -119,7 +119,7 @@ class BleSimpleHelper private constructor() {
 
     /** 是否正在扫描 */
     @RequiresPermission(Manifest.permission.BLUETOOTH)
-    fun isDiscovering() = mBluetoothAdapter?.isDiscovering ?: false
+    fun isDiscovering(): Boolean = mBluetoothAdapter?.isDiscovering ?: false
 
     /** 添加蓝牙状态监听器 */
     fun addStateListener(listener: BleStateListener) {

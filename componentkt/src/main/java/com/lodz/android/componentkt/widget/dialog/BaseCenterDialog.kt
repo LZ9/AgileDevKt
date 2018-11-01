@@ -15,15 +15,16 @@ abstract class BaseCenterDialog : BaseDialog {
 
     constructor(context: Context, @StyleRes themeResId: Int) : super(context, themeResId)
 
+    @StyleRes
     override fun getAnimations(): Int {
-        if (isNeedAnimations()) {
+        if (hasAnimations()) {
             return R.style.animation_center_in_center_out
         }
         return super.getAnimations()
     }
 
-    /** 是否使用动画 */
-    open fun isNeedAnimations() = true
+    /** 是否有动画 */
+    open fun hasAnimations(): Boolean = true
 
     override fun show() {
         val wd = window

@@ -17,13 +17,13 @@ import com.lodz.android.componentkt.R
 object ProgressDialogHelper {
 
     /** 获取一个加载框，配置返回取消[cancelable]、点击空白处取消[canceledOnTouchOutside] */
-    fun getProgressDialog(context: Context, cancelable: Boolean, canceledOnTouchOutside: Boolean) = getProgressDialog(context, "", cancelable, canceledOnTouchOutside, null)
+    fun getProgressDialog(context: Context, cancelable: Boolean, canceledOnTouchOutside: Boolean): AlertDialog = getProgressDialog(context, "", cancelable, canceledOnTouchOutside, null)
 
     /** 获取一个加载框，配置提示文字[msg]、返回取消[cancelable]、点击空白处取消[canceledOnTouchOutside] */
-    fun getProgressDialog(context: Context, msg: String, cancelable: Boolean, canceledOnTouchOutside: Boolean) = getProgressDialog(context, msg, cancelable, canceledOnTouchOutside, null)
+    fun getProgressDialog(context: Context, msg: String, cancelable: Boolean, canceledOnTouchOutside: Boolean): AlertDialog = getProgressDialog(context, msg, cancelable, canceledOnTouchOutside, null)
 
     /** 获取一个加载框，配置返回取消[cancelable]、点击空白处取消[canceledOnTouchOutside]、取消监听器[listener] */
-    fun getProgressDialog(context: Context, cancelable: Boolean, canceledOnTouchOutside: Boolean, listener: DialogInterface.OnCancelListener?) = getProgressDialog(context, "", cancelable, canceledOnTouchOutside, listener)
+    fun getProgressDialog(context: Context, cancelable: Boolean, canceledOnTouchOutside: Boolean, listener: DialogInterface.OnCancelListener?): AlertDialog = getProgressDialog(context, "", cancelable, canceledOnTouchOutside, listener)
 
     /** 获取一个加载框，配置提示文字[msg]、返回取消[cancelable]、点击空白处取消[canceledOnTouchOutside]、取消监听器[listener] */
     @SuppressLint("InflateParams")
@@ -43,7 +43,7 @@ object ProgressDialogHelper {
             progressDialog.setOnCancelListener(listener)
         }
         val wd = progressDialog.window
-        if (wd != null){
+        if (wd != null) {
             wd.setGravity(Gravity.CENTER)
         }
         return progressDialog

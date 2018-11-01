@@ -16,7 +16,8 @@ abstract class BaseRightDialog : BaseDialog {
 
     constructor(context: Context, @StyleRes themeResId: Int) : super(context, themeResId)
 
-    override fun getAnimations() = R.style.animation_right_in_right_out
+    @StyleRes
+    override fun getAnimations(): Int = R.style.animation_right_in_right_out
 
     override fun show() {
         val wd = window
@@ -32,6 +33,6 @@ abstract class BaseRightDialog : BaseDialog {
     }
 
     /** 是否需要填满高度 */
-    protected open fun isMatchHeight() = true
+    protected open fun isMatchHeight(): Boolean = true
 
 }

@@ -125,7 +125,7 @@ class SnackbarUtils private constructor() {
     }
 
     /** 得到Snackbar */
-    fun getSnackbar() = mSnackbar
+    fun getSnackbar(): Snackbar = mSnackbar
 
     /** 显示Snackbar */
     fun show() {

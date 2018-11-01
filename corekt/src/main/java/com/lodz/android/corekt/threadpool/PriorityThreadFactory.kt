@@ -10,7 +10,7 @@ import java.util.concurrent.ThreadFactory
 internal object PriorityThreadFactory {
 
     /** 创建一个优先级最高线程 */
-    internal fun createHighestPriorityThread() = object : ThreadFactory {
+    internal fun createHighestPriorityThread(): ThreadFactory = object : ThreadFactory {
         override fun newThread(r: Runnable?): Thread {
             val thread = PriorityThread(r)
             thread.setOSPriority(Process.THREAD_PRIORITY_URGENT_DISPLAY)
@@ -20,7 +20,7 @@ internal object PriorityThreadFactory {
     }
 
     /** 创建一个普通线程 */
-    internal fun createNormPriorityThread() = object : ThreadFactory {
+    internal fun createNormPriorityThread(): ThreadFactory = object : ThreadFactory {
         override fun newThread(r: Runnable?): Thread {
             val thread = PriorityThread(r)
             thread.setOSPriority(Process.THREAD_PRIORITY_DEFAULT)
@@ -30,7 +30,7 @@ internal object PriorityThreadFactory {
     }
 
     /** 创建一个优先级最低线程 */
-    internal fun createLowestPriorityThread() = object : ThreadFactory {
+    internal fun createLowestPriorityThread(): ThreadFactory = object : ThreadFactory {
         override fun newThread(r: Runnable?): Thread {
             val thread = PriorityThread(r)
             thread.setOSPriority(Process.THREAD_PRIORITY_LOWEST)
