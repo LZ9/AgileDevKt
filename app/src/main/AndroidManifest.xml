@@ -277,6 +277,14 @@
 
         </activity>
 
+        <activity
+            android:name=".modules.array.ArrayTestActivity"
+            android:label="数组列表测试类"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+
     </application>
 
 </manifest>

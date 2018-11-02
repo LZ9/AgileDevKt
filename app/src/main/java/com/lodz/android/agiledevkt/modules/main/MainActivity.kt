@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.agiledevkt.App
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.anko.AnkoLayoutActivity
+import com.lodz.android.agiledevkt.modules.array.ArrayTestActivity
 import com.lodz.android.agiledevkt.modules.bitmap.BitmapTestActivity
 import com.lodz.android.agiledevkt.modules.bluetooth.BluetoothTestActivity
 import com.lodz.android.agiledevkt.modules.color.ColorAlphaTestActivity
@@ -60,7 +61,8 @@ class MainActivity : BaseActivity() {
             "背景选择器测试类", "设置测试类", "字符测试类",
             "信息展示测试类", "蓝牙测试类", "状态栏透明颜色测试类",
             "侧滑栏测试类", "Coordinator测试类", "Snackbar测试类",
-            "崩溃测试类", "定位测试", "弹框测试"
+            "崩溃测试类", "定位测试", "弹框测试",
+            "数组列表测试类"
     )
 
     /** 功能的activity */
@@ -72,7 +74,8 @@ class MainActivity : BaseActivity() {
             SelectorTestActivity::class.java, SettingTestActivity::class.java, StrTestActivity::class.java,
             InfoTestActivity::class.java, BluetoothTestActivity::class.java, StatusBarTestActivity::class.java,
             DrawerTestActivity::class.java, CoordinatorTestActivity::class.java, SnackbarTestActivity::class.java,
-            CrashTestActivity::class.java, LocationTestActivity::class.java, DialogActivity::class.java
+            CrashTestActivity::class.java, LocationTestActivity::class.java, DialogActivity::class.java,
+            ArrayTestActivity::class.java
     )
 
     /** 列表 */

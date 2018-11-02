@@ -332,4 +332,21 @@
     <string name="dialog_bottom_sure">给他100块</string>
     <string name="dialog_top_txt">老板，来瓶82年的营养快线</string>
 
+    <!-- 数组列表测试 -->
+    <string name="array_num_int">int数字：%s</string>
+    <string name="array_num_long">long数字：%s</string>
+    <string name="array_str">字符：%s</string>
+    <string name="array_toarray">数组：%s</string>
+    <string name="array_tolist">列表：%s</string>
+    <string name="array_toarray_null">null数组：%s</string>
+    <string name="array_tolist_null">null列表：%s</string>
+    <string name="array_source">原始数据：%s</string>
+    <string name="array_group_result">分组结果：%s</string>
+    <string name="array_deduplication">去重</string>
+    <string name="array_get_size">获取长度</string>
+    <string name="array_default_sort">默认排序</string>
+    <string name="array_get_max">取最大值</string>
+    <string name="array_get_min">取最小值</string>
+    <string name="array_group">数据分组</string>
+
 </resources>
