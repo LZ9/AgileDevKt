@@ -10,31 +10,37 @@
     app:justifyContent="flex_start">
 
     <Button
+        android:id="@+id/normal_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/dialog_normal" />
 
     <Button
+        android:id="@+id/center_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/dialog_center" />
 
     <Button
+        android:id="@+id/left_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/dialog_left" />
 
     <Button
+        android:id="@+id/right_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/dialog_right" />
 
     <Button
+        android:id="@+id/bottom_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/dialog_bottom" />
 
     <Button
+        android:id="@+id/top_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/dialog_top" />

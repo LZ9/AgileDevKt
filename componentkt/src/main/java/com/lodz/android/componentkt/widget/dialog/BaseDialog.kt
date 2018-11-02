@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.graphics.drawable.Drawable
 import android.os.Build
+import android.os.Bundle
 import androidx.annotation.LayoutRes
 import androidx.annotation.StyleRes
 import com.lodz.android.componentkt.R
@@ -16,23 +17,27 @@ import com.lodz.android.componentkt.R
 abstract class BaseDialog : Dialog {
 
     constructor(context: Context) : super(context, R.style.BaseDialog) {
-        initDialog(context)
+        init()
     }
 
     constructor(context: Context, @StyleRes themeResId: Int) : super(context, themeResId) {
-        initDialog(context)
+        init()
     }
 
-    private fun initDialog(context: Context) {
-        onStartInit(context)
+    private fun init() {
         setContentView(getLayoutId())
-        findViews()
-        setListeners()
-        initData()
         setWindowAnimations()
     }
 
-    protected open fun onStartInit(context: Context) {}
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        onStartCreate(context)
+        findViews()
+        setListeners()
+        initData()
+    }
+
+    protected open fun onStartCreate(context: Context) {}
 
     @LayoutRes
     protected abstract fun getLayoutId(): Int

@@ -319,6 +319,17 @@
     <string name="dialog_right">右侧弹框</string>
     <string name="dialog_bottom">底部弹框</string>
     <string name="dialog_top">顶部弹框</string>
-
+    <string name="dialog_normal_tips">戚家十三口惨案，你居然敢说问心无愧？常威，你还说你不会武功！</string>
+    <string name="dialog_center_tips">小强！小强你怎么了小强？小强，你不能死啊！我跟你相依为命，同甘共苦了这么多年，一直把你当亲生骨肉一样教你养你，想不到今天，白发人送黑发人！</string>
+    <string name="dialog_left_txt1">臣妾坐不到啊</string>
+    <string name="dialog_left_txt2">满身大汉</string>
+    <string name="dialog_left_txt3">我能插嘴么</string>
+    <string name="dialog_right_txt1">大师兄，师父被妖怪抓走了！</string>
+    <string name="dialog_right_txt2">二师兄，师父被妖怪抓走了！</string>
+    <string name="dialog_right_txt3">大师兄，二师兄被抓走了！</string>
+    <string name="dialog_right_txt4">大师兄， 二师兄和师傅都被抓走了！</string>
+    <string name="dialog_bottom_txt">他把我叫过来，他把我玩了，连一百块都不给我，这种人好恶心的，好坏的！</string>
+    <string name="dialog_bottom_sure">给他100块</string>
+    <string name="dialog_top_txt">老板，来瓶82年的营养快线</string>
 
 </resources>
