@@ -16,19 +16,19 @@ object ImageLoader {
 
     /** 构造加载器，[any]必须是Context、FragmentActivity、Activity、Fragment、View中的一种 */
     fun create(any: Any): ImageLoaderContract {
-        if (any is FragmentActivity){
+        if (any is FragmentActivity) {
             return GlideImageLoader.with(any)
         }
-        if (any is Activity){
+        if (any is Activity) {
             return GlideImageLoader.with(any)
         }
-        if (any is Context){
+        if (any is Context) {
             return GlideImageLoader.with(any)
         }
-        if (any is Fragment){
+        if (any is Fragment) {
             return GlideImageLoader.with(any)
         }
-        if (any is View){
+        if (any is View) {
             return GlideImageLoader.with(any)
         }
         throw RuntimeException("你传入的Any对象不属于Context、FragmentActivity、Activity、Fragment、View中的一种")

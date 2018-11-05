@@ -14,7 +14,7 @@ class ImageloaderManager private constructor() {
 
     companion object {
         private val sInstance = ImageloaderManager()
-        fun get() = sInstance
+        fun get(): ImageloaderManager = sInstance
     }
 
     private var mBuilder: Builder? = null
@@ -61,7 +61,7 @@ class ImageloaderManager private constructor() {
     }
 
     /** 是否暂停加载 */
-    fun isPaused(context: Context) = GlideApp.with(context).isPaused
+    fun isPaused(context: Context): Boolean = GlideApp.with(context).isPaused
 
     inner class Builder {
 
@@ -111,16 +111,16 @@ class ImageloaderManager private constructor() {
 
         /** 获取默认占位符图片 */
         @DrawableRes
-        fun getPlaceholderResId() = placeholderResId
+        fun getPlaceholderResId(): Int = placeholderResId
 
         /** 获取默认加载失败图片 */
         @DrawableRes
-        fun getErrorResId() = errorResId
+        fun getErrorResId(): Int = errorResId
 
         /** 获取图片缓存目录文件 */
-        fun getDirectoryFile() = directoryFile
+        fun getDirectoryFile(): File? = directoryFile
 
         /** 获取缓存图片文件夹名称 */
-        fun getDirectoryName() = directoryName
+        fun getDirectoryName(): String = directoryName
     }
 }

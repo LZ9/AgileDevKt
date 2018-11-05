@@ -455,7 +455,7 @@ class GlideImageLoader private constructor() : ImageLoaderContract {
         if (bean.useRoundCorner) {
             if (bean.centerCrop) {//如果居中裁剪则使用裁剪后的圆角转换
                 list.add(CropRoundedCornersTransformation(bean.roundCornerRadius, bean.roundedCornersMargin, bean.cornerType))
-            }else{
+            } else {
                 list.add(RoundedCornersTransformation(bean.roundCornerRadius, bean.roundedCornersMargin, bean.cornerType))
             }
         }
