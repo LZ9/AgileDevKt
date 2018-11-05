@@ -11,7 +11,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 28
         versionCode 3
-        versionName "1.0.2"// 未上传
+        versionName "1.0.2"// 成功上传
     }
 
     buildTypes {
@@ -37,7 +37,7 @@ dependencies {
     api 'jp.wasabeef:glide-transformations:3.3.0'
 }
 
-//version = "1.0.1"
+//version = "1.0.2"
 //group = "com.lodz"
 //publish {
 //    userOrg = 'lz9'
