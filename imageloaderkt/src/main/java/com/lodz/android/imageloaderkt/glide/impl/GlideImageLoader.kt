@@ -24,7 +24,8 @@ import com.bumptech.glide.signature.ObjectKey
 import com.lodz.android.imageloaderkt.ImageloaderManager
 import com.lodz.android.imageloaderkt.contract.ImageLoaderContract
 import com.lodz.android.imageloaderkt.glide.config.GlideApp
-import com.lodz.android.imageloaderkt.glide.transformations.*
+import com.lodz.android.imageloaderkt.glide.transformations.CropRoundedCornersTransformation
+import jp.wasabeef.glide.transformations.*
 import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
@@ -420,24 +421,24 @@ class GlideImageLoader private constructor() : ImageLoaderContract {
             this.diskCacheStrategy(bean.diskCacheStrategy)
         }
 
-        if (bean.widthPx > 0 && bean.heightPx > 0){
+        if (bean.widthPx > 0 && bean.heightPx > 0) {
             this.override(bean.widthPx, bean.heightPx)// 设置图片宽高
         }
-        if (bean.centerCrop){
+        if (bean.centerCrop) {
             this.centerCrop()
         }
-        if (bean.fitCenter){
+        if (bean.fitCenter) {
             this.fitCenter()
         }
-        if (bean.centerInside){
+        if (bean.centerInside) {
             this.centerInside()
         }
-        if (bean.dontAnimate){
+        if (bean.dontAnimate) {
             this.dontAnimate()
         }
 
         val list = getTransformationList(bean)
-        if (list.size > 0){
+        if (list.size > 0) {
             this.transforms(*list.toTypedArray())
         }
     }
@@ -445,25 +446,29 @@ class GlideImageLoader private constructor() : ImageLoaderContract {
     /** 获取图片变换 */
     private fun getTransformationList(bean: GlideBuilderBean): List<Transformation<Bitmap>> {
         val list = ArrayList<Transformation<Bitmap>>()
-        if (bean.useBlur){
+        if (bean.useBlur) {
             list.add(BlurTransformation(bean.blurRadius))
         }
-        if (bean.useFilterColor){
+        if (bean.useFilterColor) {
             list.add(ColorFilterTransformation(bean.filterColor))
         }
-        if (bean.useRoundCorner){
-            list.add(RoundedCornersTransformation(bean.roundCornerRadius, bean.roundedCornersMargin, bean.cornerType))
+        if (bean.useRoundCorner) {
+            if (bean.centerCrop) {//如果居中裁剪则使用裁剪后的圆角转换
+                list.add(CropRoundedCornersTransformation(bean.roundCornerRadius, bean.roundedCornersMargin, bean.cornerType))
+            }else{
+                list.add(RoundedCornersTransformation(bean.roundCornerRadius, bean.roundedCornersMargin, bean.cornerType))
+            }
         }
-        if (bean.useGrayscale){
+        if (bean.useGrayscale) {
             list.add(GrayscaleTransformation())
         }
-        if (bean.useCircle){
+        if (bean.useCircle) {
             list.add(CropCircleTransformation())
         }
-        if (bean.useCropSquare){
+        if (bean.useCropSquare) {
             list.add(CropSquareTransformation())
         }
-        if (bean.useMask){
+        if (bean.useMask) {
             list.add(MaskTransformation(bean.maskResId))
         }
         return list

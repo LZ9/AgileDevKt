@@ -8,7 +8,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.transition.ViewPropertyTransition
 import com.lodz.android.imageloaderkt.R
-import com.lodz.android.imageloaderkt.glide.transformations.RoundedCornersTransformation
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 
 /**
  * Glide构建类

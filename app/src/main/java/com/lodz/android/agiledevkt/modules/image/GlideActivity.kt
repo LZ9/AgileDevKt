@@ -36,7 +36,7 @@ import com.lodz.android.corekt.utils.FileUtils
 import com.lodz.android.corekt.utils.NotificationUtils
 import com.lodz.android.corekt.utils.toastShort
 import com.lodz.android.imageloaderkt.ImageLoader
-import com.lodz.android.imageloaderkt.glide.transformations.RoundedCornersTransformation
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 
 /**
  * Glide测试
@@ -146,7 +146,7 @@ class GlideActivity : BaseActivity() {
             ImageLoader.create(getContext())
                     .load(IMG_URL)
                     .setCenterCrop()
-                    .asBitmapInto(object :SimpleTarget<Bitmap>(){
+                    .asBitmapInto(object : SimpleTarget<Bitmap>() {
                         override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
                             val builder = NotificationCompat.Builder(getContext(), NOTIFI_CHANNEL_MAIN_ID)
                             builder.setTicker("震惊！谁是超能力霸主")// 通知栏显示的文字
@@ -190,10 +190,10 @@ class GlideActivity : BaseActivity() {
     }
 
     /** 初始化通知通道 */
-    private fun initNotificationChannel(){
+    private fun initNotificationChannel() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             val channel = getMainChannel()
-            if (channel != null){
+            if (channel != null) {
                 NotificationUtils.create(getContext()).createNotificationChannel(channel) // 设置频道
             }
         }
@@ -219,7 +219,7 @@ class GlideActivity : BaseActivity() {
     }
 
     /** BASE64图片 */
-    private fun showLocalImg(){
+    private fun showLocalImg() {
         ImageLoader.create(getContext())
                 .load(BitmapUtils.base64ToByte(PIC_BASE64))
                 .setCenterInside()
@@ -239,9 +239,9 @@ class GlideActivity : BaseActivity() {
         ImageLoader.create(getContext())
                 .load(IMG_URL)
                 .setFitCenter()
-                .setRequestListener(object :RequestListener<Drawable>{
+                .setRequestListener(object : RequestListener<Drawable> {
                     override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
-                        if (e != null){
+                        if (e != null) {
                             PrintLog.e("testtag", model?.toString() ?: "", e)
                         }
                         return false
@@ -259,7 +259,7 @@ class GlideActivity : BaseActivity() {
     private fun showAnimImg() {
         ImageLoader.create(getContext())
                 .load(IMG_URL)
-                .setAnim(object :ViewPropertyTransition.Animator{
+                .setAnim(object : ViewPropertyTransition.Animator {
                     override fun animate(view: View) {
                         view.alpha = 0.5f
                         val fadeAnim = ObjectAnimator.ofFloat(view, "alpha", 0.5f, 1f)
@@ -419,8 +419,8 @@ class GlideActivity : BaseActivity() {
         val filePath = FileManager.getDownloadFolderPath() + "20170422.mp4"
 
         val file = FileUtils.create(filePath)
-        if (file == null || !FileUtils.isFileExists(file)){
-            toastShort( R.string.glide_video_file_unexists)
+        if (file == null || !FileUtils.isFileExists(file)) {
+            toastShort(R.string.glide_video_file_unexists)
             return
         }
         ImageLoader.create(getContext())

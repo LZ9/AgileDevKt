@@ -20,30 +20,25 @@ import android.content.Context
 import android.graphics.*
 import com.bumptech.glide.load.Key
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool
+import com.bumptech.glide.load.resource.bitmap.TransformationUtils
+import jp.wasabeef.glide.transformations.BitmapTransformation
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 import java.security.MessageDigest
 
-class RoundedCornersTransformation : BitmapTransformation {
+class CropRoundedCornersTransformation : BitmapTransformation {
 
     private val VERSION = 1
-    private val ID = "jp.wasabeef.glide.transformations.RoundedCornersTransformation.$VERSION"
+    private val ID = "jp.wasabeef.glide.transformations.CropRoundedCornersTransformation.$VERSION"
     private val ID_BYTES = ID.toByteArray(Key.CHARSET)
-
-    enum class CornerType {
-        ALL,
-        TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT,
-        TOP, BOTTOM, LEFT, RIGHT,
-        OTHER_TOP_LEFT, OTHER_TOP_RIGHT, OTHER_BOTTOM_LEFT, OTHER_BOTTOM_RIGHT,
-        DIAGONAL_FROM_TOP_LEFT, DIAGONAL_FROM_TOP_RIGHT
-    }
 
     private val mRadius: Float
     private val mDiameter: Float
     private val mMargin: Float
-    private val mCornerType: CornerType
+    private val mCornerType: RoundedCornersTransformation.CornerType
 
-    constructor(radius: Int, margin: Int) : this(radius, margin, CornerType.ALL)
+    constructor(radius: Int, margin: Int) : this(radius, margin, RoundedCornersTransformation.CornerType.ALL)
 
-    constructor(radius: Int, margin: Int, cornerType: CornerType) : super() {
+    constructor(radius: Int, margin: Int, cornerType: RoundedCornersTransformation.CornerType) : super() {
         this.mRadius = radius.toFloat()
         mDiameter = mRadius * 2.0f
         this.mMargin = margin.toFloat()
@@ -51,8 +46,10 @@ class RoundedCornersTransformation : BitmapTransformation {
     }
 
     override fun transform(context: Context, pool: BitmapPool, toTransform: Bitmap, outWidth: Int, outHeight: Int): Bitmap {
-        val width = toTransform.width
-        val height = toTransform.height
+        val crop = TransformationUtils.centerCrop(pool, toTransform, outWidth, outHeight)
+
+        val width = crop.width
+        val height = crop.height
 
         val bitmap = pool.get(width, height, Bitmap.Config.ARGB_8888)
         bitmap.setHasAlpha(true)
@@ -60,7 +57,7 @@ class RoundedCornersTransformation : BitmapTransformation {
         val canvas = Canvas(bitmap)
         val paint = Paint()
         paint.isAntiAlias = true
-        paint.setShader(BitmapShader(toTransform, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP))
+        paint.setShader(BitmapShader(crop, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP))
         drawRoundRect(canvas, paint, width.toFloat(), height.toFloat())
         return bitmap
     }
@@ -70,21 +67,21 @@ class RoundedCornersTransformation : BitmapTransformation {
         val bottom = height - mMargin
 
         when (mCornerType) {
-            CornerType.ALL -> canvas.drawRoundRect(RectF(mMargin, mMargin, right, bottom), mRadius, mRadius, paint)
-            CornerType.TOP_LEFT -> drawTopLeftRoundRect(canvas, paint, right, bottom)
-            CornerType.TOP_RIGHT -> drawTopRightRoundRect(canvas, paint, right, bottom)
-            CornerType.BOTTOM_LEFT -> drawBottomLeftRoundRect(canvas, paint, right, bottom)
-            CornerType.BOTTOM_RIGHT -> drawBottomRightRoundRect(canvas, paint, right, bottom)
-            CornerType.TOP -> drawTopRoundRect(canvas, paint, right, bottom)
-            CornerType.BOTTOM -> drawBottomRoundRect(canvas, paint, right, bottom)
-            CornerType.LEFT -> drawLeftRoundRect(canvas, paint, right, bottom)
-            CornerType.RIGHT -> drawRightRoundRect(canvas, paint, right, bottom)
-            CornerType.OTHER_TOP_LEFT -> drawOtherTopLeftRoundRect(canvas, paint, right, bottom)
-            CornerType.OTHER_TOP_RIGHT -> drawOtherTopRightRoundRect(canvas, paint, right, bottom)
-            CornerType.OTHER_BOTTOM_LEFT -> drawOtherBottomLeftRoundRect(canvas, paint, right, bottom)
-            CornerType.OTHER_BOTTOM_RIGHT -> drawOtherBottomRightRoundRect(canvas, paint, right, bottom)
-            CornerType.DIAGONAL_FROM_TOP_LEFT -> drawDiagonalFromTopLeftRoundRect(canvas, paint, right, bottom)
-            CornerType.DIAGONAL_FROM_TOP_RIGHT -> drawDiagonalFromTopRightRoundRect(canvas, paint, right, bottom)
+            RoundedCornersTransformation.CornerType.ALL -> canvas.drawRoundRect(RectF(mMargin, mMargin, right, bottom), mRadius, mRadius, paint)
+            RoundedCornersTransformation.CornerType.TOP_LEFT -> drawTopLeftRoundRect(canvas, paint, right, bottom)
+            RoundedCornersTransformation.CornerType.TOP_RIGHT -> drawTopRightRoundRect(canvas, paint, right, bottom)
+            RoundedCornersTransformation.CornerType.BOTTOM_LEFT -> drawBottomLeftRoundRect(canvas, paint, right, bottom)
+            RoundedCornersTransformation.CornerType.BOTTOM_RIGHT -> drawBottomRightRoundRect(canvas, paint, right, bottom)
+            RoundedCornersTransformation.CornerType.TOP -> drawTopRoundRect(canvas, paint, right, bottom)
+            RoundedCornersTransformation.CornerType.BOTTOM -> drawBottomRoundRect(canvas, paint, right, bottom)
+            RoundedCornersTransformation.CornerType.LEFT -> drawLeftRoundRect(canvas, paint, right, bottom)
+            RoundedCornersTransformation.CornerType.RIGHT -> drawRightRoundRect(canvas, paint, right, bottom)
+            RoundedCornersTransformation.CornerType.OTHER_TOP_LEFT -> drawOtherTopLeftRoundRect(canvas, paint, right, bottom)
+            RoundedCornersTransformation.CornerType.OTHER_TOP_RIGHT -> drawOtherTopRightRoundRect(canvas, paint, right, bottom)
+            RoundedCornersTransformation.CornerType.OTHER_BOTTOM_LEFT -> drawOtherBottomLeftRoundRect(canvas, paint, right, bottom)
+            RoundedCornersTransformation.CornerType.OTHER_BOTTOM_RIGHT -> drawOtherBottomRightRoundRect(canvas, paint, right, bottom)
+            RoundedCornersTransformation.CornerType.DIAGONAL_FROM_TOP_LEFT -> drawDiagonalFromTopLeftRoundRect(canvas, paint, right, bottom)
+            RoundedCornersTransformation.CornerType.DIAGONAL_FROM_TOP_RIGHT -> drawDiagonalFromTopRightRoundRect(canvas, paint, right, bottom)
             else -> canvas.drawRoundRect(RectF(mMargin, mMargin, right, bottom), mRadius, mRadius, paint)
         }
     }
@@ -174,7 +171,7 @@ class RoundedCornersTransformation : BitmapTransformation {
 
     override fun toString() = ("RoundedTransformation(radius=$mRadius, margin=$mMargin, diameter=$mDiameter, cornerType=${mCornerType.name})")
 
-    override fun equals(other: Any?) = other is RoundedCornersTransformation
+    override fun equals(other: Any?) = other is CropRoundedCornersTransformation
 
     override fun hashCode() = ID.hashCode()
 

@@ -12,7 +12,7 @@ import com.bumptech.glide.load.resource.gif.GifDrawable
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.ViewPropertyTransition
-import com.lodz.android.imageloaderkt.glide.transformations.RoundedCornersTransformation
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 
 /**
  * 图片加载库接口
