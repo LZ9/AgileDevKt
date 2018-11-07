@@ -1,4 +1,4 @@
-package com.lodz.android.componentkt.utils
+package com.lodz.android.componentkt.utils.progress
 
 import android.annotation.SuppressLint
 import android.content.Context

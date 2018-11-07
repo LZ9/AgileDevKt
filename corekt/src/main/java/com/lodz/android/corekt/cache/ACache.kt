@@ -1,0 +1,290 @@
+package com.lodz.android.corekt.cache
+
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
+import org.json.JSONArray
+import org.json.JSONObject
+import java.io.*
+
+/**
+ * 轻量级缓存
+ * Created by Michael Yang on 2013/8/7.
+ * update by zhouL on 2018/11/7.
+ */
+class ACache {
+    companion object {
+        const val TIME_HOUR = 60 * 60
+        const val TIME_DAY = TIME_HOUR * 24
+        const val MAX_SIZE = 1000 * 1000 * 50 // 50MB
+        const val MAX_COUNT = Integer.MAX_VALUE // 不限制存放数据的数量
+
+        private var sInstance: ACache? = null
+
+        fun get(context: Context?, cacheName: String = "ACache", cacheDir: File?, maxSize: Long = MAX_SIZE.toLong(), maxCount: Int = MAX_COUNT): ACache {
+            synchronized(ACache) {
+                if (sInstance == null) {
+                    if (context != null) {
+                        sInstance = ACache(context, cacheName, maxSize, maxCount)
+                    } else if (cacheDir != null) {
+                        sInstance = ACache(cacheDir, maxSize, maxCount)
+                    } else {
+                        throw IllegalArgumentException("context and cacheDir cannot be null at the same time")
+                    }
+                }
+            }
+            return sInstance!!
+        }
+    }
+
+    private var mCache: ACacheManager
+
+    private constructor(context: Context, cacheName: String, maxSize: Long, maxCount: Int) : this(File(context.getCacheDir(), cacheName), maxSize, maxCount)
+
+    private constructor(cacheDir: File, maxSize: Long, maxCount: Int) {
+        if (!cacheDir.exists() && !cacheDir.mkdirs()) {
+            throw RuntimeException("can't make dirs in ${cacheDir.absolutePath}")
+        }
+        mCache = ACacheManager(cacheDir, maxSize, maxCount)
+    }
+
+    // =======================================
+    // ============ String数据 读写 ==============
+    // =======================================
+
+    /** 保存String数据到缓存中，[key]键，[value]值 */
+    fun put(key: String, value: String) {
+        val file = mCache.newFile(key)
+        FileWriter(file).use { fw: FileWriter ->
+            BufferedWriter(fw, 1024).use { bf: BufferedWriter ->
+                bf.write(value)
+            }
+        }
+        mCache.put(file)
+    }
+
+    /** 保存String数据到缓存中，[key]键，[value]值，[saveTime]保存的时间（单位：秒） */
+    fun put(key: String, value: String, saveTime: Int) {
+        put(key, Utils.newStringWithDateInfo(saveTime, value))
+    }
+
+    /** 读取String数据，[key]键 */
+    fun getAsString(key: String): String {
+        val file = mCache.get(key)
+        if (!file.exists()) {
+            return ""
+        }
+        FileReader(file).use { fr: FileReader ->
+            BufferedReader(fr).use { br: BufferedReader ->
+                var readString = ""
+                var currentLine: String?
+                do {
+                    currentLine = br.readLine()
+                    if (currentLine == null) {
+                        break
+                    }
+                    readString += currentLine
+                } while (true)
+
+                if (!Utils.isDue(readString)) {
+                    return Utils.clearDateInfo(readString)
+                } else {
+                    remove(key)
+                    return ""
+                }
+            }
+        }
+    }
+
+    // =======================================
+    // ============= JSONObject 数据 读写 ==============
+    // =======================================
+
+    /** 保存JSONObject数据到缓存中，[key]键，[value]值 */
+    fun put(key: String, value: JSONObject) {
+        put(key, value.toString())
+    }
+
+    /** 保存JSONObject数据到缓存中，[key]键，[value]值，[saveTime]保存的时间（单位：秒） */
+    fun put(key: String, value: JSONObject, saveTime: Int) {
+        put(key, value.toString(), saveTime)
+    }
+
+    /** 读取JSONObject数据，[key]键 */
+    fun getAsJSONObject(key: String): JSONObject? {
+        val JSONString = getAsString(key)
+        try {
+            return JSONObject(JSONString)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return null
+    }
+
+    // =======================================
+    // ============ JSONArray 数据 读写 =============
+    // =======================================
+
+    /** 保存JSONArray数据到缓存中，[key]键，[value]值 */
+    fun put(key: String, value: JSONArray) {
+        put(key, value.toString())
+    }
+
+    /** 保存JSONArray数据到缓存中，[key]键，[value]值，[saveTime]保存的时间（单位：秒） */
+    fun put(key: String, value: JSONArray, saveTime: Int) {
+        put(key, value.toString(), saveTime)
+    }
+
+    /** 读取JSONArray数据，[key]键 */
+    fun getAsJSONArray(key: String): JSONArray? {
+        val JSONString = getAsString(key)
+        try {
+            return JSONArray(JSONString)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return null
+    }
+
+    // =======================================
+    // ============== byte 数据 读写 =============
+    // =======================================
+
+    /** 保存byte数据到缓存中，[key]键，[value]值 */
+    fun put(key: String, value: ByteArray) {
+        val file = mCache.newFile(key)
+        FileOutputStream(file).use { fos: FileOutputStream ->
+            fos.write(value)
+            mCache.put(file)
+        }
+    }
+
+    /** 保存byte数据到缓存中，[key]键，[value]值，[saveTime]保存的时间（单位：秒） */
+    fun put(key: String, value: ByteArray, saveTime: Int) {
+        put(key, Utils.newByteArrayWithDateInfo(saveTime, value))
+    }
+
+    /** 读取byte数据，[key]键 */
+    fun getAsByteArray(key: String): ByteArray? {
+        val file = mCache.get(key)
+        if (!file.exists()) {
+            return null
+        }
+        RandomAccessFile(file, "r").use { raf: RandomAccessFile ->
+            val byteArray = ByteArray(raf.length().toInt())
+            raf.read(byteArray)
+            if (!Utils.isDue(byteArray)) {
+                return Utils.clearDateInfo(byteArray)
+            } else {
+                remove(key)
+                return null
+            }
+        }
+    }
+
+    // =======================================
+    // ============= 序列化 数据 读写 ===============
+    // =======================================
+
+
+    /** 保存Serializable数据到缓存中，[key]键，[value]值 */
+    fun put(key: String, value: Serializable) {
+        put(key, value, -1)
+    }
+
+    /** 保存Serializable数据到缓存中，[key]键，[value]值，[saveTime]保存的时间（单位：秒） */
+    fun put(key: String, value: Serializable, saveTime: Int) {
+        ByteArrayOutputStream().use { baos: ByteArrayOutputStream ->
+            ObjectOutputStream(baos).use { oos: ObjectOutputStream ->
+                oos.writeObject(value)
+                val data = baos.toByteArray()
+                if (saveTime != -1) {
+                    put(key, data, saveTime)
+                } else {
+                    put(key, data)
+                }
+            }
+        }
+    }
+
+    /** 读取Serializable数据，[key]键 */
+    fun getAsAny(key: String): Any? {
+        val data = getAsByteArray(key)
+        if (data == null) {
+            return null
+        }
+        ByteArrayInputStream(data).use { bais: ByteArrayInputStream ->
+            ObjectInputStream(bais).use { ois: ObjectInputStream ->
+                return ois.readObject()
+            }
+        }
+    }
+
+    // =======================================
+    // ============== bitmap 数据 读写 =============
+    // =======================================
+
+    /** 保存Bitmap数据到缓存中，[key]键，[value]值 */
+    fun put(key: String, value: Bitmap) {
+        put(key, Utils.Bitmap2Bytes(value))
+    }
+
+    /** 保存Bitmap数据到缓存中，[key]键，[value]值，[saveTime]保存的时间（单位：秒） */
+    fun put(key: String, value: Bitmap, saveTime: Int) {
+        put(key, Utils.Bitmap2Bytes(value), saveTime)
+    }
+
+    /** 读取Bitmap数据，[key]键 */
+    fun getAsBitmap(key: String): Bitmap? {
+        val array = getAsByteArray(key)
+        if (array == null) {
+            return null
+        }
+        return Utils.Bytes2Bimap(array)
+    }
+
+    // =======================================
+    // ============= drawable 数据 读写 =============
+    // =======================================
+
+    /** 保存Drawable数据到缓存中，[key]键，[value]值 */
+    fun put(key: String, value: Drawable) {
+        put(key, Utils.drawable2Bitmap(value))
+    }
+
+    /** 保存Drawable数据到缓存中，[key]键，[value]值，[saveTime]保存的时间（单位：秒） */
+    fun put(key: String, value: Drawable, saveTime: Int) {
+        put(key, Utils.drawable2Bitmap(value), saveTime)
+    }
+
+    /** 读取Drawable数据，[key]键 */
+    fun getAsDrawable(key: String): Drawable? {
+        val array = getAsByteArray(key)
+        if (array == null) {
+            return null
+        }
+        val bitmap = Utils.Bytes2Bimap(array)
+        if (bitmap == null) {
+            return null
+        }
+        return Utils.bitmap2Drawable(bitmap)
+    }
+
+    // =======================================
+    // ============= 其他 =============
+    // =======================================
+
+    /** 获取缓存文件，[key]键 */
+    fun file(key: String): File? {
+        val file = mCache.newFile(key)
+        return if (file.exists()) file else null
+    }
+
+    /** 移除某个键值[key] */
+    fun remove(key: String): Boolean = mCache.remove(key)
+
+    /** 清除所有数据 */
+    fun clear() {
+        mCache.clear()
+    }
+}

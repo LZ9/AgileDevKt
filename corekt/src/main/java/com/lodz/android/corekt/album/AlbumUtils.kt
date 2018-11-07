@@ -1,5 +1,6 @@
 package com.lodz.android.corekt.album
 
+import android.content.ContentUris
 import android.content.Context
 import android.database.Cursor
 import android.media.MediaScannerConnection
@@ -94,7 +95,6 @@ object AlbumUtils {
         return list
     }
 
-
     /** 获取总图片的文件夹信息 */
     fun getAllImageFolder(context: Context): ImageFolder {
         val list = getAllImages(context)
@@ -115,7 +115,6 @@ object AlbumUtils {
                             || name.endsWith(".gif")
                             || name.endsWith(".png")
                             || name.endsWith(".jpeg"))
-
         })
 
         if (fileList == null || fileList.size == 0) {
@@ -129,14 +128,14 @@ object AlbumUtils {
     }
 
     /** 获取指定图片目录[imageFolder]下的图片数据列表 */
-    fun getImageListOfFolder(context: Context, imageFolder: ImageFolder):List<String>{
+    fun getImageListOfFolder(context: Context, imageFolder: ImageFolder): List<String> {
         val imageList = LinkedList<String>()
 
-        if (imageFolder.isAllPicture){
+        if (imageFolder.isAllPicture) {
             return getAllImages(context)
         }
 
-        if (!imageFolder.isDirectory()){
+        if (!imageFolder.isDirectory()) {
             return imageList
         }
 
@@ -153,16 +152,35 @@ object AlbumUtils {
         }
 
         for (file in files) {
-            if (file.exists() && file.length() > 0){
+            if (file.exists() && file.length() > 0) {
                 imageList.add(file.absolutePath)
             }
         }
         return imageList
     }
 
-    /** 通知刷新相册，[imagePath]图片路径，[callback]回调默认为null */
-    fun notifyScanImage(context: Context, imagePath: String, callback: MediaScannerConnection.OnScanCompletedListener? = null) {
-        MediaScannerConnection.scanFile(context, arrayOf(imagePath), arrayOf("image/jpeg"), callback)
+    /** 通知刷新相册，[imagePath]图片路径，[mimeTypes]图片格式默认jpeg/jpg/png/gif，[callback]回调默认为null */
+    fun notifyScanImage(context: Context, imagePath: String, mimeTypes: Array<String> = arrayOf("image/jpeg", "image/jpg", "image/png", "image/gif"),
+                        callback: MediaScannerConnection.OnScanCompletedListener? = null) {
+        MediaScannerConnection.scanFile(context, arrayOf(imagePath), mimeTypes, callback)
     }
 
+    /** 删除图片，[path]图片路径 */
+    fun deleteImage(context: Context, path: String): Boolean {
+        val cursor: Cursor? = MediaStore.Images.Media.query(context.contentResolver, MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                arrayOf(MediaStore.Images.Media._ID), MediaStore.Images.Media.DATA + "=?", arrayOf(path), null)
+        var isDelete = false
+        if (cursor != null && cursor.moveToFirst()) {
+            val id = cursor.getLong(0)
+            val uri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id)
+            val count = context.contentResolver.delete(uri, null, null)
+            isDelete = count == 1
+        } else {
+            val file = File(path)
+            if (file.exists()) {
+                isDelete = file.delete()
+            }
+        }
+        return isDelete
+    }
 }
