@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+//apply plugin: "guru.stefma.bintrayrelease"
 
 android {
     compileSdkVersion 28
@@ -9,7 +10,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
-        versionName "1.0.0"// 未上传
+        versionName "1.0.0"// 成功上传
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -41,3 +42,13 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
 }
+
+//version = "1.0.0"
+//group = "com.lodz"
+//publish {
+//    userOrg = 'lz9'
+//    artifactId = 'core-kt'
+//    desc = 'Hi, this is a simple tools lib for android project, i want to upload and use it~'
+//    //描述，不重要
+//    website = 'https://github.com/LZ9/AgileDev'//网站，不重要
+//}
