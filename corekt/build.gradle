@@ -27,7 +27,7 @@ android {
 
 dependencies {
     // 支持库
-    api 'androidx.appcompat:appcompat:1.0.0'
+    api 'androidx.appcompat:appcompat:1.0.1'
     api 'com.google.android.material:material:1.0.0'
     api 'androidx.recyclerview:recyclerview:1.0.0'
     api 'androidx.cardview:cardview:1.0.0'

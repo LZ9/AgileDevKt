@@ -18,30 +18,13 @@ class ACache {
         const val TIME_DAY = TIME_HOUR * 24
         const val MAX_SIZE = 1000 * 1000 * 50 // 50MB
         const val MAX_COUNT = Integer.MAX_VALUE // 不限制存放数据的数量
-
-        private var sInstance: ACache? = null
-
-        fun get(context: Context?, cacheName: String = "ACache", cacheDir: File?, maxSize: Long = MAX_SIZE.toLong(), maxCount: Int = MAX_COUNT): ACache {
-            synchronized(ACache) {
-                if (sInstance == null) {
-                    if (context != null) {
-                        sInstance = ACache(context, cacheName, maxSize, maxCount)
-                    } else if (cacheDir != null) {
-                        sInstance = ACache(cacheDir, maxSize, maxCount)
-                    } else {
-                        throw IllegalArgumentException("context and cacheDir cannot be null at the same time")
-                    }
-                }
-            }
-            return sInstance!!
-        }
     }
 
     private var mCache: ACacheManager
 
-    private constructor(context: Context, cacheName: String, maxSize: Long, maxCount: Int) : this(File(context.getCacheDir(), cacheName), maxSize, maxCount)
+    constructor(context: Context, cacheName: String = "ACache", maxSize: Long = MAX_SIZE.toLong(), maxCount: Int = MAX_COUNT) : this(File(context.getCacheDir(), cacheName), maxSize, maxCount)
 
-    private constructor(cacheDir: File, maxSize: Long, maxCount: Int) {
+    constructor(cacheDir: File, maxSize: Long = MAX_SIZE.toLong(), maxCount: Int = MAX_COUNT) {
         if (!cacheDir.exists() && !cacheDir.mkdirs()) {
             throw RuntimeException("can't make dirs in ${cacheDir.absolutePath}")
         }

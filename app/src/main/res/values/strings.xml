@@ -349,4 +349,11 @@
     <string name="array_get_min">取最小值</string>
     <string name="array_group">数据分组</string>
 
+    <!-- ACache测试 -->
+    <string name="acache_hint">请输入缓存内容</string>
+    <string name="acache_get">获取缓存内容</string>
+    <string name="acache_forever">缓存无时间限制</string>
+    <string name="acache_second">缓存5秒</string>
+    <string name="acache_day">缓存1天</string>
+
 </resources>

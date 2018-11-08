@@ -4,10 +4,12 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationChannelGroup
 import android.app.NotificationManager
+import android.content.Context
 import android.graphics.Color
 import android.widget.LinearLayout
 import com.lodz.android.agiledevkt.config.Constant
 import com.lodz.android.componentkt.base.application.BaseApplication
+import com.lodz.android.componentkt.utils.acache.ACacheUtils
 import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.corekt.network.NetworkManager
 import com.lodz.android.corekt.threadpool.ThreadPoolManager
@@ -31,6 +33,7 @@ class App : BaseApplication() {
         NetworkManager.get().init(this)
         initNotificationChannel()// 初始化通知通道
         configBaseLayout()
+        initACache(this)
     }
 
     /** 配置基类 */
@@ -105,7 +108,7 @@ class App : BaseApplication() {
 
             val channels = ArrayList<NotificationChannel>()
             val mainChannel = getMainChannel()
-            if (mainChannel != null){
+            if (mainChannel != null) {
                 channels.add(mainChannel)
             }
             val downloadChannel = getDownloadChannel()
@@ -174,6 +177,13 @@ class App : BaseApplication() {
             return channel
         }
         return null
+    }
+
+    /** 初始化ACache缓存 */
+    private fun initACache(context: Context) {
+        ACacheUtils.get().newBuilder()
+                .setCacheDir(context.cacheDir.absolutePath)// 设置缓存路径，不设置则使用默认路径
+                .build(context)// 完成构建
     }
 
     override fun onExit() {

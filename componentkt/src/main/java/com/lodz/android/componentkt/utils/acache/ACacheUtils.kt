@@ -19,6 +19,8 @@ class ACacheUtils private constructor() {
 
     /** 构建对象 */
     private var mBuilder: Builder? = null
+    /** 缓存 */
+    private var mACache: ACache? = null
 
     /** 创建构建对象 */
     fun newBuilder(): Builder {
@@ -38,7 +40,10 @@ class ACacheUtils private constructor() {
     /** 创建ACache对象 */
     fun create(): ACache {
         val builder = getBuilder()
-        return ACache.get(null, "", builder.getCacheDir(), builder.getMaxSize(), builder.getMaxCount())
+        if (mACache == null) {
+            mACache = ACache(builder.getCacheDir(), builder.getMaxSize(), builder.getMaxCount())
+        }
+        return mACache!!
     }
 
     inner class Builder {
