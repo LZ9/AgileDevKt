@@ -18,6 +18,6 @@
 ## 扩展
 - [回到顶部](https://github.com/LZ9/AgileDevKt/blob/master/imageloaderkt/readme_imageloader_update.md#imageloader库更新记录)
 - [AgileDevKt 主页](https://github.com/LZ9/AgileDevKt)
-- [了解 corekt]()
-- [了解 componentkt]()
-- [了解 imageloaderkt](https://github.com/LZ9/AgileDevKt/blob/master/imageloaderkt/readme_imageloader.md)
+- [了解 core-kt](https://github.com/LZ9/AgileDevKt/blob/master/corekt/readme_core.md)
+- [了解 component-kt]()
+- [了解 imageloader-kt](https://github.com/LZ9/AgileDevKt/blob/master/imageloaderkt/readme_imageloader.md)
