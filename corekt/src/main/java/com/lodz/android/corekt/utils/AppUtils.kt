@@ -1,11 +1,14 @@
 package com.lodz.android.corekt.utils
 
+import android.Manifest
 import android.app.ActivityManager
 import android.content.Context
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
+import android.net.wifi.WifiManager
 import android.os.Looper
 import android.provider.Settings
+import androidx.annotation.RequiresPermission
 import androidx.core.app.ActivityCompat
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -143,6 +146,18 @@ fun Context.getMetaData(key: String): Any? {
 fun Context.isGpsOpen(): Boolean {
     val state = Settings.Secure.getInt(contentResolver, Settings.Secure.LOCATION_MODE, Settings.Secure.LOCATION_MODE_OFF)
     return state != Settings.Secure.LOCATION_MODE_OFF
+}
+
+/** wifi是否可用 */
+fun Context.isWifiEnabled(): Boolean = (applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager).isWifiEnabled
+
+/** 设置wifi是否可用[enabled] */
+@RequiresPermission(Manifest.permission.CHANGE_WIFI_STATE)
+fun Context.setWifiEnabled(enabled: Boolean) {
+    val manager = applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
+    if (manager.isWifiEnabled) {
+        manager.isWifiEnabled = enabled
+    }
 }
 
 /** 获取Assets下的文件内容 */
