@@ -59,7 +59,7 @@ class ErrorLayout : LinearLayout {
         if (BaseApplication.get() != null) {
             mConfig = BaseApplication.get()!!.getBaseLayoutConfig().getErrorLayoutConfig()
         }
-        LayoutInflater.from(context).inflate(R.layout.componentkt_view_error_layout, this)
+        LayoutInflater.from(context).inflate(R.layout.componentkt_view_error, this)
         configLayout(attrs)
     }
 

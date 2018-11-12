@@ -74,7 +74,7 @@ abstract class ProgressObserver<T> : RxObserver<T>() {
     /** 获取一个加载框 */
     @SuppressLint("InflateParams")
     private fun getProgressDialog(context: Context, msg: String, cancelable: Boolean): AlertDialog {
-        val view = LayoutInflater.from(context).inflate(R.layout.componentkt_view_progress_layout, null)
+        val view = LayoutInflater.from(context).inflate(R.layout.componentkt_view_progress, null)
         val progressDialog = AlertDialog.Builder(context, R.style.ProgressStyle)
                 .setView(view)
                 .create()

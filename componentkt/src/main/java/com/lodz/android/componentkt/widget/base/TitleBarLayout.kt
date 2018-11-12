@@ -59,7 +59,7 @@ open class TitleBarLayout : LinearLayout {
         if (BaseApplication.get() != null) {
             mConfig = BaseApplication.get()!!.getBaseLayoutConfig().getTitleBarLayoutConfig()
         }
-        LayoutInflater.from(context).inflate(R.layout.componentkt_view_title_layout, this)
+        LayoutInflater.from(context).inflate(R.layout.componentkt_view_title, this)
         configLayout(attrs)
     }
 

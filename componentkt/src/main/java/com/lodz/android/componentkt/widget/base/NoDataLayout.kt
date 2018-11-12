@@ -58,7 +58,7 @@ class NoDataLayout : LinearLayout {
         if (BaseApplication.get() != null) {
             mConfig = BaseApplication.get()!!.getBaseLayoutConfig().getNoDataLayoutConfig()
         }
-        LayoutInflater.from(context).inflate(R.layout.componentkt_view_no_data_layout, this)
+        LayoutInflater.from(context).inflate(R.layout.componentkt_view_no_data, this)
         configLayout(attrs)
     }
 

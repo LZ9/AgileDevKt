@@ -67,7 +67,7 @@ class LoadingLayout : LinearLayout {
     }
 
     private fun findViews() {
-        LayoutInflater.from(context).inflate(R.layout.componentkt_view_loading_layout, this)
+        LayoutInflater.from(context).inflate(R.layout.componentkt_view_loading, this)
         mLoadingProgressBar = findViewById(R.id.loading_progressbar)
     }
 

@@ -28,7 +28,7 @@ object ProgressDialogHelper {
     /** 获取一个加载框，配置提示文字[msg]、返回取消[cancelable]、点击空白处取消[canceledOnTouchOutside]、取消监听器[listener] */
     @SuppressLint("InflateParams")
     fun getProgressDialog(context: Context, msg: String, cancelable: Boolean, canceledOnTouchOutside: Boolean, listener: DialogInterface.OnCancelListener?): AlertDialog {
-        val view = LayoutInflater.from(context).inflate(R.layout.componentkt_view_progress_layout, null)
+        val view = LayoutInflater.from(context).inflate(R.layout.componentkt_view_progress, null)
         val progressDialog = AlertDialog.Builder(context, R.style.ProgressStyle)
                 .setView(view)
                 .create()

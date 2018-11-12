@@ -10,7 +10,7 @@
         android:id="@+id/view_stub_title_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout="@layout/componentkt_viewstub_title_layout" />
+        android:layout="@layout/componentkt_viewstub_title" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -29,19 +29,19 @@
             android:id="@+id/view_stub_loading_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout="@layout/componentkt_viewstub_loading_layout" />
+            android:layout="@layout/componentkt_viewstub_loading" />
 
         <ViewStub
             android:id="@+id/view_stub_no_data_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout="@layout/componentkt_viewstub_no_data_layout" />
+            android:layout="@layout/componentkt_viewstub_no_data" />
 
         <ViewStub
             android:id="@+id/view_stub_error_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout="@layout/componentkt_viewstub_error_layout" />
+            android:layout="@layout/componentkt_viewstub_error" />
     </FrameLayout>
 
 </LinearLayout>
