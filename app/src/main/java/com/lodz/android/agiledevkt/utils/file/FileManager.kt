@@ -1,5 +1,6 @@
 package com.lodz.android.agiledevkt.utils.file
 
+import android.text.TextUtils
 import com.lodz.android.agiledevkt.App
 import com.lodz.android.corekt.anko.getStoragePath
 import com.lodz.android.corekt.utils.FileUtils
@@ -25,21 +26,10 @@ object FileManager {
     private var mCrashFolderPath = ""
 
     fun init() {
-        clean()
         initPath()
         if (isStorageCanUse) {
             initFolder()
         }
-    }
-
-    /** 清空变量 */
-    private fun clean() {
-        isStorageCanUse = false
-        mAppFolderPath = ""
-        mCacheFolderPath = ""
-        mDownloadFolderPath = ""
-        mContentFolderPath = ""
-        mCrashFolderPath = ""
     }
 
     /** 初始化路径 */
@@ -55,7 +45,7 @@ object FileManager {
         }
         // 成功获取到存储路径
         isStorageCanUse = true
-        if (!rootPath!!.endsWith(File.separator)) {
+        if (!rootPath.endsWith(File.separator)) {
             rootPath += File.separator
         }
         mAppFolderPath = rootPath + "AgileDevKt" + File.separator// 主文件夹路径
@@ -78,21 +68,34 @@ object FileManager {
         }
     }
 
-    /** 存储是否可用  */
-    fun isStorageCanUse() = isStorageCanUse
+    /** 存储是否可用 */
+    fun isStorageCanUse(): Boolean = isStorageCanUse
 
-    /** 获取app主文件夹路径  */
-    fun getAppFolderPath() = mAppFolderPath
+    /** 获取app主文件夹路径 */
+    fun getAppFolderPath(): String = fixPath(mAppFolderPath)
 
-    /** 获取缓存路径  */
-    fun getCacheFolderPath() = mCacheFolderPath
+    /** 获取缓存路径 */
+    fun getCacheFolderPath(): String = fixPath(mCacheFolderPath)
 
-    /** 获取下载路径  */
-    fun getDownloadFolderPath() = mDownloadFolderPath
+    /** 获取下载路径 */
+    fun getDownloadFolderPath(): String = fixPath(mDownloadFolderPath)
 
-    /** 获取内容路径  */
-    fun getContentFolderPath() = mContentFolderPath
+    /** 获取内容路径 */
+    fun getContentFolderPath(): String = fixPath(mContentFolderPath)
 
-    /** 获取崩溃日志路径  */
-    fun getCrashFolderPath() = mCrashFolderPath
+    /** 获取崩溃日志路径 */
+    fun getCrashFolderPath(): String = fixPath(mCrashFolderPath)
+
+    /** 修复文件夹路径[path] */
+    private fun fixPath(path: String): String {
+        if (TextUtils.isEmpty(path)) {
+            // 路径为空说明未初始化
+            init()
+        }
+        if (isStorageCanUse && !FileUtils.isFileExists(path)) {
+            //存储可用 && 路径下的文件夹不存在 说明文件夹被删除
+            initFolder()
+        }
+        return path
+    }
 }

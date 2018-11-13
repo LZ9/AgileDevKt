@@ -7,14 +7,12 @@ import android.os.Bundle
 import com.lodz.android.agiledevkt.App
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
-import com.lodz.android.agiledevkt.utils.file.FileManager
 import com.lodz.android.componentkt.base.activity.AbsActivity
 import com.lodz.android.corekt.anko.goAppDetailSetting
 import com.lodz.android.corekt.utils.StatusBarUtil
 import com.lodz.android.corekt.utils.UiHandler
 import com.lodz.android.corekt.utils.isPermissionGranted
 import com.lodz.android.corekt.utils.toastShort
-import com.lodz.android.imageloaderkt.ImageloaderManager
 import permissions.dispatcher.*
 
 /**
@@ -119,20 +117,7 @@ class SplashActivity : AbsActivity() {
 
     /** 初始化 */
     fun init() {
-        // todo 各种初始化
-        FileManager.init()
-        initImageLoader()
         goMianActivity()
-    }
-
-    /** 初始化图片加载库 */
-    private fun initImageLoader() {
-        ImageloaderManager.get().newBuilder()
-                .setPlaceholderResId(R.drawable.ic_launcher)//设置默认占位符
-                .setErrorResId(R.drawable.ic_launcher)// 设置加载失败图
-                .setDirectoryFile(applicationContext.cacheDir)// 设置缓存路径
-                .setDirectoryName("image_cache")// 缓存文件夹名称
-                .build()
     }
 
     private fun goMianActivity() {

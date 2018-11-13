@@ -8,6 +8,7 @@ import android.content.Context
 import android.graphics.Color
 import android.widget.LinearLayout
 import com.lodz.android.agiledevkt.config.Constant
+import com.lodz.android.agiledevkt.utils.file.FileManager
 import com.lodz.android.componentkt.base.application.BaseApplication
 import com.lodz.android.componentkt.utils.acache.ACacheUtils
 import com.lodz.android.corekt.log.PrintLog
@@ -15,6 +16,7 @@ import com.lodz.android.corekt.network.NetworkManager
 import com.lodz.android.corekt.threadpool.ThreadPoolManager
 import com.lodz.android.corekt.utils.NotificationUtils
 import com.lodz.android.corekt.utils.UiHandler
+import com.lodz.android.imageloaderkt.ImageloaderManager
 import java.util.*
 
 /**
@@ -28,12 +30,13 @@ class App : BaseApplication() {
     }
 
     override fun onStartCreate() {
-        // todo 待完善
+        FileManager.init()
         PrintLog.setPrint(BuildConfig.LOG_DEBUG)// 配置日志开关
         NetworkManager.get().init(this)
         initNotificationChannel()// 初始化通知通道
         configBaseLayout()
         initACache(this)
+        initImageLoader()
     }
 
     /** 配置基类 */
@@ -184,6 +187,16 @@ class App : BaseApplication() {
         ACacheUtils.get().newBuilder()
                 .setCacheDir(context.cacheDir.absolutePath)// 设置缓存路径，不设置则使用默认路径
                 .build(context)// 完成构建
+    }
+
+    /** 初始化图片加载库 */
+    private fun initImageLoader() {
+        ImageloaderManager.get().newBuilder()
+                .setPlaceholderResId(R.drawable.ic_launcher)//设置默认占位符
+                .setErrorResId(R.drawable.ic_launcher)// 设置加载失败图
+                .setDirectoryFile(applicationContext.cacheDir)// 设置缓存路径
+                .setDirectoryName("image_cache")// 缓存文件夹名称
+                .build()
     }
 
     override fun onExit() {
