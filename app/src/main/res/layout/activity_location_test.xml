@@ -128,15 +128,37 @@
                 android:textColor="@color/color_8b4513" />
         </LinearLayout>
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:background="@color/color_00a0e9"
-            android:padding="5dp"
-            android:text="@string/location_log_info"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/location_log_info"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/clean_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingStart="5dp"
+                android:paddingTop="2dp"
+                android:paddingEnd="5dp"
+                android:paddingBottom="2dp"
+                android:text="@string/location_clean_log"
+                android:textColor="@color/color_00a0e9"
+                android:textSize="13sp" />
+
+        </LinearLayout>
 
         <ScrollView
             android:id="@+id/scroll_view"

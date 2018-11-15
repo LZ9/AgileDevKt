@@ -72,6 +72,8 @@ class LocationTestActivity : BaseActivity() {
     private val mScrollView by bindView<ScrollView>(R.id.scroll_view)
     /** 日志信息 */
     private val mLogTv by bindView<TextView>(R.id.log_tv)
+    /** 清空日志 */
+    private val mCleanBtn by bindView<TextView>(R.id.clean_btn)
 
     /** 定位方式 */
     private val mRadioGroup by bindView<RadioGroup>(R.id.radio_group)
@@ -83,6 +85,8 @@ class LocationTestActivity : BaseActivity() {
 
     /** 定位方式 */
     private var mLocationType = LOCATION_GPS
+    /** 是否绑定 */
+    private var isBind = false
 
     override fun getLayoutId(): Int = R.layout.activity_location_test
 
@@ -191,7 +195,7 @@ class LocationTestActivity : BaseActivity() {
         }
 
         mBindServiceBtn.setOnClickListener {
-            if (!isGpsOpen()) {
+            if (mLocationType != LOCATION_TENCENT && !isGpsOpen()) {
                 toastShort(R.string.location_open_gps)
                 goLocationSetting()
                 return@setOnClickListener
@@ -201,6 +205,10 @@ class LocationTestActivity : BaseActivity() {
 
         mUnbindServiceBtn.setOnClickListener {
             unbind()
+        }
+
+        mCleanBtn.setOnClickListener {
+            mLogTv.text = ""
         }
     }
 
@@ -214,7 +222,15 @@ class LocationTestActivity : BaseActivity() {
         mMncTv.text = getString(R.string.location_mnc, "无")
         mLacTv.text = getString(R.string.location_lac, "无")
         mCidTv.text = getString(R.string.location_cid, "无")
+
+        updateBindBtn()
         showStatusCompleted()
+    }
+
+    /** 更新按钮状态 */
+    private fun updateBindBtn() {
+        mBindServiceBtn.isEnabled = !isBind
+        mUnbindServiceBtn.isEnabled = isBind
     }
 
     /** 打印信息[result] */
@@ -252,11 +268,14 @@ class LocationTestActivity : BaseActivity() {
             } else {
                 startService(intent)
             }
+            isBind = true
             printResult("已绑定，当前定位方式${getTypeName(type)}，请到室外无遮蔽处进行测试")
         } catch (e: Exception) {
             e.printStackTrace()
+            isBind = false
             printResult("绑定服务失败，${e.cause}")
         }
+        updateBindBtn()
     }
 
     /** 解绑服务 */
@@ -264,10 +283,12 @@ class LocationTestActivity : BaseActivity() {
         try {
             stopService(Intent(getContext(), BusService::class.java))
             printResult("已解绑")
+            isBind = false
         } catch (e: Exception) {
             e.printStackTrace()
             printResult("解绑服务失败，${e.cause}")
         }
+        updateBindBtn()
     }
 
     /** 根据定位类型[type]获取名称 */
@@ -279,7 +300,9 @@ class LocationTestActivity : BaseActivity() {
     }
 
     override fun finish() {
-        unbind()
+        if (isBind){
+            unbind()
+        }
         super.finish()
     }
 }

@@ -69,7 +69,7 @@ class TencentLocationServiceImpl : ServiceContract {
             }
 
             override fun onStatusUpdate(name: String?, status: Int, desc: String?) {
-                val log = "定位状态变化，名称：$name，状态：$status，原因$desc"
+                val log = "定位状态变化，名称：$name，状态：$status，原因：$desc"
                 EventBus.getDefault().post(LocationUpdateEvent(false, "", "", "", "", "", "", log))
             }
         }
