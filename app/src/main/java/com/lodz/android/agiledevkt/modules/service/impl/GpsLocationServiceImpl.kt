@@ -60,6 +60,7 @@ class GpsLocationServiceImpl : ServiceContract {
     private val mLocationListener = object : LocationListener {
         override fun onLocationChanged(location: Location?) {
             if (location == null) {
+                EventBus.getDefault().post(LocationUpdateEvent(false, "", "", "", "", "", "", "定位失败，定位结果为null"))
                 return
             }
 

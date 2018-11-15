@@ -12,6 +12,7 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
+        multiDexEnabled = true// 启用dex分包
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 //        ndk {
 //            abiFilters "armeabi"
@@ -77,6 +78,8 @@ dependencies {
 
     // 腾讯定位SDK
     implementation files('libs/TencentLocationSdk_v7.1.4.3_r4aa8ac63_20180911_165428.jar')
+    // 高德定位SDK
+    implementation 'com.amap.api:location:4.3.0'
 
     // 单元测试
     testImplementation 'junit:junit:4.12'

@@ -129,7 +129,10 @@ public static java.lang.String TABLENAME;
 -keep class c.t.**{*;}
 -keep class com.tencent.map.geolocation.**{*;}
 -keep class com.tencent.tencentmap.lbssdk.service.**{*;}
-
-
 -dontwarn  org.eclipse.jdt.annotation.**
 -dontwarn  c.t.**
+
+#高德定位
+-keep class com.amap.api.location.**{*;}
+-keep class com.amap.api.fence.**{*;}
+-keep class com.autonavi.aps.amapapi.model.**{*;}

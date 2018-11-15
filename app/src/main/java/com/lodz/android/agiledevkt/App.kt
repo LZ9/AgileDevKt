@@ -7,6 +7,7 @@ import android.app.NotificationManager
 import android.content.Context
 import android.graphics.Color
 import android.widget.LinearLayout
+import androidx.multidex.MultiDex
 import com.lodz.android.agiledevkt.config.Constant
 import com.lodz.android.agiledevkt.utils.file.FileManager
 import com.lodz.android.componentkt.base.application.BaseApplication
@@ -27,6 +28,11 @@ class App : BaseApplication() {
 
     companion object {
         fun get(): App = BaseApplication.get() as App
+    }
+
+    override fun attachBaseContext(base: Context?) {
+        super.attachBaseContext(base)
+        MultiDex.install(this)
     }
 
     override fun onStartCreate() {
