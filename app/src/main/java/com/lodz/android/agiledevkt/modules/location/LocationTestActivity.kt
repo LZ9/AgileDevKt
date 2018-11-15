@@ -6,11 +6,13 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.widget.RadioGroup
 import android.widget.ScrollView
 import android.widget.TextView
 import com.google.android.material.button.MaterialButton
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
+import com.lodz.android.agiledevkt.modules.service.BusService
 import com.lodz.android.agiledevkt.modules.splash.CheckDialog
 import com.lodz.android.componentkt.base.activity.BaseActivity
 import com.lodz.android.corekt.anko.bindView
@@ -29,6 +31,20 @@ import permissions.dispatcher.*
 class LocationTestActivity : BaseActivity() {
 
     companion object {
+
+        /** 间隔时间  */
+        const val LOCATION_INTERVAL_TIME = 2 * 1000L
+
+        /** 原生GPS */
+        const val LOCATION_GPS = 1
+        /** 腾讯定位 */
+        const val LOCATION_TENCENT = 2
+        /** 高德定位 */
+        const val LOCATION_AMAP = 3
+
+        /** 定位方式 */
+        const val EXTRA_TYPE = "extra_type"
+
         fun start(context: Context) {
             val intent = Intent(context, LocationTestActivity::class.java)
             context.startActivity(intent)
@@ -57,12 +73,18 @@ class LocationTestActivity : BaseActivity() {
     /** 日志信息 */
     private val mLogTv by bindView<TextView>(R.id.log_tv)
 
+    /** 定位方式 */
+    private val mRadioGroup by bindView<RadioGroup>(R.id.radio_group)
+
     /** 绑定定位服务 */
     private val mBindServiceBtn by bindView<MaterialButton>(R.id.bind_service_btn)
     /** 解绑定位服务 */
     private val mUnbindServiceBtn by bindView<MaterialButton>(R.id.unbind_service_btn)
 
-    override fun getLayoutId() = R.layout.activity_location_test
+    /** 定位方式 */
+    private var mLocationType = LOCATION_GPS
+
+    override fun getLayoutId(): Int = R.layout.activity_location_test
 
     override fun findViews(savedInstanceState: Bundle?) {
         getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME))
@@ -158,13 +180,23 @@ class LocationTestActivity : BaseActivity() {
 
     override fun setListeners() {
         super.setListeners()
+
+        mRadioGroup.setOnCheckedChangeListener { group, checkedId ->
+            mLocationType = when (checkedId) {
+                R.id.gps_rb -> LOCATION_GPS
+                R.id.tencent_rb -> LOCATION_TENCENT
+                R.id.amap_rb -> LOCATION_AMAP
+                else -> LOCATION_GPS
+            }
+        }
+
         mBindServiceBtn.setOnClickListener {
-            if (!isGpsOpen()){
+            if (!isGpsOpen()) {
                 toastShort(R.string.location_open_gps)
                 goLocationSetting()
                 return@setOnClickListener
             }
-            bind()
+            bind(mLocationType)
         }
 
         mUnbindServiceBtn.setOnClickListener {
@@ -174,7 +206,7 @@ class LocationTestActivity : BaseActivity() {
 
     /** 初始化 */
     fun initLogic() {
-        mIntervalTv.text = getString(R.string.location_interval, (LocationService.INTERVAL_TIME / 1000).toString())
+        mIntervalTv.text = getString(R.string.location_interval, (LOCATION_INTERVAL_TIME / 1000).toString())
         mUpdateTimeTv.text = getString(R.string.location_update_time, "无")
         mLongitudeTv.text = getString(R.string.location_longitude, "无")
         mLatitudeTv.text = getString(R.string.location_latitude, "无")
@@ -195,7 +227,7 @@ class LocationTestActivity : BaseActivity() {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onLocationUpdateEvent(event: LocationUpdateEvent) {
-        if (event.isLocationData){
+        if (event.isLocationData) {
             val time = DateUtils.getCurrentFormatString(DateUtils.TYPE_2)
             mUpdateTimeTv.text = getString(R.string.location_update_time, time)
             mLongitudeTv.text = getString(R.string.location_longitude, event.longitude)
@@ -205,34 +237,45 @@ class LocationTestActivity : BaseActivity() {
             mLacTv.text = getString(R.string.location_lac, event.lac)
             mCidTv.text = getString(R.string.location_cid, event.cid)
             printResult(event.log + "    " + time)
-        }else{
+        } else {
             printResult(event.log)
         }
     }
 
-    private fun bind(){
+    /** 绑定服务 */
+    private fun bind(type: Int) {
         try {
-            val intent = Intent(getContext(), LocationService::class.java)
+            val intent = Intent(getContext(), BusService::class.java)
+            intent.putExtra(EXTRA_TYPE, type)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 startForegroundService(intent)
-            }else{
+            } else {
                 startService(intent)
             }
-            printResult("已绑定，请到室外无遮蔽处进行测试")
+            printResult("已绑定，当前定位方式${getTypeName(type)}，请到室外无遮蔽处进行测试")
         } catch (e: Exception) {
             e.printStackTrace()
             printResult("绑定服务失败，${e.cause}")
         }
     }
 
-    private fun unbind(){
+    /** 解绑服务 */
+    private fun unbind() {
         try {
-            stopService(Intent(getContext(), LocationService::class.java))
+            stopService(Intent(getContext(), BusService::class.java))
             printResult("已解绑")
         } catch (e: Exception) {
             e.printStackTrace()
             printResult("解绑服务失败，${e.cause}")
         }
+    }
+
+    /** 根据定位类型[type]获取名称 */
+    private fun getTypeName(type: Int): String = when (type) {
+        LOCATION_GPS -> "原生GPS"
+        LOCATION_TENCENT -> "腾讯定位"
+        LOCATION_AMAP -> "高德定位"
+        else -> "无定位方式"
     }
 
     override fun finish() {

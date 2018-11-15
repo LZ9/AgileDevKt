@@ -66,10 +66,8 @@ android {
 
 dependencies {
     implementation project(':componentkt')
-
     implementation project(':imageloaderkt')
-//    implementation 'com.lodz:imageloader-kt:1.0.4'
-
+    //    implementation 'com.lodz:imageloader-kt:1.0.4'
     // 权限申请
     implementation 'com.github.hotchemi:permissionsdispatcher:4.0.0'
     kapt 'com.github.hotchemi:permissionsdispatcher-processor:4.0.0'
@@ -77,9 +75,14 @@ dependencies {
     implementation 'org.jetbrains.anko:anko-sdk25:0.10.7'
     implementation 'org.jetbrains.anko:anko-appcompat-v7:0.10.7'
 
+    // 腾讯定位SDK
+    implementation files('libs/TencentLocationSdk_v7.1.4.3_r4aa8ac63_20180911_165428.jar')
+
     // 单元测试
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation ('androidx.test:runner:1.1.0')
-    androidTestImplementation ('androidx.test:rules:1.1.0')
+    androidTestImplementation 'androidx.test:runner:1.1.0'
+    androidTestImplementation 'androidx.test:rules:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
+
+
 }

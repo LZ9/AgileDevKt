@@ -311,6 +311,9 @@
     <string name="location_foreground_service_title">AgileDevKt定位</string>
     <string name="location_foreground_service_tips">后台定位正在为您服务</string>
     <string name="location_open_gps">请打开GPS</string>
+    <string name="location_gps">原生GPS定位</string>
+    <string name="location_tencent">腾讯定位</string>
+    <string name="location_amap">高德定位</string>
 
     <!-- 弹框测试 -->
     <string name="dialog_normal">普通弹框</string>
