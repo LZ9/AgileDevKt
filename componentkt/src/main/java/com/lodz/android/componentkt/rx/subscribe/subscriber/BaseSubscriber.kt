@@ -84,4 +84,16 @@ abstract class BaseSubscriber<T> : Subscriber<T> {
 
     /** 是否自动订阅，默认是，否的时候需要自己调用request()方法订阅 */
     open fun isAutoSubscribe() = true
+
+    companion object {
+        /** 创建空调用 */
+        fun <T> empty(): Subscriber<T> {
+            return object : Subscriber<T> {
+                override fun onComplete() {}
+                override fun onSubscribe(s: Subscription?) {}
+                override fun onNext(t: T) {}
+                override fun onError(t: Throwable?) {}
+            }
+        }
+    }
 }

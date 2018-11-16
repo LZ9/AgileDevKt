@@ -10,6 +10,7 @@ import android.widget.TextView
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.componentkt.base.activity.BaseActivity
+import com.lodz.android.componentkt.rx.subscribe.observer.BaseObserver
 import com.lodz.android.componentkt.rx.utils.RxUtils
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.utils.ToastUtils
@@ -101,7 +102,7 @@ class ToastTestActivity :BaseActivity(){
                         str
                     }
                     .compose(RxUtils.ioToMainObservable())
-                    .subscribe()
+                    .subscribe(BaseObserver.empty())
         }
     }
 

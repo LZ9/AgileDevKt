@@ -73,4 +73,16 @@ abstract class BaseObserver<T> : Observer<T> {
     open fun onBaseComplete() {}
     /** 取消订阅时回调 */
     open fun onDispose() {}
+
+    companion object {
+        /** 创建空调用 */
+        fun <T> empty(): Observer<T> {
+            return object : Observer<T> {
+                override fun onComplete() {}
+                override fun onSubscribe(d: Disposable) {}
+                override fun onNext(t: T) {}
+                override fun onError(e: Throwable) {}
+            }
+        }
+    }
 }
