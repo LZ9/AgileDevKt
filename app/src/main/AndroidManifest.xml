@@ -353,6 +353,42 @@
 
         </activity>
 
+        <activity
+            android:name=".modules.mvc.MvcDemoActivity"
+            android:label="MVC模式测试类"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity
+            android:name=".modules.mvc.abs.MvcTestAbsActivity"
+            android:label="MVC基础Activity"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity
+            android:name=".modules.mvc.base.MvcTestBaseActivity"
+            android:label="MVC带基础状态控件Activity"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity
+            android:name=".modules.mvc.refresh.MvcTestRefreshActivity"
+            android:label="带基础状态控件和下来刷新控件Activity"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity
+            android:name=".modules.mvc.sandwich.MvcTestSandwichActivity"
+            android:label="MVC带基础状态控件、中部刷新控件和顶部/底部扩展Activity"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+
     </application>
 
 </manifest>

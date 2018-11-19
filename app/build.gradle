@@ -73,8 +73,8 @@ dependencies {
     implementation 'com.github.hotchemi:permissionsdispatcher:4.0.0'
     kapt 'com.github.hotchemi:permissionsdispatcher-processor:4.0.0'
     // anko layout
-    implementation 'org.jetbrains.anko:anko-sdk25:0.10.7'
-    implementation 'org.jetbrains.anko:anko-appcompat-v7:0.10.7'
+    implementation 'org.jetbrains.anko:anko-sdk25:0.10.8'
+    implementation 'org.jetbrains.anko:anko-appcompat-v7:0.10.8'
 
     // 腾讯定位SDK
     implementation files('libs/TencentLocationSdk_v7.1.4.3_r4aa8ac63_20180911_165428.jar')

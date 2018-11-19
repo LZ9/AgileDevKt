@@ -360,4 +360,33 @@
     <string name="acache_second">缓存5秒</string>
     <string name="acache_day">缓存1天</string>
 
+    <!-- MVC模式 -->
+    <string name="mvc_demo_abs">基础Activity</string>
+    <string name="mvc_demo_base">带基础状态控件Activity</string>
+    <string name="mvc_demo_refresh">带基础状态控件和下拉刷新控件Activity</string>
+    <string name="mvc_demo_sandwich">带基础状态控件、中部刷新控件和顶部/底部扩展Activity</string>
+    <string name="mvc_demo_fragment">Fragment用例</string>
+    <string name="mvc_demo_request_success_data">获取成功数据</string>
+    <string name="mvc_demo_request_fail_data">获取失败数据</string>
+    <string name="mvc_demo_base_title">带基础状态控件</string>
+    <string name="mvc_demo_refresh_title">带下拉刷新控件</string>
+    <string name="mvc_demo_sandwich_title">带扩展和下拉刷新控件</string>
+    <string name="mvc_demo_sandwich_top_tips">顶部提示语</string>
+    <string name="mvc_demo_sandwich_bottom_tips">底部提示语</string>
+    <string name="mvc_demo_fragment_title">MVP模式Fragment测试</string>
+    <string name="mvc_demo_loading">加载中…</string>
+    <string name="mvc_demo_refresh_data_fail">刷新数据失败</string>
+
+
+    <!-- MVP模式 -->
+    <string name="mvp_demo_abs">基础Activity</string>
+    <string name="mvp_demo_base">带基础状态控件Activity</string>
+    <string name="mvp_demo_refresh">带基础状态控件和下拉刷新控件Activity</string>
+    <string name="mvp_demo_fragment">Fragment用例</string>
+    <string name="mvp_demo_request_success_data">获取成功数据</string>
+    <string name="mvp_demo_request_fail_data">获取失败数据</string>
+    <string name="mvp_demo_base_title">带基础状态控件</string>
+    <string name="mvp_demo_refresh_title">带下拉刷新控件</string>
+    <string name="mvp_demo_fragment_title">MVP模式Fragment测试</string>
+    <string name="mvp_demo_sandwich_title">带扩展和下拉刷新控件</string>
 </resources>
