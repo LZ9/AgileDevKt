@@ -45,10 +45,11 @@ abstract class BaseActivity : AbsActivity() {
 
     final override fun afterSetContentView() {
         super.afterSetContentView()
-        if (!isUseAnkoLayout()) {
-            showStatusLoading()
-            setContainerView()
+        if (isUseAnkoLayout()) {
+            throw RuntimeException("you already use anko layout , please extends AbsActivity and use @UseAnkoLayout annotation")
         }
+        showStatusLoading()
+        setContainerView()
     }
 
     /** 把内容布局设置进来 */
@@ -67,10 +68,8 @@ abstract class BaseActivity : AbsActivity() {
 
     override fun setListeners() {
         super.setListeners()
-        if (!isUseAnkoLayout()) {
-            getTitleBarLayout().setOnBackBtnClickListener { view ->
-                onClickBackBtn()
-            }
+        getTitleBarLayout().setOnBackBtnClickListener { view ->
+            onClickBackBtn()
         }
     }
 
@@ -82,9 +81,6 @@ abstract class BaseActivity : AbsActivity() {
 
     /** 显示无数据页面 */
     protected open fun showStatusNoData() {
-        if (isUseAnkoLayout()) {
-            throw RuntimeException("you already use anko layout do not use base widget")
-        }
         mContentLayout.visibility = View.GONE
         if (mLoadingLayout != null) {
             mLoadingLayout!!.visibility = View.GONE
@@ -97,9 +93,6 @@ abstract class BaseActivity : AbsActivity() {
 
     /** 显示错误页面 */
     protected open fun showStatusError() {
-        if (isUseAnkoLayout()) {
-            throw RuntimeException("you already use anko layout do not use base widget")
-        }
         mContentLayout.visibility = View.GONE
         if (mLoadingLayout != null) {
             mLoadingLayout!!.visibility = View.GONE
@@ -112,9 +105,6 @@ abstract class BaseActivity : AbsActivity() {
 
     /** 显示加载页面 */
     protected open fun showStatusLoading() {
-        if (isUseAnkoLayout()) {
-            throw RuntimeException("you already use anko layout do not use base widget")
-        }
         mContentLayout.visibility = View.GONE
         getLoadingLayout().visibility = View.VISIBLE
         if (mErrorLayout != null) {
@@ -127,9 +117,6 @@ abstract class BaseActivity : AbsActivity() {
 
     /** 显示内容页面 */
     protected open fun showStatusCompleted() {
-        if (isUseAnkoLayout()) {
-            throw RuntimeException("you already use anko layout do not use base widget")
-        }
         mContentLayout.visibility = View.VISIBLE
         if (mLoadingLayout != null) {
             mLoadingLayout!!.visibility = View.GONE
@@ -144,25 +131,16 @@ abstract class BaseActivity : AbsActivity() {
 
     /** 隐藏TitleBar */
     protected fun goneTitleBar() {
-        if (isUseAnkoLayout()) {
-            throw RuntimeException("you already use anko layout do not use base widget")
-        }
         getTitleBarLayout().visibility = View.GONE
     }
 
     /** 显示TitleBar */
     protected fun showTitleBar() {
-        if (isUseAnkoLayout()) {
-            throw RuntimeException("you already use anko layout do not use base widget")
-        }
         getTitleBarLayout().visibility = View.VISIBLE
     }
 
     /** 获取顶部标题栏控件 */
     protected fun getTitleBarLayout(): TitleBarLayout {
-        if (isUseAnkoLayout()) {
-            throw RuntimeException("you already use anko layout do not use base widget")
-        }
         if (mTitleBarLayout == null) {
             mTitleBarLayout = mTitleBarViewStub.inflate() as TitleBarLayout
         }
@@ -171,9 +149,6 @@ abstract class BaseActivity : AbsActivity() {
 
     /** 获取加载控件 */
     protected fun getLoadingLayout(): LoadingLayout {
-        if (isUseAnkoLayout()) {
-            throw RuntimeException("you already use anko layout do not use base widget")
-        }
         if (mLoadingLayout == null) {
             mLoadingLayout = mLoadingViewStub.inflate() as LoadingLayout
             mLoadingLayout!!.visibility = View.GONE
@@ -183,9 +158,6 @@ abstract class BaseActivity : AbsActivity() {
 
     /** 获取无数据控件 */
     protected fun getNoDataLayout(): NoDataLayout {
-        if (isUseAnkoLayout()) {
-            throw RuntimeException("you already use anko layout do not use base widget")
-        }
         if (mNoDataLayout == null) {
             mNoDataLayout = mNoDataViewStub.inflate() as NoDataLayout
             mNoDataLayout!!.visibility = View.GONE
@@ -195,9 +167,6 @@ abstract class BaseActivity : AbsActivity() {
 
     /** 获取加载失败界面 */
     protected fun getErrorLayout(): ErrorLayout {
-        if (isUseAnkoLayout()) {
-            throw RuntimeException("you already use anko layout do not use base widget")
-        }
         if (mErrorLayout == null) {
             mErrorLayout = mErrorViewStub.inflate() as ErrorLayout
             mErrorLayout!!.visibility = View.GONE

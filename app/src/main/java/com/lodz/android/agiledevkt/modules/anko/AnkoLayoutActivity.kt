@@ -7,7 +7,7 @@ import android.text.InputType
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import com.lodz.android.componentkt.base.activity.BaseActivity
+import com.lodz.android.componentkt.base.activity.AbsActivity
 import com.lodz.android.componentkt.base.activity.UseAnkoLayout
 import com.lodz.android.corekt.utils.toastShort
 import org.jetbrains.anko.*
@@ -17,7 +17,7 @@ import org.jetbrains.anko.*
  * Created by zhouL on 2018/6/28.
  */
 @UseAnkoLayout
-class AnkoLayoutActivity : BaseActivity() {
+class AnkoLayoutActivity : AbsActivity() {
 
     companion object {
         fun start(context: Context) {
@@ -31,7 +31,7 @@ class AnkoLayoutActivity : BaseActivity() {
     private lateinit var mLloginBtn: Button
     private lateinit var mResultTv: TextView
 
-    override fun getLayoutId() = 0
+    override fun getAbsLayoutId(): Int = 0
 
     override fun findViews(savedInstanceState: Bundle?) {
         verticalLayout {

@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewStub
+import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.annotation.ColorRes
 import androidx.annotation.LayoutRes
@@ -12,17 +13,14 @@ import com.lodz.android.componentkt.R
 import com.lodz.android.componentkt.widget.base.ErrorLayout
 import com.lodz.android.componentkt.widget.base.LoadingLayout
 import com.lodz.android.componentkt.widget.base.NoDataLayout
-import com.lodz.android.componentkt.widget.base.TitleBarLayout
 import com.lodz.android.corekt.anko.bindView
 
 /**
- * 基类Activity（带基础状态控件和下拉刷新控件）
- * Created by zhouL on 2018/11/12.
+ * 基类Activity（带基础状态控件、中部刷新控件和顶部/底部扩展）
+ * Created by zhouL on 2018/11/19.
  */
-abstract class BaseRefreshActivity : AbsActivity() {
+abstract class BaseSandwichActivity : AbsActivity() {
 
-    /** 标题栏 */
-    private val mTitleBarViewStub by bindView<ViewStub>(R.id.view_stub_title_bar_layout)
     /** 加载页 */
     private val mLoadingViewStub by bindView<ViewStub>(R.id.view_stub_loading_layout)
     /** 无数据页 */
@@ -30,8 +28,6 @@ abstract class BaseRefreshActivity : AbsActivity() {
     /** 失败页 */
     private val mErrorViewStub by bindView<ViewStub>(R.id.view_stub_error_layout)
 
-    /** 顶部标题布局  */
-    private var mTitleBarLayout: TitleBarLayout? = null
     /** 加载布局  */
     private var mLoadingLayout: LoadingLayout? = null
     /** 无数据布局  */
@@ -39,12 +35,16 @@ abstract class BaseRefreshActivity : AbsActivity() {
     /** 错误布局  */
     private var mErrorLayout: ErrorLayout? = null
 
-    /** 下拉刷新  */
-    private val mSwipeRefreshLayout by bindView<SwipeRefreshLayout>(R.id.swipe_refresh_layout)
+    /** 顶部布局  */
+    private val mTopLayout by bindView<FrameLayout>(R.id.top_layout)
     /** 内容布局  */
     private val mContentLayout by bindView<LinearLayout>(R.id.content_layout)
+    /** 下拉刷新  */
+    private val mSwipeRefreshLayout by bindView<SwipeRefreshLayout>(R.id.swipe_refresh_layout)
+    /** 底部布局  */
+    private val mBottomLayout by bindView<FrameLayout>(R.id.bottom_layout)
 
-    override fun getAbsLayoutId(): Int = R.layout.componentkt_activity_base_refresh
+    override fun getAbsLayoutId(): Int = R.layout.componentkt_activity_base_sandwich
 
     final override fun afterSetContentView() {
         super.afterSetContentView()
@@ -52,6 +52,8 @@ abstract class BaseRefreshActivity : AbsActivity() {
             throw RuntimeException("you already use anko layout , please extends AbsActivity and use @UseAnkoLayout annotation")
         }
         showStatusLoading()
+        setTopView()
+        setBottomView()
         setContainerView()
         initSwipeRefreshLayout()
     }
@@ -66,7 +68,38 @@ abstract class BaseRefreshActivity : AbsActivity() {
                 android.R.color.holo_red_light)
         // 设置下拉进度的背景颜色
         setSwipeRefreshBackgroundColor(android.R.color.white)
+        setSwipeRefreshEnabled(false)
     }
+
+    /** 把顶部布局设置进来 */
+    private fun setTopView() {
+        if (getTopLayoutId() == 0) {
+            mTopLayout.visibility = View.GONE
+            return
+        }
+        val view = LayoutInflater.from(this).inflate(getTopLayoutId(), null)
+        val layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        mTopLayout.addView(view, layoutParams)
+        mTopLayout.visibility = View.VISIBLE
+    }
+
+    @LayoutRes
+    protected open fun getTopLayoutId(): Int = 0
+
+    /** 把底部布局设置进来 */
+    private fun setBottomView() {
+        if (getBottomLayoutId() == 0) {
+            mBottomLayout.visibility = View.GONE
+            return
+        }
+        val view = LayoutInflater.from(this).inflate(getBottomLayoutId(), null)
+        val layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        mBottomLayout.addView(view, layoutParams)
+        mBottomLayout.visibility = View.VISIBLE
+    }
+
+    @LayoutRes
+    protected open fun getBottomLayoutId(): Int = 0
 
     /** 把内容布局设置进来 */
     private fun setContainerView() {
@@ -84,10 +117,6 @@ abstract class BaseRefreshActivity : AbsActivity() {
 
     override fun setListeners() {
         super.setListeners()
-        getTitleBarLayout().setOnBackBtnClickListener {
-            onClickBackBtn()
-        }
-
         // 下拉刷新
         mSwipeRefreshLayout.setOnRefreshListener {
             onDataRefresh()
@@ -95,7 +124,7 @@ abstract class BaseRefreshActivity : AbsActivity() {
     }
 
     /** 下拉刷新 */
-    protected abstract fun onDataRefresh()
+    protected open fun onDataRefresh() {}
 
     /** 设置下拉进度的切换颜色[colorResIds] */
     protected fun setSwipeRefreshColorScheme(@ColorRes vararg colorResIds: Int) {
@@ -116,9 +145,6 @@ abstract class BaseRefreshActivity : AbsActivity() {
     protected fun setSwipeRefreshEnabled(enabled: Boolean) {
         mSwipeRefreshLayout.isEnabled = enabled
     }
-
-    /** 点击标题栏的返回按钮 */
-    protected open fun onClickBackBtn() {}
 
     /** 点击错误页面的重试按钮 */
     protected open fun onClickReload() {}
@@ -177,24 +203,6 @@ abstract class BaseRefreshActivity : AbsActivity() {
         }
     }
 
-    /** 隐藏TitleBar */
-    protected fun goneTitleBar() {
-        getTitleBarLayout().visibility = View.GONE
-    }
-
-    /** 显示TitleBar */
-    protected fun showTitleBar() {
-        getTitleBarLayout().visibility = View.VISIBLE
-    }
-
-    /** 获取顶部标题栏控件 */
-    protected fun getTitleBarLayout(): TitleBarLayout {
-        if (mTitleBarLayout == null) {
-            mTitleBarLayout = mTitleBarViewStub.inflate() as TitleBarLayout
-        }
-        return mTitleBarLayout!!
-    }
-
     /** 获取加载控件 */
     protected fun getLoadingLayout(): LoadingLayout {
         if (mLoadingLayout == null) {
@@ -224,4 +232,11 @@ abstract class BaseRefreshActivity : AbsActivity() {
         }
         return mErrorLayout!!
     }
+
+    /** 获取顶部布局 */
+    protected fun getTopView(): View = mTopLayout
+
+    /** 获取底部布局 */
+    protected fun getBottomView(): View = mBottomLayout
+
 }
