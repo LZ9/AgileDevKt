@@ -7,6 +7,7 @@ import android.os.Build
 import android.telephony.TelephonyManager
 import androidx.annotation.RequiresPermission
 import androidx.annotation.StringDef
+import java.io.File
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -80,6 +81,25 @@ object DeviceUtils {
         }
         return ""
     }
+
+    /** 校验su文件路径数组[paths]（不传或传null使用默认校验路径），不存在su文件返回null */
+    fun checkRootFile(paths: Array<String>? = null): File? {
+        var checkPaths = arrayOf("/sbin/su", "/system/bin/su", "/system/xbin/su", "/data/local/xbin/su",
+                "/data/local/bin/su", "/system/sd/xbin/su", "/system/bin/failsafe/su", "/data/local/su")
+        if (paths != null && paths.size > 0) {//如果
+            checkPaths = paths
+        }
+        for (path in checkPaths) {
+            val file = File(path)
+            if (file.exists()) {//存在返回文件
+                return file
+            }
+        }
+        return null
+    }
+
+    /** 手机是否root，通过校验默认位置的su文件，存在一定误差 */
+    fun isRoot(): Boolean = checkRootFile() != null
 }
 
 /** 获取APN名称 */
