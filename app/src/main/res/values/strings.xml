@@ -373,7 +373,7 @@
     <string name="mvc_demo_sandwich_title">带扩展和下拉刷新控件</string>
     <string name="mvc_demo_sandwich_top_tips">顶部提示语</string>
     <string name="mvc_demo_sandwich_bottom_tips">底部提示语</string>
-    <string name="mvc_demo_fragment_title">MVP模式Fragment测试</string>
+    <string name="mvc_demo_fragment_title">MVC模式Fragment测试</string>
     <string name="mvc_demo_loading">加载中…</string>
     <string name="mvc_demo_refresh_data_fail">刷新数据失败</string>
 

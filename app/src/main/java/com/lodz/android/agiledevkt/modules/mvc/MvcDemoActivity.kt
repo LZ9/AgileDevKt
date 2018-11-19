@@ -73,7 +73,7 @@ class MvcDemoActivity : BaseActivity() {
 
         // Fragment用例
         mFragmentBtn.setOnClickListener {
-
+            MvcFragmentActivity.start(getContext())
         }
     }
 
