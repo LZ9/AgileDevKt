@@ -377,7 +377,6 @@
     <string name="mvc_demo_loading">加载中…</string>
     <string name="mvc_demo_refresh_data_fail">刷新数据失败</string>
 
-
     <!-- MVP模式 -->
     <string name="mvp_demo_abs">基础Activity</string>
     <string name="mvp_demo_base">带基础状态控件Activity</string>
@@ -389,4 +388,16 @@
     <string name="mvp_demo_refresh_title">带下拉刷新控件</string>
     <string name="mvp_demo_fragment_title">MVP模式Fragment测试</string>
     <string name="mvp_demo_sandwich_title">带扩展和下拉刷新控件</string>
+
+    <!-- AnkoLayout测试 -->
+    <string name="al_account">账号</string>
+    <string name="al_pswd">密码</string>
+    <string name="al_login">登录</string>
+    <string name="al_account_empty">您尚未输入账号</string>
+    <string name="al_pswd_empty">您尚未输入密码</string>
+    <string name="al_sign">我双手搬着砖,就无法抱你。我放下了砖,却无法养你。 ---- 尼古拉斯赵四</string>
+    <string name="al_change_account">切换账号</string>
+    <string name="al_change_detail">切换详情</string>
+    <string name="al_fg_change_title">Frament改变测试</string>
+    <string name="al_name">姓名</string>
 </resources>

@@ -59,6 +59,6 @@ class MvcTestLazyFragment : LazyFragment() {
                             mResult.text = e.getErrorMsg()
                         }
                     }
-                }.create(getCxt(), R.string.mvc_demo_loading, true))
+                }.create(context, R.string.mvc_demo_loading, true))
     }
 }

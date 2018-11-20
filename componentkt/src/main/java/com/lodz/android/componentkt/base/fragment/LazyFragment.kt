@@ -199,7 +199,13 @@ abstract class LazyFragment : RxFragment(), IFragmentBackPressed {
 
     override fun onPressBack(): Boolean = false
 
-    protected open fun getCxt(): Context = context!!
+    override fun getContext(): Context {
+        val ctx = super.getContext()
+        if (ctx != null){
+            return ctx
+        }
+        return requireContext()
+    }
 
     /** 解析AnkoLayout注解 */
     private fun injectAnko(): Boolean {

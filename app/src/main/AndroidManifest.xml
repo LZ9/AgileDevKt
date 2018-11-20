@@ -395,6 +395,13 @@
 
         </activity>
 
+        <activity
+            android:name=".modules.anko.FragmentChangeActivity"
+            android:label="Fragment变更类"
+            android:screenOrientation="portrait">
+
+        </activity>
+
     </application>
 
 </manifest>
