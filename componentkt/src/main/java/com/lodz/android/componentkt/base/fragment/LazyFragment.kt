@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
+import com.lodz.android.componentkt.base.activity.UseAnkoLayout
 import com.lodz.android.corekt.anko.getSize
 import com.trello.rxlifecycle3.components.support.RxFragment
 
@@ -16,6 +17,9 @@ import com.trello.rxlifecycle3.components.support.RxFragment
  * Created by zhouL on 2018/6/20.
  */
 abstract class LazyFragment : RxFragment(), IFragmentBackPressed {
+
+    /** 是否使用Anko Layout */
+    private var isUseAnko = false
 
     /** 父控件布局  */
     private var mParentView: View? = null
@@ -32,12 +36,25 @@ abstract class LazyFragment : RxFragment(), IFragmentBackPressed {
     /** 是否从OnPause离开  */
     private var isOnPauseOut = false
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(getAbsLayoutId(), container, false)
+    /** 是否使用AnkoLayout */
+    protected fun isUseAnkoLayout(): Boolean = isUseAnko
+
+    final override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        isUseAnko = injectAnko()
+        if (!isUseAnko) {//不使用AnkoLayout再加载布局
+            return inflater.inflate(getAbsLayoutId(), container, false)
+        }
+        val view = getAnkoLayoutView()
+        if (view != null) {
+            return view
+        }
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     @LayoutRes
     protected abstract fun getAbsLayoutId(): Int
+
+    protected open fun getAnkoLayoutView(): View? = null
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
@@ -183,4 +200,22 @@ abstract class LazyFragment : RxFragment(), IFragmentBackPressed {
     override fun onPressBack(): Boolean = false
 
     protected open fun getCxt(): Context = context!!
+
+    /** 解析AnkoLayout注解 */
+    private fun injectAnko(): Boolean {
+        try {
+            if (!javaClass.isAnnotationPresent(UseAnkoLayout::class.java)) {
+                return false
+            }
+            // 进行了UseAnkoLayout注解
+            val inject = javaClass.getAnnotation(UseAnkoLayout::class.java)
+            if (inject == null) {
+                return false
+            }
+            return inject.value
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return false
+    }
 }

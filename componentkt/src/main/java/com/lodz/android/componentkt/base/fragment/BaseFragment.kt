@@ -44,6 +44,9 @@ abstract class BaseFragment :LazyFragment(){
 
     final override fun beforeFindViews(view: View) {
         super.beforeFindViews(view)
+        if (isUseAnkoLayout()) {
+            throw RuntimeException("you already use anko layout , please extends LazyFragment and use @UseAnkoLayout annotation")
+        }
         showStatusLoading()
         setContainerView()
     }
