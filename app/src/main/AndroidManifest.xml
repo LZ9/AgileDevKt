@@ -402,6 +402,20 @@
 
         </activity>
 
+        <activity
+            android:name=".modules.transition.TransitionActivity"
+            android:label="共享元素动画"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity
+            android:name=".modules.transition.ElementActivity"
+            android:label="共享元素详情"
+            android:screenOrientation="portrait">
+
+        </activity>
+
     </application>
 
 </manifest>

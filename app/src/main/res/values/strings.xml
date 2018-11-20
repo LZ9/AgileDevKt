@@ -400,4 +400,8 @@
     <string name="al_change_detail">切换详情</string>
     <string name="al_fg_change_title">Frament改变测试</string>
     <string name="al_name">姓名</string>
+
+    <!-- 共享动画 -->
+    <string name="share_element_title">共享元素</string>
+    <string name="share_element_unable">无法进行元素共享</string>
 </resources>

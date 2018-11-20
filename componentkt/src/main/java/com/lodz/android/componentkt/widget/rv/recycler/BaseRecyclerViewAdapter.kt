@@ -1,7 +1,6 @@
 package com.lodz.android.componentkt.widget.rv.recycler
 
 import android.animation.Animator
-import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +11,7 @@ import androidx.annotation.IntRange
 import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.componentkt.widget.rv.animation.*
+import com.lodz.android.corekt.anko.getSize
 
 /**
  * RecyclerView基类适配器
@@ -37,7 +37,7 @@ abstract class BaseRecyclerViewAdapter<T>(protected val context: Context) : Recy
     annotation class AnimationType
 
     /** 数据列表 */
-    private var mData: MutableList<T>? = null
+    private var mData: List<T>? = null
     /** item点击 */
     private var mOnItemClickListener: ((RecyclerView.ViewHolder, T, Int) -> Unit)? = null
     /** item长按 */
@@ -59,11 +59,12 @@ abstract class BaseRecyclerViewAdapter<T>(protected val context: Context) : Recy
 
     /** 根据[position]获取数据 */
     fun getItem(position: Int): T? {
-        if (mData == null || mData!!.size == 0) {
+        val data = mData
+        if (data.isNullOrEmpty()) {
             return null
         }
         try {
-            return mData!!.get(position)
+            return data.get(position)
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -80,22 +81,25 @@ abstract class BaseRecyclerViewAdapter<T>(protected val context: Context) : Recy
     abstract fun onBind(holder: RecyclerView.ViewHolder, position: Int)
 
     /** 设置点击事件 */
-    protected fun setItemLongClick(holder: RecyclerView.ViewHolder, position: Int) {
+    protected fun setItemClick(holder: RecyclerView.ViewHolder, position: Int) {
         holder.itemView.setOnClickListener {
             val item = getItem(position)
-            if (position >= 0 && mOnItemClickListener != null && item != null) {
-                mOnItemClickListener!!.invoke(holder, item, position)
+            val listener = mOnItemClickListener
+            if (position >= 0 && listener != null && item != null) {
+                listener.invoke(holder, item, position)
             }
         }
     }
 
     /** 设置长按事件 */
-    protected fun setItemClick(holder: RecyclerView.ViewHolder, position: Int) {
-        holder.itemView.setOnClickListener {
+    protected fun setItemLongClick(holder: RecyclerView.ViewHolder, position: Int) {
+        holder.itemView.setOnLongClickListener {
             val item = getItem(position)
-            if (position >= 0 && mOnItemLongClickListener != null && item != null) {
-                mOnItemLongClickListener!!.invoke(holder, item, position)
+            val listener = mOnItemClickListener
+            if (position >= 0 && listener != null && item != null) {
+                listener.invoke(holder, item, position)
             }
+            true
         }
     }
 
@@ -106,7 +110,8 @@ abstract class BaseRecyclerViewAdapter<T>(protected val context: Context) : Recy
 
     /** 添加item加载动画 */
     private fun addAnimation(holder: RecyclerView.ViewHolder) {
-        if (mData != null && mData!!.size > 0 && mData!!.size < mLastPosition) {//重新设置了数据
+        val data = mData
+        if (data != null && data.size > 0 && data.size < mLastPosition) {//重新设置了数据
             mLastPosition = mCustomStarPosition
         }
         if (!isOpenItemAnim || holder.layoutPosition <= mLastPosition) {//不打开item动画 || 已经加载过了
@@ -124,8 +129,7 @@ abstract class BaseRecyclerViewAdapter<T>(protected val context: Context) : Recy
     }
 
     /** 根据动画类型[animationType]获取动画 */
-    @SuppressLint("SwitchIntDef")
-    private fun getAnimationByType(@AnimationType animationType: Int) = when (animationType) {
+    private fun getAnimationByType(@AnimationType animationType: Int): BaseAnimation = when (animationType) {
         SCALE_IN -> ScaleInAnimation()
         SLIDE_IN_BOTTOM -> SlideInBottomAnimation()
         SLIDE_IN_LEFT -> SlideInLeftAnimation()
@@ -168,28 +172,22 @@ abstract class BaseRecyclerViewAdapter<T>(protected val context: Context) : Recy
         mCurrentAnimationType = animationType
     }
 
-    override fun getItemCount(): Int {
-        return getDataSize()
-    }
+    override fun getItemCount(): Int = getDataSize()
 
     /** 获取数据长度 */
-    protected fun getDataSize(): Int {
-        if (mData == null) {
-            return 0
-        }
-        return mData!!.size
-    }
+    protected fun getDataSize(): Int = mData.getSize()
 
     /** 设置数据列表[data] */
-    fun setData(data: MutableList<T>) {
+    fun setData(data: List<T>) {
         this.mData = data
     }
 
     /** 获取数据列表[data] */
-    fun getData(): MutableList<T>? = mData
+    fun getData(): List<T>? = mData
 
     /** 在onCreateViewHolder方法中根据[layoutId]获取View */
-    protected fun getLayoutView(parent: ViewGroup, @LayoutRes layoutId: Int, attachToRoot: Boolean = false) = LayoutInflater.from(context).inflate(layoutId, parent, attachToRoot)
+    protected fun getLayoutView(parent: ViewGroup, @LayoutRes layoutId: Int, attachToRoot: Boolean = false): View =
+            LayoutInflater.from(context).inflate(layoutId, parent, attachToRoot)
 
     /** 设置[itemView]的宽度值[width] */
     protected fun setItemViewWidth(itemView: View, width: Int) {
@@ -210,7 +208,7 @@ abstract class BaseRecyclerViewAdapter<T>(protected val context: Context) : Recy
         if (getDataSize() == 0) {
             return
         }
-        mData!!.removeAt(position)
+        mData!!.toMutableList().removeAt(position)
         notifyItemRemoved(position)
         if (position != mData!!.size) {// 如果移除的是最后一个，忽略
             notifyItemRangeChanged(position, mData!!.size - position)

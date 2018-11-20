@@ -45,8 +45,9 @@ object RxUtils {
             return e.getErrorMsg()
         }
         if (e is DataException) {
-            if (e.getData() != null && !e.getData()!!.getMsg().isEmpty()) {
-                return e.getData()!!.getMsg()
+            val status = e.getData()
+            if (status != null && status.getMsg().isNotEmpty()) {
+                return status.getMsg()
             }
         }
         return defaultTips

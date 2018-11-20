@@ -120,7 +120,7 @@ abstract class AbsActivity : RxAppCompatActivity() {
     protected open fun onPressBack(): Boolean = false
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onMessageEvent(event: ActivityFinishEvent) {
+    fun onActivityFinishEvent(event: ActivityFinishEvent) {
         if (!isFinishing) {
             finish()
         }

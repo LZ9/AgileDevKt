@@ -35,6 +35,7 @@ import com.lodz.android.agiledevkt.modules.statusbar.StatusBarTestActivity
 import com.lodz.android.agiledevkt.modules.str.StrTestActivity
 import com.lodz.android.agiledevkt.modules.threadpool.ThreadPoolActivity
 import com.lodz.android.agiledevkt.modules.toast.ToastTestActivity
+import com.lodz.android.agiledevkt.modules.transition.TransitionActivity
 import com.lodz.android.componentkt.base.activity.BaseActivity
 import com.lodz.android.componentkt.widget.base.TitleBarLayout
 import com.lodz.android.corekt.anko.bindView
@@ -64,7 +65,8 @@ class MainActivity : BaseActivity() {
             "信息展示测试类", "蓝牙测试类", "状态栏透明颜色测试类",
             "侧滑栏测试类", "Coordinator测试类", "Snackbar测试类",
             "崩溃测试类", "定位测试", "弹框测试",
-            "数组列表测试类", "ACache缓存测试类", "MVC模式测试类"
+            "数组列表测试类", "ACache缓存测试类", "MVC模式测试类",
+            "共享元素动画"
     )
 
     /** 功能的activity */
@@ -77,7 +79,8 @@ class MainActivity : BaseActivity() {
             InfoTestActivity::class.java, BluetoothTestActivity::class.java, StatusBarTestActivity::class.java,
             DrawerTestActivity::class.java, CoordinatorTestActivity::class.java, SnackbarTestActivity::class.java,
             CrashTestActivity::class.java, LocationTestActivity::class.java, DialogActivity::class.java,
-            ArrayTestActivity::class.java, ACacheTestActivity::class.java, MvcDemoActivity::class.java
+            ArrayTestActivity::class.java, ACacheTestActivity::class.java, MvcDemoActivity::class.java,
+            TransitionActivity::class.java
     )
 
     /** 列表 */
