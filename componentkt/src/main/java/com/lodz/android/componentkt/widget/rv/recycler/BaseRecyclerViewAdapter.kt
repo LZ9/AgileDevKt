@@ -39,9 +39,9 @@ abstract class BaseRecyclerViewAdapter<T>(protected val context: Context) : Recy
     /** 数据列表 */
     private var mData: List<T>? = null
     /** item点击 */
-    private var mOnItemClickListener: ((RecyclerView.ViewHolder, T, Int) -> Unit)? = null
+    protected var mOnItemClickListener: ((RecyclerView.ViewHolder, T, Int) -> Unit)? = null
     /** item长按 */
-    private var mOnItemLongClickListener: ((RecyclerView.ViewHolder, T, Int) -> Unit)? = null
+    protected var mOnItemLongClickListener: ((RecyclerView.ViewHolder, T, Int) -> Unit)? = null
 
     /** 动画加速器 */
     private val mInterpolator = LinearInterpolator()
@@ -58,7 +58,7 @@ abstract class BaseRecyclerViewAdapter<T>(protected val context: Context) : Recy
     private var mCustomAnimation: BaseAnimation? = null
 
     /** 根据[position]获取数据 */
-    fun getItem(position: Int): T? {
+    open fun getItem(position: Int): T? {
         val data = mData
         if (data.isNullOrEmpty()) {
             return null
@@ -81,7 +81,7 @@ abstract class BaseRecyclerViewAdapter<T>(protected val context: Context) : Recy
     abstract fun onBind(holder: RecyclerView.ViewHolder, position: Int)
 
     /** 设置点击事件 */
-    protected fun setItemClick(holder: RecyclerView.ViewHolder, position: Int) {
+    protected open fun setItemClick(holder: RecyclerView.ViewHolder, position: Int) {
         holder.itemView.setOnClickListener {
             val item = getItem(position)
             val listener = mOnItemClickListener
@@ -92,7 +92,7 @@ abstract class BaseRecyclerViewAdapter<T>(protected val context: Context) : Recy
     }
 
     /** 设置长按事件 */
-    protected fun setItemLongClick(holder: RecyclerView.ViewHolder, position: Int) {
+    protected open fun setItemLongClick(holder: RecyclerView.ViewHolder, position: Int) {
         holder.itemView.setOnLongClickListener {
             val item = getItem(position)
             val listener = mOnItemClickListener
