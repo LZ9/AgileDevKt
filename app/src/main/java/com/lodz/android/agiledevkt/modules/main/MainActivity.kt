@@ -30,6 +30,7 @@ import com.lodz.android.agiledevkt.modules.mvc.MvcDemoActivity
 import com.lodz.android.agiledevkt.modules.notification.NotificationActivity
 import com.lodz.android.agiledevkt.modules.reflect.ReflectActivity
 import com.lodz.android.agiledevkt.modules.rv.anim.AnimRvActivity
+import com.lodz.android.agiledevkt.modules.rv.loadmore.RefreshLoadMoreActivity
 import com.lodz.android.agiledevkt.modules.security.EncryptTestActivity
 import com.lodz.android.agiledevkt.modules.selector.SelectorTestActivity
 import com.lodz.android.agiledevkt.modules.setting.SettingTestActivity
@@ -92,7 +93,8 @@ class MainActivity : BaseActivity() {
             MainBean("ACache缓存测试类", "A", ACacheTestActivity::class.java),
             MainBean("MVC模式测试类", "M", MvcDemoActivity::class.java),
             MainBean("共享元素动画", "G", TransitionActivity::class.java),
-            MainBean("RV动画测试", "R", AnimRvActivity::class.java)
+            MainBean("RV动画测试", "R", AnimRvActivity::class.java),
+            MainBean("RV刷新/加载更多测试", "R", RefreshLoadMoreActivity::class.java)
     )
 
     /** 列表 */

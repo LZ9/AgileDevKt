@@ -131,7 +131,7 @@ class AnimRvActivity : BaseActivity() {
                 popup.dismiss()
                 return@setOnClickListener
             }
-            mAdapter.setBaseAnimation(null)
+            mAdapter.setBaseAnimation(null)// 取消自定义动画效果
             mAdapter.setAnimationType(mAnimType)
             popup.dismiss()
         }

@@ -423,7 +423,12 @@
 
         </activity>
 
+        <activity
+            android:name=".modules.rv.loadmore.RefreshLoadMoreActivity"
+            android:label="RV刷新/加载更多测试"
+            android:screenOrientation="portrait">
 
+        </activity>
 
     </application>
 
