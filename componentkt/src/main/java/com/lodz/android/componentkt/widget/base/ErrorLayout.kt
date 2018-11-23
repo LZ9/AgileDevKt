@@ -120,9 +120,9 @@ class ErrorLayout : LinearLayout {
         if (drawableBackground != null) {
             background = drawableBackground
         } else if (mConfig.backgroundColor != 0) {
-            setBackgroundColor(context.getColorCompat(mConfig.backgroundColor))
+            setBackgroundColor(getColorCompat(mConfig.backgroundColor))
         } else {
-            setBackgroundColor(context.getColorCompat(android.R.color.white))
+            setBackgroundColor(getColorCompat(android.R.color.white))
         }
 
         if (typedArray != null) {
@@ -162,7 +162,7 @@ class ErrorLayout : LinearLayout {
 
     /** 设置文字颜色资源[colorRes] */
     fun setTipsTextColor(@ColorRes colorRes: Int) {
-        mErrorTipsTv.setTextColor(context.getColorCompat(colorRes))
+        mErrorTipsTv.setTextColor(getColorCompat(colorRes))
     }
 
     /** 设置文字颜色[color] */

@@ -115,7 +115,7 @@ class LoadingLayout : LinearLayout {
         if (drawable != null) {
             mLoadingProgressBar.indeterminateDrawable = drawable
         } else if (mConfig.indeterminateDrawable != 0) {
-            mLoadingProgressBar.indeterminateDrawable = context.getDrawableCompat(mConfig.indeterminateDrawable)
+            mLoadingProgressBar.indeterminateDrawable = getDrawableCompat(mConfig.indeterminateDrawable)
         }
 
         // 设置ProgressBar宽高
@@ -134,9 +134,9 @@ class LoadingLayout : LinearLayout {
         if (drawableBackground != null) {
             background = drawableBackground
         } else if (mConfig.backgroundColor != 0) {
-            setBackgroundColor(context.getColorCompat(mConfig.backgroundColor))
+            setBackgroundColor(getColorCompat(mConfig.backgroundColor))
         } else {
-            setBackgroundColor(context.getColorCompat(android.R.color.white))
+            setBackgroundColor(getColorCompat(android.R.color.white))
         }
 
         if (typedArray != null) {
@@ -161,7 +161,7 @@ class LoadingLayout : LinearLayout {
 
     /** 设置文字颜色资源[colorRes] */
     fun setTipsTextColor(@ColorRes colorRes: Int) {
-        mLoadingTipsTv.setTextColor(context.getColorCompat(colorRes))
+        mLoadingTipsTv.setTextColor(getColorCompat(colorRes))
     }
 
     /** 设置文字颜色[color] */

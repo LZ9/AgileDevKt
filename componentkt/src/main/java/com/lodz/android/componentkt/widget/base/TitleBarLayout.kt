@@ -158,9 +158,9 @@ open class TitleBarLayout : LinearLayout {
         } else if (mConfig.backgroundResId != 0) {
             setBackgroundResource(mConfig.backgroundResId)
         } else if (mConfig.backgroundColor != 0) {
-            setBackgroundColor(context.getColorCompat(mConfig.backgroundColor))
+            setBackgroundColor(getColorCompat(mConfig.backgroundColor))
         } else {
-            setBackgroundColor(context.getColorCompat(android.R.color.holo_blue_light))
+            setBackgroundColor(getColorCompat(android.R.color.holo_blue_light))
         }
 
         // 是否需要阴影
@@ -229,7 +229,7 @@ open class TitleBarLayout : LinearLayout {
 
     /** 设置返回按钮文字颜色资源[colorRes] */
     fun setBackBtnTextColor(@ColorRes colorRes: Int) {
-        mBackBtn.setTextColor(context.getColorCompat(colorRes))
+        mBackBtn.setTextColor(getColorCompat(colorRes))
     }
 
     /** 设置返回按钮文字颜色[color] */
@@ -259,7 +259,7 @@ open class TitleBarLayout : LinearLayout {
 
     /** 设置标题文字颜色资源[colorRes] */
     fun setTitleTextColor(@ColorRes colorRes: Int) {
-        mTitleTv.setTextColor(context.getColorCompat(colorRes))
+        mTitleTv.setTextColor(getColorCompat(colorRes))
     }
 
     /** 设置标题文字颜色[color] */
@@ -309,7 +309,7 @@ open class TitleBarLayout : LinearLayout {
 
     /** 设置分割线颜色资源[colorRes] */
     fun setDivideLineColor(@ColorRes colorRes: Int) {
-        mDivideLineView.setBackgroundColor(context.getColorCompat(colorRes))
+        mDivideLineView.setBackgroundColor(getColorCompat(colorRes))
     }
 
     /** 设置分割线颜色[color] */

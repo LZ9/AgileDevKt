@@ -116,9 +116,9 @@ class NoDataLayout : LinearLayout {
         if (drawableBackground != null) {
             background = drawableBackground
         } else if (mConfig.backgroundColor != 0) {
-            setBackgroundColor(context.getColorCompat(mConfig.backgroundColor))
+            setBackgroundColor(getColorCompat(mConfig.backgroundColor))
         } else {
-            setBackgroundColor(context.getColorCompat(android.R.color.white))
+            setBackgroundColor(getColorCompat(android.R.color.white))
         }
 
         if (typedArray != null) {
@@ -159,7 +159,7 @@ class NoDataLayout : LinearLayout {
 
     /** 设置文字颜色资源[colorRes] */
     fun setTipsTextColor(@ColorRes colorRes: Int) {
-        mNoDataTv.setTextColor(context.getColorCompat(colorRes))
+        mNoDataTv.setTextColor(getColorCompat(colorRes))
     }
 
     /** 设置文字颜色[color] */

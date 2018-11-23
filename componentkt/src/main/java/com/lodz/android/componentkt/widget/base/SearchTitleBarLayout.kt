@@ -151,9 +151,9 @@ class SearchTitleBarLayout : FrameLayout {
         } else if (mConfig.backgroundResId != 0) {
             setBackgroundResource(mConfig.backgroundResId)
         } else if (mConfig.backgroundColor != 0) {
-            setBackgroundColor(context.getColorCompat(mConfig.backgroundColor))
+            setBackgroundColor(getColorCompat(mConfig.backgroundColor))
         } else {
-            setBackgroundColor(context.getColorCompat(android.R.color.holo_blue_light))
+            setBackgroundColor(getColorCompat(android.R.color.holo_blue_light))
         }
 
         // 是否需要阴影
@@ -296,7 +296,7 @@ class SearchTitleBarLayout : FrameLayout {
 
     /** 设置返回按钮文字颜色资源[colorRes] */
     fun setBackBtnTextColor(@ColorRes colorRes: Int) {
-        mBackBtn.setTextColor(context.getColorCompat(colorRes))
+        mBackBtn.setTextColor(getColorCompat(colorRes))
     }
 
     /** 设置返回按钮文字颜色[color] */
@@ -326,7 +326,7 @@ class SearchTitleBarLayout : FrameLayout {
 
     /** 设置分割线颜色资源[colorRes] */
     fun setDivideLineColor(@ColorRes colorRes: Int) {
-        mDivideLineView.setBackgroundColor(context.getColorCompat(colorRes))
+        mDivideLineView.setBackgroundColor(getColorCompat(colorRes))
     }
 
     /** 设置分割线颜色[color] */
@@ -418,7 +418,7 @@ class SearchTitleBarLayout : FrameLayout {
 
     /** 设置输入框提示语颜色资源[colorRes] */
     fun setInputHintTextColor(@ColorRes colorRes: Int) {
-        mInputEdit.setHintTextColor(context.getColorCompat(colorRes))
+        mInputEdit.setHintTextColor(getColorCompat(colorRes))
     }
 
     /** 设置输入框提示语颜色[color] */
@@ -443,7 +443,7 @@ class SearchTitleBarLayout : FrameLayout {
 
     /** 设置输入框文字颜色资源[colorRes] */
     fun setInputTextColor(@ColorRes colorRes: Int) {
-        mInputEdit.setTextColor(context.getColorCompat(colorRes))
+        mInputEdit.setTextColor(getColorCompat(colorRes))
     }
 
     /** 设置输入框文字颜色[color] */
