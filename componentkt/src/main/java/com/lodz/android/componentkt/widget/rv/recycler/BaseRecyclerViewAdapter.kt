@@ -163,7 +163,7 @@ abstract class BaseRecyclerViewAdapter<T>(protected val context: Context) : Recy
     }
 
     /** 设置自定义动画 */
-    fun setBaseAnimation(animation: BaseAnimation) {
+    fun setBaseAnimation(animation: BaseAnimation?) {
         mCustomAnimation = animation
     }
 

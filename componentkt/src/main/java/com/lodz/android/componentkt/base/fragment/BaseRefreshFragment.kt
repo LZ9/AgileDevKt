@@ -70,7 +70,7 @@ abstract class BaseRefreshFragment : LazyFragment(){
 
     /** 把内容布局设置进来 */
     private fun setContainerView() {
-        if (getLayoutId() == 0 || context == null) {
+        if (getLayoutId() == 0) {
             showStatusNoData()
             return
         }

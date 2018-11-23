@@ -404,4 +404,17 @@
     <!-- 共享动画 -->
     <string name="share_element_title">共享元素</string>
     <string name="share_element_unable">无法进行元素共享</string>
+
+    <!-- RecyclerView动画测试 -->
+    <string name="rvanim_reset">重置</string>
+    <string name="rvanim_anim">动画</string>
+    <string name="rvanim_popup_alpha_in">淡入</string>
+    <string name="rvanim_popup_scale_in">缩放</string>
+    <string name="rvanim_popup_slide_in_bottom">底部进入</string>
+    <string name="rvanim_popup_slide_in_left">左侧进入</string>
+    <string name="rvanim_popup_slide_in_right">右侧进入</string>
+    <string name="rvanim_popup_custom">自定义</string>
+
+
+
 </resources>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/alpha_in_btn"
+        android:layout_width="80dp"
+        android:layout_height="35dp"
+        android:background="@drawable/bg_f0f0f0_stroke_cccccc"
+        android:gravity="center"
+        android:text="@string/rvanim_popup_alpha_in"
+        android:textColor="@color/color_9a9a9a"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/scale_in_btn"
+        android:layout_width="80dp"
+        android:layout_height="35dp"
+        android:background="@drawable/bg_f0f0f0_stroke_cccccc"
+        android:gravity="center"
+        android:text="@string/rvanim_popup_scale_in"
+        android:textColor="@color/color_9a9a9a"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/slide_in_bottom_btn"
+        android:layout_width="80dp"
+        android:layout_height="35dp"
+        android:background="@drawable/bg_f0f0f0_stroke_cccccc"
+        android:gravity="center"
+        android:text="@string/rvanim_popup_slide_in_bottom"
+        android:textColor="@color/color_9a9a9a"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/slide_in_left_btn"
+        android:layout_width="80dp"
+        android:layout_height="35dp"
+        android:background="@drawable/bg_f0f0f0_stroke_cccccc"
+        android:gravity="center"
+        android:text="@string/rvanim_popup_slide_in_left"
+        android:textColor="@color/color_9a9a9a"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/slide_in_right_btn"
+        android:layout_width="80dp"
+        android:layout_height="35dp"
+        android:background="@drawable/bg_f0f0f0_stroke_cccccc"
+        android:gravity="center"
+        android:text="@string/rvanim_popup_slide_in_right"
+        android:textColor="@color/color_9a9a9a"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/custom_btn"
+        android:layout_width="80dp"
+        android:layout_height="35dp"
+        android:background="@drawable/bg_f0f0f0_stroke_cccccc"
+        android:gravity="center"
+        android:text="@string/rvanim_popup_custom"
+        android:textColor="@color/color_9a9a9a"
+        android:textSize="16sp" />
+
+</LinearLayout>

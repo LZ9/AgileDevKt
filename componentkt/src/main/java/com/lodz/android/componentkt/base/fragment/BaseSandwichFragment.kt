@@ -73,7 +73,7 @@ abstract class BaseSandwichFragment :LazyFragment(){
 
     /** 把顶部布局设置进来 */
     private fun setTopView() {
-        if (getTopLayoutId() == 0 || context == null) {
+        if (getTopLayoutId() == 0) {
             mTopLayout.visibility = View.GONE
             return
         }
@@ -88,7 +88,7 @@ abstract class BaseSandwichFragment :LazyFragment(){
 
     /** 把底部布局设置进来 */
     private fun setBottomView() {
-        if (getBottomLayoutId() == 0 || context == null) {
+        if (getBottomLayoutId() == 0) {
             mBottomLayout.visibility = View.GONE
             return
         }
@@ -103,7 +103,7 @@ abstract class BaseSandwichFragment :LazyFragment(){
 
     /** 把内容布局设置进来 */
     private fun setContainerView() {
-        if (getLayoutId() == 0 || context == null) {
+        if (getLayoutId() == 0) {
             showStatusNoData()
             return
         }
