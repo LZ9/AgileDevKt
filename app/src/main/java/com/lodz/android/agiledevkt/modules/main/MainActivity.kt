@@ -2,12 +2,14 @@ package com.lodz.android.agiledevkt.modules.main
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.agiledevkt.App
 import com.lodz.android.agiledevkt.R
+import com.lodz.android.agiledevkt.bean.MainBean
 import com.lodz.android.agiledevkt.modules.acache.ACacheTestActivity
 import com.lodz.android.agiledevkt.modules.anko.AnkoLayoutActivity
 import com.lodz.android.agiledevkt.modules.array.ArrayTestActivity
@@ -38,9 +40,10 @@ import com.lodz.android.agiledevkt.modules.toast.ToastTestActivity
 import com.lodz.android.agiledevkt.modules.transition.TransitionActivity
 import com.lodz.android.componentkt.base.activity.BaseActivity
 import com.lodz.android.componentkt.widget.base.TitleBarLayout
-import com.lodz.android.corekt.anko.bindView
-import com.lodz.android.corekt.anko.dp2px
-import com.lodz.android.corekt.anko.getColorCompat
+import com.lodz.android.componentkt.widget.index.IndexBar
+import com.lodz.android.componentkt.widget.rv.decoration.SectionItemDecoration
+import com.lodz.android.componentkt.widget.rv.decoration.StickyItemDecoration
+import com.lodz.android.corekt.anko.*
 
 class MainActivity : BaseActivity() {
 
@@ -55,44 +58,57 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    /** 功能名称 */
-    private val NAME_LIST = arrayListOf(
-            "AnkoLayout测试类", "文件测试类", "加密测试类",
-            "Bitmap图片测试类", "Glide测试", "通知测试类",
-            "Toast测试类", "反射测试类", "颜色透明度测试",
-            "线程池测试类", "身份证号码测试类", "数字格式化测试类",
-            "背景选择器测试类", "设置测试类", "字符测试类",
-            "信息展示测试类", "蓝牙测试类", "状态栏透明颜色测试类",
-            "侧滑栏测试类", "Coordinator测试类", "Snackbar测试类",
-            "崩溃测试类", "定位测试", "弹框测试",
-            "数组列表测试类", "ACache缓存测试类", "MVC模式测试类",
-            "共享元素动画"
-    )
+    /** 索引标题 */
+    private val INDEX_TITLE = arrayListOf("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N",
+            "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "#")
 
-    /** 功能的activity */
-    private val CLASS_LIST = arrayListOf(
-            AnkoLayoutActivity::class.java, FileTestActivity::class.java, EncryptTestActivity::class.java,
-            BitmapTestActivity::class.java, GlideActivity::class.java, NotificationActivity::class.java,
-            ToastTestActivity::class.java, ReflectActivity::class.java, ColorAlphaTestActivity::class.java,
-            ThreadPoolActivity::class.java, IdcardTestActivity::class.java, NumFormatTestActivity::class.java,
-            SelectorTestActivity::class.java, SettingTestActivity::class.java, StrTestActivity::class.java,
-            InfoTestActivity::class.java, BluetoothTestActivity::class.java, StatusBarTestActivity::class.java,
-            DrawerTestActivity::class.java, CoordinatorTestActivity::class.java, SnackbarTestActivity::class.java,
-            CrashTestActivity::class.java, LocationTestActivity::class.java, DialogActivity::class.java,
-            ArrayTestActivity::class.java, ACacheTestActivity::class.java, MvcDemoActivity::class.java,
-            TransitionActivity::class.java
+    private val MAIN_DATA_LIST = arrayListOf(
+            MainBean("AnkoLayout测试类", "A", AnkoLayoutActivity::class.java),
+            MainBean("文件测试类", "W", FileTestActivity::class.java),
+            MainBean("加密测试类", "J", EncryptTestActivity::class.java),
+            MainBean("Bitmap图片测试类", "B", BitmapTestActivity::class.java),
+            MainBean("Glide测试", "G", GlideActivity::class.java),
+            MainBean("通知测试类", "T", NotificationActivity::class.java),
+            MainBean("Toast测试类", "T", ToastTestActivity::class.java),
+            MainBean("反射测试类", "F", ReflectActivity::class.java),
+            MainBean("颜色透明度测试", "Y", ColorAlphaTestActivity::class.java),
+            MainBean("线程池测试类", "X", ThreadPoolActivity::class.java),
+            MainBean("身份证号码测试类", "S", IdcardTestActivity::class.java),
+            MainBean("数字格式化测试类", "S", NumFormatTestActivity::class.java),
+            MainBean("背景选择器测试类", "B", SelectorTestActivity::class.java),
+            MainBean("设置测试类", "S", SettingTestActivity::class.java),
+            MainBean("字符测试类", "Z", StrTestActivity::class.java),
+            MainBean("信息展示测试类", "X", InfoTestActivity::class.java),
+            MainBean("蓝牙测试类", "L", BluetoothTestActivity::class.java),
+            MainBean("状态栏透明颜色测试类", "Z", StatusBarTestActivity::class.java),
+            MainBean("侧滑栏测试类", "C", DrawerTestActivity::class.java),
+            MainBean("Coordinator测试类", "C", CoordinatorTestActivity::class.java),
+            MainBean("Snackbar测试类", "S", SnackbarTestActivity::class.java),
+            MainBean("崩溃测试类", "B", CrashTestActivity::class.java),
+            MainBean("定位测试", "D", LocationTestActivity::class.java),
+            MainBean("弹框测试", "T", DialogActivity::class.java),
+            MainBean("数组列表测试类", "S", ArrayTestActivity::class.java),
+            MainBean("ACache缓存测试类", "A", ACacheTestActivity::class.java),
+            MainBean("MVC模式测试类", "M", MvcDemoActivity::class.java),
+            MainBean("共享元素动画", "G", TransitionActivity::class.java)
     )
 
     /** 列表 */
     private val mRecyclerView by bindView<RecyclerView>(R.id.recycler_view)
+    /** 索引栏 */
+    private val mIndexBar by bindView<IndexBar>(R.id.index_bar)
+    /** 提示控件 */
+    private val mHintTv by bindView<TextView>(R.id.hint_tv)
 
     private lateinit var mAdapter: MainAdapter
+    private lateinit var mList: List<MainBean>
 
     override fun getLayoutId() = R.layout.activity_main
 
     override fun findViews(savedInstanceState: Bundle?) {
         initTitleBar(getTitleBarLayout())
         initRecyclerView()
+        mIndexBar.setHintTextView(mHintTv)
     }
 
     private fun initTitleBar(titleBarLayout: TitleBarLayout) {
@@ -113,9 +129,23 @@ class MainActivity : BaseActivity() {
         layoutManager.orientation = RecyclerView.VERTICAL
         mAdapter = MainAdapter(getContext())
         mRecyclerView.layoutManager = layoutManager
+        mRecyclerView.addItemDecoration(getItemDecoration())
         mRecyclerView.setHasFixedSize(true)
         mRecyclerView.adapter = mAdapter
     }
+
+    private fun getItemDecoration(): RecyclerView.ItemDecoration =
+            StickyItemDecoration.create<String>(getContext())
+                    .setOnSectionCallback(object : SectionItemDecoration.OnSectionCallback<String> {
+                        override fun getSourceItem(position: Int): String = mList.get(position).getSortStr()
+                    })
+                    .setSectionTextSize(16f)
+                    .setSectionHeight(30)
+                    .setSectionTextTypeface(Typeface.DEFAULT_BOLD)
+                    .setSectionTextColorRes(R.color.color_00a0e9)
+                    .setSectionTextPaddingLeftDp(8)
+                    .setSectionBgColorRes(R.color.color_f0f0f0)
+
 
     override fun onPressBack(): Boolean {
         App.get().exit()
@@ -125,16 +155,28 @@ class MainActivity : BaseActivity() {
     override fun setListeners() {
         super.setListeners()
         mAdapter.setOnItemClickListener { holder, item, position ->
-            val intent = Intent(getContext(), CLASS_LIST[position])
-            intent.putExtra(EXTRA_TITLE_NAME, item)
+            val intent = Intent(getContext(), item.getCls())
+            intent.putExtra(EXTRA_TITLE_NAME, item.getTitleName())
             startActivity(intent)
         }
+
+        mIndexBar.setOnIndexListener(object : IndexBar.OnIndexListener {
+            override fun onStart(position: Int, indexText: String) {
+                val layoutManager = mRecyclerView.layoutManager
+                if (layoutManager != null && layoutManager is LinearLayoutManager) {
+                    layoutManager.scrollToPositionWithOffset(mList.getPositionByIndex(INDEX_TITLE, indexText), 0)
+                }
+            }
+
+            override fun onEnd() {}
+        })
     }
 
     override fun initData() {
         super.initData()
-        mAdapter.setData(NAME_LIST)
+        mList = MAIN_DATA_LIST.group(INDEX_TITLE).toList()
+        mIndexBar.setIndexList(INDEX_TITLE)
+        mAdapter.setData(mList)
         showStatusCompleted()
     }
-
 }

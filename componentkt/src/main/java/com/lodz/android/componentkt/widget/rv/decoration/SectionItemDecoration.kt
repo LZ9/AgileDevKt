@@ -22,6 +22,12 @@ open class SectionItemDecoration<T> protected constructor(context: Context) : Ba
     /** 数据回调 */
     protected var mOnSectionCallback: OnSectionCallback<T>? = null
 
+    /** 设置回调[callback] */
+    fun setOnSectionCallback(callback: OnSectionCallback<T>?): SectionItemDecoration<*> {
+        mOnSectionCallback = callback
+        return this
+    }
+
     override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
         super.getItemOffsets(outRect, view, parent, state)
         if (mOnSectionCallback == null) {

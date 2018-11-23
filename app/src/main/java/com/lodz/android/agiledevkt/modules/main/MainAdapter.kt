@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.agiledevkt.R
+import com.lodz.android.agiledevkt.bean.MainBean
 import com.lodz.android.componentkt.widget.rv.recycler.BaseRecyclerViewAdapter
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.getColorCompat
@@ -15,7 +16,7 @@ import java.util.*
  * 主页的列表
  * Created by zhouL on 2018/6/28.
  */
-class MainAdapter(context: Context) : BaseRecyclerViewAdapter<String>(context) {
+class MainAdapter(context: Context) : BaseRecyclerViewAdapter<MainBean>(context) {
 
     private val COLORS = arrayOf(R.color.color_00a0e9, R.color.color_ea8380, R.color.color_ea413c, R.color.color_303f9f,
             R.color.color_ff4081, R.color.color_d28928, R.color.color_464646)
@@ -26,20 +27,20 @@ class MainAdapter(context: Context) : BaseRecyclerViewAdapter<String>(context) {
             0x1F62A, 0x1F62B, 0x1F62D, 0x1F630, 0x1F631, 0x1F632, 0x1F633, 0x1F634, 0x1F635, 0x1F637, 0x1F638,
             0x1F639, 0x1F63A, 0x1F63B, 0x1F63C, 0x1F63D, 0x1F63E, 0x1F63F)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MainViewHolder(getLayoutView(parent, R.layout.rv_item_main))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder = MainViewHolder(getLayoutView(parent, R.layout.rv_item_main))
 
     override fun onBind(holder: RecyclerView.ViewHolder, position: Int) {
-        val name: String? = getItem(position)
-        if (name == null) {
+        val bean: MainBean? = getItem(position)
+        if (bean == null) {
             return
         }
-        showItem(holder as MainViewHolder, name)
+        showItem(holder as MainViewHolder, bean)
     }
 
-    private fun showItem(holder: MainViewHolder, name: String) {
+    private fun showItem(holder: MainViewHolder, bean: MainBean) {
         val random = Random()
         holder.nameTv.setTextColor(context.getColorCompat(COLORS[(random.nextInt(100) + 1) % COLORS.size]))
-        val str = String(Character.toChars(EMOJI_UNICODE[(random.nextInt(100) + 1) % EMOJI_UNICODE.size])) + "   " + name
+        val str = String(Character.toChars(EMOJI_UNICODE[(random.nextInt(100) + 1) % EMOJI_UNICODE.size])) + "   " + bean.getTitleName()
         holder.nameTv.text = str
     }
 
