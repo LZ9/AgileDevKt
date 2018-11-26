@@ -415,11 +415,18 @@
     <string name="rvanim_popup_slide_in_right">右侧进入</string>
     <string name="rvanim_popup_custom">自定义</string>
 
+    <!-- RV相关的PopupWindow -->
+    <string name="rvpopup_orientation">方向</string>
+    <string name="rvpopup_layout_manager">布局</string>
+    <string name="rvpopup_vertical">纵向</string>
+    <string name="rvpopup_horizontal">横向</string>
+    <string name="rvpopup_linear">线性布局</string>
+    <string name="rvpopup_grid">网格布局</string>
+    <string name="rvpopup_staggered_grid">瀑布流</string>
+
     <!-- 刷新/加载更多测试 -->
     <string name="rvrefresh_load_fail">加载失败</string>
-    <string name="rvrefresh_delete">朵蜜我吧</string>
+    <string name="rvrefresh_delete">取关</string>
     <string name="rvrefresh_refresh_fail">刷新失败啦</string>
-    <string name="rvrefresh_orientation">方向</string>
-    <string name="rvrefresh_layout_manager">布局</string>
 
 </resources>
