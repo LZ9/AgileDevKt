@@ -81,7 +81,7 @@ class AnimRvActivity : BaseActivity() {
         showStatusCompleted()
     }
 
-    private fun createList(): List<String> {
+    private fun createList(): ArrayList<String> {
         val list = ArrayList<String>()
         for (i in 1..120) {
             list.add(DateUtils.getCurrentFormatString(DateUtils.TYPE_10))

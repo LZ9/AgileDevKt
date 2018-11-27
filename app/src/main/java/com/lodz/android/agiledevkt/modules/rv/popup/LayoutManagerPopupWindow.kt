@@ -61,7 +61,7 @@ class LayoutManagerPopupWindow(context: Context) : BasePopupWindow(context) {
     }
 
     /** 设置布局类型[type] */
-    fun set(@LayoutManagerType type: Int) {
+    fun setLayoutManagerType(@LayoutManagerType type: Int) {
         mLinearBtn.backgroundResource = if (type == TYPE_LINEAR) R.drawable.bg_f0f0f0_stroke_00a0e9 else R.drawable.bg_f0f0f0_stroke_cccccc
         mLinearBtn.textColor = getContext().getColorCompat(if (type == TYPE_LINEAR) R.color.color_00a0e9 else R.color.color_9a9a9a)
         mGridBtn.backgroundResource = if (type == TYPE_GRID) R.drawable.bg_f0f0f0_stroke_00a0e9 else R.drawable.bg_f0f0f0_stroke_cccccc

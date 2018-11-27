@@ -428,5 +428,6 @@
     <string name="rvrefresh_load_fail">加载失败</string>
     <string name="rvrefresh_delete">取关</string>
     <string name="rvrefresh_refresh_fail">刷新失败啦</string>
+    <string name="rvrefresh_long_click_tips">还不快放开奴家</string>
 
 </resources>

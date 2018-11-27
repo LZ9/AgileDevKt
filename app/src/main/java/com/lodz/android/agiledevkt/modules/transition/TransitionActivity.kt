@@ -106,7 +106,7 @@ class TransitionActivity : BaseActivity() {
         showStatusCompleted()
     }
 
-    private fun getData(): List<TransitionBean> {
+    private fun getData(): ArrayList<TransitionBean> {
         val list = ArrayList<TransitionBean>()
         for (i in 0 until IMGS.size) {
             val bean = TransitionBean()

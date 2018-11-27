@@ -37,7 +37,7 @@ abstract class BaseRecyclerViewAdapter<T>(protected val context: Context) : Recy
     annotation class AnimationType
 
     /** 数据列表 */
-    private var mData: List<T>? = null
+    private var mData: MutableList<T>? = null
     /** item点击 */
     protected var mOnItemClickListener: ((RecyclerView.ViewHolder, T, Int) -> Unit)? = null
     /** item长按 */
@@ -95,7 +95,7 @@ abstract class BaseRecyclerViewAdapter<T>(protected val context: Context) : Recy
     protected open fun setItemLongClick(holder: RecyclerView.ViewHolder, position: Int) {
         holder.itemView.setOnLongClickListener {
             val item = getItem(position)
-            val listener = mOnItemClickListener
+            val listener = mOnItemLongClickListener
             if (position >= 0 && listener != null && item != null) {
                 listener.invoke(holder, item, position)
             }
@@ -178,7 +178,7 @@ abstract class BaseRecyclerViewAdapter<T>(protected val context: Context) : Recy
     protected fun getDataSize(): Int = mData.getSize()
 
     /** 设置数据列表[data] */
-    fun setData(data: List<T>) {
+    fun setData(data: MutableList<T>) {
         this.mData = data
     }
 
@@ -208,7 +208,7 @@ abstract class BaseRecyclerViewAdapter<T>(protected val context: Context) : Recy
         if (getDataSize() == 0) {
             return
         }
-        mData!!.toMutableList().removeAt(position)
+        mData!!.removeAt(position)
         notifyItemRemoved(position)
         if (position != mData!!.size) {// 如果移除的是最后一个，忽略
             notifyItemRangeChanged(position, mData!!.size - position)

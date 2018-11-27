@@ -30,7 +30,7 @@ class RecyclerViewDragHelper<T>(val mContext: Context) {
     /** 监听器  */
     private var mListener: ((List<T>) -> Unit)? = null// 列表数据
     /** 数据列表  */
-    private var mList: List<T>? = null
+    private var mList: MutableList<T>? = null
     /** 适配器  */
     private lateinit var mAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>
     private lateinit var mItemTouchHelper: ItemTouchHelper
@@ -80,7 +80,7 @@ class RecyclerViewDragHelper<T>(val mContext: Context) {
     }
 
     /** 设置数据列表[list] */
-    fun setList(list: List<T>) {
+    fun setList(list: MutableList<T>) {
         this.mList = list
     }
 
@@ -96,8 +96,8 @@ class RecyclerViewDragHelper<T>(val mContext: Context) {
 
         // 配置拖拽类型
         override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
-            var dragFlags = 0
-            var swipeFlags = 0
+            val dragFlags: Int
+            val swipeFlags: Int
             if (recyclerView.layoutManager is GridLayoutManager) {// 网格布局
                 dragFlags = if (mUseDrag) ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT else 0
                 swipeFlags = 0
@@ -155,7 +155,7 @@ class RecyclerViewDragHelper<T>(val mContext: Context) {
                 return
             }
             val position = viewHolder.adapterPosition
-            mList!!.toMutableList().removeAt(position)
+            mList!!.removeAt(position)
             mAdapter.notifyItemRemoved(position)
             if (position != mList.getSize()) { // 如果移除的是最后一个，忽略
                 mAdapter.notifyItemRangeChanged(position, mList.getSize() - position)

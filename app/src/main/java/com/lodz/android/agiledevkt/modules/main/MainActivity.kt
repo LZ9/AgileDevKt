@@ -180,7 +180,7 @@ class MainActivity : BaseActivity() {
         super.initData()
         mList = MAIN_DATA_LIST.group(INDEX_TITLE).toList()
         mIndexBar.setIndexList(INDEX_TITLE)
-        mAdapter.setData(mList)
+        mAdapter.setData(mList.toMutableList())
         showStatusCompleted()
     }
 }

@@ -42,7 +42,7 @@ abstract class BaseLoadMoreRVAdapter<T>(context: Context) : BaseRecyclerViewAdap
     /** 是否显示加载失败页面  */
     private var isShowLoadFail = false
     /** 存放需要隐藏位置的position  */
-    private var mHidePositionList: List<Int>? = null
+    private var mHidePositionList: MutableList<Int>? = null
 
     /** 加载更多回调 */
     private var mOnLoadMoreListener: ((Int, Int, Int, Int) -> Unit)? = null// 当前页码 , 需要加载的页码 , 每页大小 , 回调位置
@@ -191,7 +191,7 @@ abstract class BaseLoadMoreRVAdapter<T>(context: Context) : BaseRecyclerViewAdap
         this.isShowBottomLayout = isShowBottomLayout
         this.mPage = 1
         if (mHidePositionList != null) {
-            mHidePositionList!!.toMutableList().clear()
+            mHidePositionList!!.clear()
             mHidePositionList = null
         }
         this.mHidePositionList = ArrayList()
@@ -226,7 +226,7 @@ abstract class BaseLoadMoreRVAdapter<T>(context: Context) : BaseRecyclerViewAdap
     /** 隐藏某个位置[position]的Item */
     fun hideItem(position: Int) {
         if (mHidePositionList != null) {
-            mHidePositionList!!.toMutableList().add(position)
+            mHidePositionList!!.add(position)
             val listener = mOnAllItemHideListener
             if (mHidePositionList.getSize() == mSumSize && listener != null) {// 隐藏的item数等于总数
                 listener.invoke()
