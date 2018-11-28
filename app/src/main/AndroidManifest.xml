@@ -430,6 +430,13 @@
 
         </activity>
 
+        <activity
+            android:name=".modules.rv.head.HeadFooterRvActivity"
+            android:label="RV带头/底部测试 "
+            android:screenOrientation="portrait">
+
+        </activity>
+
     </application>
 
 </manifest>

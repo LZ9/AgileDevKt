@@ -430,4 +430,13 @@
     <string name="rvrefresh_refresh_fail">刷新失败啦</string>
     <string name="rvrefresh_long_click_tips">还不快放开奴家</string>
 
+    <!-- 带头部和底部的RecyclerView测试 -->
+    <string name="rvhead_header">头部</string>
+    <string name="rvhead_footer">底部</string>
+    <string name="rvhead_header_tips">宝宝是头布局</string>
+    <string name="rvhead_footer_tips">宝宝是腿布局</string>
+    <string name="rvhead_item_long_click_tips">死变态 快松手啊</string>
+    <string name="rvhead_header_long_click_tips">官人按得好紧呀 ~.~ </string>
+    <string name="rvhead_footer_long_click_tips">客官不可以</string>
+
 </resources>

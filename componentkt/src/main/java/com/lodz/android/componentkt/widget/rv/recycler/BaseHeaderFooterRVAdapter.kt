@@ -68,12 +68,12 @@ abstract class BaseHeaderFooterRVAdapter<H, T, F>(context: Context) : BaseRecycl
     abstract fun getFooterViewHolder(parent: ViewGroup): RecyclerView.ViewHolder
 
     /** 设置头部数据[headerData] */
-    fun setHeaderData(headerData: H) {
+    fun setHeaderData(headerData: H?) {
         mHeaderData = headerData
     }
 
     /** 设置底部数据[footerData] */
-    fun setFooterData(footerData: F) {
+    fun setFooterData(footerData: F?) {
         mFooterData = footerData
     }
 
