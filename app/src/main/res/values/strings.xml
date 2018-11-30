@@ -439,4 +439,10 @@
     <string name="rvhead_header_long_click_tips">官人按得好紧呀 ~.~ </string>
     <string name="rvhead_footer_long_click_tips">客官不可以</string>
 
+    <!-- RV拖拽测试类 -->
+    <string name="rvdrag_swipe_mode">侧滑模式</string>
+    <string name="rvdrag_touch_drag">触摸拖拽</string>
+    <string name="rvdrag_constant_speed_drag">匀速拖拽</string>
+    <string name="rvdrag_orientation_unenable">侧滑模式下不能切换方向</string>
+    <string name="rvdrag_layout_manager_unenable">侧滑模式下不能切换布局</string>
 </resources>

@@ -22,8 +22,8 @@
         android:layout_margin="10dp"
         android:background="@drawable/bg_3981ef_corners_8"
         android:gravity="center"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
         android:text="@string/crash_txt"
         android:textColor="@color/white" />
 </LinearLayout>

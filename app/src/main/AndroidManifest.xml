@@ -432,7 +432,14 @@
 
         <activity
             android:name=".modules.rv.head.HeadFooterRvActivity"
-            android:label="RV带头/底部测试 "
+            android:label="RV带头/底部测试"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity
+            android:name=".modules.rv.drag.DragRvActivity"
+            android:label="RV拖拽测试"
             android:screenOrientation="portrait">
 
         </activity>

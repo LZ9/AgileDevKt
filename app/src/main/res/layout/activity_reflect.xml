@@ -18,8 +18,8 @@
         <com.google.android.flexbox.FlexboxLayout
             android:layout_width="match_parent"
             android:layout_height="400dp"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
             app:alignContent="flex_start"
             app:alignItems="flex_start"
             app:flexDirection="row"
