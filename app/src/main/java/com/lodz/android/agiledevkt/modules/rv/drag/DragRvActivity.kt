@@ -15,7 +15,7 @@ import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.agiledevkt.modules.rv.popup.LayoutManagerPopupWindow
 import com.lodz.android.agiledevkt.modules.rv.popup.OrientationPopupWindow
 import com.lodz.android.componentkt.base.activity.BaseActivity
-import com.lodz.android.componentkt.widget.rv.recycler.RecyclerViewDragHelper
+import com.lodz.android.componentkt.widget.rv.drag.RecyclerViewDragHelper
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.corekt.utils.toastShort
@@ -55,7 +55,8 @@ class DragRvActivity : BaseActivity() {
     private var mLayoutManagerType = LayoutManagerPopupWindow.TYPE_LINEAR
     /** 布局方向 */
     private var mOrientation = RecyclerView.VERTICAL
-
+    /** 拖拽回调 */
+    private val mCallback = DragSpeedCallback<String>()
 
     override fun getLayoutId(): Int = R.layout.activity_drag
 
@@ -79,8 +80,7 @@ class DragRvActivity : BaseActivity() {
                 .setUseRightToLeftSwipe(true)// 设置允许从右往左滑动
                 .setSwipeEnabled(false)// 设置是否允许滑动
                 .setVibrateEnabled(true)// 启用震动效果
-                .build(mRecyclerView, mAdapter)
-
+        mRecyclerViewDragHelper.build(mRecyclerView, mAdapter, mCallback)
     }
 
     private fun getLayoutManager(): RecyclerView.LayoutManager {
@@ -106,6 +106,7 @@ class DragRvActivity : BaseActivity() {
     override fun setListeners() {
         super.setListeners()
 
+        // 侧滑模式
         mSwipeModeSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked){
                 mOrientation = RecyclerView.VERTICAL
@@ -121,6 +122,7 @@ class DragRvActivity : BaseActivity() {
             mRecyclerViewDragHelper.setSwipeEnabled(isChecked)
         }
 
+        // 触摸拖拽
         mDragSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
             mRecyclerViewDragHelper.setLongPressDragEnabled(!isChecked)
             mAdapter.setItemTouchHelper(if (isChecked) mRecyclerViewDragHelper.getItemTouchHelper() else null)
@@ -128,6 +130,12 @@ class DragRvActivity : BaseActivity() {
             mAdapter.notifyDataSetChanged()
         }
 
+        // 匀速拖拽
+        mConstantSpeedSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
+            mCallback.isLimit = isChecked
+        }
+
+        // 方向
         mOrientationBtn.setOnClickListener { view ->
             if (mSwipeModeSwitch.isChecked){
                 toastShort(R.string.rvdrag_orientation_unenable)
@@ -136,6 +144,7 @@ class DragRvActivity : BaseActivity() {
             showOrientationPopupWindow(view)
         }
 
+        // 布局
         mLayoutManagerBtn.setOnClickListener { view ->
             if (mSwipeModeSwitch.isChecked){
                 toastShort(R.string.rvdrag_layout_manager_unenable)
