@@ -445,4 +445,10 @@
     <string name="rvdrag_constant_speed_drag">匀速拖拽</string>
     <string name="rvdrag_orientation_unenable">侧滑模式下不能切换方向</string>
     <string name="rvdrag_layout_manager_unenable">侧滑模式下不能切换布局</string>
+
+    <!-- RV snap测试类 -->
+    <string name="rvsnap_page">第%s页</string>
+
+
+
 </resources>

@@ -33,6 +33,7 @@ import com.lodz.android.agiledevkt.modules.rv.anim.AnimRvActivity
 import com.lodz.android.agiledevkt.modules.rv.drag.DragRvActivity
 import com.lodz.android.agiledevkt.modules.rv.head.HeadFooterRvActivity
 import com.lodz.android.agiledevkt.modules.rv.loadmore.RefreshLoadMoreActivity
+import com.lodz.android.agiledevkt.modules.rv.snap.SnapRvActivity
 import com.lodz.android.agiledevkt.modules.security.EncryptTestActivity
 import com.lodz.android.agiledevkt.modules.selector.SelectorTestActivity
 import com.lodz.android.agiledevkt.modules.setting.SettingTestActivity
@@ -98,8 +99,8 @@ class MainActivity : BaseActivity() {
             MainBean("RV动画测试", "R", AnimRvActivity::class.java),
             MainBean("RV刷新/加载更多测试", "R", RefreshLoadMoreActivity::class.java),
             MainBean("RV带头/底部测试", "R", HeadFooterRvActivity::class.java),
-            MainBean("RV拖拽测试", "R", DragRvActivity::class.java)
-
+            MainBean("RV拖拽测试", "R", DragRvActivity::class.java),
+            MainBean("RvSnap测试类", "R", SnapRvActivity::class.java)
     )
 
     /** 列表 */

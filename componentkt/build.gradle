@@ -39,6 +39,8 @@ dependencies {
     api 'com.trello.rxlifecycle3:rxlifecycle-components:3.0.0'
     // EventBus
     api 'org.greenrobot:eventbus:3.1.1'
+    // PhotoView
+    api 'com.github.chrisbanes:PhotoView:2.0.0'
 
     // 单元测试
     testImplementation 'junit:junit:4.12'
