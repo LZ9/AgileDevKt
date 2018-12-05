@@ -449,6 +449,14 @@
     <!-- RV snap测试类 -->
     <string name="rvsnap_page">第%s页</string>
 
-
-
+    <!-- RV装饰器测试类 -->
+    <string name="rvdecoration_round_bottom">底部分割线</string>
+    <string name="rvdecoration_round">外围分割线</string>
+    <string name="rvdecoration_grid">网格分割线</string>
+    <string name="rvdecoration_section">分组标签</string>
+    <string name="rvdecoration_section_fix">固定数据的分组标签</string>
+    <string name="rvdecoration_sticky_section">粘黏分组标签</string>
+    <string name="rvdecoration_sticky_section_fix">固定数据的粘黏分组标签</string>
+    <string name="rvdecoration_unenabled_orientation">该模式下不允许切换方向</string>
+    <string name="rvdecoration_unenabled_layout_manager">该模式下不允许切换布局</string>
 </resources>

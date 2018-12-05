@@ -77,17 +77,17 @@ class RoundItemDecoration private constructor(context: Context) : BaseItemDecora
     /** 右侧背景画笔  */
     private var mRightBgPaint: Paint? = null
 
-    /** 设置顶部分割线，间距[space]（单位dp），左右间隔[lrPaddingDp]，分割线颜色[color]（不传使用默认值），背景颜色[bgColor]（不传使用默认值） */
-    fun setTopDividerRes(@IntRange(from = 1) space: Int, @IntRange(from = 0) lrPaddingDp: Int,
+    /** 设置顶部分割线，间距[spaceDp]（单位dp），左右间隔[lrPaddingDp]，分割线颜色[color]（不传使用默认值），背景颜色[bgColor]（不传使用默认值） */
+    fun setTopDividerRes(@IntRange(from = 1) spaceDp: Int = 1, @IntRange(from = 0) lrPaddingDp: Int = 0,
                          @ColorRes color: Int = 0, @ColorRes bgColor: Int = 0): RoundItemDecoration =
-            setTopDividerInt(space, lrPaddingDp,
+            setTopDividerInt(spaceDp, lrPaddingDp,
                     if (color != 0) getContext().getColorCompat(color) else DEFAULT_DIVIDER_COLOR,
                     if (bgColor != 0) getContext().getColorCompat(bgColor) else DEFAULT_DIVIDER_BG_COLOR)
 
-    /** 设置顶部分割线，间距[space]（单位dp），左右间隔[lrPaddingDp]，分割线颜色[color]（不传默认灰色），背景颜色[bgColor]（不传默认白色） */
-    fun setTopDividerInt(@IntRange(from = 1) space: Int, @IntRange(from = 0) lrPaddingDp: Int,
+    /** 设置顶部分割线，间距[spaceDp]（单位dp），左右间隔[lrPaddingDp]，分割线颜色[color]（不传默认灰色），背景颜色[bgColor]（不传默认白色） */
+    fun setTopDividerInt(@IntRange(from = 1) spaceDp: Int = 1, @IntRange(from = 0) lrPaddingDp: Int = 0,
                          @ColorInt color: Int = DEFAULT_DIVIDER_COLOR, @ColorInt bgColor: Int = DEFAULT_DIVIDER_BG_COLOR): RoundItemDecoration {
-        mTopPx = getContext().dp2px(space).toInt()
+        mTopPx = getContext().dp2px(spaceDp).toInt()
         mTopLrPadding = getContext().dp2px(lrPaddingDp).toInt()
 
         if (mTopPaint == null) {
@@ -102,17 +102,17 @@ class RoundItemDecoration private constructor(context: Context) : BaseItemDecora
         return this
     }
 
-    /** 设置底部分割线，间距[space]（单位dp），左右间隔[lrPaddingDp]，分割线颜色[color]（不传使用默认值），背景颜色[bgColor]（不传使用默认值） */
-    fun setBottomDividerRes(@IntRange(from = 1) space: Int, @IntRange(from = 0) lrPaddingDp: Int,
+    /** 设置底部分割线，间距[spaceDp]（单位dp），左右间隔[lrPaddingDp]，分割线颜色[color]（不传使用默认值），背景颜色[bgColor]（不传使用默认值） */
+    fun setBottomDividerRes(@IntRange(from = 1) spaceDp: Int = 1, @IntRange(from = 0) lrPaddingDp: Int = 0,
                             @ColorRes color: Int = 0, @ColorRes bgColor: Int = 0): RoundItemDecoration =
-            setBottomDividerInt(space, lrPaddingDp,
+            setBottomDividerInt(spaceDp, lrPaddingDp,
                     if (color != 0) getContext().getColorCompat(color) else DEFAULT_DIVIDER_COLOR,
                     if (bgColor != 0) getContext().getColorCompat(bgColor) else DEFAULT_DIVIDER_BG_COLOR)
 
-    /** 设置底部分割线，间距[space]（单位dp），左右间隔[lrPaddingDp]，分割线颜色[color]（不传默认灰色），背景颜色[bgColor]（不传默认白色） */
-    fun setBottomDividerInt(@IntRange(from = 1) space: Int, @IntRange(from = 0) lrPaddingDp: Int,
+    /** 设置底部分割线，间距[spaceDp]（单位dp），左右间隔[lrPaddingDp]，分割线颜色[color]（不传默认灰色），背景颜色[bgColor]（不传默认白色） */
+    fun setBottomDividerInt(@IntRange(from = 1) spaceDp: Int = 1, @IntRange(from = 0) lrPaddingDp: Int = 0,
                             @ColorInt color: Int = DEFAULT_DIVIDER_COLOR, @ColorInt bgColor: Int = DEFAULT_DIVIDER_BG_COLOR): RoundItemDecoration {
-        mBottomPx = getContext().dp2px(space).toInt()
+        mBottomPx = getContext().dp2px(spaceDp).toInt()
         mBottomLrPadding = getContext().dp2px(lrPaddingDp).toInt()
 
         if (mBottomPaint == null) {
@@ -127,17 +127,17 @@ class RoundItemDecoration private constructor(context: Context) : BaseItemDecora
         return this
     }
 
-    /** 设置左侧分割线，间距[space]（单位dp），左右间隔[lrPaddingDp]，分割线颜色[color]（不传使用默认值），背景颜色[bgColor]（不传使用默认值） */
-    fun setLeftDividerRes(@IntRange(from = 1) space: Int, @IntRange(from = 0) lrPaddingDp: Int,
+    /** 设置左侧分割线，间距[spaceDp]（单位dp），左右间隔[lrPaddingDp]，分割线颜色[color]（不传使用默认值），背景颜色[bgColor]（不传使用默认值） */
+    fun setLeftDividerRes(@IntRange(from = 1) spaceDp: Int = 1, @IntRange(from = 0) lrPaddingDp: Int = 0,
                           @ColorRes color: Int = 0, @ColorRes bgColor: Int = 0): RoundItemDecoration =
-            setLeftDividerInt(space, lrPaddingDp,
+            setLeftDividerInt(spaceDp, lrPaddingDp,
                     if (color != 0) getContext().getColorCompat(color) else DEFAULT_DIVIDER_COLOR,
                     if (bgColor != 0) getContext().getColorCompat(bgColor) else DEFAULT_DIVIDER_BG_COLOR)
 
-    /** 设置左侧分割线，间距[space]（单位dp），左右间隔[lrPaddingDp]，分割线颜色[color]（不传默认灰色），背景颜色[bgColor]（不传默认白色） */
-    fun setLeftDividerInt(@IntRange(from = 1) space: Int, @IntRange(from = 0) lrPaddingDp: Int,
+    /** 设置左侧分割线，间距[spaceDp]（单位dp），左右间隔[lrPaddingDp]，分割线颜色[color]（不传默认灰色），背景颜色[bgColor]（不传默认白色） */
+    fun setLeftDividerInt(@IntRange(from = 1) spaceDp: Int = 1, @IntRange(from = 0) lrPaddingDp: Int = 0,
                           @ColorInt color: Int = DEFAULT_DIVIDER_COLOR, @ColorInt bgColor: Int = DEFAULT_DIVIDER_BG_COLOR): RoundItemDecoration {
-        mLeftPx = getContext().dp2px(space).toInt()
+        mLeftPx = getContext().dp2px(spaceDp).toInt()
         mLeftTbPadding = getContext().dp2px(lrPaddingDp).toInt()
 
         if (mLeftPaint == null) {
@@ -152,17 +152,17 @@ class RoundItemDecoration private constructor(context: Context) : BaseItemDecora
         return this
     }
 
-    /** 设置右侧分割线，间距[space]（单位dp），左右间隔[lrPaddingDp]，分割线颜色[color]（不传使用默认值），背景颜色[bgColor]（不传使用默认值） */
-    fun setRightDividerRes(@IntRange(from = 1) space: Int, @IntRange(from = 0) lrPaddingDp: Int,
+    /** 设置右侧分割线，间距[spaceDp]（单位dp），左右间隔[lrPaddingDp]，分割线颜色[color]（不传使用默认值），背景颜色[bgColor]（不传使用默认值） */
+    fun setRightDividerRes(@IntRange(from = 1) spaceDp: Int = 1, @IntRange(from = 0) lrPaddingDp: Int = 0,
                            @ColorRes color: Int = 0, @ColorRes bgColor: Int = 0): RoundItemDecoration =
-            setRightDividerInt(space, lrPaddingDp,
+            setRightDividerInt(spaceDp, lrPaddingDp,
                     if (color != 0) getContext().getColorCompat(color) else DEFAULT_DIVIDER_COLOR,
                     if (bgColor != 0) getContext().getColorCompat(bgColor) else DEFAULT_DIVIDER_BG_COLOR)
 
-    /** 设置右侧分割线，间距[space]（单位dp），左右间隔[lrPaddingDp]，分割线颜色[color]（不传默认灰色），背景颜色[bgColor]（不传默认白色） */
-    fun setRightDividerInt(@IntRange(from = 1) space: Int, @IntRange(from = 0) lrPaddingDp: Int,
+    /** 设置右侧分割线，间距[spaceDp]（单位dp），左右间隔[lrPaddingDp]，分割线颜色[color]（不传默认灰色），背景颜色[bgColor]（不传默认白色） */
+    fun setRightDividerInt(@IntRange(from = 1) spaceDp: Int = 1, @IntRange(from = 0) lrPaddingDp: Int = 0,
                            @ColorInt color: Int = DEFAULT_DIVIDER_COLOR, @ColorInt bgColor: Int = DEFAULT_DIVIDER_BG_COLOR): RoundItemDecoration {
-        mRightPx = getContext().dp2px(space).toInt()
+        mRightPx = getContext().dp2px(spaceDp).toInt()
         mRightTbPadding = getContext().dp2px(lrPaddingDp).toInt()
 
         if (mRightPaint == null) {
@@ -194,7 +194,6 @@ class RoundItemDecoration private constructor(context: Context) : BaseItemDecora
     }
 
     override fun onDraw(canvas: Canvas, parent: RecyclerView, state: RecyclerView.State) {
-        super.onDraw(canvas, parent, state)
         if (mTopPx <= 0 && mBottomPx <= 0 && mLeftPx <= 0 && mRightPx <= 0) {
             return
         }

@@ -451,6 +451,20 @@
 
         </activity>
 
+        <activity
+            android:name=".modules.rv.decoration.DecorationRvActivity"
+            android:label="RV装饰器测试"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity
+            android:name=".modules.rv.decoration.DecorationTestActivity"
+            android:label="装饰器测试类"
+            android:screenOrientation="portrait">
+
+        </activity>
+
     </application>
 
 </manifest>
