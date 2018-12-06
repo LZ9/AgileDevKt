@@ -141,7 +141,8 @@ class GridItemDecoration private constructor(context: Context) : BaseItemDecorat
         }
 
         // 横向
-        parent.setPadding(0, 0, 0, mPx)
+        parent.setPadding(parent.paddingStart, parent.paddingTop, parent.paddingEnd,
+                if (parent.paddingBottom >= mPx) parent.paddingBottom else parent.paddingBottom + mPx)
         if (position < spanCount) {//最左侧
             outRect.top = mPx
             outRect.bottom = 0

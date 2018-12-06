@@ -17,6 +17,7 @@ import com.lodz.android.agiledevkt.modules.rv.popup.LayoutManagerPopupWindow
 import com.lodz.android.agiledevkt.modules.rv.popup.OrientationPopupWindow
 import com.lodz.android.componentkt.base.activity.BaseActivity
 import com.lodz.android.componentkt.widget.base.TitleBarLayout
+import com.lodz.android.componentkt.widget.rv.decoration.GridItemDecoration
 import com.lodz.android.componentkt.widget.rv.decoration.RoundItemDecoration
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.dp2px
@@ -119,7 +120,7 @@ class DecorationTestActivity : BaseActivity() {
 
         val orientationTv = getTextView(R.string.rvpopup_orientation);//方向
         orientationTv.setOnClickListener { view ->
-            if (mDecorationType == DECORATION_TYPE_ROUND_BOTTOM){
+            if (mDecorationType == DECORATION_TYPE_ROUND_BOTTOM) {
                 toastShort(R.string.rvdecoration_unenabled_orientation)
                 return@setOnClickListener
             }
@@ -129,7 +130,7 @@ class DecorationTestActivity : BaseActivity() {
 
         val layoutManagerTv = getTextView(R.string.rvpopup_layout_manager);//布局
         layoutManagerTv.setOnClickListener { view ->
-            if (mDecorationType == DECORATION_TYPE_ROUND_BOTTOM || mDecorationType == DECORATION_TYPE_ROUND){
+            if (mDecorationType == DECORATION_TYPE_ROUND_BOTTOM || mDecorationType == DECORATION_TYPE_ROUND) {
                 toastShort(R.string.rvdecoration_unenabled_layout_manager)
                 return@setOnClickListener
             }
@@ -183,8 +184,11 @@ class DecorationTestActivity : BaseActivity() {
 
     /** 根据类型[type]获取装饰器 */
     private fun getItemDecoration(type: Int): RecyclerView.ItemDecoration {
-        if (type == DECORATION_TYPE_ROUND_BOTTOM){
-            return RoundItemDecoration.createBottomDivider(getContext(), 1,10, R.color.color_9a9a9a, R.color.white)
+        if (type == DECORATION_TYPE_ROUND_BOTTOM) {
+            return RoundItemDecoration.createBottomDivider(getContext(), 1, 10, R.color.color_9a9a9a, R.color.white)
+        }
+        if (type == DECORATION_TYPE_GRID) {
+            return GridItemDecoration.create(getContext()).setDividerRes(R.color.color_9a9a9a).setDividerSpace(2)
         }
         return RoundItemDecoration.create(getContext())
                 .setTopDividerRes(3, 0, R.color.color_9a9a9a, R.color.color_ea413c)
@@ -196,7 +200,7 @@ class DecorationTestActivity : BaseActivity() {
     /** 获取布局 */
     private fun getLayoutManager(): RecyclerView.LayoutManager {
         if (mLayoutManagerType == LayoutManagerPopupWindow.TYPE_GRID) {
-            val layoutManager = GridLayoutManager(getContext(), 3)
+            val layoutManager = GridLayoutManager(getContext(), 6)
             layoutManager.orientation = mOrientation
             return layoutManager
         }
