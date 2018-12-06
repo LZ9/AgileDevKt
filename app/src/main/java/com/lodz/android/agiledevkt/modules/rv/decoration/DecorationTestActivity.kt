@@ -23,6 +23,7 @@ import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.dp2px
 import com.lodz.android.corekt.anko.getColorCompat
 import com.lodz.android.corekt.utils.toastShort
+import org.jetbrains.anko.padding
 
 /**
  * 装饰器测试类
@@ -205,7 +206,7 @@ class DecorationTestActivity : BaseActivity() {
             return layoutManager
         }
         if (mLayoutManagerType == LayoutManagerPopupWindow.TYPE_STAGGERED) {
-            return StaggeredGridLayoutManager(2, mOrientation)
+            return StaggeredGridLayoutManager(3, mOrientation)
         }
 
         val layoutManager = LinearLayoutManager(getContext())
@@ -220,9 +221,17 @@ class DecorationTestActivity : BaseActivity() {
 
     override fun initData() {
         super.initData()
+        configByType(mDecorationType)
         mAdapter.setData(getList())
         mAdapter.notifyDataSetChanged()
         showStatusCompleted()
+    }
+
+    /** 根据类型[type]配置界面 */
+    private fun configByType(type: Int) {
+        if (type == DECORATION_TYPE_GRID){
+            mRecyclerView.padding = dp2px(8).toInt()
+        }
     }
 
     private fun getList(): ArrayList<String> {
