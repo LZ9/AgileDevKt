@@ -2,6 +2,7 @@ package com.lodz.android.agiledevkt.modules.rv.decoration
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -19,9 +20,8 @@ import com.lodz.android.componentkt.base.activity.BaseActivity
 import com.lodz.android.componentkt.widget.base.TitleBarLayout
 import com.lodz.android.componentkt.widget.rv.decoration.GridItemDecoration
 import com.lodz.android.componentkt.widget.rv.decoration.RoundItemDecoration
-import com.lodz.android.corekt.anko.bindView
-import com.lodz.android.corekt.anko.dp2px
-import com.lodz.android.corekt.anko.getColorCompat
+import com.lodz.android.componentkt.widget.rv.decoration.SectionItemDecoration
+import com.lodz.android.corekt.anko.*
 import com.lodz.android.corekt.utils.toastShort
 import org.jetbrains.anko.padding
 
@@ -58,6 +58,9 @@ class DecorationTestActivity : BaseActivity() {
         }
     }
 
+    /** 列表索引 */
+    private val INDEX_TITLE = arrayListOf("0", "1", "2", "3", "4", "5", "6", "7", "8", "9")
+
     /** 列表 */
     private val mRecyclerView by bindView<RecyclerView>(R.id.recycler_view)
     private lateinit var mAdapter: DecorationRvAdapter
@@ -69,6 +72,9 @@ class DecorationTestActivity : BaseActivity() {
     private var mLayoutManagerType = LayoutManagerPopupWindow.TYPE_LINEAR
     /** 布局方向 */
     private var mOrientation = RecyclerView.VERTICAL
+
+    /** 列表数据 */
+    private lateinit var mList: ArrayList<String>
 
     override fun startCreate() {
         super.startCreate()
@@ -121,7 +127,7 @@ class DecorationTestActivity : BaseActivity() {
 
         val orientationTv = getTextView(R.string.rvpopup_orientation);//方向
         orientationTv.setOnClickListener { view ->
-            if (mDecorationType == DECORATION_TYPE_ROUND_BOTTOM) {
+            if (mDecorationType == DECORATION_TYPE_ROUND_BOTTOM || mDecorationType == DECORATION_TYPE_SECTION) {
                 toastShort(R.string.rvdecoration_unenabled_orientation)
                 return@setOnClickListener
             }
@@ -131,7 +137,8 @@ class DecorationTestActivity : BaseActivity() {
 
         val layoutManagerTv = getTextView(R.string.rvpopup_layout_manager);//布局
         layoutManagerTv.setOnClickListener { view ->
-            if (mDecorationType == DECORATION_TYPE_ROUND_BOTTOM || mDecorationType == DECORATION_TYPE_ROUND) {
+            if (mDecorationType == DECORATION_TYPE_ROUND_BOTTOM || mDecorationType == DECORATION_TYPE_ROUND
+                    || mDecorationType == DECORATION_TYPE_SECTION) {
                 toastShort(R.string.rvdecoration_unenabled_layout_manager)
                 return@setOnClickListener
             }
@@ -191,6 +198,19 @@ class DecorationTestActivity : BaseActivity() {
         if (type == DECORATION_TYPE_GRID) {
             return GridItemDecoration.create(getContext()).setDividerRes(R.color.color_9a9a9a).setDividerSpace(2)
         }
+        if (type == DECORATION_TYPE_SECTION) {
+            return SectionItemDecoration.create<String>(getContext())
+                    .setOnSectionCallback(object : SectionItemDecoration.OnSectionCallback<String> {
+                        override fun getSourceItem(position: Int): String = mList.get(position)
+                    })
+                    .setSectionBgColorRes(R.color.color_ea6662)
+                    .setSectionTextColorRes(R.color.color_ffa630)
+                    .setSectionTextPaddingLeftDp(8)
+                    .setSectionTextTypeface(Typeface.DEFAULT_BOLD)
+                    .setSectionHeight(30)
+                    .setSectionTextSize(16f)
+
+        }
         return RoundItemDecoration.create(getContext())
                 .setTopDividerRes(3, 0, R.color.color_9a9a9a, R.color.color_ea413c)
                 .setLeftDividerRes(3, 0, R.color.color_9a9a9a, R.color.color_ea413c)
@@ -222,15 +242,19 @@ class DecorationTestActivity : BaseActivity() {
     override fun initData() {
         super.initData()
         configByType(mDecorationType)
-        mAdapter.setData(getList())
+        mAdapter.setData(mList)
         mAdapter.notifyDataSetChanged()
         showStatusCompleted()
     }
 
     /** 根据类型[type]配置界面 */
     private fun configByType(type: Int) {
-        if (type == DECORATION_TYPE_GRID){
+        mList = getList()
+        if (type == DECORATION_TYPE_GRID) {
             mRecyclerView.padding = dp2px(8).toInt()
+        }
+        if (type == DECORATION_TYPE_SECTION) {
+            mList = mList.group(INDEX_TITLE).toArrayList()
         }
     }
 

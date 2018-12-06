@@ -3,6 +3,7 @@ package com.lodz.android.corekt.anko
 import androidx.annotation.IntRange
 import com.lodz.android.corekt.array.Groupable
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * 数组列表帮助类
@@ -14,6 +15,12 @@ inline fun <reified T> Array<T>.deduplication(): Array<*> = LinkedHashSet<T>(toL
 
 /** 列表数据去重 */
 fun <T> Collection<T>.deduplication(): Collection<T> = LinkedHashSet<T>(this).toList()
+
+/** 列表转ArrayList */
+fun <T> Collection<T>.toArrayList():ArrayList<T> = ArrayList(this)
+
+/** 数组转ArrayList */
+fun <T> Array<T>.toArrayList():ArrayList<T> = ArrayList(this.toList())
 
 /** 获取数组长度 */
 fun Array<*>?.getSize(): Int = if (this == null) 0 else this.size
