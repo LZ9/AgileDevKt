@@ -23,7 +23,7 @@
         api 'androidx.annotation:annotation:1.0.0'
         api 'androidx.constraintlayout:constraintlayout:2.0.0-alpha2'
         api 'com.google.android:flexbox:1.1.0'
-        api 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.10'
+        api 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.11'
     }
 ```
 
