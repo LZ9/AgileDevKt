@@ -18,10 +18,7 @@ import com.lodz.android.agiledevkt.modules.rv.popup.LayoutManagerPopupWindow
 import com.lodz.android.agiledevkt.modules.rv.popup.OrientationPopupWindow
 import com.lodz.android.componentkt.base.activity.BaseActivity
 import com.lodz.android.componentkt.widget.base.TitleBarLayout
-import com.lodz.android.componentkt.widget.rv.decoration.GridItemDecoration
-import com.lodz.android.componentkt.widget.rv.decoration.RoundItemDecoration
-import com.lodz.android.componentkt.widget.rv.decoration.SectionFixItemDecoration
-import com.lodz.android.componentkt.widget.rv.decoration.SectionItemDecoration
+import com.lodz.android.componentkt.widget.rv.decoration.*
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.dp2px
 import com.lodz.android.corekt.anko.getColorCompat
@@ -137,7 +134,8 @@ class DecorationTestActivity : BaseActivity() {
         val orientationTv = getTextView(R.string.rvpopup_orientation);//方向
         orientationTv.setOnClickListener { view ->
             if (mDecorationType == DECORATION_TYPE_ROUND_BOTTOM || mDecorationType == DECORATION_TYPE_SECTION
-                    || mDecorationType == DECORATION_TYPE_SECTION_FIX) {
+                    || mDecorationType == DECORATION_TYPE_SECTION_FIX || mDecorationType == DECORATION_TYPE_STICKY_SECTION
+                    || mDecorationType == DECORATION_TYPE_STICKY_SECTION_FIX) {
                 toastShort(R.string.rvdecoration_unenabled_orientation)
                 return@setOnClickListener
             }
@@ -148,7 +146,8 @@ class DecorationTestActivity : BaseActivity() {
         val layoutManagerTv = getTextView(R.string.rvpopup_layout_manager);//布局
         layoutManagerTv.setOnClickListener { view ->
             if (mDecorationType == DECORATION_TYPE_ROUND_BOTTOM || mDecorationType == DECORATION_TYPE_ROUND
-                    || mDecorationType == DECORATION_TYPE_SECTION || mDecorationType == DECORATION_TYPE_SECTION_FIX) {
+                    || mDecorationType == DECORATION_TYPE_SECTION || mDecorationType == DECORATION_TYPE_SECTION_FIX
+                    || mDecorationType == DECORATION_TYPE_STICKY_SECTION || mDecorationType == DECORATION_TYPE_STICKY_SECTION_FIX) {
                 toastShort(R.string.rvdecoration_unenabled_layout_manager)
                 return@setOnClickListener
             }
@@ -220,7 +219,7 @@ class DecorationTestActivity : BaseActivity() {
                     .setSectionHeight(30)
                     .setSectionTextSize(16f)
         }
-        if (type == DECORATION_TYPE_SECTION_FIX){//按传入的数据配置分组标签
+        if (type == DECORATION_TYPE_SECTION_FIX) {//按传入的数据配置分组标签
             return SectionFixItemDecoration.create(getContext(), CLUB_INDEX_TITLE, PLAYER_FIX_SECTIONS)
                     .setSectionBgColorRes(R.color.color_1a1a1a)
                     .setSectionTextColorRes(R.color.color_f0f0f0)
@@ -229,6 +228,27 @@ class DecorationTestActivity : BaseActivity() {
                     .setSectionHeight(36)
                     .setSectionTextSize(16f)
 
+        }
+        if (type == DECORATION_TYPE_STICKY_SECTION) {// 根据数据自动生成分组标签
+            return StickyItemDecoration.create<String>(getContext())
+                    .setOnSectionCallback(object : SectionItemDecoration.OnSectionCallback<String> {
+                        override fun getSourceItem(position: Int): String = mList.get(position)
+                    })
+                    .setSectionBgColorRes(R.color.color_ea6662)
+                    .setSectionTextColorRes(R.color.color_ffa630)
+                    .setSectionTextPaddingLeftDp(8)
+                    .setSectionTextTypeface(Typeface.DEFAULT_BOLD)
+                    .setSectionHeight(30)
+                    .setSectionTextSize(16f)
+        }
+        if (type == DECORATION_TYPE_STICKY_SECTION_FIX) {//按传入的数据配置分组标签
+            return StickyFixItemDecoration.create(getContext(), CLUB_INDEX_TITLE, PLAYER_FIX_SECTIONS)
+                    .setSectionBgColorRes(R.color.color_1a1a1a)
+                    .setSectionTextColorRes(R.color.color_f0f0f0)
+                    .setSectionTextPaddingLeftDp(8)
+                    .setSectionTextTypeface(Typeface.DEFAULT_BOLD)
+                    .setSectionHeight(36)
+                    .setSectionTextSize(16f)
         }
         // 订制上下左右边线
         return RoundItemDecoration.create(getContext())
@@ -273,9 +293,9 @@ class DecorationTestActivity : BaseActivity() {
         if (type == DECORATION_TYPE_GRID) {
             mRecyclerView.padding = dp2px(8).toInt()
         }
-        if (type == DECORATION_TYPE_SECTION_FIX){
+        if (type == DECORATION_TYPE_SECTION_FIX || type == DECORATION_TYPE_STICKY_SECTION_FIX) {
             val list = ArrayList<String>()
-            for (source in PLAYER_FIX_SECTIONS){
+            for (source in PLAYER_FIX_SECTIONS) {
                 list.addAll(source)
             }
             mList = list
