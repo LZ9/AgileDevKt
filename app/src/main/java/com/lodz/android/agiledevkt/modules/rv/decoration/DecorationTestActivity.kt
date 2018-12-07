@@ -20,8 +20,11 @@ import com.lodz.android.componentkt.base.activity.BaseActivity
 import com.lodz.android.componentkt.widget.base.TitleBarLayout
 import com.lodz.android.componentkt.widget.rv.decoration.GridItemDecoration
 import com.lodz.android.componentkt.widget.rv.decoration.RoundItemDecoration
+import com.lodz.android.componentkt.widget.rv.decoration.SectionFixItemDecoration
 import com.lodz.android.componentkt.widget.rv.decoration.SectionItemDecoration
-import com.lodz.android.corekt.anko.*
+import com.lodz.android.corekt.anko.bindView
+import com.lodz.android.corekt.anko.dp2px
+import com.lodz.android.corekt.anko.getColorCompat
 import com.lodz.android.corekt.utils.toastShort
 import org.jetbrains.anko.padding
 
@@ -58,8 +61,14 @@ class DecorationTestActivity : BaseActivity() {
         }
     }
 
-    /** 列表索引 */
-    private val INDEX_TITLE = arrayListOf("0", "1", "2", "3", "4", "5", "6", "7", "8", "9")
+    /** 俱乐部列表索引 */
+    private val CLUB_INDEX_TITLE = arrayListOf("曼联", "阿森纳", "切尔西", "利物浦")
+    private val PLAYER_FIX_SECTIONS = listOf(
+            listOf("贝克汉姆", "吉格斯", "斯科尔斯", "鲁尼", "费迪南德", "范德萨", "卡里克", "罗伊基恩", "埃弗拉"),
+            listOf("亨利", "皮雷", "博格坎普", "莱曼", "维埃拉", "罗西基", "阿什利科尔", "索尔坎贝尔"),
+            listOf("兰帕德", "切赫", "特里", "乔科尔", "德罗巴", "巴拉克", "舍甫琴科", "罗本"),
+            listOf("欧文", "杰拉德", "卡拉格", "福勒", "雷纳", "阿隆索", "库伊特", "里瑟")
+    )
 
     /** 列表 */
     private val mRecyclerView by bindView<RecyclerView>(R.id.recycler_view)
@@ -127,7 +136,8 @@ class DecorationTestActivity : BaseActivity() {
 
         val orientationTv = getTextView(R.string.rvpopup_orientation);//方向
         orientationTv.setOnClickListener { view ->
-            if (mDecorationType == DECORATION_TYPE_ROUND_BOTTOM || mDecorationType == DECORATION_TYPE_SECTION) {
+            if (mDecorationType == DECORATION_TYPE_ROUND_BOTTOM || mDecorationType == DECORATION_TYPE_SECTION
+                    || mDecorationType == DECORATION_TYPE_SECTION_FIX) {
                 toastShort(R.string.rvdecoration_unenabled_orientation)
                 return@setOnClickListener
             }
@@ -138,7 +148,7 @@ class DecorationTestActivity : BaseActivity() {
         val layoutManagerTv = getTextView(R.string.rvpopup_layout_manager);//布局
         layoutManagerTv.setOnClickListener { view ->
             if (mDecorationType == DECORATION_TYPE_ROUND_BOTTOM || mDecorationType == DECORATION_TYPE_ROUND
-                    || mDecorationType == DECORATION_TYPE_SECTION) {
+                    || mDecorationType == DECORATION_TYPE_SECTION || mDecorationType == DECORATION_TYPE_SECTION_FIX) {
                 toastShort(R.string.rvdecoration_unenabled_layout_manager)
                 return@setOnClickListener
             }
@@ -192,13 +202,13 @@ class DecorationTestActivity : BaseActivity() {
 
     /** 根据类型[type]获取装饰器 */
     private fun getItemDecoration(type: Int): RecyclerView.ItemDecoration {
-        if (type == DECORATION_TYPE_ROUND_BOTTOM) {
+        if (type == DECORATION_TYPE_ROUND_BOTTOM) {//只设置底部下划线
             return RoundItemDecoration.createBottomDivider(getContext(), 1, 10, R.color.color_9a9a9a, R.color.white)
         }
-        if (type == DECORATION_TYPE_GRID) {
+        if (type == DECORATION_TYPE_GRID) {//设置网格线
             return GridItemDecoration.create(getContext()).setDividerRes(R.color.color_9a9a9a).setDividerSpace(2)
         }
-        if (type == DECORATION_TYPE_SECTION) {
+        if (type == DECORATION_TYPE_SECTION) {// 根据数据自动生成分组标签
             return SectionItemDecoration.create<String>(getContext())
                     .setOnSectionCallback(object : SectionItemDecoration.OnSectionCallback<String> {
                         override fun getSourceItem(position: Int): String = mList.get(position)
@@ -209,8 +219,18 @@ class DecorationTestActivity : BaseActivity() {
                     .setSectionTextTypeface(Typeface.DEFAULT_BOLD)
                     .setSectionHeight(30)
                     .setSectionTextSize(16f)
+        }
+        if (type == DECORATION_TYPE_SECTION_FIX){//按传入的数据配置分组标签
+            return SectionFixItemDecoration.create(getContext(), CLUB_INDEX_TITLE, PLAYER_FIX_SECTIONS)
+                    .setSectionBgColorRes(R.color.color_1a1a1a)
+                    .setSectionTextColorRes(R.color.color_f0f0f0)
+                    .setSectionTextPaddingLeftDp(8)
+                    .setSectionTextTypeface(Typeface.DEFAULT_BOLD)
+                    .setSectionHeight(36)
+                    .setSectionTextSize(16f)
 
         }
+        // 订制上下左右边线
         return RoundItemDecoration.create(getContext())
                 .setTopDividerRes(3, 0, R.color.color_9a9a9a, R.color.color_ea413c)
                 .setLeftDividerRes(3, 0, R.color.color_9a9a9a, R.color.color_ea413c)
@@ -253,8 +273,12 @@ class DecorationTestActivity : BaseActivity() {
         if (type == DECORATION_TYPE_GRID) {
             mRecyclerView.padding = dp2px(8).toInt()
         }
-        if (type == DECORATION_TYPE_SECTION) {
-            mList = mList.group(INDEX_TITLE).toArrayList()
+        if (type == DECORATION_TYPE_SECTION_FIX){
+            val list = ArrayList<String>()
+            for (source in PLAYER_FIX_SECTIONS){
+                list.addAll(source)
+            }
+            mList = list
         }
     }
 
