@@ -14,7 +14,7 @@ import com.lodz.android.corekt.utils.ReflectUtils
  * 可设置底线宽度的TabLayout
  * Created by zhouL on 2018/12/3.
  */
-class MmsTabLayout : TabLayout {
+open class MmsTabLayout : TabLayout {
 
     /** 两侧间距 */
     private var mTabMarginPx = 0
