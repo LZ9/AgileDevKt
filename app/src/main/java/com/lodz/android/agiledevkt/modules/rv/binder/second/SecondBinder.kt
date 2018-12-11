@@ -1,27 +1,25 @@
-package com.lodz.android.agiledevkt.modules.rv.binder.first
+package com.lodz.android.agiledevkt.modules.rv.binder.second
 
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.NationBean
 import com.lodz.android.componentkt.widget.rv.binder.RecyclerBinder
-import com.lodz.android.componentkt.widget.rv.horizontal.HorRecyclerView
 import com.lodz.android.corekt.anko.bindView
 
 /**
- * Created by zhouL on 2018/12/10.
+ * Created by zhouL on 2018/12/11.
  */
-class FirstBinder(context: Context, binderType: Int) : RecyclerBinder<List<NationBean>>(context, binderType) {
+class SecondBinder(context: Context, binderType: Int) : RecyclerBinder<List<NationBean>>(context, binderType) {
 
     private var mData: List<NationBean>? = null
     private var mListener: Listener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder =
-            DataViewHolder(getLayoutView(parent, R.layout.rv_binder_first))
-
+            DataViewHolder(getLayoutView(parent, R.layout.rv_binder_second))
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val list = mData
@@ -31,8 +29,6 @@ class FirstBinder(context: Context, binderType: Int) : RecyclerBinder<List<Natio
         holder.setData(list)
     }
 
-    override fun getCount(): Int = 1
-
     fun setListener(listener: Listener) {
         mListener = listener
     }
@@ -41,24 +37,24 @@ class FirstBinder(context: Context, binderType: Int) : RecyclerBinder<List<Natio
         mData = list
     }
 
-    override fun getData(position: Int): List<NationBean>? {
-        return mData
-    }
+    override fun getData(position: Int): List<NationBean>? = mData
+
+    override fun getCount(): Int = 1
 
     private inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         /** 水平RV */
-        val horRv by bindView<HorRecyclerView>(R.id.hor_recycler_view)
+        val rv by bindView<RecyclerView>(R.id.recycler_view)
 
-        private var mAdapter: FirstBinderAdapter? = null
+        private var mAdapter: SecondBinderAdapter? = null
 
         fun setData(list: List<NationBean>) {
             if (mAdapter == null) {
-                val layoutManager = LinearLayoutManager(getContext())
-                layoutManager.orientation = RecyclerView.HORIZONTAL
-                mAdapter = FirstBinderAdapter(getContext())
-                horRv.layoutManager = layoutManager
-                horRv.setHasFixedSize(true)
-                horRv.adapter = mAdapter
+                val layoutManager = GridLayoutManager(getContext(), 2)
+                layoutManager.orientation = RecyclerView.VERTICAL
+                mAdapter = SecondBinderAdapter(getContext())
+                rv.layoutManager = layoutManager
+                rv.setHasFixedSize(true)
+                rv.adapter = mAdapter
                 mAdapter!!.setOnItemClickListener { viewHolder, item, position ->
                     if (mListener != null) {
                         mListener!!.onClick(item)

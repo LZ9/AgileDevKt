@@ -9,6 +9,7 @@ import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.NationBean
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.agiledevkt.modules.rv.binder.first.FirstBinder
+import com.lodz.android.agiledevkt.modules.rv.binder.second.SecondBinder
 import com.lodz.android.componentkt.base.activity.BaseActivity
 import com.lodz.android.componentkt.widget.rv.binder.RvBinderAdapter
 import com.lodz.android.corekt.anko.bindView
@@ -80,6 +81,7 @@ class BinderRvActivity : BaseActivity() {
     /** 添加binder */
     private fun addBinder() {
         mAdapter.addBinder(getFirstBinder())
+        mAdapter.addBinder(getSecondBinder())
 
     }
 
@@ -88,6 +90,17 @@ class BinderRvActivity : BaseActivity() {
         val binder = FirstBinder(getContext(), FIRST_BINDER)
         binder.setData(getNationList())
         binder.setListener(object :FirstBinder.Listener{
+            override fun onClick(item: NationBean) {
+                toastShort(item.name)
+            }
+        })
+        return binder
+    }
+
+    private fun getSecondBinder(): SecondBinder {
+        val binder = SecondBinder(getContext(), SECOND_BINDER)
+        binder.setData(getNationList())
+        binder.setListener(object :SecondBinder.Listener{
             override fun onClick(item: NationBean) {
                 toastShort(item.name)
             }
