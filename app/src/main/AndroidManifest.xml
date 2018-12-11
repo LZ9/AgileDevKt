@@ -465,6 +465,13 @@
 
         </activity>
 
+        <activity
+            android:name=".modules.rv.binder.BinderRvActivity"
+            android:label="RecyclerBinder测试类"
+            android:screenOrientation="portrait">
+
+        </activity>
+
     </application>
 
 </manifest>

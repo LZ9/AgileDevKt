@@ -30,6 +30,7 @@ import com.lodz.android.agiledevkt.modules.mvc.MvcDemoActivity
 import com.lodz.android.agiledevkt.modules.notification.NotificationActivity
 import com.lodz.android.agiledevkt.modules.reflect.ReflectActivity
 import com.lodz.android.agiledevkt.modules.rv.anim.AnimRvActivity
+import com.lodz.android.agiledevkt.modules.rv.binder.BinderRvActivity
 import com.lodz.android.agiledevkt.modules.rv.decoration.DecorationRvActivity
 import com.lodz.android.agiledevkt.modules.rv.drag.DragRvActivity
 import com.lodz.android.agiledevkt.modules.rv.head.HeadFooterRvActivity
@@ -102,7 +103,8 @@ class MainActivity : BaseActivity() {
             MainBean("RV带头/底部测试", "R", HeadFooterRvActivity::class.java),
             MainBean("RV拖拽测试", "R", DragRvActivity::class.java),
             MainBean("RvSnap测试类", "R", SnapRvActivity::class.java),
-            MainBean("RV装饰器测试", "R", DecorationRvActivity::class.java)
+            MainBean("RV装饰器测试", "R", DecorationRvActivity::class.java),
+            MainBean("RecyclerBinder测试类", "R", BinderRvActivity::class.java)
     )
 
     /** 列表 */
