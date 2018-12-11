@@ -3,6 +3,7 @@ package com.lodz.android.agiledevkt.modules.rv.binder
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.agiledevkt.R
@@ -10,9 +11,12 @@ import com.lodz.android.agiledevkt.bean.NationBean
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.agiledevkt.modules.rv.binder.first.FirstBinder
 import com.lodz.android.agiledevkt.modules.rv.binder.second.SecondBinder
+import com.lodz.android.agiledevkt.modules.rv.binder.third.ThirdBinder
 import com.lodz.android.componentkt.base.activity.BaseActivity
 import com.lodz.android.componentkt.widget.rv.binder.RvBinderAdapter
 import com.lodz.android.corekt.anko.bindView
+import com.lodz.android.corekt.anko.getColorCompat
+import com.lodz.android.corekt.utils.SnackbarUtils
 import com.lodz.android.corekt.utils.toastShort
 
 /**
@@ -56,6 +60,10 @@ class BinderRvActivity : BaseActivity() {
             "CHN", "USA", "RUS", "JPN", "KOR", "AUS", "UKR", "PRK", "BRA"
     )
 
+
+    /** 根布局 */
+    private val mRootLayout by bindView<ViewGroup>(R.id.root_layout)
+
     /** 列表 */
     private val mRecyclerView by bindView<RecyclerView>(R.id.recycler_view)
     private lateinit var mAdapter: RvBinderAdapter
@@ -82,7 +90,7 @@ class BinderRvActivity : BaseActivity() {
     private fun addBinder() {
         mAdapter.addBinder(getFirstBinder())
         mAdapter.addBinder(getSecondBinder())
-
+        mAdapter.addBinder(getThirdBinder())
     }
 
     /** 添加FirstBinder */
@@ -103,6 +111,17 @@ class BinderRvActivity : BaseActivity() {
         binder.setListener(object :SecondBinder.Listener{
             override fun onClick(item: NationBean) {
                 toastShort(item.name)
+            }
+        })
+        return binder
+    }
+
+    private fun getThirdBinder(): ThirdBinder {
+        val binder = ThirdBinder(getContext(), THIRD_BINDER)
+        binder.setData(getNationList())
+        binder.setListener(object :ThirdBinder.Listener{
+            override fun onClick(item: NationBean) {
+                SnackbarUtils.createShort(mRootLayout, item.name).setBackgroundColor(getColorCompat(R.color.color_a0191919)).show()
             }
         })
         return binder
