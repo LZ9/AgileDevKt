@@ -108,7 +108,7 @@ abstract class LazyFragment : RxFragment(), IFragmentBackPressed {
 
     protected open fun beforeFindViews(view: View) {}
 
-    protected abstract fun findViews(view: View, savedInstanceState: Bundle?)
+    protected open fun findViews(view: View, savedInstanceState: Bundle?){}
 
     protected open fun setListeners(view: View) {}
 

@@ -2,7 +2,6 @@ package com.lodz.android.agiledevkt.modules.mvc.abs
 
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import com.lodz.android.agiledevkt.R
@@ -35,8 +34,6 @@ class MvcTestAbsActivity : AbsActivity() {
     private val mGetFailResultBtn by bindView<Button>(R.id.get_fail_reuslt_btn)
 
     override fun getAbsLayoutId(): Int = R.layout.activity_mvc_test
-
-    override fun findViews(savedInstanceState: Bundle?) {}
 
     override fun setListeners() {
         super.setListeners()

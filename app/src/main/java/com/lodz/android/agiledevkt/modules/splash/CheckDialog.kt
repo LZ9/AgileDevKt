@@ -23,8 +23,6 @@ class CheckDialog(context: Context) : BaseDialog(context) {
 
     override fun getLayoutId() = R.layout.dialog_check
 
-    override fun findViews() {}
-
     /** 设置内容文本[content] */
     fun setContentMsg(content: String) {
         mContentTv.text = content

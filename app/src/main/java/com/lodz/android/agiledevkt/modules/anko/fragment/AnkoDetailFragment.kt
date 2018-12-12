@@ -1,6 +1,5 @@
 package com.lodz.android.agiledevkt.modules.anko.fragment
 
-import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -58,8 +57,6 @@ class AnkoDetailFragment :LazyFragment(){
             }
         }.view
     }
-
-    override fun findViews(view: View, savedInstanceState: Bundle?) {}
 
     override fun initData(view: View) {
         super.initData(view)

@@ -10,5 +10,4 @@ import com.lodz.android.componentkt.widget.dialog.BaseTopDialog
  */
 class TopDialog(context: Context) : BaseTopDialog(context) {
     override fun getLayoutId(): Int = R.layout.dialog_top
-    override fun findViews() {}
 }

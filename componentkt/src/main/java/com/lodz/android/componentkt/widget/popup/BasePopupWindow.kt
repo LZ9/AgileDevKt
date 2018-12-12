@@ -55,7 +55,7 @@ abstract class BasePopupWindow(context: Context) {
     @LayoutRes
     protected abstract fun getLayoutId(): Int
 
-    protected abstract fun findViews(view: View)
+    protected open fun findViews(view: View){}
 
     protected open fun setListeners() {}
 

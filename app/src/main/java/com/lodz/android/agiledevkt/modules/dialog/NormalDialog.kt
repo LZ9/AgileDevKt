@@ -10,5 +10,4 @@ import com.lodz.android.componentkt.widget.dialog.BaseDialog
  */
 class NormalDialog(context: Context) : BaseDialog(context) {
     override fun getLayoutId(): Int = R.layout.dialog_normal
-    override fun findViews() {}
 }

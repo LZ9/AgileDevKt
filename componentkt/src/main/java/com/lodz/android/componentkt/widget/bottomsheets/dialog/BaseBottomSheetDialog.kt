@@ -36,7 +36,7 @@ abstract class BaseBottomSheetDialog : BottomSheetDialog {
         configBehavior()
     }
 
-    open protected fun startCreate() {}
+    protected open fun startCreate() {}
 
     private fun createContentView(@LayoutRes layoutId: Int) {
         val view = layoutInflater.inflate(layoutId, null)
@@ -44,17 +44,17 @@ abstract class BaseBottomSheetDialog : BottomSheetDialog {
     }
 
     @LayoutRes
-    abstract protected fun getLayoutId(): Int
+    protected abstract fun getLayoutId(): Int
 
-    protected abstract fun findViews()
+    protected open fun findViews() {}
 
-    open protected fun setListeners() {}
+    protected open fun setListeners() {}
 
-    open protected fun initData() {}
+    protected open fun initData() {}
 
-    open protected fun endCreate() {}
+    protected open fun endCreate() {}
 
-    abstract protected fun onBehaviorInit(behavior: BottomSheetBehavior<*>)
+    protected abstract fun onBehaviorInit(behavior: BottomSheetBehavior<*>)
 
     protected fun getDialogInterface(): DialogInterface = this
 
@@ -94,8 +94,8 @@ abstract class BaseBottomSheetDialog : BottomSheetDialog {
     }
 
     /** 配置是否透明状态栏（可重写，默认是） */
-    open protected fun configTransparentStatusBar(): Boolean = true
+    protected open fun configTransparentStatusBar(): Boolean = true
 
     /** 配置布局高度偏移量（可重写，默认0） */
-    open protected fun configTopOffsetPx(): Int = 0
+    protected open fun configTopOffsetPx(): Int = 0
 }

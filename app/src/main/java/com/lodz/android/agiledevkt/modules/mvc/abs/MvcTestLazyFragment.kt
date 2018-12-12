@@ -1,6 +1,5 @@
 package com.lodz.android.agiledevkt.modules.mvc.abs
 
-import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -31,8 +30,6 @@ class MvcTestLazyFragment : LazyFragment() {
     private val mGetFailResultBtn by bindView<Button>(R.id.get_fail_reuslt_btn)
 
     override fun getAbsLayoutId(): Int = R.layout.activity_mvc_test
-
-    override fun findViews(view: View, savedInstanceState: Bundle?) {}
 
     override fun setListeners(view: View) {
         super.setListeners(view)

@@ -46,7 +46,7 @@ abstract class AbsActivity : RxAppCompatActivity() {
 
     protected open fun afterSetContentView() {}
 
-    protected abstract fun findViews(savedInstanceState: Bundle?)
+    protected open fun findViews(savedInstanceState: Bundle?){}
 
     protected open fun setListeners() {}
 

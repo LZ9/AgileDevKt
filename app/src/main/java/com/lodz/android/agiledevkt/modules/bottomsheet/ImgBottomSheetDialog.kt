@@ -24,8 +24,6 @@ class ImgBottomSheetDialog(context: Context) : BaseBottomSheetDialog(context) {
 
     override fun getLayoutId(): Int = R.layout.dialog_img_bottom_sheet
 
-    override fun findViews() {}
-
     override fun setListeners() {
         super.setListeners()
         mTitleBarLayout.setOnBackBtnClickListener {

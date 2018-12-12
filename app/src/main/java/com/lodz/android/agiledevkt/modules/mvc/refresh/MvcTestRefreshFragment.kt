@@ -1,6 +1,5 @@
 package com.lodz.android.agiledevkt.modules.mvc.refresh
 
-import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -32,8 +31,6 @@ class MvcTestRefreshFragment : BaseRefreshFragment() {
     private val mGetFailResultBtn by bindView<Button>(R.id.get_fail_reuslt_btn)
 
     override fun getLayoutId(): Int = R.layout.activity_mvc_test
-
-    override fun findViews(view: View, savedInstanceState: Bundle?) {}
 
     override fun onDataRefresh() {
         getRefreshData(Random.nextInt(9) % 2 == 0)

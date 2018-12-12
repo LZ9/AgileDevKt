@@ -10,5 +10,4 @@ import com.lodz.android.componentkt.widget.dialog.BaseCenterDialog
  */
 class CenterDialog(context: Context) : BaseCenterDialog(context) {
     override fun getLayoutId(): Int = R.layout.dialog_center
-    override fun findViews() {}
 }

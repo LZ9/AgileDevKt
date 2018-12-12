@@ -42,7 +42,7 @@ abstract class BaseDialog : Dialog {
     @LayoutRes
     protected abstract fun getLayoutId(): Int
 
-    protected abstract fun findViews()
+    protected open fun findViews(){}
 
     protected open fun setListeners() {}
 

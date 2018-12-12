@@ -10,5 +10,4 @@ import com.lodz.android.componentkt.widget.dialog.BaseLeftDialog
  */
 class LeftDialog(context: Context) : BaseLeftDialog(context) {
     override fun getLayoutId(): Int = R.layout.dialog_left
-    override fun findViews() {}
 }

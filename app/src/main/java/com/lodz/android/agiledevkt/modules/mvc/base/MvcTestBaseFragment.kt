@@ -1,6 +1,5 @@
 package com.lodz.android.agiledevkt.modules.mvc.base
 
-import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -30,8 +29,6 @@ class MvcTestBaseFragment : BaseFragment() {
     private val mGetFailResultBtn by bindView<Button>(R.id.get_fail_reuslt_btn)
 
     override fun getLayoutId(): Int = R.layout.activity_mvc_test
-
-    override fun findViews(view: View, savedInstanceState: Bundle?) {}
 
     override fun onClickReload() {
         super.onClickReload()

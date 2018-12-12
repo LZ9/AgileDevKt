@@ -78,8 +78,6 @@ class AnkoAccountFragment :LazyFragment(){
         }
     }
 
-    override fun findViews(view: View, savedInstanceState: Bundle?) {}
-
     override fun initData(view: View) {
         super.initData(view)
         mAccountTv.text = getString(R.string.al_account) + "  " + mAccount

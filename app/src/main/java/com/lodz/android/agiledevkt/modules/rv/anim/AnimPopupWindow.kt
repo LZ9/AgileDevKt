@@ -1,7 +1,6 @@
 package com.lodz.android.agiledevkt.modules.rv.anim
 
 import android.content.Context
-import android.view.View
 import android.widget.PopupWindow
 import android.widget.TextView
 import com.lodz.android.agiledevkt.R
@@ -40,8 +39,6 @@ class AnimPopupWindow(context: Context) : BasePopupWindow(context) {
     private var mOnClickListener: ((PopupWindow, Int) -> Unit)? = null
 
     override fun getLayoutId(): Int = R.layout.popup_anim
-
-    override fun findViews(view: View) {}
 
     override fun setListeners() {
         super.setListeners()
