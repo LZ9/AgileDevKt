@@ -15,6 +15,7 @@ import com.lodz.android.agiledevkt.modules.anko.AnkoLayoutActivity
 import com.lodz.android.agiledevkt.modules.array.ArrayTestActivity
 import com.lodz.android.agiledevkt.modules.bitmap.BitmapTestActivity
 import com.lodz.android.agiledevkt.modules.bluetooth.BluetoothTestActivity
+import com.lodz.android.agiledevkt.modules.bottomsheet.BottomSheetsActivity
 import com.lodz.android.agiledevkt.modules.color.ColorAlphaTestActivity
 import com.lodz.android.agiledevkt.modules.coordinator.CoordinatorTestActivity
 import com.lodz.android.agiledevkt.modules.crash.CrashTestActivity
@@ -104,7 +105,8 @@ class MainActivity : BaseActivity() {
             MainBean("RV拖拽测试", "R", DragRvActivity::class.java),
             MainBean("RvSnap测试类", "R", SnapRvActivity::class.java),
             MainBean("RV装饰器测试", "R", DecorationRvActivity::class.java),
-            MainBean("RecyclerBinder测试类", "R", BinderRvActivity::class.java)
+            MainBean("RecyclerBinder测试类", "R", BinderRvActivity::class.java),
+            MainBean("BottomSheets测试类", "B", BottomSheetsActivity::class.java)
     )
 
     /** 列表 */

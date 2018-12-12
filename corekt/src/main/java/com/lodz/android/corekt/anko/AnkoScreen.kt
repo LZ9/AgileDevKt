@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.Point
 import android.util.DisplayMetrics
 import android.view.View
+import android.view.Window
 import android.view.WindowManager
 import androidx.fragment.app.Fragment
 
@@ -44,9 +45,9 @@ fun View.getScreenWidth(): Int = context.getScreenWidth()
 fun View.getScreenHeight(): Int = context.getScreenHeight()
 
 /** 判断是否存在NavigationBar */
-fun Activity.hasNavigationBar(): Boolean {
+fun Context.hasNavigationBar(window: Window): Boolean {
     val point = Point()
-    windowManager.defaultDisplay.getRealSize(point)
+    window.windowManager.defaultDisplay.getRealSize(point)
     val realHeight = point.y//获取真实屏幕高度
     if (getScreenHeight() < realHeight) {//可用屏幕高度小于真实屏幕高度
         return true
@@ -55,13 +56,25 @@ fun Activity.hasNavigationBar(): Boolean {
 }
 
 /** 获取虚拟按键高度 */
-fun Activity.getNavigationBarHeight(): Int {
+fun Context.getNavigationBarHeight(window: Window): Int {
     val id = resources.getIdentifier("navigation_bar_height", "dimen", "android")
-    if (id != 0 && hasNavigationBar()) {
+    if (id != 0 && hasNavigationBar(window)) {
         return resources.getDimensionPixelSize(id)
     }
     return 0
 }
+
+/** 判断是否存在NavigationBar */
+fun Activity.hasNavigationBar(): Boolean = hasNavigationBar(window)
+
+/** 判断是否存在NavigationBar */
+fun Fragment.hasNavigationBar(): Boolean = requireActivity().hasNavigationBar()
+
+/** 获取虚拟按键高度 */
+fun Fragment.getNavigationBarHeight(): Int = requireActivity().getNavigationBarHeight()
+
+/** 获取虚拟按键高度 */
+fun Activity.getNavigationBarHeight(): Int = getNavigationBarHeight(window)
 
 /** 获取状态栏高度 */
 fun Context.getStatusBarHeight(): Int {
@@ -71,12 +84,6 @@ fun Context.getStatusBarHeight(): Int {
     }
     return 0
 }
-
-/** 判断是否存在NavigationBar */
-fun Fragment.hasNavigationBar(): Boolean = requireActivity().hasNavigationBar()
-
-/** 获取虚拟按键高度 */
-fun Fragment.getNavigationBarHeight(): Int = requireActivity().getNavigationBarHeight()
 
 /** 获取状态栏高度 */
 fun Fragment.getStatusBarHeight(): Int = requireContext().getStatusBarHeight()

@@ -459,4 +459,14 @@
     <string name="rvdecoration_sticky_section_fix">固定数据的粘黏分组标签</string>
     <string name="rvdecoration_unenabled_orientation">该模式下不允许切换方向</string>
     <string name="rvdecoration_unenabled_layout_manager">该模式下不允许切换布局</string>
+
+    <!-- BottomSheets -->
+    <string name="bottom_sheets_show">展示BottomSheet</string>
+    <string name="bottom_sheets_dialog">展示BottomSheetDialog</string>
+    <string name="bottom_sheets_dialog_fragment">展示BottomSheetDialogFragment</string>
+    <string name="bottom_sheets_expand">拖动展开</string>
+    <string name="bottom_sheets_pikachu">去吧皮卡丘</string>
+    <string name="bottom_sheets_pikachu_tips">电疗鼻祖</string>
+
+
 </resources>

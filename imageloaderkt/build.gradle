@@ -27,7 +27,7 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.annotation:annotation:1.0.0'
+    implementation 'androidx.annotation:annotation:1.0.1'
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.11'
 
     // glide
@@ -42,6 +42,6 @@ dependencies {
 //publish {
 //    userOrg = 'lz9'
 //    artifactId = 'imageloader-kt'
-//    desc = 'Hi, this is a simple tools lib for android project, i want to upload and use it~'//描述，不重要
-//    website = 'https://github.com/LZ9/AgileDev'//网站，不重要
+//    desc = 'Hi, this is a image loader'//描述，不重要
+//    website = 'https://github.com/LZ9/AgileDevKt'//网站，不重要
 //}

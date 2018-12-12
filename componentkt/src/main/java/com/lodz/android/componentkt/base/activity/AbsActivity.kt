@@ -24,7 +24,7 @@ abstract class AbsActivity : RxAppCompatActivity() {
     /** 是否使用Anko Layout */
     private var isUseAnko = false
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    final override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         isUseAnko = injectAnko()
         EventBus.getDefault().register(this)
