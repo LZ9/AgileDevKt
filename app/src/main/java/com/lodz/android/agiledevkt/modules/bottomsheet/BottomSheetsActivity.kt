@@ -63,7 +63,7 @@ class BottomSheetsActivity : AbsActivity() {
         }
 
         mDialogFragmentBtn.setOnClickListener {
-
+            TabBottomSheetDialogFragment().show(supportFragmentManager, "TabBottomSheetDialogFragment")
         }
 
         mBottomSheetBehavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {

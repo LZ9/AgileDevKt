@@ -467,6 +467,11 @@
     <string name="bottom_sheets_expand">拖动展开</string>
     <string name="bottom_sheets_pikachu">去吧皮卡丘</string>
     <string name="bottom_sheets_pikachu_tips">电疗鼻祖</string>
-
+    <string name="bottom_sheets_tab_tips">骑她不如骑她</string>
+    <string name="bottom_sheets_pikachu_pinarello">Pinarello</string>
+    <string name="bottom_sheets_pikachu_trek">Trek</string>
+    <string name="bottom_sheets_pikachu_colnago">Colnago</string>
+    <string name="bottom_sheets_pikachu_look">Look</string>
+    <string name="bottom_sheets_pikachu_specialized">Specialized</string>
 
 </resources>

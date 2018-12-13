@@ -45,7 +45,7 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment() {
         if (cls == null) {
             return
         }
-        val behavior = ReflectUtils.getFieldValue(cls, this, "behavior")
+        val behavior = ReflectUtils.getFieldValue(cls, dialog, "behavior")
         if (behavior != null && behavior is BottomSheetBehavior<*>) {
             onBehaviorInit(behavior)
         }
