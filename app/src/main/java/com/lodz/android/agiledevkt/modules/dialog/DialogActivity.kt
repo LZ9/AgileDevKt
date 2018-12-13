@@ -9,7 +9,7 @@ import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.componentkt.base.activity.BaseActivity
 
 /**
- * 弹框测试类
+ * Dialog测试
  * Created by zhouL on 2018/11/1.
  */
 class DialogActivity : BaseActivity() {

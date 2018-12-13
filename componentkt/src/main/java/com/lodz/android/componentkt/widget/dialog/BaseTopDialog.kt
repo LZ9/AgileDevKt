@@ -17,7 +17,7 @@ abstract class BaseTopDialog : BaseDialog {
     constructor(context: Context, @StyleRes themeResId: Int) : super(context, themeResId)
 
     @StyleRes
-    override fun getAnimations(): Int = R.style.animation_top_in_top_out
+    override fun configAnimations(): Int = R.style.animation_top_in_top_out
 
     override fun show() {
         val wd = window

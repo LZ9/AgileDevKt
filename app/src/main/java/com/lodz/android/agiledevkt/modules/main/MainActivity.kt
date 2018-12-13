@@ -20,6 +20,7 @@ import com.lodz.android.agiledevkt.modules.color.ColorAlphaTestActivity
 import com.lodz.android.agiledevkt.modules.coordinator.CoordinatorTestActivity
 import com.lodz.android.agiledevkt.modules.crash.CrashTestActivity
 import com.lodz.android.agiledevkt.modules.dialog.DialogActivity
+import com.lodz.android.agiledevkt.modules.dialogfragment.DialogFragmentActivity
 import com.lodz.android.agiledevkt.modules.drawer.DrawerTestActivity
 import com.lodz.android.agiledevkt.modules.file.FileTestActivity
 import com.lodz.android.agiledevkt.modules.format.NumFormatTestActivity
@@ -94,7 +95,8 @@ class MainActivity : BaseActivity() {
             MainBean("Snackbar测试类", "S", SnackbarTestActivity::class.java),
             MainBean("崩溃测试类", "B", CrashTestActivity::class.java),
             MainBean("定位测试", "D", LocationTestActivity::class.java),
-            MainBean("弹框测试", "T", DialogActivity::class.java),
+            MainBean("Dialog测试", "D", DialogActivity::class.java),
+            MainBean("DialogFragment测试类", "D", DialogFragmentActivity::class.java),
             MainBean("数组列表测试类", "S", ArrayTestActivity::class.java),
             MainBean("ACache缓存测试类", "A", ACacheTestActivity::class.java),
             MainBean("MVC模式测试类", "M", MvcDemoActivity::class.java),

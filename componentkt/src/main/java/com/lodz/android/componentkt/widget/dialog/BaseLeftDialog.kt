@@ -17,7 +17,7 @@ abstract class BaseLeftDialog : BaseDialog {
     constructor(context: Context, @StyleRes themeResId: Int) : super(context, themeResId)
 
     @StyleRes
-    override fun getAnimations(): Int = R.style.animation_left_in_left_out
+    override fun configAnimations(): Int = R.style.animation_left_in_left_out
 
     override fun show() {
         val wd = window

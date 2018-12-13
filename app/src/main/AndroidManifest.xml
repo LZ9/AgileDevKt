@@ -334,7 +334,7 @@
 
         <activity
             android:name=".modules.dialog.DialogActivity"
-            android:label="弹框测试类"
+            android:label="Dialog测试"
             android:screenOrientation="portrait">
 
         </activity>
@@ -475,6 +475,13 @@
         <activity
             android:name=".modules.bottomsheet.BottomSheetsActivity"
             android:label="BottomSheets测试类"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity
+            android:name=".modules.dialogfragment.DialogFragmentActivity"
+            android:label="DialogFragment测试类"
             android:screenOrientation="portrait">
 
         </activity>

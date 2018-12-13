@@ -17,7 +17,7 @@ abstract class BaseRightDialog : BaseDialog {
     constructor(context: Context, @StyleRes themeResId: Int) : super(context, themeResId)
 
     @StyleRes
-    override fun getAnimations(): Int = R.style.animation_right_in_right_out
+    override fun configAnimations(): Int = R.style.animation_right_in_right_out
 
     override fun show() {
         val wd = window

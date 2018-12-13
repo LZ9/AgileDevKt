@@ -42,20 +42,20 @@ abstract class BaseDialog : Dialog {
     @LayoutRes
     protected abstract fun getLayoutId(): Int
 
-    protected open fun findViews(){}
+    protected open fun findViews() {}
 
     protected open fun setListeners() {}
 
     protected open fun initData() {}
 
     @StyleRes
-    protected open fun getAnimations() = -1
+    protected open fun configAnimations() = -1
 
     /** 设置弹出动画 */
     private fun setWindowAnimations() {
-        val wd = window
-        if (wd != null && getAnimations() != -1) {
-            wd.setWindowAnimations(getAnimations()) //设置窗口弹出动画
+        val animations = configAnimations()
+        if (animations != -1) {
+            window?.setWindowAnimations(animations) //设置窗口弹出动画
         }
     }
 

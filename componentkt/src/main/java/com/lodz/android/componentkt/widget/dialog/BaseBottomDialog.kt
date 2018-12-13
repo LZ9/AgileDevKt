@@ -17,7 +17,7 @@ abstract class BaseBottomDialog : BaseDialog {
     constructor(context: Context, @StyleRes themeResId: Int) : super(context, themeResId)
 
     @StyleRes
-    override fun getAnimations(): Int {
+    override fun configAnimations(): Int {
         return R.style.animation_bottom_in_bottom_out
     }
 

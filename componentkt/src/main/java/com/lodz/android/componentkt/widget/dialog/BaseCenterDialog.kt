@@ -16,11 +16,11 @@ abstract class BaseCenterDialog : BaseDialog {
     constructor(context: Context, @StyleRes themeResId: Int) : super(context, themeResId)
 
     @StyleRes
-    override fun getAnimations(): Int {
+    override fun configAnimations(): Int {
         if (hasAnimations()) {
             return R.style.animation_center_in_center_out
         }
-        return super.getAnimations()
+        return super.configAnimations()
     }
 
     /** 是否有动画 */

@@ -65,20 +65,20 @@ abstract class BaseBottomSheetDialog : BottomSheetDialog {
 
     /** 配置状态栏 */
     private fun configStatusBar() {
-        val wds = window
-        if (wds == null) {
+        val wd = window
+        if (wd == null) {
             return
         }
         if (!configTransparentStatusBar()) {
-            wds.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+            wd.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
             return
         }
-        wds.setGravity(Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL)// 设置底部展示
+        wd.setGravity(Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL)// 设置底部展示
         val screenHeight = context.getScreenHeight()
         val statusBarHeight = context.getStatusBarHeight()
-        val navigationBarHeight = context.getNavigationBarHeight(wds)
+        val navigationBarHeight = context.getNavigationBarHeight(wd)
         val dialogHeight = screenHeight - statusBarHeight + navigationBarHeight - configTopOffsetPx()//屏幕高度 - 状态栏高度 + 导航栏 - 偏移量高度
-        wds.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, if (dialogHeight == 0) ViewGroup.LayoutParams.MATCH_PARENT else dialogHeight)
+        wd.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, if (dialogHeight == 0) ViewGroup.LayoutParams.MATCH_PARENT else dialogHeight)
     }
 
     /** 配置BottomSheetBehavior */
