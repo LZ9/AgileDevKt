@@ -1,2 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.lodz.android.componentkt" />
+    package="com.lodz.android.componentkt">
+
+    <application>
+        <activity
+            android:name=".photopicker.preview.PicturePreviewActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+
+    </application>
+</manifest>

@@ -474,4 +474,19 @@
     <string name="bottom_sheets_pikachu_look">Look</string>
     <string name="bottom_sheets_pikachu_specialized">Specialized</string>
 
+    <!-- 图片测试 -->
+    <string name="pic_picker">图片选择器</string>
+    <string name="pic_preview">图片预览器</string>
+    <string name="pic_take_photo">拍照</string>
+    <string name="pic_nine_grid">九宫格</string>
+
+    <!-- 图片预览器 -->
+    <string name="preview_scale">缩放</string>
+    <string name="preview_show_pager">显示页码</string>
+    <string name="preview_click_close">点击关闭</string>
+    <string name="preview_position">预览起始页：</string>
+    <string name="preview_plus">+</string>
+    <string name="preview_minus">-</string>
+    <string name="preview_pic">预览图片</string>
+    <string name="preview_long_click_tips">%s - 块松开奴家</string>
 </resources>

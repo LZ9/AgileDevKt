@@ -30,6 +30,7 @@ import com.lodz.android.agiledevkt.modules.info.InfoTestActivity
 import com.lodz.android.agiledevkt.modules.location.LocationTestActivity
 import com.lodz.android.agiledevkt.modules.mvc.MvcDemoActivity
 import com.lodz.android.agiledevkt.modules.notification.NotificationActivity
+import com.lodz.android.agiledevkt.modules.pic.PicActivity
 import com.lodz.android.agiledevkt.modules.reflect.ReflectActivity
 import com.lodz.android.agiledevkt.modules.rv.anim.AnimRvActivity
 import com.lodz.android.agiledevkt.modules.rv.binder.BinderRvActivity
@@ -108,7 +109,8 @@ class MainActivity : BaseActivity() {
             MainBean("RvSnap测试类", "R", SnapRvActivity::class.java),
             MainBean("RV装饰器测试", "R", DecorationRvActivity::class.java),
             MainBean("RecyclerBinder测试类", "R", BinderRvActivity::class.java),
-            MainBean("BottomSheets测试类", "B", BottomSheetsActivity::class.java)
+            MainBean("BottomSheets测试类", "B", BottomSheetsActivity::class.java),
+            MainBean("图片测试类", "T", PicActivity::class.java)
     )
 
     /** 列表 */
