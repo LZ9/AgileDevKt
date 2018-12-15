@@ -4,13 +4,13 @@ import androidx.annotation.ColorRes
 import com.lodz.android.componentkt.photopicker.contract.OnClickListener
 import com.lodz.android.componentkt.photopicker.contract.OnLongClickListener
 import com.lodz.android.componentkt.photopicker.contract.OnPhotoLoader
-import java.io.Serializable
+import com.lodz.android.corekt.anko.getSize
 
 /**
  * 预览数据
  * Created by zhouL on 2018/12/13.
  */
-class PreviewBean<T> :Serializable{
+class PreviewBean<T> {
 
     /** 资源列表 */
     var sourceList: List<T>? = null
@@ -40,4 +40,13 @@ class PreviewBean<T> :Serializable{
     var longClickListener: OnLongClickListener<T>? = null
     /** 是否可缩放 */
     var isScale = true
+
+    fun clear() {
+        if (sourceList.getSize() > 0) {
+            sourceList = null
+        }
+        photoLoader = null
+        clickListener = null
+        longClickListener = null
+    }
 }

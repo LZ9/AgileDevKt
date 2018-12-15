@@ -127,11 +127,6 @@ class PreviewManager<T> private constructor(private val previewBean: PreviewBean
         if ((previewBean.showPosition + 1) > previewBean.sourceList.getSize()) {// 校验默认位置参数
             previewBean.showPosition = 0
         }
-        
-//        previewBean.sourceList = null
-//        previewBean.photoLoader = null
-//        previewBean.clickListener = null
-//        previewBean.longClickListener = null
 
         PicturePreviewActivity.start(context, previewBean)
     }
