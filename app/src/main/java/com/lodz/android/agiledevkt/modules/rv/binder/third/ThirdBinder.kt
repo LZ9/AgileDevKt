@@ -34,7 +34,7 @@ class ThirdBinder(context: Context, binderType: Int) : RecyclerBinder<NationBean
 
     private fun showItem(holder: DataViewHolder, bean: NationBean) {
         ImageLoader.create(getContext())
-                .load(bean.imgUrl)
+                .loadUrl(bean.imgUrl)
                 .useCircle()
                 .setCenterCrop()
                 .into(holder.nationImg)

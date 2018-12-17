@@ -112,7 +112,7 @@ class PicPreviewActivity : BaseActivity() {
                     })
                     .setImgLoader(object :OnPhotoLoader<String>{
                         override fun displayImg(context: Context, source: String, imageView: ImageView) {
-                            ImageLoader.create(context).load(source).setFitCenter().into(imageView)
+                            ImageLoader.create(context).loadUrl(source).setFitCenter().into(imageView)
                         }
                     })
                     .build(IMG_URLS)

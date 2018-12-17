@@ -139,7 +139,7 @@ class DrawerTestActivity : AbsActivity() {
     override fun initData() {
         super.initData()
         ImageLoader.create(getContext())
-                .load(R.drawable.bg_pokemon)
+                .loadResId(R.drawable.bg_pokemon)
                 .useCircle()
                 .into(mUserLogoImg)
     }

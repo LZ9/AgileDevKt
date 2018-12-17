@@ -131,7 +131,7 @@ class CoorTranslationActivity : AbsActivity() {
     /** 显示头像 */
     private fun showHeadImg(imageView: ImageView) {
         ImageLoader.create(this)
-                .load(R.drawable.bg_pokemon)
+                .loadResId(R.drawable.bg_pokemon)
                 .useCircle()
                 .into(imageView)
     }

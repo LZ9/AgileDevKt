@@ -61,7 +61,7 @@ class AnkoDetailFragment :LazyFragment(){
     override fun initData(view: View) {
         super.initData(view)
         ImageLoader.create(context)
-                .load(R.drawable.bg_pokemon)
+                .loadResId(R.drawable.bg_pokemon)
                 .useCircle()
                 .setCenterCrop()
                 .into(mAvatarImg)

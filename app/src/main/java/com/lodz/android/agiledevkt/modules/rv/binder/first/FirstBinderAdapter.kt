@@ -30,7 +30,7 @@ class FirstBinderAdapter(context: Context) : BaseRecyclerViewAdapter<NationBean>
 
     private fun showItem(holder: DataViewHolder, bean: NationBean) {
         ImageLoader.create(context)
-                .load(bean.imgUrl)
+                .loadUrl(bean.imgUrl)
                 .setCenterCrop()
                 .into(holder.nationImg)
         holder.nationTv.text = bean.name

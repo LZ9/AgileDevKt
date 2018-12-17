@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.util.Base64
 import android.view.View
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
@@ -96,12 +97,47 @@ class GlideImageLoader private constructor() : ImageLoaderContract {
 
     }
 
-    override fun load(any: Any): ImageLoaderContract {
-        if (any is String || any is Uri || any is File || any is Int || any is ByteArray) {
-            mGlideBuilderBean!!.path = any
+    override fun loadUrl(url: String): ImageLoaderContract {
+        mGlideBuilderBean!!.path = url
+        return this
+    }
+
+    override fun loadUri(uri: Uri): ImageLoaderContract {
+        mGlideBuilderBean!!.path = uri
+        return this
+    }
+
+    override fun loadFile(file: File): ImageLoaderContract {
+        mGlideBuilderBean!!.path = file
+        return this
+    }
+
+    override fun loadFilePath(path: String): ImageLoaderContract {
+        val file = File(path)
+        if (file.exists()) {
+            mGlideBuilderBean!!.path = file
             return this
         }
-        throw RuntimeException("Glide不支持String/Uri/File/Int/byte[]以外的图片路径参数")
+        return loadUrl("")
+    }
+
+    override fun loadResId(resId: Int): ImageLoaderContract {
+        mGlideBuilderBean!!.path = resId
+        return this
+    }
+
+    override fun loadBase64(base64: String, flags: Int): ImageLoaderContract {
+        try {
+            return loadBytes(Base64.decode(base64, flags))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return loadUrl("")
+    }
+
+    override fun loadBytes(bytes: ByteArray): ImageLoaderContract {
+        mGlideBuilderBean!!.path = bytes
+        return this
     }
 
     override fun setPlaceholder(placeholderResId: Int): ImageLoaderContract {

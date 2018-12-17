@@ -12,14 +12,10 @@ import com.lodz.android.componentkt.photopicker.contract.OnPhotoLoader
  */
 class PreviewBuilder<T> {
     /** 预览数据 */
-    private val previewBean: PreviewBean<T>
-
-    init {
-        previewBean = PreviewBean()
-    }
+    private val previewBean = PreviewBean<T>()
 
     /** 设置图片加载器[photoLoader] */
-    fun setImgLoaderStr(photoLoader: OnPhotoLoader<T>): PreviewBuilder<T> {
+    fun setImgLoader(photoLoader: OnPhotoLoader<T>): PreviewBuilder<T> {
         previewBean.photoLoader = photoLoader
         return this
     }

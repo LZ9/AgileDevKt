@@ -31,7 +31,6 @@ import com.lodz.android.agiledevkt.utils.file.FileManager
 import com.lodz.android.componentkt.base.activity.BaseActivity
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.log.PrintLog
-import com.lodz.android.corekt.utils.BitmapUtils
 import com.lodz.android.corekt.utils.FileUtils
 import com.lodz.android.corekt.utils.NotificationUtils
 import com.lodz.android.corekt.utils.toastShort
@@ -136,7 +135,7 @@ class GlideActivity : BaseActivity() {
             builder.setContent(remoteViews)
 
             ImageLoader.create(getContext())
-                    .load(IMG_URL)
+                    .loadUrl(IMG_URL)
                     .setCenterCrop()
                     .asBitmapInto(NotificationTarget(getContext(), R.id.remoteview_icon, remoteViews, builder.build(), 1235))
         }
@@ -144,7 +143,7 @@ class GlideActivity : BaseActivity() {
         // 原生通知栏
         mSystemNotifyBtn.setOnClickListener {
             ImageLoader.create(getContext())
-                    .load(IMG_URL)
+                    .loadUrl(IMG_URL)
                     .setCenterCrop()
                     .asBitmapInto(object : SimpleTarget<Bitmap>() {
                         override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
@@ -221,7 +220,7 @@ class GlideActivity : BaseActivity() {
     /** BASE64图片 */
     private fun showLocalImg() {
         ImageLoader.create(getContext())
-                .load(BitmapUtils.base64ToByte(PIC_BASE64))
+                .loadBase64(PIC_BASE64)
                 .setCenterInside()
                 .into(mBase64Img)
     }
@@ -229,7 +228,7 @@ class GlideActivity : BaseActivity() {
     /** 本地居中剪切图片  */
     private fun showLocalCropImg() {
         ImageLoader.create(getContext())
-                .load(R.drawable.bg_pokemon)
+                .loadResId(R.drawable.bg_pokemon)
                 .setCenterCrop()
                 .into(mLocalCropImg)
     }
@@ -237,7 +236,7 @@ class GlideActivity : BaseActivity() {
     /** 网络图片 */
     private fun showUrlImg() {
         ImageLoader.create(getContext())
-                .load(IMG_URL)
+                .loadUrl(IMG_URL)
                 .setFitCenter()
                 .setRequestListener(object : RequestListener<Drawable> {
                     override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
@@ -258,7 +257,7 @@ class GlideActivity : BaseActivity() {
     /** 动画显示 */
     private fun showAnimImg() {
         ImageLoader.create(getContext())
-                .load(IMG_URL)
+                .loadUrl(IMG_URL)
                 .setAnim(object : ViewPropertyTransition.Animator {
                     override fun animate(view: View) {
                         view.alpha = 0.5f
@@ -274,7 +273,7 @@ class GlideActivity : BaseActivity() {
     /** 网络gif */
     private fun showUrlGifImg() {
         ImageLoader.create(getContext())
-                .load(GIF_URL)
+                .loadUrl(GIF_URL)
                 .setFitCenter()
                 .into(mUrlGifImg)
     }
@@ -282,7 +281,7 @@ class GlideActivity : BaseActivity() {
     /** 本地gif */
     private fun showLocalGifImg() {
         ImageLoader.create(getContext())
-                .load(R.drawable.ic_gif)
+                .loadResId(R.drawable.ic_gif)
                 .setFitCenter()
                 .into(mLocalGifImg)
     }
@@ -290,7 +289,7 @@ class GlideActivity : BaseActivity() {
     /** 毛玻璃 */
     private fun showBlurImg() {
         ImageLoader.create(getContext())
-                .load(IMG_URL)
+                .loadUrl(IMG_URL)
                 .useBlur()
                 .setFitCenter()
                 .into(mBlurImg)
@@ -299,7 +298,7 @@ class GlideActivity : BaseActivity() {
     /** 覆盖颜色 */
     private fun showFilterColorImg() {
         ImageLoader.create(getContext())
-                .load(IMG_URL)
+                .loadUrl(IMG_URL)
                 .setFitCenter()
                 .setFilterColor(ContextCompat.getColor(getContext(), R.color.color_60ea413c))
                 .useFilterColor()
@@ -309,7 +308,7 @@ class GlideActivity : BaseActivity() {
     /** 全圆角 */
     private fun showCornersAllImg() {
         ImageLoader.create(getContext())
-                .load(IMG_URL)
+                .loadUrl(IMG_URL)
                 .useRoundCorner()
                 .setRoundCorner(10)
                 .setRoundedCornerType(RoundedCornersTransformation.CornerType.ALL)
@@ -320,7 +319,7 @@ class GlideActivity : BaseActivity() {
     /** 顶部圆角 */
     private fun showCornersTopImg() {
         ImageLoader.create(getContext())
-                .load(R.drawable.ic_regret)
+                .loadResId(R.drawable.ic_regret)
                 .useRoundCorner()
                 .setRoundCorner(10)
                 .setRoundedCornerType(RoundedCornersTransformation.CornerType.TOP)
@@ -331,7 +330,7 @@ class GlideActivity : BaseActivity() {
     /** 灰度化 */
     private fun showGrayscaleImg() {
         ImageLoader.create(getContext())
-                .load(IMG_URL)
+                .loadUrl(IMG_URL)
                 .setFitCenter()
                 .useGrayscale()
                 .into(mGrayscaleImg)
@@ -340,7 +339,7 @@ class GlideActivity : BaseActivity() {
     /** 圆角/灰度化 */
     private fun showCornersGrayscaleImg() {
         ImageLoader.create(getContext())
-                .load(IMG_URL)
+                .loadUrl(IMG_URL)
                 .useRoundCorner()
                 .setRoundCorner(10)
                 .useGrayscale()
@@ -351,7 +350,7 @@ class GlideActivity : BaseActivity() {
     /** 圆形 */
     private fun showCircleImg() {
         ImageLoader.create(getContext())
-                .load(IMG_URL)
+                .loadUrl(IMG_URL)
                 .useCircle()
                 .setFitCenter()
                 .into(mCircleImg)
@@ -360,7 +359,7 @@ class GlideActivity : BaseActivity() {
     /** 圆形/毛玻璃 */
     private fun showCircleBlurImg() {
         ImageLoader.create(getContext())
-                .load(IMG_URL)
+                .loadUrl(IMG_URL)
                 .useBlur()
                 .useCircle()
                 .setFitCenter()
@@ -370,7 +369,7 @@ class GlideActivity : BaseActivity() {
     /** 圆形/灰度化/毛玻璃 */
     private fun showCircleGrayscaleBlurImg() {
         ImageLoader.create(getContext())
-                .load(IMG_URL)
+                .loadUrl(IMG_URL)
                 .useCircle()
                 .useBlur()
                 .useGrayscale()
@@ -381,7 +380,7 @@ class GlideActivity : BaseActivity() {
     /** 蒙板效果 */
     private fun showMaskImg() {
         ImageLoader.create(getContext())
-                .load(IMG_URL)
+                .loadUrl(IMG_URL)
                 .useMask()
                 .setFitCenter()
                 .into(mMaskImg)
@@ -390,7 +389,7 @@ class GlideActivity : BaseActivity() {
     /** 正方形 */
     private fun showSquareImg() {
         ImageLoader.create(getContext())
-                .load(IMG_URL)
+                .loadUrl(IMG_URL)
                 .setCenterCrop()
                 .useCropSquare()
                 .into(mSquareImg)
@@ -399,7 +398,7 @@ class GlideActivity : BaseActivity() {
     /** 正方形/毛玻璃 */
     private fun showSquareBlurImg() {
         ImageLoader.create(getContext())
-                .load(IMG_URL)
+                .loadUrl(IMG_URL)
                 .useBlur()
                 .setCenterCrop()
                 .useCropSquare()
@@ -409,7 +408,7 @@ class GlideActivity : BaseActivity() {
     /** 本地webp */
     private fun showLocalWebpImg() {
         ImageLoader.create(getContext())
-                .load(R.drawable.ic_webp)
+                .loadResId(R.drawable.ic_webp)
                 .setFitCenter()
                 .into(mLocalWebpImg)
     }
@@ -424,7 +423,7 @@ class GlideActivity : BaseActivity() {
             return
         }
         ImageLoader.create(getContext())
-                .load(Uri.fromFile(file))
+                .loadUri(Uri.fromFile(file))
                 .setVideo()
                 .into(mLocalVideoImg)
     }

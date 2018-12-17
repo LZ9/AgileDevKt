@@ -33,7 +33,7 @@ object BitmapUtils {
     }
 
     /** Base64转为Byte数组 */
-    fun base64ToByte(base64Data: String, flags: Int = Base64.NO_WRAP) = Base64.decode(base64Data, flags)
+    fun base64ToByte(base64Data: String, flags: Int = Base64.NO_WRAP): ByteArray = Base64.decode(base64Data, flags)
 
     /** [drawable]转为Bitmap，宽度[widthPx]和高度[heightPx]默认取[drawable]的值 */
     fun drawableToBitmap(drawable: Drawable, @IntRange(from = 1) widthPx: Int = drawable.intrinsicWidth, @IntRange(from = 1) heightPx: Int = drawable.intrinsicHeight): Bitmap? {

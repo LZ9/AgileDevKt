@@ -39,7 +39,7 @@ class SnapAdapter(context: Context) : BaseRecyclerViewAdapter<NationBean>(contex
             return
         }
         ImageLoader.create(context)
-                .load(url)
+                .loadUrl(url)
                 .useRoundCorner()
                 .into(imageView)
     }
