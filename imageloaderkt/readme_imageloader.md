@@ -2,12 +2,12 @@
 图片加载库已经集成了Glide v4以上版本，并且对Glide做了解耦封装，支持链式调用，小伙伴可以随心所欲使用。
 
 ## 目录
- - [1、内部引用](https://github.com/LZ9/AgileDevKt/blob/master/imageloaderkt/readme_imageloader.md#1内部引用)
- - [2、AppGlideModule实现](https://github.com/LZ9/AgileDevKt/blob/master/imageloaderkt/readme_imageloader.md#2appglidemodule实现)
- - [3、初始化](https://github.com/LZ9/AgileDevKt/blob/master/imageloaderkt/readme_imageloader.md#3初始化)
- - [4、缓存操作](https://github.com/LZ9/AgileDevKt/blob/master/imageloaderkt/readme_imageloader.md#4缓存操作)
- - [5、使用方法](https://github.com/LZ9/AgileDevKt/blob/master/imageloaderkt/readme_imageloader.md#5使用方法)
- - [扩展](https://github.com/LZ9/AgileDevKt/blob/master/imageloaderkt/readme_imageloader.md#扩展)
+ - [1、内部引用](https://github.com/LZ9/Pandora/blob/master/imageloaderkt/readme_imageloader.md#1内部引用)
+ - [2、AppGlideModule实现](https://github.com/LZ9/Pandora/blob/master/imageloaderkt/readme_imageloader.md#2appglidemodule实现)
+ - [3、初始化](https://github.com/LZ9/Pandora/blob/master/imageloaderkt/readme_imageloader.md#3初始化)
+ - [4、缓存操作](https://github.com/LZ9/Pandora/blob/master/imageloaderkt/readme_imageloader.md#4缓存操作)
+ - [5、使用方法](https://github.com/LZ9/Pandora/blob/master/imageloaderkt/readme_imageloader.md#5使用方法)
+ - [扩展](https://github.com/LZ9/Pandora/blob/master/imageloaderkt/readme_imageloader.md#扩展)
 
 ## 1、内部引用
 在图片库里已经为大家加入了Glide的依赖，小伙伴不需要再重复添加，我在图片库里也已经集成了图片变换，可以直接通过链式来调用。
@@ -67,7 +67,7 @@
 下面为基本的使用方法，你可以根据自己的需要链上对应的方法，对图片进行控制。
 ```
     ImageLoader.create(this)
-        .load("http://ww2.sinaimg.cn/large/610dc034jw1f91ypzqaivj20u00k0jui.jpg")// 设置加载路径（String/Uri/File/Integer/byte[]）
+        .loadUrl("http://ww2.sinaimg.cn/large/610dc034jw1f91ypzqaivj20u00k0jui.jpg")// 设置加载路径，其他加载方法：loadUri、loadFile、loadFilePath等等
         .setPlaceholder(R.drawable.ic_launcher)// 设置加载图占位图
         .setError(R.drawable.ic_launcher)// 设置加载失败图
         .setImageSize(100, 100)// 设置图片宽高（单位px）
@@ -112,8 +112,8 @@
 
 ## 扩展
 
-- [更新记录](https://github.com/LZ9/AgileDevKt/blob/master/imageloaderkt/readme_imageloader_update.md)
-- [回到顶部](https://github.com/LZ9/AgileDevKt/blob/master/imageloaderkt/readme_imageloader.md#imageloader库)
-- [AgileDevKt 主页](https://github.com/LZ9/AgileDevKt)
-- [了解 core-kt](https://github.com/LZ9/AgileDevKt/blob/master/corekt/readme_core.md)
-- [了解 component-kt]()
+- [更新记录](https://github.com/LZ9/Pandora/blob/master/imageloaderkt/readme_imageloader_update.md)
+- [回到顶部](https://github.com/LZ9/Pandora/blob/master/imageloaderkt/readme_imageloader.md#imageloader库)
+- [Pandora 主页](https://github.com/LZ9/Pandora)
+- [了解 core-kt](https://github.com/LZ9/Pandora/blob/master/corekt/readme_core.md)
+- [了解 Pandora]()
