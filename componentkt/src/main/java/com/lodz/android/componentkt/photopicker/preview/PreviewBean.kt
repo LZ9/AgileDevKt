@@ -4,13 +4,12 @@ import androidx.annotation.ColorRes
 import com.lodz.android.componentkt.photopicker.contract.OnClickListener
 import com.lodz.android.componentkt.photopicker.contract.OnLongClickListener
 import com.lodz.android.componentkt.photopicker.contract.OnPhotoLoader
-import com.lodz.android.corekt.anko.getSize
 
 /**
  * 预览数据
  * Created by zhouL on 2018/12/13.
  */
-class PreviewBean<T> {
+class PreviewBean<T : Any> {
 
     /** 资源列表 */
     var sourceList: List<T>? = null
@@ -23,10 +22,10 @@ class PreviewBean<T> {
     var backgroundColor = android.R.color.black
     /** 顶部状态栏颜色 */
     @ColorRes
-    var statusBarColor = 0
+    var statusBarColor = android.R.color.black
     /** 底部导航栏颜色 */
     @ColorRes
-    var navigationBarColor = 0
+    var navigationBarColor = android.R.color.black
     /** 页码文字颜色 */
     @ColorRes
     var pagerTextColor = android.R.color.darker_gray
@@ -42,9 +41,7 @@ class PreviewBean<T> {
     var isScale = true
 
     fun clear() {
-        if (sourceList.getSize() > 0) {
-            sourceList = null
-        }
+        sourceList = null
         photoLoader = null
         clickListener = null
         longClickListener = null

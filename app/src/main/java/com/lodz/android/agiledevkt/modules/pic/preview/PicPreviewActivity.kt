@@ -25,7 +25,7 @@ import com.lodz.android.imageloaderkt.ImageLoader
 class PicPreviewActivity : BaseActivity() {
 
     companion object {
-        fun start(context: Context){
+        fun start(context: Context) {
             val intent = Intent(context, PicPreviewActivity::class.java)
             context.startActivity(intent)
         }
@@ -76,18 +76,18 @@ class PicPreviewActivity : BaseActivity() {
 
         mPlusBtn.setOnClickListener {
             mPosition++
-            if (mPosition > IMG_URLS.size - 1){
+            if (mPosition > IMG_URLS.size - 1) {
                 mPosition = IMG_URLS.size - 1
             }
-            mPositionTv.text = mPosition.toString()
+            mPositionTv.text = (mPosition + 1).toString()
         }
 
         mMinusBtn.setOnClickListener {
             mPosition--
-            if (mPosition < 0){
+            if (mPosition < 0) {
                 mPosition = 0
             }
-            mPositionTv.text = mPosition.toString()
+            mPositionTv.text = (mPosition + 1).toString()
         }
 
         mPreviewBtn.setOnClickListener {
@@ -100,17 +100,21 @@ class PicPreviewActivity : BaseActivity() {
                     .setPagerTextColor(R.color.white)
                     .setPagerTextSize(14)
                     .setShowPagerText(mShowPagerSwitch.isChecked)
-                    .setOnClickListener(object :OnClickListener<String>{
+                    .setOnClickListener(object : OnClickListener<String> {
                         override fun onClick(context: Context, source: String, position: Int, controller: PreviewController) {
-                            controller.close()
+                            if (mClickCloseSwitch.isChecked) {
+                                controller.close()
+                            } else {
+                                toastShort(getString(R.string.preview_click_tips, position.toString()))
+                            }
                         }
                     })
-                    .setOnLongClickListener(object :OnLongClickListener<String>{
+                    .setOnLongClickListener(object : OnLongClickListener<String> {
                         override fun onLongClick(context: Context, source: String, position: Int, controller: PreviewController) {
                             toastShort(getString(R.string.preview_long_click_tips, position.toString()))
                         }
                     })
-                    .setImgLoader(object :OnPhotoLoader<String>{
+                    .setImgLoader(object : OnPhotoLoader<String> {
                         override fun displayImg(context: Context, source: String, imageView: ImageView) {
                             ImageLoader.create(context).loadUrl(source).setFitCenter().into(imageView)
                         }
@@ -120,10 +124,9 @@ class PicPreviewActivity : BaseActivity() {
         }
     }
 
-
     override fun initData() {
         super.initData()
-        mPositionTv.text = mPosition.toString()
+        mPositionTv.text = (mPosition + 1).toString()
         showStatusCompleted()
     }
 }

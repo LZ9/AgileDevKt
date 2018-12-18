@@ -488,5 +488,6 @@
     <string name="preview_plus">+</string>
     <string name="preview_minus">-</string>
     <string name="preview_pic">预览图片</string>
-    <string name="preview_long_click_tips">%s - 块松开奴家</string>
+    <string name="preview_long_click_tips">%s - 快松开奴家</string>
+    <string name="preview_click_tips">%s - 哪里不懂点哪里</string>
 </resources>

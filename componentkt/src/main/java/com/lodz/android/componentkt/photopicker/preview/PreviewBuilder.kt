@@ -10,7 +10,7 @@ import com.lodz.android.componentkt.photopicker.contract.OnPhotoLoader
  * 图片预览构建器
  * Created by zhouL on 2018/12/15.
  */
-class PreviewBuilder<T> {
+class PreviewBuilder<T : Any> {
     /** 预览数据 */
     private val previewBean = PreviewBean<T>()
 
