@@ -20,6 +20,11 @@ class PicturePagerAdapter<T : Any>(context: Context, isScale: Boolean, photoLoad
     /** 图片加载器 */
     private var mPhotoLoader: OnPhotoLoader<T>?
 
+    /** 点击 */
+    private var mOnClickListener: ((RecyclerView.ViewHolder, T, Int) -> Unit)? = null
+    /** 长按 */
+    private var mOnLongClickListener: ((RecyclerView.ViewHolder, T, Int) -> Unit)? = null
+
     init {
         this.isScale = isScale
         this.mPhotoLoader = photoLoader
@@ -51,11 +56,36 @@ class PicturePagerAdapter<T : Any>(context: Context, isScale: Boolean, photoLoad
         val item = getItem(position)
         if (item != null) {
             mPhotoLoader?.displayImg(context, item, holder.photoImg)
+
+            holder.photoImg.setOnClickListener {
+                mOnClickListener?.invoke(holder, item, position)
+            }
+
+            holder.photoImg.setOnLongClickListener {
+                mOnLongClickListener?.invoke(holder, item, position)
+                return@setOnLongClickListener true
+            }
         }
+    }
+
+    /** 释放资源 */
+    fun release() {
+        mPhotoLoader = null
+    }
+
+    /** 设置点击事件监听器 */
+    fun setOnImgClickListener(listener: (viewHolder: RecyclerView.ViewHolder, item: T, position: Int) -> Unit) {
+        mOnClickListener = listener
+    }
+
+    /** 设置长按事件监听器 */
+    fun setOnImgLongClickListener(listener: (viewHolder: RecyclerView.ViewHolder, item: T, position: Int) -> Unit) {
+        mOnLongClickListener = listener
     }
 
     private inner class DataViewHolder(itemView: ViewGroup) : RecyclerView.ViewHolder(itemView) {
         val photoImg: ImageView
+
         init {
             // 根据是否缩放设置图片控件
             photoImg = if (isScale) PhotoView(itemView.context) else ImageView(itemView.context)
@@ -64,8 +94,4 @@ class PicturePagerAdapter<T : Any>(context: Context, isScale: Boolean, photoLoad
         }
     }
 
-    /** 释放资源 */
-    fun release() {
-        mPhotoLoader = null
-    }
 }

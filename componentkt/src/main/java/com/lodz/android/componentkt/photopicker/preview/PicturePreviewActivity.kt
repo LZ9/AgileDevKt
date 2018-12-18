@@ -99,11 +99,11 @@ class PicturePreviewActivity<T : Any> : AbsActivity() {
             setPagerNum(position)
         }
 
-        mAdapter.setOnItemClickListener { viewHolder, item, position ->
+        mAdapter.setOnImgClickListener { viewHolder, item, position ->
             mPreviewBean?.clickListener?.onClick(viewHolder.itemView.context, item, position, mPreviewController)
         }
 
-        mAdapter.setOnItemLongClickListener { viewHolder, item, position ->
+        mAdapter.setOnImgLongClickListener { viewHolder, item, position ->
             mPreviewBean?.longClickListener?.onLongClick(viewHolder.itemView.context, item, position, mPreviewController)
         }
     }
@@ -116,7 +116,7 @@ class PicturePreviewActivity<T : Any> : AbsActivity() {
             return
         }
         val list = bean.sourceList
-        if (list.isNullOrEmpty()){
+        if (list.isNullOrEmpty()) {
             finish()
             return
         }
@@ -127,7 +127,7 @@ class PicturePreviewActivity<T : Any> : AbsActivity() {
             StatusBarUtil.setNavigationBarColor(window, getColorCompat(bean.navigationBarColor))
         }
         setPagerNum(bean.showPosition)
-        mPagerTv.visibility = if (bean.isShowPagerText) View.VISIBLE else  View.GONE
+        mPagerTv.visibility = if (bean.isShowPagerText) View.VISIBLE else View.GONE
         mPagerTv.setTextColor(getColorCompat(bean.pagerTextColor))
         mPagerTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, bean.pagerTextSize.toFloat())
 
