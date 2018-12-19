@@ -16,12 +16,13 @@ import java.util.*
  */
 object AlbumUtils {
 
-    /** 获取相册中所有图片列表 */
+    /** 获取相册中所有图片路径列表 */
     fun getAllImages(context: Context): List<String> {
         val imageList = LinkedList<String>()
 
         val uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
         val selection = MediaStore.Images.Media.MIME_TYPE + "=? or " +
+                MediaStore.Images.Media.MIME_TYPE + "=? or " +
                 MediaStore.Images.Media.MIME_TYPE + "=? or " +
                 MediaStore.Images.Media.MIME_TYPE + "=?"
         val selectionArgs = arrayOf("image/jpeg", "image/png", "image/gif", "image/jpg")
@@ -61,7 +62,7 @@ object AlbumUtils {
         if (list.isEmpty()) {
             return folders
         }
-        folders.add(getAllImageFolder(context))
+        folders.add(getTotalImageFolder(context))
         folders.addAll(getImageFolders(list))
         return folders
     }
@@ -96,14 +97,13 @@ object AlbumUtils {
     }
 
     /** 获取总图片的文件夹信息 */
-    fun getAllImageFolder(context: Context): ImageFolder {
+    fun getTotalImageFolder(context: Context): ImageFolder {
         val list = getAllImages(context)
 
         val imageFolder = ImageFolder()
         imageFolder.name = "所有图片"
-        imageFolder.isAllPicture = true
         imageFolder.count = list.getSize()
-        imageFolder.firstImagePath = if (list.isEmpty()) "" else list.get(0)
+        imageFolder.coverImgPath = if (list.isEmpty()) "" else list.get(0)
         return imageFolder
     }
 
@@ -122,7 +122,7 @@ object AlbumUtils {
         }
         val imageFolder = ImageFolder()
         imageFolder.count = fileList.size
-        imageFolder.firstImagePath = coverImgPath
+        imageFolder.coverImgPath = coverImgPath
         imageFolder.dir = file.absolutePath
         return imageFolder
     }
@@ -131,12 +131,8 @@ object AlbumUtils {
     fun getImageListOfFolder(context: Context, imageFolder: ImageFolder): List<String> {
         val imageList = LinkedList<String>()
 
-        if (imageFolder.isAllPicture) {
+        if (imageFolder.isAllPicture()) {
             return getAllImages(context)
-        }
-
-        if (!imageFolder.isDirectory()) {
-            return imageList
         }
 
         val directoryFile = File(imageFolder.dir)
@@ -180,6 +176,9 @@ object AlbumUtils {
             if (file.exists()) {
                 isDelete = file.delete()
             }
+        }
+        if (cursor != null){
+            cursor.close()
         }
         return isDelete
     }

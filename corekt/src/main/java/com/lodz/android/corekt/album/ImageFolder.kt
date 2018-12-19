@@ -15,16 +15,12 @@ class ImageFolder {
                 name = dir.substring(if (lastIndexOf + 1 < dir.length) lastIndexOf + 1 else lastIndexOf)
             }
         }
-    /** 文件夹内第一张图片的路径  */
-    var firstImagePath = ""
+    /** 文件夹封面图片的路径  */
+    var coverImgPath = ""
     /** 文件夹的名称  */
     var name = ""
     /** 文件夹图片的数量  */
     var count = 0
     /** 是否所有图片  */
-    var isAllPicture = false
-
-    /** 是否是目录  */
-    fun isDirectory(): Boolean = dir.isEmpty()
-
+    fun isAllPicture(): Boolean = dir.isEmpty()
 }

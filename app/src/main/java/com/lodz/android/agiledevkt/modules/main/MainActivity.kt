@@ -11,6 +11,7 @@ import com.lodz.android.agiledevkt.App
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.MainBean
 import com.lodz.android.agiledevkt.modules.acache.ACacheTestActivity
+import com.lodz.android.agiledevkt.modules.album.AlbumActivity
 import com.lodz.android.agiledevkt.modules.anko.AnkoLayoutActivity
 import com.lodz.android.agiledevkt.modules.array.ArrayTestActivity
 import com.lodz.android.agiledevkt.modules.bitmap.BitmapTestActivity
@@ -110,7 +111,8 @@ class MainActivity : BaseActivity() {
             MainBean("RV装饰器测试", "R", DecorationRvActivity::class.java),
             MainBean("RecyclerBinder测试类", "R", BinderRvActivity::class.java),
             MainBean("BottomSheets测试类", "B", BottomSheetsActivity::class.java),
-            MainBean("图片测试类", "T", PicActivity::class.java)
+            MainBean("图片测试类", "T", PicActivity::class.java),
+            MainBean("系统相册测试类", "X", AlbumActivity::class.java)
     )
 
     /** 列表 */

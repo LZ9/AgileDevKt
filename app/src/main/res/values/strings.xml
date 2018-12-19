@@ -474,6 +474,17 @@
     <string name="bottom_sheets_pikachu_look">Look</string>
     <string name="bottom_sheets_pikachu_specialized">Specialized</string>
 
+    <!-- 系统相册 -->
+    <string name="album_all_pic_path">获取相册所有图片路径</string>
+    <string name="album_all_img_folders">获取所有图片文件夹</string>
+    <string name="album_list_img_folders">获取图片列表包含的所有图片文件夹</string>
+    <string name="album_total_img_folder">获取总图片的文件夹</string>
+    <string name="album_img_folder">获取指定文件目录下的图片文件夹</string>
+    <string name="album_list_for_img_folder">获取指定图片文件夹里的图片路径列表</string>
+    <string name="album_delete_img">随机删除图片</string>
+    <string name="album_count">总数：</string>
+    <string name="album_no_pic">暂无图片</string>
+
     <!-- 图片测试 -->
     <string name="pic_picker">图片选择器</string>
     <string name="pic_preview">图片预览器</string>

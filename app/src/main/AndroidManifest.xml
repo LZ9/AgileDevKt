@@ -500,6 +500,12 @@
 
         </activity>
 
+        <activity
+            android:name=".modules.album.AlbumActivity"
+            android:label="系统相册测试类"
+            android:screenOrientation="portrait">
+
+        </activity>
 
     </application>
 
