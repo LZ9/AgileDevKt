@@ -9,6 +9,7 @@ import com.lodz.android.corekt.anko.getSize
 import java.io.File
 import java.io.FilenameFilter
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * 系统相册工具类
@@ -120,8 +121,19 @@ object AlbumUtils {
         if (fileList == null || fileList.size == 0) {
             return null
         }
+        var rootPath = file.absolutePath// 获取目录路径
+        if (!rootPath.endsWith(File.separator)) {
+            rootPath += File.separator
+        }
+        val imageList = ArrayList<String>()
+        for (path in fileList) {
+            val tempFile = File(rootPath + path)
+            if (tempFile.exists() && tempFile.length() > 0) {//文件存在且大小不为0
+                imageList.add(path)
+            }
+        }
         val imageFolder = ImageFolder()
-        imageFolder.count = fileList.size
+        imageFolder.count = imageList.size
         imageFolder.coverImgPath = coverImgPath
         imageFolder.dir = file.absolutePath
         return imageFolder
@@ -177,7 +189,7 @@ object AlbumUtils {
                 isDelete = file.delete()
             }
         }
-        if (cursor != null){
+        if (cursor != null) {
             cursor.close()
         }
         return isDelete

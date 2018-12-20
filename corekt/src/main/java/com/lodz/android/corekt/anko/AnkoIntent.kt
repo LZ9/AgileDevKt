@@ -3,6 +3,7 @@
 package com.lodz.android.corekt.anko
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.admin.DevicePolicyManager
 import android.content.ActivityNotFoundException
 import android.content.ComponentName
@@ -11,6 +12,7 @@ import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.net.Uri
 import android.os.Build
+import android.provider.MediaStore
 import android.provider.Settings
 import androidx.core.content.FileProvider
 import com.lodz.android.corekt.utils.FileUtils
@@ -197,4 +199,24 @@ fun Context.sendSMS(number: String, text: String = "") {
     val intent = Intent(Intent.ACTION_VIEW, Uri.parse("sms:$number"))
     intent.putExtra("sms_body", text)
     startActivity(intent)
+}
+
+/** 拍照，存储地址[savePath]，FileProvider名称[authority]，请求码[requestCode] */
+fun Activity.takePhoto(savePath: String, authority: String, requestCode: Int): Boolean {
+    val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+    if (intent.resolveActivity(packageManager) == null) {
+        return false
+    }
+    try {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(this, authority, File(savePath)))
+        } else {
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(File(savePath)))
+        }
+    } catch (e: Exception) {
+        e.printStackTrace()
+        return false
+    }
+    startActivityForResult(intent, requestCode)
+    return true
 }
