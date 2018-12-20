@@ -1,12 +1,21 @@
 package com.lodz.android.agiledevkt.modules.pic
 
+import android.content.Context
 import android.os.Bundle
+import android.widget.ImageView
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.button.MaterialButton
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.agiledevkt.modules.pic.preview.PicPreviewActivity
+import com.lodz.android.agiledevkt.utils.file.FileManager
 import com.lodz.android.componentkt.base.activity.BaseActivity
+import com.lodz.android.componentkt.photopicker.contract.OnPhotoLoader
+import com.lodz.android.componentkt.photopicker.contract.picker.OnPhotoPickerListener
+import com.lodz.android.componentkt.photopicker.picker.PickerManager
 import com.lodz.android.corekt.anko.bindView
+import com.lodz.android.corekt.utils.toastShort
+import com.lodz.android.imageloaderkt.ImageLoader
 
 /**
  * 图片测试类
@@ -33,7 +42,31 @@ class PicActivity : BaseActivity() {
     override fun setListeners() {
         super.setListeners()
         mPickBtn.setOnClickListener {
-
+            PickerManager.create()
+                    .setMaxCount(9)
+                    .setNeedCamera(true)
+                    .setNeedItemPreview(true)
+                    .setCameraSavePath(FileManager.getCacheFolderPath())
+                    .setAuthority("com.lodz.android.agiledevkt.fileprovider")
+                    .setImgLoader(object :OnPhotoLoader<String>{
+                        override fun displayImg(context: Context, source: String, imageView: ImageView) {
+                            ImageLoader.create(context).loadFilePath(source).diskCacheStrategy(DiskCacheStrategy.NONE).setCenterCrop().into(imageView)
+                        }
+                    })
+                    .setPreviewImgLoader(object :OnPhotoLoader<String>{
+                        override fun displayImg(context: Context, source: String, imageView: ImageView) {
+                            ImageLoader.create(context).loadFilePath(source).diskCacheStrategy(DiskCacheStrategy.NONE).setFitCenter().into(imageView)
+                        }
+                    })
+                    .setOnPhotoPickerListener(object :OnPhotoPickerListener{
+                        override fun onPickerSelected(photos: List<String>) {
+                            if (photos.isNotEmpty()){
+                                toastShort(photos.get(0))
+                            }
+                        }
+                    })
+                    .build()
+                    .open(getContext())
         }
 
         mPreviewBtn.setOnClickListener {

@@ -8,6 +8,17 @@
 
         </activity>
 
+        <activity
+            android:name=".photopicker.picker.pick.PhotoPickerActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity
+            android:name=".photopicker.picker.take.TakePhotoActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
 
     </application>
 </manifest>

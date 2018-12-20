@@ -9,7 +9,7 @@ import com.lodz.android.componentkt.photopicker.contract.OnPhotoLoader
  * 预览数据
  * Created by zhouL on 2018/12/13.
  */
-class PreviewBean<T : Any> {
+internal class PreviewBean<T : Any> {
 
     /** 资源列表 */
     var sourceList: List<T>? = null

@@ -13,7 +13,7 @@ import com.lodz.android.componentkt.widget.rv.recycler.BaseRecyclerViewAdapter
  * 图片翻页适配器
  * Created by zhouL on 2018/12/17.
  */
-class PicturePagerAdapter<T : Any>(context: Context, isScale: Boolean, photoLoader: OnPhotoLoader<T>) : BaseRecyclerViewAdapter<T>(context) {
+internal class PicturePagerAdapter<T : Any>(context: Context, isScale: Boolean, photoLoader: OnPhotoLoader<T>) : BaseRecyclerViewAdapter<T>(context) {
 
     /** 是否缩放 */
     private val isScale: Boolean

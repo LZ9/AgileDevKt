@@ -36,7 +36,7 @@ class PickerUIConfig private constructor() {
     private var selectedBtnSelected = android.R.color.holo_green_dark
     /** 选中后的遮罩层颜色 */
     @ColorRes
-    private var maskColor = android.R.color.transparent
+    private var maskColor = 0
     /** 返回按钮颜色 */
     @ColorRes
     private var backBtnColor = android.R.color.white
@@ -55,6 +55,9 @@ class PickerUIConfig private constructor() {
     /** 预览按钮普通颜色 */
     @ColorRes
     private var previewBtnNormal = android.R.color.white
+    /** 预览按钮按压颜色 */
+    @ColorRes
+    private var previewBtnPressed = android.R.color.darker_gray
     /** 预览按钮不可用颜色 */
     @ColorRes
     private var previewBtnUnable = android.R.color.darker_gray
@@ -192,6 +195,14 @@ class PickerUIConfig private constructor() {
         return this
     }
 
+    /** 设置预览按钮按压颜色[color] */
+    fun setPreviewBtnPressed(@ColorRes color: Int): PickerUIConfig {
+        if (color != 0) {
+            previewBtnPressed = color
+        }
+        return this
+    }
+
     /** 设置预览按钮不可用颜色[color] */
     fun setPreviewBtnUnable(@ColorRes color: Int): PickerUIConfig {
         if (color != 0) {
@@ -311,6 +322,10 @@ class PickerUIConfig private constructor() {
     /** 预览按钮普通颜色 */
     @ColorRes
     internal fun getPreviewBtnNormal(): Int = previewBtnNormal
+
+    /** 预览按钮按压颜色 */
+    @ColorRes
+    internal fun getPreviewBtnPressed(): Int = previewBtnPressed
 
     /** 预览按钮不可用颜色 */
     @ColorRes

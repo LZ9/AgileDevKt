@@ -23,7 +23,7 @@ import com.lodz.android.corekt.anko.getColorCompat
  * 图片文件夹列表适配器
  * Created by zhouL on 2018/12/18.
  */
-class ImageFolderAdapter(context: Context) : BaseRecyclerViewAdapter<ImageFolderItemBean>(context) {
+internal class ImageFolderAdapter(context: Context) : BaseRecyclerViewAdapter<ImageFolderItemBean>(context) {
 
     /** 图片加载器 */
     private var mPhotoLoader: OnPhotoLoader<String>? = null

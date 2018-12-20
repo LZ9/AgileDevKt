@@ -25,11 +25,11 @@ import com.lodz.android.corekt.utils.StatusBarUtil
  * 图片预览页面
  * Created by zhouL on 2018/12/13.
  */
-class PicturePreviewActivity<T : Any> : AbsActivity() {
+internal class PicturePreviewActivity<T : Any> : AbsActivity() {
 
     companion object {
         private var sPreviewBean: PreviewBean<*>? = null
-        fun <T : Any> start(context: Context, previewBean: PreviewBean<T>) {
+        internal fun <T : Any> start(context: Context, previewBean: PreviewBean<T>) {
             synchronized(this) {
                 if (sPreviewBean != null) {
                     return

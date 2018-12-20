@@ -48,7 +48,7 @@ class ImageFolderDialog(context: Context) : BaseTopDialog(context) {
     }
 
     /** 设置图片加载器[photoLoader] */
-    fun setOnPhotoLoader(photoLoader: OnPhotoLoader<String>) {
+    fun setOnPhotoLoader(photoLoader: OnPhotoLoader<String>?) {
         mPhotoLoader = photoLoader
     }
 
