@@ -97,6 +97,7 @@ internal class PhotoPickerActivity : AbsActivity() {
 
     override fun findViews(savedInstanceState: Bundle?) {
         super.findViews(savedInstanceState)
+        val rootLayout = findViewById<ViewGroup>(R.id.root_layout)
         val topLayout = findViewById<ViewGroup>(R.id.top_layout)
         val bottomLayout = findViewById<ViewGroup>(R.id.bottom_layout)
         val titleTv = findViewById<TextView>(R.id.title_tv)
@@ -108,6 +109,7 @@ internal class PhotoPickerActivity : AbsActivity() {
         }
 
         initRecyclerView(bean)
+        rootLayout.setBackgroundColor(getColorCompat(bean.pickerUIConfig.getItemBgColor()))
         topLayout.setBackgroundColor(getColorCompat(bean.pickerUIConfig.getTopLayoutColor()))//设置顶部栏背景色
         bottomLayout.setBackgroundColor(getColorCompat(bean.pickerUIConfig.getBottomLayoutColor()))//设置底部栏背景色
         titleTv.setTextColor(getColorCompat(bean.pickerUIConfig.getMainTextColor()))//设置标题文字颜色

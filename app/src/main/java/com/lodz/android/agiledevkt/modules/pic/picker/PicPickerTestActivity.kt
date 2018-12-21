@@ -95,6 +95,7 @@ class PicPickerTestActivity : BaseActivity() {
                     .setNeedCamera(mShowCameraSwitch.isChecked)
                     .setNeedItemPreview(mItemPreviewSwitch.isChecked)
                     .setClickClosePreview(mClickClosePreviewSwitch.isChecked)
+                    .setPickerUIConfig(mConfig)
                     .setCameraSavePath(FileManager.getCacheFolderPath())
                     .setAuthority("com.lodz.android.agiledevkt.fileprovider")
                     .setImgLoader(object : OnPhotoLoader<String> {
@@ -157,7 +158,30 @@ class PicPickerTestActivity : BaseActivity() {
 
     /** 设置风格一 */
     private fun setOneStyle() {
-
+        mConfig = PickerUIConfig.createDefault()
+                .setStatusBarColor(R.color.color_00a0e9)
+                .setNavigationBarColor(R.color.color_00a0e9)
+                .setCameraImg(R.drawable.ic_wallet)
+                .setCameraBgColor(R.color.white)
+                .setItemBgColor(R.color.white)
+                .setSelectedBtnUnselect(R.color.color_b3e5fc)
+                .setSelectedBtnSelected(R.color.color_00a0e9)
+                .setMaskColor(R.color.color_11000000)
+                .setBackBtnColor(R.color.white)
+                .setMainTextColor(R.color.white)
+                .setMoreFolderImg(R.drawable.ic_update)
+                .setTopLayoutColor(R.color.color_00a0e9)
+                .setBottomLayoutColor(R.color.color_00a0e9)
+                .setPreviewBtnNormal(R.color.white)
+                .setPreviewBtnPressed(R.color.color_9a9a9a)
+                .setPreviewBtnUnable(R.color.color_9a9a9a)
+                .setConfirmBtnNormal(R.color.white)
+                .setConfirmBtnPressed(R.color.color_b3e5fc)
+                .setConfirmBtnUnable(R.color.color_b3e5fc)
+                .setConfirmTextNormal(R.color.color_9a9a9a)
+                .setConfirmTextPressed(R.color.color_cccccc)
+                .setConfirmTextUnable(R.color.color_cccccc)
+                .setFolderSelectColor(R.color.color_00a0e9)
     }
 
     /** 设置风格二 */
