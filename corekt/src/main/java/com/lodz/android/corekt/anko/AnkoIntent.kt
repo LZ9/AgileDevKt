@@ -213,10 +213,10 @@ fun Activity.takePhoto(savePath: String, authority: String, requestCode: Int): B
         } else {
             intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(File(savePath)))
         }
+        startActivityForResult(intent, requestCode)
     } catch (e: Exception) {
         e.printStackTrace()
         return false
     }
-    startActivityForResult(intent, requestCode)
     return true
 }

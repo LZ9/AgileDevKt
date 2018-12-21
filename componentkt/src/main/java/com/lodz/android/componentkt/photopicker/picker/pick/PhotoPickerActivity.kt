@@ -221,7 +221,7 @@ internal class PhotoPickerActivity : AbsActivity() {
 
             // 图片预览器
             PreviewManager.create<String>()
-                    .setScale(true)
+                    .setScale(bean.isScale)
                     .setPosition(0)
                     .setPagerTextSize(14)
                     .setShowPagerText(true)
@@ -231,7 +231,9 @@ internal class PhotoPickerActivity : AbsActivity() {
                     .setPagerTextColor(bean.pickerUIConfig.getMainTextColor())
                     .setOnClickListener(object : OnClickListener<String> {
                         override fun onClick(context: Context, source: String, position: Int, controller: PreviewController) {
-                            controller.close()
+                            if (bean.isClickClosePreview) {
+                                controller.close()
+                            }
                         }
                     })
                     .setImgLoader(object : OnPhotoLoader<String> {
@@ -255,36 +257,41 @@ internal class PhotoPickerActivity : AbsActivity() {
                     return
                 }
 
-                mCurrentPhotoList.forEachIndexed { i, pickerItemBean ->
-                    if (bean.path.equals(mCurrentPhotoList.get(i).path)) {
-                        mCurrentPhotoList.get(i).isSelected = !bean.isSelected//更改选中状态
-                        mAdapter.setData(mCurrentPhotoList)
-                        mAdapter.notifyItemChanged(position)//刷新数据
-                        if (mCurrentPhotoList.get(i).isSelected) {// 点击后是选中状态
-                            mSelectedList.add(bean)
-                        } else {// 点击后是非选中状态
-                            for (selectedBean in mSelectedList) {
-                                if (selectedBean.path.equals(bean.path)) {
-                                    mSelectedList.remove(selectedBean)// 从选中列表里去除
+                synchronized(this) {
+                    for (i in mCurrentPhotoList.indices) {
+                        if (bean.path.equals(mCurrentPhotoList.get(i).path)) {
+                            mCurrentPhotoList.get(i).isSelected = !bean.isSelected//更改选中状态
+                            mAdapter.setData(mCurrentPhotoList)
+                            mAdapter.notifyItemChanged(position)//刷新数据
+                            if (mCurrentPhotoList.get(i).isSelected) {// 点击后是选中状态
+                                mSelectedList.add(bean)
+                            } else {// 点击后是非选中状态
+                                val iterator = mSelectedList.iterator()
+                                while (iterator.hasNext()) {
+                                    if (iterator.next().path.equals(bean.path)) {
+                                        iterator.remove()// 从选中列表里去除
+                                        break
+                                    }
                                 }
                             }
+                            // 设置按钮状态
+                            mConfirmBtn.isEnabled = mSelectedList.isNotEmpty()
+                            mConfirmBtn.text = if (mSelectedList.isNotEmpty()) {
+                                getString(R.string.componentkt_picker_confirm_num, mSelectedList.size.toString(), pickerBean.maxCount.toString())
+                            } else {
+                                getString(R.string.componentkt_picker_confirm)
+                            }
+                            mPreviewBtn.isEnabled = mSelectedList.isNotEmpty()
+                            mPreviewBtn.text = if (mSelectedList.isNotEmpty()) {
+                                getString(R.string.componentkt_picker_preview_num, mSelectedList.size.toString())
+                            } else {
+                                getString(R.string.componentkt_picker_preview)
+                            }
+                            return
                         }
-                        // 设置按钮状态
-                        mConfirmBtn.isEnabled = mSelectedList.isNotEmpty()
-                        mConfirmBtn.text = if (mSelectedList.isNotEmpty()) {
-                            getString(R.string.componentkt_picker_confirm_num, mSelectedList.size.toString(), pickerBean.maxCount.toString())
-                        } else {
-                            getString(R.string.componentkt_picker_confirm)
-                        }
-                        mPreviewBtn.isEnabled = mSelectedList.isNotEmpty()
-                        mPreviewBtn.text = if (mSelectedList.isNotEmpty()) {
-                            getString(R.string.componentkt_picker_preview_num, mSelectedList.size.toString())
-                        } else {
-                            getString(R.string.componentkt_picker_preview)
-                        }
-                        return
                     }
                 }
+
             }
 
             override fun onClickCamera() {
@@ -303,7 +310,7 @@ internal class PhotoPickerActivity : AbsActivity() {
             }
             // 图片预览器
             PreviewManager.create<String>()
-                    .setScale(true)
+                    .setScale(bean.isScale)
                     .setShowPagerText(false)
                     .setBackgroundColor(bean.pickerUIConfig.getItemBgColor())
                     .setStatusBarColor(bean.pickerUIConfig.getStatusBarColor())
@@ -311,7 +318,9 @@ internal class PhotoPickerActivity : AbsActivity() {
                     .setPagerTextColor(bean.pickerUIConfig.getMainTextColor())
                     .setOnClickListener(object : OnClickListener<String> {
                         override fun onClick(context: Context, source: String, position: Int, controller: PreviewController) {
-                            controller.close()
+                            if (bean.isClickClosePreview) {
+                                controller.close()
+                            }
                         }
                     })
                     .setImgLoader(object : OnPhotoLoader<String> {

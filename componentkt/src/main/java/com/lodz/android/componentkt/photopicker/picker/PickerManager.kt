@@ -49,13 +49,14 @@ class PickerManager internal constructor(private val pickerBean: PickerBean) {
             pickerBean.sourceList = pickerBean.sourceList!!.deduplication().toList()// 对指定的图片列表去重
             pickerBean.isNeedCamera = false// 不允许使用拍照模式
         }
-        if (pickerBean.cameraSavePath.isEmpty()) {// 校验拍照保存地址
+        if (pickerBean.isNeedCamera && pickerBean.cameraSavePath.isEmpty()) {// 开启拍照功能要校验拍照保存地址
             pickerBean.cameraSavePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).absolutePath
         }
-        if (!pickerBean.cameraSavePath.endsWith(File.separator)) {//补全地址
+        if (pickerBean.isNeedCamera && !pickerBean.cameraSavePath.endsWith(File.separator)) {//补全地址
             pickerBean.cameraSavePath += File.separator
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && pickerBean.authority.isEmpty()) {//当前系统是7.0以上且没有配置FileProvider
+        //开启拍照功能 && 当前系统是7.0以上且没有配置FileProvider
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && pickerBean.isNeedCamera && pickerBean.authority.isEmpty()) {
             context.toastShort(R.string.componentkt_photo_authority_empty)
             return
         }

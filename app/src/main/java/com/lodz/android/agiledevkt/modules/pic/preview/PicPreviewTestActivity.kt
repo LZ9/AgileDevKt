@@ -19,14 +19,14 @@ import com.lodz.android.corekt.utils.toastShort
 import com.lodz.android.imageloaderkt.ImageLoader
 
 /**
- * 图片预览类
+ * 图片预览测试类
  * Created by zhouL on 2018/12/14.
  */
-class PicPreviewActivity : BaseActivity() {
+class PicPreviewTestActivity : BaseActivity() {
 
     companion object {
         fun start(context: Context) {
-            val intent = Intent(context, PicPreviewActivity::class.java)
+            val intent = Intent(context, PicPreviewTestActivity::class.java)
             context.startActivity(intent)
         }
     }

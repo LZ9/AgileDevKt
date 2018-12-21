@@ -69,6 +69,18 @@ class PickerBuilder {
         return this
     }
 
+    /** 设置预览是否缩放图片[isScale] */
+    fun setScale(isScale: Boolean): PickerBuilder {
+        pickerBean.isScale = isScale
+        return this
+    }
+
+    /** 设置是否点击关闭预览[isClickClosePreview] */
+    fun setClickClosePreview(isClickClosePreview: Boolean): PickerBuilder {
+        pickerBean.isClickClosePreview = isClickClosePreview
+        return this
+    }
+
     /** 完成构建（选择手机里的全部图片） */
     fun build(): PickerManager {
         pickerBean.isPickAllPhoto = true

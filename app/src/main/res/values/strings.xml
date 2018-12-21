@@ -501,4 +501,17 @@
     <string name="preview_pic">预览图片</string>
     <string name="preview_long_click_tips">%s - 快松开奴家</string>
     <string name="preview_click_tips">%s - 哪里不懂点哪里</string>
+
+    <!-- 图片选择器 -->
+    <string name="picker_phone_pic">挑选手机相册</string>
+    <string name="picker_custom_pic">挑选指定图片</string>
+    <string name="picker_max_count">最大可选图片数：</string>
+    <string name="picker_preview_scale">预览缩放图片</string>
+    <string name="picker_show_camera">显示拍照</string>
+    <string name="picker_item_preview">单张预览</string>
+    <string name="picker_click_close_preview">点击关闭预览</string>
+    <string name="picker_style_default">默认风格</string>
+    <string name="picker_style_one">风格一</string>
+    <string name="picker_style_two">风格二</string>
+    <string name="picker_style_three">风格三</string>
 </resources>

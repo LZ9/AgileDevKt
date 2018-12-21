@@ -33,6 +33,10 @@ internal class PickerBean {
     var isPickAllPhoto = true
     /** 是否立即返回结果 */
     var isImmediately = true
+    /** 是否预览 */
+    var isScale = true
+    /** 是否点击关闭预览 */
+    var isClickClosePreview = true
 
     fun clear() {
         sourceList = null

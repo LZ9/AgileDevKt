@@ -494,8 +494,8 @@
         </activity>
 
         <activity
-            android:name=".modules.pic.preview.PicPreviewActivity"
-            android:label="图片预览类"
+            android:name=".modules.pic.preview.PicPreviewTestActivity"
+            android:label="图片预览测试类"
             android:screenOrientation="portrait">
 
         </activity>
@@ -503,6 +503,13 @@
         <activity
             android:name=".modules.album.AlbumActivity"
             android:label="系统相册测试类"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity
+            android:name=".modules.pic.picker.PicPickerTestActivity"
+            android:label="图片选择测试类"
             android:screenOrientation="portrait">
 
         </activity>
