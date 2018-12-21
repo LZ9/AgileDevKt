@@ -26,13 +26,13 @@ abstract class BaseHeaderFooterRVAdapter<H, T, F>(context: Context) : BaseRecycl
     private var mFooterData: F? = null
 
     /** 头部点击 */
-    private var mOnHeaderClickListener: ((RecyclerView.ViewHolder, H, Int) -> Unit)? = null
+    private var mOnHeaderClickListener: ((holder: RecyclerView.ViewHolder, data: H, position: Int) -> Unit)? = null
     /** 头部长按 */
-    private var mOnHeaderLongClickListener: ((RecyclerView.ViewHolder, H, Int) -> Unit)? = null
+    private var mOnHeaderLongClickListener: ((holder: RecyclerView.ViewHolder, data: H, position: Int) -> Unit)? = null
     /** 底部点击 */
-    private var mOnFooterClickListener: ((RecyclerView.ViewHolder, F, Int) -> Unit)? = null
+    private var mOnFooterClickListener: ((holder: RecyclerView.ViewHolder, data: F, position: Int) -> Unit)? = null
     /** 底部长按 */
-    private var mOnFooterLongClickListener: ((RecyclerView.ViewHolder, F, Int) -> Unit)? = null
+    private var mOnFooterLongClickListener: ((holder: RecyclerView.ViewHolder, data: F, position: Int) -> Unit)? = null
 
     override fun getItemViewType(position: Int): Int {
         if (mHeaderData != null) {
@@ -105,55 +105,47 @@ abstract class BaseHeaderFooterRVAdapter<H, T, F>(context: Context) : BaseRecycl
         holder.itemView.setOnClickListener { view ->
             if (mHeaderData == null && mFooterData == null) {//没有头部 没有底部
                 val item = getItem(position)
-                if (mOnItemClickListener != null && item != null) {
-                    mOnItemClickListener!!.invoke(holder, item, position)
+                if (item != null) {
+                    mOnItemClickListener?.invoke(holder, item, position)
                 }
                 return@setOnClickListener
             }
             if (mHeaderData != null && mFooterData == null) {// 有头部 没有底部
                 if (position == 0) {
-                    if (mOnHeaderClickListener != null) {
-                        mOnHeaderClickListener!!.invoke(holder, mHeaderData!!, position)
-                    }
+                    mOnHeaderClickListener?.invoke(holder, mHeaderData!!, position)
                     return@setOnClickListener
                 }
                 val item = getItem(position)
-                if (mOnItemClickListener != null && item != null) {
-                    mOnItemClickListener!!.invoke(holder, item, position - 1)
+                if (item != null) {
+                    mOnItemClickListener?.invoke(holder, item, position - 1)
                 }
                 return@setOnClickListener
             }
 
             if (mHeaderData == null) {// 没有头部 有底部
                 if (position == getItemCount() - 1) {
-                    if (mOnFooterClickListener != null) {
-                        mOnFooterClickListener!!.invoke(holder, mFooterData!!, position)
-                    }
+                    mOnFooterClickListener?.invoke(holder, mFooterData!!, position)
                     return@setOnClickListener
                 }
                 val item = getItem(position)
-                if (mOnItemClickListener != null && item != null) {
-                    mOnItemClickListener!!.invoke(holder, item, position)
+                if (item != null) {
+                    mOnItemClickListener?.invoke(holder, item, position)
                 }
                 return@setOnClickListener
             }
 
             // 有头部 有底部
             if (position == 0) {
-                if (mOnHeaderClickListener != null) {
-                    mOnHeaderClickListener!!.invoke(holder, mHeaderData!!, position)
-                }
+                mOnHeaderClickListener?.invoke(holder, mHeaderData!!, position)
                 return@setOnClickListener
             }
             if (position == getItemCount() - 1) {
-                if (mOnFooterClickListener != null) {
-                    mOnFooterClickListener!!.invoke(holder, mFooterData!!, position)
-                }
+                mOnFooterClickListener?.invoke(holder, mFooterData!!, position)
                 return@setOnClickListener
             }
             val item = getItem(position)
-            if (mOnItemClickListener != null && item != null) {
-                mOnItemClickListener!!.invoke(holder, item, position - 1)
+            if (item != null) {
+                mOnItemClickListener?.invoke(holder, item, position - 1)
             }
         }
     }
@@ -162,55 +154,47 @@ abstract class BaseHeaderFooterRVAdapter<H, T, F>(context: Context) : BaseRecycl
         holder.itemView.setOnLongClickListener { view ->
             if (mHeaderData == null && mFooterData == null) {//没有头部 没有底部
                 val item = getItem(position)
-                if (mOnItemLongClickListener != null && item != null) {
-                    mOnItemLongClickListener!!.invoke(holder, item, position)
+                if (item != null) {
+                    mOnItemLongClickListener?.invoke(holder, item, position)
                 }
                 return@setOnLongClickListener true
             }
 
             if (mHeaderData != null && mFooterData == null) {// 有头部 没有底部
                 if (position == 0) {
-                    if (mOnHeaderLongClickListener != null) {
-                        mOnHeaderLongClickListener!!.invoke(holder, mHeaderData!!, position)
-                    }
+                    mOnHeaderLongClickListener?.invoke(holder, mHeaderData!!, position)
                     return@setOnLongClickListener true
                 }
                 val item = getItem(position)
-                if (mOnItemLongClickListener != null && item != null) {
-                    mOnItemLongClickListener!!.invoke(holder, item, position - 1)
+                if (item != null) {
+                    mOnItemLongClickListener?.invoke(holder, item, position - 1)
                 }
                 return@setOnLongClickListener true
             }
 
             if (mHeaderData == null) {// 没有头部 有底部
                 if (position == getItemCount() - 1) {
-                    if (mOnFooterLongClickListener != null) {
-                        mOnFooterLongClickListener!!.invoke(holder, mFooterData!!, position)
-                    }
+                    mOnFooterLongClickListener?.invoke(holder, mFooterData!!, position)
                     return@setOnLongClickListener true
                 }
                 val item = getItem(position)
-                if (mOnItemLongClickListener != null && item != null) {
-                    mOnItemLongClickListener!!.invoke(holder, item, position)
+                if (item != null) {
+                    mOnItemLongClickListener?.invoke(holder, item, position)
                 }
                 return@setOnLongClickListener true
             }
 
             // 有头部 有底部
             if (position == 0) {
-                if (mOnHeaderLongClickListener != null) {
-                    mOnHeaderLongClickListener!!.invoke(holder, mHeaderData!!, position)
-                }
+                mOnHeaderLongClickListener?.invoke(holder, mHeaderData!!, position)
             }
             if (position == getItemCount() - 1) {
-                if (mOnFooterLongClickListener != null) {
-                    mOnFooterLongClickListener!!.invoke(holder, mFooterData!!, position)
-                }
+                mOnFooterLongClickListener?.invoke(holder, mFooterData!!, position)
             }
             if (mOnItemLongClickListener != null) {
                 val item = getItem(position)
-                if (mOnItemLongClickListener != null && item != null) {
-                    mOnItemLongClickListener!!.invoke(holder, item, position - 1)
+                if (item != null) {
+                    mOnItemLongClickListener?.invoke(holder, item, position - 1)
                 }
             }
             return@setOnLongClickListener true
@@ -218,22 +202,22 @@ abstract class BaseHeaderFooterRVAdapter<H, T, F>(context: Context) : BaseRecycl
     }
 
     /** 设置头部点击事件监听器 */
-    fun setOnHeaderClickListener(listener: (RecyclerView.ViewHolder, H, Int) -> Unit) {
+    fun setOnHeaderClickListener(listener: (holder: RecyclerView.ViewHolder, data: H, position: Int) -> Unit) {
         mOnHeaderClickListener = listener
     }
 
     /** 设置头部长按事件监听器 */
-    fun setOnHeaderLongClickListener(listener: (RecyclerView.ViewHolder, H, Int) -> Unit) {
+    fun setOnHeaderLongClickListener(listener: (holder: RecyclerView.ViewHolder, data: H, position: Int) -> Unit) {
         mOnHeaderLongClickListener = listener
     }
 
     /** 设置底部点击事件监听器 */
-    fun setOnFooterClickListener(listener: (RecyclerView.ViewHolder, F, Int) -> Unit) {
+    fun setOnFooterClickListener(listener: (holder: RecyclerView.ViewHolder, data: F, position: Int) -> Unit) {
         mOnFooterClickListener = listener
     }
 
     /** 设置底部长按事件监听器 */
-    fun setOnFooterLongClickListener(listener: (RecyclerView.ViewHolder, F, Int) -> Unit) {
+    fun setOnFooterLongClickListener(listener: (holder: RecyclerView.ViewHolder, data: F, position: Int) -> Unit) {
         mOnFooterLongClickListener = listener
     }
 

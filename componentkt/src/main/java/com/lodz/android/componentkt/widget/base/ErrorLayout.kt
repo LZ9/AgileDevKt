@@ -181,7 +181,7 @@ class ErrorLayout : LinearLayout {
     }
 
     /** 设置重载监听器[listener] */
-    fun setReloadListener(listener: (View) -> Unit) {
+    fun setReloadListener(listener: (view: View) -> Unit) {
         mRootView.setOnClickListener(listener)
     }
 

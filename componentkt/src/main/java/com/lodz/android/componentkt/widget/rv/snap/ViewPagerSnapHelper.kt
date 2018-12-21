@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 open class ViewPagerSnapHelper(val mStartPosition: Int) : PagerSnapHelper() {
 
     /** 监听器 */
-    private var mOnPageChangeListener: ((Int) -> Unit)? = null
+    private var mOnPageChangeListener: ((position: Int) -> Unit)? = null
 
     override fun attachToRecyclerView(recyclerView: RecyclerView?) {
         super.attachToRecyclerView(recyclerView)
@@ -32,9 +32,7 @@ open class ViewPagerSnapHelper(val mStartPosition: Int) : PagerSnapHelper() {
                     if (centerView != null) {
                         val position = layoutManager.getPosition(centerView)
                         if (lastPosition == 1 && position == 0) {// 修复用户连续滑动回到第一个item时不会回调RecyclerView.SCROLL_STATE_IDLE状态的BUG
-                            if (mOnPageChangeListener != null) {
-                                mOnPageChangeListener!!.invoke(position)
-                            }
+                            mOnPageChangeListener?.invoke(position)
                             lastPosition = position
                         }
                     }
@@ -55,9 +53,7 @@ open class ViewPagerSnapHelper(val mStartPosition: Int) : PagerSnapHelper() {
                 }
 
                 if (lastPosition != position) {//获取的位置和最近一次的位置不一致时，通知外部变化
-                    if (mOnPageChangeListener != null) {
-                        mOnPageChangeListener!!.invoke(position)
-                    }
+                    mOnPageChangeListener?.invoke(position)
                 }
                 lastPosition = position//更新最近一次的位置
             }
@@ -65,7 +61,7 @@ open class ViewPagerSnapHelper(val mStartPosition: Int) : PagerSnapHelper() {
     }
 
     /** 设置pager变化监听器[listener]，返回pager位置[position] */
-    fun setOnPageChangeListener(listener: (Int) -> Unit) {
+    fun setOnPageChangeListener(listener: (position: Int) -> Unit) {
         mOnPageChangeListener = listener
     }
 }

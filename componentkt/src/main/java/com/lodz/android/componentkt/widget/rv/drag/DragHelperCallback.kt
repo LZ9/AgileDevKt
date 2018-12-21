@@ -30,7 +30,7 @@ open class DragHelperCallback<T> : ItemTouchHelper.Callback() {
     private var isVibrate = false
 
     /** 监听器  */
-    private var mListener: ((List<T>) -> Unit)? = null// 列表数据
+    private var mListener: ((list: List<T>) -> Unit)? = null// 列表数据
     /** 数据列表  */
     private var mList: MutableList<T>? = null
     /** 适配器  */
@@ -77,7 +77,7 @@ open class DragHelperCallback<T> : ItemTouchHelper.Callback() {
     }
 
     /** 设置监听器[listener] */
-    fun setListener(listener: ((List<T>) -> Unit)?) {
+    fun setListener(listener: ((list: List<T>) -> Unit)?) {
         this.mListener = listener
     }
 
@@ -136,9 +136,7 @@ open class DragHelperCallback<T> : ItemTouchHelper.Callback() {
         if (mAdapter != null) {
             mAdapter!!.notifyItemMoved(fromPosition, toPosition)
         }
-        if (mListener != null) {
-            mListener!!.invoke(mList!!)
-        }
+        mListener?.invoke(mList!!)
         return true
     }
 
@@ -155,9 +153,7 @@ open class DragHelperCallback<T> : ItemTouchHelper.Callback() {
                 mAdapter!!.notifyItemRangeChanged(position, mList.getSize() - position)
             }
         }
-        if (mListener != null) {
-            mListener!!.invoke(mList!!)
-        }
+        mListener?.invoke(mList!!)
     }
 
     // 当长按选中item时（拖拽开始时）调用

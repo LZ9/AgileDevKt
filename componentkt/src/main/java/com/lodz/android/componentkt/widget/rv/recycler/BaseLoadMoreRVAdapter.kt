@@ -45,9 +45,9 @@ abstract class BaseLoadMoreRVAdapter<T>(context: Context) : BaseRecyclerViewAdap
     private var mHidePositionList: MutableList<Int>? = null
 
     /** 加载更多回调 */
-    private var mOnLoadMoreListener: ((Int, Int, Int, Int) -> Unit)? = null// 当前页码 , 需要加载的页码 , 每页大小 , 回调位置
+    private var mOnLoadMoreListener: ((currentPage: Int, nextPage: Int, size: Int, position: Int) -> Unit)? = null
     /** 加载失败回调 */
-    private var mOnLoadFailClickListener: ((Int, Int) -> Unit)? = null// 需要重载的页码 , 每页大小
+    private var mOnLoadFailClickListener: ((reloadPage: Int, size: Int) -> Unit)? = null
     /** 所有item都隐藏回调 */
     private var mOnAllItemHideListener: (() -> Unit)? = null
 
@@ -137,10 +137,7 @@ abstract class BaseLoadMoreRVAdapter<T>(context: Context) : BaseRecyclerViewAdap
             showLoadingMore(holder)
         } else if (holder is BaseLoadMoreRVAdapter<*>.LoadFailViewHolder) {
             holder.itemView.setOnClickListener {
-                val listener = mOnLoadFailClickListener
-                if (listener != null) {
-                    listener.invoke(mPage + 1, mSize)
-                }
+                mOnLoadFailClickListener?.invoke(mPage + 1, mSize)
             }
             showLoadFail(holder)
         } else if (holder is BaseLoadMoreRVAdapter<*>.BlankViewHolder) {
@@ -172,10 +169,7 @@ abstract class BaseLoadMoreRVAdapter<T>(context: Context) : BaseRecyclerViewAdap
         val loadIndex = if (mSize - mLoadIndex > 0) mLoadIndex else 0
 
         if ((getListItemCount() - loadIndex) == (position + 1) && isLoadMore && !isShowLoadFail) {
-            val listener = mOnLoadMoreListener
-            if (listener != null) {
-                listener.invoke(mPage, (mPage + 1), mSize, position)
-            }
+            mOnLoadMoreListener?.invoke(mPage, (mPage + 1), mSize, position)
         }
     }
 
@@ -227,20 +221,19 @@ abstract class BaseLoadMoreRVAdapter<T>(context: Context) : BaseRecyclerViewAdap
     fun hideItem(position: Int) {
         if (mHidePositionList != null) {
             mHidePositionList!!.add(position)
-            val listener = mOnAllItemHideListener
-            if (mHidePositionList.getSize() == mSumSize && listener != null) {// 隐藏的item数等于总数
-                listener.invoke()
+            if (mHidePositionList.getSize() == mSumSize) {// 隐藏的item数等于总数
+                mOnAllItemHideListener?.invoke()
             }
         }
     }
 
     /** 设置加载更多监听器[listener]，回调：当前页码[currentPage] , 需要加载的页码[nextPage] , 每页大小[size] , 回调位置[position] */
-    fun setOnLoadMoreListener(listener: (Int, Int, Int, Int) -> Unit) {
+    fun setOnLoadMoreListener(listener: (currentPage: Int, nextPage: Int, size: Int, position: Int) -> Unit) {
         this.mOnLoadMoreListener = listener
     }
 
     /** 设置加载失败点击监听器[listener]，回调：需要重载的页码[reloadPage] , 每页大小[size] */
-    fun setOnLoadFailClickListener(listener: (Int, Int) -> Unit) {
+    fun setOnLoadFailClickListener(listener: (reloadPage: Int, size: Int) -> Unit) {
         this.mOnLoadFailClickListener = listener
     }
 

@@ -36,27 +36,21 @@ class LayoutManagerPopupWindow(context: Context) : BasePopupWindow(context) {
     private val mStaggeredBtn by getPopup().bindView<TextView>(R.id.staggered_btn)
 
     /** 点击 */
-    private var mOnClickListener: ((PopupWindow, Int) -> Unit)? = null
+    private var mOnClickListener: ((popup: PopupWindow, type: Int) -> Unit)? = null
 
     override fun getLayoutId(): Int = R.layout.popup_layout_manager
 
     override fun findViews(view: View) {
         mLinearBtn.setOnClickListener {
-            if (mOnClickListener != null) {
-                mOnClickListener!!.invoke(getPopup(), TYPE_LINEAR)
-            }
+            mOnClickListener?.invoke(getPopup(), TYPE_LINEAR)
         }
 
         mGridBtn.setOnClickListener {
-            if (mOnClickListener != null) {
-                mOnClickListener!!.invoke(getPopup(), TYPE_GRID)
-            }
+            mOnClickListener?.invoke(getPopup(), TYPE_GRID)
         }
 
         mStaggeredBtn.setOnClickListener {
-            if (mOnClickListener != null) {
-                mOnClickListener!!.invoke(getPopup(), TYPE_STAGGERED)
-            }
+            mOnClickListener?.invoke(getPopup(), TYPE_STAGGERED)
         }
     }
 
@@ -72,7 +66,7 @@ class LayoutManagerPopupWindow(context: Context) : BasePopupWindow(context) {
 
 
     /** 设置监听器[listener] */
-    fun setOnClickListener(listener: (PopupWindow, Int) -> Unit) {
+    fun setOnClickListener(listener: (popup: PopupWindow, type: Int) -> Unit) {
         mOnClickListener = listener
     }
 }

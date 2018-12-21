@@ -23,7 +23,7 @@ class ImageFolderDialog(context: Context) : BaseTopDialog(context) {
     private lateinit var mAdapter: ImageFolderAdapter
 
     /** 监听器 */
-    private var mListener: ((DialogInterface, ImageFolderItemBean) -> Unit)? = null
+    private var mListener: ((dialog: DialogInterface, bean: ImageFolderItemBean) -> Unit)? = null
     /** 图片加载器 */
     private var mPhotoLoader: OnPhotoLoader<String>? = null
     /** 图片文件夹列表 */
@@ -63,7 +63,7 @@ class ImageFolderDialog(context: Context) : BaseTopDialog(context) {
     }
 
     /** 设置监听器[listener] */
-    fun setListener(listener: (DialogInterface, ImageFolderItemBean) -> Unit) {
+    fun setListener(listener: (dialog: DialogInterface, bean: ImageFolderItemBean) -> Unit) {
         mListener = listener
     }
 
@@ -93,7 +93,17 @@ class ImageFolderDialog(context: Context) : BaseTopDialog(context) {
         mAdapter.setPickerUIConfig(config)
         mRecyclerView.visibility = View.VISIBLE
         mAdapter.setData(list.toMutableList())
-        mRecyclerView.smoothScrollToPosition(0)
+        mRecyclerView.scrollToPosition(getSelectedPosition(list))
         mAdapter.notifyDataSetChanged()
+    }
+
+    /** 获取选中的位置 */
+    private fun getSelectedPosition(list: List<ImageFolderItemBean>): Int {
+        list.forEachIndexed { index, folder ->
+            if (folder.isSelected) {
+                return index
+            }
+        }
+        return 0
     }
 }

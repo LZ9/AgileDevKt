@@ -64,11 +64,11 @@ class AnkoLayoutActivity : AbsActivity() {
         super.setListeners()
         mLloginBtn.setOnClickListener { view ->
             if (mAccountEdit.text.isEmpty()) {
-                MainActivity@ this.toastShort(R.string.al_account_empty)
+                toastShort(R.string.al_account_empty)
                 return@setOnClickListener
             }
             if (mPswdEdit.text.isEmpty()) {
-                MainActivity@ this.toastShort(R.string.al_pswd_empty)
+                toastShort(R.string.al_pswd_empty)
                 return@setOnClickListener
             }
             mResultTv.text = "账号：${mAccountEdit.text} ; 密码：${mPswdEdit.text}"

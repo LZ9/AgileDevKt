@@ -23,22 +23,18 @@ class OrientationPopupWindow(context: Context) : BasePopupWindow(context) {
     private val mHorizontalBtn by getPopup().bindView<TextView>(R.id.horizontal_btn)
 
     /** 点击 */
-    private var mOnClickListener: ((PopupWindow, Int) -> Unit)? = null
+    private var mOnClickListener: ((popup: PopupWindow, orientation: Int) -> Unit)? = null
 
     override fun getLayoutId(): Int = R.layout.popup_orientation
 
     override fun setListeners() {
         super.setListeners()
         mVerticalBtn.setOnClickListener {
-            if (mOnClickListener != null) {
-                mOnClickListener!!.invoke(getPopup(), RecyclerView.VERTICAL)
-            }
+            mOnClickListener?.invoke(getPopup(), RecyclerView.VERTICAL)
         }
 
         mHorizontalBtn.setOnClickListener {
-            if (mOnClickListener != null) {
-                mOnClickListener!!.invoke(getPopup(), RecyclerView.HORIZONTAL)
-            }
+            mOnClickListener?.invoke(getPopup(), RecyclerView.HORIZONTAL)
         }
     }
 
@@ -51,7 +47,7 @@ class OrientationPopupWindow(context: Context) : BasePopupWindow(context) {
     }
 
     /** 设置监听器[listener] */
-    fun setOnClickListener(listener: (PopupWindow, Int) -> Unit) {
+    fun setOnClickListener(listener: (popup: PopupWindow, orientation: Int) -> Unit) {
         mOnClickListener = listener
     }
 }

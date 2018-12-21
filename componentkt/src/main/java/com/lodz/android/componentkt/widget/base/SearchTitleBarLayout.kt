@@ -50,7 +50,7 @@ class SearchTitleBarLayout : FrameLayout {
     /** 输入框监听 */
     private var mTextWatcher: TextWatcher? = null
     /** 清空按钮点击回调 */
-    private var mCleanClickListener: ((View) -> Unit)? = null
+    private var mCleanClickListener: ((view: View) -> Unit)? = null
 
     constructor(context: Context) : super(context) {
         init(null)
@@ -379,7 +379,7 @@ class SearchTitleBarLayout : FrameLayout {
     }
 
     /** 设置清空按钮点击监听[listener] */
-    fun setOnCleanClickListener(listener: (View) -> Unit) {
+    fun setOnCleanClickListener(listener: (view: View) -> Unit) {
         mCleanClickListener = listener
     }
 

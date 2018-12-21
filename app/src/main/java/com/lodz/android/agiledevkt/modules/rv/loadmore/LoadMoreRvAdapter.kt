@@ -18,7 +18,7 @@ import com.lodz.android.corekt.anko.getScreenWidth
  */
 class LoadMoreRvAdapter(context: Context) : SimpleLoadMoreRVAdapter<String>(context) {
 
-    private var mOnClickDeleteListener: ((Int) -> Unit)? = null
+    private var mOnClickDeleteListener: ((position: Int) -> Unit)? = null
 
     /** 当前布局 */
     @LayoutManagerPopupWindow.LayoutManagerType
@@ -29,7 +29,7 @@ class LoadMoreRvAdapter(context: Context) : SimpleLoadMoreRVAdapter<String>(cont
     }
 
     /** 设置监听器[listener] */
-    fun setOnClickDeleteListener(listener: (Int) -> Unit) {
+    fun setOnClickDeleteListener(listener: (position: Int) -> Unit) {
         mOnClickDeleteListener = listener
     }
 
@@ -70,9 +70,7 @@ class LoadMoreRvAdapter(context: Context) : SimpleLoadMoreRVAdapter<String>(cont
         }
         holder.dataTv.text = data
         holder.deleteBtn.setOnClickListener {
-            if (mOnClickDeleteListener != null) {
-                mOnClickDeleteListener!!.invoke(position)
-            }
+            mOnClickDeleteListener?.invoke(position)
         }
     }
 

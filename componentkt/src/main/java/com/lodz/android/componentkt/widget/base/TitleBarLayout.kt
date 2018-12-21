@@ -207,7 +207,7 @@ open class TitleBarLayout : LinearLayout {
     }
 
     /** 设置返回按钮监听[listener] */
-    fun setOnBackBtnClickListener(listener: (View) -> Unit) {
+    fun setOnBackBtnClickListener(listener: (view: View) -> Unit) {
         mBackLayout.setOnClickListener(listener)
     }
 

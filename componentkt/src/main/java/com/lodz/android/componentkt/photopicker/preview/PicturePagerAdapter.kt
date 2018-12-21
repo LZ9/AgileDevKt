@@ -21,9 +21,9 @@ internal class PicturePagerAdapter<T : Any>(context: Context, isScale: Boolean, 
     private var mPhotoLoader: OnPhotoLoader<T>?
 
     /** 点击 */
-    private var mOnClickListener: ((RecyclerView.ViewHolder, T, Int) -> Unit)? = null
+    private var mOnClickListener: ((viewHolder: RecyclerView.ViewHolder, item: T, position: Int) -> Unit)? = null
     /** 长按 */
-    private var mOnLongClickListener: ((RecyclerView.ViewHolder, T, Int) -> Unit)? = null
+    private var mOnLongClickListener: ((viewHolder: RecyclerView.ViewHolder, item: T, position: Int) -> Unit)? = null
 
     init {
         this.isScale = isScale

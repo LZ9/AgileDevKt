@@ -16,7 +16,7 @@ import org.jetbrains.anko.support.v4.UI
  * Created by zhouL on 2018/11/20.
  */
 @UseAnkoLayout
-class AnkoDetailFragment :LazyFragment(){
+class AnkoDetailFragment : LazyFragment() {
 
     companion object {
         fun newInstance(): AnkoDetailFragment = AnkoDetailFragment()
@@ -27,9 +27,9 @@ class AnkoDetailFragment :LazyFragment(){
     /** 签名 */
     private lateinit var mSignTv: TextView
     /** 切换按钮 */
-    private lateinit var mChangeBtn : Button
+    private lateinit var mChangeBtn: Button
     /** 监听器 */
-    private var mListener: ((View) -> Unit)? = null
+    private var mListener: ((view: View) -> Unit)? = null
 
     override fun getAbsLayoutId(): Int = 0
 
@@ -48,10 +48,8 @@ class AnkoDetailFragment :LazyFragment(){
 
                 mChangeBtn = button {
                     setText(R.string.al_change_account)
-                    setOnClickListener {view ->
-                        if (mListener != null){
-                            mListener!!.invoke(view)
-                        }
+                    setOnClickListener { view ->
+                        mListener?.invoke(view)
                     }
                 }
             }
@@ -68,7 +66,7 @@ class AnkoDetailFragment :LazyFragment(){
     }
 
     /** 设置页面切换监听器[listener] */
-    fun setOnChangeListener(listener: (View) -> Unit) {
+    fun setOnChangeListener(listener: (view: View) -> Unit) {
         mListener = listener
     }
 

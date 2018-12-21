@@ -36,46 +36,34 @@ class AnimPopupWindow(context: Context) : BasePopupWindow(context) {
     private val mCustomBtn by getPopup().bindView<TextView>(R.id.custom_btn)
 
     /** 点击 */
-    private var mOnClickListener: ((PopupWindow, Int) -> Unit)? = null
+    private var mOnClickListener: ((popup: PopupWindow, type: Int) -> Unit)? = null
 
     override fun getLayoutId(): Int = R.layout.popup_anim
 
     override fun setListeners() {
         super.setListeners()
         mAlphaInBtn.setOnClickListener {
-            if (mOnClickListener != null) {
-                mOnClickListener!!.invoke(getPopup(), BaseRecyclerViewAdapter.ALPHA_IN)
-            }
+            mOnClickListener?.invoke(getPopup(), BaseRecyclerViewAdapter.ALPHA_IN)
         }
 
         mScaleInBtn.setOnClickListener {
-            if (mOnClickListener != null) {
-                mOnClickListener!!.invoke(getPopup(), BaseRecyclerViewAdapter.SCALE_IN)
-            }
+            mOnClickListener?.invoke(getPopup(), BaseRecyclerViewAdapter.SCALE_IN)
         }
 
         mSlideInBottomBtn.setOnClickListener {
-            if (mOnClickListener != null) {
-                mOnClickListener!!.invoke(getPopup(), BaseRecyclerViewAdapter.SLIDE_IN_BOTTOM)
-            }
+            mOnClickListener?.invoke(getPopup(), BaseRecyclerViewAdapter.SLIDE_IN_BOTTOM)
         }
 
         mSlideInLeftBtn.setOnClickListener {
-            if (mOnClickListener != null) {
-                mOnClickListener!!.invoke(getPopup(), BaseRecyclerViewAdapter.SLIDE_IN_LEFT)
-            }
+            mOnClickListener?.invoke(getPopup(), BaseRecyclerViewAdapter.SLIDE_IN_LEFT)
         }
 
         mSlideInRightBtn.setOnClickListener {
-            if (mOnClickListener != null) {
-                mOnClickListener!!.invoke(getPopup(), BaseRecyclerViewAdapter.SLIDE_IN_RIGHT)
-            }
+            mOnClickListener?.invoke(getPopup(), BaseRecyclerViewAdapter.SLIDE_IN_RIGHT)
         }
 
         mCustomBtn.setOnClickListener {
-            if (mOnClickListener != null) {
-                mOnClickListener!!.invoke(getPopup(), TYPE_CUSTOM)
-            }
+            mOnClickListener?.invoke(getPopup(), TYPE_CUSTOM)
         }
     }
 
@@ -96,7 +84,7 @@ class AnimPopupWindow(context: Context) : BasePopupWindow(context) {
     }
 
     /** 设置监听器[listener] */
-    fun setOnClickListener(listener: (PopupWindow, Int) -> Unit) {
+    fun setOnClickListener(listener: (popup: PopupWindow, type: Int) -> Unit) {
         mOnClickListener = listener
     }
 }

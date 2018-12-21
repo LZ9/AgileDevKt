@@ -25,7 +25,7 @@ class RecyclerViewDragHelper<T>(val mContext: Context) {
     private var isVibrateEnabled = false
 
     /** 监听器  */
-    private var mListener: ((List<T>) -> Unit)? = null// 列表数据
+    private var mListener: ((list: List<T>) -> Unit)? = null// 列表数据
     /** 数据列表  */
     private var mList: MutableList<T>? = null
 
@@ -97,11 +97,9 @@ class RecyclerViewDragHelper<T>(val mContext: Context) {
     }
 
     /** 设置监听器 */
-    fun setListener(listener: (List<T>) -> Unit): RecyclerViewDragHelper<*> {
+    fun setListener(listener: (list: List<T>) -> Unit): RecyclerViewDragHelper<*> {
         mListener = listener
-        if (mCallback != null) {
-            mCallback!!.setListener(listener)
-        }
+        mCallback?.setListener(listener)
         return this
     }
 
@@ -133,8 +131,8 @@ class RecyclerViewDragHelper<T>(val mContext: Context) {
     }
 
     /** 获取ItemTouchHelper */
-    fun getItemTouchHelper(): ItemTouchHelper{
-        if (mItemTouchHelper == null){
+    fun getItemTouchHelper(): ItemTouchHelper {
+        if (mItemTouchHelper == null) {
             throw RuntimeException("please call build() first")
         }
         return mItemTouchHelper!!

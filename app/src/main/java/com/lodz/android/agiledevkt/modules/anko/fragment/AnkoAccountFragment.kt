@@ -15,7 +15,7 @@ import org.jetbrains.anko.support.v4.UI
  * Created by zhouL on 2018/11/20.
  */
 @UseAnkoLayout
-class AnkoAccountFragment :LazyFragment(){
+class AnkoAccountFragment : LazyFragment() {
 
     companion object {
 
@@ -35,9 +35,9 @@ class AnkoAccountFragment :LazyFragment(){
     /** 姓名控件 */
     private lateinit var mNameTv: TextView
     /** 切换按钮 */
-    private lateinit var mChangeBtn : Button
+    private lateinit var mChangeBtn: Button
     /** 监听器 */
-    private var mListener: ((View) -> Unit)? = null
+    private var mListener: ((view: View) -> Unit)? = null
 
     /** 账号 */
     private var mAccount = ""
@@ -57,10 +57,8 @@ class AnkoAccountFragment :LazyFragment(){
                 }
                 mChangeBtn = button {
                     setText(R.string.al_change_detail)
-                    setOnClickListener {view ->
-                        if (mListener != null){
-                            mListener!!.invoke(view)
-                        }
+                    setOnClickListener { view ->
+                        mListener?.invoke(view)
                     }
                 }
             }
@@ -70,9 +68,9 @@ class AnkoAccountFragment :LazyFragment(){
     override fun startCreate() {
         super.startCreate()
         val bundle = arguments
-        if (bundle != null){
+        if (bundle != null) {
             val account = bundle.getString(EXTRA_ACCOUNT)
-            if (!account.isNullOrEmpty()){
+            if (!account.isNullOrEmpty()) {
                 mAccount = account
             }
         }
@@ -84,7 +82,7 @@ class AnkoAccountFragment :LazyFragment(){
     }
 
     /** 设置页面切换监听器[listener] */
-    fun setOnChangeListener(listener: (View) -> Unit) {
+    fun setOnChangeListener(listener: (view: View) -> Unit) {
         mListener = listener
     }
 }

@@ -39,9 +39,9 @@ abstract class BaseRecyclerViewAdapter<T>(protected val context: Context) : Recy
     /** 数据列表 */
     private var mData: MutableList<T>? = null
     /** item点击 */
-    protected var mOnItemClickListener: ((RecyclerView.ViewHolder, T, Int) -> Unit)? = null
+    protected var mOnItemClickListener: ((viewHolder: RecyclerView.ViewHolder, item: T, position: Int) -> Unit)? = null
     /** item长按 */
-    protected var mOnItemLongClickListener: ((RecyclerView.ViewHolder, T, Int) -> Unit)? = null
+    protected var mOnItemLongClickListener: ((viewHolder: RecyclerView.ViewHolder, item: T, position: Int) -> Unit)? = null
 
     /** 动画加速器 */
     private val mInterpolator = LinearInterpolator()
@@ -84,9 +84,8 @@ abstract class BaseRecyclerViewAdapter<T>(protected val context: Context) : Recy
     protected open fun setItemClick(holder: RecyclerView.ViewHolder, position: Int) {
         holder.itemView.setOnClickListener {
             val item = getItem(position)
-            val listener = mOnItemClickListener
-            if (position >= 0 && listener != null && item != null) {
-                listener.invoke(holder, item, position)
+            if (position >= 0 && item != null) {
+                mOnItemClickListener?.invoke(holder, item, position)
             }
         }
     }
@@ -95,11 +94,10 @@ abstract class BaseRecyclerViewAdapter<T>(protected val context: Context) : Recy
     protected open fun setItemLongClick(holder: RecyclerView.ViewHolder, position: Int) {
         holder.itemView.setOnLongClickListener {
             val item = getItem(position)
-            val listener = mOnItemLongClickListener
-            if (position >= 0 && listener != null && item != null) {
-                listener.invoke(holder, item, position)
+            if (position >= 0 && item != null) {
+                mOnItemLongClickListener?.invoke(holder, item, position)
             }
-            true
+            return@setOnLongClickListener true
         }
     }
 
