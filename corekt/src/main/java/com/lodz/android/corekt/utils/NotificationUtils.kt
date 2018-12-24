@@ -72,6 +72,9 @@ class NotificationUtils private constructor(context: Context) {
         return this
     }
 
+    /** 获取通知管理器 */
+    fun getManager(): NotificationManager = mNotificationManager
+
     private fun getRandomId(): Int = Random().nextInt(999998) + 1
 
     /** 如何创建一个NotificationChannel */
