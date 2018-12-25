@@ -11,6 +11,7 @@
     <color name="color_11000000">#11000000</color>
     <color name="color_55000000">#55000000</color>
     <color name="color_60000000">#60000000</color>
+    <color name="color_aa9a9a9a">#aa9a9a9a</color>
     <color name="color_60ff4081">#60ff4081</color>
     <color name="color_d0ff4081">#d0ff4081</color>
     <color name="color_a0191919">#a0191919</color>
@@ -56,8 +57,6 @@
     <color name="color_dda0dd">#dda0dd</color>
     <color name="color_deb887">#deb887</color>
     <color name="color_8b4513">#8b4513</color>
-
-
-
+    <color name="color_d43450">#d43450</color>
 
 </resources>

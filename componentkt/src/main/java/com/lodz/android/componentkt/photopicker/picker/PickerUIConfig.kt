@@ -82,6 +82,9 @@ class PickerUIConfig private constructor() {
     /** 文件夹选择颜色 */
     @ColorRes
     private var folderSelectColor = android.R.color.holo_green_dark
+    /** 预览页背景色 */
+    @ColorRes
+    private var previewBgColor = android.R.color.black
 
     /** 设置顶部状态栏颜色[color] */
     fun setStatusBarColor(@ColorRes color: Int): PickerUIConfig {
@@ -267,6 +270,14 @@ class PickerUIConfig private constructor() {
         return this
     }
 
+    /** 设置预览页背景色[color] */
+    fun setPreviewBgColor(@ColorRes color: Int): PickerUIConfig {
+        if (color != 0) {
+            previewBgColor = color
+        }
+        return this
+    }
+
     /** 顶部状态栏颜色 */
     @ColorRes
     internal fun getStatusBarColor(): Int = statusBarColor
@@ -358,4 +369,9 @@ class PickerUIConfig private constructor() {
     /** 文件夹选择颜色 */
     @ColorRes
     internal fun getFolderSelectColor(): Int = folderSelectColor
+
+    /** 预览页背景色 */
+    @ColorRes
+    internal fun getPreviewBgColor(): Int = previewBgColor
+
 }
