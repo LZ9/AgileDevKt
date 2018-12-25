@@ -15,7 +15,7 @@
         </activity>
 
         <activity
-            android:name=".photopicker.picker.take.TakePhotoActivity"
+            android:name=".photopicker.take.TakePhotoActivity"
             android:screenOrientation="portrait">
 
         </activity>

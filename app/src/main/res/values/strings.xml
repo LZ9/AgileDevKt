@@ -514,4 +514,10 @@
     <string name="picker_style_one">风格一</string>
     <string name="picker_style_two">风格二</string>
     <string name="picker_style_three">风格三</string>
+
+    <!-- 拍照 -->
+    <string name="take_photo_immediately">拍照后直接获取路径</string>
+    <string name="take_photo_confirm">拍照后确认</string>
+
+
 </resources>

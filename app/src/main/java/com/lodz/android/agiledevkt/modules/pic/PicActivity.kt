@@ -6,6 +6,7 @@ import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.agiledevkt.modules.pic.picker.PicPickerTestActivity
 import com.lodz.android.agiledevkt.modules.pic.preview.PicPreviewTestActivity
+import com.lodz.android.agiledevkt.modules.pic.take.TakePhotoTestActivity
 import com.lodz.android.componentkt.base.activity.BaseActivity
 import com.lodz.android.corekt.anko.bindView
 
@@ -42,12 +43,17 @@ class PicActivity : BaseActivity() {
         }
 
         mTakePhotoBtn.setOnClickListener {
-
+            TakePhotoTestActivity.start(getContext())
         }
 
         mNineGridBtn.setOnClickListener {
 
         }
+    }
+
+    override fun onClickBackBtn() {
+        super.onClickBackBtn()
+        finish()
     }
 
     override fun initData() {

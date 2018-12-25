@@ -31,8 +31,6 @@ internal class PickerBean {
     var authority = ""
     /** 是否挑选手机的全部图片 */
     var isPickAllPhoto = true
-    /** 是否立即返回结果 */
-    var isImmediately = true
     /** 是否预览 */
     var isScale = true
     /** 是否点击关闭预览 */

@@ -5,7 +5,7 @@ import com.lodz.android.componentkt.photopicker.contract.OnPhotoLoader
 import com.lodz.android.componentkt.photopicker.contract.picker.OnPhotoPickerListener
 
 /**
- * 照片选择管理类
+ * 照片选择构建类
  * Created by zhouL on 2018/12/19.
  */
 class PickerBuilder {

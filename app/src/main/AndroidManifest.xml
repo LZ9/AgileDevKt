@@ -514,6 +514,13 @@
 
         </activity>
 
+        <activity
+            android:name=".modules.pic.take.TakePhotoTestActivity"
+            android:label="拍照测试类"
+            android:screenOrientation="portrait">
+
+        </activity>
+
     </application>
 
 </manifest>

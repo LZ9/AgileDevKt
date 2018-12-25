@@ -5,7 +5,6 @@ import android.os.Build
 import android.os.Environment
 import com.lodz.android.componentkt.R
 import com.lodz.android.componentkt.photopicker.picker.pick.PhotoPickerActivity
-import com.lodz.android.componentkt.photopicker.picker.take.TakePhotoActivity
 import com.lodz.android.corekt.album.AlbumUtils
 import com.lodz.android.corekt.anko.deduplication
 import com.lodz.android.corekt.utils.toastShort
@@ -61,29 +60,5 @@ class PickerManager internal constructor(private val pickerBean: PickerBean) {
             return
         }
         PhotoPickerActivity.start(context, pickerBean)
-    }
-
-    /** 拍照，上下文[context]，是否立即返回结果[isImmediately]（默认true） */
-    fun takePhoto(context: Context, isImmediately: Boolean = true) {
-        if (pickerBean.previewLoader == null && !isImmediately) {//没有立即返回需要校验预览图片加载器
-            context.toastShort(R.string.componentkt_preview_loader_unset)
-            return
-        }
-        if (pickerBean.photoPickerListener == null) {// 校验图片选中回调监听
-            context.toastShort(R.string.componentkt_photo_selected_listener_unset)
-            return
-        }
-        if (pickerBean.cameraSavePath.isEmpty()) {// 校验拍照保存地址
-            pickerBean.cameraSavePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).absolutePath
-        }
-        if (!pickerBean.cameraSavePath.endsWith(File.separator)) {//补全地址
-            pickerBean.cameraSavePath += File.separator
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && pickerBean.authority.isEmpty()) {//当前系统是7.0以上且没有配置FileProvider
-            context.toastShort(R.string.componentkt_photo_authority_empty)
-            return
-        }
-        pickerBean.isImmediately = isImmediately// 设置是否立即返回结果
-        TakePhotoActivity.start(context, pickerBean)
     }
 }
