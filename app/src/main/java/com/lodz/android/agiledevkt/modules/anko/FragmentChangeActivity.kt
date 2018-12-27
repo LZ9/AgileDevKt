@@ -6,7 +6,7 @@ import android.os.Bundle
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.anko.fragment.AnkoAccountFragment
 import com.lodz.android.agiledevkt.modules.anko.fragment.AnkoDetailFragment
-import com.lodz.android.componentkt.base.activity.BaseActivity
+import com.lodz.android.pandora.base.activity.BaseActivity
 
 /**
  * Fragment变更类

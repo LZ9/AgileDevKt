@@ -6,11 +6,11 @@ import android.graphics.Color
 import android.os.Bundle
 import android.widget.TextView
 import com.lodz.android.agiledevkt.R
-import com.lodz.android.componentkt.base.activity.AbsActivity
-import com.lodz.android.componentkt.widget.base.SearchTitleBarLayout
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.utils.DateUtils
 import com.lodz.android.corekt.utils.IdCardUtils
+import com.lodz.android.pandora.base.activity.AbsActivity
+import com.lodz.android.pandora.widget.base.SearchTitleBarLayout
 
 /**
  * 身份证号码测试类

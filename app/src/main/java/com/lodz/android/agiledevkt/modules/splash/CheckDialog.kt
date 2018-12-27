@@ -6,8 +6,8 @@ import android.view.View
 import android.widget.TextView
 import androidx.annotation.StringRes
 import com.lodz.android.agiledevkt.R
-import com.lodz.android.componentkt.widget.dialog.BaseDialog
 import com.lodz.android.corekt.anko.bindView
+import com.lodz.android.pandora.widget.dialog.BaseDialog
 
 /**
  * 核对弹框

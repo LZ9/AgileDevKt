@@ -6,14 +6,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.lodz.android.componentkt.widget.base.SearchTitleBarLayout
+    <com.lodz.android.pandora.widget.base.SearchTitleBarLayout
         android:id="@+id/search_title_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:inputBackground="@drawable/bg_ffffff_corners_4_stroke_9b9b9b"
         app:inputHint="@string/idcard_input_hint">
 
-    </com.lodz.android.componentkt.widget.base.SearchTitleBarLayout>
+    </com.lodz.android.pandora.widget.base.SearchTitleBarLayout>
 
     <ScrollView
         android:layout_width="match_parent"

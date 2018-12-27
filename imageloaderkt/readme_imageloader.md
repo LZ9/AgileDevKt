@@ -85,7 +85,7 @@
         .setCenterInside()// 设置内部居中
         .dontAnimate()// 设置使用动画
         .userCrossFade()// 使用默认渐变效果
-        .setAnimResId(R.anim.componentkt_anim_bottom_in)// 设置动画资源id
+        .setAnimResId(R.anim.pandora_anim_bottom_in)// 设置动画资源id
         .setAnim(object :ViewPropertyTransition.Animator{// 设置动画
             override fun animate(view: View?) {
 

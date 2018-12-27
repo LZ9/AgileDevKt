@@ -9,8 +9,8 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.lodz.android.agiledevkt.R
-import com.lodz.android.componentkt.widget.dialogfragment.BaseTopDialogFragment
 import com.lodz.android.corekt.anko.bindView
+import com.lodz.android.pandora.widget.dialogfragment.BaseTopDialogFragment
 
 /**
  * 底部DialogFragment测试类

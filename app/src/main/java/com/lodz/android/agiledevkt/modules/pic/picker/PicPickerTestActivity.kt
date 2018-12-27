@@ -12,16 +12,16 @@ import android.widget.TextView
 import com.google.android.material.button.MaterialButton
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.utils.file.FileManager
-import com.lodz.android.componentkt.base.activity.BaseActivity
-import com.lodz.android.componentkt.photopicker.contract.OnPhotoLoader
-import com.lodz.android.componentkt.photopicker.contract.picker.OnPhotoPickerListener
-import com.lodz.android.componentkt.photopicker.picker.PickerManager
-import com.lodz.android.componentkt.photopicker.picker.PickerUIConfig
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.goAppDetailSetting
 import com.lodz.android.corekt.utils.isPermissionGranted
 import com.lodz.android.corekt.utils.toastShort
 import com.lodz.android.imageloaderkt.ImageLoader
+import com.lodz.android.pandora.base.activity.BaseActivity
+import com.lodz.android.pandora.photopicker.contract.OnPhotoLoader
+import com.lodz.android.pandora.photopicker.contract.picker.OnPhotoPickerListener
+import com.lodz.android.pandora.photopicker.picker.PickerManager
+import com.lodz.android.pandora.photopicker.picker.PickerUIConfig
 import permissions.dispatcher.*
 
 /**

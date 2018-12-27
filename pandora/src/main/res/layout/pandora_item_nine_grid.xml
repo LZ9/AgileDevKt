@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/pandora_app_img_name" />
+
+    <ImageView
+        android:id="@+id/delete_btn"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_gravity="end|top"
+        android:contentDescription="@string/pandora_app_img_name"
+        android:padding="3dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/pandora_ic_nine_grid_delete"
+        android:visibility="gone" />
+
+</FrameLayout>

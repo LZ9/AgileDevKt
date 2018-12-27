@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.NationBean
-import com.lodz.android.componentkt.widget.rv.binder.RecyclerBinder
 import com.lodz.android.corekt.anko.bindView
+import com.lodz.android.pandora.widget.rv.binder.RecyclerBinder
 
 /**
  * Created by zhouL on 2018/12/11.

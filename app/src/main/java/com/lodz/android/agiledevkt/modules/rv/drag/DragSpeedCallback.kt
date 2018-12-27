@@ -1,7 +1,7 @@
 package com.lodz.android.agiledevkt.modules.rv.drag
 
 import androidx.recyclerview.widget.RecyclerView
-import com.lodz.android.componentkt.widget.rv.drag.DragHelperCallback
+import com.lodz.android.pandora.widget.rv.drag.DragHelperCallback
 
 /**
  * 匀速拖拽回调

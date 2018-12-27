@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.agiledevkt.R
-import com.lodz.android.componentkt.widget.rv.recycler.BaseRecyclerViewAdapter
 import com.lodz.android.corekt.anko.bindView
+import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
 
 /**
  * 蓝牙设备适配器

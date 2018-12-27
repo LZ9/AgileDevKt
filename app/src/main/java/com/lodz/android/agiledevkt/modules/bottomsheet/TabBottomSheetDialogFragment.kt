@@ -11,9 +11,9 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.tabs.TabLayout
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.dialogfragment.TestFragment
-import com.lodz.android.componentkt.widget.bottomsheets.dialogfragment.BaseBottomSheetDialogFragment
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.dp2px
+import com.lodz.android.pandora.widget.bottomsheets.dialogfragment.BaseBottomSheetDialogFragment
 
 /**
  * Tab页的BottomSheetDialogFragment

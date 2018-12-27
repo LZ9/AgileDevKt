@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import com.lodz.android.agiledevkt.R
-import com.lodz.android.componentkt.base.fragment.LazyFragment
 import com.lodz.android.corekt.anko.bindView
+import com.lodz.android.pandora.base.fragment.LazyFragment
 
 /**
  * 弹框内的测试fragment

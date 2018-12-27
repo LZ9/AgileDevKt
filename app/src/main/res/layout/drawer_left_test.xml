@@ -20,7 +20,7 @@
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/componentkt_nav_header_height"
+                android:layout_height="@dimen/pandora_nav_header_height"
                 android:background="@drawable/bg_gradient_start_00a0e9">
 
                 <LinearLayout

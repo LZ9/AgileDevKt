@@ -7,11 +7,11 @@ import android.widget.Button
 import android.widget.TextView
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
-import com.lodz.android.componentkt.base.activity.BaseActivity
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.deduplication
 import com.lodz.android.corekt.anko.getSize
 import com.lodz.android.corekt.anko.group
+import com.lodz.android.pandora.base.activity.BaseActivity
 
 /**
  * 数组列表测试类

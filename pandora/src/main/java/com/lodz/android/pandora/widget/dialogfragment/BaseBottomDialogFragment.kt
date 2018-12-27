@@ -1,0 +1,28 @@
+package com.lodz.android.pandora.widget.dialogfragment
+
+import android.view.Gravity
+import android.view.Window
+import android.view.WindowManager
+import com.lodz.android.pandora.R
+
+/**
+ * 底部DialogFragment基类
+ * Created by zhouL on 2018/12/13.
+ */
+abstract class BaseBottomDialogFragment() : BaseDialogFragment() {
+
+    override fun configAnimations(): Int = R.style.animation_bottom_in_bottom_out
+
+    override fun configDialogWindow(window: Window) {
+        super.configDialogWindow(window)
+        window.setGravity(Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL)
+        if (isMatchWidth()) {
+            val layoutParams = window.attributes
+            layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT
+            window.attributes = layoutParams
+        }
+    }
+
+    /** 是否需要填满宽度 */
+    protected open fun isMatchWidth(): Boolean = true
+}

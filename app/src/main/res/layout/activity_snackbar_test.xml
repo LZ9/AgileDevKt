@@ -10,12 +10,12 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.lodz.android.componentkt.widget.base.TitleBarLayout
+        <com.lodz.android.pandora.widget.base.TitleBarLayout
             android:id="@+id/title_bar_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        </com.lodz.android.componentkt.widget.base.TitleBarLayout>
+        </com.lodz.android.pandora.widget.base.TitleBarLayout>
 
         <Button
             android:id="@+id/attention_btn"

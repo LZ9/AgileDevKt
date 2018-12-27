@@ -8,8 +8,8 @@ import com.lodz.android.agiledevkt.modules.pic.ninegrid.NineGridActivity
 import com.lodz.android.agiledevkt.modules.pic.picker.PicPickerTestActivity
 import com.lodz.android.agiledevkt.modules.pic.preview.PicPreviewTestActivity
 import com.lodz.android.agiledevkt.modules.pic.take.TakePhotoTestActivity
-import com.lodz.android.componentkt.base.activity.BaseActivity
 import com.lodz.android.corekt.anko.bindView
+import com.lodz.android.pandora.base.activity.BaseActivity
 
 /**
  * 图片测试类

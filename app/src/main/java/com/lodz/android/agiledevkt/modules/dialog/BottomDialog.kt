@@ -4,8 +4,8 @@ import android.content.Context
 import android.os.Build
 import android.widget.TextView
 import com.lodz.android.agiledevkt.R
-import com.lodz.android.componentkt.widget.dialog.BaseBottomDialog
 import com.lodz.android.corekt.anko.bindView
+import com.lodz.android.pandora.widget.dialog.BaseBottomDialog
 
 /**
  * 底部弹框测试类

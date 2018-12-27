@@ -1,1 +1,1 @@
-include ':app', ':componentkt', ':corekt', ':imageloaderkt'
+include ':app', ':corekt', ':imageloaderkt', ':pandora'

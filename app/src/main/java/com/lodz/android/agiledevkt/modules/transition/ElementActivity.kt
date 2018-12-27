@@ -9,9 +9,9 @@ import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.core.util.Pair
 import com.lodz.android.agiledevkt.R
-import com.lodz.android.componentkt.base.activity.BaseActivity
-import com.lodz.android.componentkt.utils.transition.TransitionHelper
 import com.lodz.android.corekt.anko.bindView
+import com.lodz.android.pandora.base.activity.BaseActivity
+import com.lodz.android.pandora.utils.transition.TransitionHelper
 import org.jetbrains.anko.imageResource
 
 /**

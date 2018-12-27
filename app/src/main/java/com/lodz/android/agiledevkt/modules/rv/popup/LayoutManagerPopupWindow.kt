@@ -6,9 +6,9 @@ import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.annotation.IntDef
 import com.lodz.android.agiledevkt.R
-import com.lodz.android.componentkt.widget.popup.BasePopupWindow
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.getColorCompat
+import com.lodz.android.pandora.widget.popup.BasePopupWindow
 import org.jetbrains.anko.backgroundResource
 import org.jetbrains.anko.textColor
 

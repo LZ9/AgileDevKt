@@ -160,7 +160,7 @@
                 android:text="@string/nine_grid_twelve" />
         </RadioGroup>
 
-        <com.lodz.android.componentkt.widget.ninegrid.SimpleNineGridView
+        <com.lodz.android.pandora.widget.ninegrid.SimpleNineGridView
             android:id="@+id/picker_nine_grid_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -172,7 +172,7 @@
             app:maxPic="9"
             app:spanCount="3">
 
-        </com.lodz.android.componentkt.widget.ninegrid.SimpleNineGridView>
+        </com.lodz.android.pandora.widget.ninegrid.SimpleNineGridView>
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -206,7 +206,7 @@
         </FrameLayout>
 
 
-        <com.lodz.android.componentkt.widget.ninegrid.NineGridView
+        <com.lodz.android.pandora.widget.ninegrid.NineGridView
             android:id="@+id/show_only_nine_grid_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -220,7 +220,7 @@
             app:maxPic="8"
             app:spanCount="4">
 
-        </com.lodz.android.componentkt.widget.ninegrid.NineGridView>
+        </com.lodz.android.pandora.widget.ninegrid.NineGridView>
 
         <View
             android:layout_width="match_parent"

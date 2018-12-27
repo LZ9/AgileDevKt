@@ -7,10 +7,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.rv.popup.LayoutManagerPopupWindow
-import com.lodz.android.componentkt.widget.rv.recycler.BaseHeaderFooterRVAdapter
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.dp2px
 import com.lodz.android.corekt.anko.getScreenWidth
+import com.lodz.android.pandora.widget.rv.recycler.BaseHeaderFooterRVAdapter
 
 /**
  * 带头/底部的适配器

@@ -9,9 +9,9 @@ import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.agiledevkt.modules.splash.SplashActivity
 import com.lodz.android.agiledevkt.utils.crash.CrashManager
-import com.lodz.android.componentkt.base.activity.BaseActivity
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.utils.UiHandler
+import com.lodz.android.pandora.base.activity.BaseActivity
 
 /**
  * 崩溃测试类

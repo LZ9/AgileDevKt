@@ -2,8 +2,8 @@ package com.lodz.android.agiledevkt.modules.dialog
 
 import android.content.Context
 import com.lodz.android.agiledevkt.R
-import com.lodz.android.componentkt.widget.dialog.BaseRightDialog
 import com.lodz.android.corekt.anko.createColorDrawable
+import com.lodz.android.pandora.widget.dialog.BaseRightDialog
 
 /**
  * 右侧弹框测试类

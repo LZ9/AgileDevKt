@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pandora_title_bar_height"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/back_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/back_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:drawableStart="@drawable/pandora_selector_btn_back"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:maxWidth="90dp"
+                android:paddingStart="10dp"
+                android:textColor="@android:color/white"
+                tools:ignore="RtlSymmetry" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/input_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="10dp"
+            android:background="@android:color/white"
+            android:gravity="center_vertical">
+
+            <EditText
+                android:id="@+id/input_edit"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="@string/pandora_search_title_hint"
+                android:inputType="text"
+                android:textSize="13sp" />
+
+            <ImageView
+                android:id="@+id/clear_btn"
+                android:layout_width="32dp"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/pandora_app_img_name"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/pandora_ic_clean"
+                android:visibility="gone" />
+
+            <View
+                android:id="@+id/vertical_line"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:background="#d9d9d9" />
+
+            <ImageView
+                android:id="@+id/search_btn"
+                android:layout_width="32dp"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/pandora_app_img_name"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/pandora_ic_search" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/divide_line"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#d9d9d9" />
+
+</LinearLayout>

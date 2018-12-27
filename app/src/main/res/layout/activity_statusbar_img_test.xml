@@ -35,7 +35,7 @@
                     android:paddingEnd="14dp"
                     android:paddingStart="14dp"
                     android:paddingTop="8dp"
-                    android:src="@drawable/componentkt_ic_back" />
+                    android:src="@drawable/pandora_ic_back" />
 
                 <ImageView
                     android:id="@+id/desc_btn"

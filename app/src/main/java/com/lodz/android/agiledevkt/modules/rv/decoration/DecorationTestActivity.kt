@@ -16,13 +16,13 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.rv.popup.LayoutManagerPopupWindow
 import com.lodz.android.agiledevkt.modules.rv.popup.OrientationPopupWindow
-import com.lodz.android.componentkt.base.activity.BaseActivity
-import com.lodz.android.componentkt.widget.base.TitleBarLayout
-import com.lodz.android.componentkt.widget.rv.decoration.*
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.dp2px
 import com.lodz.android.corekt.anko.getColorCompat
 import com.lodz.android.corekt.utils.toastShort
+import com.lodz.android.pandora.base.activity.BaseActivity
+import com.lodz.android.pandora.widget.base.TitleBarLayout
+import com.lodz.android.pandora.widget.rv.decoration.*
 import org.jetbrains.anko.padding
 
 /**

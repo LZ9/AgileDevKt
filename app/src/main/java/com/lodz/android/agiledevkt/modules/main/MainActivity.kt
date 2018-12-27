@@ -49,12 +49,12 @@ import com.lodz.android.agiledevkt.modules.str.StrTestActivity
 import com.lodz.android.agiledevkt.modules.threadpool.ThreadPoolActivity
 import com.lodz.android.agiledevkt.modules.toast.ToastTestActivity
 import com.lodz.android.agiledevkt.modules.transition.TransitionActivity
-import com.lodz.android.componentkt.base.activity.BaseActivity
-import com.lodz.android.componentkt.widget.base.TitleBarLayout
-import com.lodz.android.componentkt.widget.index.IndexBar
-import com.lodz.android.componentkt.widget.rv.decoration.SectionItemDecoration
-import com.lodz.android.componentkt.widget.rv.decoration.StickyItemDecoration
 import com.lodz.android.corekt.anko.*
+import com.lodz.android.pandora.base.activity.BaseActivity
+import com.lodz.android.pandora.widget.base.TitleBarLayout
+import com.lodz.android.pandora.widget.index.IndexBar
+import com.lodz.android.pandora.widget.rv.decoration.SectionItemDecoration
+import com.lodz.android.pandora.widget.rv.decoration.StickyItemDecoration
 
 class MainActivity : BaseActivity() {
 

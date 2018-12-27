@@ -24,7 +24,7 @@
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/componentkt_title_bar_height"
+                    android:layout_height="@dimen/pandora_title_bar_height"
                     app:layout_collapseMode="pin">
 
                     <ImageView
@@ -32,7 +32,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:contentDescription="@string/app_img_name"
-                        android:src="@drawable/componentkt_selector_btn_back" />
+                        android:src="@drawable/pandora_selector_btn_back" />
 
                 </androidx.appcompat.widget.Toolbar>
 

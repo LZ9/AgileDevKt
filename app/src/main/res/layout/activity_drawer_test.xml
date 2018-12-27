@@ -14,13 +14,13 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.lodz.android.componentkt.widget.base.TitleBarLayout
+        <com.lodz.android.pandora.widget.base.TitleBarLayout
             android:id="@+id/title_bar_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:backDrawable="@drawable/componentkt_selector_btn_menu">
+            app:backDrawable="@drawable/pandora_selector_btn_menu">
 
-        </com.lodz.android.componentkt.widget.base.TitleBarLayout>
+        </com.lodz.android.pandora.widget.base.TitleBarLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -64,7 +64,7 @@
 
     <include
         layout="@layout/drawer_left_test"
-        android:layout_width="@dimen/componentkt_nav_width"
+        android:layout_width="@dimen/pandora_nav_width"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true" />

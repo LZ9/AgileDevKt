@@ -8,15 +8,15 @@ import android.widget.Switch
 import android.widget.TextView
 import com.google.android.material.button.MaterialButton
 import com.lodz.android.agiledevkt.R
-import com.lodz.android.componentkt.base.activity.BaseActivity
-import com.lodz.android.componentkt.photopicker.contract.OnClickListener
-import com.lodz.android.componentkt.photopicker.contract.OnLongClickListener
-import com.lodz.android.componentkt.photopicker.contract.OnPhotoLoader
-import com.lodz.android.componentkt.photopicker.contract.preview.PreviewController
-import com.lodz.android.componentkt.photopicker.preview.PreviewManager
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.utils.toastShort
 import com.lodz.android.imageloaderkt.ImageLoader
+import com.lodz.android.pandora.base.activity.BaseActivity
+import com.lodz.android.pandora.photopicker.contract.OnClickListener
+import com.lodz.android.pandora.photopicker.contract.OnLongClickListener
+import com.lodz.android.pandora.photopicker.contract.OnPhotoLoader
+import com.lodz.android.pandora.photopicker.contract.preview.PreviewController
+import com.lodz.android.pandora.photopicker.preview.PreviewManager
 
 /**
  * 图片预览测试类

@@ -4,11 +4,11 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <com.lodz.android.componentkt.widget.rv.horizontal.HorRecyclerView
+    <com.lodz.android.pandora.widget.rv.horizontal.HorRecyclerView
         android:id="@+id/hor_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    </com.lodz.android.componentkt.widget.rv.horizontal.HorRecyclerView>
+    </com.lodz.android.pandora.widget.rv.horizontal.HorRecyclerView>
 
 </LinearLayout>

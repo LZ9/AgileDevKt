@@ -8,8 +8,8 @@ import android.widget.EditText
 import android.widget.TextView
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
-import com.lodz.android.componentkt.base.activity.BaseActivity
-import com.lodz.android.componentkt.utils.acache.ACacheUtils
+import com.lodz.android.pandora.base.activity.BaseActivity
+import com.lodz.android.pandora.utils.acache.ACacheUtils
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.cache.ACache
 import com.lodz.android.corekt.utils.toastShort

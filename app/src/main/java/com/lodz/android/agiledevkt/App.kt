@@ -10,14 +10,14 @@ import android.widget.LinearLayout
 import androidx.multidex.MultiDex
 import com.lodz.android.agiledevkt.config.Constant
 import com.lodz.android.agiledevkt.utils.file.FileManager
-import com.lodz.android.componentkt.base.application.BaseApplication
-import com.lodz.android.componentkt.utils.acache.ACacheUtils
 import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.corekt.network.NetworkManager
 import com.lodz.android.corekt.threadpool.ThreadPoolManager
 import com.lodz.android.corekt.utils.NotificationUtils
 import com.lodz.android.corekt.utils.UiHandler
 import com.lodz.android.imageloaderkt.ImageloaderManager
+import com.lodz.android.pandora.base.application.BaseApplication
+import com.lodz.android.pandora.utils.acache.ACacheUtils
 import java.util.*
 
 /**
@@ -56,7 +56,7 @@ class App : BaseApplication() {
     /** 配置标题栏 */
     private fun configTitleBarLayout() {
         getBaseLayoutConfig().getTitleBarLayoutConfig().isNeedBackBtn = true
-//        getBaseLayoutConfig().getTitleBarLayoutConfig().backBtnResId = R.drawable.componentkt_ic_launcher
+//        getBaseLayoutConfig().getTitleBarLayoutConfig().backBtnResId = R.drawable.pandora_ic_launcher
         getBaseLayoutConfig().getTitleBarLayoutConfig().backgroundColor = R.color.color_00a0e9
 //        getBaseLayoutConfig().getTitleBarLayoutConfig().backBtnText = "返回"
 //        getBaseLayoutConfig().getTitleBarLayoutConfig().backBtnTextColor = R.color.color_d9d9d9
@@ -76,7 +76,7 @@ class App : BaseApplication() {
         getBaseLayoutConfig().getNoDataLayoutConfig().orientation = LinearLayout.VERTICAL
         getBaseLayoutConfig().getNoDataLayoutConfig().isNeedImg = true
         getBaseLayoutConfig().getNoDataLayoutConfig().isNeedTips = false
-//        getBaseLayoutConfig().getNoDataLayoutConfig().drawableResId = R.drawable.componentkt_ic_launcher
+//        getBaseLayoutConfig().getNoDataLayoutConfig().drawableResId = R.drawable.pandora_ic_launcher
 //        getBaseLayoutConfig().getNoDataLayoutConfig().tips = "没数据飞走了"
 //        getBaseLayoutConfig().getNoDataLayoutConfig().textColor = R.color.color_ffa630
 //        getBaseLayoutConfig().getNoDataLayoutConfig().textSize = 23
@@ -102,7 +102,7 @@ class App : BaseApplication() {
         getBaseLayoutConfig().getErrorLayoutConfig().orientation = LinearLayout.VERTICAL
         getBaseLayoutConfig().getErrorLayoutConfig().isNeedImg = true
         getBaseLayoutConfig().getErrorLayoutConfig().isNeedTips = false
-//        getBaseLayoutConfig().getErrorLayoutConfig().drawableResId = R.drawable.componentkt_ic_launcher
+//        getBaseLayoutConfig().getErrorLayoutConfig().drawableResId = R.drawable.pandora_ic_launcher
 //        getBaseLayoutConfig().getErrorLayoutConfig().backgroundColor = R.color.color_ffa630
 //        getBaseLayoutConfig().getErrorLayoutConfig().tips = "接口出错啦"
 //        getBaseLayoutConfig().getErrorLayoutConfig().textColor = R.color.color_ea413c

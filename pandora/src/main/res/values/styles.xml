@@ -1,0 +1,80 @@
+<resources>
+
+    <!-- 接口加载框 -->
+    <style name="ProgressStyle" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowFrame">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+    <style name="BaseDialog" parent="Theme.AppCompat.Light.Dialog">
+        <!--无边框-->
+        <item name="android:windowFrame">@null</item>
+        <!--提示框是否是浮动的-->
+        <item name="android:windowIsFloating">true</item>
+        <!--控件启动前的背景色-->
+        <item name="android:windowContentOverlay">@null</item>
+        <!--提示框的背景颜色-->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!--软键盘设置-->
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+        <!-- 背景缓存色 -->
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <!-- 是否半透明 -->
+        <item name="android:windowIsTranslucent">true</item>
+        <!-- 无标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <!--是否充许对话框的背景变暗。为true则充许变暗-->
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <!-- 透明Dialog -->
+    <style name="NoDimDialog" parent="BaseDialog">
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+    <!-- 透明bottomSheetStyle -->
+    <style name="TransparentBottomSheetStyle" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/SheetStyle</item>
+    </style>
+
+    <!-- 透明bottomSheetStyle -->
+    <style name="SheetStyle" parent="android:Widget">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="behavior_peekHeight">auto</item>
+        <item name="behavior_hideable">true</item>
+        <item name="behavior_skipCollapsed">false</item>
+    </style>
+
+    <!-- 中进中出（缩放） -->
+    <style name="animation_center_in_center_out" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/pandora_anim_center_in</item>
+        <item name="android:windowExitAnimation">@anim/pandora_anim_center_out</item>
+    </style>
+
+    <!-- 底部进底部出 -->
+    <style name="animation_bottom_in_bottom_out" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/pandora_anim_bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/pandora_anim_bottom_out</item>
+    </style>
+
+    <!-- 顶部进顶部出 -->
+    <style name="animation_top_in_top_out" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/pandora_anim_top_in</item>
+        <item name="android:windowExitAnimation">@anim/pandora_anim_top_out</item>
+    </style>
+
+    <!-- 右进右出 -->
+    <style name="animation_right_in_right_out" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/pandora_anim_right_in</item>
+        <item name="android:windowExitAnimation">@anim/pandora_anim_right_out</item>
+    </style>
+
+    <!-- 左进左出 -->
+    <style name="animation_left_in_left_out" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/pandora_anim_left_in</item>
+        <item name="android:windowExitAnimation">@anim/pandora_anim_left_out</item>
+    </style>
+</resources>

@@ -5,9 +5,9 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.lodz.android.agiledevkt.R
-import com.lodz.android.componentkt.base.activity.UseAnkoLayout
-import com.lodz.android.componentkt.base.fragment.LazyFragment
 import com.lodz.android.imageloaderkt.ImageLoader
+import com.lodz.android.pandora.base.activity.UseAnkoLayout
+import com.lodz.android.pandora.base.fragment.LazyFragment
 import org.jetbrains.anko.*
 import org.jetbrains.anko.support.v4.UI
 

@@ -9,10 +9,10 @@ import android.widget.TextView
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.agiledevkt.utils.file.FileManager
-import com.lodz.android.componentkt.base.activity.BaseActivity
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.utils.FileUtils
 import com.lodz.android.corekt.utils.toastShort
+import com.lodz.android.pandora.base.activity.BaseActivity
 import java.io.File
 
 /**
@@ -154,7 +154,7 @@ class FileTestActivity : BaseActivity() {
 
         // bitmap转文件
         mSaveBitmapBtn.setOnClickListener {
-            val bitmap = BitmapFactory.decodeResource(resources, R.drawable.componentkt_ic_search)
+            val bitmap = BitmapFactory.decodeResource(resources, R.drawable.pandora_ic_search)
             FileUtils.bitmapToPath(bitmap, SAVE_PATH, "12sdaww","png", 100)
             toastShort("保存完成")
         }

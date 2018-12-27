@@ -66,7 +66,7 @@ android {
 }
 
 dependencies {
-    implementation project(':componentkt')
+    implementation project(':pandora')
     implementation project(':imageloaderkt')
     //    implementation 'com.lodz:imageloader-kt:1.0.4'
     // 权限申请
@@ -85,7 +85,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test:rules:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 
 
 }

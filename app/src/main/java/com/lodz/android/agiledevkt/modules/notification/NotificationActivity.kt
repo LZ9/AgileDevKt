@@ -12,10 +12,10 @@ import androidx.core.app.NotificationCompat
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.config.Constant
 import com.lodz.android.agiledevkt.modules.main.MainActivity
-import com.lodz.android.componentkt.base.activity.BaseActivity
-import com.lodz.android.componentkt.rx.subscribe.observer.BaseObserver
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.utils.NotificationUtils
+import com.lodz.android.pandora.base.activity.BaseActivity
+import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
 import io.reactivex.Observable
 import java.util.*
 import java.util.concurrent.TimeUnit

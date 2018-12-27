@@ -9,20 +9,20 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
-import com.lodz.android.componentkt.base.activity.BaseActivity
-import com.lodz.android.componentkt.rx.subscribe.observer.BaseObserver
-import com.lodz.android.componentkt.rx.utils.RxUtils
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.utils.ToastUtils
 import com.lodz.android.corekt.utils.toastLong
 import com.lodz.android.corekt.utils.toastShort
+import com.lodz.android.pandora.base.activity.BaseActivity
+import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
+import com.lodz.android.pandora.rx.utils.RxUtils
 import io.reactivex.Observable
 
 /**
  * Toast测试类
  * Created by zhouL on 2018/7/16.
  */
-class ToastTestActivity :BaseActivity(){
+class ToastTestActivity : BaseActivity(){
 
     companion object {
         fun start(context: Context){

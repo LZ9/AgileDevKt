@@ -1,8 +1,8 @@
 package com.lodz.android.agiledevkt.modules.mvc
 
-import com.lodz.android.componentkt.rx.exception.DataException
-import com.lodz.android.componentkt.rx.utils.RxObservableOnSubscribe
 import com.lodz.android.corekt.utils.UiHandler
+import com.lodz.android.pandora.rx.exception.DataException
+import com.lodz.android.pandora.rx.utils.RxObservableOnSubscribe
 import io.reactivex.Observable
 import io.reactivex.ObservableEmitter
 

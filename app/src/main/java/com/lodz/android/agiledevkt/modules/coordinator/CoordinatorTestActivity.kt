@@ -6,8 +6,8 @@ import android.os.Bundle
 import android.widget.Button
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
-import com.lodz.android.componentkt.base.activity.BaseActivity
 import com.lodz.android.corekt.anko.bindView
+import com.lodz.android.pandora.base.activity.BaseActivity
 
 /**
  * CoordinatorLayout测试类

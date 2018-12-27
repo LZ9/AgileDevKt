@@ -9,14 +9,14 @@ import android.widget.ImageView
 import android.widget.SeekBar
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
-import com.lodz.android.componentkt.base.activity.BaseActivity
-import com.lodz.android.componentkt.rx.subscribe.observer.BaseObserver
-import com.lodz.android.componentkt.rx.utils.RxUtils
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.getDrawableCompat
 import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.corekt.utils.BitmapUtils
 import com.lodz.android.corekt.utils.toastShort
+import com.lodz.android.pandora.base.activity.BaseActivity
+import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
+import com.lodz.android.pandora.rx.utils.RxUtils
 import io.reactivex.Observable
 import java.util.concurrent.TimeUnit
 

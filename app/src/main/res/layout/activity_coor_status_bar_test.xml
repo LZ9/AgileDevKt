@@ -48,14 +48,14 @@
                         android:contentDescription="@string/app_img_name"
                         android:src="@drawable/ic_launcher" />
 
-                    <com.lodz.android.componentkt.widget.base.TitleBarLayout
+                    <com.lodz.android.pandora.widget.base.TitleBarLayout
                         android:id="@+id/title_bar_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:titleBarBackground="@color/transparent"
                         app:titleTextColor="@color/white">
 
-                    </com.lodz.android.componentkt.widget.base.TitleBarLayout>
+                    </com.lodz.android.pandora.widget.base.TitleBarLayout>
                 </FrameLayout>
 
             </androidx.appcompat.widget.Toolbar>

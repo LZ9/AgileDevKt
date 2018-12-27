@@ -7,12 +7,12 @@ import android.widget.Button
 import android.widget.TextView
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.mvc.ApiModule
-import com.lodz.android.componentkt.base.activity.BaseSandwichActivity
-import com.lodz.android.componentkt.rx.subscribe.observer.RxObserver
-import com.lodz.android.componentkt.rx.utils.RxUtils
-import com.lodz.android.componentkt.widget.base.TitleBarLayout
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.utils.toastShort
+import com.lodz.android.pandora.base.activity.BaseSandwichActivity
+import com.lodz.android.pandora.rx.subscribe.observer.RxObserver
+import com.lodz.android.pandora.rx.utils.RxUtils
+import com.lodz.android.pandora.widget.base.TitleBarLayout
 import com.trello.rxlifecycle3.android.ActivityEvent
 import kotlin.random.Random
 

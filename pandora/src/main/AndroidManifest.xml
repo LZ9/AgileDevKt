@@ -1,0 +1,24 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.lodz.android.pandora" >
+
+    <application>
+        <activity
+            android:name=".photopicker.preview.PicturePreviewActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity
+            android:name=".photopicker.picker.pick.PhotoPickerActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity
+            android:name=".photopicker.take.TakePhotoActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+    </application>
+</manifest>

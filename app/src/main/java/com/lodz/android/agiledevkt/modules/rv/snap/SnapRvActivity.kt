@@ -10,10 +10,10 @@ import com.google.android.material.tabs.TabLayout
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.NationBean
 import com.lodz.android.agiledevkt.modules.main.MainActivity
-import com.lodz.android.componentkt.base.activity.BaseActivity
-import com.lodz.android.componentkt.widget.rv.snap.TabPagerSnapHelper
-import com.lodz.android.componentkt.widget.rv.snap.ViewPagerSnapHelper
 import com.lodz.android.corekt.anko.bindView
+import com.lodz.android.pandora.base.activity.BaseActivity
+import com.lodz.android.pandora.widget.rv.snap.TabPagerSnapHelper
+import com.lodz.android.pandora.widget.rv.snap.ViewPagerSnapHelper
 
 /**
  * RvSnap测试类

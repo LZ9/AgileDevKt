@@ -6,13 +6,13 @@ import android.os.Bundle
 import android.widget.Button
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
-import com.lodz.android.componentkt.base.activity.BaseActivity
+import com.lodz.android.pandora.base.activity.BaseActivity
 
 /**
  * DialogFragment测试类
  * Created by zhouL on 2018/12/13.
  */
-class DialogFragmentActivity :BaseActivity(){
+class DialogFragmentActivity : BaseActivity(){
 
     companion object {
         fun start(context: Context){

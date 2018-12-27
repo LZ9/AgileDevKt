@@ -3,7 +3,7 @@ package com.lodz.android.agiledevkt.modules.rv.anim
 import android.animation.Animator
 import android.animation.ObjectAnimator
 import android.view.View
-import com.lodz.android.componentkt.widget.rv.animation.BaseAnimation
+import com.lodz.android.pandora.widget.rv.animation.BaseAnimation
 
 /**
  * 缩放淡入

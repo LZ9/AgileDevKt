@@ -6,10 +6,10 @@ import android.os.Bundle
 import android.widget.TextView
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
-import com.lodz.android.componentkt.base.activity.BaseActivity
 import com.lodz.android.corekt.anko.AnkoNumFormat
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.format
+import com.lodz.android.pandora.base.activity.BaseActivity
 
 /**
  * 数字格式化测试类

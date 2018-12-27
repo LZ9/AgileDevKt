@@ -11,16 +11,16 @@ import android.widget.Switch
 import android.widget.TextView
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.utils.file.FileManager
-import com.lodz.android.componentkt.base.activity.BaseActivity
-import com.lodz.android.componentkt.widget.ninegrid.NineGridView
-import com.lodz.android.componentkt.widget.ninegrid.OnNineGridViewListener
-import com.lodz.android.componentkt.widget.ninegrid.OnSimpleNineGridViewListener
-import com.lodz.android.componentkt.widget.ninegrid.SimpleNineGridView
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.goAppDetailSetting
 import com.lodz.android.corekt.utils.isPermissionGranted
 import com.lodz.android.corekt.utils.toastShort
 import com.lodz.android.imageloaderkt.ImageLoader
+import com.lodz.android.pandora.base.activity.BaseActivity
+import com.lodz.android.pandora.widget.ninegrid.NineGridView
+import com.lodz.android.pandora.widget.ninegrid.OnNineGridViewListener
+import com.lodz.android.pandora.widget.ninegrid.OnSimpleNineGridViewListener
+import com.lodz.android.pandora.widget.ninegrid.SimpleNineGridView
 import permissions.dispatcher.*
 
 /**

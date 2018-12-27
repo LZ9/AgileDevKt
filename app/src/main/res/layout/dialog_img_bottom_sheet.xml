@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.lodz.android.componentkt.widget.base.TitleBarLayout
+    <com.lodz.android.pandora.widget.base.TitleBarLayout
         android:id="@+id/title_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -13,7 +13,7 @@
         app:titleText="@string/bottom_sheets_pikachu"
         app:titleTextColor="@color/white">
 
-    </com.lodz.android.componentkt.widget.base.TitleBarLayout>
+    </com.lodz.android.pandora.widget.base.TitleBarLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

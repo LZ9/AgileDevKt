@@ -10,13 +10,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.AppBarLayout
 import com.lodz.android.agiledevkt.R
-import com.lodz.android.componentkt.base.activity.AbsActivity
-import com.lodz.android.componentkt.widget.contract.OnAppBarStateChangeListener
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.dp2px
 import com.lodz.android.corekt.anko.getScreenWidth
 import com.lodz.android.corekt.utils.toastShort
 import com.lodz.android.imageloaderkt.ImageLoader
+import com.lodz.android.pandora.base.activity.AbsActivity
+import com.lodz.android.pandora.widget.contract.OnAppBarStateChangeListener
 import java.util.*
 
 /**

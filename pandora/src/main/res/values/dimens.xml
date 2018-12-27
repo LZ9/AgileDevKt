@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--标题栏高度-->
+    <dimen name="pandora_title_bar_height">56dp</dimen>
+    <!--侧滑栏头部布局高度-->
+    <dimen name="pandora_nav_header_height">176dp</dimen>
+    <!--侧滑栏宽度-->
+    <dimen name="pandora_nav_width">280dp</dimen>
+</resources>

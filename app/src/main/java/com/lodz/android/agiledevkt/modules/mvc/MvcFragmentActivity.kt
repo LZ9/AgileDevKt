@@ -13,8 +13,8 @@ import com.lodz.android.agiledevkt.modules.mvc.abs.MvcTestLazyFragment
 import com.lodz.android.agiledevkt.modules.mvc.base.MvcTestBaseFragment
 import com.lodz.android.agiledevkt.modules.mvc.refresh.MvcTestRefreshFragment
 import com.lodz.android.agiledevkt.modules.mvc.sandwich.MvcTestSandwichFragment
-import com.lodz.android.componentkt.base.activity.BaseActivity
 import com.lodz.android.corekt.anko.bindView
+import com.lodz.android.pandora.base.activity.BaseActivity
 
 /**
  * fragment生命周期测试类

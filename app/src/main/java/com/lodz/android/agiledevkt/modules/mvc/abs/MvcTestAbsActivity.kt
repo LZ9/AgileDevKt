@@ -6,11 +6,11 @@ import android.widget.Button
 import android.widget.TextView
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.mvc.ApiModule
-import com.lodz.android.componentkt.base.activity.AbsActivity
-import com.lodz.android.componentkt.rx.exception.DataException
-import com.lodz.android.componentkt.rx.subscribe.observer.ProgressObserver
-import com.lodz.android.componentkt.rx.utils.RxUtils
 import com.lodz.android.corekt.anko.bindView
+import com.lodz.android.pandora.base.activity.AbsActivity
+import com.lodz.android.pandora.rx.exception.DataException
+import com.lodz.android.pandora.rx.subscribe.observer.ProgressObserver
+import com.lodz.android.pandora.rx.utils.RxUtils
 import com.trello.rxlifecycle3.android.ActivityEvent
 
 /**

@@ -5,10 +5,10 @@ import android.widget.TextView
 import com.google.android.material.button.MaterialButton
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
-import com.lodz.android.componentkt.base.activity.BaseActivity
 import com.lodz.android.corekt.album.AlbumUtils
 import com.lodz.android.corekt.album.ImageFolder
 import com.lodz.android.corekt.anko.bindView
+import com.lodz.android.pandora.base.activity.BaseActivity
 import java.io.File
 import kotlin.random.Random
 
