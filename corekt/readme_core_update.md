@@ -1,5 +1,15 @@
 # core-kt库更新记录
 
+##### 2018/12/27
+1. AppUtils添加wifi判断方法
+2. DeviceUtils增加root判断
+3. 在PopupWindow里增加控件绑定扩展方法
+4. 在AnkoArray里增加ArrayList的转换方法
+5. 修复AlbumUtils里的bug
+6. AnkoIntent增加拍照方法扩展
+7. 更新依赖版本
+8. 发布1.0.2版本
+
 ##### 2018/11/08
 1. 将core库转为kotlin
 2. 根据kotlin特性重构代码

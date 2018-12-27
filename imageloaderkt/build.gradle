@@ -43,5 +43,5 @@ dependencies {
 //    userOrg = 'lz9'
 //    artifactId = 'imageloader-kt'
 //    desc = 'Hi, this is a image loader'//描述，不重要
-//    website = 'https://github.com/LZ9/Pandora'//网站，不重要
+//    website = 'https://github.com/LZ9/AgileDevKt'//网站，不重要
 //}
