@@ -173,31 +173,37 @@ open class NineGridView : FrameLayout {
     /** 设置是否需要添加图标[isNeed] */
     fun setNeedAddBtn(isNeed: Boolean) {
         mAdapter.setNeedAddBtn(isNeed)
+        mAdapter.notifyDataSetChanged()
     }
 
     /** 设置添加图标[resId] */
     fun setAddBtnDrawable(@DrawableRes resId: Int) {
         mAdapter.setAddBtnDrawable(getDrawableCompat(resId))
+        mAdapter.notifyDataSetChanged()
     }
 
     /** 设置是否显示删除按钮[isShow] */
     fun setShowDelete(isShow: Boolean) {
         mAdapter.setShowDelete(isShow)
+        mAdapter.notifyDataSetChanged()
     }
 
     /** 设置删除图标[resId] */
     fun setDeleteBtnDrawable(@DrawableRes resId: Int) {
         mAdapter.setDeleteBtnDrawable(getDrawableCompat(resId))
+        mAdapter.notifyDataSetChanged()
     }
 
     /** 设置最大图片数[count] */
     fun setMaxPic(@IntRange(from = 1) count: Int) {
         mAdapter.setMaxPic(count)
+        clearData()
+        mAdapter.notifyDataSetChanged()
     }
 
     /** 设置数据 */
     fun setData(data: ArrayList<String>) {
-        mDataList = data
+        mDataList = ArrayList()
         //如果数据大于最大图片数，则取前n位数据
         val length = if (data.size > mAdapter.getMaxPic()) mAdapter.getMaxPic() else data.size
         for (i in 0 until length) {

@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/color_00a0e9">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/nine_grid_add_pic"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/get_pic_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/bg_ffffff_corners_4"
+                android:paddingStart="4dp"
+                android:paddingTop="3dp"
+                android:paddingEnd="4dp"
+                android:paddingBottom="3dp"
+                android:text="@string/nine_grid_get_pic"
+                android:textColor="@color/color_00a0e9"
+                android:textSize="12sp" />
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Switch
+                android:id="@+id/scale_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="15dp"
+                android:checked="true"
+                android:text="@string/picker_preview_scale" />
+
+            <Switch
+                android:id="@+id/click_close_preview_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/picker_click_close_preview" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Switch
+                android:id="@+id/show_camera_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="15dp"
+                android:checked="true"
+                android:text="@string/picker_show_camera" />
+
+            <Switch
+                android:id="@+id/item_preview_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/picker_item_preview" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <Switch
+                android:id="@+id/add_btn_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="15dp"
+                android:checked="true"
+                android:text="@string/nine_grid_add_btn" />
+
+            <Switch
+                android:id="@+id/delete_btn_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/nine_grid_delete_btn" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Switch
+                android:id="@+id/drag_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="15dp"
+                android:checked="true"
+                android:text="@string/nine_grid_drag" />
+
+            <Switch
+                android:id="@+id/drag_vibrate_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/nine_grid_drag_vibrate" />
+        </LinearLayout>
+
+        <RadioGroup
+            android:id="@+id/radio_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/six_rb"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/nine_grid_six" />
+
+            <RadioButton
+                android:id="@+id/nine_rb"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:text="@string/nine_grid_nine" />
+
+            <RadioButton
+                android:id="@+id/twelve_rb"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:text="@string/nine_grid_twelve" />
+        </RadioGroup>
+
+        <com.lodz.android.componentkt.widget.ninegrid.SimpleNineGridView
+            android:id="@+id/picker_nine_grid_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:isNeedAddBtn="true"
+            app:isNeedDrag="true"
+            app:isNeedDragVibrate="true"
+            app:isShowDeleteBtn="true"
+            app:itemHigh="100dp"
+            app:maxPic="9"
+            app:spanCount="3">
+
+        </com.lodz.android.componentkt.widget.ninegrid.SimpleNineGridView>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/color_00a0e9">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/nine_grid_show_only"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/only_pic_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/bg_ffffff_corners_4"
+                android:paddingStart="4dp"
+                android:paddingTop="3dp"
+                android:paddingEnd="4dp"
+                android:paddingBottom="3dp"
+                android:text="@string/nine_grid_get_pic"
+                android:textColor="@color/color_00a0e9"
+                android:textSize="12sp" />
+
+        </FrameLayout>
+
+
+        <com.lodz.android.componentkt.widget.ninegrid.NineGridView
+            android:id="@+id/show_only_nine_grid_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:addBtnDrawable="@drawable/ic_wallet"
+            app:deleteDrawable="@drawable/ic_update"
+            app:isNeedAddBtn="false"
+            app:isNeedDrag="false"
+            app:isNeedDragVibrate="false"
+            app:isShowDeleteBtn="false"
+            app:itemHigh="100dp"
+            app:maxPic="8"
+            app:spanCount="4">
+
+        </com.lodz.android.componentkt.widget.ninegrid.NineGridView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@color/color_00a0e9" />
+
+        <TextView
+            android:id="@+id/result_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
+            android:textColor="@color/color_00a0e9"
+            android:textSize="16sp"
+            tools:text="结果" />
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

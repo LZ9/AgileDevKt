@@ -519,5 +519,15 @@
     <string name="take_photo_immediately">拍照后直接获取路径</string>
     <string name="take_photo_confirm">拍照后确认</string>
 
-
+    <!-- 九宫格 -->
+    <string name="nine_grid_get_pic">获取图片路径</string>
+    <string name="nine_grid_show_only">只显示图片</string>
+    <string name="nine_grid_add_pic">添加图片</string>
+    <string name="nine_grid_add_btn">添加图片按钮</string>
+    <string name="nine_grid_delete_btn">删除按钮</string>
+    <string name="nine_grid_drag">允许拖拽</string>
+    <string name="nine_grid_drag_vibrate">拖拽震动</string>
+    <string name="nine_grid_six">6张</string>
+    <string name="nine_grid_nine">9张</string>
+    <string name="nine_grid_twelve">12张</string>
 </resources>

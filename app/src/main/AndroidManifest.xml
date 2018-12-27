@@ -62,7 +62,7 @@
 
     <!-- ********************* 高德定位 ********************* -->
     <!--用于申请调用A-GPS模块-->
-    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <!--用于进行网络定位-->
     <!--<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>-->
     <!--用于访问GPS定位-->
@@ -517,6 +517,13 @@
         <activity
             android:name=".modules.pic.take.TakePhotoTestActivity"
             android:label="拍照测试类"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity
+            android:name=".modules.pic.ninegrid.NineGridActivity"
+            android:label="九宫格测试类"
             android:screenOrientation="portrait">
 
         </activity>

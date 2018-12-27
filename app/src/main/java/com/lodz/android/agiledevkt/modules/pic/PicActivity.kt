@@ -4,6 +4,7 @@ import android.os.Bundle
 import com.google.android.material.button.MaterialButton
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
+import com.lodz.android.agiledevkt.modules.pic.ninegrid.NineGridActivity
 import com.lodz.android.agiledevkt.modules.pic.picker.PicPickerTestActivity
 import com.lodz.android.agiledevkt.modules.pic.preview.PicPreviewTestActivity
 import com.lodz.android.agiledevkt.modules.pic.take.TakePhotoTestActivity
@@ -47,7 +48,7 @@ class PicActivity : BaseActivity() {
         }
 
         mNineGridBtn.setOnClickListener {
-
+            NineGridActivity.start(getContext())
         }
     }
 
