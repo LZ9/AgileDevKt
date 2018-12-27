@@ -2,15 +2,15 @@
 这个是最底层的核心依赖库，主要用来放androidx库和通用的帮助类
 
 ## 目录
-- [1、涉及的androidx和kotlin依赖](https://github.com/LZ9/Pandora/blob/master/corekt/readme_core.md#1涉及的androidx和kotlin依赖)
-- [2、日志类PrintLog](https://github.com/LZ9/Pandora/blob/master/corekt/readme_core.md#2日志类printlog)
-- [3、网络状态类NetworkManager](https://github.com/LZ9/Pandora/blob/master/corekt/readme_core.md#3网络状态类networkmanager)
-- [4、加密相关](https://github.com/LZ9/Pandora/blob/master/corekt/readme_core.md#4加密相关)
-- [5、线程池ThreadPoolManager](https://github.com/LZ9/Pandora/blob/master/corekt/readme_core.md#5线程池threadpoolmanager)
-- [6、缓存Cache](https://github.com/LZ9/Pandora/blob/master/corekt/readme_core.md#6缓存cache)
-- [7、通知帮助类NotificationUtils](https://github.com/LZ9/Pandora/blob/master/corekt/readme_core.md#7通知帮助类notificationutils)
-- [8、各种通用工具类](https://github.com/LZ9/Pandora/blob/master/corekt/readme_core.md#8各种通用工具类)
-- [扩展](https://github.com/LZ9/Pandora/blob/master/corekt/readme_core.md#扩展)
+- [1、涉及的androidx和kotlin依赖](https://github.com/LZ9/AgileDevKt/blob/master/corekt/readme_core.md#1涉及的androidx和kotlin依赖)
+- [2、日志类PrintLog](https://github.com/LZ9/AgileDevKt/blob/master/corekt/readme_core.md#2日志类printlog)
+- [3、网络状态类NetworkManager](https://github.com/LZ9/AgileDevKt/blob/master/corekt/readme_core.md#3网络状态类networkmanager)
+- [4、加密相关](https://github.com/LZ9/AgileDevKt/blob/master/corekt/readme_core.md#4加密相关)
+- [5、线程池ThreadPoolManager](https://github.com/LZ9/AgileDevKt/blob/master/corekt/readme_core.md#5线程池threadpoolmanager)
+- [6、缓存Cache](https://github.com/LZ9/AgileDevKt/blob/master/corekt/readme_core.md#6缓存cache)
+- [7、通知帮助类NotificationUtils](https://github.com/LZ9/AgileDevKt/blob/master/corekt/readme_core.md#7通知帮助类notificationutils)
+- [8、各种通用工具类](https://github.com/LZ9/AgileDevKt/blob/master/corekt/readme_core.md#8各种通用工具类)
+- [扩展](https://github.com/LZ9/AgileDevKt/blob/master/corekt/readme_core.md#扩展)
 
 ## 1、涉及的androidx和kotlin依赖
 该库引用了下方这些support库，如果您的app有重复引用可以选择去掉顶层引用或者保证版本一致
@@ -231,8 +231,8 @@ PrintLog主要封装了日志的打印开关，小伙伴可以在app里的build.
 
 ## 扩展
 
-- [更新记录](https://github.com/LZ9/Pandora/blob/master/corekt/readme_core_update.md)
-- [回到顶部](https://github.com/LZ9/Pandora/blob/master/corekt/readme_core.md#core-kt库)
-- [Pandora 主页](https://github.com/LZ9/Pandora)
+- [更新记录](https://github.com/LZ9/AgileDevKt/blob/master/corekt/readme_core_update.md)
+- [回到顶部](https://github.com/LZ9/AgileDevKt/blob/master/corekt/readme_core.md#core-kt库)
+- [AgileDevKt 主页](https://github.com/LZ9/AgileDevKt)
 - [了解 Pandora]()
-- [了解 imageloader-kt](https://github.com/LZ9/Pandora/blob/master/imageloaderkt/readme_imageloader.md)
+- [了解 imageloader-kt](https://github.com/LZ9/AgileDevKt/blob/master/imageloaderkt/readme_imageloader.md)
