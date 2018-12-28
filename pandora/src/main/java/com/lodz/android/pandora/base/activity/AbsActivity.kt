@@ -130,8 +130,9 @@ abstract class AbsActivity : RxAppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
         val bundle = getSaveBundle()
-        if (BaseApplication.get() != null && bundle != null) {
-            BaseApplication.get()!!.putSaveInstanceState(bundle)
+        val app = BaseApplication.get()
+        if (app != null && bundle != null) {
+            app.putSaveInstanceState(bundle)
         }
     }
 
@@ -141,11 +142,12 @@ abstract class AbsActivity : RxAppCompatActivity() {
     /** 被回收后从后台回到前台调用 */
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
         super.onRestoreInstanceState(savedInstanceState)
-        if (BaseApplication.get() == null) {
+        val app = BaseApplication.get()
+        if (app == null) {
             return
         }
 
-        val bundle: Bundle? = BaseApplication.get()!!.getSaveInstanceState()
+        val bundle = app.getSaveInstanceState()
         if (bundle != null) {
             onRestore(bundle)
         }

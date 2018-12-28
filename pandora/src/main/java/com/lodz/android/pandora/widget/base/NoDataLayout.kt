@@ -55,8 +55,9 @@ class NoDataLayout : LinearLayout {
     }
 
     private fun init(attrs: AttributeSet?) {
-        if (BaseApplication.get() != null) {
-            mConfig = BaseApplication.get()!!.getBaseLayoutConfig().getNoDataLayoutConfig()
+        val app = BaseApplication.get()
+        if (app != null) {
+            mConfig = app.getBaseLayoutConfig().getNoDataLayoutConfig()
         }
         LayoutInflater.from(context).inflate(R.layout.pandora_view_no_data, this)
         configLayout(attrs)

@@ -154,15 +154,17 @@ class CrashManager private constructor() : Thread.UncaughtExceptionHandler {
         infos.put("packageName", app.packageName)
         infos.put("versionName", app.getVersionName())
         infos.put("versionCode", app.getVersionCode().toString())
-        infos.forEach { key, value -> PrintLog.i(mTag, key + " : " + value) }
+        for (info in infos) {
+            PrintLog.i(mTag, info.key + " : " + info.value)
+        }
         return infos
     }
 
     /** 获取设备信息[deviceInfos]和异常内容[t]日志 */
     private fun getLogContent(deviceInfos: Map<String, String>, t: Throwable?): String {
         val stringBuilder = StringBuilder()
-        deviceInfos.forEach { key, value ->
-            stringBuilder.append(key + "=" + value + "\n")
+        for (info in deviceInfos) {
+            stringBuilder.append(info.key + "=" + info.value + "\n")
         }
         if (t == null) {
             return stringBuilder.toString()

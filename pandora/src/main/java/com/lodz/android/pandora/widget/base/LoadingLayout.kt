@@ -59,8 +59,9 @@ class LoadingLayout : LinearLayout {
     }
 
     private fun init(attrs: AttributeSet?) {
-        if (BaseApplication.get() != null) {
-            mConfig = BaseApplication.get()!!.getBaseLayoutConfig().getLoadingLayoutConfig()
+        val app = BaseApplication.get()
+        if (app != null) {
+            mConfig = app.getBaseLayoutConfig().getLoadingLayoutConfig()
         }
         findViews()
         configLayout(attrs)

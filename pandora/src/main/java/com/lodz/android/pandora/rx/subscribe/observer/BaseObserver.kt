@@ -33,10 +33,11 @@ abstract class BaseObserver<T> : Observer<T> {
 
     /** 打印标签日志 */
     private fun printTagLog(t: Throwable) {
-        if (BaseApplication.get() == null) {
+        val app = BaseApplication.get()
+        if (app == null) {
             return
         }
-        val tag = BaseApplication.get()!!.getMetaData(ERROR_TAG)
+        val tag = app.getMetaData(ERROR_TAG)
         if (tag != null && tag is String) {
             if (!tag.isEmpty()) {
                 PrintLog.e(tag, t.toString(), t)

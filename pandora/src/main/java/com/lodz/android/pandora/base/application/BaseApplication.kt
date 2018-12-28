@@ -22,7 +22,7 @@ abstract class BaseApplication : Application() {
     /** 保存回收前数据的Bundle */
     private var mRestoreBundle: Bundle? = null
 
-    override fun onCreate() {
+    final override fun onCreate() {
         super.onCreate()
         sInstance = this
         mBaseLayoutConfig = BaseLayoutConfig()
