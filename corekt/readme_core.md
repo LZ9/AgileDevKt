@@ -234,5 +234,5 @@ PrintLog主要封装了日志的打印开关，小伙伴可以在app里的build.
 - [更新记录](https://github.com/LZ9/AgileDevKt/blob/master/corekt/readme_core_update.md)
 - [回到顶部](https://github.com/LZ9/AgileDevKt/blob/master/corekt/readme_core.md#core-kt库)
 - [AgileDevKt 主页](https://github.com/LZ9/AgileDevKt)
-- [了解 Pandora]()
+- [了解 Pandora](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/readme_pandora.md)
 - [了解 imageloader-kt](https://github.com/LZ9/AgileDevKt/blob/master/imageloaderkt/readme_imageloader.md)

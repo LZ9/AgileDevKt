@@ -24,5 +24,5 @@ get()|获取Application单例|该方法获取到的是BaseApplication，如果�
 exit()|需要整个退出应用时调用该方法|调用时内部会关闭你所有继承了AbsActivity的页面，并且回调onExit()方法执行你需要释放资源的逻辑
 
 ## 扩展
-- [返回目录]()
-- [回到顶部]()
+- [返回目录](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/readme_pandora.md)
+- [回到顶部](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/pandora_application.md#application基类)

@@ -28,7 +28,7 @@ Pandora支持Androidx和Kotlin开发插件，内部集成了包括
 ```
 
 ## 目录
-- [Application基类]()
+- [Application基类](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/pandora_application.md)
 - [Activity基类]()
 - [Fragment基类]()
 - [图片选择和预览]()
@@ -47,8 +47,8 @@ Pandora支持Androidx和Kotlin开发插件，内部集成了包括
 
 ## 扩展
 
-- [更新记录](https://github.com/LZ9/AgileDevKt/blob/master/corekt/readme_core_update.md)
-- [回到顶部](https://github.com/LZ9/AgileDevKt/blob/master/corekt/readme_core.md#core-kt库)
+- [更新记录](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/readme_pandora_update.md)
+- [回到顶部](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/readme_pandora.md#pandora)
 - [AgileDevKt 主页](https://github.com/LZ9/AgileDevKt)
-- [了解 Pandora]()
+- [了解 core-kt](https://github.com/LZ9/AgileDevKt/blob/master/corekt/readme_core.md)
 - [了解 imageloader-kt](https://github.com/LZ9/AgileDevKt/blob/master/imageloaderkt/readme_imageloader.md)

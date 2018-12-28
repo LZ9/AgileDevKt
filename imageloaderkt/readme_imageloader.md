@@ -116,4 +116,4 @@
 - [回到顶部](https://github.com/LZ9/AgileDevKt/blob/master/imageloaderkt/readme_imageloader.md#imageloader库)
 - [AgileDevKt 主页](https://github.com/LZ9/AgileDevKt)
 - [了解 core-kt](https://github.com/LZ9/AgileDevKt/blob/master/corekt/readme_core.md)
-- [了解 Pandora]()
+- [了解 Pandora](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/readme_pandora.md)
