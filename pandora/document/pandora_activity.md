@@ -53,6 +53,7 @@ isUseAnkoLayout()|是否使用AnkoLayout|无
  - AbsActivity支持AnkoLayout，你只需要加上 **@UseAnkoLayout** 注解并且 **override fun getAbsLayoutId(): Int = 0** 即可
  - 了解官方 **Anko Layouts ([wiki](https://github.com/Kotlin/anko/wiki/Anko-Layouts))**
  - 了解如何继承AbsActivity使用AnkoLayout可以参考[AnkoLayoutActivity.kt](https://github.com/LZ9/AgileDevKt/blob/master/app/src/main/java/com/lodz/android/agiledevkt/modules/anko/AnkoLayoutActivity.kt)
+ - 除了AbsActivity以外的Activity基类均不支持AnkoLayout
 
 ### 5. 使用Rx绑定生命周期
 如果在AbsActivity的继承类里使用RxJava调用可以直接链上生命周期方法来指定何时停止订阅，例如：
@@ -63,7 +64,7 @@ isUseAnkoLayout()|是否使用AnkoLayout|无
 ```
 
 ## 二、BaseActivity
-BaseActivity集成自AbsActivity。
+BaseActivity继承自AbsActivity。
 该Activity封装了常用的基础控件，包括：标题栏，加载页、加载失败页和无数据页。
 每个页面都可以在Activity单独配置，
 也可以在Application里对所有的BaseActivity继承类里的基础控件进行配置，统一配置请参考[Application基类](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/pandora_application.md)。
@@ -102,8 +103,45 @@ getLoadingLayout()|获取加载页对象|可对加载页进行配置
 getNoDataLayout()|获取无数据页对象|可对无数据页进行配置
 getErrorLayout()|获取加载失败页对象|可对加载失败页进行配置
 
-### 3. BaseActivity不支持AnkoLayout
-请勿在BaseActivity的集成类里使用AnkoLayout，我已在内部进行判断，会抛出一个RuntimeException
+## 三、BaseRefreshActivity
+BaseRefreshActivity继承自AbsActivity。除了和BaseActivity一样封装了基础控件外，还增加了下拉刷新控件
+
+### 1. 可重写方法
+BaseRefreshActivity比BaseActivity多了1个重写方法
+
+方法名称|描述|备注
+:---|:---|:---
+onDataRefresh()|刷新回调|用户下拉刷新时会触发该回调方法
+
+### 2. 可调用方法
+比起BaseActivity多了4个可以调用的方法
+
+方法名称|描述|备注
+:---|:---|:---
+setSwipeRefreshColorScheme(@ColorRes vararg colorResIds: Int)|设置下拉进度的切换颜色|无
+setSwipeRefreshBackgroundColor(@ColorRes colorResId: Int)|设置下拉进度的背景颜色|无
+setSwipeRefreshFinish()|设置刷新结束（隐藏刷新进度条）|无
+setSwipeRefreshEnabled(enabled: Boolean)|设置刷新控件是否启用|true为启用，false为不启用
+
+## 四、BaseSandwichActivity
+BaseSandwichActivity继承自AbsActivity。与BaseRefreshActivity相比去掉了标题栏控件和相关方法，增加了顶部和底部的扩展布局。
+
+### 1. 可重写方法
+新增两个可重写的方法
+
+方法名称|描述|备注
+:---|:---|:---
+getTopLayoutId()|获取顶部布局layoutId|无
+getBottomLayoutId()|获取底部布局layoutId|无
+
+### 2. 可调用方法
+新增两个可调用方法
+
+方法名称|描述|备注
+:---|:---|:---
+getTopView()|获取顶部布局对象|无
+getBottomView()|获取底部布局对象|无
+
 
 ## 扩展
 - [返回目录](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/readme_pandora.md)
