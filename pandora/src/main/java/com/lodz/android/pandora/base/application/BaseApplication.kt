@@ -20,7 +20,7 @@ abstract class BaseApplication : Application() {
     /** 基础控件配置 */
     private lateinit var mBaseLayoutConfig: BaseLayoutConfig
     /** 保存回收前数据的Bundle */
-    private var mRestoreBundle: Bundle? = null
+    private var mRestoreMap = HashMap<String, Bundle?>()
 
     final override fun onCreate() {
         super.onCreate()
@@ -51,11 +51,11 @@ abstract class BaseApplication : Application() {
     abstract fun onExit()
 
     /** 当APP在后台被回收时可以调用该方法保存关键数据 */
-    fun putSaveInstanceState(bundle: Bundle) {
-        mRestoreBundle = bundle
+    fun putSaveInstanceState(key: String, bundle: Bundle) {
+        mRestoreMap.put(key, bundle)
     }
 
     /** 当APP被回收后从后台回到前台时调用该方法获取保存的关键数据 */
-    fun getSaveInstanceState(): Bundle? = mRestoreBundle
+    fun getSaveInstanceState(key: String): Bundle? = mRestoreMap.get(key)
 
 }

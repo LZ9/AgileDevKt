@@ -132,7 +132,7 @@ abstract class AbsActivity : RxAppCompatActivity() {
         val bundle = getSaveBundle()
         val app = BaseApplication.get()
         if (app != null && bundle != null) {
-            app.putSaveInstanceState(bundle)
+            app.putSaveInstanceState(javaClass.simpleName, bundle)
         }
     }
 
@@ -147,7 +147,7 @@ abstract class AbsActivity : RxAppCompatActivity() {
             return
         }
 
-        val bundle = app.getSaveInstanceState()
+        val bundle = app.getSaveInstanceState(javaClass.simpleName)
         if (bundle != null) {
             onRestore(bundle)
         }
