@@ -41,7 +41,7 @@ findFragmentByTag(tag: String)|通过tag找到对应的Fragment|无
 isUseAnkoLayout()|是否使用AnkoLayout|无
 
 ### 3. 使用EventBus
-我已经在AbsActivity里注册和解注册EventBus，有用到EventBus的可以直接写订阅方法接收即可
+我已经在AbsActivity里注册和解注册EventBus，有用到EventBus的可以直接写订阅方法接收即可，例如：
 ```
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onXxxxEvent(event: XxxxEvent) {
@@ -54,8 +54,57 @@ isUseAnkoLayout()|是否使用AnkoLayout|无
  - 了解官方 **Anko Layouts ([wiki](https://github.com/Kotlin/anko/wiki/Anko-Layouts))**
  - 了解如何继承AbsActivity使用AnkoLayout可以参考[AnkoLayoutActivity.kt](https://github.com/LZ9/AgileDevKt/blob/master/app/src/main/java/com/lodz/android/agiledevkt/modules/anko/AnkoLayoutActivity.kt)
 
+### 5. 使用Rx绑定生命周期
+如果在AbsActivity的继承类里使用RxJava调用可以直接链上生命周期方法来指定何时停止订阅，例如：
+```
+    Observable.interval(1, TimeUnit.SECONDS)
+        .compose(bindUntilEvent(ActivityEvent.DESTROY))//当Activity销毁时停止订阅
+        .subscribe(BaseObserver.empty())
+```
 
+## 二、BaseActivity
+BaseActivity集成自AbsActivity。
+该Activity封装了常用的基础控件，包括：标题栏，加载页、加载失败页和无数据页。
+每个页面都可以在Activity单独配置，
+也可以在Application里对所有的BaseActivity继承类里的基础控件进行配置，统一配置请参考[Application基类](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/pandora_application.md)。
+
+### 1. 可重写方法
+除了AbsActivity里可以重写的方法外，BaseActivity新增或者变更了一些方法
+
+ - 变更后不可重写的方法如下：
+
+方法名称|描述
+:---|:---
+getAbsLayoutId()|已由内部实现，用getLayoutId()替代
+afterSetContentView()|已由内部实现
+
+ - 新增的可重写的方法
+
+方法名称|描述|备注
+:---|:---|:---
+getLayoutId()|获取布局layoutId|用来替代getAbsLayoutId()
+onClickBackBtn()|点击标题栏返回按钮回调|默认不实现，你可以根据自己的需要实现逻辑
+onClickReload()|点击失败页面重试按钮回调|默认不实现，你可以根据自己的需要实现逻辑
+
+### 2. 可调用方法
+除了AbsActivity里的方法外，这里新增了一些方法
+
+方法名称|描述|备注
+:---|:---|:---
+showStatusLoading()|显示加载页|无
+showStatusNoData()|显示无数据页|没有设置LayoutId时默认显示此页面
+showStatusError()|显示加载失败页|用户点击重试按钮会回调onClickReload()
+showStatusCompleted()|显示加载完成|显示出getLayoutId()里的UI页面
+goneTitleBar()|隐藏标题栏|无
+showTitleBar()|显示标题栏|无
+getTitleBarLayout()|获取标题栏对象|可对标题栏进行配置
+getLoadingLayout()|获取加载页对象|可对加载页进行配置
+getNoDataLayout()|获取无数据页对象|可对无数据页进行配置
+getErrorLayout()|获取加载失败页对象|可对加载失败页进行配置
+
+### 3. BaseActivity不支持AnkoLayout
+请勿在BaseActivity的集成类里使用AnkoLayout，我已在内部进行判断，会抛出一个RuntimeException
 
 ## 扩展
 - [返回目录](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/readme_pandora.md)
-- [回到顶部]()
+- [回到顶部](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/pandora_activity.md#activity基类)
