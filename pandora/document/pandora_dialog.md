@@ -1,10 +1,10 @@
 # Dialog封装
-我为大家提供了6个可继承的Dialog基类，分别是：[BaseDialog]()、
-[BaseCenterDialog]()、
-[BaseBottomDialog]()、
-[BaseTopDialog]()、
-[BaseLeftDialog]()、
-[BaseRightDialog]()，
+我为大家提供了6个可继承的Dialog基类，分别是：[BaseDialog](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/pandora_dialog.md#一basedialog)、
+[BaseCenterDialog](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/pandora_dialog.md#二basecenterdialog)、
+[BaseBottomDialog](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/pandora_dialog.md#三basebottomdialog)、
+[BaseTopDialog](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/pandora_dialog.md#四basetopdialog)、
+[BaseLeftDialog](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/pandora_dialog.md#五baseleftdialog)、
+[BaseRightDialog](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/pandora_dialog.md#六baserightdialog)，
 后5个都继承自BaseDialog，
 使用方法可以参考[DialogActivity.kt](https://github.com/LZ9/AgileDevKt/blob/master/app/src/main/java/com/lodz/android/agiledevkt/modules/dialog/DialogActivity.kt)。
 
@@ -74,4 +74,4 @@ BaseRightDialog继承自BaseDialog，限定了Dialog由右侧弹出，其他使�
 
 ## 扩展
 - [返回目录](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/readme_pandora.md)
-- [回到顶部]()
+- [回到顶部](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/pandora_dialog.md#dialog封装)

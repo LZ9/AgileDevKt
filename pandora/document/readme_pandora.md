@@ -38,7 +38,7 @@ Pandora支持Androidx和Kotlin开发插件，内部集成了包括
 - [共享元素封装(待补充)]()
 - [状态控件基类(待补充)]()
 - [BottomSheet封装(待补充)]()
-- [Dialog封装(待补充)]()
+- [Dialog封装](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/pandora_dialog.md)
 - [DialogFragment封装(待补充)]()
 - [PopupWindow封装(待补充)]()
 - [自定义控件封装(待补充)]()
