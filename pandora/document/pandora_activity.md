@@ -1,5 +1,9 @@
 # Activity基类
-我为大家提供了4个可继承的Activity基类，分别是：AbsActivity、BaseActivity、BaseRefreshActivity、BaseSandwichActivity，后三个都继承自AbsActivity，
+我为大家提供了4个可继承的Activity基类，分别是：[AbsActivity](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/pandora_activity.md#一absactivity)、
+[BaseActivity](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/pandora_activity.md#二baseactivity)、
+[BaseRefreshActivity](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/pandora_activity.md#三baserefreshactivity)、
+[BaseSandwichActivity](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/pandora_activity.md#四basesandwichactivity)，
+后三个都继承自AbsActivity，
 使用方法可以参考[MvcDemoActivity.kt](https://github.com/LZ9/AgileDevKt/blob/master/app/src/main/java/com/lodz/android/agiledevkt/modules/mvc/MvcDemoActivity.kt)。
 
 ## 一、AbsActivity
@@ -50,10 +54,37 @@ isUseAnkoLayout()|是否使用AnkoLayout|无
 ```
 
 ### 4. 使用AnkoLayout
- - AbsActivity支持AnkoLayout，你只需要加上 **@UseAnkoLayout** 注解并且 **override fun getAbsLayoutId(): Int = 0** 即可
+ - AbsActivity支持AnkoLayout，你只需要加上 **@UseAnkoLayout** 注解并且 **override fun getAbsLayoutId(): Int = 0** ，然后在findViews()方法里编写的UI，例如：
+```
+    override fun findViews(savedInstanceState: Bundle?) {
+        verticalLayout {
+            padding = dip(30)
+            mAccountEdit = editText {
+                id = android.R.id.edit
+                setHint(R.string.al_account)
+                textSize = 24f
+            }
+            mPswdEdit = editText {
+                id = android.R.id.inputExtractEditText
+                setHint(R.string.al_pswd)
+                textSize = 24f
+                inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            }
+            mLloginBtn = button(R.string.al_login) {
+                id = android.R.id.button1
+                textSize = 26f
+            }
+            mResultTv = textView {
+                id = android.R.id.text1
+                text = "1"
+                textSize = 24f
+            }
+        }
+    }
+```
  - 了解官方 **Anko Layouts ([wiki](https://github.com/Kotlin/anko/wiki/Anko-Layouts))**
  - 了解如何继承AbsActivity使用AnkoLayout可以参考[AnkoLayoutActivity.kt](https://github.com/LZ9/AgileDevKt/blob/master/app/src/main/java/com/lodz/android/agiledevkt/modules/anko/AnkoLayoutActivity.kt)
- - 除了AbsActivity以外的Activity基类均不支持AnkoLayout
+ - 除了AbsActivity以外的Activity基类**均不支持**AnkoLayout
 
 ### 5. 使用Rx绑定生命周期
 如果在AbsActivity的继承类里使用RxJava调用可以直接链上生命周期方法来指定何时停止订阅，例如：
