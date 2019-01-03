@@ -40,6 +40,8 @@ abstract class BaseFragment : LazyFragment() {
     /** 内容布局  */
     private val mContentLayout by bindView<LinearLayout>(R.id.content_layout)
 
+    final override fun getAnkoLayoutView(): View? = super.getAnkoLayoutView()
+
     override fun getAbsLayoutId(): Int = R.layout.pandora_fragment_base
 
     final override fun beforeFindViews(view: View) {

@@ -31,13 +31,14 @@ abstract class BaseDialog : Dialog {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        onStartCreate(context)
+        startCreate()
         findViews()
         setListeners()
         initData()
+        endCreate()
     }
 
-    protected open fun onStartCreate(context: Context) {}
+    protected open fun startCreate() {}
 
     @LayoutRes
     protected abstract fun getLayoutId(): Int
@@ -47,6 +48,8 @@ abstract class BaseDialog : Dialog {
     protected open fun setListeners() {}
 
     protected open fun initData() {}
+
+    protected open fun endCreate() {}
 
     @StyleRes
     protected open fun configAnimations() = -1

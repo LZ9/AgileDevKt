@@ -82,7 +82,7 @@ abstract class LazyFragment : RxFragment(), IFragmentBackPressed {
         mParentView = null
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    final override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mParentView = view
         if (!isLazyLoad || userVisibleHint) {// 不使用懒加载 || fragment可见

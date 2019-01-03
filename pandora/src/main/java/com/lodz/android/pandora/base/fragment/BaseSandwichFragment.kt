@@ -44,6 +44,8 @@ abstract class BaseSandwichFragment : LazyFragment() {
     /** 底部布局  */
     private val mBottomLayout by bindView<FrameLayout>(R.id.bottom_layout)
 
+    final override fun getAnkoLayoutView(): View? = super.getAnkoLayoutView()
+
     override fun getAbsLayoutId(): Int = R.layout.pandora_fragment_base_sandwich
 
     final override fun beforeFindViews(view: View) {

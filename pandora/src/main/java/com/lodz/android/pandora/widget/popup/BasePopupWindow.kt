@@ -38,9 +38,11 @@ abstract class BasePopupWindow(context: Context) {
     }
 
     fun create() {
+        startCreate()
         findViews(mPopupWindow.contentView)
         setListeners()
         initData()
+        endCreate()
     }
 
     /** 设置宽度，可重写该方法 */
@@ -52,6 +54,8 @@ abstract class BasePopupWindow(context: Context) {
     /** 设置阴影值，可重写该方法 */
     protected open fun getElevationValue(): Float = 12f
 
+    protected open fun startCreate() {}
+
     @LayoutRes
     protected abstract fun getLayoutId(): Int
 
@@ -60,6 +64,8 @@ abstract class BasePopupWindow(context: Context) {
     protected open fun setListeners() {}
 
     protected open fun initData() {}
+
+    protected open fun endCreate() {}
 
     protected fun getContext(): Context = mContext
 
