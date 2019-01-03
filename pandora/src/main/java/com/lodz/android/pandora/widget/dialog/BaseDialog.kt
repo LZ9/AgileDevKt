@@ -29,7 +29,7 @@ abstract class BaseDialog : Dialog {
         setWindowAnimations()
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    final override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         startCreate()
         findViews()
