@@ -1,10 +1,10 @@
 # DialogFragment封装
-我为大家提供了6个可继承的Dialog基类，分别是：[BaseDialogFragment]()、
-[BaseCenterDialogFragment]()、
-[BaseBottomDialogFragment]()、
-[BaseTopDialogFragment]()、
-[BaseLeftDialogFragment]()、
-[BaseRightDialogFragment]()，
+我为大家提供了6个可继承的Dialog基类，分别是：[BaseDialogFragment](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/pandora_dialogfragment.md#一basedialogfragment)、
+[BaseCenterDialogFragment](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/pandora_dialogfragment.md#二basecenterdialogfragment)、
+[BaseBottomDialogFragment](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/pandora_dialogfragment.md#三basebottomdialogfragment)、
+[BaseTopDialogFragment](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/pandora_dialogfragment.md#四basetopdialogfragment)、
+[BaseLeftDialogFragment](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/pandora_dialogfragment.md#五baseleftdialogfragment)、
+[BaseRightDialogFragment](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/pandora_dialogfragment.md#六baserightdialogfragment)，
 后5个都继承自BaseDialogFragment，
 使用方法可以参考[DialogFragmentActivity.kt](https://github.com/LZ9/AgileDevKt/blob/master/app/src/main/java/com/lodz/android/agiledevkt/modules/dialogfragment/DialogFragmentActivity.kt)。
 
@@ -73,4 +73,4 @@ BaseRightDialogFragment继承自BaseDialogFragment，限定了Dialog由右侧弹
 
 ## 扩展
 - [返回目录](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/readme_pandora.md)
-- [回到顶部]()
+- [回到顶部](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/pandora_dialogfragment.md#dialogfragment封装)
