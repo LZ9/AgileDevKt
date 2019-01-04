@@ -27,7 +27,7 @@ abstract class BasePopupWindow(context: Context) {
 
     private fun createPopupWindow(context: Context): PopupWindow {
         val popView = LayoutInflater.from(context).inflate(getLayoutId(), null)
-        val popupWindow = PopupWindow(popView, getWidth(), getHeight(), true)
+        val popupWindow = PopupWindow(popView, getWidthPx(), getHeightPx(), true)
         popupWindow.isTouchable = true
         popupWindow.isOutsideTouchable = true
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -46,10 +46,10 @@ abstract class BasePopupWindow(context: Context) {
     }
 
     /** 设置宽度，可重写该方法 */
-    protected open fun getWidth(): Int = ViewGroup.LayoutParams.WRAP_CONTENT
+    protected open fun getWidthPx(): Int = ViewGroup.LayoutParams.WRAP_CONTENT
 
     /** 设置高度，可重写该方法 */
-    protected open fun getHeight(): Int = ViewGroup.LayoutParams.WRAP_CONTENT
+    protected open fun getHeightPx(): Int = ViewGroup.LayoutParams.WRAP_CONTENT
 
     /** 设置阴影值，可重写该方法 */
     protected open fun getElevationValue(): Float = 12f

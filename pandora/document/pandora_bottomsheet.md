@@ -1,6 +1,6 @@
 # BottomSheet封装
-我为大家提供了2个可继承的BottomSheet相关基类，分别是：[BaseBottomSheetDialog]()、
-[BaseBottomSheetDialogFragment]()，
+我为大家提供了2个可继承的BottomSheet相关基类，分别是：[BaseBottomSheetDialog](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/pandora_bottomsheet.md#一basebottomsheetdialog)、
+[BaseBottomSheetDialogFragment](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/pandora_bottomsheet.md#二basebottomsheetdialogfragment)，
 使用方法可以参考[BottomSheetsActivity.kt](https://github.com/LZ9/AgileDevKt/blob/master/app/src/main/java/com/lodz/android/agiledevkt/modules/bottomsheet/BottomSheetsActivity.kt)。
 
 ## 一、BaseBottomSheetDialog
@@ -46,4 +46,4 @@ BaseBottomSheetDialogFragment继承自BottomSheetDialogFragment，
 
 ## 扩展
 - [返回目录](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/readme_pandora.md)
-- [回到顶部]()
+- [回到顶部](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/pandora_bottomsheet.md#bottomsheet封装)
