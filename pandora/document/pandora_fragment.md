@@ -7,7 +7,7 @@
 使用方法可以参考[MvcFragmentActivity.kt](https://github.com/LZ9/AgileDevKt/blob/master/app/src/main/java/com/lodz/android/agiledevkt/modules/mvc/MvcFragmentActivity.kt)。
 
 ## 一、LazyFragment
-该Fragment是Pandora里所有Fragment封装类的基础，内部实现了Rx的生命周期绑定，懒加载以及AnkoLayout的使用。
+LazyFragment是Pandora里所有Fragment封装类的基础，内部实现了Rx的生命周期绑定，懒加载以及AnkoLayout的使用。
 
 ### 1. 可重写方法
 为了实现fragment的懒加载，我对内部的回调机制进行了重新梳理，建议大家使用时重写我提供的方法。

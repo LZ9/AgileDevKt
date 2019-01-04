@@ -7,7 +7,7 @@
 使用方法可以参考[MvcDemoActivity.kt](https://github.com/LZ9/AgileDevKt/blob/master/app/src/main/java/com/lodz/android/agiledevkt/modules/mvc/MvcDemoActivity.kt)。
 
 ## 一、AbsActivity
-该Activity是Pandora里所有Activity封装类的基础，内部实现了Rx的生命周期绑定，EventBus解注册以及AnkoLayout的使用。
+AbsActivity是Pandora里所有Activity封装类的基础，内部实现了Rx的生命周期绑定，EventBus解注册以及AnkoLayout的使用。
 
 ### 1. 可重写方法
 我对onCreate()方法进行了细分，回调顺序按文档描述顺序，大家可以根据自己的需要重写对应的方法，并在内部实现业务逻辑。

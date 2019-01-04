@@ -1,6 +1,7 @@
 package com.lodz.android.pandora.widget.dialogfragment
 
 import android.app.Dialog
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,14 +18,14 @@ import com.lodz.android.pandora.R
  */
 abstract class BaseDialogFragment : DialogFragment() {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    final override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(getLayoutId(), container, false)
     }
 
     @LayoutRes
     protected abstract fun getLayoutId(): Int
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    final override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         startCreate()
         findViews(view, savedInstanceState)
@@ -74,4 +75,12 @@ abstract class BaseDialogFragment : DialogFragment() {
 
     /** 配置Dialog的Window参数 */
     protected open fun configDialogWindow(window: Window) {}
+
+    override fun getContext(): Context {
+        val ctx = super.getContext()
+        if (ctx != null) {
+            return ctx
+        }
+        return requireContext()
+    }
 }
