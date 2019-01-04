@@ -6,41 +6,84 @@ import android.content.DialogInterface
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AlertDialog
+import com.lodz.android.corekt.anko.getDrawableCompat
 import com.lodz.android.pandora.R
 
 /**
  * 加载框帮助类
  * Created by zhouL on 2018/7/6.
  */
-object ProgressDialogHelper {
+class ProgressDialogHelper private constructor() {
 
-    /** 获取一个加载框，配置返回取消[cancelable]、点击空白处取消[canceledOnTouchOutside] */
-    fun getProgressDialog(context: Context, cancelable: Boolean, canceledOnTouchOutside: Boolean): AlertDialog = getProgressDialog(context, "", cancelable, canceledOnTouchOutside, null)
+    /** 返回键关闭 */
+    private var mCancelable = false
+    /** 点击空白处取消 */
+    private var mCanceledOnTouchOutside = false
+    /** 加载提示语 */
+    private var mMsg = ""
+    /** 取消监听器 */
+    private var mListener: DialogInterface.OnCancelListener? = null
+    /** 加载动画资源 */
+    @DrawableRes
+    private var mIndeterminateDrawable: Int = 0
 
-    /** 获取一个加载框，配置提示文字[msg]、返回取消[cancelable]、点击空白处取消[canceledOnTouchOutside] */
-    fun getProgressDialog(context: Context, msg: String, cancelable: Boolean, canceledOnTouchOutside: Boolean): AlertDialog = getProgressDialog(context, msg, cancelable, canceledOnTouchOutside, null)
+    companion object {
+        fun get(): ProgressDialogHelper = ProgressDialogHelper()
+    }
 
-    /** 获取一个加载框，配置返回取消[cancelable]、点击空白处取消[canceledOnTouchOutside]、取消监听器[listener] */
-    fun getProgressDialog(context: Context, cancelable: Boolean, canceledOnTouchOutside: Boolean, listener: DialogInterface.OnCancelListener?): AlertDialog = getProgressDialog(context, "", cancelable, canceledOnTouchOutside, listener)
+    /** 设置返回键可关闭[cancelable] */
+    fun setCancelable(cancelable: Boolean): ProgressDialogHelper {
+        mCancelable = cancelable
+        return this
+    }
 
-    /** 获取一个加载框，配置提示文字[msg]、返回取消[cancelable]、点击空白处取消[canceledOnTouchOutside]、取消监听器[listener] */
+    /** 设置点击空白处可取消[canceledOnTouchOutside] */
+    fun setCanceledOnTouchOutside(canceledOnTouchOutside: Boolean): ProgressDialogHelper {
+        mCanceledOnTouchOutside = canceledOnTouchOutside
+        return this
+    }
+
+    /** 设置加载提示语[msg] */
+    fun setMsg(msg: String): ProgressDialogHelper {
+        mMsg = msg
+        return this
+    }
+
+    /** 设置取消监听器[listener] */
+    fun setListener(listener: DialogInterface.OnCancelListener): ProgressDialogHelper {
+        mListener = listener
+        return this
+    }
+
+    /** 设置加载动画资源[resId] */
+    fun setIndeterminateDrawable(@DrawableRes resId: Int) {
+        this.mIndeterminateDrawable = resId
+    }
+
+    /** 创建加载库，上下文[context] */
     @SuppressLint("InflateParams")
-    fun getProgressDialog(context: Context, msg: String, cancelable: Boolean, canceledOnTouchOutside: Boolean, listener: DialogInterface.OnCancelListener?): AlertDialog {
+    fun create(context: Context): AlertDialog {
         val view = LayoutInflater.from(context).inflate(R.layout.pandora_view_progress, null)
         val progressDialog = AlertDialog.Builder(context, R.style.ProgressStyle)
                 .setView(view)
                 .create()
-        if (!msg.isEmpty()) {
-            val msgTv = view.findViewById<TextView>(R.id.msg)
-            msgTv.visibility = View.VISIBLE
-            msgTv.text = msg
+        if (mMsg.isNotEmpty()) {
+            val tv = view.findViewById<TextView>(R.id.msg)
+            tv.visibility = View.VISIBLE
+            tv.text = mMsg
         }
-        progressDialog.setCanceledOnTouchOutside(canceledOnTouchOutside)
-        progressDialog.setCancelable(cancelable)
-        if (listener != null) {
-            progressDialog.setOnCancelListener(listener)
+        if (mIndeterminateDrawable != 0) {
+            val pb = view.findViewById<ProgressBar>(R.id.progress_bar)
+            pb.indeterminateDrawable = context.getDrawableCompat(mIndeterminateDrawable)
+        }
+        progressDialog.setCanceledOnTouchOutside(mCanceledOnTouchOutside)
+        progressDialog.setCancelable(mCancelable)
+        if (mListener != null) {
+            progressDialog.setOnCancelListener(mListener)
         }
         val wd = progressDialog.window
         if (wd != null) {

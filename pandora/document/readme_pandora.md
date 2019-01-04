@@ -40,7 +40,7 @@ Pandora支持Androidx和Kotlin开发插件，内部集成了包括
 - [BottomSheet封装](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/pandora_bottomsheet.md)
 - [Dialog封装](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/pandora_dialog.md)
 - [DialogFragment封装](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/pandora_dialogfragment.md)
-- PopupWindow封装[待补充]()
+- [PopupWindow封装](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/pandora_popupwindow.md)
 - 自定义控件封装[待补充]()
 - 九宫格封装[待补充]()
 - RecyclerView封装[待补充]()

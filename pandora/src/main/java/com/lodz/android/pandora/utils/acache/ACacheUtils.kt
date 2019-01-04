@@ -30,7 +30,7 @@ class ACacheUtils private constructor() {
     }
 
     /** 获取构建对象 */
-    fun getBuilder(): Builder {
+    internal fun getBuilder(): Builder {
         if (mBuilder == null) {
             mBuilder = newBuilder()
         }
