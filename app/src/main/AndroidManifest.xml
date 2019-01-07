@@ -528,6 +528,13 @@
 
         </activity>
 
+        <activity
+            android:name=".modules.progressdialog.ProgressDialogActivity"
+            android:label="加载框测试类"
+            android:screenOrientation="portrait">
+
+        </activity>
+
     </application>
 
 </manifest>

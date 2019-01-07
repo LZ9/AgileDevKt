@@ -530,4 +530,14 @@
     <string name="nine_grid_six">6张</string>
     <string name="nine_grid_nine">9张</string>
     <string name="nine_grid_twelve">12张</string>
+
+    <!-- 加载库 -->
+    <string name="pd_no_tips">无提示语</string>
+    <string name="pd_tips">有提示语</string>
+    <string name="pd_custom_icon">自定义图标</string>
+    <string name="pd_canceled_on_touch_outside">点击空白不可消失</string>
+    <string name="pd_cancelable">点击空白和返回不可消失（5秒后自动消失）</string>
+    <string name="pd_loading">加载中</string>
+    <string name="pd_dismiss">关闭</string>
+
 </resources>

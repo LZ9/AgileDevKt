@@ -77,6 +77,9 @@
 -keep class android.arch.** { *; }
 -keep class androidx.** { *; }
 
+#webview相关
+-keep class android.webkit.** { *;}
+
 #RxJava
 -keep class io.reactivex.** { *; }
 -keep class org.reactivestreams.** { *; }

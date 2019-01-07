@@ -20,7 +20,7 @@ import com.lodz.android.pandora.R
 class ProgressDialogHelper private constructor() {
 
     /** 返回键关闭 */
-    private var mCancelable = false
+    private var mCancelable = true
     /** 点击空白处取消 */
     private var mCanceledOnTouchOutside = false
     /** 加载提示语 */
@@ -60,8 +60,9 @@ class ProgressDialogHelper private constructor() {
     }
 
     /** 设置加载动画资源[resId] */
-    fun setIndeterminateDrawable(@DrawableRes resId: Int) {
-        this.mIndeterminateDrawable = resId
+    fun setIndeterminateDrawable(@DrawableRes resId: Int): ProgressDialogHelper {
+        mIndeterminateDrawable = resId
+        return this
     }
 
     /** 创建加载库，上下文[context] */

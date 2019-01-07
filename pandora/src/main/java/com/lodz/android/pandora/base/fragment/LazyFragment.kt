@@ -9,6 +9,8 @@ import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 import com.lodz.android.corekt.anko.getSize
 import com.lodz.android.pandora.base.activity.UseAnkoLayout
+import com.trello.rxlifecycle3.LifecycleTransformer
+import com.trello.rxlifecycle3.android.FragmentEvent
 import com.trello.rxlifecycle3.components.support.RxFragment
 
 /**
@@ -223,4 +225,7 @@ abstract class LazyFragment : RxFragment(), IFragmentBackPressed {
         }
         return false
     }
+
+    /** 绑定Fragment的DestroyView生命周期 */
+    protected fun <T> bindDestroyViewEvent(): LifecycleTransformer<T> = bindUntilEvent(FragmentEvent.DESTROY_VIEW)
 }

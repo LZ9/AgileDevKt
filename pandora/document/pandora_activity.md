@@ -92,6 +92,11 @@ isUseAnkoLayout()|是否使用AnkoLayout|无
     Observable.interval(1, TimeUnit.SECONDS)
         .compose(bindUntilEvent(ActivityEvent.DESTROY))//当Activity销毁时停止订阅
         .subscribe(BaseObserver.empty())
+
+    Observable.interval(1, TimeUnit.SECONDS)
+        .compose(bindDestroyEvent())// 如果你需要在Destroy解绑订阅可以直接调用我封装的快捷方法
+        .subscribe(BaseObserver.empty())
+
 ```
 
 ## 二、BaseActivity

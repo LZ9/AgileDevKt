@@ -75,6 +75,10 @@ isUseAnkoLayout()|是否使用AnkoLayout|无
     Observable.interval(1, TimeUnit.SECONDS)
         .compose(bindUntilEvent(FragmentEvent.DESTROY_VIEW))//当Fragment销毁时停止订阅
         .subscribe(BaseObserver.empty())
+
+    Observable.interval(1, TimeUnit.SECONDS)
+        .compose(bindDestroyViewEvent())// 如果你需要在DestroyView解绑订阅可以直接调用我封装的快捷方法
+        .subscribe(BaseObserver.empty())
 ```
 
 ## 二、BaseFragment
