@@ -54,7 +54,7 @@ class ProgressDialogHelper private constructor() {
     }
 
     /** 设置取消监听器[listener] */
-    fun setListener(listener: DialogInterface.OnCancelListener): ProgressDialogHelper {
+    fun setOnCancelListener(listener: DialogInterface.OnCancelListener): ProgressDialogHelper {
         mListener = listener
         return this
     }

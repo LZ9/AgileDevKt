@@ -93,7 +93,7 @@ class ProgressDialogActivity : BaseActivity() {
                     .setCancelable(true)
                     .setCanceledOnTouchOutside(false)
                     .setMsg(getString(R.string.pd_loading))
-                    .setListener(DialogInterface.OnCancelListener { dialog ->
+                    .setOnCancelListener(DialogInterface.OnCancelListener { dialog ->
                         toastShort(R.string.pd_dismiss)
                     })
                     .create(getContext())
