@@ -37,4 +37,4 @@ setReturnTransitionDuration(activity: Activity, duration: Long)|设置动画退�
 
 ## 扩展
 - [返回目录](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/readme_pandora.md)
-- [回到顶部]()
+- [回到顶部](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/pandora_transition.md#共享元素封装)
