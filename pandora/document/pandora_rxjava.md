@@ -143,7 +143,7 @@ viewClick(view: View, duration: Long = 1, unit: TimeUnit = TimeUnit.SECONDS)|在
 
 方法名称|描述|备注
 :---|:---|:---
-textChanges(textView: TextView, duration: Long = 500, unit: TimeUnit = TimeUnit.MILLISECONDS)|文本变动延迟回调|默认变动后500秒回调一次
+textChanges(textView: TextView, duration: Long = 500, unit: TimeUnit = TimeUnit.MILLISECONDS)|文本变动延迟回调|默认变动后500毫秒回调一次
 
 调用方法参考
 ```
