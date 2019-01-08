@@ -8,6 +8,7 @@ import android.widget.TextView
 import com.lodz.android.corekt.utils.BitmapUtils
 import com.lodz.android.pandora.rx.exception.DataException
 import com.lodz.android.pandora.rx.exception.RxException
+import com.lodz.android.pandora.rx.status.ResponseStatus
 import io.reactivex.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -51,8 +52,8 @@ object RxUtils {
         }
         if (e is DataException) {
             val status = e.getData()
-            if (status != null && status.getMsg().isNotEmpty()) {
-                return status.getMsg()
+            if (status != null && status.valueMsg().isNotEmpty()) {
+                return status.valueMsg()
             }
         }
         return defaultTips
@@ -65,6 +66,9 @@ object RxUtils {
         }
         return defaultTips
     }
+
+    /** 获取接口数据状态，[e]异常 */
+    fun getResponseStatus(e: Throwable): ResponseStatus? = if (e is DataException) e.getData() else null
 
     /** 把图片路径[path]转为指定宽[widthPx]高[heightPx]的base64 */
     fun decodePathToBase64(path: String, widthPx: Int, heightPx: Int): Observable<String> {

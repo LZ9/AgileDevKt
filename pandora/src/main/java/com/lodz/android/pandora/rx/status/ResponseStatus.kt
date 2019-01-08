@@ -10,8 +10,8 @@ interface ResponseStatus {
     fun isSuccess(): Boolean
 
     /** 获取提示语信息 */
-    fun getMsg(): String
+    fun valueMsg(): String
 
     /** 获取状态标志 */
-    fun getStatus(): String
+    fun valueStatus(): String
 }
