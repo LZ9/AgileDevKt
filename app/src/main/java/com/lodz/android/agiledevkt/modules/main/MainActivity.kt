@@ -41,6 +41,7 @@ import com.lodz.android.agiledevkt.modules.rv.drag.DragRvActivity
 import com.lodz.android.agiledevkt.modules.rv.head.HeadFooterRvActivity
 import com.lodz.android.agiledevkt.modules.rv.loadmore.RefreshLoadMoreActivity
 import com.lodz.android.agiledevkt.modules.rv.snap.SnapRvActivity
+import com.lodz.android.agiledevkt.modules.rxjava.RxJavaTestActivity
 import com.lodz.android.agiledevkt.modules.security.EncryptTestActivity
 import com.lodz.android.agiledevkt.modules.selector.SelectorTestActivity
 import com.lodz.android.agiledevkt.modules.setting.SettingTestActivity
@@ -114,7 +115,8 @@ class MainActivity : BaseActivity() {
             MainBean("BottomSheets测试类", "B", BottomSheetsActivity::class.java),
             MainBean("图片测试类", "T", PicActivity::class.java),
             MainBean("系统相册测试类", "X", AlbumActivity::class.java),
-            MainBean("加载框测试类", "J", ProgressDialogActivity::class.java)
+            MainBean("加载框测试类", "J", ProgressDialogActivity::class.java),
+            MainBean("RxJava测试类", "R", RxJavaTestActivity::class.java)
     )
 
     /** 列表 */

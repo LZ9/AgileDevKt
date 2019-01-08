@@ -540,4 +540,19 @@
     <string name="pd_loading">加载中</string>
     <string name="pd_dismiss">关闭</string>
 
+    <!-- RxJava -->
+    <string name="rx_clean_data">清空日志</string>
+    <string name="rx_memory_cache">内存缓存</string>
+    <string name="rx_disk_cache">磁盘缓存</string>
+    <string name="rx_network_data">网络数据</string>
+    <string name="rx_request_data">获存数据</string>
+    <string name="rx_request_data_fail">获存数据失败</string>
+    <string name="rx_quick_click">快速点击</string>
+    <string name="rx_search_hint">输入搜索关键字</string>
+    <string name="rx_path_to_base64">图片路径转Base64</string>
+    <string name="rx_paths_to_base64">图片路径数组转Base64</string>
+    <string name="rx_pic_empty">你的手机暂无图片</string>
+    <string name="rx_pic_path">路径图片</string>
+    <string name="rx_pic_base64">Base64图片</string>
+    <string name="rx_pic_coding">编码中</string>
 </resources>

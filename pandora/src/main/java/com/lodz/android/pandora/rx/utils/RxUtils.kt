@@ -39,6 +39,11 @@ object RxUtils {
         override fun apply(upstream: Single<T>): Single<T> = upstream.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
+    /** 在异步线程发起，在主线程订阅 */
+    fun ioToMainCompletable(): CompletableTransformer = object : CompletableTransformer {
+        override fun apply(upstream: Completable): CompletableSource = upstream.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+    }
+
     /** 获取异常[e]的提示语（配合订阅者使用），是否网络异常[isNetwork]，默认提示语[defaultTips] */
     fun getExceptionTips(e: Throwable, isNetwork: Boolean, defaultTips: String): String {
         if (isNetwork && e is RxException) {
@@ -171,11 +176,11 @@ object RxUtils {
                     }
 
                     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                        val text = s?.toString() ?: ""
-                        emitter.onNext(text)
                     }
 
                     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                        val text = s?.toString() ?: ""
+                        emitter.onNext(text)
                     }
                 })
             }
