@@ -1,5 +1,7 @@
 package com.lodz.android.pandora.photopicker.take
 
+import android.content.Context
+import android.widget.ImageView
 import androidx.annotation.ColorRes
 import com.lodz.android.pandora.photopicker.contract.OnPhotoLoader
 import com.lodz.android.pandora.photopicker.contract.picker.OnPhotoPickerListener
@@ -19,11 +21,27 @@ class TakeBuilder {
         return this
     }
 
+    /** 设置预览图图加载器[previewLoader] */
+    fun setPreviewImgLoader(previewLoader: (context: Context, source: String, imageView: ImageView) -> Unit): TakeBuilder =
+            setPreviewImgLoader(object : OnPhotoLoader<String> {
+                override fun displayImg(context: Context, source: String, imageView: ImageView) {
+                    previewLoader.invoke(context, source, imageView)
+                }
+            })
+
     /** 设置图片选中回调[listener] */
     fun setOnPhotoPickerListener(listener: OnPhotoPickerListener?): TakeBuilder {
         takeBean.photoPickerListener = listener
         return this
     }
+
+    /** 设置图片选中回调[listener] */
+    fun setOnPhotoPickerListener(listener: ((photos: List<String>) -> Unit)?): TakeBuilder =
+            setOnPhotoPickerListener(object : OnPhotoPickerListener {
+                override fun onPickerSelected(photos: List<String>) {
+                    listener?.invoke(photos)
+                }
+            })
 
     /** 设置拍照保存地址[savePath] */
     fun setCameraSavePath(savePath: String): TakeBuilder {

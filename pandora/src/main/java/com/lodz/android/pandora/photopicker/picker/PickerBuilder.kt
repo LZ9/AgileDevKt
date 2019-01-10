@@ -22,13 +22,12 @@ class PickerBuilder {
     }
 
     /** 设置图片加载器[photoLoader] */
-    fun setImgLoader(photoLoader: (context: Context, source: String, imageView: ImageView) -> Unit): PickerBuilder {
-        return setImgLoader(object : OnPhotoLoader<String> {
-            override fun displayImg(context: Context, source: String, imageView: ImageView) {
-                photoLoader.invoke(context, source, imageView)
-            }
-        })
-    }
+    fun setImgLoader(photoLoader: (context: Context, source: String, imageView: ImageView) -> Unit): PickerBuilder =
+            setImgLoader(object : OnPhotoLoader<String> {
+                override fun displayImg(context: Context, source: String, imageView: ImageView) {
+                    photoLoader.invoke(context, source, imageView)
+                }
+            })
 
     /** 设置预览图图加载器[previewLoader] */
     fun setPreviewImgLoader(previewLoader: OnPhotoLoader<String>): PickerBuilder {
@@ -37,13 +36,12 @@ class PickerBuilder {
     }
 
     /** 设置预览图图加载器[previewLoader] */
-    fun setPreviewImgLoader(previewLoader: (context: Context, source: String, imageView: ImageView) -> Unit): PickerBuilder {
-        return setPreviewImgLoader(object : OnPhotoLoader<String> {
-            override fun displayImg(context: Context, source: String, imageView: ImageView) {
-                previewLoader.invoke(context, source, imageView)
-            }
-        })
-    }
+    fun setPreviewImgLoader(previewLoader: (context: Context, source: String, imageView: ImageView) -> Unit): PickerBuilder =
+            setPreviewImgLoader(object : OnPhotoLoader<String> {
+                override fun displayImg(context: Context, source: String, imageView: ImageView) {
+                    previewLoader.invoke(context, source, imageView)
+                }
+            })
 
     /** 设置图片选中回调[listener] */
     fun setOnPhotoPickerListener(listener: OnPhotoPickerListener): PickerBuilder {
@@ -52,13 +50,12 @@ class PickerBuilder {
     }
 
     /** 设置图片选中回调[listener] */
-    fun setOnPhotoPickerListener(listener: (photos: List<String>) -> Unit): PickerBuilder {
-        return setOnPhotoPickerListener(object : OnPhotoPickerListener {
-            override fun onPickerSelected(photos: List<String>) {
-                listener.invoke(photos)
-            }
-        })
-    }
+    fun setOnPhotoPickerListener(listener: (photos: List<String>) -> Unit): PickerBuilder =
+            setOnPhotoPickerListener(object : OnPhotoPickerListener {
+                override fun onPickerSelected(photos: List<String>) {
+                    listener.invoke(photos)
+                }
+            })
 
     /** 设置图片可选最大数量[maxCount] */
     fun setMaxCount(@IntRange(from = 1) maxCount: Int): PickerBuilder {

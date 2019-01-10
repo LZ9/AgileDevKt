@@ -1,10 +1,13 @@
 package com.lodz.android.pandora.photopicker.preview
 
+import android.content.Context
+import android.widget.ImageView
 import androidx.annotation.ColorRes
 import androidx.annotation.IntRange
 import com.lodz.android.pandora.photopicker.contract.OnClickListener
 import com.lodz.android.pandora.photopicker.contract.OnLongClickListener
 import com.lodz.android.pandora.photopicker.contract.OnPhotoLoader
+import com.lodz.android.pandora.photopicker.contract.preview.PreviewController
 
 /**
  * 图片预览构建器
@@ -19,6 +22,14 @@ class PreviewBuilder<T : Any> {
         previewBean.photoLoader = photoLoader
         return this
     }
+
+    /** 设置图片加载器[photoLoader] */
+    fun setImgLoader(photoLoader: (context: Context, source: T, imageView: ImageView) -> Unit): PreviewBuilder<T> =
+            setImgLoader(object : OnPhotoLoader<T> {
+                override fun displayImg(context: Context, source: T, imageView: ImageView) {
+                    photoLoader.invoke(context, source, imageView)
+                }
+            })
 
     /** 设置是否可缩放[isScale] */
     fun setScale(isScale: Boolean): PreviewBuilder<T> {
@@ -74,11 +85,27 @@ class PreviewBuilder<T : Any> {
         return this
     }
 
+    /** 设置点击监听[listener] */
+    fun setOnClickListener(listener: (context: Context, source: T, position: Int, controller: PreviewController) -> Unit): PreviewBuilder<T> =
+            setOnClickListener(object : OnClickListener<T> {
+                override fun onClick(context: Context, source: T, position: Int, controller: PreviewController) {
+                    listener.invoke(context, source, position, controller)
+                }
+            })
+
     /** 设置长按监听[listener] */
     fun setOnLongClickListener(listener: OnLongClickListener<T>): PreviewBuilder<T> {
         previewBean.longClickListener = listener
         return this
     }
+
+    /** 设置长按监听[listener] */
+    fun setOnLongClickListener(listener: (context: Context, source: T, position: Int, controller: PreviewController) -> Unit): PreviewBuilder<T> =
+            setOnLongClickListener(object : OnLongClickListener<T> {
+                override fun onLongClick(context: Context, source: T, position: Int, controller: PreviewController) {
+                    listener.invoke(context, source, position, controller)
+                }
+            })
 
     /** 完成单张图片[source]构建 */
     fun build(source: T): PreviewManager<T> {
