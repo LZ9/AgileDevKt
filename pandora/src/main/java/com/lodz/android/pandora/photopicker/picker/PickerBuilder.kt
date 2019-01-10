@@ -1,5 +1,7 @@
 package com.lodz.android.pandora.photopicker.picker
 
+import android.content.Context
+import android.widget.ImageView
 import androidx.annotation.IntRange
 import com.lodz.android.pandora.photopicker.contract.OnPhotoLoader
 import com.lodz.android.pandora.photopicker.contract.picker.OnPhotoPickerListener
@@ -19,16 +21,43 @@ class PickerBuilder {
         return this
     }
 
+    /** 设置图片加载器[photoLoader] */
+    fun setImgLoader(photoLoader: (context: Context, source: String, imageView: ImageView) -> Unit): PickerBuilder {
+        return setImgLoader(object : OnPhotoLoader<String> {
+            override fun displayImg(context: Context, source: String, imageView: ImageView) {
+                photoLoader.invoke(context, source, imageView)
+            }
+        })
+    }
+
     /** 设置预览图图加载器[previewLoader] */
     fun setPreviewImgLoader(previewLoader: OnPhotoLoader<String>): PickerBuilder {
         pickerBean.previewLoader = previewLoader
         return this
     }
 
+    /** 设置预览图图加载器[previewLoader] */
+    fun setPreviewImgLoader(previewLoader: (context: Context, source: String, imageView: ImageView) -> Unit): PickerBuilder {
+        return setPreviewImgLoader(object : OnPhotoLoader<String> {
+            override fun displayImg(context: Context, source: String, imageView: ImageView) {
+                previewLoader.invoke(context, source, imageView)
+            }
+        })
+    }
+
     /** 设置图片选中回调[listener] */
     fun setOnPhotoPickerListener(listener: OnPhotoPickerListener): PickerBuilder {
         pickerBean.photoPickerListener = listener
         return this
+    }
+
+    /** 设置图片选中回调[listener] */
+    fun setOnPhotoPickerListener(listener: (photos: List<String>) -> Unit): PickerBuilder {
+        return setOnPhotoPickerListener(object : OnPhotoPickerListener {
+            override fun onPickerSelected(photos: List<String>) {
+                listener.invoke(photos)
+            }
+        })
     }
 
     /** 设置图片可选最大数量[maxCount] */

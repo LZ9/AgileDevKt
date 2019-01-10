@@ -108,25 +108,19 @@ class PicPickerTestActivity : BaseActivity() {
                     .setPickerUIConfig(mConfig)
                     .setCameraSavePath(FileManager.getCacheFolderPath())
                     .setAuthority("com.lodz.android.agiledevkt.fileprovider")
-                    .setImgLoader(object : OnPhotoLoader<String> {
-                        override fun displayImg(context: Context, source: String, imageView: ImageView) {
-                            ImageLoader.create(context).loadFilePath(source).setCenterCrop().into(imageView)
+                    .setImgLoader { context, source, imageView ->
+                        ImageLoader.create(context).loadFilePath(source).setCenterCrop().into(imageView)
+                    }
+                    .setPreviewImgLoader { context, source, imageView ->
+                        ImageLoader.create(context).loadFilePath(source).setFitCenter().into(imageView)
+                    }
+                    .setOnPhotoPickerListener { photos ->
+                        var str = ""
+                        for (path in photos) {
+                            str += "$path\n\n"
                         }
-                    })
-                    .setPreviewImgLoader(object : OnPhotoLoader<String> {
-                        override fun displayImg(context: Context, source: String, imageView: ImageView) {
-                            ImageLoader.create(context).loadFilePath(source).setFitCenter().into(imageView)
-                        }
-                    })
-                    .setOnPhotoPickerListener(object : OnPhotoPickerListener {
-                        override fun onPickerSelected(photos: List<String>) {
-                            var str = ""
-                            for (path in photos) {
-                                str += "$path\n\n"
-                            }
-                            mResultTv.text = str
-                        }
-                    })
+                        mResultTv.text = str
+                    }
                     .build()
                     .open(getContext())
         }
