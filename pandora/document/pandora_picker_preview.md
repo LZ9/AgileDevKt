@@ -137,7 +137,7 @@ PickerManager可以帮你快速构造一个图片选择器，包括挑选指定�
 ```
  - android:resource=""里放你刚才在xml里创建的文件名称
  - android:authorities=""里放你自定义的FileProvider名称，正常是以你的包名命名**packageName.fileprovider**保证不会和其他人重复，例如我的测试APP就是**com.lodz.android.agiledevkt.fileprovider**
- - 然后在选择器里配置你自定义的FileProvider名称就OK了 **setAuthority("packageName.fileprovider")**
+ - 然后在选择器里配置你自定义的FileProvider名称 **setAuthority("packageName.fileprovider")**
  - 我这里的android:name=""使用的是androidx，如果你还在使用support包，那你需要改为**android.support.v4.content.FileProvider**
 
 ## 二、拍照管理器TakePhotoManager
@@ -171,7 +171,7 @@ TakePhotoManager对调用系统拍照做了封装，帮助你摆脱onActivityRes
 
 ### 2. 注意事项
  - 拍照功能需要用到相机权限，请务必添加并且动态申请（sdk >= 6.0）
- - 适配7.0及以上版本的手机请务必设置FileProvider，配置方法 [阿萨德撒多]() 参考
+ - 适配7.0及以上版本的手机请务必设置FileProvider，配置方法参考 [FileProvider配置](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/pandora_picker_preview.md#4-fileprovider配置)
 
 ## 三、图片预器PreviewManager
 PreviewManager具备灵活的泛型支持，你只需要在creat()方法里指定传入图片列表的类型，在接口回调中就会回调相应类型的数据
@@ -204,6 +204,7 @@ PreviewManager具备灵活的泛型支持，你只需要在creat()方法里指�
         .build(array)// 构建图片数组预览
         .open(getContext())//打开预览器
 ```
+ - build(pic)、build(list)和build(array)选择一个调用即可
  - 如果你没有设置setImgLoader()方法会提示：**您尚未设置图片加载器**
  - 如果你的build()方法入参是空，会提示：**图片数据为空**
  - 如果构建的图片只有一张则不显示页码
@@ -211,4 +212,4 @@ PreviewManager具备灵活的泛型支持，你只需要在creat()方法里指�
 
 ## 扩展
 - [返回目录](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/readme_pandora.md)
-- [回到顶部]()
+- [回到顶部](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/pandora_picker_preview.md#图片选择和预览)
