@@ -1,4 +1,4 @@
-package com.lodz.android.agiledevkt.modules.rxjava
+package com.lodz.android.agiledevkt.modules.rxjava.utils
 
 import io.reactivex.Observable
 import io.reactivex.functions.BiFunction

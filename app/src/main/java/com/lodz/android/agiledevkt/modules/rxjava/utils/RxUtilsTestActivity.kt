@@ -1,4 +1,4 @@
-package com.lodz.android.agiledevkt.modules.rxjava
+package com.lodz.android.agiledevkt.modules.rxjava.utils
 
 import android.content.Context
 import android.content.Intent
@@ -21,14 +21,14 @@ import com.lodz.android.pandora.rx.subscribe.observer.ProgressObserver
 import com.lodz.android.pandora.rx.utils.RxUtils
 
 /**
- * RxJava测试类
- * Created by zhouL on 2019/1/7.
+ * Rx帮助类测试
+ * Created by zhouL on 2019/1/11.
  */
-class RxJavaTestActivity : BaseActivity() {
+class RxUtilsTestActivity : BaseActivity() {
 
     companion object {
         fun start(context: Context) {
-            val intent = Intent(context, RxJavaTestActivity::class.java)
+            val intent = Intent(context, RxUtilsTestActivity::class.java)
             context.startActivity(intent)
         }
     }
@@ -60,7 +60,7 @@ class RxJavaTestActivity : BaseActivity() {
     /** 快速点击 */
     private val mBase64Img by bindView<ImageView>(R.id.base64_img)
 
-    override fun getLayoutId(): Int = R.layout.activity_rxjava_test
+    override fun getLayoutId(): Int = R.layout.activity_rx_utils_test
 
     override fun findViews(savedInstanceState: Bundle?) {
         super.findViews(savedInstanceState)
@@ -116,7 +116,7 @@ class RxJavaTestActivity : BaseActivity() {
         RxUtils.viewClick(mQuickClickBtn)
                 .subscribe(object :BaseObserver<View>(){
                     override fun onBaseNext(any: View) {
-                        printResult(getString(R.string.rx_quick_click))
+                        printResult(getString(R.string.rx_utils_quick_click))
                     }
 
                     override fun onBaseError(e: Throwable) {
@@ -128,7 +128,7 @@ class RxJavaTestActivity : BaseActivity() {
         mPathToBase64Btn.setOnClickListener {
             val list = AlbumUtils.getAllImages(getContext())
             if (list.isEmpty()){
-                printResult(getString(R.string.rx_pic_empty))
+                printResult(getString(R.string.rx_utils_pic_empty))
                 return@setOnClickListener
             }
             val path = list.get(0)
@@ -140,7 +140,7 @@ class RxJavaTestActivity : BaseActivity() {
             RxUtils.decodePathToBase64(path, getScreenWidth() / 8, getScreenHeight() / 8)
                     .compose(RxUtils.ioToMainObservable())
                     .compose(bindDestroyEvent())
-                    .subscribe(object :ProgressObserver<String>(){
+                    .subscribe(object : ProgressObserver<String>(){
                         override fun onPgNext(any: String) {
                             printResult("\nBase64路径：$any")
                             ImageLoader.create(getContext())
@@ -152,14 +152,14 @@ class RxJavaTestActivity : BaseActivity() {
                         override fun onPgError(e: Throwable, isNetwork: Boolean) {
 
                         }
-                    }.create(getContext(), R.string.rx_pic_coding, true))
+                    }.create(getContext(), R.string.rx_utils_pic_coding, true))
 
         }
 
         mPathsToBase64Btn.setOnClickListener {
             val list = AlbumUtils.getAllImages(getContext())
             if (list.isEmpty()){
-                printResult(getString(R.string.rx_pic_empty))
+                printResult(getString(R.string.rx_utils_pic_empty))
                 return@setOnClickListener
             }
             val paths = if (list.size > 3){
@@ -189,7 +189,7 @@ class RxJavaTestActivity : BaseActivity() {
                         override fun onPgError(e: Throwable, isNetwork: Boolean) {
 
                         }
-                    }.create(getContext(), R.string.rx_pic_coding, true))
+                    }.create(getContext(), R.string.rx_utils_pic_coding, true))
         }
     }
 

@@ -27,7 +27,7 @@
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/rx_clean_data"
+        android:text="@string/rx_utils_clean_data"
         android:textColor="@color/white" />
 
     <LinearLayout
@@ -40,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:text="@string/rx_memory_cache" />
+            android:text="@string/rx_utils_memory_cache" />
 
         <Switch
             android:id="@+id/disk_switch"
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:checked="true"
-            android:text="@string/rx_disk_cache" />
+            android:text="@string/rx_utils_disk_cache" />
 
         <Switch
             android:id="@+id/network_switch"
@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:checked="true"
-            android:text="@string/rx_network_data" />
+            android:text="@string/rx_utils_network_data" />
     </LinearLayout>
 
     <com.google.android.material.button.MaterialButton
@@ -64,14 +64,14 @@
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/rx_request_data"
+        android:text="@string/rx_utils_request_data"
         android:textColor="@color/white" />
 
     <EditText
         android:id="@+id/search_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/rx_search_hint"
+        android:hint="@string/rx_utils_search_hint"
         android:inputType="text"
         android:textSize="14sp"
         tools:ignore="Autofill" />
@@ -88,7 +88,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/rx_quick_click"
+            android:text="@string/rx_utils_quick_click"
             android:textColor="@color/white" />
 
         <com.google.android.material.button.MaterialButton
@@ -99,7 +99,7 @@
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
             android:layout_weight="1"
-            android:text="@string/rx_path_to_base64"
+            android:text="@string/rx_utils_path_to_base64"
             android:textColor="@color/white" />
 
         <com.google.android.material.button.MaterialButton
@@ -108,7 +108,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/rx_paths_to_base64"
+            android:text="@string/rx_utils_paths_to_base64"
             android:textColor="@color/white" />
     </LinearLayout>
 
@@ -134,7 +134,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/rx_pic_path" />
+                android:text="@string/rx_utils_pic_path" />
 
         </LinearLayout>
 
@@ -155,7 +155,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/rx_pic_base64" />
+                android:text="@string/rx_utils_pic_base64" />
 
         </LinearLayout>
     </LinearLayout>
