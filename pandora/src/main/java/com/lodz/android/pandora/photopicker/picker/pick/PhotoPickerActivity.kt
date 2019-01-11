@@ -22,9 +22,7 @@ import com.lodz.android.corekt.anko.*
 import com.lodz.android.corekt.utils.*
 import com.lodz.android.pandora.R
 import com.lodz.android.pandora.base.activity.AbsActivity
-import com.lodz.android.pandora.photopicker.contract.OnClickListener
 import com.lodz.android.pandora.photopicker.contract.OnPhotoLoader
-import com.lodz.android.pandora.photopicker.contract.preview.PreviewController
 import com.lodz.android.pandora.photopicker.picker.PickerBean
 import com.lodz.android.pandora.photopicker.picker.PickerItemBean
 import com.lodz.android.pandora.photopicker.picker.dialog.ImageFolderDialog
@@ -231,18 +229,14 @@ internal class PhotoPickerActivity : AbsActivity() {
                     .setStatusBarColor(bean.pickerUIConfig.getStatusBarColor())
                     .setNavigationBarColor(bean.pickerUIConfig.getNavigationBarColor())
                     .setPagerTextColor(bean.pickerUIConfig.getMainTextColor())
-                    .setOnClickListener(object : OnClickListener<String> {
-                        override fun onClick(context: Context, source: String, position: Int, controller: PreviewController) {
-                            if (bean.isClickClosePreview) {
-                                controller.close()
-                            }
+                    .setOnClickListener { context, source, position, controller ->
+                        if (bean.isClickClosePreview) {
+                            controller.close()
                         }
-                    })
-                    .setImgLoader(object : OnPhotoLoader<String> {
-                        override fun displayImg(context: Context, source: String, imageView: ImageView) {
-                            bean.previewLoader?.displayImg(context, source, imageView)
-                        }
-                    })
+                    }
+                    .setImgLoader { context, source, imageView ->
+                        bean.previewLoader?.displayImg(context, source, imageView)
+                    }
                     .build(list)
                     .open(getContext())
         }
@@ -318,18 +312,14 @@ internal class PhotoPickerActivity : AbsActivity() {
                     .setStatusBarColor(bean.pickerUIConfig.getStatusBarColor())
                     .setNavigationBarColor(bean.pickerUIConfig.getNavigationBarColor())
                     .setPagerTextColor(bean.pickerUIConfig.getMainTextColor())
-                    .setOnClickListener(object : OnClickListener<String> {
-                        override fun onClick(context: Context, source: String, position: Int, controller: PreviewController) {
-                            if (bean.isClickClosePreview) {
-                                controller.close()
-                            }
+                    .setOnClickListener { context, source, position, controller ->
+                        if (bean.isClickClosePreview) {
+                            controller.close()
                         }
-                    })
-                    .setImgLoader(object : OnPhotoLoader<String> {
-                        override fun displayImg(context: Context, source: String, imageView: ImageView) {
-                            bean.previewLoader?.displayImg(context, source, imageView)
-                        }
-                    })
+                    }
+                    .setImgLoader { context, source, imageView ->
+                        bean.previewLoader?.displayImg(context, source, imageView)
+                    }
                     .build(item.path)
                     .open(getContext())
         }

@@ -3,7 +3,6 @@ package com.lodz.android.agiledevkt.modules.pic.preview
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.ImageView
 import android.widget.Switch
 import android.widget.TextView
 import com.google.android.material.button.MaterialButton
@@ -12,10 +11,6 @@ import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.utils.toastShort
 import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.base.activity.BaseActivity
-import com.lodz.android.pandora.photopicker.contract.OnClickListener
-import com.lodz.android.pandora.photopicker.contract.OnLongClickListener
-import com.lodz.android.pandora.photopicker.contract.OnPhotoLoader
-import com.lodz.android.pandora.photopicker.contract.preview.PreviewController
 import com.lodz.android.pandora.photopicker.preview.PreviewManager
 
 /**
@@ -100,25 +95,19 @@ class PicPreviewTestActivity : BaseActivity() {
                     .setPagerTextColor(R.color.white)
                     .setPagerTextSize(14)
                     .setShowPagerText(mShowPagerSwitch.isChecked)
-                    .setOnClickListener(object : OnClickListener<String> {
-                        override fun onClick(context: Context, source: String, position: Int, controller: PreviewController) {
-                            if (mClickCloseSwitch.isChecked) {
-                                controller.close()
-                            } else {
-                                toastShort(getString(R.string.preview_click_tips, position.toString()))
-                            }
+                    .setOnClickListener { context, source, position, controller ->
+                        if (mClickCloseSwitch.isChecked) {
+                            controller.close()
+                        } else {
+                            toastShort(getString(R.string.preview_click_tips, position.toString()))
                         }
-                    })
-                    .setOnLongClickListener(object : OnLongClickListener<String> {
-                        override fun onLongClick(context: Context, source: String, position: Int, controller: PreviewController) {
-                            toastShort(getString(R.string.preview_long_click_tips, position.toString()))
-                        }
-                    })
-                    .setImgLoader(object : OnPhotoLoader<String> {
-                        override fun displayImg(context: Context, source: String, imageView: ImageView) {
-                            ImageLoader.create(context).loadUrl(source).setFitCenter().into(imageView)
-                        }
-                    })
+                    }
+                    .setOnLongClickListener { context, source, position, controller ->
+                        toastShort(getString(R.string.preview_long_click_tips, position.toString()))
+                    }
+                    .setImgLoader { context, source, imageView ->
+                        ImageLoader.create(context).loadUrl(source).setFitCenter().into(imageView)
+                    }
                     .build(IMG_URLS)
                     .open(getContext())
         }

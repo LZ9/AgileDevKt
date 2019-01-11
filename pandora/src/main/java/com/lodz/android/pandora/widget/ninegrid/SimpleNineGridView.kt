@@ -4,9 +4,6 @@ import android.content.Context
 import android.util.AttributeSet
 import android.widget.ImageView
 import com.lodz.android.corekt.anko.toArrayList
-import com.lodz.android.pandora.photopicker.contract.OnPhotoLoader
-import com.lodz.android.pandora.photopicker.contract.picker.OnPhotoPickerListener
-import com.lodz.android.pandora.photopicker.contract.preview.PreviewController
 import com.lodz.android.pandora.photopicker.picker.PickerManager
 import com.lodz.android.pandora.photopicker.picker.PickerUIConfig
 import com.lodz.android.pandora.photopicker.preview.PreviewManager
@@ -44,21 +41,15 @@ class SimpleNineGridView : NineGridView {
         setListener(object : OnNineGridViewListener {
             override fun onAddPic(addCount: Int) {
                 PickerManager.create()
-                        .setImgLoader(object : OnPhotoLoader<String> {
-                            override fun displayImg(context: Context, source: String, imageView: ImageView) {
-                                mListener?.onDisplayPickerImg(context, source, imageView)
-                            }
-                        })
-                        .setPreviewImgLoader(object : OnPhotoLoader<String> {
-                            override fun displayImg(context: Context, source: String, imageView: ImageView) {
-                                mListener?.onDisplayPreviewImg(context, source, imageView)
-                            }
-                        })
-                        .setOnPhotoPickerListener(object : OnPhotoPickerListener {
-                            override fun onPickerSelected(photos: List<String>) {
-                                addDatas(photos.toArrayList())
-                            }
-                        })
+                        .setImgLoader { context, source, imageView ->
+                            mListener?.onDisplayPickerImg(context, source, imageView)
+                        }
+                        .setPreviewImgLoader { context, source, imageView ->
+                            mListener?.onDisplayPreviewImg(context, source, imageView)
+                        }
+                        .setOnPhotoPickerListener { photos ->
+                            addDatas(photos.toArrayList())
+                        }
                         .setMaxCount(addCount)
                         .setScale(isScale)
                         .setNeedCamera(isNeedCamera)
@@ -89,18 +80,14 @@ class SimpleNineGridView : NineGridView {
                         .setPagerTextColor(android.R.color.white)
                         .setPagerTextSize(14)
                         .setShowPagerText(true)
-                        .setOnClickListener(object : com.lodz.android.pandora.photopicker.contract.OnClickListener<String> {
-                            override fun onClick(context: Context, source: String, position: Int, controller: PreviewController) {
-                                if (isClickClosePreview) {
-                                    controller.close()
-                                }
+                        .setOnClickListener { context, source, position, controller ->
+                            if (isClickClosePreview) {
+                                controller.close()
                             }
-                        })
-                        .setImgLoader(object : OnPhotoLoader<String> {
-                            override fun displayImg(context: Context, source: String, imageView: ImageView) {
-                                mListener?.onDisplayPreviewImg(context, source, imageView)
-                            }
-                        })
+                        }
+                        .setImgLoader { context, source, imageView ->
+                            mListener?.onDisplayPreviewImg(context, source, imageView)
+                        }
                         .build(getPicData())
                         .open(getContext())
             }

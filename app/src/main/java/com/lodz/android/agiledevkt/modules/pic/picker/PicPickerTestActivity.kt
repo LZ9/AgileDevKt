@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.widget.ImageView
 import android.widget.RadioGroup
 import android.widget.Switch
 import android.widget.TextView
@@ -18,8 +17,6 @@ import com.lodz.android.corekt.utils.isPermissionGranted
 import com.lodz.android.corekt.utils.toastShort
 import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.base.activity.BaseActivity
-import com.lodz.android.pandora.photopicker.contract.OnPhotoLoader
-import com.lodz.android.pandora.photopicker.contract.picker.OnPhotoPickerListener
 import com.lodz.android.pandora.photopicker.picker.PickerManager
 import com.lodz.android.pandora.photopicker.picker.PickerUIConfig
 import permissions.dispatcher.*
@@ -133,25 +130,19 @@ class PicPickerTestActivity : BaseActivity() {
                     .setNeedItemPreview(mItemPreviewSwitch.isChecked)
                     .setClickClosePreview(mClickClosePreviewSwitch.isChecked)
                     .setPickerUIConfig(mConfig)
-                    .setImgLoader(object : OnPhotoLoader<String> {
-                        override fun displayImg(context: Context, source: String, imageView: ImageView) {
-                            ImageLoader.create(context).loadUrl(source).setCenterCrop().into(imageView)
+                    .setImgLoader { context, source, imageView ->
+                        ImageLoader.create(context).loadUrl(source).setCenterCrop().into(imageView)
+                    }
+                    .setPreviewImgLoader { context, source, imageView ->
+                        ImageLoader.create(context).loadUrl(source).setFitCenter().into(imageView)
+                    }
+                    .setOnPhotoPickerListener { photos ->
+                        var str = ""
+                        for (path in photos) {
+                            str += "$path\n\n"
                         }
-                    })
-                    .setPreviewImgLoader(object : OnPhotoLoader<String> {
-                        override fun displayImg(context: Context, source: String, imageView: ImageView) {
-                            ImageLoader.create(context).loadUrl(source).setFitCenter().into(imageView)
-                        }
-                    })
-                    .setOnPhotoPickerListener(object : OnPhotoPickerListener {
-                        override fun onPickerSelected(photos: List<String>) {
-                            var str = ""
-                            for (path in photos) {
-                                str += "$path\n\n"
-                            }
-                            mResultTv.text = str
-                        }
-                    })
+                        mResultTv.text = str
+                    }
                     .build(IMG_URLS)
                     .open(getContext())
         }

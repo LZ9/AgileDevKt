@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.widget.ImageView
 import android.widget.TextView
 import com.google.android.material.button.MaterialButton
 import com.lodz.android.agiledevkt.R
@@ -16,8 +15,6 @@ import com.lodz.android.corekt.utils.isPermissionGranted
 import com.lodz.android.corekt.utils.toastShort
 import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.base.activity.BaseActivity
-import com.lodz.android.pandora.photopicker.contract.OnPhotoLoader
-import com.lodz.android.pandora.photopicker.contract.picker.OnPhotoPickerListener
 import com.lodz.android.pandora.photopicker.take.TakePhotoManager
 import permissions.dispatcher.*
 
@@ -63,24 +60,22 @@ class TakePhotoTestActivity : BaseActivity() {
     override fun setListeners() {
         super.setListeners()
         mImmediatelyBtn.setOnClickListener {
-            mResultTv.text =""
+            mResultTv.text = ""
             TakePhotoManager.create()
                     .setImmediately(true)
                     .setCameraSavePath(FileManager.getCacheFolderPath())
                     .setAuthority("com.lodz.android.agiledevkt.fileprovider")
-                    .setOnPhotoPickerListener(object : OnPhotoPickerListener {
-                        override fun onPickerSelected(photos: List<String>) {
-                            if (photos.isNotEmpty()) {
-                                mResultTv.text = photos.get(0)
-                            }
+                    .setOnPhotoPickerListener { photos ->
+                        if (photos.isNotEmpty()) {
+                            mResultTv.text = photos.get(0)
                         }
-                    })
+                    }
                     .build()
                     .take(getContext())
         }
 
         mConfirmPhotoBtn.setOnClickListener {
-            mResultTv.text =""
+            mResultTv.text = ""
             TakePhotoManager.create()
                     .setStatusBarColor(R.color.color_d43450)
                     .setNavigationBarColor(R.color.color_d43450)
@@ -88,18 +83,14 @@ class TakePhotoTestActivity : BaseActivity() {
                     .setImmediately(false)
                     .setCameraSavePath(FileManager.getCacheFolderPath())
                     .setAuthority("com.lodz.android.agiledevkt.fileprovider")
-                    .setPreviewImgLoader(object : OnPhotoLoader<String> {
-                        override fun displayImg(context: Context, source: String, imageView: ImageView) {
-                            ImageLoader.create(context).loadFilePath(source).setFitCenter().into(imageView)
+                    .setPreviewImgLoader { context, source, imageView ->
+                        ImageLoader.create(context).loadFilePath(source).setFitCenter().into(imageView)
+                    }
+                    .setOnPhotoPickerListener { photos ->
+                        if (photos.isNotEmpty()) {
+                            mResultTv.text = photos.get(0)
                         }
-                    })
-                    .setOnPhotoPickerListener(object : OnPhotoPickerListener {
-                        override fun onPickerSelected(photos: List<String>) {
-                            if (photos.isNotEmpty()) {
-                                mResultTv.text = photos.get(0)
-                            }
-                        }
-                    })
+                    }
                     .build()
                     .take(getContext())
         }
