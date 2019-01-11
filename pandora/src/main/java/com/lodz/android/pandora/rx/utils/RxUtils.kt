@@ -21,28 +21,28 @@ import java.util.concurrent.TimeUnit
 object RxUtils {
 
     /** 在异步线程发起，在主线程订阅 */
-    fun <T> ioToMainObservable(): ObservableTransformer<T, T> = object : ObservableTransformer<T, T> {
-        override fun apply(upstream: Observable<T>): Observable<T> = upstream.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+    fun <T> ioToMainObservable(): ObservableTransformer<T, T> = ObservableTransformer { upstream ->
+        return@ObservableTransformer upstream.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
     /** 在异步线程发起，在主线程订阅 */
-    fun <T> ioToMainFlowable(): FlowableTransformer<T, T> = object : FlowableTransformer<T, T> {
-        override fun apply(upstream: Flowable<T>): Flowable<T> = upstream.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+    fun <T> ioToMainFlowable(): FlowableTransformer<T, T> = FlowableTransformer { upstream ->
+        return@FlowableTransformer upstream.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
     /** 在异步线程发起，在主线程订阅 */
-    fun <T> ioToMainMaybe(): MaybeTransformer<T, T> = object : MaybeTransformer<T, T> {
-        override fun apply(upstream: Maybe<T>): Maybe<T> = upstream.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+    fun <T> ioToMainMaybe(): MaybeTransformer<T, T> = MaybeTransformer { upstream ->
+        return@MaybeTransformer upstream.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
     /** 在异步线程发起，在主线程订阅 */
-    fun <T> ioToMainSingle(): SingleTransformer<T, T> = object : SingleTransformer<T, T> {
-        override fun apply(upstream: Single<T>): Single<T> = upstream.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+    fun <T> ioToMainSingle(): SingleTransformer<T, T> = SingleTransformer { upstream ->
+        return@SingleTransformer upstream.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
     /** 在异步线程发起，在主线程订阅 */
-    fun ioToMainCompletable(): CompletableTransformer = object : CompletableTransformer {
-        override fun apply(upstream: Completable): CompletableSource = upstream.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+    fun ioToMainCompletable(): CompletableTransformer = CompletableTransformer { upstream ->
+        return@CompletableTransformer upstream.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
     /** 获取异常[e]的提示语（配合订阅者使用），是否网络异常[isNetwork]，默认提示语[defaultTips] */
