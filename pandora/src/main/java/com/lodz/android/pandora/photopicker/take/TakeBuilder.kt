@@ -4,7 +4,7 @@ import android.content.Context
 import android.widget.ImageView
 import androidx.annotation.ColorRes
 import com.lodz.android.pandora.photopicker.contract.OnPhotoLoader
-import com.lodz.android.pandora.photopicker.contract.picker.OnPhotoPickerListener
+import com.lodz.android.pandora.photopicker.contract.take.OnPhotoTakeListener
 
 /**
  * 拍照构建
@@ -29,17 +29,17 @@ class TakeBuilder {
                 }
             })
 
-    /** 设置图片选中回调[listener] */
-    fun setOnPhotoPickerListener(listener: OnPhotoPickerListener?): TakeBuilder {
-        takeBean.photoPickerListener = listener
+    /** 拍照回调[listener] */
+    fun setOnPhotoTakeListener(listener: OnPhotoTakeListener?): TakeBuilder {
+        takeBean.photoTakeListener = listener
         return this
     }
 
-    /** 设置图片选中回调[listener] */
-    fun setOnPhotoPickerListener(listener: ((photos: List<String>) -> Unit)?): TakeBuilder =
-            setOnPhotoPickerListener(object : OnPhotoPickerListener {
-                override fun onPickerSelected(photos: List<String>) {
-                    listener?.invoke(photos)
+    /** 拍照回调[listener] */
+    fun setOnPhotoTakeListener(listener: ((photo: String) -> Unit)?): TakeBuilder =
+            setOnPhotoTakeListener(object : OnPhotoTakeListener {
+                override fun onTake(photo: String) {
+                    listener?.invoke(photo)
                 }
             })
 

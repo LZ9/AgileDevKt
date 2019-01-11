@@ -31,6 +31,7 @@
     <string name="pandora_photo_temp_file_fail">文件创建失败</string>
     <string name="pandora_photo_folder_fail">文件夹创建失败</string>
     <string name="pandora_photo_authority_empty">您尚未配置FileProvider</string>
+    <string name="pandora_photo_take_listener_unset">您尚未设置拍照回调监听器</string>
 
     <!-- 搜索标题栏 -->
     <string name="pandora_search_title_hint">请输入查询关键字</string>

@@ -17,14 +17,14 @@ class TakePhotoManager internal constructor(private val takeBean: TakeBean) {
         fun create(): TakeBuilder = TakeBuilder()
     }
 
-    /** 拍照，上下文[context]，是否立即返回结果[isImmediately]（默认true） */
+    /** 拍照，上下文[context] */
     fun take(context: Context) {
         if (takeBean.previewLoader == null && !takeBean.isImmediately) {//没有立即返回需要校验预览图片加载器
             context.toastShort(R.string.pandora_preview_loader_unset)
             return
         }
-        if (takeBean.photoPickerListener == null) {// 校验图片选中回调监听
-            context.toastShort(R.string.pandora_photo_selected_listener_unset)
+        if (takeBean.photoTakeListener == null) {// 校验图片选中回调监听
+            context.toastShort(R.string.pandora_photo_take_listener_unset)
             return
         }
         if (takeBean.cameraSavePath.isEmpty()) {// 校验拍照保存地址

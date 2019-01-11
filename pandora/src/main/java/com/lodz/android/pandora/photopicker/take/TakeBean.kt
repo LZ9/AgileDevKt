@@ -2,7 +2,7 @@ package com.lodz.android.pandora.photopicker.take
 
 import androidx.annotation.ColorRes
 import com.lodz.android.pandora.photopicker.contract.OnPhotoLoader
-import com.lodz.android.pandora.photopicker.contract.picker.OnPhotoPickerListener
+import com.lodz.android.pandora.photopicker.contract.take.OnPhotoTakeListener
 
 /**
  * 拍照数据
@@ -13,7 +13,7 @@ internal class TakeBean {
     /** 预览图加载接口 */
     var previewLoader: OnPhotoLoader<String>? = null
     /** 照片回调接口 */
-    var photoPickerListener: OnPhotoPickerListener? = null
+    var photoTakeListener: OnPhotoTakeListener? = null
     /** 拍照保存地址 */
     var cameraSavePath = ""
     /** 7.0的FileProvider名字 */
@@ -32,6 +32,6 @@ internal class TakeBean {
 
     fun clear() {
         previewLoader = null
-        photoPickerListener = null
+        photoTakeListener = null
     }
 }

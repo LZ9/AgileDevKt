@@ -141,9 +141,7 @@ internal class TakePhotoActivity : AbsActivity() {
 
     /** 处理确认照片 */
     private fun handleConfirm() {
-        val list = ArrayList<String>()
-        list.add(mTempFilePath)
-        mTakeBean?.photoPickerListener?.onPickerSelected(list)
+        mTakeBean?.photoTakeListener?.onTake(mTempFilePath)
         finish()
     }
 

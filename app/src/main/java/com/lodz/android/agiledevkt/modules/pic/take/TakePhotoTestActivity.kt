@@ -65,9 +65,9 @@ class TakePhotoTestActivity : BaseActivity() {
                     .setImmediately(true)
                     .setCameraSavePath(FileManager.getCacheFolderPath())
                     .setAuthority("com.lodz.android.agiledevkt.fileprovider")
-                    .setOnPhotoPickerListener { photos ->
-                        if (photos.isNotEmpty()) {
-                            mResultTv.text = photos.get(0)
+                    .setOnPhotoTakeListener { photo ->
+                        if (photo.isNotEmpty()) {
+                            mResultTv.text = photo
                         }
                     }
                     .build()
@@ -77,18 +77,18 @@ class TakePhotoTestActivity : BaseActivity() {
         mConfirmPhotoBtn.setOnClickListener {
             mResultTv.text = ""
             TakePhotoManager.create()
-                    .setStatusBarColor(R.color.color_d43450)
-                    .setNavigationBarColor(R.color.color_d43450)
-                    .setPreviewBgColor(R.color.white)
+                    .setStatusBarColor(R.color.black)
+                    .setNavigationBarColor(R.color.black)
+                    .setPreviewBgColor(R.color.black)
                     .setImmediately(false)
                     .setCameraSavePath(FileManager.getCacheFolderPath())
                     .setAuthority("com.lodz.android.agiledevkt.fileprovider")
                     .setPreviewImgLoader { context, source, imageView ->
                         ImageLoader.create(context).loadFilePath(source).setFitCenter().into(imageView)
                     }
-                    .setOnPhotoPickerListener { photos ->
-                        if (photos.isNotEmpty()) {
-                            mResultTv.text = photos.get(0)
+                    .setOnPhotoTakeListener { photo ->
+                        if (photo.isNotEmpty()) {
+                            mResultTv.text = photo
                         }
                     }
                     .build()
