@@ -163,5 +163,5 @@ textChanges(textView: TextView, duration: Long = 500, unit: TimeUnit = TimeUnit.
 ```
 
 ## 扩展
-- [返回目录](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/readme_pandora.md)
-- [回到顶部]()
+- [返回目录](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/rx/pandora_rx.md)
+- [回到顶部](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/rx/pandora_rx_utils.md#rx帮助类)
