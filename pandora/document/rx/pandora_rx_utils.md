@@ -1,4 +1,4 @@
-# RxJava封装
+# Rx帮助类
 我在RxUtils里对一些常用的RxJava方法进行了封装，大家可以通过静态调用来使用订阅。
 使用方法可以参考[RxJavaTestActivity.kt](https://github.com/LZ9/AgileDevKt/blob/master/app/src/main/java/com/lodz/android/agiledevkt/modules/rxjava/RxJavaTestActivity.kt)。
 
@@ -164,4 +164,4 @@ textChanges(textView: TextView, duration: Long = 500, unit: TimeUnit = TimeUnit.
 
 ## 扩展
 - [返回目录](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/readme_pandora.md)
-- [回到顶部](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/pandora_rxjava.md#rxjava封装)
+- [回到顶部]()
