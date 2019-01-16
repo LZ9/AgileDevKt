@@ -1,5 +1,6 @@
 package com.lodz.android.pandora.rx.utils
 
+import io.reactivex.ObservableEmitter
 import io.reactivex.ObservableOnSubscribe
 
 /**
@@ -15,4 +16,22 @@ abstract class RxObservableOnSubscribe<T>(vararg args: Any?) : ObservableOnSubsc
     }
 
     fun getArgs(): Array<out Any?> = mArgs
+
+    fun doNext(emitter: ObservableEmitter<T>, t: T) {
+        if (!emitter.isDisposed) {
+            emitter.onNext(t)
+        }
+    }
+
+    fun doError(emitter: ObservableEmitter<T>, error: Throwable) {
+        if (!emitter.isDisposed) {
+            emitter.onError(error)
+        }
+    }
+
+    fun doComplete(emitter: ObservableEmitter<T>) {
+        if (!emitter.isDisposed) {
+            emitter.onComplete()
+        }
+    }
 }

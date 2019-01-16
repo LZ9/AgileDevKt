@@ -39,15 +39,6 @@ abstract class ProgressSubscriber<T> : RxSubscriber<T>() {
     /** 加载框 */
     var mProgressDialog: AlertDialog? = null
 
-    /** 创建默认加载框 */
-    fun create(context: Context): ProgressSubscriber<T> = create(context, "", true)
-
-    /** 创建加载框，配置取消参数[cancelable] */
-    fun create(context: Context, cancelable: Boolean): ProgressSubscriber<T> = create(context, "", cancelable)
-
-    /** 创建加载框，配置提示文字资源[strResId]和取消参数[cancelable] */
-    fun create(context: Context, @StringRes strResId: Int, cancelable: Boolean): ProgressSubscriber<T> = create(context, context.getString(strResId), cancelable)
-
     /** 创建自定义加载框[dialog] */
     fun create(dialog: AlertDialog): ProgressSubscriber<T> {
         try {
@@ -61,10 +52,14 @@ abstract class ProgressSubscriber<T> : RxSubscriber<T>() {
         return this
     }
 
+    /** 创建加载框，配置提示文字资源[strResId]和取消参数[cancelable] */
+    fun create(context: Context, @StringRes strResId: Int, cancelable: Boolean = false, canceledOnTouchOutside: Boolean = false): ProgressSubscriber<T> =
+            create(context, context.getString(strResId), cancelable, canceledOnTouchOutside)
+
     /** 创建加载框，配置提示文字[msg]和取消参数[cancelable] */
-    fun create(context: Context, msg: String, cancelable: Boolean): ProgressSubscriber<T> {
+    fun create(context: Context, msg: String, cancelable: Boolean = false, canceledOnTouchOutside: Boolean = false): ProgressSubscriber<T> {
         try {
-            mProgressDialog = getProgressDialog(context, msg, cancelable)
+            mProgressDialog = getProgressDialog(context, msg, cancelable, canceledOnTouchOutside)
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -73,7 +68,7 @@ abstract class ProgressSubscriber<T> : RxSubscriber<T>() {
 
     /** 获取一个加载框 */
     @SuppressLint("InflateParams")
-    private fun getProgressDialog(context: Context, msg: String, cancelable: Boolean): AlertDialog {
+    private fun getProgressDialog(context: Context, msg: String, cancelable: Boolean, canceledOnTouchOutside: Boolean): AlertDialog {
         val view = LayoutInflater.from(context).inflate(R.layout.pandora_view_progress, null)
         val progressDialog = AlertDialog.Builder(context, R.style.ProgressStyle)
                 .setView(view)
@@ -83,7 +78,7 @@ abstract class ProgressSubscriber<T> : RxSubscriber<T>() {
             msgTv.visibility = View.VISIBLE
             msgTv.text = msg
         }
-        progressDialog.setCanceledOnTouchOutside(false)
+        progressDialog.setCanceledOnTouchOutside(canceledOnTouchOutside)
         progressDialog.setCancelable(cancelable)
         progressDialog.setOnCancelListener {
             cancelDialog()

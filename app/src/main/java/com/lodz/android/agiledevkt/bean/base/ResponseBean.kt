@@ -11,6 +11,14 @@ open class ResponseBean<T> : ResponseStatus {
     companion object {
         const val SUCCESS = 1
         const val FAIL = 2
+
+        fun <T> createFail(): ResponseBean<T> = ResponseBean()
+
+        fun <T> createSuccess(): ResponseBean<T> {
+            val responseBean = ResponseBean<T>()
+            responseBean.code = SUCCESS
+            return responseBean
+        }
     }
 
     /** 状态 */

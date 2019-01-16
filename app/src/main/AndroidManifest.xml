@@ -542,6 +542,13 @@
 
         </activity>
 
+        <activity
+            android:name=".modules.rxjava.observable.RxObservableActivity"
+            android:label="RxObservable订阅测试"
+            android:screenOrientation="portrait">
+
+        </activity>
+
     </application>
 
 </manifest>

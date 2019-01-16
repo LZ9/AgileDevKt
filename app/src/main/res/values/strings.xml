@@ -556,4 +556,13 @@
     <string name="rx_utils_pic_path">路径图片</string>
     <string name="rx_utils_pic_base64">Base64图片</string>
     <string name="rx_utils_pic_coding">编码中</string>
+    <string name="rx_fail">订阅失败</string>
+    <string name="rx_cancelable">返回键关闭</string>
+    <string name="rx_canceled_outside">空白处关闭</string>
+    <string name="rx_cancelable_open_tips">请先打开返回键关闭开关</string>
+    <string name="rx_observable_original">原始订阅接口</string>
+    <string name="rx_observable_base">基础封装</string>
+    <string name="rx_observable_rx">响应数据封装</string>
+    <string name="rx_observable_progress">进度条封装</string>
+
 </resources>
