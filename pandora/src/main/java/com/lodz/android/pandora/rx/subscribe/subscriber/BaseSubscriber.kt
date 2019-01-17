@@ -19,7 +19,7 @@ abstract class BaseSubscriber<T> : Subscriber<T> {
     final override fun onSubscribe(s: Subscription) {
         mSubscription = s
         if (isAutoSubscribe()) {
-            request(1)
+            request(Long.MAX_VALUE)
         }
         onBaseSubscribe(s)
     }
@@ -52,7 +52,7 @@ abstract class BaseSubscriber<T> : Subscriber<T> {
         onBaseComplete()
     }
 
-    fun getSubscription() = mSubscription
+    fun getSubscription(): Subscription? = mSubscription
 
     fun clearSubscription() {
         mSubscription = null
@@ -68,9 +68,7 @@ abstract class BaseSubscriber<T> : Subscriber<T> {
 
     /** 请求订阅  */
     fun request(n: Long) {
-        if (mSubscription != null) {
-            mSubscription!!.request(n)
-        }
+        mSubscription?.request(n)
     }
 
     open fun onBaseSubscribe(s: Subscription) {}
@@ -84,7 +82,7 @@ abstract class BaseSubscriber<T> : Subscriber<T> {
     open fun onCancel() {}
 
     /** 是否自动订阅，默认是，否的时候需要自己调用request()方法订阅 */
-    open fun isAutoSubscribe() = true
+    open fun isAutoSubscribe(): Boolean = true
 
     companion object {
         /** 创建空调用 */

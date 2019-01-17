@@ -12,6 +12,7 @@ import androidx.annotation.RequiresPermission
 import androidx.core.app.ActivityCompat
 import java.io.BufferedReader
 import java.io.InputStreamReader
+import java.nio.charset.StandardCharsets
 import java.util.*
 
 /**
@@ -162,7 +163,7 @@ fun Context.setWifiEnabled(enabled: Boolean) {
 
 /** 获取Assets下的文件内容 */
 fun Context.getAssetsFileContent(fileName: String): String {
-    InputStreamReader(assets.open(fileName), "UTF-8").use { isr: InputStreamReader ->
+    InputStreamReader(assets.open(fileName), StandardCharsets.UTF_8).use { isr: InputStreamReader ->
         BufferedReader(isr).use { br: BufferedReader ->
             var line: String?
             val builder = StringBuilder()
