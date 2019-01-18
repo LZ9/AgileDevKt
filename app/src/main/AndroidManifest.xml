@@ -549,6 +549,14 @@
 
         </activity>
 
+        <activity
+            android:name=".modules.rxjava.flowable.RxFlowableActivity"
+            android:label="RxFlowable订阅测试"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+
     </application>
 
 </manifest>

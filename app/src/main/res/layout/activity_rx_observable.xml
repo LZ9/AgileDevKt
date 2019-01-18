@@ -33,30 +33,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Switch
-            android:id="@+id/cancelable_switch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:switchPadding="5dp"
-            android:text="@string/rx_cancelable" />
-
-        <Switch
-            android:id="@+id/canceled_outside_switch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:checked="false"
-            android:switchPadding="5dp"
-            android:text="@string/rx_canceled_outside" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/original_btn"
             style="?android:attr/borderlessButtonStyle"
@@ -79,30 +55,43 @@
 
     </LinearLayout>
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/rx_btn"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/rx_observable_rx"
+        android:textColor="@color/white" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/rx_btn"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_width="0dp"
+        <Switch
+            android:id="@+id/cancelable_switch"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
-            android:layout_weight="1"
-            android:text="@string/rx_observable_rx"
-            android:textColor="@color/white" />
+            android:checked="true"
+            android:switchPadding="5dp"
+            android:text="@string/rx_cancelable" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/progress_btn"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_width="0dp"
+        <Switch
+            android:id="@+id/canceled_outside_switch"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_weight="1"
-            android:text="@string/rx_observable_progress"
-            android:textColor="@color/white" />
+            android:layout_marginStart="10dp"
+            android:checked="false"
+            android:switchPadding="5dp"
+            android:text="@string/rx_canceled_outside" />
+
     </LinearLayout>
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/progress_btn"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/rx_observable_progress"
+        android:textColor="@color/white" />
 </LinearLayout>

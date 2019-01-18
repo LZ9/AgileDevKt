@@ -53,7 +53,7 @@ class RxObservableActivity : BaseActivity() {
     /** 结果 */
     private val mResultTv by bindView<TextView>(R.id.result_tv)
 
-    override fun getLayoutId(): Int = R.layout.activity_observable
+    override fun getLayoutId(): Int = R.layout.activity_rx_observable
 
     override fun findViews(savedInstanceState: Bundle?) {
         super.findViews(savedInstanceState)

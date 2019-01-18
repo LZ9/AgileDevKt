@@ -556,13 +556,25 @@
     <string name="rx_utils_pic_path">路径图片</string>
     <string name="rx_utils_pic_base64">Base64图片</string>
     <string name="rx_utils_pic_coding">编码中</string>
+    <string name="rx_backpressure">背压测试</string>
     <string name="rx_fail">订阅失败</string>
     <string name="rx_cancelable">返回键关闭</string>
     <string name="rx_canceled_outside">空白处关闭</string>
+    <string name="rx_auto_request">自动拉取</string>
     <string name="rx_cancelable_open_tips">请先打开返回键关闭开关</string>
     <string name="rx_observable_original">原始订阅接口</string>
     <string name="rx_observable_base">基础封装</string>
     <string name="rx_observable_rx">响应数据封装</string>
     <string name="rx_observable_progress">进度条封装</string>
-
+    <string name="rx_flowable_bp">背压类型：</string>
+    <string name="rx_flowable_bp_missing">MISSING</string>
+    <string name="rx_flowable_bp_error">ERROR</string>
+    <string name="rx_flowable_bp_buffer">BUFFER</string>
+    <string name="rx_flowable_bp_drop">DROP</string>
+    <string name="rx_flowable_bp_latest">LATEST</string>
+    <string name="rx_flowable_stop">停止订阅</string>
+    <string name="rx_flowable_request">拉取数据</string>
+    <string name="rx_flowable_bp_test">背压测试</string>
+    <string name="rx_flowable_request_test">数据拉取测试</string>
+    <string name="rx_flowable_bp_close_tips">我在数据发送内部进行了限流控制，关闭背压测试开关将启用数据上游限流，无法观察到背压效果</string>
 </resources>
