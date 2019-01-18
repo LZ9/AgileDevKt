@@ -7,13 +7,17 @@ import android.widget.*
 import androidx.core.widget.NestedScrollView
 import com.google.android.material.button.MaterialButton
 import com.lodz.android.agiledevkt.R
+import com.lodz.android.agiledevkt.bean.base.ResponseBean
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.corekt.anko.bindView
+import com.lodz.android.corekt.anko.then
 import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.corekt.utils.UiHandler
 import com.lodz.android.corekt.utils.toastShort
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.rx.subscribe.subscriber.BaseSubscriber
+import com.lodz.android.pandora.rx.subscribe.subscriber.ProgressSubscriber
+import com.lodz.android.pandora.rx.subscribe.subscriber.RxSubscriber
 import com.lodz.android.pandora.rx.utils.RxFlowableOnSubscribe
 import com.lodz.android.pandora.rx.utils.RxUtils
 import io.reactivex.BackpressureStrategy
@@ -196,14 +200,39 @@ class RxFlowableActivity : BaseActivity() {
         // 响应数据封装
         mRxBtn.setOnClickListener {
             cleanLog()
+            createFlowable(false)
+                    .compose(RxUtils.ioToMainFlowable())
+                    .compose(bindDestroyEvent())
+                    .subscribe(object :RxSubscriber<ResponseBean<String>>(){
+                        override fun onRxNext(any: ResponseBean<String>) {
+                            printLog("onRxNext num : ${any.data}")
+                        }
+
+                        override fun onRxError(e: Throwable, isNetwork: Boolean) {
+                            printLog("onRxError message : ${RxUtils.getExceptionTips(e, isNetwork, "create fail")}")
+                        }
+                    })
         }
 
         // 进度条封装
         mProgressBtn.setOnClickListener {
             cleanLog()
+            createFlowable(true)
+                    .compose(RxUtils.ioToMainFlowable())
+                    .compose(bindDestroyEvent())
+                    .subscribe(object : ProgressSubscriber<ResponseBean<String>>() {
+                        override fun onPgNext(any: ResponseBean<String>) {
+                            printLog("onPgNext num : ${any.data}")
+                        }
+
+                        override fun onPgError(e: Throwable, isNetwork: Boolean) {
+                            printLog("onPgError message : ${RxUtils.getExceptionTips(e, isNetwork, "create fail")}")
+                        }
+                    }.create(getContext(), "loading", mCancelableSwitch.isChecked, mCanceledOutsideSwitch.isChecked))
         }
     }
 
+    /** 创建自定义背压Flowable */
     private fun createBpFlowable(): Flowable<String> {
         return Flowable.create(object : RxFlowableOnSubscribe<String>("test.txt") {
             override fun subscribe(emitter: FlowableEmitter<String>) {
@@ -246,6 +275,35 @@ class RxFlowableActivity : BaseActivity() {
                 }
             }
         }, mBackpressureType)
+    }
+
+    /** 创建自定义Flowable，[isDelay]是否延时 */
+    private fun createFlowable(isDelay: Boolean): Flowable<ResponseBean<String>> {
+        return Flowable.create(object :RxFlowableOnSubscribe<ResponseBean<String>>(isDelay.then { 3 } ?: 0){
+            override fun subscribe(emitter: FlowableEmitter<ResponseBean<String>>) {
+                val delayTime = getArgs()[0] as Int
+                if (emitter.isCancelled){
+                    return
+                }
+                val responseBean: ResponseBean<String> = if (mFailSwitch.isChecked) {
+                    val bean: ResponseBean<String> = ResponseBean.createFail()
+                    bean.msg = "data empty"
+                    bean
+                } else {
+                    val bean: ResponseBean<String> = ResponseBean.createSuccess()
+                    bean.data = "i am data"
+                    bean
+                }
+                try {
+                    Thread.sleep(delayTime * 1000L)
+                    doNext(emitter, responseBean)
+                    doComplete(emitter)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    doError(emitter, e)
+                }
+            }
+        }, BackpressureStrategy.BUFFER)
     }
 
     override fun initData() {
