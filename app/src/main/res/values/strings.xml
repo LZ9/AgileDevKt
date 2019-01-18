@@ -577,4 +577,8 @@
     <string name="rx_flowable_bp_test">背压测试</string>
     <string name="rx_flowable_request_test">数据拉取测试</string>
     <string name="rx_flowable_bp_close_tips">我在数据发送内部进行了限流控制，关闭背压测试开关将启用数据上游限流，无法观察到背压效果</string>
+    <string name="rx_single_to_observable">Single转Observable订阅</string>
+
+
+
 </resources>

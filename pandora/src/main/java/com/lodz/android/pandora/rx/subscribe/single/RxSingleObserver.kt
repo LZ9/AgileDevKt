@@ -1,4 +1,4 @@
-package com.lodz.android.pandora.rx.subscribe.observer
+package com.lodz.android.pandora.rx.subscribe.single
 
 import com.lodz.android.pandora.rx.exception.DataException
 import com.lodz.android.pandora.rx.exception.NetworkException
@@ -7,34 +7,29 @@ import com.lodz.android.pandora.rx.status.ResponseStatus
 import io.reactivex.disposables.Disposable
 
 /**
- * 网络接口使用的订阅者（无背压），主要对接口进行判断处理
- * Created by zhouL on 2018/7/5.
+ * 网络接口使用的订阅者，主要对接口进行判断处理
+ * Created by zhouL on 2019/1/18.
  */
-abstract class RxObserver<T> : BaseObserver<T>() {
+abstract class RxSingleObserver<T> : BaseSingleObserver<T>() {
 
     final override fun onBaseSubscribe(d: Disposable) {
         super.onBaseSubscribe(d)
         onRxSubscribe(d)
     }
 
-    final override fun onBaseComplete() {
-        super.onBaseComplete()
-        onRxComplete()
+    final override fun onBaseSuccess(any: T) {
+        try {
+            checkError(any)
+            onRxSuccess(any)
+        } catch (e: Exception) {
+            onError(e)
+        }
     }
 
     final override fun onBaseError(e: Throwable) {
         val exception = RxExceptionFactory.create(e)
         onRxError(exception, exception is NetworkException)
         onErrorEnd()
-    }
-
-    final override fun onBaseNext(any: T) {
-        try {
-            checkError(any)
-            onRxNext(any)
-        } catch (e: Exception) {
-            onError(e)
-        }
     }
 
     /** 核对数据 */
@@ -53,11 +48,9 @@ abstract class RxObserver<T> : BaseObserver<T>() {
 
     open fun onRxSubscribe(d: Disposable) {}
 
-    abstract fun onRxNext(any: T)
+    abstract fun onRxSuccess(any: T)
 
     abstract fun onRxError(e: Throwable, isNetwork: Boolean)
-
-    open fun onRxComplete() {}
 
     /** onError执行完后会调用该方法 */
     open fun onErrorEnd() {}

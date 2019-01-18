@@ -29,7 +29,7 @@ abstract class BaseSubscriber<T> : Subscriber<T> {
     }
 
     final override fun onError(t: Throwable?) {
-        if (t == null){
+        if (t == null) {
             return
         }
         t.printStackTrace()
@@ -64,7 +64,7 @@ abstract class BaseSubscriber<T> : Subscriber<T> {
     /** 停止订阅  */
     fun cancel() {
         if (mSubscription != null) {
-            mSubscription!!.cancel()
+            mSubscription?.cancel()
             onCancel()
         }
     }
@@ -89,13 +89,11 @@ abstract class BaseSubscriber<T> : Subscriber<T> {
 
     companion object {
         /** 创建空调用 */
-        fun <T> empty(): Subscriber<T> {
-            return object : Subscriber<T> {
-                override fun onComplete() {}
-                override fun onSubscribe(s: Subscription?) {}
-                override fun onNext(t: T) {}
-                override fun onError(t: Throwable?) {}
-            }
+        fun <T> empty(): Subscriber<T> = object : Subscriber<T> {
+            override fun onComplete() {}
+            override fun onSubscribe(s: Subscription?) {}
+            override fun onNext(t: T) {}
+            override fun onError(t: Throwable?) {}
         }
     }
 }

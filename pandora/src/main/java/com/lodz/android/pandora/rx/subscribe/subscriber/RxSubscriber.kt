@@ -13,10 +13,12 @@ import org.reactivestreams.Subscription
 abstract class RxSubscriber<T> : BaseSubscriber<T>() {
 
     final override fun onBaseSubscribe(s: Subscription?) {
+        super.onBaseSubscribe(s)
         onRxSubscribe(s)
     }
 
     final override fun onBaseComplete() {
+        super.onBaseComplete()
         onRxComplete()
     }
 

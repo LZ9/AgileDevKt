@@ -1,4 +1,4 @@
-package com.lodz.android.pandora.rx.subscribe.observer
+package com.lodz.android.pandora.rx.subscribe.single
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -13,10 +13,10 @@ import com.lodz.android.pandora.R
 import io.reactivex.disposables.Disposable
 
 /**
- * 展示加载框的订阅者（无背压）
- * Created by zhouL on 2018/7/5.
+ * 展示加载框的订阅者
+ * Created by zhouL on 2019/1/18.
  */
-abstract class ProgressObserver<T> : RxObserver<T>() {
+abstract class ProgressSingleObserver<T> : RxSingleObserver<T>() {
 
     final override fun onRxSubscribe(d: Disposable) {
         super.onRxSubscribe(d)
@@ -24,25 +24,21 @@ abstract class ProgressObserver<T> : RxObserver<T>() {
         onPgSubscribe(d)
     }
 
-    final override fun onRxNext(any: T) {
-        onPgNext(any)
+    final override fun onRxSuccess(any: T) {
+        onPgSuccess(any)
+        dismissProgress()
     }
 
     final override fun onRxError(e: Throwable, isNetwork: Boolean) {
         onPgError(e, isNetwork)
-    }
-
-    final override fun onRxComplete() {
-        super.onRxComplete()
         dismissProgress()
-        onPgComplete()
     }
 
     /** 加载框 */
     private var mProgressDialog: AlertDialog? = null
 
     /** 创建自定义加载框[dialog] */
-    fun create(dialog: AlertDialog): ProgressObserver<T> {
+    fun create(dialog: AlertDialog): ProgressSingleObserver<T> {
         try {
             mProgressDialog = dialog
             mProgressDialog?.setOnCancelListener {
@@ -55,11 +51,11 @@ abstract class ProgressObserver<T> : RxObserver<T>() {
     }
 
     /** 创建加载框，配置提示文字资源[strResId]和取消参数[cancelable] */
-    fun create(context: Context, @StringRes strResId: Int, cancelable: Boolean = true, canceledOnTouchOutside: Boolean = false): ProgressObserver<T> =
+    fun create(context: Context, @StringRes strResId: Int, cancelable: Boolean = true, canceledOnTouchOutside: Boolean = false): ProgressSingleObserver<T> =
             create(context, context.getString(strResId), cancelable, canceledOnTouchOutside)
 
     /** 创建加载框，配置提示文字[msg]和返回键关闭[cancelable]默认true，点击空白关闭[canceledOnTouchOutside]默认false */
-    fun create(context: Context, msg: String, cancelable: Boolean = true, canceledOnTouchOutside: Boolean = false): ProgressObserver<T> {
+    fun create(context: Context, msg: String, cancelable: Boolean = true, canceledOnTouchOutside: Boolean = false): ProgressSingleObserver<T> {
         try {
             mProgressDialog = getProgressDialog(context, msg, cancelable, canceledOnTouchOutside)
         } catch (e: Exception) {
@@ -134,11 +130,9 @@ abstract class ProgressObserver<T> : RxObserver<T>() {
 
     open fun onPgSubscribe(d: Disposable) {}
 
-    abstract fun onPgNext(any: T)
+    abstract fun onPgSuccess(any: T)
 
     abstract fun onPgError(e: Throwable, isNetwork: Boolean)
-
-    open fun onPgComplete() {}
 
     /** 用户取消回调 */
     open fun onPgCancel() {}

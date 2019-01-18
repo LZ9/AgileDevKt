@@ -1,16 +1,16 @@
-package com.lodz.android.pandora.rx.subscribe.observer
+package com.lodz.android.pandora.rx.subscribe.single
 
 import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.corekt.utils.getMetaData
 import com.lodz.android.pandora.base.application.BaseApplication
-import io.reactivex.Observer
+import io.reactivex.SingleObserver
 import io.reactivex.disposables.Disposable
 
 /**
- * 基类订阅者（无背压）
- * Created by zhouL on 2018/7/5.
+ * 基类订阅者
+ * Created by zhouL on 2019/1/18.
  */
-abstract class BaseObserver<T> : Observer<T> {
+abstract class BaseSingleObserver<T> : SingleObserver<T> {
 
     private val ERROR_TAG = "error_tag"
 
@@ -21,14 +21,14 @@ abstract class BaseObserver<T> : Observer<T> {
         onBaseSubscribe(d)
     }
 
-    final override fun onNext(any: T) {
-        onBaseNext(any)
+    final override fun onSuccess(t: T) {
+        onBaseSuccess(t)
     }
 
-    final override fun onError(t: Throwable) {
-        t.printStackTrace()
-        printTagLog(t)
-        onBaseError(t)
+    final override fun onError(e: Throwable) {
+        e.printStackTrace()
+        printTagLog(e)
+        onBaseError(e)
     }
 
     /** 打印标签日志 */
@@ -43,10 +43,6 @@ abstract class BaseObserver<T> : Observer<T> {
                 PrintLog.e(tag, t.toString(), t)
             }
         }
-    }
-
-    final override fun onComplete() {
-        onBaseComplete()
     }
 
     fun getDisposable(): Disposable? {
@@ -67,20 +63,18 @@ abstract class BaseObserver<T> : Observer<T> {
 
     open fun onBaseSubscribe(d: Disposable) {}
 
-    abstract fun onBaseNext(any: T)
+    abstract fun onBaseSuccess(any: T)
 
     abstract fun onBaseError(e: Throwable)
 
-    open fun onBaseComplete() {}
     /** 取消订阅时回调 */
     open fun onDispose() {}
 
     companion object {
         /** 创建空调用 */
-        fun <T> empty(): Observer<T> = object : Observer<T> {
-            override fun onComplete() {}
+        fun <T> empty(): SingleObserver<T> = object : SingleObserver<T> {
+            override fun onSuccess(t: T) {}
             override fun onSubscribe(d: Disposable) {}
-            override fun onNext(t: T) {}
             override fun onError(e: Throwable) {}
         }
     }

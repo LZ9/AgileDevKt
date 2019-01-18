@@ -556,6 +556,12 @@
 
         </activity>
 
+        <activity
+            android:name=".modules.rxjava.single.RxSingleActivity"
+            android:label="RxSingle订阅测试"
+            android:screenOrientation="portrait">
+
+        </activity>
 
     </application>
 

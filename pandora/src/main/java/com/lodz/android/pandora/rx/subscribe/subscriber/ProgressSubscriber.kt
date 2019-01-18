@@ -19,6 +19,7 @@ import org.reactivestreams.Subscription
 abstract class ProgressSubscriber<T> : RxSubscriber<T>() {
 
     final override fun onRxSubscribe(s: Subscription?) {
+        super.onRxSubscribe(s)
         showProgress()
         onPgSubscribe(s)
     }
@@ -32,6 +33,7 @@ abstract class ProgressSubscriber<T> : RxSubscriber<T>() {
     }
 
     final override fun onRxComplete() {
+        super.onRxComplete()
         dismissProgress()
         onPgComplete()
     }
@@ -43,7 +45,7 @@ abstract class ProgressSubscriber<T> : RxSubscriber<T>() {
     fun create(dialog: AlertDialog): ProgressSubscriber<T> {
         try {
             mProgressDialog = dialog
-            mProgressDialog!!.setOnCancelListener {
+            mProgressDialog?.setOnCancelListener {
                 cancelDialog()
             }
         } catch (e: Exception) {
@@ -101,9 +103,7 @@ abstract class ProgressSubscriber<T> : RxSubscriber<T>() {
     private fun showProgress() {
         UiHandler.post(Runnable {
             try {
-                if (mProgressDialog != null) {
-                    mProgressDialog!!.show()
-                }
+                mProgressDialog?.show()
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -114,10 +114,8 @@ abstract class ProgressSubscriber<T> : RxSubscriber<T>() {
     private fun dismissProgress() {
         UiHandler.post(Runnable {
             try {
-                if (mProgressDialog != null) {
-                    mProgressDialog!!.dismiss()
-                    mProgressDialog = null
-                }
+                mProgressDialog?.dismiss()
+                mProgressDialog = null
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -125,10 +123,12 @@ abstract class ProgressSubscriber<T> : RxSubscriber<T>() {
     }
 
     override fun onErrorEnd() {// 抛异常关闭
+        super.onErrorEnd()
         dismissProgress()
     }
 
     override fun onCancel() {// 开发者关闭
+        super.onCancel()
         dismissProgress()
     }
 
