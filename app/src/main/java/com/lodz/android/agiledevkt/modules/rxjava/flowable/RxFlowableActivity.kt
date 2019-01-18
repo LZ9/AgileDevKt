@@ -19,6 +19,7 @@ import com.lodz.android.pandora.rx.utils.RxUtils
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.FlowableEmitter
+import org.reactivestreams.Subscriber
 import org.reactivestreams.Subscription
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -73,6 +74,8 @@ class RxFlowableActivity : BaseActivity() {
     private var mBackpressureType = BackpressureStrategy.ERROR
     /** 背压订阅器 */
     private var mBpSubscription: Subscription? = null
+    /** 数据拉取订阅器 */
+    private var mDataSubscription: Subscription? = null
 
     override fun getLayoutId(): Int = R.layout.activity_rx_flowable
 
@@ -121,26 +124,25 @@ class RxFlowableActivity : BaseActivity() {
             createBpFlowable()
                     .compose(RxUtils.ioToMainFlowable())
                     .compose(bindDestroyEvent())
-                    .subscribe(object : BaseSubscriber<String>() {
-                        override fun onBaseSubscribe(s: Subscription) {
-                            super.onBaseSubscribe(s)
+                    .subscribe(object : Subscriber<String> {
+                        override fun onSubscribe(s: Subscription?) {
                             mBpSubscription = s
-                            request(1)
+                            s?.request(1)
                         }
 
-                        override fun onBaseNext(any: String) {
-                            printLog(any)
+                        override fun onNext(str: String?) {
+                            printLog(str ?: "")
                             UiHandler.postDelayed(Runnable {
-                                getSubscription()?.request(1)
+                                mBpSubscription?.request(1)
                             }, 100)
                         }
 
-                        override fun onBaseError(e: Throwable) {
-                            printLog("异常：${e.message}")
+                        override fun onError(t: Throwable?) {
+                            printLog("异常：${t?.message}")
                         }
 
-                        override fun isAutoSubscribe(): Boolean {
-                            return false
+                        override fun onComplete() {
+
                         }
                     })
         }
@@ -152,8 +154,35 @@ class RxFlowableActivity : BaseActivity() {
 
         // 数据拉取按钮
         mRequestBtn.setOnClickListener {
+            mDataSubscription?.request(Long.MAX_VALUE)
+            mDataSubscription = null
+        }
 
+        // 数据拉取测试
+        mRequestTestBtn.setOnClickListener {
+            cleanLog()
+            val list = arrayListOf(4, 54, 8, 7, 4, 64, 187, 6, 314, 34, 6, 87)
+            Flowable.fromIterable(list)
+                    .onBackpressureBuffer()
+                    .compose(RxUtils.ioToMainFlowable())
+                    .compose(bindDestroyEvent())
+                    .subscribe(object :BaseSubscriber<Int>(){
+                        override fun onBaseSubscribe(s: Subscription?) {
+                            super.onBaseSubscribe(s)
+                            mDataSubscription = s
+                        }
+                        override fun onBaseNext(any: Int) {
+                            printLog("num : $any")
+                        }
 
+                        override fun onBaseError(e: Throwable) {
+                            printLog("异常：${e.message}")
+                        }
+
+                        override fun isAutoSubscribe(): Boolean {
+                            return mAutoRequestSwitch.isChecked
+                        }
+                    })
         }
 
         // 返回键关闭开关
@@ -162,11 +191,6 @@ class RxFlowableActivity : BaseActivity() {
                 mCanceledOutsideSwitch.isChecked = false
             }
             mCanceledOutsideSwitch.isEnabled = isChecked
-        }
-
-        // 数据拉取测试
-        mRequestTestBtn.setOnClickListener {
-
         }
 
         // 响应数据封装
@@ -237,8 +261,11 @@ class RxFlowableActivity : BaseActivity() {
 
     /** 打印日志 */
     private fun printLog(text: String) {
-        mScrollView
-        val log = "${mResultTv.text}\n$text"
+        val log = if (mResultTv.text.isEmpty()){
+            text
+        }else{
+            "${mResultTv.text}\n$text"
+        }
         mResultTv.text = log
         UiHandler.postDelayed(Runnable {
             mScrollView.fullScroll(ScrollView.FOCUS_DOWN)

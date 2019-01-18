@@ -16,7 +16,7 @@ abstract class BaseSubscriber<T> : Subscriber<T> {
 
     private var mSubscription: Subscription? = null
 
-    final override fun onSubscribe(s: Subscription) {
+    override fun onSubscribe(s: Subscription?) {
         mSubscription = s
         if (isAutoSubscribe()) {
             request(Long.MAX_VALUE)
@@ -28,7 +28,10 @@ abstract class BaseSubscriber<T> : Subscriber<T> {
         onBaseNext(any)
     }
 
-    final override fun onError(t: Throwable) {
+    final override fun onError(t: Throwable?) {
+        if (t == null){
+            return
+        }
         t.printStackTrace()
         printTagLog(t)
         onBaseError(t)
@@ -71,7 +74,7 @@ abstract class BaseSubscriber<T> : Subscriber<T> {
         mSubscription?.request(n)
     }
 
-    open fun onBaseSubscribe(s: Subscription) {}
+    open fun onBaseSubscribe(s: Subscription?) {}
 
     abstract fun onBaseNext(any: T)
 

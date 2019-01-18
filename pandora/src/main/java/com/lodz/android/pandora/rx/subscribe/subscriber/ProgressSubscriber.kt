@@ -18,7 +18,7 @@ import org.reactivestreams.Subscription
  */
 abstract class ProgressSubscriber<T> : RxSubscriber<T>() {
 
-    final override fun onRxSubscribe(s: Subscription) {
+    final override fun onRxSubscribe(s: Subscription?) {
         showProgress()
         onPgSubscribe(s)
     }
@@ -132,7 +132,7 @@ abstract class ProgressSubscriber<T> : RxSubscriber<T>() {
         dismissProgress()
     }
 
-    open fun onPgSubscribe(s: Subscription) {}
+    open fun onPgSubscribe(s: Subscription?) {}
 
     abstract fun onPgNext(any: T)
 

@@ -12,7 +12,7 @@ import org.reactivestreams.Subscription
  */
 abstract class RxSubscriber<T> : BaseSubscriber<T>() {
 
-    final override fun onBaseSubscribe(s: Subscription) {
+    final override fun onBaseSubscribe(s: Subscription?) {
         onRxSubscribe(s)
     }
 
@@ -49,7 +49,7 @@ abstract class RxSubscriber<T> : BaseSubscriber<T>() {
         }
     }
 
-    open fun onRxSubscribe(s: Subscription) {}
+    open fun onRxSubscribe(s: Subscription?) {}
 
     abstract fun onRxNext(any: T)
 
