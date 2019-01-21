@@ -28,7 +28,7 @@ import io.reactivex.disposables.Disposable
 
 /**
  * RxSingle订阅测试
- * 只发射单个数据或错误事件
+ * 只发射1个数据或错误事件，发送结束即终止
  * Created by zhouL on 2019/1/18.
  */
 class RxSingleActivity : BaseActivity() {

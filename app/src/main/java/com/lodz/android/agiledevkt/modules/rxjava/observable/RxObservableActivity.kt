@@ -3,14 +3,17 @@ package com.lodz.android.agiledevkt.modules.rxjava.observable
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ScrollView
 import android.widget.Switch
 import android.widget.TextView
+import androidx.core.widget.NestedScrollView
 import com.google.android.material.button.MaterialButton
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.base.ResponseBean
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.then
+import com.lodz.android.corekt.utils.UiHandler
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
 import com.lodz.android.pandora.rx.subscribe.observer.ProgressObserver
@@ -24,7 +27,7 @@ import io.reactivex.disposables.Disposable
 
 /**
  * RxObservable订阅测试
- * 能够发射0或n个数据，并以成功或错误事件终止。
+ * 能够发射0或n个数据，并以完成或错误事件终止。
  * Created by zhouL on 2019/1/14.
  */
 class RxObservableActivity : BaseActivity() {
@@ -36,6 +39,10 @@ class RxObservableActivity : BaseActivity() {
         }
     }
 
+    /** 滚动控件 */
+    private val mScrollView by bindView<NestedScrollView>(R.id.scroll_view)
+    /** 结果 */
+    private val mResultTv by bindView<TextView>(R.id.result_tv)
     /** 订阅失败开关 */
     private val mFailSwitch by bindView<Switch>(R.id.fail_switch)
     /** 返回键关闭开关 */
@@ -50,8 +57,6 @@ class RxObservableActivity : BaseActivity() {
     private val mRxBtn by bindView<MaterialButton>(R.id.rx_btn)
     /** 进度条封装 */
     private val mProgressBtn by bindView<MaterialButton>(R.id.progress_btn)
-    /** 结果 */
-    private val mResultTv by bindView<TextView>(R.id.result_tv)
 
     override fun getLayoutId(): Int = R.layout.activity_rx_observable
 
@@ -223,7 +228,14 @@ class RxObservableActivity : BaseActivity() {
 
     /** 打印日志 */
     private fun printLog(text: String) {
-        val log = "${mResultTv.text}\n$text"
+        val log = if (mResultTv.text.isEmpty()) {
+            text
+        } else {
+            "${mResultTv.text}\n$text"
+        }
         mResultTv.text = log
+        UiHandler.postDelayed(Runnable {
+            mScrollView.fullScroll(ScrollView.FOCUS_DOWN)
+        }, 100)
     }
 }

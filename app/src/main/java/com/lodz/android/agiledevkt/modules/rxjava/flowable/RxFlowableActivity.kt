@@ -31,7 +31,7 @@ import java.nio.charset.StandardCharsets
 
 /**
  * RxFlowable订阅测试
- * 能够发射0或n个数据，并以成功或错误事件终止。 支持Backpressure，可以控制数据源发射的速度。
+ * 能够发射0或n个数据，并以完成或错误事件终止。 支持Backpressure，可以控制数据源发射的速度。
  * Created by zhouL on 2019/1/16.
  */
 class RxFlowableActivity : BaseActivity() {
