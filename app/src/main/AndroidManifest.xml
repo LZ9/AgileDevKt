@@ -563,6 +563,13 @@
 
         </activity>
 
+        <activity
+            android:name=".modules.rxjava.maybe.RxMaybeActivity"
+            android:label="RxMaybe订阅测试"
+            android:screenOrientation="portrait">
+
+        </activity>
+
     </application>
 
 </manifest>

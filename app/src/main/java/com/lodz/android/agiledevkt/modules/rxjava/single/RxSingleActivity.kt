@@ -28,7 +28,7 @@ import io.reactivex.disposables.Disposable
 
 /**
  * RxSingle订阅测试
- * 只发射1个数据或错误事件，发送结束即终止
+ * 发送单个事件，以发送成功或错误事件终止
  * Created by zhouL on 2019/1/18.
  */
 class RxSingleActivity : BaseActivity() {
@@ -163,11 +163,11 @@ class RxSingleActivity : BaseActivity() {
                     .compose(bindDestroyEvent())
                     .subscribe(object : ProgressSingleObserver<ResponseBean<String>>() {
                         override fun onPgSuccess(any: ResponseBean<String>) {
-                            printLog("onRxNext num : ${any.data}")
+                            printLog("onPgSuccess num : ${any.data}")
                         }
 
                         override fun onPgError(e: Throwable, isNetwork: Boolean) {
-                            printLog("onRxError message : ${RxUtils.getExceptionTips(e, isNetwork, "create fail")}")
+                            printLog("onPgError message : ${RxUtils.getExceptionTips(e, isNetwork, "create fail")}")
                         }
                     }.create(getContext(), "loading", mCancelableSwitch.isChecked, mCanceledOutsideSwitch.isChecked))
         }
