@@ -131,7 +131,7 @@ class RxObservableActivity : BaseActivity() {
                     .compose(bindDestroyEvent())
                     .subscribe(object : RxObserver<ResponseBean<String>>() {
                         override fun onRxNext(any: ResponseBean<String>) {
-                            printLog("onRxNext num : ${any.data}")
+                            printLog("onRxNext : ${any.data}")
                         }
 
                         override fun onRxError(e: Throwable, isNetwork: Boolean) {
@@ -202,11 +202,11 @@ class RxObservableActivity : BaseActivity() {
                 }
                 val responseBean: ResponseBean<String> = if (mFailSwitch.isChecked) {
                     val bean: ResponseBean<String> = ResponseBean.createFail()
-                    bean.msg = "data empty"
+                    bean.msg = "数据获取失败"
                     bean
                 } else {
                     val bean: ResponseBean<String> = ResponseBean.createSuccess()
-                    bean.data = "i am data"
+                    bean.data = "数据获取成功"
                     bean
                 }
                 try {
