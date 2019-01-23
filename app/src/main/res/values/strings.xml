@@ -581,5 +581,6 @@
     <string name="rx_maybe_to_observable">Maybe转Observable订阅</string>
     <string name="rx_maybe_success">订阅成功</string>
     <string name="rx_maybe_complete">订阅完成</string>
+    <string name="rx_completable_to_observable">Completable转Observable订阅</string>
 
 </resources>

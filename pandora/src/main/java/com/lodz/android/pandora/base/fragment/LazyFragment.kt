@@ -228,4 +228,5 @@ abstract class LazyFragment : RxFragment(), IFragmentBackPressed {
 
     /** 绑定Fragment的DestroyView生命周期 */
     protected fun <T> bindDestroyViewEvent(): LifecycleTransformer<T> = bindUntilEvent(FragmentEvent.DESTROY_VIEW)
+    protected fun bindAnyDestroyViewEvent(): LifecycleTransformer<Any> = bindUntilEvent(FragmentEvent.DESTROY_VIEW)
 }

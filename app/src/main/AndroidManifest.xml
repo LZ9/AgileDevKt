@@ -570,6 +570,14 @@
 
         </activity>
 
+        <activity
+            android:name=".modules.rxjava.completable.RxCompletableActivity"
+            android:label="RxCompletable订阅测试"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+
     </application>
 
 </manifest>

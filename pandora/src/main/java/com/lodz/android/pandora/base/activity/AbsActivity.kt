@@ -216,4 +216,5 @@ abstract class AbsActivity : RxAppCompatActivity() {
 
     /** 绑定Activity的Destroy生命周期 */
     protected fun <T> bindDestroyEvent(): LifecycleTransformer<T> = bindUntilEvent(ActivityEvent.DESTROY)
+    protected fun bindAnyDestroyEvent(): LifecycleTransformer<Any> = bindUntilEvent(ActivityEvent.DESTROY)
 }

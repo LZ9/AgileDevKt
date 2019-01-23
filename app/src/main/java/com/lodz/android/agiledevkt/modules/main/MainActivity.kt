@@ -41,6 +41,7 @@ import com.lodz.android.agiledevkt.modules.rv.drag.DragRvActivity
 import com.lodz.android.agiledevkt.modules.rv.head.HeadFooterRvActivity
 import com.lodz.android.agiledevkt.modules.rv.loadmore.RefreshLoadMoreActivity
 import com.lodz.android.agiledevkt.modules.rv.snap.SnapRvActivity
+import com.lodz.android.agiledevkt.modules.rxjava.completable.RxCompletableActivity
 import com.lodz.android.agiledevkt.modules.rxjava.flowable.RxFlowableActivity
 import com.lodz.android.agiledevkt.modules.rxjava.maybe.RxMaybeActivity
 import com.lodz.android.agiledevkt.modules.rxjava.observable.RxObservableActivity
@@ -124,7 +125,8 @@ class MainActivity : BaseActivity() {
             MainBean("RxObservable订阅测试", "R", RxObservableActivity::class.java),
             MainBean("RxFlowable订阅测试", "R", RxFlowableActivity::class.java),
             MainBean("RxSingle订阅测试", "R", RxSingleActivity::class.java),
-            MainBean("RxMaybe订阅测试", "R", RxMaybeActivity::class.java)
+            MainBean("RxMaybe订阅测试", "R", RxMaybeActivity::class.java),
+            MainBean("RxCompletable订阅测试", "R", RxCompletableActivity::class.java)
     )
 
     /** 列表 */

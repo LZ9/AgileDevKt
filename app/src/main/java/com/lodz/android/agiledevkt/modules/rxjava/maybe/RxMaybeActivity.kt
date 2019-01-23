@@ -218,7 +218,7 @@ class RxMaybeActivity : BaseActivity() {
             createMaybe(true)
                     .compose(RxUtils.ioToMainMaybe())
                     .compose(bindDestroyEvent())
-                    .subscribe(object :ProgressMaybeObserver<ResponseBean<String>>(){
+                    .subscribe(object : ProgressMaybeObserver<ResponseBean<String>>() {
                         override fun onPgSuccess(any: ResponseBean<String>) {
                             printLog("onPgSuccess num : ${any.data}")
                         }
