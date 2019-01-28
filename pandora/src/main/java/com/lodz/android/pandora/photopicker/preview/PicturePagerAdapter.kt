@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import com.github.chrisbanes.photoview.PhotoView
 import com.lodz.android.pandora.photopicker.contract.OnPhotoLoader
+import com.lodz.android.pandora.widget.photoview.PhotoView
 import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
 
 /**
@@ -41,7 +41,7 @@ internal class PicturePagerAdapter<T : Any>(context: Context, isScale: Boolean, 
         super.onViewDetachedFromWindow(holder)
         if (isScale && holder is PicturePagerAdapter<*>.DataViewHolder) {
             if (holder.photoImg is PhotoView) {
-                holder.photoImg.attacher.update()//离开屏幕后还原缩放
+                holder.photoImg.getAttacher().update()//离开屏幕后还原缩放
             }
         }
     }

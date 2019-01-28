@@ -40,8 +40,6 @@ dependencies {
     api 'com.trello.rxlifecycle3:rxlifecycle-components:3.0.0'
     // EventBus
     api 'org.greenrobot:eventbus:3.1.1'
-    // PhotoView
-    api 'com.github.chrisbanes:PhotoView:2.0.0'
 }
 
 //version = "1.0.0"

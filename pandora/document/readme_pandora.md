@@ -23,7 +23,6 @@ Pandora支持Androidx和Kotlin开发插件，内部集成了包括
         api 'com.alibaba:fastjson:1.2.54'
         api 'com.trello.rxlifecycle3:rxlifecycle-components:3.0.0'
         api 'org.greenrobot:eventbus:3.1.1'
-        api 'com.github.chrisbanes:PhotoView:2.0.0'
     }
 ```
 
