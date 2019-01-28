@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import com.lodz.android.pandora.photopicker.contract.OnPhotoLoader
+import com.lodz.android.pandora.photopicker.contract.OnImgLoader
 import com.lodz.android.pandora.widget.photoview.PhotoView
 import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
 
@@ -13,12 +13,12 @@ import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
  * 图片翻页适配器
  * Created by zhouL on 2018/12/17.
  */
-internal class PicturePagerAdapter<T : Any>(context: Context, isScale: Boolean, photoLoader: OnPhotoLoader<T>) : BaseRecyclerViewAdapter<T>(context) {
+internal class PicturePagerAdapter<T : Any>(context: Context, isScale: Boolean, imgLoader: OnImgLoader<T>) : BaseRecyclerViewAdapter<T>(context) {
 
     /** 是否缩放 */
     private val isScale: Boolean
     /** 图片加载器 */
-    private var mPhotoLoader: OnPhotoLoader<T>?
+    private var mImgLoader: OnImgLoader<T>?
 
     /** 点击 */
     private var mOnClickListener: ((viewHolder: RecyclerView.ViewHolder, item: T, position: Int) -> Unit)? = null
@@ -27,7 +27,7 @@ internal class PicturePagerAdapter<T : Any>(context: Context, isScale: Boolean, 
 
     init {
         this.isScale = isScale
-        this.mPhotoLoader = photoLoader
+        this.mImgLoader = imgLoader
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -55,7 +55,7 @@ internal class PicturePagerAdapter<T : Any>(context: Context, isScale: Boolean, 
     private fun showItem(holder: PicturePagerAdapter<*>.DataViewHolder, position: Int) {
         val item = getItem(position)
         if (item != null) {
-            mPhotoLoader?.displayImg(context, item, holder.photoImg)
+            mImgLoader?.displayImg(context, item, holder.photoImg)
 
             holder.photoImg.setOnClickListener {
                 mOnClickListener?.invoke(holder, item, position)
@@ -70,7 +70,7 @@ internal class PicturePagerAdapter<T : Any>(context: Context, isScale: Boolean, 
 
     /** 释放资源 */
     fun release() {
-        mPhotoLoader = null
+        mImgLoader = null
     }
 
     /** 设置点击事件监听器 */

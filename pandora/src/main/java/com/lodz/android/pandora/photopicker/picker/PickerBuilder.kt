@@ -3,7 +3,7 @@ package com.lodz.android.pandora.photopicker.picker
 import android.content.Context
 import android.widget.ImageView
 import androidx.annotation.IntRange
-import com.lodz.android.pandora.photopicker.contract.OnPhotoLoader
+import com.lodz.android.pandora.photopicker.contract.OnImgLoader
 import com.lodz.android.pandora.photopicker.contract.picker.OnPhotoPickerListener
 
 /**
@@ -15,29 +15,29 @@ class PickerBuilder {
     /** 图片数据 */
     private val pickerBean = PickerBean()
 
-    /** 设置图片加载器[photoLoader] */
-    fun setImgLoader(photoLoader: OnPhotoLoader<String>): PickerBuilder {
-        pickerBean.photoLoader = photoLoader
+    /** 设置图片加载器[imgLoader] */
+    fun setImgLoader(imgLoader: OnImgLoader<String>): PickerBuilder {
+        pickerBean.imgLoader = imgLoader
         return this
     }
 
-    /** 设置图片加载器[photoLoader] */
-    fun setImgLoader(photoLoader: (context: Context, source: String, imageView: ImageView) -> Unit): PickerBuilder =
-            setImgLoader(object : OnPhotoLoader<String> {
+    /** 设置图片加载器[imgLoader] */
+    fun setImgLoader(imgLoader: (context: Context, source: String, imageView: ImageView) -> Unit): PickerBuilder =
+            setImgLoader(object : OnImgLoader<String> {
                 override fun displayImg(context: Context, source: String, imageView: ImageView) {
-                    photoLoader.invoke(context, source, imageView)
+                    imgLoader.invoke(context, source, imageView)
                 }
             })
 
     /** 设置预览图图加载器[previewLoader] */
-    fun setPreviewImgLoader(previewLoader: OnPhotoLoader<String>): PickerBuilder {
+    fun setPreviewImgLoader(previewLoader: OnImgLoader<String>): PickerBuilder {
         pickerBean.previewLoader = previewLoader
         return this
     }
 
     /** 设置预览图图加载器[previewLoader] */
     fun setPreviewImgLoader(previewLoader: (context: Context, source: String, imageView: ImageView) -> Unit): PickerBuilder =
-            setPreviewImgLoader(object : OnPhotoLoader<String> {
+            setPreviewImgLoader(object : OnImgLoader<String> {
                 override fun displayImg(context: Context, source: String, imageView: ImageView) {
                     previewLoader.invoke(context, source, imageView)
                 }

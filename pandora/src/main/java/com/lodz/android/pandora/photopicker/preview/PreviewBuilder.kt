@@ -5,8 +5,8 @@ import android.widget.ImageView
 import androidx.annotation.ColorRes
 import androidx.annotation.IntRange
 import com.lodz.android.pandora.photopicker.contract.OnClickListener
+import com.lodz.android.pandora.photopicker.contract.OnImgLoader
 import com.lodz.android.pandora.photopicker.contract.OnLongClickListener
-import com.lodz.android.pandora.photopicker.contract.OnPhotoLoader
 import com.lodz.android.pandora.photopicker.contract.preview.PreviewController
 
 /**
@@ -17,17 +17,17 @@ class PreviewBuilder<T : Any> {
     /** 预览数据 */
     private val previewBean = PreviewBean<T>()
 
-    /** 设置图片加载器[photoLoader] */
-    fun setImgLoader(photoLoader: OnPhotoLoader<T>): PreviewBuilder<T> {
-        previewBean.photoLoader = photoLoader
+    /** 设置图片加载器[imgLoader] */
+    fun setImgLoader(imgLoader: OnImgLoader<T>): PreviewBuilder<T> {
+        previewBean.imgLoader = imgLoader
         return this
     }
 
-    /** 设置图片加载器[photoLoader] */
-    fun setImgLoader(photoLoader: (context: Context, source: T, imageView: ImageView) -> Unit): PreviewBuilder<T> =
-            setImgLoader(object : OnPhotoLoader<T> {
+    /** 设置图片加载器[imgLoader] */
+    fun setImgLoader(imgLoader: (context: Context, source: T, imageView: ImageView) -> Unit): PreviewBuilder<T> =
+            setImgLoader(object : OnImgLoader<T> {
                 override fun displayImg(context: Context, source: T, imageView: ImageView) {
-                    photoLoader.invoke(context, source, imageView)
+                    imgLoader.invoke(context, source, imageView)
                 }
             })
 

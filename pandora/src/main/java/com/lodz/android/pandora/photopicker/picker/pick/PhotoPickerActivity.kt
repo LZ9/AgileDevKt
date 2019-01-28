@@ -22,7 +22,6 @@ import com.lodz.android.corekt.anko.*
 import com.lodz.android.corekt.utils.*
 import com.lodz.android.pandora.R
 import com.lodz.android.pandora.base.activity.AbsActivity
-import com.lodz.android.pandora.photopicker.contract.OnPhotoLoader
 import com.lodz.android.pandora.photopicker.picker.PickerBean
 import com.lodz.android.pandora.photopicker.picker.PickerItemBean
 import com.lodz.android.pandora.photopicker.picker.dialog.ImageFolderDialog
@@ -137,7 +136,7 @@ internal class PhotoPickerActivity : AbsActivity() {
     private fun initRecyclerView(bean: PickerBean) {
         val layoutManager = GridLayoutManager(getContext(), 3)
         layoutManager.orientation = RecyclerView.VERTICAL
-        mAdapter = PhotoPickerAdapter(getContext(), bean.photoLoader, bean.isNeedCamera, bean.pickerUIConfig)
+        mAdapter = PhotoPickerAdapter(getContext(), bean.imgLoader, bean.isNeedCamera, bean.pickerUIConfig)
         mRecyclerView.layoutManager = layoutManager
         mRecyclerView.setHasFixedSize(true)
         mRecyclerView.adapter = mAdapter
@@ -172,7 +171,7 @@ internal class PhotoPickerActivity : AbsActivity() {
             }
 
             val dialog = ImageFolderDialog(getContext())
-            dialog.setOnPhotoLoader(bean.photoLoader)
+            dialog.setOnImgLoader(bean.imgLoader)
             dialog.setPickerUIConfig(bean.pickerUIConfig)
             dialog.setData(list)
             dialog.setOnCancelListener { dialogInterface ->

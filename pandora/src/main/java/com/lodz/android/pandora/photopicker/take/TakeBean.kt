@@ -1,7 +1,7 @@
 package com.lodz.android.pandora.photopicker.take
 
 import androidx.annotation.ColorRes
-import com.lodz.android.pandora.photopicker.contract.OnPhotoLoader
+import com.lodz.android.pandora.photopicker.contract.OnImgLoader
 import com.lodz.android.pandora.photopicker.contract.take.OnPhotoTakeListener
 
 /**
@@ -11,7 +11,7 @@ import com.lodz.android.pandora.photopicker.contract.take.OnPhotoTakeListener
 internal class TakeBean {
 
     /** 预览图加载接口 */
-    var previewLoader: OnPhotoLoader<String>? = null
+    var imgLoader: OnImgLoader<String>? = null
     /** 照片回调接口 */
     var photoTakeListener: OnPhotoTakeListener? = null
     /** 拍照保存地址 */
@@ -31,7 +31,7 @@ internal class TakeBean {
     var previewBgColor = android.R.color.black
 
     fun clear() {
-        previewLoader = null
+        imgLoader = null
         photoTakeListener = null
     }
 }

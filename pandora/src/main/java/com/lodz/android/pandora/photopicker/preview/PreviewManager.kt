@@ -16,7 +16,7 @@ class PreviewManager<T : Any> internal constructor(private val previewBean: Prev
 
     /** 打开预览器，上下文[context] */
     fun open(context: Context) {
-        if (previewBean.photoLoader == null) {// 校验图片加载器
+        if (previewBean.imgLoader == null) {// 校验图片加载器
             ToastUtils.showShort(context, R.string.pandora_photo_loader_unset)
             return
         }

@@ -22,12 +22,12 @@ class PickerManager internal constructor(private val pickerBean: PickerBean) {
 
     /** 打开选择器，上下文[context] */
     fun open(context: Context) {
-        if (pickerBean.photoLoader == null) {// 校验图片加载器
+        if (pickerBean.imgLoader == null) {// 校验图片加载器
             context.toastShort(R.string.pandora_photo_loader_unset)
             return
         }
         if (pickerBean.previewLoader == null) {
-            pickerBean.previewLoader = pickerBean.photoLoader
+            pickerBean.previewLoader = pickerBean.imgLoader
         }
         if (pickerBean.photoPickerListener == null) {// 校验图片选中回调监听
             context.toastShort(R.string.pandora_photo_selected_listener_unset)

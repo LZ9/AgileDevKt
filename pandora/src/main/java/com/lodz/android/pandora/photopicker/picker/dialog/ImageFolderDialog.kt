@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.pandora.R
-import com.lodz.android.pandora.photopicker.contract.OnPhotoLoader
+import com.lodz.android.pandora.photopicker.contract.OnImgLoader
 import com.lodz.android.pandora.photopicker.picker.PickerUIConfig
 import com.lodz.android.pandora.widget.dialog.BaseTopDialog
 
@@ -25,7 +25,7 @@ class ImageFolderDialog(context: Context) : BaseTopDialog(context) {
     /** 监听器 */
     private var mListener: ((dialog: DialogInterface, bean: ImageFolderItemBean) -> Unit)? = null
     /** 图片加载器 */
-    private var mPhotoLoader: OnPhotoLoader<String>? = null
+    private var mImgLoader: OnImgLoader<String>? = null
     /** 图片文件夹列表 */
     private var mList: List<ImageFolderItemBean>? = null
     /** UI配置 */
@@ -47,9 +47,9 @@ class ImageFolderDialog(context: Context) : BaseTopDialog(context) {
         mRecyclerView.adapter = mAdapter
     }
 
-    /** 设置图片加载器[photoLoader] */
-    fun setOnPhotoLoader(photoLoader: OnPhotoLoader<String>?) {
-        mPhotoLoader = photoLoader
+    /** 设置图片加载器[imgLoader] */
+    fun setOnImgLoader(imgLoader: OnImgLoader<String>?) {
+        mImgLoader = imgLoader
     }
 
     /** 设置图片文件夹列表[list] */
@@ -73,7 +73,7 @@ class ImageFolderDialog(context: Context) : BaseTopDialog(context) {
             mListener?.invoke(getDialogInterface(), item)
         }
 
-        mAdapter.setOnPhotoLoader(mPhotoLoader)
+        mAdapter.setOnImgLoader(mImgLoader)
     }
 
     override fun initData() {

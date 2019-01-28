@@ -15,7 +15,7 @@ import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.dp2px
 import com.lodz.android.corekt.anko.getColorCompat
 import com.lodz.android.pandora.R
-import com.lodz.android.pandora.photopicker.contract.OnPhotoLoader
+import com.lodz.android.pandora.photopicker.contract.OnImgLoader
 import com.lodz.android.pandora.photopicker.picker.PickerUIConfig
 import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
 
@@ -26,15 +26,15 @@ import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
 internal class ImageFolderAdapter(context: Context) : BaseRecyclerViewAdapter<ImageFolderItemBean>(context) {
 
     /** 图片加载器 */
-    private var mPhotoLoader: OnPhotoLoader<String>? = null
+    private var mImgLoader: OnImgLoader<String>? = null
     /** 未选中图标 */
     private var mUnselectBitmap: Bitmap? = null
     /** 已选中图标 */
     private var mSelectedBitmap: Bitmap? = null
 
-    /** 设置图片加载器[photoLoader] */
-    fun setOnPhotoLoader(photoLoader: OnPhotoLoader<String>?) {
-        mPhotoLoader = photoLoader
+    /** 设置图片加载器[imgLoader] */
+    fun setOnImgLoader(imgLoader: OnImgLoader<String>?) {
+        mImgLoader = imgLoader
     }
 
     /** 设置UI配置[config] */
@@ -60,7 +60,7 @@ internal class ImageFolderAdapter(context: Context) : BaseRecyclerViewAdapter<Im
             return
         }
 
-        mPhotoLoader?.displayImg(context, imageFolder.coverImgPath, holder.coverImg)
+        mImgLoader?.displayImg(context, imageFolder.coverImgPath, holder.coverImg)
         holder.floderNameTv.text = imageFolder.name
         holder.countTv.text = context.getString(R.string.pandora_picker_folder_num, imageFolder.count.toString())
         holder.selectImg.setImageBitmap(if (bean.isSelected) mSelectedBitmap else mUnselectBitmap)

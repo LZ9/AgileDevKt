@@ -2,8 +2,8 @@ package com.lodz.android.pandora.photopicker.preview
 
 import androidx.annotation.ColorRes
 import com.lodz.android.pandora.photopicker.contract.OnClickListener
+import com.lodz.android.pandora.photopicker.contract.OnImgLoader
 import com.lodz.android.pandora.photopicker.contract.OnLongClickListener
-import com.lodz.android.pandora.photopicker.contract.OnPhotoLoader
 
 /**
  * 预览数据
@@ -14,7 +14,7 @@ internal class PreviewBean<T : Any> {
     /** 资源列表 */
     var sourceList: List<T>? = null
     /** 图片加载接口 */
-    var photoLoader: OnPhotoLoader<T>? = null
+    var imgLoader: OnImgLoader<T>? = null
     /** 默认显示的图片位置 */
     var showPosition = 0
     /** 预览页的背景色 */
@@ -42,7 +42,7 @@ internal class PreviewBean<T : Any> {
 
     fun clear() {
         sourceList = null
-        photoLoader = null
+        imgLoader = null
         clickListener = null
         longClickListener = null
     }

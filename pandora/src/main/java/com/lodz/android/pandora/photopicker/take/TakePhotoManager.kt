@@ -19,7 +19,7 @@ class TakePhotoManager internal constructor(private val takeBean: TakeBean) {
 
     /** 拍照，上下文[context] */
     fun take(context: Context) {
-        if (takeBean.previewLoader == null && !takeBean.isImmediately) {//没有立即返回需要校验预览图片加载器
+        if (takeBean.imgLoader == null && !takeBean.isImmediately) {//没有立即返回需要校验预览图片加载器
             context.toastShort(R.string.pandora_preview_loader_unset)
             return
         }

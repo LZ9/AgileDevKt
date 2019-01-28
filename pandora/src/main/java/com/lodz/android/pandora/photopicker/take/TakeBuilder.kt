@@ -3,7 +3,7 @@ package com.lodz.android.pandora.photopicker.take
 import android.content.Context
 import android.widget.ImageView
 import androidx.annotation.ColorRes
-import com.lodz.android.pandora.photopicker.contract.OnPhotoLoader
+import com.lodz.android.pandora.photopicker.contract.OnImgLoader
 import com.lodz.android.pandora.photopicker.contract.take.OnPhotoTakeListener
 
 /**
@@ -15,17 +15,17 @@ class TakeBuilder {
     /** 图片数据 */
     private val takeBean = TakeBean()
 
-    /** 设置预览图图加载器[previewLoader] */
-    fun setPreviewImgLoader(previewLoader: OnPhotoLoader<String>?): TakeBuilder {
-        takeBean.previewLoader = previewLoader
+    /** 设置预览图图加载器[imgLoader] */
+    fun setOnImgLoader(imgLoader: OnImgLoader<String>?): TakeBuilder {
+        takeBean.imgLoader = imgLoader
         return this
     }
 
-    /** 设置预览图图加载器[previewLoader] */
-    fun setPreviewImgLoader(previewLoader: (context: Context, source: String, imageView: ImageView) -> Unit): TakeBuilder =
-            setPreviewImgLoader(object : OnPhotoLoader<String> {
+    /** 设置预览图图加载器[imgLoader] */
+    fun setOnImgLoader(imgLoader: (context: Context, source: String, imageView: ImageView) -> Unit): TakeBuilder =
+            setOnImgLoader(object : OnImgLoader<String> {
                 override fun displayImg(context: Context, source: String, imageView: ImageView) {
-                    previewLoader.invoke(context, source, imageView)
+                    imgLoader.invoke(context, source, imageView)
                 }
             })
 

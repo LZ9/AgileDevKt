@@ -15,7 +15,7 @@ import com.lodz.android.corekt.anko.dp2px
 import com.lodz.android.corekt.anko.getColorCompat
 import com.lodz.android.corekt.anko.getScreenWidth
 import com.lodz.android.pandora.R
-import com.lodz.android.pandora.photopicker.contract.OnPhotoLoader
+import com.lodz.android.pandora.photopicker.contract.OnImgLoader
 import com.lodz.android.pandora.photopicker.picker.PickerItemBean
 import com.lodz.android.pandora.photopicker.picker.PickerUIConfig
 import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
@@ -24,7 +24,7 @@ import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
  * 照片选择适配器
  * Created by zhouL on 2018/12/20.
  */
-internal class PhotoPickerAdapter(context: Context, photoLoader: OnPhotoLoader<String>?, isNeedCamera: Boolean, config: PickerUIConfig) : BaseRecyclerViewAdapter<PickerItemBean>(context) {
+internal class PhotoPickerAdapter(context: Context, imgLoader: OnImgLoader<String>?, isNeedCamera: Boolean, config: PickerUIConfig) : BaseRecyclerViewAdapter<PickerItemBean>(context) {
 
     /** 相机 */
     private val VIEW_TYPE_CAMERA = 0
@@ -32,7 +32,7 @@ internal class PhotoPickerAdapter(context: Context, photoLoader: OnPhotoLoader<S
     private val VIEW_TYPE_ITEM = 1
 
     /** 图片加载接口 */
-    private var mPhotoLoader: OnPhotoLoader<String>?
+    private var mImgLoader: OnImgLoader<String>?
     /** 监听器 */
     private var mListener: Listener? = null
 
@@ -47,7 +47,7 @@ internal class PhotoPickerAdapter(context: Context, photoLoader: OnPhotoLoader<S
     private val mConfig: PickerUIConfig
 
     init {
-        this.mPhotoLoader = photoLoader
+        this.mImgLoader = imgLoader
         this.isNeedCamera = isNeedCamera
         this.mConfig = config
         mUnselectBitmap = getUnselectBitmap(mConfig.getSelectedBtnUnselect())
@@ -94,7 +94,7 @@ internal class PhotoPickerAdapter(context: Context, photoLoader: OnPhotoLoader<S
     private fun showItem(holder: PickerViewHolder, bean: PickerItemBean, position: Int) {
         setItemViewHeight(holder.itemView, context.getScreenWidth() / 3)
         holder.itemView.setBackgroundColor(context.getColorCompat(mConfig.getItemBgColor()))
-        mPhotoLoader?.displayImg(context, bean.path, holder.photoImg)
+        mImgLoader?.displayImg(context, bean.path, holder.photoImg)
         holder.selectIconBtn.setImageBitmap(if (bean.isSelected) mSelectedBitmap else mUnselectBitmap)
         holder.selectIconBtn.setOnClickListener {
             mListener?.onSelected(bean, position)
@@ -143,7 +143,7 @@ internal class PhotoPickerAdapter(context: Context, photoLoader: OnPhotoLoader<S
 
     /** 释放资源 */
     fun release() {
-        mPhotoLoader = null
+        mImgLoader = null
     }
 
     override fun setItemClick(holder: RecyclerView.ViewHolder, position: Int) {

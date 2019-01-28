@@ -155,7 +155,7 @@ internal class TakePhotoActivity : AbsActivity() {
 
     /** 处理拍照成功 */
     private fun handleCameraSuccess() {
-        mTakeBean?.previewLoader?.displayImg(getContext(), mTempFilePath, mPhotoImg)
+        mTakeBean?.imgLoader?.displayImg(getContext(), mTempFilePath, mPhotoImg)
     }
 
     override fun finish() {

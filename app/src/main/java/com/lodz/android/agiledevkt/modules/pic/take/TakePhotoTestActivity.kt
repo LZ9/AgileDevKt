@@ -83,7 +83,7 @@ class TakePhotoTestActivity : BaseActivity() {
                     .setImmediately(false)
                     .setCameraSavePath(FileManager.getCacheFolderPath())
                     .setAuthority("com.lodz.android.agiledevkt.fileprovider")
-                    .setPreviewImgLoader { context, source, imageView ->
+                    .setOnImgLoader { context, source, imageView ->
                         ImageLoader.create(context).loadFilePath(source).setFitCenter().into(imageView)
                     }
                     .setOnPhotoTakeListener { photo ->

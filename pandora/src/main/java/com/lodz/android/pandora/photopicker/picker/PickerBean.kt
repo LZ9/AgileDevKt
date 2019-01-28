@@ -1,6 +1,6 @@
 package com.lodz.android.pandora.photopicker.picker
 
-import com.lodz.android.pandora.photopicker.contract.OnPhotoLoader
+import com.lodz.android.pandora.photopicker.contract.OnImgLoader
 import com.lodz.android.pandora.photopicker.contract.picker.OnPhotoPickerListener
 
 /**
@@ -12,9 +12,9 @@ internal class PickerBean {
     /** 资源列表 */
     var sourceList: List<String>? = null
     /** 图片加载接口 */
-    var photoLoader: OnPhotoLoader<String>? = null
+    var imgLoader: OnImgLoader<String>? = null
     /** 预览图加载接口 */
-    var previewLoader: OnPhotoLoader<String>? = null
+    var previewLoader: OnImgLoader<String>? = null
     /** 照片回调接口 */
     var photoPickerListener: OnPhotoPickerListener? = null
     /** 可选最大数量 */
@@ -38,7 +38,7 @@ internal class PickerBean {
 
     fun clear() {
         sourceList = null
-        photoLoader = null
+        imgLoader = null
         previewLoader = null
         photoPickerListener = null
     }
