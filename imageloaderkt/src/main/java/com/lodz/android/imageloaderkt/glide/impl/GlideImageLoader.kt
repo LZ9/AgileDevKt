@@ -283,6 +283,21 @@ class GlideImageLoader private constructor() : ImageLoaderContract {
         return this
     }
 
+    override fun download() {
+        if (mRequestManager == null || mGlideBuilderBean == null) {
+            return
+        }
+        val bean = mGlideBuilderBean!!
+
+        mRequestManager!!.download(bean.path).apply {
+            this.apply(getRequestOptions(bean))
+        }.apply {
+            if (bean.requestListener != null) {// 设置请求监听器
+                this.listener(bean.requestListener as RequestListener<File>)
+            }
+        }.submit()
+    }
+
     override fun into(imageView: ImageView) {
         if (mRequestManager == null || mGlideBuilderBean == null) {
             return

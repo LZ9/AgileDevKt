@@ -142,4 +142,7 @@ interface ImageLoaderContract {
 
     /** 将图片转为gif并装载到[target] */
     fun asGifInto(target: SimpleTarget<GifDrawable>)
+
+    /** 下载图片 */
+    fun download()
 }
