@@ -16,9 +16,17 @@ class PreviewManager<T : Any> internal constructor(private val previewBean: Prev
 
     /** 打开预览器，上下文[context] */
     fun open(context: Context) {
-        if (previewBean.imgLoader == null) {// 校验图片加载器
+        if (previewBean.imgLoader == null && previewBean.largeImgLoader == null) {// 校验图片加载器
             ToastUtils.showShort(context, R.string.pandora_photo_loader_unset)
             return
+        }
+        // 确保只回调一个图片加载接口
+        if (previewBean.imgLoader != null ){
+            previewBean.largeImgLoader = null
+        }
+
+        if (previewBean.largeImgLoader != null ){
+            previewBean.imgLoader = null
         }
         if (previewBean.sourceList.isNullOrEmpty()) {// 校验数据列表
             ToastUtils.showShort(context, R.string.pandora_preview_source_list_empty)

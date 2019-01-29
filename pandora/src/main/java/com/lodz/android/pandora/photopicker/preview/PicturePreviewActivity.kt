@@ -18,6 +18,7 @@ import com.lodz.android.corekt.utils.StatusBarUtil
 import com.lodz.android.pandora.R
 import com.lodz.android.pandora.base.activity.AbsActivity
 import com.lodz.android.pandora.photopicker.contract.OnImgLoader
+import com.lodz.android.pandora.photopicker.contract.preview.OnLargeImgLoader
 import com.lodz.android.pandora.photopicker.contract.preview.PreviewController
 import com.lodz.android.pandora.widget.rv.snap.ViewPagerSnapHelper
 
@@ -74,18 +75,19 @@ internal class PicturePreviewActivity<T : Any> : AbsActivity() {
             return
         }
         val imgLoader = bean.imgLoader
-        if (imgLoader == null) {
+        val largeImgLoader = bean.largeImgLoader
+        if (imgLoader == null && largeImgLoader == null) {
             finish()
             return
         }
-        initRecyclerView(bean, imgLoader)
+        initRecyclerView(bean, imgLoader, largeImgLoader)
     }
 
     /** 初始化RV */
-    private fun initRecyclerView(bean: PreviewBean<T>, imgLoader: OnImgLoader<T>) {
+    private fun initRecyclerView(bean: PreviewBean<T>, imgLoader: OnImgLoader<T>?, largeImgLoader: OnLargeImgLoader<T>?) {
         val layoutManager = LinearLayoutManager(getContext())
         layoutManager.orientation = RecyclerView.HORIZONTAL
-        mAdapter = PicturePagerAdapter(getContext(), bean.isScale, imgLoader)
+        mAdapter = PicturePagerAdapter(getContext(), bean.isScale, imgLoader, largeImgLoader)
         mRecyclerView.layoutManager = layoutManager
         mRecyclerView.setHasFixedSize(true)
         mRecyclerView.adapter = mAdapter

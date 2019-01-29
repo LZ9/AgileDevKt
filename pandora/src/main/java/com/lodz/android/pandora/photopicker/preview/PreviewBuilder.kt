@@ -4,9 +4,11 @@ import android.content.Context
 import android.widget.ImageView
 import androidx.annotation.ColorRes
 import androidx.annotation.IntRange
+import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
 import com.lodz.android.pandora.photopicker.contract.OnClickListener
 import com.lodz.android.pandora.photopicker.contract.OnImgLoader
 import com.lodz.android.pandora.photopicker.contract.OnLongClickListener
+import com.lodz.android.pandora.photopicker.contract.preview.OnLargeImgLoader
 import com.lodz.android.pandora.photopicker.contract.preview.PreviewController
 
 /**
@@ -16,6 +18,20 @@ import com.lodz.android.pandora.photopicker.contract.preview.PreviewController
 class PreviewBuilder<T : Any> {
     /** 预览数据 */
     private val previewBean = PreviewBean<T>()
+
+    /** 设置大图片加载器[imgLoader] */
+    fun setLargeImgLoader(imgLoader: OnLargeImgLoader<T>): PreviewBuilder<T> {
+        previewBean.largeImgLoader = imgLoader
+        return this
+    }
+
+    /** 设置大图片加载器[imgLoader] */
+    fun setLargeImgLoader(imgLoader: (context: Context, source: T, imageView: SubsamplingScaleImageView) -> Unit): PreviewBuilder<T> =
+            setLargeImgLoader(object : OnLargeImgLoader<T> {
+                override fun displayImg(context: Context, source: T, imageView: SubsamplingScaleImageView) {
+                    imgLoader.invoke(context, source, imageView)
+                }
+            })
 
     /** 设置图片加载器[imgLoader] */
     fun setImgLoader(imgLoader: OnImgLoader<T>): PreviewBuilder<T> {

@@ -4,6 +4,7 @@ import androidx.annotation.ColorRes
 import com.lodz.android.pandora.photopicker.contract.OnClickListener
 import com.lodz.android.pandora.photopicker.contract.OnImgLoader
 import com.lodz.android.pandora.photopicker.contract.OnLongClickListener
+import com.lodz.android.pandora.photopicker.contract.preview.OnLargeImgLoader
 
 /**
  * 预览数据
@@ -15,6 +16,8 @@ internal class PreviewBean<T : Any> {
     var sourceList: List<T>? = null
     /** 图片加载接口 */
     var imgLoader: OnImgLoader<T>? = null
+    /** 大图片加载接口 */
+    var largeImgLoader: OnLargeImgLoader<T>? = null
     /** 默认显示的图片位置 */
     var showPosition = 0
     /** 预览页的背景色 */
