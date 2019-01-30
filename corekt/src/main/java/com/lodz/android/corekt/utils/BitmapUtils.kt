@@ -1,14 +1,14 @@
 package com.lodz.android.corekt.utils
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.util.Base64
 import android.view.View
-import androidx.annotation.FloatRange
 import androidx.annotation.IntDef
-import androidx.annotation.IntRange
+import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.FileInputStream
 
@@ -18,10 +18,17 @@ import java.io.FileInputStream
  */
 object BitmapUtils {
 
-    /** 把[bitmap]转为Bsae64，质量[quality]默认70，转码类型[flags]默认Base64.NO_WRAP */
-    fun bitmapToBase64(bitmap: Bitmap, @IntRange(from = 0, to = 100) quality: Int = 70, flags: Int = Base64.NO_WRAP): String {
+    /** 把[bitmap]转为Bsae64，质量[quality]（0-100，默认70），转码类型[flags]默认Base64.NO_WRAP */
+    fun bitmapToBase64(bitmap: Bitmap, quality: Int = 70, flags: Int = Base64.NO_WRAP): String {
+        var reviseQuality = quality
+        if (quality < 0) {
+            reviseQuality = 0
+        }
+        if (quality > 100) {
+            reviseQuality = 100
+        }
         ByteArrayOutputStream().use { baos: ByteArrayOutputStream ->
-            bitmap.compress(Bitmap.CompressFormat.JPEG, quality, baos)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, reviseQuality, baos)
             return Base64.encodeToString(baos.toByteArray(), flags) ?: ""
         }
     }
@@ -36,7 +43,7 @@ object BitmapUtils {
     fun base64ToByte(base64Data: String, flags: Int = Base64.NO_WRAP): ByteArray = Base64.decode(base64Data, flags)
 
     /** [drawable]转为Bitmap，宽度[widthPx]和高度[heightPx]默认取[drawable]的值 */
-    fun drawableToBitmap(drawable: Drawable, @IntRange(from = 1) widthPx: Int = drawable.intrinsicWidth, @IntRange(from = 1) heightPx: Int = drawable.intrinsicHeight): Bitmap? {
+    fun drawableToBitmap(drawable: Drawable, widthPx: Int = drawable.intrinsicWidth, heightPx: Int = drawable.intrinsicHeight): Bitmap? {
         if (widthPx < 1 || heightPx < 1) {
             return null
         }
@@ -353,12 +360,12 @@ object BitmapUtils {
     }
 
     /** 更改图片[bitmap]色系，图片的亮暗程度值[delta]越小图片会越亮，取值范围(1,23) */
-    fun setBitmapTone(bitmap: Bitmap, @IntRange(from = 1, to = 23) delta: Int): Bitmap {
+    fun setBitmapTone(bitmap: Bitmap, delta: Int): Bitmap {
         var newDelta = delta
-        if (delta >= 23) {
+        if (delta > 23) {
             newDelta = 23
         }
-        if (delta <= 1) {
+        if (delta < 1) {
             newDelta = 1
         }
 
@@ -408,7 +415,7 @@ object BitmapUtils {
     }
 
     /** 设置图片[bitmap]饱和度[value] */
-    fun setBitmapSaturation(bitmap: Bitmap, @FloatRange(from = 0.0, to = 2.0) value: Float): Bitmap {
+    fun setBitmapSaturation(bitmap: Bitmap, value: Float): Bitmap {
         var newValue = value
         if (value <= 0f) {
             newValue = 0f
@@ -433,7 +440,7 @@ object BitmapUtils {
     }
 
     /** 设置图片[bitmap]的亮度值[value] */
-    fun setBitmapLuminance(bitmap: Bitmap, @FloatRange(from = 0.0, to = 2.0) value: Float): Bitmap {
+    fun setBitmapLuminance(bitmap: Bitmap, value: Float): Bitmap {
         var newValue = value
         if (value <= 0f) {
             newValue = 0f
@@ -458,7 +465,7 @@ object BitmapUtils {
     }
 
     /** 设置图片[bitmap]的色相值[value] */
-    fun setBitmapHue(bitmap: Bitmap, @FloatRange(from = 0.0, to = 2.0) value: Float): Bitmap {
+    fun setBitmapHue(bitmap: Bitmap, value: Float): Bitmap {
         var newValue = value
         if (value <= 0f) {
             newValue = 0f
@@ -516,7 +523,7 @@ object BitmapUtils {
     fun createSoftenBitmap(bitmap: Bitmap) = setBitmapTone(bitmap, 16)
 
     /** 对图片[bitmap]进行光照效果处理，光源位置为X轴[centerX]和Y轴[centerY]，光照强度[strength] */
-    fun createSunshineBitmap(bitmap: Bitmap, centerX: Int, centerY: Int, @FloatRange(from = 0.0, to = 100.0) strength: Float = 50f): Bitmap {
+    fun createSunshineBitmap(bitmap: Bitmap, centerX: Int, centerY: Int, strength: Float = 50f): Bitmap {
         var newStrength = strength + 100
         if (newStrength >= 200f) {
             newStrength = 200f
@@ -687,4 +694,69 @@ object BitmapUtils {
         return newBitmap
     }
 
+    /** 对大图[bitmap]进行拼装和优化处理 */
+    fun createLargeBitmap(context: Context, bitmap: Bitmap): Bitmap {
+        val maxHeight = 3000// 图片最大长度
+        try {
+            ByteArrayOutputStream().use { baos ->
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos)
+                ByteArrayInputStream(baos.toByteArray()).use { inputStream ->
+                    //BitmapRegionDecoder newInstance(InputStream is, boolean isShareable)
+                    //用于创建BitmapRegionDecoder，isBm表示输入流，只有jpeg和png图片才支持这种方式，
+                    // isShareable如果为true，那BitmapRegionDecoder会对输入流保持一个表面的引用，
+                    // 如果为false，那么它将会创建一个输入流的复制，并且一直使用它。即使为true，程序也有可能会创建一个输入流的深度复制。
+                    // 如果图片是逐步解码的，那么为true会降低图片的解码速度。如果路径下的图片不是支持的格式，那就会抛出异常
+                    val decoder = BitmapRegionDecoder.newInstance(inputStream, true)
+
+                    val imgWidth = decoder.width
+                    val imgHeight = decoder.height
+
+                    val opts = BitmapFactory.Options()
+
+                    //计算图片要被切分成几个整块，
+                    // 如果sum=0 说明图片的长度不足3000px，不进行切分 直接添加
+                    // 如果sum>0 先添加整图，再添加多余的部分，否则多余的部分不足3000时底部会有空白
+                    val sum = imgHeight / maxHeight
+                    val redundant = imgHeight % maxHeight
+                    val rect = Rect()
+
+                    val bitmapList = ArrayList<Bitmap>()
+
+                    if (sum == 0) { //图片的长度 < 3000直接加载
+                        bitmapList.add(bitmap)
+                    } else {
+                        for (i in 0 until sum) {
+                            //需要注意：mRect.set(left, top, right, bottom)的第四个参数，
+                            //也就是图片的高不能大于这里的4096
+                            rect.set(0, i * maxHeight, imgWidth, (i + 1) * maxHeight)
+                            bitmapList.add(decoder.decodeRegion(rect, opts))
+                        }
+
+                        //将多余的不足3000的部分作为尾部拼接
+                        if (redundant > 0) {
+                            rect.set(0, sum * maxHeight, imgWidth, imgHeight)
+                            bitmapList.add(decoder.decodeRegion(rect, opts))
+                        }
+                    }
+                    val bigbitmap = Bitmap.createBitmap(imgWidth, imgHeight, Bitmap.Config.ARGB_8888)
+                    val canvas = Canvas(bigbitmap)
+
+                    val paint = Paint()
+                    var height = 0f
+
+                    //将之前的bitmap取出来拼接成一个bitmap
+                    for (bmp in bitmapList) {
+                        canvas.drawBitmap(bmp, 0f, height, paint)
+                        height += bmp.height
+
+                        bmp.recycle()
+                    }
+                    return bigbitmap
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return bitmap
+    }
 }

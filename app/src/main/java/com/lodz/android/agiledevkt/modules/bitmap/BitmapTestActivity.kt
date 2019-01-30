@@ -7,6 +7,10 @@ import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.SeekBar
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.corekt.anko.bindView
@@ -14,11 +18,14 @@ import com.lodz.android.corekt.anko.getDrawableCompat
 import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.corekt.utils.BitmapUtils
 import com.lodz.android.corekt.utils.toastShort
+import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
 import com.lodz.android.pandora.rx.utils.RxUtils
 import io.reactivex.Observable
+import java.io.File
 import java.util.concurrent.TimeUnit
+
 
 /**
  * Bitmap图片测试类
@@ -111,6 +118,9 @@ class BitmapTestActivity : BaseActivity() {
 
     /** 浮雕效果图片 */
     private val mEmbossImg by bindView<ImageView>(R.id.emboss_img)
+
+    /** 大图 */
+    private val mLargeImg by bindView<ImageView>(R.id.large_img)
 
     override fun getLayoutId() = R.layout.activity_bitmap_test
 
@@ -264,6 +274,7 @@ class BitmapTestActivity : BaseActivity() {
         showFilmBitmap()
         showSharpenBitmap()
         showEmbossBitmap()
+        showLargeBitmap()
         showStatusCompleted()
     }
 
@@ -672,5 +683,26 @@ class BitmapTestActivity : BaseActivity() {
                         mEmbossImg.setImageResource(R.drawable.ic_launcher)
                     }
                 })
+    }
+
+    /** 显示大图 */
+    private fun showLargeBitmap() {
+        val url = "http://bmob-cdn-15177.b0.upaiyun.com/2018/08/23/8fa7f1c2404bafbd808bde10ff072ceb.jpg"
+        ImageLoader.create(this).loadUrl(url).setRequestListener(object :RequestListener<File>{
+            override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<File>?, isFirstResource: Boolean): Boolean {
+                mLargeImg.setImageResource(R.drawable.ic_launcher)
+                return false
+            }
+
+            override fun onResourceReady(resource: File?, model: Any?, target: Target<File>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                if (resource == null){
+                    mLargeImg.setImageResource(R.drawable.ic_launcher)
+                }else{
+                    mLargeImg.setImageBitmap(BitmapUtils.createLargeBitmap(getContext(), BitmapFactory.decodeResource(resources, R.drawable.ic_large)))
+//                    mLargeImg.setImageBitmap(BitmapUtils.createLargeBitmap(getContext(), BitmapFactory.decodeFile(resource.absolutePath)))
+                }
+                return false
+            }
+        }).download()
     }
 }
