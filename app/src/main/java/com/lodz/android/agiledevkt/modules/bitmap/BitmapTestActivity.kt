@@ -22,6 +22,7 @@ import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
 import com.lodz.android.pandora.rx.utils.RxUtils
+import com.lodz.android.pandora.widget.custom.LongImageView
 import io.reactivex.Observable
 import java.io.File
 import java.util.concurrent.TimeUnit
@@ -119,8 +120,11 @@ class BitmapTestActivity : BaseActivity() {
     /** 浮雕效果图片 */
     private val mEmbossImg by bindView<ImageView>(R.id.emboss_img)
 
-    /** 大图 */
+    /** 长图 */
     private val mLargeImg by bindView<ImageView>(R.id.large_img)
+
+    /** 长图 */
+    private val mLongImg by bindView<LongImageView>(R.id.long_img)
 
     override fun getLayoutId() = R.layout.activity_bitmap_test
 
@@ -275,6 +279,7 @@ class BitmapTestActivity : BaseActivity() {
         showSharpenBitmap()
         showEmbossBitmap()
         showLargeBitmap()
+        showLongBitmap()
         showStatusCompleted()
     }
 
@@ -685,24 +690,42 @@ class BitmapTestActivity : BaseActivity() {
                 })
     }
 
-    /** 显示大图 */
+    /** 显示长图 */
     private fun showLargeBitmap() {
         val url = "http://bmob-cdn-15177.b0.upaiyun.com/2018/08/23/8fa7f1c2404bafbd808bde10ff072ceb.jpg"
-        ImageLoader.create(this).loadUrl(url).setRequestListener(object :RequestListener<File>{
+        ImageLoader.create(this).loadUrl(url).setRequestListener(object : RequestListener<File> {
             override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<File>?, isFirstResource: Boolean): Boolean {
                 mLargeImg.setImageResource(R.drawable.ic_launcher)
                 return false
             }
 
             override fun onResourceReady(resource: File?, model: Any?, target: Target<File>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                if (resource == null){
+                if (resource == null) {
                     mLargeImg.setImageResource(R.drawable.ic_launcher)
-                }else{
-                    mLargeImg.setImageBitmap(BitmapUtils.createLargeBitmap(getContext(), BitmapFactory.decodeResource(resources, R.drawable.ic_large)))
-//                    mLargeImg.setImageBitmap(BitmapUtils.createLargeBitmap(getContext(), BitmapFactory.decodeFile(resource.absolutePath)))
+                } else {
+                    Observable.just(resource)
+                            .map { file ->
+                                return@map BitmapUtils.createLongLargeBitmap(getContext(), BitmapFactory.decodeFile(file.absolutePath))
+
+                            }.compose(RxUtils.ioToMainObservable())
+                            .subscribe(object : BaseObserver<Bitmap>() {
+                                override fun onBaseNext(any: Bitmap) {
+                                    mLargeImg.setImageBitmap(any)
+                                }
+
+                                override fun onBaseError(e: Throwable) {
+                                    mLargeImg.setImageResource(R.drawable.ic_launcher)
+                                }
+
+                            })
                 }
                 return false
             }
         }).download()
+    }
+
+    /** 显示长图 */
+    private fun showLongBitmap() {
+        mLongImg.setImageRes(R.drawable.ic_large)
     }
 }

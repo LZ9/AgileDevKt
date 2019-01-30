@@ -65,6 +65,7 @@
     <string name="bitmap_film">底片效果图片</string>
     <string name="bitmap_sharpen">锐化效果图片</string>
     <string name="bitmap_emboss">浮雕效果图片</string>
+    <string name="bitmap_long">长图</string>
 
     <!-- glide测试类 -->
     <string name="glide_custom_notify">自定义通知栏</string>

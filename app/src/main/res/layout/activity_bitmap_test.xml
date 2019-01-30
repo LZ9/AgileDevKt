@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -636,5 +637,41 @@
             android:layout_gravity="center_horizontal"
             android:adjustViewBounds="true"
             android:contentDescription="@string/app_img_name" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:text="@string/bitmap_long"
+            android:textColor="@color/color_00a0e9" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/color_00a0e9" />
+
+        <com.lodz.android.pandora.widget.custom.LongImageView
+            android:id="@+id/long_img"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:placeholderDrawable="@drawable/ic_collect"
+            app:placeholderHeight="200dp"
+            app:placeholderScaleType="center"
+            app:showPlaceholder="true">
+
+        </com.lodz.android.pandora.widget.custom.LongImageView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:text="@string/bitmap_long"
+            android:textColor="@color/color_00a0e9" />
     </LinearLayout>
 </ScrollView>

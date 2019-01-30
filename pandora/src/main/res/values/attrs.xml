@@ -136,6 +136,7 @@
         <attr name="itemHigh" format="dimension" />
     </declare-styleable>
 
+    <!--索引条-->
     <declare-styleable name="IndexBar">
         <attr name="indexTextColor" format="color" />
         <attr name="indexTextSize" format="dimension" />
@@ -143,5 +144,21 @@
         <attr name="pressBackgroundColor" format="reference|color" />
     </declare-styleable>
 
-
+    <!--长图-->
+    <declare-styleable name="LongImageView">
+        <attr name="placeholderDrawable" format="reference" />
+        <attr name="placeholderScaleType" format="integer">
+            <enum name="matrix" value="0" />
+            <enum name="fitXY" value="1" />
+            <enum name="fitStart" value="2" />
+            <enum name="fitCenter" value="3" />
+            <enum name="fitEnd" value="4" />
+            <enum name="center" value="5" />
+            <enum name="centerCrop" value="6" />
+            <enum name="centerInside" value="7" />
+        </attr>
+        <attr name="placeholderWidth" format="dimension" />
+        <attr name="placeholderHeight" format="dimension" />
+        <attr name="showPlaceholder" format="boolean" />
+    </declare-styleable>
 </resources>

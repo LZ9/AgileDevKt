@@ -8,6 +8,7 @@ import android.os.Build
 import android.util.Base64
 import android.view.View
 import androidx.annotation.IntDef
+import com.lodz.android.corekt.anko.getScreenHeight
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.FileInputStream
@@ -694,9 +695,36 @@ object BitmapUtils {
         return newBitmap
     }
 
-    /** 对大图[bitmap]进行拼装和优化处理 */
-    fun createLargeBitmap(context: Context, bitmap: Bitmap): Bitmap {
-        val maxHeight = 3000// 图片最大长度
+    /** 对长图[bitmap]进行拼装和优化处理 */
+    @Deprecated("如果图片太长可能会出现无法显示的问题")
+    fun createLongLargeBitmap(context: Context, bitmap: Bitmap): Bitmap {
+        val bitmaps = createLongLargeBitmaps(context, bitmap)
+
+        val imgWidth = bitmap.width
+        var imgHeight = 0
+        for (bmp in bitmaps) {
+            imgHeight += bmp.height
+        }
+
+        val bigbitmap = Bitmap.createBitmap(imgWidth, imgHeight, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bigbitmap)
+
+        val paint = Paint()
+        var height = 0f
+
+        //将之前的bitmap取出来拼接成一个bitmap
+        for (bmp in bitmaps) {
+            canvas.drawBitmap(bmp, 0f, height, paint)
+            height += bmp.height
+            bmp.recycle()
+        }
+        return bigbitmap
+    }
+
+    /** 将长图[bitmap]切分成多个Bitmap对象 */
+    fun createLongLargeBitmaps(context: Context, bitmap: Bitmap): List<Bitmap> {
+        val maxHeight = context.getScreenHeight()// 图片最大长度
+        val bitmapList = ArrayList<Bitmap>()
         try {
             ByteArrayOutputStream().use { baos ->
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos)
@@ -720,8 +748,6 @@ object BitmapUtils {
                     val redundant = imgHeight % maxHeight
                     val rect = Rect()
 
-                    val bitmapList = ArrayList<Bitmap>()
-
                     if (sum == 0) { //图片的长度 < 3000直接加载
                         bitmapList.add(bitmap)
                     } else {
@@ -738,25 +764,12 @@ object BitmapUtils {
                             bitmapList.add(decoder.decodeRegion(rect, opts))
                         }
                     }
-                    val bigbitmap = Bitmap.createBitmap(imgWidth, imgHeight, Bitmap.Config.ARGB_8888)
-                    val canvas = Canvas(bigbitmap)
-
-                    val paint = Paint()
-                    var height = 0f
-
-                    //将之前的bitmap取出来拼接成一个bitmap
-                    for (bmp in bitmapList) {
-                        canvas.drawBitmap(bmp, 0f, height, paint)
-                        height += bmp.height
-
-                        bmp.recycle()
-                    }
-                    return bigbitmap
+                    return bitmapList
                 }
             }
         } catch (e: Exception) {
             e.printStackTrace()
         }
-        return bitmap
+        return bitmapList
     }
 }
