@@ -9,10 +9,12 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.annotation.DrawableRes
 import androidx.core.widget.NestedScrollView
+import com.lodz.android.corekt.anko.getSize
 import com.lodz.android.corekt.utils.BitmapUtils
 import com.lodz.android.pandora.R
 import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
@@ -24,12 +26,21 @@ import java.io.File
  * 长图控件
  * Created by zhouL on 2019/1/30.
  */
-class LongImageView : NestedScrollView {
+class LongImageView : FrameLayout {
 
-    /** 根布局 */
-    private var mRootLayout: LinearLayout? = null
+    /** 图片布局 */
+    private var mImgLayout: LinearLayout? = null
+    /** 滑动布局 */
+    private var mScrollView: NestedScrollView? = null
     /** 占位符 */
     private var mPlaceholderImg: ImageView? = null
+    /** 临时位图 */
+    private var mTempBitmaps: List<Bitmap>? = null
+
+    /** 点击监听器 */
+    private var mClickListener: OnClickListener? = null
+    /** 长按监听器 */
+    private var mLongClickListener: OnLongClickListener? = null
 
     constructor(context: Context) : super(context) {
         init(null)
@@ -46,6 +57,13 @@ class LongImageView : NestedScrollView {
     private fun init(attrs: AttributeSet?) {
         findViews()
         configLayout(attrs)
+    }
+
+    private fun findViews() {
+        LayoutInflater.from(context).inflate(R.layout.pandora_view_long_img, this)
+        mImgLayout = findViewById(R.id.root_layout)
+        mScrollView = findViewById(R.id.scroll_view)
+        mPlaceholderImg = findViewById(R.id.placeholder_img)
     }
 
     private fun configLayout(attrs: AttributeSet?) {
@@ -100,12 +118,6 @@ class LongImageView : NestedScrollView {
         else -> ImageView.ScaleType.CENTER
     }
 
-    private fun findViews() {
-        LayoutInflater.from(context).inflate(R.layout.pandora_view_long_img, this)
-        mRootLayout = findViewById(R.id.root_layout)
-        mPlaceholderImg = findViewById(R.id.placeholder_img)
-    }
-
     /** 设置占位符图片[resId] */
     fun setPlaceholderRes(@DrawableRes resId: Int) {
         mPlaceholderImg?.setImageResource(resId)
@@ -136,6 +148,7 @@ class LongImageView : NestedScrollView {
     /** 显示占位符[isShow] */
     fun showPlaceholder(isShow: Boolean = true) {
         mPlaceholderImg?.visibility = if (isShow) View.VISIBLE else View.GONE
+        mScrollView?.visibility = if (isShow) View.GONE else View.VISIBLE
     }
 
     /** 获取占位符控件 */
@@ -143,6 +156,8 @@ class LongImageView : NestedScrollView {
 
     /** 设置长图资源[resId] */
     fun setImageRes(@DrawableRes resId: Int) {
+        showPlaceholder()
+        release()
         Observable.just(resId)
                 .map { id ->
                     return@map BitmapFactory.decodeResource(context.resources, id)
@@ -158,6 +173,8 @@ class LongImageView : NestedScrollView {
 
     /** 设置长图文件[file] */
     fun setImageFile(file: File) {
+        showPlaceholder()
+        release()
         Observable.just(file)
                 .map { f ->
                     return@map BitmapFactory.decodeFile(f.absolutePath)
@@ -173,6 +190,8 @@ class LongImageView : NestedScrollView {
 
     /** 设置长图位图[bitmap] */
     fun setImageBitmap(bitmap: Bitmap) {
+        showPlaceholder()
+        release()
         Observable.just(bitmap)
                 .map { bmp ->
                     return@map BitmapUtils.createLongLargeBitmaps(context, bmp)
@@ -188,15 +207,44 @@ class LongImageView : NestedScrollView {
 
     /** 加载位图列表[bitmaps] */
     private fun loadImageBitmaps(bitmaps: List<Bitmap>) {
+        mTempBitmaps = bitmaps
         for (bitmap in bitmaps) {
             val imageView = ImageView(context)
             imageView.adjustViewBounds = true
             imageView.setImageBitmap(bitmap)
-            mRootLayout?.addView(imageView, ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT))
+            imageView.setOnClickListener { v ->
+                mClickListener?.onClick(v)
+            }
+            imageView.setOnLongClickListener { v ->
+                mLongClickListener?.onLongClick(v) ?: false
+            }
+            mImgLayout?.addView(imageView, ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT))
         }
         mPlaceholderImg?.visibility = View.GONE
-        mRootLayout?.visibility = View.VISIBLE
+        mScrollView?.visibility = View.VISIBLE
     }
 
+    /** 释放图片资源 */
+    fun release() {
+        mImgLayout?.removeAllViews()
+        if (mTempBitmaps.getSize() > 0) {
+            for (bitmap in mTempBitmaps!!) {
+                bitmap.recycle()
+            }
+            mTempBitmaps = null
+        }
+        mClickListener = null
+        mLongClickListener = null
+    }
+
+    override fun setOnClickListener(l: OnClickListener?) {
+        super.setOnClickListener(l)
+        mClickListener = l
+    }
+
+    override fun setOnLongClickListener(l: OnLongClickListener?) {
+        super.setOnLongClickListener(l)
+        mLongClickListener = l
+    }
 
 }

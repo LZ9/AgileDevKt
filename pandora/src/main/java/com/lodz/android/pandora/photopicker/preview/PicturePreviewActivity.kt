@@ -17,8 +17,6 @@ import com.lodz.android.corekt.anko.getSize
 import com.lodz.android.corekt.utils.StatusBarUtil
 import com.lodz.android.pandora.R
 import com.lodz.android.pandora.base.activity.AbsActivity
-import com.lodz.android.pandora.photopicker.contract.OnImgLoader
-import com.lodz.android.pandora.photopicker.contract.preview.OnLargeImgLoader
 import com.lodz.android.pandora.photopicker.contract.preview.PreviewController
 import com.lodz.android.pandora.widget.rv.snap.ViewPagerSnapHelper
 
@@ -26,11 +24,11 @@ import com.lodz.android.pandora.widget.rv.snap.ViewPagerSnapHelper
  * 图片预览页面
  * Created by zhouL on 2018/12/13.
  */
-internal class PicturePreviewActivity<T : Any> : AbsActivity() {
+internal class PicturePreviewActivity<V : View, T : Any> : AbsActivity() {
 
     companion object {
-        private var sPreviewBean: PreviewBean<*>? = null
-        internal fun <T : Any> start(context: Context, previewBean: PreviewBean<T>) {
+        private var sPreviewBean: PreviewBean<*, *>? = null
+        internal fun <V : View, T : Any> start(context: Context, previewBean: PreviewBean<V, T>) {
             synchronized(this) {
                 if (sPreviewBean != null) {
                     return
@@ -52,16 +50,16 @@ internal class PicturePreviewActivity<T : Any> : AbsActivity() {
     /** 预览控制器 */
     private lateinit var mPreviewController: PreviewController
     /** 预览数据 */
-    private var mPreviewBean: PreviewBean<T>? = null
+    private var mPreviewBean: PreviewBean<V, T>? = null
     /** 适配器 */
-    private lateinit var mAdapter: PicturePagerAdapter<T>
+    private lateinit var mAdapter: PicturePagerAdapter<V, T>
     /** 滑动帮助类 */
     private lateinit var mSnapHelper: ViewPagerSnapHelper
 
     @Suppress("UNCHECKED_CAST")
     override fun startCreate() {
         super.startCreate()
-        mPreviewBean = sPreviewBean as PreviewBean<T>
+        mPreviewBean = sPreviewBean as PreviewBean<V, T>
         mPreviewController = PreviewControllerImpl(this)
     }
 
@@ -74,20 +72,19 @@ internal class PicturePreviewActivity<T : Any> : AbsActivity() {
             finish()
             return
         }
-        val imgLoader = bean.imgLoader
-        val largeImgLoader = bean.largeImgLoader
-        if (imgLoader == null && largeImgLoader == null) {
+        val view = bean.imgView
+        if (view == null) {
             finish()
             return
         }
-        initRecyclerView(bean, imgLoader, largeImgLoader)
+        initRecyclerView(bean, view)
     }
 
     /** 初始化RV */
-    private fun initRecyclerView(bean: PreviewBean<T>, imgLoader: OnImgLoader<T>?, largeImgLoader: OnLargeImgLoader<T>?) {
+    private fun initRecyclerView(bean: PreviewBean<V, T>, view: AbsImageView<V, T>) {
         val layoutManager = LinearLayoutManager(getContext())
         layoutManager.orientation = RecyclerView.HORIZONTAL
-        mAdapter = PicturePagerAdapter(getContext(), bean.isScale, imgLoader, largeImgLoader)
+        mAdapter = PicturePagerAdapter(getContext(), view, bean.isScale, mPreviewController)
         mRecyclerView.layoutManager = layoutManager
         mRecyclerView.setHasFixedSize(true)
         mRecyclerView.adapter = mAdapter
@@ -99,14 +96,6 @@ internal class PicturePreviewActivity<T : Any> : AbsActivity() {
         super.setListeners()
         mSnapHelper.setOnPageChangeListener { position ->
             setPagerNum(position)
-        }
-
-        mAdapter.setOnImgClickListener { viewHolder, item, position ->
-            mPreviewBean?.clickListener?.onClick(viewHolder.itemView.context, item, position, mPreviewController)
-        }
-
-        mAdapter.setOnImgLongClickListener { viewHolder, item, position ->
-            mPreviewBean?.longClickListener?.onLongClick(viewHolder.itemView.context, item, position, mPreviewController)
         }
     }
 

@@ -1,23 +1,16 @@
 package com.lodz.android.pandora.photopicker.preview
 
+import android.view.View
 import androidx.annotation.ColorRes
-import com.lodz.android.pandora.photopicker.contract.OnClickListener
-import com.lodz.android.pandora.photopicker.contract.OnImgLoader
-import com.lodz.android.pandora.photopicker.contract.OnLongClickListener
-import com.lodz.android.pandora.photopicker.contract.preview.OnLargeImgLoader
 
 /**
  * 预览数据
  * Created by zhouL on 2018/12/13.
  */
-internal class PreviewBean<T : Any> {
+internal class PreviewBean<V : View, T : Any> {
 
     /** 资源列表 */
     var sourceList: List<T>? = null
-    /** 图片加载接口 */
-    var imgLoader: OnImgLoader<T>? = null
-    /** 大图片加载接口 */
-    var largeImgLoader: OnLargeImgLoader<T>? = null
     /** 默认显示的图片位置 */
     var showPosition = 0
     /** 预览页的背景色 */
@@ -36,17 +29,13 @@ internal class PreviewBean<T : Any> {
     var pagerTextSize = 16
     /** 是否显示页码文字 */
     var isShowPagerText = true
-    /** 点击事件 */
-    var clickListener: OnClickListener<T>? = null
-    /** 长按事件事件 */
-    var longClickListener: OnLongClickListener<T>? = null
     /** 是否可缩放 */
     var isScale = true
+    /** 图片控件 */
+    var imgView: AbsImageView<V, T>? = null
 
     fun clear() {
         sourceList = null
-        imgLoader = null
-        clickListener = null
-        longClickListener = null
+        imgView = null
     }
 }

@@ -13,13 +13,21 @@
         tools:scaleType="center"
         tools:src="@drawable/pandora_ic_launcher" />
 
-    <LinearLayout
-        android:id="@+id/root_layout"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:visibility="gone">
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/root_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
 
 </FrameLayout>

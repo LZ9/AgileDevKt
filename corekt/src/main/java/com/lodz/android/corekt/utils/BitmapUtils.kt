@@ -21,6 +21,7 @@ object BitmapUtils {
 
     /** 把[bitmap]转为Bsae64，质量[quality]（0-100，默认70），转码类型[flags]默认Base64.NO_WRAP */
     fun bitmapToBase64(bitmap: Bitmap, quality: Int = 70, flags: Int = Base64.NO_WRAP): String {
+        // @IntRange(from = 0, to = 100) quality: Int = 70
         var reviseQuality = quality
         if (quality < 0) {
             reviseQuality = 0
@@ -45,6 +46,7 @@ object BitmapUtils {
 
     /** [drawable]转为Bitmap，宽度[widthPx]和高度[heightPx]默认取[drawable]的值 */
     fun drawableToBitmap(drawable: Drawable, widthPx: Int = drawable.intrinsicWidth, heightPx: Int = drawable.intrinsicHeight): Bitmap? {
+        // @IntRange(from = 1) widthPx: Int = drawable.intrinsicWidth, @IntRange(from = 1) heightPx: Int = drawable.intrinsicHeight
         if (widthPx < 1 || heightPx < 1) {
             return null
         }
@@ -362,6 +364,7 @@ object BitmapUtils {
 
     /** 更改图片[bitmap]色系，图片的亮暗程度值[delta]越小图片会越亮，取值范围(1,23) */
     fun setBitmapTone(bitmap: Bitmap, delta: Int): Bitmap {
+        // @IntRange(from = 1, to = 23) delta: Int
         var newDelta = delta
         if (delta > 23) {
             newDelta = 23
@@ -417,6 +420,7 @@ object BitmapUtils {
 
     /** 设置图片[bitmap]饱和度[value] */
     fun setBitmapSaturation(bitmap: Bitmap, value: Float): Bitmap {
+        // @FloatRange(from = 0.0, to = 2.0) value: Float
         var newValue = value
         if (value <= 0f) {
             newValue = 0f
@@ -442,6 +446,7 @@ object BitmapUtils {
 
     /** 设置图片[bitmap]的亮度值[value] */
     fun setBitmapLuminance(bitmap: Bitmap, value: Float): Bitmap {
+        // @FloatRange(from = 0.0, to = 2.0) value: Float
         var newValue = value
         if (value <= 0f) {
             newValue = 0f
@@ -467,6 +472,7 @@ object BitmapUtils {
 
     /** 设置图片[bitmap]的色相值[value] */
     fun setBitmapHue(bitmap: Bitmap, value: Float): Bitmap {
+        // @FloatRange(from = 0.0, to = 2.0) value: Float
         var newValue = value
         if (value <= 0f) {
             newValue = 0f
@@ -521,10 +527,11 @@ object BitmapUtils {
     }
 
     /** 对图片[bitmap]进行柔化效果处理 */
-    fun createSoftenBitmap(bitmap: Bitmap) = setBitmapTone(bitmap, 16)
+    fun createSoftenBitmap(bitmap: Bitmap): Bitmap = setBitmapTone(bitmap, 16)
 
     /** 对图片[bitmap]进行光照效果处理，光源位置为X轴[centerX]和Y轴[centerY]，光照强度[strength] */
     fun createSunshineBitmap(bitmap: Bitmap, centerX: Int, centerY: Int, strength: Float = 50f): Bitmap {
+        //  @FloatRange(from = 0.0, to = 100.0) strength: Float = 50f
         var newStrength = strength + 100
         if (newStrength >= 200f) {
             newStrength = 200f

@@ -22,10 +22,12 @@ import com.lodz.android.corekt.anko.*
 import com.lodz.android.corekt.utils.*
 import com.lodz.android.pandora.R
 import com.lodz.android.pandora.base.activity.AbsActivity
+import com.lodz.android.pandora.photopicker.contract.preview.PreviewController
 import com.lodz.android.pandora.photopicker.picker.PickerBean
 import com.lodz.android.pandora.photopicker.picker.PickerItemBean
 import com.lodz.android.pandora.photopicker.picker.dialog.ImageFolderDialog
 import com.lodz.android.pandora.photopicker.picker.dialog.ImageFolderItemBean
+import com.lodz.android.pandora.photopicker.preview.AbsImageView
 import com.lodz.android.pandora.photopicker.preview.PreviewManager
 import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
 import com.lodz.android.pandora.rx.utils.RxUtils
@@ -219,7 +221,7 @@ internal class PhotoPickerActivity : AbsActivity() {
             }
 
             // 图片预览器
-            PreviewManager.create<String>()
+            PreviewManager.create<ImageView, String>()
                     .setScale(bean.isScale)
                     .setPosition(0)
                     .setPagerTextSize(14)
@@ -228,14 +230,26 @@ internal class PhotoPickerActivity : AbsActivity() {
                     .setStatusBarColor(bean.pickerUIConfig.getStatusBarColor())
                     .setNavigationBarColor(bean.pickerUIConfig.getNavigationBarColor())
                     .setPagerTextColor(bean.pickerUIConfig.getMainTextColor())
-                    .setOnClickListener { context, source, position, controller ->
-                        if (bean.isClickClosePreview) {
-                            controller.close()
+                    .setImageView(object : AbsImageView<ImageView, String>() {
+                        override fun onCreateView(context: Context, isScale: Boolean): ImageView {
+                            val img = ImageView(context)
+                            img.scaleType = ImageView.ScaleType.CENTER_INSIDE
+                            return img
                         }
-                    }
-                    .setImgLoader { context, source, imageView ->
-                        bean.previewLoader?.displayImg(context, source, imageView)
-                    }
+
+                        override fun onDisplayImg(context: Context, source: String, view: ImageView) {
+                            bean.previewLoader?.displayImg(context, source, view)
+                        }
+
+                        override fun onClickImpl(viewHolder: RecyclerView.ViewHolder, view: ImageView, item: String, position: Int, controller: PreviewController) {
+                            super.onClickImpl(viewHolder, view, item, position, controller)
+                            view.setOnClickListener {
+                                if (bean.isClickClosePreview) {
+                                    controller.close()
+                                }
+                            }
+                        }
+                    })
                     .build(list)
                     .open(getContext())
         }
@@ -304,21 +318,33 @@ internal class PhotoPickerActivity : AbsActivity() {
                 return@setOnItemClickListener
             }
             // 图片预览器
-            PreviewManager.create<String>()
+            PreviewManager.create<ImageView, String>()
                     .setScale(bean.isScale)
                     .setShowPagerText(false)
                     .setBackgroundColor(bean.pickerUIConfig.getPreviewBgColor())
                     .setStatusBarColor(bean.pickerUIConfig.getStatusBarColor())
                     .setNavigationBarColor(bean.pickerUIConfig.getNavigationBarColor())
                     .setPagerTextColor(bean.pickerUIConfig.getMainTextColor())
-                    .setOnClickListener { context, source, position, controller ->
-                        if (bean.isClickClosePreview) {
-                            controller.close()
+                    .setImageView(object : AbsImageView<ImageView, String>() {
+                        override fun onCreateView(context: Context, isScale: Boolean): ImageView {
+                            val img = ImageView(context)
+                            img.scaleType = ImageView.ScaleType.CENTER_INSIDE
+                            return img
                         }
-                    }
-                    .setImgLoader { context, source, imageView ->
-                        bean.previewLoader?.displayImg(context, source, imageView)
-                    }
+
+                        override fun onDisplayImg(context: Context, source: String, view: ImageView) {
+                            bean.previewLoader?.displayImg(context, source, view)
+                        }
+
+                        override fun onClickImpl(viewHolder: RecyclerView.ViewHolder, view: ImageView, item: String, position: Int, controller: PreviewController) {
+                            super.onClickImpl(viewHolder, view, item, position, controller)
+                            view.setOnClickListener {
+                                if (bean.isClickClosePreview) {
+                                    controller.close()
+                                }
+                            }
+                        }
+                    })
                     .build(item.path)
                     .open(getContext())
         }

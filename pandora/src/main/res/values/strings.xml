@@ -14,6 +14,7 @@
 
     <!-- 图片预览/选择 -->
     <string name="pandora_photo_loader_unset">您尚未设置图片加载器</string>
+    <string name="pandora_preview_img_unset">您尚未设置图片控件</string>
     <string name="pandora_preview_loader_unset">您尚未设置图片预览器</string>
     <string name="pandora_preview_source_list_empty">图片数据为空</string>
     <string name="pandora_photo_source_list_empty">您没有可以选择的图片</string>

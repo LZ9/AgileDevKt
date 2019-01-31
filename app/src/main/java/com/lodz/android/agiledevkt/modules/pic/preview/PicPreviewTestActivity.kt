@@ -2,22 +2,25 @@ package com.lodz.android.agiledevkt.modules.pic.preview
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.Switch
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import com.davemorrissey.labs.subscaleview.ImageSource
 import com.google.android.material.button.MaterialButton
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.utils.toastShort
 import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.base.activity.BaseActivity
+import com.lodz.android.pandora.photopicker.contract.preview.PreviewController
+import com.lodz.android.pandora.photopicker.preview.AbsImageView
 import com.lodz.android.pandora.photopicker.preview.PreviewManager
+import com.lodz.android.pandora.widget.custom.LongImageView
 import java.io.File
 
 /**
@@ -95,7 +98,7 @@ class PicPreviewTestActivity : BaseActivity() {
         }
 
         mPreviewBtn.setOnClickListener {
-            PreviewManager.create<String>()
+            PreviewManager.create<ImageView, String>()
                     .setScale(mScaleSwitch.isChecked)
                     .setPosition(mPosition)
                     .setBackgroundColor(R.color.black)
@@ -104,25 +107,42 @@ class PicPreviewTestActivity : BaseActivity() {
                     .setPagerTextColor(R.color.white)
                     .setPagerTextSize(14)
                     .setShowPagerText(mShowPagerSwitch.isChecked)
-                    .setOnClickListener { context, source, position, controller ->
-                        if (mClickCloseSwitch.isChecked) {
-                            controller.close()
-                        } else {
-                            toastShort(getString(R.string.preview_click_tips, position.toString()))
+                    .setImageView(object : AbsImageView<ImageView, String>(){
+                        override fun onCreateView(context: Context, isScale: Boolean): ImageView {
+                            val img = ImageView(context)
+                            img.scaleType = ImageView.ScaleType.CENTER_INSIDE
+                            return img
                         }
-                    }
-                    .setOnLongClickListener { context, source, position, controller ->
-                        toastShort(getString(R.string.preview_long_click_tips, position.toString()))
-                    }
-                    .setImgLoader { context, source, imageView ->
-                        ImageLoader.create(context).loadUrl(source).setFitCenter().into(imageView)
-                    }
+
+                        override fun onDisplayImg(context: Context, source: String, view: ImageView) {
+                            ImageLoader.create(context).loadUrl(source).setFitCenter().into(view)
+                        }
+
+                        override fun onClickImpl(viewHolder: RecyclerView.ViewHolder, view: ImageView, item: String, position: Int, controller: PreviewController) {
+                            super.onClickImpl(viewHolder, view, item, position, controller)
+                            view.setOnClickListener {
+                                if (mClickCloseSwitch.isChecked) {
+                                    controller.close()
+                                } else {
+                                    toastShort(getString(R.string.preview_click_tips, position.toString()))
+                                }
+                            }
+                        }
+
+                        override fun onLongClickImpl(viewHolder: RecyclerView.ViewHolder, view: ImageView, item: String, position: Int, controller: PreviewController) {
+                            super.onLongClickImpl(viewHolder, view, item, position, controller)
+                            view.setOnLongClickListener {
+                                toastShort(getString(R.string.preview_long_click_tips, position.toString()))
+                                return@setOnLongClickListener true
+                            }
+                        }
+                    })
                     .build(IMG_URLS)
                     .open(getContext())
         }
 
         mLargePreviewBtn.setOnClickListener {
-            PreviewManager.create<String>()
+            PreviewManager.create<LongImageView, String>()
                     .setScale(mScaleSwitch.isChecked)
                     .setPosition(mPosition)
                     .setBackgroundColor(R.color.black)
@@ -131,31 +151,48 @@ class PicPreviewTestActivity : BaseActivity() {
                     .setPagerTextColor(R.color.white)
                     .setPagerTextSize(14)
                     .setShowPagerText(mShowPagerSwitch.isChecked)
-                    .setOnClickListener { context, source, position, controller ->
-                        if (mClickCloseSwitch.isChecked) {
-                            controller.close()
-                        } else {
-                            toastShort(getString(R.string.preview_click_tips, position.toString()))
+                    .setImageView(object : AbsImageView<LongImageView, String>(){
+                        override fun onCreateView(context: Context, isScale: Boolean): LongImageView {
+                            val img = LongImageView(context)
+                            img.setPlaceholderRes(R.drawable.ic_launcher)
+                            img.setPlaceholderScaleType(ImageView.ScaleType.CENTER)
+                            return img
                         }
-                    }
-                    .setOnLongClickListener { context, source, position, controller ->
-                        toastShort(getString(R.string.preview_long_click_tips, position.toString()))
-                    }
-                    .setLargeImgLoader { context, source, imageView ->
-                        ImageLoader.create(context).loadUrl(source).setRequestListener(object : RequestListener<File> {
-                            override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<File>?, isFirstResource: Boolean): Boolean {
-                                imageView.setImage(ImageSource.resource(R.drawable.ic_launcher))
-                                return false
-                            }
 
-                            override fun onResourceReady(resource: File?, model: Any?, target: Target<File>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                                if (resource != null){
-                                    imageView.setImage(ImageSource.uri(Uri.fromFile(resource)))
+                        override fun onDisplayImg(context: Context, source: String, view: LongImageView) {
+                            ImageLoader.create(context).loadUrl(source).setRequestListener(object : RequestListener<File> {
+                                override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<File>?, isFirstResource: Boolean): Boolean {
+                                    return false
                                 }
-                                return false
+
+                                override fun onResourceReady(resource: File?, model: Any?, target: Target<File>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                                    if (resource != null){
+                                        view.setImageFile(resource)
+                                    }
+                                    return false
+                                }
+                            }).download()
+                        }
+
+                        override fun onClickImpl(viewHolder: RecyclerView.ViewHolder, view: LongImageView, item: String, position: Int, controller: PreviewController) {
+                            super.onClickImpl(viewHolder, view, item, position, controller)
+                            view.setOnClickListener {
+                                if (mClickCloseSwitch.isChecked) {
+                                    controller.close()
+                                } else {
+                                    toastShort(getString(R.string.preview_click_tips, position.toString()))
+                                }
                             }
-                        }).download()
-                    }
+                        }
+
+                        override fun onLongClickImpl(viewHolder: RecyclerView.ViewHolder, view: LongImageView, item: String, position: Int, controller: PreviewController) {
+                            super.onLongClickImpl(viewHolder, view, item, position, controller)
+                            view.setOnLongClickListener {
+                                toastShort(getString(R.string.preview_long_click_tips, position.toString()))
+                                return@setOnLongClickListener true
+                            }
+                        }
+                    })
                     .build(IMG_URLS)
                     .open(getContext())
         }

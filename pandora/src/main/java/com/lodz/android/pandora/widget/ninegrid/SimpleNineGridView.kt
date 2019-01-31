@@ -3,9 +3,12 @@ package com.lodz.android.pandora.widget.ninegrid
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.ImageView
+import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.corekt.anko.toArrayList
+import com.lodz.android.pandora.photopicker.contract.preview.PreviewController
 import com.lodz.android.pandora.photopicker.picker.PickerManager
 import com.lodz.android.pandora.photopicker.picker.PickerUIConfig
+import com.lodz.android.pandora.photopicker.preview.AbsImageView
 import com.lodz.android.pandora.photopicker.preview.PreviewManager
 
 
@@ -71,7 +74,7 @@ class SimpleNineGridView : NineGridView {
             }
 
             override fun onClickPic(data: String, position: Int) {
-                PreviewManager.create<String>()
+                PreviewManager.create<ImageView, String>()
                         .setScale(isScale)
                         .setPosition(position)
                         .setBackgroundColor(android.R.color.black)
@@ -80,14 +83,26 @@ class SimpleNineGridView : NineGridView {
                         .setPagerTextColor(android.R.color.white)
                         .setPagerTextSize(14)
                         .setShowPagerText(true)
-                        .setOnClickListener { context, source, position, controller ->
-                            if (isClickClosePreview) {
-                                controller.close()
+                        .setImageView(object : AbsImageView<ImageView, String>() {
+                            override fun onCreateView(context: Context, isScale: Boolean): ImageView {
+                                val img = ImageView(context)
+                                img.scaleType = ImageView.ScaleType.CENTER_INSIDE
+                                return img
                             }
-                        }
-                        .setImgLoader { context, source, imageView ->
-                            mListener?.onDisplayPreviewImg(context, source, imageView)
-                        }
+
+                            override fun onDisplayImg(context: Context, source: String, view: ImageView) {
+                                mListener?.onDisplayPreviewImg(context, source, view)
+                            }
+
+                            override fun onClickImpl(viewHolder: RecyclerView.ViewHolder, view: ImageView, item: String, position: Int, controller: PreviewController) {
+                                super.onClickImpl(viewHolder, view, item, position, controller)
+                                view.setOnClickListener {
+                                    if (isClickClosePreview) {
+                                        controller.close()
+                                    }
+                                }
+                            }
+                        })
                         .build(getPicData())
                         .open(getContext())
             }
