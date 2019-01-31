@@ -112,7 +112,6 @@ class PicPreviewTestActivity : BaseActivity() {
                 toastShort(R.string.preview_unsupport_scale)
             }
             PreviewManager.create<ImageView, String>()
-                    .setScale(mScaleSwitch.isChecked)
                     .setPosition(mPosition)
                     .setBackgroundColor(R.color.black)
                     .setStatusBarColor(R.color.black)
@@ -120,10 +119,9 @@ class PicPreviewTestActivity : BaseActivity() {
                     .setPagerTextColor(R.color.white)
                     .setPagerTextSize(14)
                     .setShowPagerText(mShowPagerSwitch.isChecked)
-                    .setImageView(object : AbsImageView<ImageView, String>(){
+                    .setImageView(object : AbsImageView<ImageView, String>(mScaleSwitch.isChecked){
                         override fun onCreateView(context: Context, isScale: Boolean): ImageView {
                             val img = ImageView(context)
-
                             img.scaleType = ImageView.ScaleType.CENTER_INSIDE
                             return img
                         }
@@ -161,7 +159,6 @@ class PicPreviewTestActivity : BaseActivity() {
                 toastShort(R.string.preview_only_scale)
             }
             PreviewManager.create<PhotoView, String>()
-                    .setScale(mScaleSwitch.isChecked)
                     .setPosition(mPosition)
                     .setBackgroundColor(R.color.black)
                     .setStatusBarColor(R.color.black)
@@ -169,7 +166,7 @@ class PicPreviewTestActivity : BaseActivity() {
                     .setPagerTextColor(R.color.white)
                     .setPagerTextSize(14)
                     .setShowPagerText(mShowPagerSwitch.isChecked)
-                    .setImageView(object : AbsImageView<PhotoView, String>(){
+                    .setImageView(object : AbsImageView<PhotoView, String>(mScaleSwitch.isChecked){
                         override fun onCreateView(context: Context, isScale: Boolean): PhotoView {
                             val img = PhotoView(context)
                             img.scaleType = ImageView.ScaleType.CENTER_INSIDE
@@ -213,7 +210,6 @@ class PicPreviewTestActivity : BaseActivity() {
 
         mLargeBtn.setOnClickListener {
             PreviewManager.create<SubsamplingScaleImageView, String>()
-                    .setScale(mScaleSwitch.isChecked)
                     .setPosition(mPosition)
                     .setBackgroundColor(R.color.black)
                     .setStatusBarColor(R.color.black)
@@ -221,7 +217,7 @@ class PicPreviewTestActivity : BaseActivity() {
                     .setPagerTextColor(R.color.white)
                     .setPagerTextSize(14)
                     .setShowPagerText(mShowPagerSwitch.isChecked)
-                    .setImageView(object : AbsImageView<SubsamplingScaleImageView, String>(){
+                    .setImageView(object : AbsImageView<SubsamplingScaleImageView, String>(mScaleSwitch.isChecked){
                         override fun onCreateView(context: Context, isScale: Boolean): SubsamplingScaleImageView {
                             val img = SubsamplingScaleImageView(context)
                             img.setImage(ImageSource.resource(R.drawable.ic_launcher))
@@ -281,7 +277,6 @@ class PicPreviewTestActivity : BaseActivity() {
                 toastShort(R.string.preview_unsupport_scale)
             }
             PreviewManager.create<LongImageView, String>()
-                    .setScale(mScaleSwitch.isChecked)
                     .setPosition(mPosition)
                     .setBackgroundColor(R.color.black)
                     .setStatusBarColor(R.color.black)
@@ -289,7 +284,7 @@ class PicPreviewTestActivity : BaseActivity() {
                     .setPagerTextColor(R.color.white)
                     .setPagerTextSize(14)
                     .setShowPagerText(mShowPagerSwitch.isChecked)
-                    .setImageView(object : AbsImageView<LongImageView, String>(){
+                    .setImageView(object : AbsImageView<LongImageView, String>(mScaleSwitch.isChecked){
                         override fun onCreateView(context: Context, isScale: Boolean): LongImageView {
                             val img = LongImageView(context)
                             img.setPlaceholderRes(R.drawable.ic_launcher)

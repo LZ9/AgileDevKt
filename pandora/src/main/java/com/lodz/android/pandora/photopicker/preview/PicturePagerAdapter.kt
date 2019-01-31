@@ -12,18 +12,15 @@ import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
  * 图片翻页适配器
  * Created by zhouL on 2018/12/17.
  */
-internal class PicturePagerAdapter<V : View, T : Any>(context: Context, view: AbsImageView<V, T>, isScale: Boolean, controller: PreviewController) : BaseRecyclerViewAdapter<T>(context) {
+internal class PicturePagerAdapter<V : View, T : Any>(context: Context, view: AbsImageView<V, T>, controller: PreviewController) : BaseRecyclerViewAdapter<T>(context) {
 
     /** 图片控件 */
     private val mView: AbsImageView<V, T>
-    /** 是否缩放 */
-    private val isScale: Boolean
     /** 图片加载器 */
     private var mController: PreviewController
 
     init {
         this.mView = view
-        this.isScale = isScale
         this.mController = controller
     }
 
@@ -38,7 +35,7 @@ internal class PicturePagerAdapter<V : View, T : Any>(context: Context, view: Ab
     override fun onViewDetachedFromWindow(holder: RecyclerView.ViewHolder) {
         super.onViewDetachedFromWindow(holder)
         if (holder is PicturePagerAdapter<*, *>.DataViewHolder) {
-            mView.onViewDetached(holder.photoImg as V, isScale)
+            mView.onViewDetached(holder.photoImg as V)
         }
     }
 
@@ -70,7 +67,7 @@ internal class PicturePagerAdapter<V : View, T : Any>(context: Context, view: Ab
         val photoImg: V
 
         init {
-            photoImg = mView.onCreateView(itemView.context, isScale)
+            photoImg = mView.onCreateView(itemView.context)
             itemView.addView(photoImg, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         }
     }

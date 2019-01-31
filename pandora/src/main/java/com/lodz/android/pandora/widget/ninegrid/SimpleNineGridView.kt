@@ -43,21 +43,27 @@ class SimpleNineGridView : NineGridView {
     init {
         setListener(object : OnNineGridViewListener {
             override fun onAddPic(addCount: Int) {
-                PickerManager.create()
+                PickerManager.create<ImageView>()
                         .setImgLoader { context, source, imageView ->
                             mListener?.onDisplayPickerImg(context, source, imageView)
                         }
-                        .setPreviewImgLoader { context, source, imageView ->
-                            mListener?.onDisplayPreviewImg(context, source, imageView)
-                        }
+                        .setImageView(object : AbsImageView<ImageView, String>(isScale) {
+                            override fun onCreateView(context: Context, isScale: Boolean): ImageView {
+                                val img = ImageView(context)
+                                img.scaleType = ImageView.ScaleType.CENTER_INSIDE
+                                return img
+                            }
+
+                            override fun onDisplayImg(context: Context, source: String, view: ImageView) {
+                                mListener?.onDisplayPreviewImg(context, source, view)
+                            }
+                        })
                         .setOnPhotoPickerListener { photos ->
                             addDatas(photos.toArrayList())
                         }
                         .setMaxCount(addCount)
-                        .setScale(isScale)
                         .setNeedCamera(isNeedCamera)
                         .setNeedItemPreview(isNeedItemPreview)
-                        .setClickClosePreview(isClickClosePreview)
                         .setPickerUIConfig(mConfig)
                         .setCameraSavePath(mCameraSavePath)
                         .setAuthority(mAuthority)
@@ -75,7 +81,6 @@ class SimpleNineGridView : NineGridView {
 
             override fun onClickPic(data: String, position: Int) {
                 PreviewManager.create<ImageView, String>()
-                        .setScale(isScale)
                         .setPosition(position)
                         .setBackgroundColor(android.R.color.black)
                         .setStatusBarColor(android.R.color.black)
@@ -83,7 +88,7 @@ class SimpleNineGridView : NineGridView {
                         .setPagerTextColor(android.R.color.white)
                         .setPagerTextSize(14)
                         .setShowPagerText(true)
-                        .setImageView(object : AbsImageView<ImageView, String>() {
+                        .setImageView(object : AbsImageView<ImageView, String>(isScale) {
                             override fun onCreateView(context: Context, isScale: Boolean): ImageView {
                                 val img = ImageView(context)
                                 img.scaleType = ImageView.ScaleType.CENTER_INSIDE

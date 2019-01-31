@@ -3,8 +3,10 @@ package com.lodz.android.pandora.photopicker.picker
 import android.content.Context
 import android.os.Build
 import android.os.Environment
+import android.view.View
 import com.lodz.android.corekt.album.AlbumUtils
 import com.lodz.android.corekt.anko.deduplication
+import com.lodz.android.corekt.utils.ToastUtils
 import com.lodz.android.corekt.utils.toastShort
 import com.lodz.android.pandora.R
 import com.lodz.android.pandora.photopicker.picker.pick.PhotoPickerActivity
@@ -14,10 +16,10 @@ import java.io.File
  * 照片选择器
  * Created by zhouL on 2018/12/19.
  */
-class PickerManager internal constructor(private val pickerBean: PickerBean) {
+class PickerManager<V : View> internal constructor(private val pickerBean: PickerBean<V>) {
 
     companion object {
-        fun create(): PickerBuilder = PickerBuilder()
+        fun <V : View> create(): PickerBuilder<V> = PickerBuilder()
     }
 
     /** 打开选择器，上下文[context] */
@@ -26,8 +28,9 @@ class PickerManager internal constructor(private val pickerBean: PickerBean) {
             context.toastShort(R.string.pandora_photo_loader_unset)
             return
         }
-        if (pickerBean.previewLoader == null) {
-            pickerBean.previewLoader = pickerBean.imgLoader
+        if (pickerBean.imgView == null) {// 校验图片加载器
+            ToastUtils.showShort(context, R.string.pandora_preview_img_unset)
+            return
         }
         if (pickerBean.photoPickerListener == null) {// 校验图片选中回调监听
             context.toastShort(R.string.pandora_photo_selected_listener_unset)

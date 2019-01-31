@@ -22,12 +22,10 @@ import com.lodz.android.corekt.anko.*
 import com.lodz.android.corekt.utils.*
 import com.lodz.android.pandora.R
 import com.lodz.android.pandora.base.activity.AbsActivity
-import com.lodz.android.pandora.photopicker.contract.preview.PreviewController
 import com.lodz.android.pandora.photopicker.picker.PickerBean
 import com.lodz.android.pandora.photopicker.picker.PickerItemBean
 import com.lodz.android.pandora.photopicker.picker.dialog.ImageFolderDialog
 import com.lodz.android.pandora.photopicker.picker.dialog.ImageFolderItemBean
-import com.lodz.android.pandora.photopicker.preview.AbsImageView
 import com.lodz.android.pandora.photopicker.preview.PreviewManager
 import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
 import com.lodz.android.pandora.rx.utils.RxUtils
@@ -37,12 +35,12 @@ import io.reactivex.Observable
  * 图片选择页面
  * Created by zhouL on 2018/12/20.
  */
-internal class PhotoPickerActivity : AbsActivity() {
+internal class PhotoPickerActivity<V : View> : AbsActivity() {
 
     companion object {
-        private var sPickerBean: PickerBean? = null
+        private var sPickerBean: PickerBean<*>? = null
 
-        internal fun start(context: Context, pickerBean: PickerBean) {
+        internal fun <V : View> start(context: Context, pickerBean: PickerBean<V>) {
             synchronized(this) {
                 if (sPickerBean != null) {
                     return
@@ -76,7 +74,7 @@ internal class PhotoPickerActivity : AbsActivity() {
     private lateinit var mAdapter: PhotoPickerAdapter
 
     /** 选择器数据 */
-    private var mPickerBean: PickerBean? = null
+    private var mPickerBean: PickerBean<V>? = null
     /** 当前照片 */
     private val mCurrentPhotoList = ArrayList<PickerItemBean>()
     /** 已选中的照片 */
@@ -87,9 +85,10 @@ internal class PhotoPickerActivity : AbsActivity() {
     /** 当前展示的图片文件夹 */
     private var mCurrentImageFolder: ImageFolder? = null
 
+    @Suppress("UNCHECKED_CAST")
     override fun startCreate() {
         super.startCreate()
-        mPickerBean = sPickerBean
+        mPickerBean = sPickerBean as PickerBean<V>
     }
 
     override fun getAbsLayoutId(): Int = R.layout.pandora_activity_picker
@@ -135,7 +134,7 @@ internal class PhotoPickerActivity : AbsActivity() {
     }
 
     /** 初始化RecyclerView */
-    private fun initRecyclerView(bean: PickerBean) {
+    private fun initRecyclerView(bean: PickerBean<V>) {
         val layoutManager = GridLayoutManager(getContext(), 3)
         layoutManager.orientation = RecyclerView.VERTICAL
         mAdapter = PhotoPickerAdapter(getContext(), bean.imgLoader, bean.isNeedCamera, bean.pickerUIConfig)
@@ -215,14 +214,18 @@ internal class PhotoPickerActivity : AbsActivity() {
                 return@setOnClickListener
             }
 
+            val view = bean.imgView
+            if (view == null) {
+                return@setOnClickListener
+            }
+
             val list = ArrayList<String>()
             for (itemBean in mSelectedList) {
                 list.add(itemBean.path)// 组装数据
             }
 
             // 图片预览器
-            PreviewManager.create<ImageView, String>()
-                    .setScale(bean.isScale)
+            PreviewManager.create<V, String>()
                     .setPosition(0)
                     .setPagerTextSize(14)
                     .setShowPagerText(true)
@@ -230,26 +233,7 @@ internal class PhotoPickerActivity : AbsActivity() {
                     .setStatusBarColor(bean.pickerUIConfig.getStatusBarColor())
                     .setNavigationBarColor(bean.pickerUIConfig.getNavigationBarColor())
                     .setPagerTextColor(bean.pickerUIConfig.getMainTextColor())
-                    .setImageView(object : AbsImageView<ImageView, String>() {
-                        override fun onCreateView(context: Context, isScale: Boolean): ImageView {
-                            val img = ImageView(context)
-                            img.scaleType = ImageView.ScaleType.CENTER_INSIDE
-                            return img
-                        }
-
-                        override fun onDisplayImg(context: Context, source: String, view: ImageView) {
-                            bean.previewLoader?.displayImg(context, source, view)
-                        }
-
-                        override fun onClickImpl(viewHolder: RecyclerView.ViewHolder, view: ImageView, item: String, position: Int, controller: PreviewController) {
-                            super.onClickImpl(viewHolder, view, item, position, controller)
-                            view.setOnClickListener {
-                                if (bean.isClickClosePreview) {
-                                    controller.close()
-                                }
-                            }
-                        }
-                    })
+                    .setImageView(view)
                     .build(list)
                     .open(getContext())
         }
@@ -317,34 +301,18 @@ internal class PhotoPickerActivity : AbsActivity() {
             if (!bean.isNeedItemPreview) {// 不需要预览
                 return@setOnItemClickListener
             }
+            val view = bean.imgView
+            if (view == null) {
+                return@setOnItemClickListener
+            }
             // 图片预览器
-            PreviewManager.create<ImageView, String>()
-                    .setScale(bean.isScale)
+            PreviewManager.create<V, String>()
                     .setShowPagerText(false)
                     .setBackgroundColor(bean.pickerUIConfig.getPreviewBgColor())
                     .setStatusBarColor(bean.pickerUIConfig.getStatusBarColor())
                     .setNavigationBarColor(bean.pickerUIConfig.getNavigationBarColor())
                     .setPagerTextColor(bean.pickerUIConfig.getMainTextColor())
-                    .setImageView(object : AbsImageView<ImageView, String>() {
-                        override fun onCreateView(context: Context, isScale: Boolean): ImageView {
-                            val img = ImageView(context)
-                            img.scaleType = ImageView.ScaleType.CENTER_INSIDE
-                            return img
-                        }
-
-                        override fun onDisplayImg(context: Context, source: String, view: ImageView) {
-                            bean.previewLoader?.displayImg(context, source, view)
-                        }
-
-                        override fun onClickImpl(viewHolder: RecyclerView.ViewHolder, view: ImageView, item: String, position: Int, controller: PreviewController) {
-                            super.onClickImpl(viewHolder, view, item, position, controller)
-                            view.setOnClickListener {
-                                if (bean.isClickClosePreview) {
-                                    controller.close()
-                                }
-                            }
-                        }
-                    })
+                    .setImageView(view)
                     .build(item.path)
                     .open(getContext())
         }
@@ -448,7 +416,7 @@ internal class PhotoPickerActivity : AbsActivity() {
     }
 
     /** 绘制确定按钮 */
-    private fun drawConfirmBtn(bean: PickerBean) {
+    private fun drawConfirmBtn(bean: PickerBean<V>) {
         mConfirmBtn.viewTreeObserver.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
             override fun onPreDraw(): Boolean {
                 mConfirmBtn.viewTreeObserver.removeOnPreDrawListener(this)

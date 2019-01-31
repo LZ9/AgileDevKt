@@ -5,9 +5,12 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.RadioGroup
 import android.widget.Switch
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.github.chrisbanes.photoview.PhotoView
 import com.google.android.material.button.MaterialButton
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.utils.file.FileManager
@@ -17,8 +20,10 @@ import com.lodz.android.corekt.utils.isPermissionGranted
 import com.lodz.android.corekt.utils.toastShort
 import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.base.activity.BaseActivity
+import com.lodz.android.pandora.photopicker.contract.preview.PreviewController
 import com.lodz.android.pandora.photopicker.picker.PickerManager
 import com.lodz.android.pandora.photopicker.picker.PickerUIConfig
+import com.lodz.android.pandora.photopicker.preview.AbsImageView
 import permissions.dispatcher.*
 
 /**
@@ -96,21 +101,36 @@ class PicPickerTestActivity : BaseActivity() {
 
         // 挑选手机相册
         PickPhoneBtn.setOnClickListener {
-            PickerManager.create()
+            PickerManager.create<ImageView>()
                     .setMaxCount(mMaxCount)
-                    .setScale(mScaleSwitch.isChecked)
                     .setNeedCamera(mShowCameraSwitch.isChecked)
                     .setNeedItemPreview(mItemPreviewSwitch.isChecked)
-                    .setClickClosePreview(mClickClosePreviewSwitch.isChecked)
                     .setPickerUIConfig(mConfig)
                     .setCameraSavePath(FileManager.getCacheFolderPath())
                     .setAuthority("com.lodz.android.agiledevkt.fileprovider")
                     .setImgLoader { context, source, imageView ->
                         ImageLoader.create(context).loadFilePath(source).setCenterCrop().into(imageView)
                     }
-                    .setPreviewImgLoader { context, source, imageView ->
-                        ImageLoader.create(context).loadFilePath(source).setFitCenter().into(imageView)
-                    }
+                    .setImageView(object : AbsImageView<ImageView, String>(mScaleSwitch.isChecked) {
+                        override fun onCreateView(context: Context, isScale: Boolean): ImageView {
+                            val img = if (isScale) PhotoView(context) else ImageView(context)
+                            img.scaleType = ImageView.ScaleType.CENTER_INSIDE
+                            return img
+                        }
+
+                        override fun onDisplayImg(context: Context, source: String, view: ImageView) {
+                            ImageLoader.create(context).loadFilePath(source).setFitCenter().into(view)
+                        }
+
+                        override fun onClickImpl(viewHolder: RecyclerView.ViewHolder, view: ImageView, item: String, position: Int, controller: PreviewController) {
+                            super.onClickImpl(viewHolder, view, item, position, controller)
+                            view.setOnClickListener {
+                                if (mClickClosePreviewSwitch.isChecked) {
+                                    controller.close()
+                                }
+                            }
+                        }
+                    })
                     .setOnPhotoPickerListener { photos ->
                         var str = ""
                         for (path in photos) {
@@ -124,18 +144,33 @@ class PicPickerTestActivity : BaseActivity() {
 
         // 挑选指定图片
         PickCustomBtn.setOnClickListener {
-            PickerManager.create()
+            PickerManager.create<ImageView>()
                     .setMaxCount(mMaxCount)
-                    .setScale(mScaleSwitch.isChecked)
                     .setNeedItemPreview(mItemPreviewSwitch.isChecked)
-                    .setClickClosePreview(mClickClosePreviewSwitch.isChecked)
                     .setPickerUIConfig(mConfig)
                     .setImgLoader { context, source, imageView ->
                         ImageLoader.create(context).loadUrl(source).setCenterCrop().into(imageView)
                     }
-                    .setPreviewImgLoader { context, source, imageView ->
-                        ImageLoader.create(context).loadUrl(source).setFitCenter().into(imageView)
-                    }
+                    .setImageView(object : AbsImageView<ImageView, String>(mScaleSwitch.isChecked) {
+                        override fun onCreateView(context: Context, isScale: Boolean): ImageView {
+                            val img = if (isScale) PhotoView(context) else ImageView(context)
+                            img.scaleType = ImageView.ScaleType.CENTER_INSIDE
+                            return img
+                        }
+
+                        override fun onDisplayImg(context: Context, source: String, view: ImageView) {
+                            ImageLoader.create(context).loadUrl(source).setFitCenter().into(view)
+                        }
+
+                        override fun onClickImpl(viewHolder: RecyclerView.ViewHolder, view: ImageView, item: String, position: Int, controller: PreviewController) {
+                            super.onClickImpl(viewHolder, view, item, position, controller)
+                            view.setOnClickListener {
+                                if (mClickClosePreviewSwitch.isChecked) {
+                                    controller.close()
+                                }
+                            }
+                        }
+                    })
                     .setOnPhotoPickerListener { photos ->
                         var str = ""
                         for (path in photos) {

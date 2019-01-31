@@ -1,56 +1,44 @@
 package com.lodz.android.pandora.photopicker.picker
 
 import android.content.Context
+import android.view.View
 import android.widget.ImageView
 import androidx.annotation.IntRange
 import com.lodz.android.pandora.photopicker.contract.OnImgLoader
 import com.lodz.android.pandora.photopicker.contract.picker.OnPhotoPickerListener
+import com.lodz.android.pandora.photopicker.preview.AbsImageView
 
 /**
  * 照片选择构建类
  * Created by zhouL on 2018/12/19.
  */
-class PickerBuilder {
+class PickerBuilder<V : View> {
 
     /** 图片数据 */
-    private val pickerBean = PickerBean()
+    private val pickerBean = PickerBean<V>()
 
     /** 设置图片加载器[imgLoader] */
-    fun setImgLoader(imgLoader: OnImgLoader<String>): PickerBuilder {
+    fun setImgLoader(imgLoader: OnImgLoader<String>): PickerBuilder<V> {
         pickerBean.imgLoader = imgLoader
         return this
     }
 
     /** 设置图片加载器[imgLoader] */
-    fun setImgLoader(imgLoader: (context: Context, source: String, imageView: ImageView) -> Unit): PickerBuilder =
+    fun setImgLoader(imgLoader: (context: Context, source: String, imageView: ImageView) -> Unit): PickerBuilder<V> =
             setImgLoader(object : OnImgLoader<String> {
                 override fun displayImg(context: Context, source: String, imageView: ImageView) {
                     imgLoader.invoke(context, source, imageView)
                 }
             })
 
-    /** 设置预览图图加载器[previewLoader] */
-    fun setPreviewImgLoader(previewLoader: OnImgLoader<String>): PickerBuilder {
-        pickerBean.previewLoader = previewLoader
-        return this
-    }
-
-    /** 设置预览图图加载器[previewLoader] */
-    fun setPreviewImgLoader(previewLoader: (context: Context, source: String, imageView: ImageView) -> Unit): PickerBuilder =
-            setPreviewImgLoader(object : OnImgLoader<String> {
-                override fun displayImg(context: Context, source: String, imageView: ImageView) {
-                    previewLoader.invoke(context, source, imageView)
-                }
-            })
-
     /** 设置图片选中回调[listener] */
-    fun setOnPhotoPickerListener(listener: OnPhotoPickerListener): PickerBuilder {
+    fun setOnPhotoPickerListener(listener: OnPhotoPickerListener): PickerBuilder<V> {
         pickerBean.photoPickerListener = listener
         return this
     }
 
     /** 设置图片选中回调[listener] */
-    fun setOnPhotoPickerListener(listener: (photos: List<String>) -> Unit): PickerBuilder =
+    fun setOnPhotoPickerListener(listener: (photos: List<String>) -> Unit): PickerBuilder<V> =
             setOnPhotoPickerListener(object : OnPhotoPickerListener {
                 override fun onPickerSelected(photos: List<String>) {
                     listener.invoke(photos)
@@ -58,7 +46,7 @@ class PickerBuilder {
             })
 
     /** 设置图片可选最大数量[maxCount] */
-    fun setMaxCount(@IntRange(from = 1) maxCount: Int): PickerBuilder {
+    fun setMaxCount(@IntRange(from = 1) maxCount: Int): PickerBuilder<V> {
         if (maxCount > 0) {
             pickerBean.maxCount = maxCount
         }
@@ -66,62 +54,56 @@ class PickerBuilder {
     }
 
     /** 设置是否需要相机功能[needCamera] */
-    fun setNeedCamera(needCamera: Boolean): PickerBuilder {
+    fun setNeedCamera(needCamera: Boolean): PickerBuilder<V> {
         pickerBean.isNeedCamera = needCamera
         return this
     }
 
     /** 设置是否需要item的预览功能[needItemPreview] */
-    fun setNeedItemPreview(needItemPreview: Boolean): PickerBuilder {
+    fun setNeedItemPreview(needItemPreview: Boolean): PickerBuilder<V> {
         pickerBean.isNeedItemPreview = needItemPreview
         return this
     }
 
     /** 设置拍照保存地址[savePath] */
-    fun setCameraSavePath(savePath: String): PickerBuilder {
+    fun setCameraSavePath(savePath: String): PickerBuilder<V> {
         pickerBean.cameraSavePath = savePath
         return this
     }
 
     /** 设置选择器的界面配置[config] */
-    fun setPickerUIConfig(config: PickerUIConfig): PickerBuilder {
+    fun setPickerUIConfig(config: PickerUIConfig): PickerBuilder<V> {
         pickerBean.pickerUIConfig = config
         return this
     }
 
     /** 设置7.0的FileProvider名字[authority] */
-    fun setAuthority(authority: String): PickerBuilder {
+    fun setAuthority(authority: String): PickerBuilder<V> {
         pickerBean.authority = authority
         return this
     }
 
-    /** 设置预览是否缩放图片[isScale] */
-    fun setScale(isScale: Boolean): PickerBuilder {
-        pickerBean.isScale = isScale
-        return this
-    }
-
-    /** 设置是否点击关闭预览[isClickClosePreview] */
-    fun setClickClosePreview(isClickClosePreview: Boolean): PickerBuilder {
-        pickerBean.isClickClosePreview = isClickClosePreview
+    /** 设置图片控件[view] */
+    fun setImageView(view: AbsImageView<V, String>): PickerBuilder<V> {
+        pickerBean.imgView = view
         return this
     }
 
     /** 完成构建（选择手机里的全部图片） */
-    fun build(): PickerManager {
+    fun build(): PickerManager<V> {
         pickerBean.isPickAllPhoto = true
         return PickerManager(pickerBean)
     }
 
     /** 完成构建（选择指定的图片） */
-    fun build(sourceList: List<String>): PickerManager {
+    fun build(sourceList: List<String>): PickerManager<V> {
         pickerBean.isPickAllPhoto = false
         pickerBean.sourceList = sourceList
         return PickerManager(pickerBean)
     }
 
     /** 完成构建（选择指定的图片） */
-    fun build(sourceArray: Array<String>): PickerManager {
+    fun build(sourceArray: Array<String>): PickerManager<V> {
         pickerBean.isPickAllPhoto = false
         pickerBean.sourceList = sourceArray.toList()
         return PickerManager(pickerBean)

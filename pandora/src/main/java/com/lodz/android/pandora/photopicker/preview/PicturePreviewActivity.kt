@@ -84,7 +84,7 @@ internal class PicturePreviewActivity<V : View, T : Any> : AbsActivity() {
     private fun initRecyclerView(bean: PreviewBean<V, T>, view: AbsImageView<V, T>) {
         val layoutManager = LinearLayoutManager(getContext())
         layoutManager.orientation = RecyclerView.HORIZONTAL
-        mAdapter = PicturePagerAdapter(getContext(), view, bean.isScale, mPreviewController)
+        mAdapter = PicturePagerAdapter(getContext(), view, mPreviewController)
         mRecyclerView.layoutManager = layoutManager
         mRecyclerView.setHasFixedSize(true)
         mRecyclerView.adapter = mAdapter

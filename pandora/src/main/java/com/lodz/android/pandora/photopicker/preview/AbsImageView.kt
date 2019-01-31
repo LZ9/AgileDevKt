@@ -9,13 +9,13 @@ import com.lodz.android.pandora.photopicker.contract.preview.PreviewController
  * 图片控件抽象类
  * Created by zhouL on 2019/1/30.
  */
-abstract class AbsImageView<V : View, T> {
+abstract class AbsImageView<V : View, T>(private val isScale: Boolean) {
 
     /** 创建图片控件，在RV的ViewHolder创建时调用 */
-    abstract fun onCreateView(context: Context, isScale: Boolean): V
+    abstract fun onCreateView(context: Context, isScale: Boolean = isScale()): V
 
     /** 当图片离开屏幕时回调，可用于重置图片状态，[isScale]是否启用缩放 */
-    open fun onViewDetached(view: V, isScale: Boolean) {}
+    open fun onViewDetached(view: V, isScale: Boolean = isScale()) {}
 
     /** 点击回调，返回true表示开发者自己实现，false使用默认实现 */
     open fun onClickImpl(viewHolder: RecyclerView.ViewHolder, view: V, item: T, position: Int, controller: PreviewController) {}
@@ -28,4 +28,7 @@ abstract class AbsImageView<V : View, T> {
 
     /** 释放资源，会在浏览器关闭后回调 */
     open fun onRelease() {}
+
+    /** 是否可以缩放 */
+    internal fun isScale(): Boolean = isScale
 }

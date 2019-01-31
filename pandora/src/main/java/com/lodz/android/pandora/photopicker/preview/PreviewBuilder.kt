@@ -12,12 +12,6 @@ class PreviewBuilder<V : View, T : Any> {
     /** 预览数据 */
     private val previewBean = PreviewBean<V, T>()
 
-    /** 设置是否可缩放[isScale] */
-    fun setScale(isScale: Boolean): PreviewBuilder<V, T> {
-        previewBean.isScale = isScale
-        return this
-    }
-
     /** 设置默认展示图片的位置[position] */
     fun setPosition(@IntRange(from = 0) position: Int): PreviewBuilder<V, T> {
         previewBean.showPosition = position

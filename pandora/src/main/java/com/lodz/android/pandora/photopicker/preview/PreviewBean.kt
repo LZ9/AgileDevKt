@@ -29,8 +29,6 @@ internal class PreviewBean<V : View, T : Any> {
     var pagerTextSize = 16
     /** 是否显示页码文字 */
     var isShowPagerText = true
-    /** 是否可缩放 */
-    var isScale = true
     /** 图片控件 */
     var imgView: AbsImageView<V, T>? = null
 
