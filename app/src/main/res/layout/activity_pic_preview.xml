@@ -96,21 +96,43 @@
     </com.google.android.flexbox.FlexboxLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/preview_btn"
+        android:id="@+id/img_btn"
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:text="@string/preview_pic"
+        android:text="@string/preview_img_pic"
+        android:textAllCaps="false"
         android:textColor="@color/white" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/large_preview_btn"
+        android:id="@+id/photo_btn"
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
+        android:text="@string/preview_photo_pic"
+        android:textAllCaps="false"
+        android:textColor="@color/white" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/large_btn"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:textAllCaps="false"
         android:text="@string/preview_large_pic"
+        android:textColor="@color/white" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/long_btn"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:textAllCaps="false"
+        android:text="@string/preview_long_pic"
         android:textColor="@color/white" />
 
 </LinearLayout>

@@ -157,7 +157,7 @@ class LongImageView : FrameLayout {
     /** 设置长图资源[resId] */
     fun setImageRes(@DrawableRes resId: Int) {
         showPlaceholder()
-        release()
+        clearViews()
         Observable.just(resId)
                 .map { id ->
                     return@map BitmapFactory.decodeResource(context.resources, id)
@@ -174,7 +174,7 @@ class LongImageView : FrameLayout {
     /** 设置长图文件[file] */
     fun setImageFile(file: File) {
         showPlaceholder()
-        release()
+        clearViews()
         Observable.just(file)
                 .map { f ->
                     return@map BitmapFactory.decodeFile(f.absolutePath)
@@ -191,7 +191,7 @@ class LongImageView : FrameLayout {
     /** 设置长图位图[bitmap] */
     fun setImageBitmap(bitmap: Bitmap) {
         showPlaceholder()
-        release()
+        clearViews()
         Observable.just(bitmap)
                 .map { bmp ->
                     return@map BitmapUtils.createLongLargeBitmaps(context, bmp)
@@ -224,8 +224,7 @@ class LongImageView : FrameLayout {
         mScrollView?.visibility = View.VISIBLE
     }
 
-    /** 释放图片资源 */
-    fun release() {
+    private fun clearViews() {
         mImgLayout?.removeAllViews()
         if (mTempBitmaps.getSize() > 0) {
             for (bitmap in mTempBitmaps!!) {
@@ -233,6 +232,11 @@ class LongImageView : FrameLayout {
             }
             mTempBitmaps = null
         }
+    }
+
+    /** 释放图片资源 */
+    fun release() {
+        clearViews()
         mClickListener = null
         mLongClickListener = null
     }

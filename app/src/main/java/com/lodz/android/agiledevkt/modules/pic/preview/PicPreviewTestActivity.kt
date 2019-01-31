@@ -2,6 +2,7 @@ package com.lodz.android.agiledevkt.modules.pic.preview
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.Switch
@@ -11,6 +12,9 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.davemorrissey.labs.subscaleview.ImageSource
+import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
+import com.github.chrisbanes.photoview.PhotoView
 import com.google.android.material.button.MaterialButton
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.corekt.anko.bindView
@@ -58,10 +62,15 @@ class PicPreviewTestActivity : BaseActivity() {
     private val mMinusBtn by bindView<TextView>(R.id.minus_btn)
     /** 起始页码 */
     private val mPositionTv by bindView<TextView>(R.id.position_tv)
-    /** 预览按钮 */
-    private val mPreviewBtn by bindView<MaterialButton>(R.id.preview_btn)
-    /** 大图预览按钮 */
-    private val mLargePreviewBtn by bindView<MaterialButton>(R.id.large_preview_btn)
+
+    /** ImageView预览 */
+    private val mImgBtn by bindView<MaterialButton>(R.id.img_btn)
+    /** ImageView预览 */
+    private val mPhotoBtn by bindView<MaterialButton>(R.id.photo_btn)
+    /** ScaleImageView预览 */
+    private val mLargeBtn by bindView<MaterialButton>(R.id.large_btn)
+    /** LongImageView预览 */
+    private val mLongBtn by bindView<MaterialButton>(R.id.long_btn)
 
     /** 起始页码 */
     private var mPosition = 0
@@ -97,7 +106,11 @@ class PicPreviewTestActivity : BaseActivity() {
             mPositionTv.text = (mPosition + 1).toString()
         }
 
-        mPreviewBtn.setOnClickListener {
+        mImgBtn.setOnClickListener {
+            if (mScaleSwitch.isChecked){
+                mScaleSwitch.isChecked = false
+                toastShort(R.string.preview_unsupport_scale)
+            }
             PreviewManager.create<ImageView, String>()
                     .setScale(mScaleSwitch.isChecked)
                     .setPosition(mPosition)
@@ -110,6 +123,7 @@ class PicPreviewTestActivity : BaseActivity() {
                     .setImageView(object : AbsImageView<ImageView, String>(){
                         override fun onCreateView(context: Context, isScale: Boolean): ImageView {
                             val img = ImageView(context)
+
                             img.scaleType = ImageView.ScaleType.CENTER_INSIDE
                             return img
                         }
@@ -141,7 +155,131 @@ class PicPreviewTestActivity : BaseActivity() {
                     .open(getContext())
         }
 
-        mLargePreviewBtn.setOnClickListener {
+        mPhotoBtn.setOnClickListener {
+            if (!mScaleSwitch.isChecked){
+                mScaleSwitch.isChecked = true
+                toastShort(R.string.preview_only_scale)
+            }
+            PreviewManager.create<PhotoView, String>()
+                    .setScale(mScaleSwitch.isChecked)
+                    .setPosition(mPosition)
+                    .setBackgroundColor(R.color.black)
+                    .setStatusBarColor(R.color.black)
+                    .setNavigationBarColor(R.color.black)
+                    .setPagerTextColor(R.color.white)
+                    .setPagerTextSize(14)
+                    .setShowPagerText(mShowPagerSwitch.isChecked)
+                    .setImageView(object : AbsImageView<PhotoView, String>(){
+                        override fun onCreateView(context: Context, isScale: Boolean): PhotoView {
+                            val img = PhotoView(context)
+                            img.scaleType = ImageView.ScaleType.CENTER_INSIDE
+                            img.setZoomable(isScale)
+                            return img
+                        }
+
+                        override fun onDisplayImg(context: Context, source: String, view: PhotoView) {
+                            ImageLoader.create(context).loadUrl(source).setFitCenter().into(view)
+                        }
+
+                        override fun onClickImpl(viewHolder: RecyclerView.ViewHolder, view: PhotoView, item: String, position: Int, controller: PreviewController) {
+                            super.onClickImpl(viewHolder, view, item, position, controller)
+                            view.setOnClickListener {
+                                if (mClickCloseSwitch.isChecked) {
+                                    controller.close()
+                                } else {
+                                    toastShort(getString(R.string.preview_click_tips, position.toString()))
+                                }
+                            }
+                        }
+
+                        override fun onLongClickImpl(viewHolder: RecyclerView.ViewHolder, view: PhotoView, item: String, position: Int, controller: PreviewController) {
+                            super.onLongClickImpl(viewHolder, view, item, position, controller)
+                            view.setOnLongClickListener {
+                                toastShort(getString(R.string.preview_long_click_tips, position.toString()))
+                                return@setOnLongClickListener true
+                            }
+                        }
+
+                        override fun onViewDetached(view: PhotoView, isScale: Boolean) {
+                            super.onViewDetached(view, isScale)
+                            if (isScale){
+                                view.getAttacher().update()
+                            }
+                        }
+                    })
+                    .build(IMG_URLS)
+                    .open(getContext())
+        }
+
+        mLargeBtn.setOnClickListener {
+            PreviewManager.create<SubsamplingScaleImageView, String>()
+                    .setScale(mScaleSwitch.isChecked)
+                    .setPosition(mPosition)
+                    .setBackgroundColor(R.color.black)
+                    .setStatusBarColor(R.color.black)
+                    .setNavigationBarColor(R.color.black)
+                    .setPagerTextColor(R.color.white)
+                    .setPagerTextSize(14)
+                    .setShowPagerText(mShowPagerSwitch.isChecked)
+                    .setImageView(object : AbsImageView<SubsamplingScaleImageView, String>(){
+                        override fun onCreateView(context: Context, isScale: Boolean): SubsamplingScaleImageView {
+                            val img = SubsamplingScaleImageView(context)
+                            img.setImage(ImageSource.resource(R.drawable.ic_launcher))
+                            img.isZoomEnabled = isScale
+                            return img
+                        }
+
+                        override fun onDisplayImg(context: Context, source: String, view: SubsamplingScaleImageView) {
+                            ImageLoader.create(context).loadUrl(source).setRequestListener(object : RequestListener<File> {
+                                override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<File>?, isFirstResource: Boolean): Boolean {
+                                    view.setImage(ImageSource.resource(R.drawable.ic_launcher))
+                                    return false
+                                }
+
+                                override fun onResourceReady(resource: File?, model: Any?, target: Target<File>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                                    if (resource != null){
+                                        view.setImage(ImageSource.uri(Uri.fromFile(resource)))
+                                    }
+                                    return false
+                                }
+                            }).download()
+                        }
+
+                        override fun onClickImpl(viewHolder: RecyclerView.ViewHolder, view: SubsamplingScaleImageView, item: String, position: Int, controller: PreviewController) {
+                            super.onClickImpl(viewHolder, view, item, position, controller)
+                            view.setOnClickListener {
+                                if (mClickCloseSwitch.isChecked) {
+                                    controller.close()
+                                } else {
+                                    toastShort(getString(R.string.preview_click_tips, position.toString()))
+                                }
+                            }
+                        }
+
+                        override fun onLongClickImpl(viewHolder: RecyclerView.ViewHolder, view: SubsamplingScaleImageView, item: String, position: Int, controller: PreviewController) {
+                            super.onLongClickImpl(viewHolder, view, item, position, controller)
+                            view.setOnLongClickListener {
+                                toastShort(getString(R.string.preview_long_click_tips, position.toString()))
+                                return@setOnLongClickListener true
+                            }
+                        }
+
+                        override fun onViewDetached(view: SubsamplingScaleImageView, isScale: Boolean) {
+                            super.onViewDetached(view, isScale)
+                            if (isScale){
+                                view.resetScaleAndCenter()
+                            }
+                        }
+                    })
+                    .build(IMG_URLS)
+                    .open(getContext())
+        }
+
+        mLongBtn.setOnClickListener {
+            if (mScaleSwitch.isChecked){
+                mScaleSwitch.isChecked = false
+                toastShort(R.string.preview_unsupport_scale)
+            }
             PreviewManager.create<LongImageView, String>()
                     .setScale(mScaleSwitch.isChecked)
                     .setPosition(mPosition)

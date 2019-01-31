@@ -80,6 +80,12 @@ dependencies {
     // 高德定位SDK
     implementation 'com.amap.api:location:4.3.0'
 
+    // 大图加载缩放
+    implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
+    // PhotoView
+    implementation 'com.github.chrisbanes:PhotoView:2.0.0'
+
+
     // 单元测试
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
