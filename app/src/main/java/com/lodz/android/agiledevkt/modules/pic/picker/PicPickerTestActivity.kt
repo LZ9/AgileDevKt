@@ -130,6 +130,13 @@ class PicPickerTestActivity : BaseActivity() {
                                 }
                             }
                         }
+
+                        override fun onViewDetached(view: ImageView, isScale: Boolean) {
+                            super.onViewDetached(view, isScale)
+                            if (isScale && view is PhotoView){
+                                view.getAttacher().update()
+                            }
+                        }
                     })
                     .setOnPhotoPickerListener { photos ->
                         var str = ""
@@ -168,6 +175,13 @@ class PicPickerTestActivity : BaseActivity() {
                                 if (mClickClosePreviewSwitch.isChecked) {
                                     controller.close()
                                 }
+                            }
+                        }
+
+                        override fun onViewDetached(view: ImageView, isScale: Boolean) {
+                            super.onViewDetached(view, isScale)
+                            if (isScale && view is PhotoView){
+                                view.getAttacher().update()
                             }
                         }
                     })

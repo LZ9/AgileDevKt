@@ -9,6 +9,8 @@ import android.widget.ImageView
 import android.widget.RadioGroup
 import android.widget.Switch
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.github.chrisbanes.photoview.PhotoView
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.utils.file.FileManager
 import com.lodz.android.corekt.anko.bindView
@@ -17,6 +19,8 @@ import com.lodz.android.corekt.utils.isPermissionGranted
 import com.lodz.android.corekt.utils.toastShort
 import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.base.activity.BaseActivity
+import com.lodz.android.pandora.photopicker.contract.preview.PreviewController
+import com.lodz.android.pandora.photopicker.preview.AbsImageView
 import com.lodz.android.pandora.widget.ninegrid.NineGridView
 import com.lodz.android.pandora.widget.ninegrid.OnNineGridViewListener
 import com.lodz.android.pandora.widget.ninegrid.OnSimpleNineGridViewListener
@@ -54,7 +58,7 @@ class NineGridActivity : BaseActivity() {
     /** 获取九宫格路径按钮 */
     private val mOnlyPicBtn by bindView<TextView>(R.id.only_pic_btn)
     /** 可添加图片的九宫格 */
-    private val mPickerNineGridView by bindView<SimpleNineGridView>(R.id.picker_nine_grid_view)
+    private val mPickerNineGridView by bindView<SimpleNineGridView<ImageView>>(R.id.picker_nine_grid_view)
     /** 获取九宫格路径按钮 */
     private val mGetPicBtn by bindView<TextView>(R.id.get_pic_btn)
     /** 预览缩放图片 */
@@ -125,20 +129,12 @@ class NineGridActivity : BaseActivity() {
             mResultTv.text = result
         }
 
-        mScaleSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
-            mPickerNineGridView.setScale(isChecked)
-        }
-
         mShowCameraSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
             mPickerNineGridView.setNeedCamera(isChecked)
         }
 
         mItemPreviewSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
             mPickerNineGridView.setNeedItemPreview(isChecked)
-        }
-
-        mClickClosePreviewSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
-            mPickerNineGridView.setClickClosePreview(isChecked)
         }
 
         mAddBtnSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -158,20 +154,44 @@ class NineGridActivity : BaseActivity() {
         }
 
         mRadioGroup.setOnCheckedChangeListener { group, checkedId ->
-            when(checkedId){
+            when (checkedId) {
                 R.id.six_rb -> mPickerNineGridView.setMaxPic(6)
                 R.id.nine_rb -> mPickerNineGridView.setMaxPic(9)
                 R.id.twelve_rb -> mPickerNineGridView.setMaxPic(12)
             }
         }
 
-        mPickerNineGridView.setOnSimpleNineGridViewListener(object : OnSimpleNineGridViewListener {
-            override fun onDisplayNineGridImg(context: Context, data: String, imageView: ImageView) {
-                ImageLoader.create(context).loadUrl(data).setCenterCrop().into(imageView)
+        mPickerNineGridView.setOnSimpleNineGridViewListener(object : OnSimpleNineGridViewListener<ImageView> {
+            override fun createImageView(): AbsImageView<ImageView, String> = object : AbsImageView<ImageView, String>(mScaleSwitch.isChecked) {
+                override fun onCreateView(context: Context, isScale: Boolean): ImageView {
+                    val img = if (isScale) PhotoView(context) else ImageView(context)
+                    img.scaleType = ImageView.ScaleType.CENTER_INSIDE
+                    return img
+                }
+
+                override fun onDisplayImg(context: Context, source: String, view: ImageView) {
+                    ImageLoader.create(context).loadFilePath(source).setFitCenter().into(view)
+                }
+
+                override fun onClickImpl(viewHolder: RecyclerView.ViewHolder, view: ImageView, item: String, position: Int, controller: PreviewController) {
+                    super.onClickImpl(viewHolder, view, item, position, controller)
+                    view.setOnClickListener {
+                        if (mClickClosePreviewSwitch.isChecked) {
+                            controller.close()
+                        }
+                    }
+                }
+
+                override fun onViewDetached(view: ImageView, isScale: Boolean) {
+                    super.onViewDetached(view, isScale)
+                    if (isScale && view is PhotoView) {
+                        view.getAttacher().update()
+                    }
+                }
             }
 
-            override fun onDisplayPreviewImg(context: Context, data: String, imageView: ImageView) {
-                ImageLoader.create(context).loadUrl(data).setCenterInside().into(imageView)
+            override fun onDisplayNineGridImg(context: Context, data: String, imageView: ImageView) {
+                ImageLoader.create(context).loadUrl(data).setCenterCrop().into(imageView)
             }
 
             override fun onDisplayPickerImg(context: Context, data: String, imageView: ImageView) {
@@ -233,8 +253,8 @@ class NineGridActivity : BaseActivity() {
     }
 
     private fun init() {
-        mShowOnlyNineGridView.setData(IMG_URLS)
         mPickerNineGridView.config(FileManager.getCacheFolderPath(), "com.lodz.android.agiledevkt.fileprovider")
+        mShowOnlyNineGridView.setData(IMG_URLS)
         showStatusCompleted()
     }
 }

@@ -2,13 +2,11 @@ package com.lodz.android.pandora.widget.ninegrid
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.View
 import android.widget.ImageView
-import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.corekt.anko.toArrayList
-import com.lodz.android.pandora.photopicker.contract.preview.PreviewController
 import com.lodz.android.pandora.photopicker.picker.PickerManager
 import com.lodz.android.pandora.photopicker.picker.PickerUIConfig
-import com.lodz.android.pandora.photopicker.preview.AbsImageView
 import com.lodz.android.pandora.photopicker.preview.PreviewManager
 
 
@@ -16,10 +14,10 @@ import com.lodz.android.pandora.photopicker.preview.PreviewManager
  * 简单的九宫格实现
  * Created by zhouL on 2018/12/26.
  */
-class SimpleNineGridView : NineGridView {
+class SimpleNineGridView<V : View> : NineGridView {
 
     /** 接口  */
-    private var mListener: OnSimpleNineGridViewListener? = null
+    private var mListener: OnSimpleNineGridViewListener<V>? = null
     /** 照片保存地址  */
     private var mCameraSavePath = ""
     /** 7.0的FileProvider名字  */
@@ -28,10 +26,6 @@ class SimpleNineGridView : NineGridView {
     private var isNeedCamera = true
     /** 是否需要预览Item  */
     private var isNeedItemPreview = true
-    /** 是否需要缩放  */
-    private var isScale = true
-    /** 是否点击关闭预览  */
-    private var isClickClosePreview = true
     /** 选择器UI配置  */
     private var mConfig = PickerUIConfig.createDefault()
 
@@ -43,21 +37,15 @@ class SimpleNineGridView : NineGridView {
     init {
         setListener(object : OnNineGridViewListener {
             override fun onAddPic(addCount: Int) {
-                PickerManager.create<ImageView>()
+                val listener = mListener
+                if (listener == null) {
+                    return
+                }
+                PickerManager.create<V>()
                         .setImgLoader { context, source, imageView ->
                             mListener?.onDisplayPickerImg(context, source, imageView)
                         }
-                        .setImageView(object : AbsImageView<ImageView, String>(isScale) {
-                            override fun onCreateView(context: Context, isScale: Boolean): ImageView {
-                                val img = ImageView(context)
-                                img.scaleType = ImageView.ScaleType.CENTER_INSIDE
-                                return img
-                            }
-
-                            override fun onDisplayImg(context: Context, source: String, view: ImageView) {
-                                mListener?.onDisplayPreviewImg(context, source, view)
-                            }
-                        })
+                        .setImageView(listener.createImageView())
                         .setOnPhotoPickerListener { photos ->
                             addDatas(photos.toArrayList())
                         }
@@ -80,7 +68,11 @@ class SimpleNineGridView : NineGridView {
             }
 
             override fun onClickPic(data: String, position: Int) {
-                PreviewManager.create<ImageView, String>()
+                val listener = mListener
+                if (listener == null) {
+                    return
+                }
+                PreviewManager.create<V, String>()
                         .setPosition(position)
                         .setBackgroundColor(android.R.color.black)
                         .setStatusBarColor(android.R.color.black)
@@ -88,26 +80,7 @@ class SimpleNineGridView : NineGridView {
                         .setPagerTextColor(android.R.color.white)
                         .setPagerTextSize(14)
                         .setShowPagerText(true)
-                        .setImageView(object : AbsImageView<ImageView, String>(isScale) {
-                            override fun onCreateView(context: Context, isScale: Boolean): ImageView {
-                                val img = ImageView(context)
-                                img.scaleType = ImageView.ScaleType.CENTER_INSIDE
-                                return img
-                            }
-
-                            override fun onDisplayImg(context: Context, source: String, view: ImageView) {
-                                mListener?.onDisplayPreviewImg(context, source, view)
-                            }
-
-                            override fun onClickImpl(viewHolder: RecyclerView.ViewHolder, view: ImageView, item: String, position: Int, controller: PreviewController) {
-                                super.onClickImpl(viewHolder, view, item, position, controller)
-                                view.setOnClickListener {
-                                    if (isClickClosePreview) {
-                                        controller.close()
-                                    }
-                                }
-                            }
-                        })
+                        .setImageView(listener.createImageView())
                         .build(getPicData())
                         .open(getContext())
             }
@@ -121,7 +94,7 @@ class SimpleNineGridView : NineGridView {
     }
 
     /** 设置监听器[listener] */
-    fun setOnSimpleNineGridViewListener(listener: OnSimpleNineGridViewListener) {
+    fun setOnSimpleNineGridViewListener(listener: OnSimpleNineGridViewListener<V>) {
         mListener = listener
     }
 
@@ -133,16 +106,6 @@ class SimpleNineGridView : NineGridView {
     /** 设置是否需要预览Item[isNeed] */
     fun setNeedItemPreview(isNeed: Boolean) {
         isNeedItemPreview = isNeed
-    }
-
-    /** 设置是否需要缩放[isScale] */
-    fun setScale(isScale: Boolean) {
-        this.isScale = isScale
-    }
-
-    /** 设置是否点击关闭预览[isClose] */
-    fun setClickClosePreview(isClose: Boolean) {
-        this.isClickClosePreview = isClose
     }
 
     /** 设置选择器UI配置[config] */
@@ -167,5 +130,4 @@ class SimpleNineGridView : NineGridView {
     private fun setListener(listener: OnNineGridViewListener) {
         super.setOnNineGridViewListener(listener)
     }
-
 }
