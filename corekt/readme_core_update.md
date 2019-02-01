@@ -1,5 +1,11 @@
 # core-kt库更新记录
 
+##### 2018/02/01
+1. 更新Kotlin插件版本
+2. BitmapUtils添加长图分段截取方法
+3. 修复编译器入参范围注解BUG
+4. 发布1.0.3版本
+
 ##### 2018/12/27
 1. AppUtils添加wifi判断方法
 2. DeviceUtils增加root判断

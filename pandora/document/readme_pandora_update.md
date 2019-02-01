@@ -1,5 +1,26 @@
 # Pandora更新记录
 
+##### 2018/02/01
+1.  修复BaseApplication内部获取时的判空BUG
+2.  修复Activity回收后的数据保存BUG
+3.  Fragment基类支持AnkoLayout
+4.  重构加载框帮助类ProgressDialogHelper，改为链式调用
+5.  Activity和Fragment基类增加Rx生命周期快捷绑定
+6.  RxUtils增加Completable的线程切换方法、修复文本延迟回调BUG、增加获取ResponseStatus方法
+7.  修改拍照管理类TakePhotoManager数据回调接口
+8.  优化Progress订阅者的加载库创建方法
+9.  RxObservableOnSubscribe增加订阅停止判断的辅助方法
+10. 增加RxFlowableOnSubscribe、RxSingleOnSubscribe、RxMaybeOnSubscribe和RxCompletableOnSubscribe
+11. 所有订阅者增加静态空方法
+12. 增加Single相关的订阅者封装
+13. 增加Maybe相关的订阅者封装
+14. 增加Completable的订阅封装
+15. 更新rxjava、fastjson和kotlin插件版本
+16. 增加长图加载控件
+17. 图片预览器增加AbsImageView抽象类，支持开发者自定义图片控件来加载
+18. 优化PickerManager、PreviewManager和SimpleNineGridView支持AbsImageView
+19. 发布1.1.0版本
+
 ##### 2018/12/27
 1. 将component库转为kotlin
 2. 根据kotlin特性重构代码
