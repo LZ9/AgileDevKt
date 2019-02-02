@@ -29,10 +29,10 @@ import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.agiledevkt.utils.file.FileManager
 import com.lodz.android.corekt.anko.bindView
+import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.corekt.utils.FileUtils
 import com.lodz.android.corekt.utils.NotificationUtils
-import com.lodz.android.corekt.utils.toastShort
 import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.base.activity.BaseActivity
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation

@@ -18,7 +18,7 @@ import com.github.chrisbanes.photoview.PhotoView
 import com.google.android.material.button.MaterialButton
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.corekt.anko.bindView
-import com.lodz.android.corekt.utils.toastShort
+import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.photopicker.contract.preview.PreviewController

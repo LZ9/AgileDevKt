@@ -15,10 +15,10 @@ import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.goBluetoothSetting
+import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.corekt.ble.BleDiscoveryListener
 import com.lodz.android.corekt.ble.BleSimpleHelper
 import com.lodz.android.corekt.ble.BleStateListener
-import com.lodz.android.corekt.utils.toastShort
 import com.lodz.android.pandora.base.activity.BaseActivity
 
 /**

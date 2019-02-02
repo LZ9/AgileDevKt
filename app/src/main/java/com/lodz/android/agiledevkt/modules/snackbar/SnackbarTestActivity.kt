@@ -13,8 +13,8 @@ import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.dp2px
 import com.lodz.android.corekt.anko.getColorCompat
+import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.corekt.utils.SnackbarUtils
-import com.lodz.android.corekt.utils.toastShort
 import com.lodz.android.pandora.base.activity.AbsActivity
 import com.lodz.android.pandora.widget.base.TitleBarLayout
 

@@ -8,10 +8,10 @@ import com.lodz.android.agiledevkt.App
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.corekt.anko.goAppDetailSetting
+import com.lodz.android.corekt.anko.isPermissionGranted
+import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.corekt.utils.StatusBarUtil
 import com.lodz.android.corekt.utils.UiHandler
-import com.lodz.android.corekt.utils.isPermissionGranted
-import com.lodz.android.corekt.utils.toastShort
 import com.lodz.android.pandora.base.activity.AbsActivity
 import permissions.dispatcher.*
 

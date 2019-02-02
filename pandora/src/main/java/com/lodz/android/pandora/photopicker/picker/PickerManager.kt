@@ -6,8 +6,8 @@ import android.os.Environment
 import android.view.View
 import com.lodz.android.corekt.album.AlbumUtils
 import com.lodz.android.corekt.anko.deduplication
+import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.corekt.utils.ToastUtils
-import com.lodz.android.corekt.utils.toastShort
 import com.lodz.android.pandora.R
 import com.lodz.android.pandora.photopicker.picker.pick.PhotoPickerActivity
 import java.io.File

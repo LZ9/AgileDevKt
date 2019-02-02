@@ -1,7 +1,7 @@
 package com.lodz.android.pandora.rx.subscribe.observer
 
+import com.lodz.android.corekt.anko.getMetaData
 import com.lodz.android.corekt.log.PrintLog
-import com.lodz.android.corekt.utils.getMetaData
 import com.lodz.android.pandora.base.application.BaseApplication
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable

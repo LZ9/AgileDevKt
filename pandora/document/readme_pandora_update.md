@@ -19,7 +19,7 @@
 16. 增加长图加载控件
 17. 图片预览器增加AbsImageView抽象类，支持开发者自定义图片控件来加载
 18. 优化PickerManager、PreviewManager和SimpleNineGridView支持AbsImageView
-19. 发布1.1.0版本
+19. 发布1.1.1版本
 
 ##### 2018/12/27
 1. 将component库转为kotlin

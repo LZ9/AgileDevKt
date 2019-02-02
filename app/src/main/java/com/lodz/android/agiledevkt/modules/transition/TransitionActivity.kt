@@ -11,7 +11,7 @@ import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.TransitionBean
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.corekt.anko.bindView
-import com.lodz.android.corekt.utils.toastShort
+import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.utils.transition.TransitionHelper.finish
 import com.trello.rxlifecycle3.android.RxLifecycleAndroid.bindView

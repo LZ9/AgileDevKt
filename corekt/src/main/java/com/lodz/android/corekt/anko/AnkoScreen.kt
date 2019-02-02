@@ -79,10 +79,7 @@ fun Activity.getNavigationBarHeight(): Int = getNavigationBarHeight(window)
 /** 获取状态栏高度 */
 fun Context.getStatusBarHeight(): Int {
     val id = resources.getIdentifier("status_bar_height", "dimen", "android")
-    if (id != 0) {
-        return resources.getDimensionPixelSize(id)
-    }
-    return 0
+    return if (id != 0) resources.getDimensionPixelSize(id) else 0
 }
 
 /** 获取状态栏高度 */

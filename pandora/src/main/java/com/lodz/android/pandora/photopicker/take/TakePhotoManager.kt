@@ -3,7 +3,7 @@ package com.lodz.android.pandora.photopicker.take
 import android.content.Context
 import android.os.Build
 import android.os.Environment
-import com.lodz.android.corekt.utils.toastShort
+import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.pandora.R
 import java.io.File
 

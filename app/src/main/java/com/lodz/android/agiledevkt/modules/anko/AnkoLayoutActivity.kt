@@ -8,7 +8,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import com.lodz.android.agiledevkt.R
-import com.lodz.android.corekt.utils.toastShort
+import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.pandora.base.activity.AbsActivity
 import com.lodz.android.pandora.base.activity.UseAnkoLayout
 import org.jetbrains.anko.*

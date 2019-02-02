@@ -4,6 +4,9 @@ import android.content.Intent
 import android.os.Looper
 import android.widget.Toast
 import com.lodz.android.agiledevkt.utils.file.FileManager
+import com.lodz.android.corekt.anko.getAppName
+import com.lodz.android.corekt.anko.getVersionCode
+import com.lodz.android.corekt.anko.getVersionName
 import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.corekt.utils.*
 import com.lodz.android.pandora.base.application.BaseApplication

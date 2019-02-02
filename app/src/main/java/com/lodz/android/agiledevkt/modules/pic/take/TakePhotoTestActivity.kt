@@ -11,8 +11,8 @@ import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.utils.file.FileManager
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.goAppDetailSetting
-import com.lodz.android.corekt.utils.isPermissionGranted
-import com.lodz.android.corekt.utils.toastShort
+import com.lodz.android.corekt.anko.isPermissionGranted
+import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.photopicker.take.TakePhotoManager

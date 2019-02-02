@@ -10,8 +10,8 @@ import android.widget.SeekBar
 import android.widget.TextView
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.corekt.anko.bindView
+import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.corekt.utils.StatusBarUtil
-import com.lodz.android.corekt.utils.toastShort
 import com.lodz.android.pandora.base.activity.AbsActivity
 
 /**

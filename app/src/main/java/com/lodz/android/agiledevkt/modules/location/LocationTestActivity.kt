@@ -14,9 +14,7 @@ import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.agiledevkt.modules.service.BusService
 import com.lodz.android.agiledevkt.modules.splash.CheckDialog
-import com.lodz.android.corekt.anko.bindView
-import com.lodz.android.corekt.anko.goAppDetailSetting
-import com.lodz.android.corekt.anko.goLocationSetting
+import com.lodz.android.corekt.anko.*
 import com.lodz.android.corekt.utils.*
 import com.lodz.android.pandora.base.activity.BaseActivity
 import org.greenrobot.eventbus.Subscribe

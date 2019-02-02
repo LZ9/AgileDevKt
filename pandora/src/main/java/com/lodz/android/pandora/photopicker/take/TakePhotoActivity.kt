@@ -11,6 +11,7 @@ import com.lodz.android.corekt.album.AlbumUtils
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.getColorCompat
 import com.lodz.android.corekt.anko.takePhoto
+import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.corekt.utils.*
 import com.lodz.android.pandora.R
 import com.lodz.android.pandora.base.activity.AbsActivity

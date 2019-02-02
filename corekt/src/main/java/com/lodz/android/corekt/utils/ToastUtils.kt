@@ -8,7 +8,6 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.fragment.app.Fragment
 
 /**
  * Toast帮助类
@@ -148,7 +147,7 @@ class ToastUtils private constructor(val mContext: Context) {
     }
 
     /** 获取默认的toast */
-    private fun getDefaultToast() = Toast.makeText(mContext, mText, mDuration)
+    private fun getDefaultToast(): Toast = Toast.makeText(mContext, mText, mDuration)
 
     /** 获取自定义view的toast */
     private fun getCustomViewToast(): Toast {
@@ -157,37 +156,3 @@ class ToastUtils private constructor(val mContext: Context) {
         return toast
     }
 }
-
-//----------------------------- Context扩展 ---------------------------------------
-
-/** 显示文字为[text]的短时间的Toast */
-fun Context.toastShort(text: String) {
-    ToastUtils.showShort(this, text)
-}
-
-/** 显示文字资源为[strResId]的短时间的Toast */
-fun Context.toastShort(@StringRes strResId: Int) {
-    ToastUtils.showShort(this, strResId)
-}
-
-/** 显示文字为[text]的长时间的Toast */
-fun Context.toastLong(text: String) {
-    ToastUtils.showLong(this, text)
-}
-
-/** 显示文字资源为[strResId]的长时间的Toast */
-fun Context.toastLong(@StringRes strResId: Int) {
-    ToastUtils.showLong(this, strResId)
-}
-
-/** 显示文字为[text]的短时间的Toast */
-fun Fragment.toastShort(text: String) = context?.toastShort(text)
-
-/** 显示文字资源为[strResId]的短时间的Toast */
-fun Fragment.toastShort(@StringRes strResId: Int) = context?.toastShort(strResId)
-
-/** 显示文字为[text]的长时间的Toast */
-fun Fragment.toastLong(text: String) = context?.toastLong(text)
-
-/** 显示文字资源为[strResId]的长时间的Toast */
-fun Fragment.toastLong(@StringRes strResId: Int) = context?.toastLong(strResId)
