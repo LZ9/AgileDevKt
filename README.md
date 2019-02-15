@@ -1,11 +1,11 @@
 # 敏捷开发解决方案
 这套敏捷开发解决方案基于Kotlin语法实现，根据Kotlin的特性进行了方法扩展。
 解决方案主要包含了3块内容，能帮助你快速构建一个中小型的App，你只需要专注于UI开发和业务逻辑即可。
-三块组件都只支持androidx，请确保你的工程已经升级支持androidx。
+三块组件都只支持Androidx，请确保你的工程已经升级支持Androidx。
 
 ## 1. 使用扩展方法：
 如果你希望获取丰富的扩展方法来支持你的工程，你可以选择依赖[corek-kt](https://github.com/LZ9/AgileDevKt/blob/master/corekt/readme_core.md)，
-里面同时包含了androidx相关的支持库。
+里面同时包含了Androidx相关的支持库。
 ```
     implementation 'com.lodz:core-kt:1.0.4'
 ```

@@ -6,29 +6,54 @@
 
 ## 一、照片选择器PickerManager
 PickerManager可以帮你快速构造一个图片选择器，包括挑选指定图片，挑选手机图片，拍照，以及丰富的UI订制，
-同时还支持你使用你喜欢的任何图片加载器来加载图片。
+同时还支持你使用你喜欢的任何图片加载器和图片控件来加载图片。
 参考方法 [PicPickerTestActivity.kt](https://github.com/LZ9/AgileDevKt/blob/master/app/src/main/java/com/lodz/android/agiledevkt/modules/pic/picker/PicPickerTestActivity.kt)。
 
 ### 1. 构建方法
 我使用链式的封装来帮助大家快速构造选择器对象。
 
 ```
-    PickerManager.create()// 获取PickerManager对象
+    PickerManager.create<V>()// 获取PickerManager对象，V是图片控件的泛型需要开发者具体指定
         .setMaxCount(max)// 设置可选图片的最大数量（n > 0）
-        .setScale(isScale)// 设置预览是否缩放图片
         .setNeedCamera(isNeedCamera)// 设置是否需要相机功能
         .setNeedItemPreview(isNeedItemPreview)// 设置是否需要item的预览功能
         .setClickClosePreview(isClickClosePreview)// 设置是否点击关闭预览
         .setPickerUIConfig(UIConfig)// 设置选择器的界面配置，不设置使用默认UI风格
         .setCameraSavePath(path)// 设置拍照保存地址
         .setAuthority(authority)// 设置7.0的FileProvider名字
-        .setImgLoader { context, source, imageView ->// 设置item的图片加载器
+        .setImgLoader { context, source, view -> // 设置item的图片加载器
             // 使用你自己的图片加载器，如果加载器要传入Context请务必使用我回调出来的context
         }
-        .setPreviewImgLoader { context, source, imageView ->// 设置预览图图加载器
-            // 同上
-        }
-        .setOnPhotoPickerListener { photos ->// 设置图片选中回调
+        .setImageView(object : AbsImageView<V, T>(isScale) {// 设置图片控件，V是图片控件的泛型，T是数据泛型，isScale是图片控件是否开启缩放
+            override fun onCreateView(context: Context, isScale: Boolean): V {
+                // 创建预览器的图片控件
+            }
+
+            override fun onDisplayImg(context: Context, source: String, view: V) {
+                // 设置预览器的图片加载器
+            }
+
+            override fun onClickImpl(viewHolder: RecyclerView.ViewHolder, view: V, item: String, position: Int, controller: PreviewController) {
+                super.onClickImpl(viewHolder, view, item, position, controller)
+                // 控件的点击实现
+            }
+
+            override fun onLongClickImpl(viewHolder: RecyclerView.ViewHolder, view: V, item: String, position: Int, controller: PreviewController) {
+                super.onLongClickImpl(viewHolder, view, item, position, controller)
+                // 控件的长按实现
+            }
+
+            override fun onViewDetached(view: V, isScale: Boolean) {
+                super.onViewDetached(view, isScale)
+                // 预览器图片离开屏幕时回调，例如离开屏幕恢复缩放比例
+            }
+
+            override fun onRelease() {
+                super.onRelease()
+                // 预览器释放资源时回调
+            }
+        })
+        .setOnPhotoPickerListener { photos -> // 设置图片选中回调
             // 获取用户选中的图片
         }
         .build()// 选择手机图片
@@ -39,7 +64,7 @@ PickerManager可以帮你快速构造一个图片选择器，包括挑选指定�
 
  - build()、build(list)和build(array)只需要选择一个调用即可
  - 如果你没有设置setImgLoader()会提示：**您尚未设置图片加载器**
- - 如果你没有设置setPreviewImgLoader()会默认采用setImgLoader()里监听回调
+ - 如果你没有设置setImageView()会提示：**您尚未设置图片预览控件**
  - 如果你没有设置setOnPhotoPickerListener()会提示：**您尚未设置图片选中监听器**
  - 如果你调用了build(list)和build(array)却传入空的list或array，会提示：**您没有可以选择的图片**
  - 如果你调用了build()并且没有开启相机拍照（setNeedCamera()没有设置或设置为false），而手机里又没有任何图片时，会提示：**您没有可以选择的图片**
@@ -181,8 +206,7 @@ PreviewManager具备灵活的泛型支持，你只需要在creat()方法里指�
 通过链式调用快速构建，支持UI配置和泛型支持。
 
 ```
-    PreviewManager.create<T>()// 创建PreviewManager对象，T为泛型
-        .setScale(isScale)// 设置是否可缩放
+    PreviewManager.create<V, T>()// 创建PreviewManager对象，V是图片控件的泛型，T是数据泛型，需要开发者具体指定
         .setPosition(position)// 设置默认展示图片的位置
         .setBackgroundColor(color)// 设置背景色
         .setStatusBarColor(color)// 设置顶部状态栏颜色
@@ -190,22 +214,42 @@ PreviewManager具备灵活的泛型支持，你只需要在creat()方法里指�
         .setPagerTextColor(color)// 设置页码文字颜色
         .setPagerTextSize(textSize)// 设置页码文字大小
         .setShowPagerText(isShow)// 设置是否显示页码文字
-        .setOnClickListener { context, source, position, controller ->// 设置点击监听
-            // 点击图回调
-        }
-        .setOnLongClickListener { context, source, position, controller ->// 设置长按监听
-            // 长按图回调
-        }
-        .setImgLoader { context, source, imageView ->// 设置图片加载器
-            // 使用你自己的图片加载器，如果加载器要传入Context请务必使用我回调出来的context
-        }
+        .setImageView(object : AbsImageView<V, T>(isScale) {// 设置图片控件，V是图片控件的泛型，T是数据泛型，isScale是图片控件是否开启缩放
+            override fun onCreateView(context: Context, isScale: Boolean): V {
+                // 创建预览器的图片控件
+            }
+            
+            override fun onDisplayImg(context: Context, source: String, view: V) {
+                // 设置预览器的图片加载器，如果加载器要传入Context请务必使用我回调出来的context
+            }
+            
+            override fun onClickImpl(viewHolder: RecyclerView.ViewHolder, view: V, item: String, position: Int, controller: PreviewController) {
+                super.onClickImpl(viewHolder, view, item, position, controller)
+                // 控件的点击实现
+            }
+            
+            override fun onLongClickImpl(viewHolder: RecyclerView.ViewHolder, view: V, item: String, position: Int, controller: PreviewController) {
+                super.onLongClickImpl(viewHolder, view, item, position, controller)
+                // 控件的长按实现
+            }
+            
+            override fun onViewDetached(view: V, isScale: Boolean) {
+                super.onViewDetached(view, isScale)
+                // 预览器图片离开屏幕时回调，例如离开屏幕恢复缩放比例
+            }
+            
+            override fun onRelease() {
+                super.onRelease()
+                // 预览器释放资源时回调
+            }
+        })
         .build(pic)// 构建单张图片预览
         .build(list)// 构建图片列表预览
         .build(array)// 构建图片数组预览
         .open(getContext())//打开预览器
 ```
  - build(pic)、build(list)和build(array)选择一个调用即可
- - 如果你没有设置setImgLoader()方法会提示：**您尚未设置图片加载器**
+ - 如果你没有设置setImageView()方法会提示：**您尚未设置图片预览控件**
  - 如果你的build()方法入参是空，会提示：**图片数据为空**
  - 如果构建的图片只有一张则不显示页码
  - 如果setPosition()的值超出了图片的数量，我会重置为从第一张开始预览
