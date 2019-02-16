@@ -22,4 +22,4 @@ DataException继承RxException，内部支持存储ResponseStatus对象，用户
 
 ## 扩展
 - [返回目录](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/rx/pandora_rx.md)
-- [回到顶部]()
+- [回到顶部](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/rx/pandora_rx_exception.md#异常封装)
