@@ -105,6 +105,11 @@
                 android:resource="@xml/file_provider_paths" />
         </provider>
 
+        <!--订阅日志标签-->
+        <meta-data
+            android:name="error_tag"
+            android:value="resultValue" />
+
         <!--腾讯定位-->
         <meta-data
             android:name="TencentMapSDK"
