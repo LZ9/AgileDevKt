@@ -1,5 +1,10 @@
 # imageloader-kt库更新记录
 
+##### 2018/02/22
+1. 更新Kotlin插件版本
+2. 更新Glide版本
+3. 发布1.0.7版本
+
 ##### 2018/02/01
 1. 更新glide-transformations版本
 2. 更新kotlin插件版本
