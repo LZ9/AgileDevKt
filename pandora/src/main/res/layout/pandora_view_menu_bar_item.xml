@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:ignore="UseCompoundDrawables">
+
+        <ImageView
+            android:id="@+id/ic_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/pandora_app_img_name"
+            tools:src="@drawable/pandora_ic_launcher" />
+
+        <TextView
+            android:id="@+id/text_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            tools:text="首页" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/num_tv"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_gravity="end|top"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/pandora_bg_ea413c_circle"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:textSize="12sp"
+        android:visibility="gone"
+        tools:text="99+"
+        tools:visibility="visible" />
+
+</FrameLayout>

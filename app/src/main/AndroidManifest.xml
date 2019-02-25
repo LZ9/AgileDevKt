@@ -20,6 +20,8 @@
     <!-- 蓝牙 -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <!-- 前台通知 -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <!-- ********************* 需要申请（只要同组有一个授权整组的权限都可以使用） ********************* -->
     <!-- 相机 -->
@@ -582,6 +584,12 @@
 
         </activity>
 
+        <activity
+            android:name=".modules.menubar.MenuBarTestActivity"
+            android:label="底部菜单栏测试类"
+            android:screenOrientation="portrait">
+
+        </activity>
 
     </application>
 

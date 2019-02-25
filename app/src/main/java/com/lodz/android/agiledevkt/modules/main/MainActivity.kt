@@ -29,6 +29,7 @@ import com.lodz.android.agiledevkt.modules.idcard.IdcardTestActivity
 import com.lodz.android.agiledevkt.modules.image.GlideActivity
 import com.lodz.android.agiledevkt.modules.info.InfoTestActivity
 import com.lodz.android.agiledevkt.modules.location.LocationTestActivity
+import com.lodz.android.agiledevkt.modules.menubar.MenuBarTestActivity
 import com.lodz.android.agiledevkt.modules.mvc.MvcDemoActivity
 import com.lodz.android.agiledevkt.modules.notification.NotificationActivity
 import com.lodz.android.agiledevkt.modules.pic.PicActivity
@@ -126,7 +127,9 @@ class MainActivity : BaseActivity() {
             MainBean("RxFlowable订阅测试", "R", RxFlowableActivity::class.java),
             MainBean("RxSingle订阅测试", "R", RxSingleActivity::class.java),
             MainBean("RxMaybe订阅测试", "R", RxMaybeActivity::class.java),
-            MainBean("RxCompletable订阅测试", "R", RxCompletableActivity::class.java)
+            MainBean("RxCompletable订阅测试", "R", RxCompletableActivity::class.java),
+            MainBean("底部菜单栏测试类", "D", MenuBarTestActivity::class.java)
+
     )
 
     /** 列表 */
