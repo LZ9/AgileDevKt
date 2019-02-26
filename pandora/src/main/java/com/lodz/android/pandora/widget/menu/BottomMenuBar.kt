@@ -135,8 +135,10 @@ class BottomMenuBar : LinearLayout {
                 continue
             }
             if (cfg.getType() == type){
-                vg.isSelected =  true
-                mOnSelectedListener?.invoke(type)
+                if (!vg.isSelected){
+                    vg.isSelected =  true
+                    mOnSelectedListener?.invoke(type)
+                }
             }else{
                 vg.isSelected =  false
             }

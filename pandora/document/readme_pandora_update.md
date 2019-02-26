@@ -1,6 +1,11 @@
 # Pandora更新记录
 
-##### 2018/02/01
+##### 2019/02/25
+1. 更新rxandroid版本
+2. 添加底部菜单栏控件
+3. 发布1.1.2版本
+
+##### 2019/02/01
 1.  修复BaseApplication内部获取时的判空BUG
 2.  修复Activity回收后的数据保存BUG
 3.  Fragment基类支持AnkoLayout
