@@ -41,7 +41,7 @@ abstract class BaseActivity : AbsActivity() {
     private val mContentLayout by bindView<LinearLayout>(R.id.content_layout)
 
     @LayoutRes
-    override fun getAbsLayoutId(): Int = R.layout.pandora_activity_base
+    final override fun getAbsLayoutId(): Int = R.layout.pandora_activity_base
 
     final override fun afterSetContentView() {
         super.afterSetContentView()

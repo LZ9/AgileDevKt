@@ -42,7 +42,7 @@ abstract class BaseFragment : LazyFragment() {
 
     final override fun getAnkoLayoutView(): View? = super.getAnkoLayoutView()
 
-    override fun getAbsLayoutId(): Int = R.layout.pandora_fragment_base
+    final override fun getAbsLayoutId(): Int = R.layout.pandora_fragment_base
 
     final override fun beforeFindViews(view: View) {
         super.beforeFindViews(view)

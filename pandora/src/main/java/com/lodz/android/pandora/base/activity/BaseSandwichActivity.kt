@@ -44,7 +44,7 @@ abstract class BaseSandwichActivity : AbsActivity() {
     /** 底部布局  */
     private val mBottomLayout by bindView<FrameLayout>(R.id.bottom_layout)
 
-    override fun getAbsLayoutId(): Int = R.layout.pandora_activity_base_sandwich
+    final override fun getAbsLayoutId(): Int = R.layout.pandora_activity_base_sandwich
 
     final override fun afterSetContentView() {
         super.afterSetContentView()

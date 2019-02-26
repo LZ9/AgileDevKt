@@ -44,7 +44,7 @@ abstract class BaseRefreshActivity : AbsActivity() {
     /** 内容布局  */
     private val mContentLayout by bindView<LinearLayout>(R.id.content_layout)
 
-    override fun getAbsLayoutId(): Int = R.layout.pandora_activity_base_refresh
+    final override fun getAbsLayoutId(): Int = R.layout.pandora_activity_base_refresh
 
     final override fun afterSetContentView() {
         super.afterSetContentView()

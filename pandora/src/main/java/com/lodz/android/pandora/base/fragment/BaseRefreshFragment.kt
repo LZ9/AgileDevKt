@@ -46,7 +46,7 @@ abstract class BaseRefreshFragment : LazyFragment() {
 
     final override fun getAnkoLayoutView(): View? = super.getAnkoLayoutView()
 
-    override fun getAbsLayoutId(): Int = R.layout.pandora_fragment_base_refresh
+    final override fun getAbsLayoutId(): Int = R.layout.pandora_fragment_base_refresh
 
     final override fun beforeFindViews(view: View) {
         super.beforeFindViews(view)
