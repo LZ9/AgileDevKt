@@ -1,11 +1,14 @@
 package com.lodz.android.corekt.utils
 
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
+import android.content.Context
 import androidx.annotation.StringDef
 import java.text.SimpleDateFormat
 import java.util.*
 
 /**
- * 时间格式化帮助类
+ * 时间帮助类
  * Created by zhouL on 2018/7/2.
  */
 object DateUtils {
@@ -94,6 +97,24 @@ object DateUtils {
         }
         return ""
     }
+
+    /** 显示日期选择器，[context]上下文，[listener]监听器，[calendar]日历对象（默认自动获取） */
+    fun showDatePicker(context: Context, listener: DatePickerDialog.OnDateSetListener, calendar: Calendar = Calendar.getInstance()) {
+        val dialog = DatePickerDialog(context, listener,
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH))
+        dialog.show()
+    }
+
+    /** 显示时间选择器，[context]上下文，[listener]监听器，[calendar]日历对象（默认自动获取），[is24HourView]是否按24小时格式显示界面 */
+    fun showTimePicker(context: Context, listener: TimePickerDialog.OnTimeSetListener, calendar: Calendar = Calendar.getInstance(), is24HourView: Boolean = true) {
+        val dialog = TimePickerDialog(context, listener,
+                calendar.get(Calendar.HOUR_OF_DAY),
+                calendar.get(Calendar.MINUTE), is24HourView)
+        dialog.show()
+    }
+
 }
 
 
