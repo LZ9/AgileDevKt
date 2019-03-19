@@ -591,6 +591,13 @@
 
         </activity>
 
+        <activity
+            android:name=".modules.collect.CollectActivity"
+            android:label="采集测试页"
+            android:screenOrientation="portrait">
+
+        </activity>
+
     </application>
 
 </manifest>

@@ -21,6 +21,30 @@
     <attr name="contentBackground" format="color" />
     <attr name="isNeedImg" format="boolean" />
     <attr name="src" format="reference" />
+    <attr name="titleText" format="string" />
+    <attr name="titleTextColor" format="color" />
+    <attr name="titleTextSize" format="dimension" />
+    <attr name="titleWidth" format="dimension" />
+    <attr name="titleBackground" format="reference" />
+    <attr name="contentText" format="string" />
+    <attr name="contentTextColor" format="color" />
+    <attr name="contentTextSize" format="dimension" />
+    <attr name="contentHint" format="string" />
+    <attr name="contentHintColor" format="color" />
+    <attr name="contentDrawableStart" format="reference" />
+    <attr name="contentDrawableEnd" format="reference" />
+    <attr name="contentDrawablePadding" format="dimension" />
+    <attr name="contentTag" format="string" />
+    <attr name="isRequired" format="boolean" />
+    <attr name="requiredSrc" format="reference" />
+    <attr name="unitText" format="string" />
+    <attr name="unitTextColor" format="color" />
+    <attr name="unitTextSize" format="dimension" />
+    <attr name="jumpText" format="string" />
+    <attr name="jumpTextColor" format="color" />
+    <attr name="jumpTextSize" format="dimension" />
+    <attr name="jumpBackground" format="reference" />
+    <attr name="isReadOnly" format="boolean" />
 
     <!--加载页-->
     <declare-styleable name="LoadingLayout">
@@ -79,9 +103,9 @@
         <attr name="backText" />
         <attr name="backTextColor" />
         <attr name="backTextSize" />
-        <attr name="titleText" format="string" />
-        <attr name="titleTextColor" format="color" />
-        <attr name="titleTextSize" format="dimension" />
+        <attr name="titleText" />
+        <attr name="titleTextColor" />
+        <attr name="titleTextSize" />
         <attr name="isShowDivideLine" />
         <attr name="divideLineColor" />
         <attr name="divideLineHeight" />
@@ -161,4 +185,34 @@
         <attr name="placeholderHeight" format="dimension" />
         <attr name="showPlaceholder" format="boolean" />
     </declare-styleable>
+
+    <!--采集展示控件-->
+    <declare-styleable name="CltTextView">
+        <attr name="titleText" />
+        <attr name="titleTextColor" />
+        <attr name="titleTextSize" />
+        <attr name="titleWidth" />
+        <attr name="titleBackground" />
+        <attr name="contentText" />
+        <attr name="contentTextColor" />
+        <attr name="contentTextSize" />
+        <attr name="contentHint" />
+        <attr name="contentHintColor" />
+        <attr name="contentDrawableStart" />
+        <attr name="contentDrawableEnd" />
+        <attr name="contentDrawablePadding" />
+        <attr name="contentTag" />
+        <attr name="isRequired" />
+        <attr name="requiredSrc" />
+        <attr name="unitText" />
+        <attr name="unitTextColor" />
+        <attr name="unitTextSize" />
+        <attr name="jumpText" />
+        <attr name="jumpTextColor" />
+        <attr name="jumpTextSize" />
+        <attr name="jumpBackground" />
+        <attr name="isReadOnly" />
+    </declare-styleable>
+
+
 </resources>

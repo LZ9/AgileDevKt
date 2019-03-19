@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.lodz.android.pandora.widget.collect.CltTextView
+        android:id="@+id/name_cltv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:contentText="@string/clt_name_content"
+        app:contentTextColor="@color/color_d28928"
+        app:contentTextSize="15sp"
+        app:isRequired="true"
+        app:jumpBackground="@drawable/bg_8100a0e9_corner_4"
+        app:jumpText="@string/clt_name_jump"
+        app:jumpTextColor="@color/white"
+        app:jumpTextSize="13sp"
+        app:titleText="@string/clt_name"
+        app:titleTextColor="@color/color_2f6dc9"
+        app:titleTextSize="18sp"
+        app:titleWidth="150dp">
+
+    </com.lodz.android.pandora.widget.collect.CltTextView>
+
+    <com.lodz.android.pandora.widget.collect.CltTextView
+        android:id="@+id/sex_cltv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:contentDrawableEnd="@drawable/ic_wallet"
+        app:contentHint="@string/clt_sex_hint"
+        app:contentTag="@string/clt_sex"
+        app:isRequired="true"
+        app:requiredSrc="@drawable/pandora_ic_search"
+        app:titleBackground="@color/color_4c4c4c"
+        app:titleText="@string/clt_sex"
+        app:titleTextColor="@color/white"
+        app:titleTextSize="12sp">
+
+    </com.lodz.android.pandora.widget.collect.CltTextView>
+
+    <com.lodz.android.pandora.widget.collect.CltTextView
+        android:id="@+id/age_cltv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:contentDrawablePadding="15dp"
+        app:contentDrawableStart="@drawable/ic_collect"
+        app:contentHint="@string/clt_age_hint"
+        app:contentHintColor="@color/color_3f51b5"
+        app:titleText="@string/clt_age"
+        app:unitText="@string/clt_age_unit"
+        app:unitTextColor="@color/color_ff6307"
+        app:unitTextSize="14sp">
+
+    </com.lodz.android.pandora.widget.collect.CltTextView>
+
+</LinearLayout>

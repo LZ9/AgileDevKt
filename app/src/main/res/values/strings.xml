@@ -589,4 +589,15 @@
     <string name="rx_maybe_complete">订阅完成</string>
     <string name="rx_completable_to_observable">Completable转Observable订阅</string>
 
+    <!-- 采集测试 -->
+    <string name="clt_title">采集测试页</string>
+    <string name="clt_name">姓名：</string>
+    <string name="clt_name_content">贝克汉姆</string>
+    <string name="clt_name_jump">选择</string>
+    <string name="clt_sex">性别：</string>
+    <string name="clt_sex_hint">请选择性别</string>
+    <string name="clt_age">年龄：</string>
+    <string name="clt_age_hint">请选择性别</string>
+    <string name="clt_age_unit">岁</string>
+
 </resources>

@@ -17,6 +17,7 @@ import com.lodz.android.agiledevkt.modules.array.ArrayTestActivity
 import com.lodz.android.agiledevkt.modules.bitmap.BitmapTestActivity
 import com.lodz.android.agiledevkt.modules.bluetooth.BluetoothTestActivity
 import com.lodz.android.agiledevkt.modules.bottomsheet.BottomSheetsActivity
+import com.lodz.android.agiledevkt.modules.collect.CollectActivity
 import com.lodz.android.agiledevkt.modules.color.ColorAlphaTestActivity
 import com.lodz.android.agiledevkt.modules.coordinator.CoordinatorTestActivity
 import com.lodz.android.agiledevkt.modules.crash.CrashTestActivity
@@ -128,8 +129,8 @@ class MainActivity : BaseActivity() {
             MainBean("RxSingle订阅测试", "R", RxSingleActivity::class.java),
             MainBean("RxMaybe订阅测试", "R", RxMaybeActivity::class.java),
             MainBean("RxCompletable订阅测试", "R", RxCompletableActivity::class.java),
-            MainBean("底部菜单栏测试类", "D", MenuBarTestActivity::class.java)
-
+            MainBean("底部菜单栏测试类", "D", MenuBarTestActivity::class.java),
+            MainBean("采集测试页", "C", CollectActivity::class.java)
     )
 
     /** 列表 */
