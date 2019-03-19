@@ -20,8 +20,8 @@
         api 'com.google.android.material:material:1.0.0'
         api 'androidx.recyclerview:recyclerview:1.0.0'
         api 'androidx.cardview:cardview:1.0.0'
-        api 'androidx.annotation:annotation:1.0.1'
-        api 'androidx.constraintlayout:constraintlayout:2.0.0-alpha3'
+        api 'androidx.annotation:annotation:1.0.2'
+        api 'androidx.constraintlayout:constraintlayout:1.1.3'
         api 'com.google.android:flexbox:1.1.0'
         api 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.21'
     }
