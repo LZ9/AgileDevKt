@@ -23,8 +23,9 @@ object DateUtils {
     const val TYPE_9 = "yyyy-MM-dd HH-mm-ss"
     const val TYPE_10 = "yyyy-MM-dd HH:mm:ss:SSS"
     const val TYPE_11 = "yyyy-MM-dd HH:mm"
+    const val TYPE_12 = "yyyyMM"
 
-    @StringDef(TYPE_1, TYPE_2, TYPE_3, TYPE_4, TYPE_5, TYPE_6, TYPE_7, TYPE_8, TYPE_9, TYPE_10, TYPE_11)
+    @StringDef(TYPE_1, TYPE_2, TYPE_3, TYPE_4, TYPE_5, TYPE_6, TYPE_7, TYPE_8, TYPE_9, TYPE_10, TYPE_11, TYPE_12)
     @Retention(AnnotationRetention.SOURCE)
     annotation class FormatType
 
