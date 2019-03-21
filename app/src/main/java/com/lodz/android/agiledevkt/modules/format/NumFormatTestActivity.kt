@@ -3,12 +3,12 @@ package com.lodz.android.agiledevkt.modules.format
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
-import com.lodz.android.corekt.anko.AnkoNumFormat
-import com.lodz.android.corekt.anko.bindView
-import com.lodz.android.corekt.anko.format
+import com.lodz.android.corekt.anko.*
 import com.lodz.android.pandora.base.activity.BaseActivity
 
 /**
@@ -30,6 +30,11 @@ class NumFormatTestActivity : BaseActivity() {
     private val mTwoBtn by bindView<TextView>(R.id.two_btn)
     /** 按钮3 */
     private val mThreeBtn by bindView<TextView>(R.id.three_btn)
+    /** 数字输入框 */
+    private val mNumEdit by bindView<EditText>(R.id.num_edit)
+    /** 转换按钮 */
+    private val mTransformationBtn by bindView<Button>(R.id.transformation_btn)
+
 
     /** 结果 */
     private val mResultTv by bindView<TextView>(R.id.result_tv)
@@ -58,6 +63,15 @@ class NumFormatTestActivity : BaseActivity() {
 
         mThreeBtn.setOnClickListener {
             printFormat(mThreeBtn.text.toString())
+        }
+
+        mTransformationBtn.setOnClickListener {
+            val str = mNumEdit.text.toString()
+            if (str.isEmpty()){
+                toastShort(R.string.format_num_hint)
+                return@setOnClickListener
+            }
+            mResultTv.text = str.toInt().toChinese()
         }
     }
 

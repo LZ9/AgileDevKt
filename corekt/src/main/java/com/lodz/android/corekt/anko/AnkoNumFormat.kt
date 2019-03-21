@@ -41,3 +41,15 @@ fun Float.format(formatType: String = AnkoNumFormat.TYPE_TWO_DECIMAL): String {
     }
     return ""
 }
+
+/** 数字转中文 */
+fun Int.toChinese(): String {
+    val numCHN = arrayListOf("零", "一", "二", "三", "四", "五", "六", "七", "八", "九", "十",  "百", "千", "万", "亿")
+    val numStr = this.toString()
+    if (numStr.length == 1){
+        return numCHN[this]
+    }
+
+
+    return ""
+}

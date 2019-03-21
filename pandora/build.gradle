@@ -26,8 +26,8 @@ android {
 }
 
 dependencies {
-    api 'com.lodz:core-kt:1.0.6'
-//    api project(':corekt')
+//    api 'com.lodz:core-kt:1.0.6'
+    api project(':corekt')
 
     // RxJava
     api 'io.reactivex.rxjava2:rxjava:2.2.7'
