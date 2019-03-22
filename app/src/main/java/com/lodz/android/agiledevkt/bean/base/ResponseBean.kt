@@ -9,8 +9,8 @@ import com.lodz.android.pandora.rx.status.ResponseStatus
 open class ResponseBean<T> : ResponseStatus {
 
     companion object {
-        const val SUCCESS = 1
-        const val FAIL = 2
+        const val SUCCESS = 200
+        const val FAIL = 500
 
         fun <T> createFail(): ResponseBean<T> = ResponseBean()
 

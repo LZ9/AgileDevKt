@@ -602,4 +602,8 @@
     <string name="clt_age_hint">请选择性别</string>
     <string name="clt_age_unit">岁</string>
 
+    <!-- 接口测试 -->
+    <string name="api_loading">正在获取</string>
+    <string name="api_fail">获取失败</string>
+
 </resources>

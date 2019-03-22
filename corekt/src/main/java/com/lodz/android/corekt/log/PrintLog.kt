@@ -10,6 +10,9 @@ import androidx.annotation.IntDef
  */
 object PrintLog {
 
+    /** 日志分段长度  */
+    private const val LOG_SEGMENTED_LENGTH = 3000
+
     private const val LOG_I = 0
     private const val LOG_V = 1
     private const val LOG_D = 2
@@ -137,14 +140,14 @@ object PrintLog {
 
     /** 打印分段日志。[type]为日志类型，[tag]为日志标签，[log]为日志内容 */
     private fun logSegmented(@LogType type: Int, tag: String, log: String) {
-        if (log.length < 3000) {
+        if (log.length < LOG_SEGMENTED_LENGTH) {
             logByType(type, tag, log)
             return
         }
-        val index = Math.ceil(log.length / 3000.0).toInt()
+        val index = Math.ceil(log.length / LOG_SEGMENTED_LENGTH.toDouble()).toInt()
         for (i in 0 until index) {
-            val start = i * 3000
-            var end = 3000 + i * 3000
+            val start = i * LOG_SEGMENTED_LENGTH
+            var end = LOG_SEGMENTED_LENGTH + i * LOG_SEGMENTED_LENGTH
             if (end >= log.length) {
                 end = log.length
             }

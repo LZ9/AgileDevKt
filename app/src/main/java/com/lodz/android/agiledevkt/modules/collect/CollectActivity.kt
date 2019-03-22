@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.lodz.android.agiledevkt.R
+import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.pandora.base.activity.BaseActivity
@@ -34,7 +35,7 @@ class CollectActivity :BaseActivity(){
 
     override fun findViews(savedInstanceState: Bundle?) {
         super.findViews(savedInstanceState)
-        getTitleBarLayout().setTitleName(R.string.clt_title)
+        getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME))
     }
 
     override fun onClickBackBtn() {

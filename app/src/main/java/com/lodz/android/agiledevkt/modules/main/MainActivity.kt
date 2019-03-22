@@ -13,6 +13,7 @@ import com.lodz.android.agiledevkt.bean.MainBean
 import com.lodz.android.agiledevkt.modules.acache.ACacheTestActivity
 import com.lodz.android.agiledevkt.modules.album.AlbumActivity
 import com.lodz.android.agiledevkt.modules.anko.AnkoLayoutActivity
+import com.lodz.android.agiledevkt.modules.api.ApiTestActivity
 import com.lodz.android.agiledevkt.modules.array.ArrayTestActivity
 import com.lodz.android.agiledevkt.modules.bitmap.BitmapTestActivity
 import com.lodz.android.agiledevkt.modules.bluetooth.BluetoothTestActivity
@@ -130,7 +131,8 @@ class MainActivity : BaseActivity() {
             MainBean("RxMaybe订阅测试", "R", RxMaybeActivity::class.java),
             MainBean("RxCompletable订阅测试", "R", RxCompletableActivity::class.java),
             MainBean("底部菜单栏测试类", "D", MenuBarTestActivity::class.java),
-            MainBean("采集测试页", "C", CollectActivity::class.java)
+            MainBean("采集测试页", "C", CollectActivity::class.java),
+            MainBean("接口测试类", "J", ApiTestActivity::class.java)
     )
 
     /** 列表 */

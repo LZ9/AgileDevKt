@@ -20,7 +20,7 @@ class FastJsonResponseBodyConverter<T>(private val type: Type?, private val conf
 
     override fun convert(value: ResponseBody?): T {
         try {
-            return JSON.parseObject(value.toString(), type, config, featureValues, *mFeatures)
+            return JSON.parseObject(value?.string() ?: "{}", type, config, featureValues, *mFeatures)
         } finally {
             value?.close()
         }
