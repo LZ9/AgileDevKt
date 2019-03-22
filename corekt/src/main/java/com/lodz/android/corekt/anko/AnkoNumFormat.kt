@@ -42,7 +42,7 @@ fun Float.format(formatType: String = AnkoNumFormat.TYPE_TWO_DECIMAL): String {
     return ""
 }
 
-/** 数字转中文（到3位百） */
+/** 数字转中文（到3位千） */
 fun Int.toChinese(): String {
     val numCHN = arrayListOf("零", "一", "二", "三", "四", "五", "六", "七", "八", "九")
     val numEmptyCHN = arrayListOf("", "一", "二", "三", "四", "五", "六", "七", "八", "九")
@@ -69,12 +69,35 @@ fun Int.toChinese(): String {
         val ten = numStr.substring(1, 2).toInt()
         val one = numStr.substring(2, 3).toInt()
         if (one == 0) {
-            return numEmptyCHN[hundred] + "百" + numCHN[ten] + "十"
+            return numEmptyCHN[hundred] + "百" + numEmptyCHN[ten] + "十"
         }
         if (ten == 0) {
             return numEmptyCHN[hundred] + "百零" + numEmptyCHN[one]
         }
-        return numEmptyCHN[hundred] + "百" + numCHN[ten] + "十" + numEmptyCHN[one]
+        return numEmptyCHN[hundred] + "百" + numEmptyCHN[ten] + "十" + numEmptyCHN[one]
+    }
+    //千
+    if (numStr.length == 4) {
+        if (this == 1000) {
+            return "一千"
+        }
+        val thousand = numStr.substring(0, 1).toInt()
+        val hundred = numStr.substring(1, 2).toInt()
+        val ten = numStr.substring(2, 3).toInt()
+        val one = numStr.substring(3, 4).toInt()
+        if (hundred == 0 && ten == 0) {
+            return numEmptyCHN[thousand] + "千零" + numEmptyCHN[one]
+        }
+        if (hundred == 0) {
+            return numEmptyCHN[thousand] + "千零" + numEmptyCHN[ten] + "十" + numEmptyCHN[one]
+        }
+        if (ten == 0 && one == 0) {
+            return numEmptyCHN[thousand] + "千" + numEmptyCHN[hundred] + "百"
+        }
+        if (ten == 0) {
+            return numEmptyCHN[thousand] + "千" + numEmptyCHN[hundred] + "百零" + numEmptyCHN[one]
+        }
+        return numEmptyCHN[thousand] + "千" + numEmptyCHN[hundred] + "百" + numEmptyCHN[ten] + "十" + numEmptyCHN[one]
     }
     return ""
 }
