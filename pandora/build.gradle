@@ -9,8 +9,8 @@ android {
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 7
-        versionName "1.1.5"// 成功上传
+        versionCode 8
+        versionName "1.1.6"// 未上传
     }
 
     buildTypes {
@@ -30,7 +30,7 @@ dependencies {
     api project(':corekt')
 
     // RxJava
-    api 'io.reactivex.rxjava2:rxjava:2.2.7'
+    api 'io.reactivex.rxjava2:rxjava:2.2.8'
     api 'io.reactivex.rxjava2:rxandroid:2.1.1'
     // Retrofit
     api 'com.squareup.retrofit2:retrofit:2.5.0'
