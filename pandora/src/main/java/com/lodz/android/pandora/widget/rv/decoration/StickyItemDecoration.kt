@@ -43,8 +43,8 @@ class StickyItemDecoration<T> private constructor(context: Context) : SectionIte
                 continue
             }
 
-            val top = parent.top
-            val bottom = parent.top + mSectionHeightPx
+            val top = 0
+            val bottom = mSectionHeightPx
 
             val sectionTop = Math.max(top, view.top - mSectionHeightPx)// 顶部section上坐标，取top和viewtop最大值
             val sectionBottom = Math.max(bottom, view.top)// 顶部section下坐标，取bottom和viewbottom的最大值
