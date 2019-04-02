@@ -54,6 +54,22 @@ object DateUtils {
         return null
     }
 
+    /** 将格式化[formatType]后的时间字符串[source]转成Calendar */
+    fun parseFormatToCalendar(formatType: String, source: String): Calendar? {
+        val date = parseFormatDate(formatType, source)
+        if (date != null) {
+            return parseDateToCalendar(date)
+        }
+        return null
+    }
+
+    /** 将[date]转成Calendar */
+    fun parseDateToCalendar(date: Date): Calendar {
+        val cal = Calendar.getInstance()
+        cal.time = date
+        return cal
+    }
+
     /** 将日期字符串[source]从旧格式[oldFormatType]改为新格式[newFormatType] */
     fun changeFormatString(oldFormatType: String, newFormatType: String, source: String): String {
         val date = parseFormatDate(oldFormatType, source)
@@ -116,6 +132,15 @@ object DateUtils {
         dialog.show()
     }
 
+    /** 日期1是否在日期2之前（dateOne < dateTwo） */
+    fun isBefore(dateOne: Date, dateTwo: Date): Boolean = dateOne.before(dateTwo)
+
+    /** 日期1是否在日期2之前（dateOne < dateTwo） */
+    fun isBefore(formatType: String, sourceOne: String, sourceTwo: String): Boolean {
+        val dateOne = parseFormatDate(formatType, sourceOne)
+        val dateTwo = parseFormatDate(formatType, sourceTwo)
+        return dateOne?.before(dateTwo) ?: false
+    }
 }
 
 

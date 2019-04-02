@@ -22,6 +22,7 @@ import com.lodz.android.agiledevkt.modules.collect.CollectActivity
 import com.lodz.android.agiledevkt.modules.color.ColorAlphaTestActivity
 import com.lodz.android.agiledevkt.modules.coordinator.CoordinatorTestActivity
 import com.lodz.android.agiledevkt.modules.crash.CrashTestActivity
+import com.lodz.android.agiledevkt.modules.date.DateActivity
 import com.lodz.android.agiledevkt.modules.dialog.DialogActivity
 import com.lodz.android.agiledevkt.modules.dialogfragment.DialogFragmentActivity
 import com.lodz.android.agiledevkt.modules.drawer.DrawerTestActivity
@@ -132,7 +133,8 @@ class MainActivity : BaseActivity() {
             MainBean("RxCompletable订阅测试", "R", RxCompletableActivity::class.java),
             MainBean("底部菜单栏测试类", "D", MenuBarTestActivity::class.java),
             MainBean("采集测试页", "C", CollectActivity::class.java),
-            MainBean("接口测试类", "J", ApiTestActivity::class.java)
+            MainBean("接口测试类", "J", ApiTestActivity::class.java),
+            MainBean("日期测试类", "R", DateActivity::class.java)
     )
 
     /** 列表 */

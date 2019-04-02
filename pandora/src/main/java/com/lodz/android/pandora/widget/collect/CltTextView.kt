@@ -78,8 +78,15 @@ class CltTextView : FrameLayout {
         }
 
         // 设置必填图片是否显示
-        setRequiredVisibility(typedArray?.getBoolean(R.styleable.CltTextView_isRequired, false)
-                ?: false)
+        val visibility = typedArray?.getInt(R.styleable.CltTextView_requiredVisibility, 0) ?: 0
+        if (visibility == 1) {
+            setRequiredVisibility(View.INVISIBLE)
+        } else if (visibility == 2) {
+            setRequiredVisibility(View.GONE)
+        } else {
+            setRequiredVisibility(View.VISIBLE)
+        }
+
         // 设置必填图片
         val src: Drawable? = typedArray?.getDrawable(R.styleable.CltTextView_requiredSrc)
         if (src != null) {
@@ -159,6 +166,11 @@ class CltTextView : FrameLayout {
         if (contentTag != null) {
             setContentTag(contentTag)
         }
+        // 设置加载页背景
+        val contentBackground: Drawable? = typedArray?.getDrawable(R.styleable.CltTextView_contentBackground)
+        if (contentBackground != null) {
+            setContentBackground(contentBackground)
+        }
         // 设置单位文字
         val unitText: String? = typedArray?.getString(R.styleable.CltTextView_unitText)
         if (unitText != null) {
@@ -224,9 +236,9 @@ class CltTextView : FrameLayout {
         mRequiredImg.setImageDrawable(drawable)
     }
 
-    /** 设置必填图片是否显示[isShow] */
-    fun setRequiredVisibility(isShow: Boolean) {
-        mRequiredImg.visibility = if (isShow) View.VISIBLE else View.INVISIBLE
+    /** 设置必填图片显隐[visibility] */
+    fun setRequiredVisibility(visibility: Int) {
+        mRequiredImg.visibility = visibility
     }
 
     /** 获取必填图片是否显示 */
@@ -389,6 +401,21 @@ class CltTextView : FrameLayout {
     /** 设置内容点击监听器[listener] */
     fun setOnContentClickListener(listener: View.OnClickListener?) {
         mContentTv.setOnClickListener(listener)
+    }
+
+    /** 设置内容背景[drawable] */
+    fun setContentBackground(drawable: Drawable) {
+        mContentTv.background = drawable
+    }
+
+    /** 设置内容背景[color] */
+    fun setContentBackground(@ColorInt color: Int) {
+        mContentTv.setBackgroundColor(color)
+    }
+
+    /** 设置内容背景[resId] */
+    fun setContentBackgroundRes(@DrawableRes resId: Int) {
+        mContentTv.setBackgroundResource(resId)
     }
 
     /** 设置是否需要单位[isNeed] */

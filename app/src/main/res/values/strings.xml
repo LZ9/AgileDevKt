@@ -606,4 +606,18 @@
     <string name="api_loading">正在获取</string>
     <string name="api_fail">获取失败</string>
 
+    <!-- 日期测试 -->
+    <string name="date_start">开始时间</string>
+    <string name="date_end">结束时间</string>
+    <string name="date_gap">-</string>
+    <string name="date_format_type">日期格式：</string>
+    <string name="date_format_hint">请选择日期格式</string>
+    <string name="date_current">当前日期：</string>
+    <string name="date_current_before">当前日期之前5天：</string>
+    <string name="date_current_after">当前日期之后5天：</string>
+    <string name="date_sys_picker">系统日期选择框</string>
+    <string name="date_time_picker">系统时间选择框</string>
+
+
+
 </resources>

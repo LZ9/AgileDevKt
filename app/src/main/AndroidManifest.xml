@@ -605,6 +605,13 @@
 
         </activity>
 
+        <activity
+            android:name=".modules.date.DateActivity"
+            android:label="日期测试类"
+            android:screenOrientation="portrait">
+
+        </activity>
+
     </application>
 
 </manifest>
