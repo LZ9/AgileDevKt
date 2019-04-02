@@ -9,14 +9,16 @@ import android.view.ViewGroup
 import android.view.Window
 import androidx.annotation.LayoutRes
 import androidx.annotation.StyleRes
-import androidx.fragment.app.DialogFragment
 import com.lodz.android.pandora.R
+import com.trello.rxlifecycle3.LifecycleTransformer
+import com.trello.rxlifecycle3.android.FragmentEvent
+import com.trello.rxlifecycle3.components.support.RxDialogFragment
 
 /**
  * DialogFragment基类
  * Created by zhouL on 2018/12/13.
  */
-abstract class BaseDialogFragment : DialogFragment() {
+abstract class BaseDialogFragment : RxDialogFragment() {
 
     final override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(getLayoutId(), container, false)
@@ -45,11 +47,7 @@ abstract class BaseDialogFragment : DialogFragment() {
     protected open fun endCreate() {}
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val ctx = context
-        if (ctx == null) {
-            return super.onCreateDialog(savedInstanceState)
-        }
-        return Dialog(ctx, R.style.BaseDialog)
+        return Dialog(context, R.style.BaseDialog)
     }
 
     override fun onStart() {
@@ -83,4 +81,8 @@ abstract class BaseDialogFragment : DialogFragment() {
         }
         return requireContext()
     }
+
+    /** 绑定Fragment的DestroyView生命周期 */
+    protected fun <T> bindDestroyViewEvent(): LifecycleTransformer<T> = bindUntilEvent(FragmentEvent.DESTROY_VIEW)
+    protected fun bindAnyDestroyViewEvent(): LifecycleTransformer<Any> = bindUntilEvent(FragmentEvent.DESTROY_VIEW)
 }

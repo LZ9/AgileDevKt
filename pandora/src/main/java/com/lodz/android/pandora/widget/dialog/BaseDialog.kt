@@ -1,6 +1,5 @@
 package com.lodz.android.pandora.widget.dialog
 
-import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.graphics.drawable.Drawable
@@ -9,12 +8,14 @@ import android.os.Bundle
 import androidx.annotation.LayoutRes
 import androidx.annotation.StyleRes
 import com.lodz.android.pandora.R
+import com.trello.rxlifecycle3.LifecycleTransformer
+import com.trello.rxlifecycle3.android.FragmentEvent
 
 /**
  * 弹框基类
  * Created by zhouL on 2018/9/28.
  */
-abstract class BaseDialog : Dialog {
+abstract class BaseDialog : RxDialog {
 
     constructor(context: Context) : super(context, R.style.BaseDialog) {
         init()
@@ -76,4 +77,8 @@ abstract class BaseDialog : Dialog {
 
     /** 获取dialog接口对象 */
     protected fun getDialogInterface(): DialogInterface = this
+
+    /** 绑定Activity的Destroy生命周期 */
+    protected fun <T> bindStopEvent(): LifecycleTransformer<T> = bindUntilEvent(FragmentEvent.STOP)
+    protected fun bindAnyStopEvent(): LifecycleTransformer<Any> = bindUntilEvent(FragmentEvent.STOP)
 }
