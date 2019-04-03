@@ -17,16 +17,22 @@ inline fun <reified T> Array<T>.deduplication(): Array<*> = LinkedHashSet<T>(toL
 fun <T> Collection<T>.deduplication(): Collection<T> = LinkedHashSet<T>(this).toList()
 
 /** 列表转ArrayList */
-fun <T> Collection<T>.toArrayList():ArrayList<T> = ArrayList(this)
+fun <T> Collection<T>.toArrayList(): ArrayList<T> = ArrayList(this)
 
 /** 数组转ArrayList */
-fun <T> Array<T>.toArrayList():ArrayList<T> = ArrayList(this.toList())
+fun <T> Array<T>.toArrayList(): ArrayList<T> = ArrayList(this.toList())
 
 /** 获取数组长度 */
 fun Array<*>?.getSize(): Int = if (this == null) 0 else this.size
 
 /** 获取列表长度 */
 fun Collection<*>?.getSize(): Int = if (this == null) 0 else this.size
+
+/** 获取数组长度 */
+fun Array<*>?.isNullOrEmpty(): Boolean = this == null || this.size == 0
+
+/** 获取列表长度 */
+fun Collection<*>?.isNullOrEmpty(): Boolean = this == null || this.size == 0
 
 /** 将数据分组，泛型T可以为String或者实现了Groupable的任意类，[groups]为分组标题，[compareLength]为匹配长度 */
 inline fun <reified T> Array<T>.group(groups: Array<String>, @IntRange(from = 1) compareLength: Int = 1): Array<T> = toList().group(groups.toList(), compareLength).toTypedArray()
@@ -76,20 +82,20 @@ fun <T> Collection<T>.group(groups: Collection<String>, @IntRange(from = 1) comp
 
 /** 通过索引文字[indexText]来获取原数据列表里的首个item位置，[groups]为分组标题 */
 fun <T> Collection<T>.getPositionByIndex(groups: List<String>, indexText: String): Int {
-    if (isEmpty() || groups.isEmpty() || indexText.isEmpty()){
+    if (isEmpty() || groups.isEmpty() || indexText.isEmpty()) {
         return 0
     }
     for ((i, t) in withIndex()) {
-        if (t is Groupable || t is String){
+        if (t is Groupable || t is String) {
             val item = if (t is Groupable) t.getSortStr() else t as String
-            if (item.isEmpty()){
+            if (item.isEmpty()) {
                 continue
             }
-            if (item.length <= indexText.length){// 列表文字长度小于等于索引字符长度
+            if (item.length <= indexText.length) {// 列表文字长度小于等于索引字符长度
                 if (item.equals(indexText.substring(0, item.length))) {
                     return i
                 }
-            }else{
+            } else {
                 if (indexText.equals(item.substring(0, indexText.length))) {
                     return i
                 }
@@ -99,7 +105,7 @@ fun <T> Collection<T>.getPositionByIndex(groups: List<String>, indexText: String
 
     // 都没有匹配到说明数据里没有indexText的内容，则匹配他的前一位
     val position = groups.indexOf(indexText)
-    if (position <= 0){
+    if (position <= 0) {
         return 0
     }
     return getPositionByIndex(groups, groups.get(position - 1))
