@@ -10,7 +10,9 @@ import android.widget.DatePicker
 import android.widget.TextView
 import android.widget.TimePicker
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder
+import com.bigkoo.pickerview.builder.TimePickerBuilder
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener
+import com.bigkoo.pickerview.listener.OnTimeSelectListener
 import com.google.android.material.button.MaterialButton
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
@@ -53,7 +55,11 @@ class DateActivity : BaseActivity() {
     /** 系统时间选择框 */
     private val mTimePickerBtn by bindView<MaterialButton>(R.id.time_picker_btn)
     /** 选择时间 */
-    private val mTimePickerTv by bindView<TextView>(R.id.time_picker_tv);
+    private val mTimePickerTv by bindView<TextView>(R.id.time_picker_tv)
+    /** 时间日期滚动选择框 */
+    private val mTimeWheelBtn by bindView<MaterialButton>(R.id.time_wheel_btn)
+    /** 选择时间日期 */
+    private val mTimeWheelTv by bindView<TextView>(R.id.time_wheel_tv)
 
     override fun getLayoutId(): Int = R.layout.activity_date
 
@@ -70,15 +76,47 @@ class DateActivity : BaseActivity() {
     override fun setListeners() {
         super.setListeners()
         mFormatTypeClttv.setOnContentClickListener {
-            val dialog = OptionsPickerBuilder(getContext(), object : OnOptionsSelectListener {
-                override fun onOptionsSelect(options1: Int, options2: Int, options3: Int, v: View?) {
-                    mFormatTypeClttv.setContentText(FORMAT_TYPE_LIST[options1])
-                    mFormatTypeClttv.setContentTag(options1.toString())
-                    updateUI()
-                }
-            }).build<String>()
+            val dialog = OptionsPickerBuilder(getContext(),
+                    object : OnOptionsSelectListener {
+                        override fun onOptionsSelect(options1: Int, options2: Int, options3: Int, v: View?) {
+                            mFormatTypeClttv.setContentText(FORMAT_TYPE_LIST[options1])
+                            mFormatTypeClttv.setContentTag(options1.toString())
+                            updateUI()
+                        }
+                    })
+                    .setSubmitText(getString(R.string.date_confirm))
+                    .setCancelText(getString(R.string.date_cancel))
+                    .setTitleText(getString(R.string.date_format_title))
+                    .setSelectOptions(mFormatTypeClttv.getContentTag().toInt())
+                    .build<String>()
             dialog.setPicker(FORMAT_TYPE_LIST)
-            dialog.setSelectOptions(mFormatTypeClttv.getContentTag().toInt())
+            dialog.show()
+        }
+
+        mTimeWheelBtn.setOnClickListener {
+            var calendar = DateUtils.parseFormatToCalendar(DateUtils.TYPE_2, mTimeWheelTv.text.toString())
+            if (calendar == null) {
+                calendar = Calendar.getInstance()
+            }
+
+            val startDate = Calendar.getInstance()
+            val endDate = Calendar.getInstance()
+            startDate.set(startDate.get(Calendar.YEAR) - 100, Calendar.JANUARY, 1)
+            endDate.set(endDate.get(Calendar.YEAR) + 100, Calendar.DECEMBER, 31)
+
+            val dialog = TimePickerBuilder(getContext(),
+                    object : OnTimeSelectListener {
+                        override fun onTimeSelect(date: Date?, v: View?) {
+                            mTimeWheelTv.setText(if (date != null) DateUtils.getFormatString(DateUtils.TYPE_2, date) else "")
+                        }
+                    })
+                    .setTitleText(getString(R.string.date_pick_title))
+                    .setDate(calendar)
+                    .setRangDate(startDate, endDate)
+                    .setType(booleanArrayOf(true, true, true, true, true, true))
+                    .setLabel("年", "月", "日", "时", "分", "秒")
+                    .isCyclic(true)
+                    .build()
             dialog.show()
         }
 
@@ -86,7 +124,7 @@ class DateActivity : BaseActivity() {
             var calendar = Calendar.getInstance()
             val dateStr = mDatePickerTv.text.toString()
             if (dateStr.isNotEmpty()) {
-                calendar = DateUtils.parseFormatToCalendar(DateUtils.TYPE_2, dateStr)
+                calendar = DateUtils.parseFormatToCalendar(DateUtils.TYPE_6, dateStr)
             }
 
             DateUtils.showDatePicker(getContext(), object : DatePickerDialog.OnDateSetListener {
@@ -95,7 +133,7 @@ class DateActivity : BaseActivity() {
                     c.set(Calendar.YEAR, year)
                     c.set(Calendar.MONTH, month)
                     c.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-                    mDatePickerTv.text = DateUtils.parseFormatCalendar(DateUtils.TYPE_2, c)
+                    mDatePickerTv.text = DateUtils.parseFormatCalendar(DateUtils.TYPE_6, c)
                 }
             }, calendar)
         }
@@ -104,7 +142,7 @@ class DateActivity : BaseActivity() {
             var calendar = Calendar.getInstance()
             val dateStr = mTimePickerTv.text.toString()
             if (dateStr.isNotEmpty()) {
-                calendar = DateUtils.parseFormatToCalendar(DateUtils.TYPE_2, dateStr)
+                calendar = DateUtils.parseFormatToCalendar(DateUtils.TYPE_8, dateStr)
             }
 
             DateUtils.showTimePicker(getContext(), object : TimePickerDialog.OnTimeSetListener {
@@ -112,7 +150,7 @@ class DateActivity : BaseActivity() {
                     val c = Calendar.getInstance()
                     c.set(Calendar.HOUR_OF_DAY, hourOfDay)
                     c.set(Calendar.MINUTE, minute)
-                    mTimePickerTv.text = DateUtils.parseFormatCalendar(DateUtils.TYPE_2, c)
+                    mTimePickerTv.text = DateUtils.parseFormatCalendar(DateUtils.TYPE_8, c)
                 }
             }, calendar)
         }

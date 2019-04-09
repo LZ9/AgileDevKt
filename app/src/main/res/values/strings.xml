@@ -617,6 +617,11 @@
     <string name="date_current_after">当前日期之后5天：</string>
     <string name="date_sys_picker">系统日期选择框</string>
     <string name="date_time_picker">系统时间选择框</string>
+    <string name="date_confirm">选他</string>
+    <string name="date_cancel">拒绝</string>
+    <string name="date_format_title">日期格式</string>
+    <string name="date_time_wheel">时间日期滚动选择框</string>
+    <string name="date_pick_title">日期选择</string>
 
 
 
