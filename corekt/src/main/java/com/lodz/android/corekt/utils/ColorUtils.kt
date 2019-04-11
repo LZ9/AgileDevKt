@@ -15,10 +15,12 @@ object ColorUtils {
 
     /** 设置颜色资源[color]的透明度[alpha] */
     @ColorInt
+    @JvmStatic
     fun getColorAlphaRes(context: Context, @ColorRes color: Int, @FloatRange(from = 0.0, to = 1.0) alpha: Float): Int = getColorAlphaInt(context.getColorCompat(color), alpha)
 
     /** 设置颜色[color]的透明度[alpha] */
     @ColorInt
+    @JvmStatic
     fun getColorAlphaInt(@ColorInt color: Int, @FloatRange(from = 0.0, to = 1.0) alpha: Float): Int {
         // 透明度最大值
         val MAX = 255

@@ -11,6 +11,7 @@ object IdCardUtils {
     private val POWER = arrayOf(7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2)
 
     /** 验证18位身份证号[idCard]是否合法 */
+    @JvmStatic
     fun validateIdCard(idCard: String): Boolean {
         if (idCard.isEmpty()) {
             return false
@@ -50,6 +51,7 @@ object IdCardUtils {
     }
 
     /** 获取17位待补全的身份证号[idCard]的校验位 */
+    @JvmStatic
     fun getValidationCode(idCard: String): String {
         if (idCard.isEmpty()) {
             return ""
@@ -111,6 +113,7 @@ object IdCardUtils {
     }
 
     /** 获取身份证[idCard]的性别代码（0非身份证 1男 2女） */
+    @JvmStatic
     fun getSexCode(idCard: String): Int {
         if (!validateIdCard(idCard)) {
             return 0
@@ -120,6 +123,7 @@ object IdCardUtils {
     }
 
     /** 获取身份证[idCard]的性别（男 女） */
+    @JvmStatic
     fun getSexStr(idCard: String): String {
         val sexCode = getSexCode(idCard)
         if (sexCode == 1) {
@@ -132,6 +136,7 @@ object IdCardUtils {
     }
 
     /** 根据日期格式[dateFormat]从身份证[idCard]获取出生年月（默认格式yyyyMMdd） */
+    @JvmStatic
     fun getBirth(idCard: String, dateFormat: String = DateUtils.TYPE_5): String {
         if (!validateIdCard(idCard)) {
             return ""
@@ -144,6 +149,7 @@ object IdCardUtils {
     }
 
     /** 从身份证[idCard]获取年 */
+    @JvmStatic
     fun getYear(idCard: String): String {
         if (!validateIdCard(idCard)) {
             return ""
@@ -152,6 +158,7 @@ object IdCardUtils {
     }
 
     /** 从身份证[idCard]获取月 */
+    @JvmStatic
     fun getMonth(idCard: String): String {
         if (!validateIdCard(idCard)) {
             return ""
@@ -160,6 +167,7 @@ object IdCardUtils {
     }
 
     /** 从身份证[idCard]获取日 */
+    @JvmStatic
     fun getDay(idCard: String): String {
         if (!validateIdCard(idCard)) {
             return ""
@@ -168,6 +176,7 @@ object IdCardUtils {
     }
 
     /** 从身份证[idCard]获取年龄 */
+    @JvmStatic
     fun getAge(idCard: String): Int {
         if (!validateIdCard(idCard)) {
             return 0
@@ -178,6 +187,7 @@ object IdCardUtils {
     }
 
     /** 从身份证[idCard]获取户籍省份 */
+    @JvmStatic
     fun getProvince(idCard: String): String {
         if (!validateIdCard(idCard)) {
             return ""

@@ -27,11 +27,13 @@ object PrintLog {
     private var isPrint = true
 
     /** 通过[isPrint]来控制是否打开日志 */
+    @JvmStatic
     fun setPrint(isPrint: Boolean) {
         this.isPrint = isPrint
     }
 
     /** 打印INFO类型日志。[tag]为日志标签，[log]为日志内容 */
+    @JvmStatic
     fun i(tag: String, log: String?) {
         if (isPrint) {
             logByType(LOG_I, tag, log)
@@ -39,6 +41,7 @@ object PrintLog {
     }
 
     /** 打印INFO类型分段日志。[tag]为日志标签，[log]为日志内容 */
+    @JvmStatic
     fun iS(tag: String, log: String?) {
         if (!isPrint) {
             return
@@ -51,6 +54,7 @@ object PrintLog {
     }
 
     /** 打印VERBOSE类型日志。[tag]为日志标签，[log]为日志内容 */
+    @JvmStatic
     fun v(tag: String, log: String?) {
         if (isPrint) {
             logByType(LOG_V, tag, log)
@@ -58,6 +62,7 @@ object PrintLog {
     }
 
     /** 打印VERBOSE类型分段日志。[tag]为日志标签，[log]为日志内容 */
+    @JvmStatic
     fun vS(tag: String, log: String?) {
         if (!isPrint) {
             return
@@ -70,6 +75,7 @@ object PrintLog {
     }
 
     /** 打印DEBUG类型日志。[tag]为日志标签，[log]为日志内容 */
+    @JvmStatic
     fun d(tag: String, log: String?) {
         if (isPrint) {
             logByType(LOG_D, tag, log)
@@ -77,6 +83,7 @@ object PrintLog {
     }
 
     /** 打印DEBUG类型分段日志。[tag]为日志标签，[log]为日志内容 */
+    @JvmStatic
     fun dS(tag: String, log: String?) {
         if (!isPrint) {
             return
@@ -89,6 +96,7 @@ object PrintLog {
     }
 
     /** 打印WARN类型日志。[tag]为日志标签，[log]为日志内容 */
+    @JvmStatic
     fun w(tag: String, log: String?) {
         if (isPrint) {
             logByType(LOG_W, tag, log)
@@ -96,6 +104,7 @@ object PrintLog {
     }
 
     /** 打印WARN类型分段日志。[tag]为日志标签，[log]为日志内容 */
+    @JvmStatic
     fun wS(tag: String, log: String?) {
         if (!isPrint) {
             return
@@ -108,6 +117,7 @@ object PrintLog {
     }
 
     /** 打印ERROR类型日志。[tag]为日志标签，[log]为日志内容 */
+    @JvmStatic
     fun e(tag: String, log: String?) {
         if (isPrint) {
             logByType(LOG_E, tag, log)
@@ -115,6 +125,7 @@ object PrintLog {
     }
 
     /** 打印ERROR类型分段日志。[tag]为日志标签，[log]为日志内容 */
+    @JvmStatic
     fun eS(tag: String, log: String?) {
         if (!isPrint) {
             return
@@ -127,6 +138,7 @@ object PrintLog {
     }
 
     /** 打印ERROR类型日志。[tag]为日志标签，[log]为日志内容 */
+    @JvmStatic
     fun e(tag: String, log: String?, t: Throwable) {
         if (!isPrint) {
             return

@@ -34,26 +34,31 @@ class ToastUtils private constructor(val mContext: Context) {
     companion object {
 
         /** 通过上下文[context]创建ToastUtils对象 */
+        @JvmStatic
         fun create(context: Context): ToastUtils {
             return ToastUtils(context)
         }
 
         /** 通过上下文[context]显示文字为[text]的短时间的Toast */
+        @JvmStatic
         fun showShort(context: Context, text: String) {
             create(context).setText(text).setShort().show()
         }
 
         /** 通过上下文[context]显示文字资源为[text]的短时间的Toast */
+        @JvmStatic
         fun showShort(context: Context, @StringRes strResId: Int) {
             create(context).setText(strResId).setShort().show()
         }
 
         /** 通过上下文[context]显示文字为[text]的长时间的Toast */
+        @JvmStatic
         fun showLong(context: Context, text: String) {
             create(context).setText(text).setLong().show()
         }
 
         /** 通过上下文[context]显示文字资源为[text]的长时间的Toast */
+        @JvmStatic
         fun showLong(context: Context, @StringRes strResId: Int) {
             create(context).setText(strResId).setLong().show()
         }

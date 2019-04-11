@@ -9,6 +9,7 @@ import java.security.MessageDigest
 object MD5 {
 
     /** 将内容[content]转为信息摘要 */
+    @JvmStatic
     fun md(content: String): String? {
         // 用来将字节转换成 16 进制表示的字符
         val hexDigits = charArrayOf('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f')

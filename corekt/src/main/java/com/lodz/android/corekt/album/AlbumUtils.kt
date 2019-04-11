@@ -18,6 +18,7 @@ import kotlin.collections.ArrayList
 object AlbumUtils {
 
     /** 获取相册中所有图片路径列表 */
+    @JvmStatic
     fun getAllImages(context: Context): List<String> {
         val imageList = LinkedList<String>()
 
@@ -57,6 +58,7 @@ object AlbumUtils {
     }
 
     /** 获取所有图片的文件夹（包括总图片的文件夹） */
+    @JvmStatic
     fun getAllImageFolders(context: Context): List<ImageFolder> {
         val folders = LinkedList<ImageFolder>()
         val list = getAllImages(context)
@@ -69,6 +71,7 @@ object AlbumUtils {
     }
 
     /** 获取图片列表[pictures]的文件夹信息 */
+    @JvmStatic
     fun getImageFolders(pictures: List<String>): List<ImageFolder> {
         val list = LinkedList<ImageFolder>()
         if (pictures.isEmpty()) {
@@ -98,6 +101,7 @@ object AlbumUtils {
     }
 
     /** 获取总图片的文件夹信息 */
+    @JvmStatic
     fun getTotalImageFolder(context: Context): ImageFolder {
         val list = getAllImages(context)
 
@@ -109,6 +113,7 @@ object AlbumUtils {
     }
 
     /** 获取指定文件目录[file]下的图片文件夹信息，[coverImgPath]为封面图片路径 */
+    @JvmStatic
     fun getImageFolder(file: File, coverImgPath: String): ImageFolder? {
         val fileList = file.list(object : FilenameFilter {
             override fun accept(dir: File?, name: String?): Boolean =
@@ -140,6 +145,7 @@ object AlbumUtils {
     }
 
     /** 获取指定图片目录[imageFolder]下的图片数据列表 */
+    @JvmStatic
     fun getImageListOfFolder(context: Context, imageFolder: ImageFolder): List<String> {
         val imageList = LinkedList<String>()
 
@@ -168,12 +174,14 @@ object AlbumUtils {
     }
 
     /** 通知刷新相册，[imagePath]图片路径，[mimeTypes]图片格式默认jpeg/jpg/png/gif，[callback]回调默认为null */
+    @JvmStatic
     fun notifyScanImage(context: Context, imagePath: String, mimeTypes: Array<String> = arrayOf("image/jpeg", "image/jpg", "image/png", "image/gif"),
                         callback: MediaScannerConnection.OnScanCompletedListener? = null) {
         MediaScannerConnection.scanFile(context.applicationContext, arrayOf(imagePath), mimeTypes, callback)
     }
 
     /** 删除图片，[path]图片路径 */
+    @JvmStatic
     fun deleteImage(context: Context, path: String): Boolean {
         val cursor: Cursor? = MediaStore.Images.Media.query(context.contentResolver, MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                 arrayOf(MediaStore.Images.Media._ID), MediaStore.Images.Media.DATA + "=?", arrayOf(path), null)

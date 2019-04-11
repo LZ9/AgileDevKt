@@ -9,6 +9,7 @@ import java.lang.reflect.Field
 object ReflectUtils {
 
     /** 根据类名[classPath]获取对应的class（类名须包括包名，找不到返回null） */
+    @JvmStatic
     fun getClassForName(classPath: String): Class<*>? {
         try {
             return Class.forName(classPath)
@@ -19,6 +20,7 @@ object ReflectUtils {
     }
 
     /** 获取类[c]的无参构造函数对象（如果目标对象没有无参构造函数返回null） */
+    @JvmStatic
     fun getConstructor(c: Class<*>): Any? {
         try {
             return c.newInstance()
@@ -29,6 +31,7 @@ object ReflectUtils {
     }
 
     /** 获取类[c]带有参数的构造函数对象，包括构造函数的参数类型[paramClassTypes]和构造函数的具体入参[params]（找不到返回null） */
+    @JvmStatic
     fun getConstructor(c: Class<*>, paramClassTypes: Array<Class<*>>, params: Array<Any>): Any? {
         try {
             val constructor = c.getDeclaredConstructor(*paramClassTypes)
@@ -41,6 +44,7 @@ object ReflectUtils {
     }
 
     /** 执行类[c]的某个函数，需要类的对象[constructor]，函数名字[functionName]，函数的参数类型[paramClassTypes]和具体入参[params] */
+    @JvmStatic
     fun executeFunction(c: Class<*>, constructor: Any, functionName: String, paramClassTypes: Array<Class<*>>? = null, params: Array<Any>? = null): Any? {
         try {
             val method = if (paramClassTypes == null) c.getDeclaredMethod(functionName) else c.getDeclaredMethod(functionName, *paramClassTypes)// 方法名和参数类型
@@ -53,6 +57,7 @@ object ReflectUtils {
     }
 
     /** 从类[c]的对象[constructor]里去获取变量名为[typeName]的值 */
+    @JvmStatic
     fun getFieldValue(c: Class<*>, constructor: Any, typeName: String): Any? {
         try {
             val field = c.getDeclaredField(typeName) // privategetField不能获取private
@@ -65,6 +70,7 @@ object ReflectUtils {
     }
 
     /** 获取类[c]的变量名为[typeName]的Field对象 */
+    @JvmStatic
     fun getField(c: Class<*>, typeName: String): Field? {
         try {
             val field = c.getDeclaredField(typeName)
@@ -77,6 +83,7 @@ object ReflectUtils {
     }
 
     /** 在类[c]的对象[constructor]里去设置变量名为[typeName]的[value]值 */
+    @JvmStatic
     fun setFieldValue(c: Class<*>, constructor: Any, typeName: String, value: Any): Boolean {
         try {
             val field = c.getDeclaredField(typeName)
@@ -90,6 +97,7 @@ object ReflectUtils {
     }
 
     /** 获取类[c]里的方法名列表 */
+    @JvmStatic
     fun getMethodName(c: Class<*>): List<String> {
         val list = ArrayList<String>()
         val methods = c.declaredMethods
@@ -100,6 +108,7 @@ object ReflectUtils {
     }
 
     /** 获取类[c]里的变量名列表 */
+    @JvmStatic
     fun getFieldName(c: Class<*>): List<String> {
         val list = ArrayList<String>()
         val fields = c.declaredFields
@@ -110,6 +119,7 @@ object ReflectUtils {
     }
 
     /** 获取类[c]里所有构造函数名称 */
+    @JvmStatic
     fun getConstructorName(c: Class<*>): List<String> {
         val list = ArrayList<String>()
         val constructors = c.declaredConstructors

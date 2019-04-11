@@ -1,6 +1,5 @@
 package com.lodz.android.corekt.security
 
-import java.lang.StringBuilder
 import java.security.MessageDigest
 
 
@@ -11,6 +10,7 @@ import java.security.MessageDigest
 object SHA1 {
 
     /** 将内容[content]转为信息摘要 */
+    @JvmStatic
     fun md(content: String): String? {
         try {
             val digest = MessageDigest.getInstance("SHA-1")

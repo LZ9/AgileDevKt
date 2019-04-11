@@ -17,6 +17,7 @@ class BleSimpleHelper private constructor() {
 
     companion object {
         private val sInstance = BleSimpleHelper()
+        @JvmStatic
         fun get(): BleSimpleHelper = sInstance
     }
 

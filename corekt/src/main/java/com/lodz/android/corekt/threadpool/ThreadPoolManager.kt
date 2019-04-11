@@ -11,7 +11,8 @@ class ThreadPoolManager private constructor() {
 
     companion object {
         private val sInstance = ThreadPoolManager()
-        fun get() = sInstance
+        @JvmStatic
+        fun get(): ThreadPoolManager = sInstance
     }
 
     /** 最高优先级线程池（界面数据加载）  */

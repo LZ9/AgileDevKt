@@ -23,6 +23,7 @@ class NotificationUtils private constructor(context: Context) {
 
     companion object {
         /** 创建通知管理 */
+        @JvmStatic
         fun create(context: Context): NotificationUtils = NotificationUtils(context)
     }
 

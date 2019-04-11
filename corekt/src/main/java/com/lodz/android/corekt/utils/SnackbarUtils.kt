@@ -24,6 +24,7 @@ class SnackbarUtils private constructor() {
     companion object {
 
         /** 创建一个短时Snackbar，控件容器[view]，内容文字[text] */
+        @JvmStatic
         fun createShort(view: View, text: String): SnackbarUtils {
             val utils = SnackbarUtils()
             utils.mSnackbar = Snackbar.make(view, text, Snackbar.LENGTH_SHORT)
@@ -31,6 +32,7 @@ class SnackbarUtils private constructor() {
         }
 
         /** 创建一个短时Snackbar，控件容器[view]，内容文字[textRes] */
+        @JvmStatic
         fun createShort(view: View, @StringRes textRes: Int): SnackbarUtils {
             val utils = SnackbarUtils()
             utils.mSnackbar = Snackbar.make(view, textRes, Snackbar.LENGTH_SHORT)
@@ -38,6 +40,7 @@ class SnackbarUtils private constructor() {
         }
 
         /** 创建一个长时Snackbar，控件容器[view]，内容文字[text] */
+        @JvmStatic
         fun createLong(view: View, text: String): SnackbarUtils {
             val utils = SnackbarUtils()
             utils.mSnackbar = Snackbar.make(view, text, Snackbar.LENGTH_LONG)
@@ -45,6 +48,7 @@ class SnackbarUtils private constructor() {
         }
 
         /** 创建一个长时Snackbar，控件容器[view]，内容文字[textRes] */
+        @JvmStatic
         fun createLong(view: View, @StringRes textRes: Int): SnackbarUtils {
             val utils = SnackbarUtils()
             utils.mSnackbar = Snackbar.make(view, textRes, Snackbar.LENGTH_LONG)
@@ -52,6 +56,7 @@ class SnackbarUtils private constructor() {
         }
 
         /** 创建一个自定义时长Snackbar，控件容器[view]，内容文字[text]，时长[duration]以毫秒为单位 */
+        @JvmStatic
         fun createCustom(view: View, text: String, duration: Int): SnackbarUtils {
             val utils = SnackbarUtils()
             utils.mSnackbar = Snackbar.make(view, text, Snackbar.LENGTH_INDEFINITE).setDuration(duration)
@@ -59,6 +64,7 @@ class SnackbarUtils private constructor() {
         }
 
         /** 创建一个自定义时长Snackbar，控件容器[view]，内容文字[textRes]，时长[duration]以毫秒为单位 */
+        @JvmStatic
         fun createCustom(view: View, @StringRes textRes: Int, duration: Int): SnackbarUtils {
             val utils = SnackbarUtils()
             utils.mSnackbar = Snackbar.make(view, textRes, Snackbar.LENGTH_INDEFINITE).setDuration(duration)

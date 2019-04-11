@@ -18,6 +18,7 @@ class NetworkManager private constructor() {
 
     companion object {
         private val sInstance = NetworkManager()
+        @JvmStatic
         fun get(): NetworkManager = sInstance
     }
 

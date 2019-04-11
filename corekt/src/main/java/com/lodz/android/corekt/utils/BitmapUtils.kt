@@ -20,6 +20,7 @@ import java.io.FileInputStream
 object BitmapUtils {
 
     /** 把[bitmap]转为Bsae64，质量[quality]（0-100，默认70），转码类型[flags]默认Base64.NO_WRAP */
+    @JvmStatic
     fun bitmapToBase64(bitmap: Bitmap, quality: Int = 70, flags: Int = Base64.NO_WRAP): String {
         // @IntRange(from = 0, to = 100) quality: Int = 70
         var reviseQuality = quality
@@ -36,15 +37,18 @@ object BitmapUtils {
     }
 
     /** Base64转为Bitmap */
+    @JvmStatic
     fun base64ToBitmap(base64Data: String, flags: Int = Base64.NO_WRAP): Bitmap? {
         val bytes = base64ToByte(base64Data, flags)
         return BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
     }
 
     /** Base64转为Byte数组 */
+    @JvmStatic
     fun base64ToByte(base64Data: String, flags: Int = Base64.NO_WRAP): ByteArray = Base64.decode(base64Data, flags)
 
     /** [drawable]转为Bitmap，宽度[widthPx]和高度[heightPx]默认取[drawable]的值 */
+    @JvmStatic
     fun drawableToBitmap(drawable: Drawable, widthPx: Int = drawable.intrinsicWidth, heightPx: Int = drawable.intrinsicHeight): Bitmap? {
         // @IntRange(from = 1) widthPx: Int = drawable.intrinsicWidth, @IntRange(from = 1) heightPx: Int = drawable.intrinsicHeight
         if (widthPx < 1 || heightPx < 1) {
@@ -58,6 +62,7 @@ object BitmapUtils {
     }
 
     /** 把[view]转为Bitmap */
+    @JvmStatic
     fun viewToBitmap(view: View): Bitmap? {
         val bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
@@ -67,6 +72,7 @@ object BitmapUtils {
     }
 
     /** 把图片路径[path]转为Bitmap并对宽[widthPx]高[heightPx]进行质量压缩 */
+    @JvmStatic
     fun compressBitmap(path: String, widthPx: Int, heightPx: Int): Bitmap? {
         try {
             val opts = BitmapFactory.Options()
@@ -118,6 +124,7 @@ object BitmapUtils {
 
     /** 合并前景图[fg]和背景图[bgd] */
     @SuppressLint("SwitchIntDef")
+    @JvmStatic
     fun combineBitmap(fg: Bitmap, bg: Bitmap, @CombinekLocationType location: Int, marginPx: Int = 0): Bitmap {
         var newMargin = 0f
         if (marginPx > 0) {
@@ -171,6 +178,7 @@ object BitmapUtils {
 
     /** 将水印图片[watermark]放置在原图片[src]上，水印位置[location]，间距[margin] */
     @SuppressLint("SwitchIntDef")
+    @JvmStatic
     fun createWatermarkBitmap(src: Bitmap, watermark: Bitmap, @WatermarkLocationType location: Int, marginPx: Int): Bitmap {
         var newMargin = 0f
         if (marginPx > 0) {
@@ -200,6 +208,7 @@ object BitmapUtils {
 
 
     /** 将原图片转为灰度图 */
+    @JvmStatic
     fun createGreyBitmap(bitmap: Bitmap): Bitmap {
         val width = bitmap.width// 获取位图的宽
         val height = bitmap.height// 获取位图的高
@@ -227,6 +236,7 @@ object BitmapUtils {
     }
 
     /** 将图片[bitmap]转为圆角[roundPx]图 */
+    @JvmStatic
     fun createRoundedCornerBitmap(bitmap: Bitmap, roundPx: Float = 12f): Bitmap {
 
         val output = Bitmap.createBitmap(bitmap.width, bitmap.height, Bitmap.Config.ARGB_8888)
@@ -249,6 +259,7 @@ object BitmapUtils {
     }
 
     /** 将图片[bitmap]增加倒影 */
+    @JvmStatic
     fun createReflectionBitmap(bitmap: Bitmap): Bitmap {
         val reflectionGap = 0
         val width = bitmap.width
@@ -282,6 +293,7 @@ object BitmapUtils {
 
 
     /** 将图片[bitmap]转为居中圆形图 */
+    @JvmStatic
     fun createRoundBitmap(bitmap: Bitmap): Bitmap {
         var width = bitmap.width
         var height = bitmap.height
@@ -342,6 +354,7 @@ object BitmapUtils {
     }
 
     /** 将图片[bitmap]旋转[angle]角度 */
+    @JvmStatic
     fun rotateBitmap(bitmap: Bitmap, angle: Int): Bitmap {
         val matrix = Matrix()
         matrix.postRotate(angle.toFloat())
@@ -349,6 +362,7 @@ object BitmapUtils {
     }
 
     /** 把图片[bitmap]水平翻转 */
+    @JvmStatic
     fun reverseBitmapHorizontal(bitmap: Bitmap): Bitmap {
         val matrix = Matrix()
         matrix.preScale(-1f, 1f)
@@ -356,6 +370,7 @@ object BitmapUtils {
     }
 
     /** 把图片[bitmap]垂直翻转 */
+    @JvmStatic
     fun reverseBitmapVertical(bitmap: Bitmap): Bitmap {
         val matrix = Matrix()
         matrix.preScale(1f, -1f)
@@ -363,6 +378,7 @@ object BitmapUtils {
     }
 
     /** 更改图片[bitmap]色系，图片的亮暗程度值[delta]越小图片会越亮，取值范围(1,23) */
+    @JvmStatic
     fun setBitmapTone(bitmap: Bitmap, delta: Int): Bitmap {
         // @IntRange(from = 1, to = 23) delta: Int
         var newDelta = delta
@@ -419,6 +435,7 @@ object BitmapUtils {
     }
 
     /** 设置图片[bitmap]饱和度[value] */
+    @JvmStatic
     fun setBitmapSaturation(bitmap: Bitmap, value: Float): Bitmap {
         // @FloatRange(from = 0.0, to = 2.0) value: Float
         var newValue = value
@@ -445,6 +462,7 @@ object BitmapUtils {
     }
 
     /** 设置图片[bitmap]的亮度值[value] */
+    @JvmStatic
     fun setBitmapLuminance(bitmap: Bitmap, value: Float): Bitmap {
         // @FloatRange(from = 0.0, to = 2.0) value: Float
         var newValue = value
@@ -471,6 +489,7 @@ object BitmapUtils {
     }
 
     /** 设置图片[bitmap]的色相值[value] */
+    @JvmStatic
     fun setBitmapHue(bitmap: Bitmap, value: Float): Bitmap {
         // @FloatRange(from = 0.0, to = 2.0) value: Float
         var newValue = value
@@ -502,6 +521,7 @@ object BitmapUtils {
 
 
     /** 把图片[bitmap]设置为怀旧效果 */
+    @JvmStatic
     fun createNostalgicBitmap(bitmap: Bitmap): Bitmap {
         val width = bitmap.width
         val height = bitmap.height
@@ -527,9 +547,11 @@ object BitmapUtils {
     }
 
     /** 对图片[bitmap]进行柔化效果处理 */
+    @JvmStatic
     fun createSoftenBitmap(bitmap: Bitmap): Bitmap = setBitmapTone(bitmap, 16)
 
     /** 对图片[bitmap]进行光照效果处理，光源位置为X轴[centerX]和Y轴[centerY]，光照强度[strength] */
+    @JvmStatic
     fun createSunshineBitmap(bitmap: Bitmap, centerX: Int, centerY: Int, strength: Float = 50f): Bitmap {
         //  @FloatRange(from = 0.0, to = 100.0) strength: Float = 50f
         var newStrength = strength + 100
@@ -586,6 +608,7 @@ object BitmapUtils {
     }
 
     /** 将图片[bitmap]进行底片效果处理 */
+    @JvmStatic
     fun createFilmBitmap(bitmap: Bitmap): Bitmap {
         // RGBA的最大值
         val MAX_VALUE = 255
@@ -619,6 +642,7 @@ object BitmapUtils {
     }
 
     /** 将图片[bitmap]进行锐化效果处理 */
+    @JvmStatic
     fun createSharpenBitmap(bitmap: Bitmap): Bitmap {
         // 拉普拉斯矩阵
         val laplacian = intArrayOf(-1, -1, -1, -1, 9, -1, -1, -1, -1)
@@ -667,6 +691,7 @@ object BitmapUtils {
     }
 
     /** 对图片[bitmap]进行浮雕效果处理 */
+    @JvmStatic
     fun createEmbossBitmap(bitmap: Bitmap): Bitmap {
         val width = bitmap.width
         val height = bitmap.height
@@ -704,6 +729,7 @@ object BitmapUtils {
 
     /** 对长图[bitmap]进行拼装和优化处理 */
     @Deprecated("如果图片太长可能会出现无法显示的问题")
+    @JvmStatic
     fun createLongLargeBitmap(context: Context, bitmap: Bitmap): Bitmap {
         val bitmaps = createLongLargeBitmaps(context, bitmap)
 
@@ -729,6 +755,7 @@ object BitmapUtils {
     }
 
     /** 将长图[bitmap]切分成多个Bitmap对象 */
+    @JvmStatic
     fun createLongLargeBitmaps(context: Context, bitmap: Bitmap): List<Bitmap> {
         val maxHeight = context.getScreenHeight()// 图片最大长度
         val bitmapList = ArrayList<Bitmap>()

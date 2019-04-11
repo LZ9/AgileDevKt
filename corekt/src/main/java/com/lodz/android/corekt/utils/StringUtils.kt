@@ -10,6 +10,7 @@ import java.net.URLEncoder
 object StringUtils {
 
     /** 用UTF-8解码文字[str] */
+    @JvmStatic
     fun decodeUtf8(str: String): String {
         try {
             if (str.isNotEmpty()) {
@@ -22,6 +23,7 @@ object StringUtils {
     }
 
     /** 用UTF-8编码文字[str] */
+    @JvmStatic
     fun encodeUtf8(str: String): String {
         try {
             if (str.isNotEmpty()) {
@@ -34,6 +36,7 @@ object StringUtils {
     }
 
     /** 根据分隔符[separator]将字符串[source]转为列表 */
+    @JvmStatic
     fun getListBySeparator(str: String, separator: String): List<String> {
         var source = str
         val list = ArrayList<String>()
@@ -51,6 +54,7 @@ object StringUtils {
     }
 
     /** 根据分隔符[separator]组装列表[list]元素 */
+    @JvmStatic
     fun getStringBySeparator(list: List<String>, separator: String): String {
         var result = ""
         if (list.isEmpty()) {

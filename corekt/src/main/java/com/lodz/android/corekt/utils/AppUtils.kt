@@ -10,10 +10,10 @@ import java.util.*
 object AppUtils {
 
     /** 当前是否在主线程（UI线程） */
+    @JvmStatic
     fun isMainThread(): Boolean = Looper.myLooper() == Looper.getMainLooper()
 
     /** 获取随机的UUID */
+    @JvmStatic
     fun getUUID(): String = UUID.randomUUID().toString()
-
 }
-

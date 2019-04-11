@@ -34,6 +34,7 @@ object DeviceUtils {
     annotation class DeviceKey
 
     /** 获取手机的UA信息 */
+    @JvmStatic
     fun getUserAgent(): String {
         try {
             return System.getProperty("http.agent") ?: ""
@@ -44,12 +45,15 @@ object DeviceUtils {
     }
 
     /** 获取语言 */
+    @JvmStatic
     fun getLanguage(): String = Locale.getDefault().language ?: ""
 
     /** 获取国家 */
+    @JvmStatic
     fun getCountry(): String = Locale.getDefault().country ?: ""
 
     /** 获取设备信息 */
+    @JvmStatic
     fun getDeviceInfo(): Map<String, String> {
         val infos = HashMap<String, String>()
         try {
@@ -65,6 +69,7 @@ object DeviceUtils {
     }
 
     /** 获取设备[key]对应的值 */
+    @JvmStatic
     fun getDeviceValue(key: String): String {
         if (key.isEmpty()) {
             return ""
@@ -78,6 +83,7 @@ object DeviceUtils {
     }
 
     /** 校验su文件路径数组[paths]（不传或传null使用默认校验路径），不存在su文件返回null */
+    @JvmStatic
     fun checkRootFile(paths: Array<String>? = null): File? {
         var checkPaths = arrayOf("/sbin/su", "/system/bin/su", "/system/xbin/su", "/data/local/xbin/su",
                 "/data/local/bin/su", "/system/sd/xbin/su", "/system/bin/failsafe/su", "/data/local/su")
@@ -94,5 +100,6 @@ object DeviceUtils {
     }
 
     /** 手机是否root，通过校验默认位置的su文件，存在一定误差 */
+    @JvmStatic
     fun isRoot(): Boolean = checkRootFile() != null
 }

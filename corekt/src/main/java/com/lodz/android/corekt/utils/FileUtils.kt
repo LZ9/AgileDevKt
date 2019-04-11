@@ -13,6 +13,7 @@ import java.text.DecimalFormat
 object FileUtils {
 
     /** 设置当前路径[filePath]拥有最高权限 */
+    @JvmStatic
     fun setFileRoot(filePath: String): Boolean {
         try {
             val permission = "777"
@@ -27,6 +28,7 @@ object FileUtils {
     }
 
     /** 根据路径[filePath]创建文件对象 */
+    @JvmStatic
     fun create(filePath: String): File? {
         try {
             return File(filePath)
@@ -37,15 +39,19 @@ object FileUtils {
     }
 
     /** 路径[filePath]下的文件是否存在 */
+    @JvmStatic
     fun isFileExists(filePath: String): Boolean = isFileExists(create(filePath))
 
     /** 判断文件[file]是否存在 */
+    @JvmStatic
     fun isFileExists(file: File?): Boolean = file != null && file.exists()
 
     /** 根据路径[filePath]对文件重命名[newName] */
+    @JvmStatic
     fun renameFile(filePath: String, newName: String): Boolean = renameFile(create(filePath), newName)
 
     /** 对文件[file]重命名[newName] */
+    @JvmStatic
     fun renameFile(file: File?, newName: String): Boolean {
         val replaceName = newName.replace(" ", "", true)//去掉新名称中的空格
         if (file == null || !isFileExists(file)) {//文件为空或者文件不存在
@@ -60,6 +66,7 @@ object FileUtils {
     }
 
     /** 删除指定路径[filePath]下以后缀[suffix]结尾的文件，例如：.apk、.png等等 */
+    @JvmStatic
     fun deleteFileWithSuffix(filePath: String, suffix: String) {
         val file = create(filePath)
         if (file == null || !isFileExists(file)) {// 文件为空或不存在
@@ -83,6 +90,7 @@ object FileUtils {
     }
 
     /** 获取文件名[fileName]的后缀 */
+    @JvmStatic
     fun getSuffix(fileName: String): String {
         var subffix = ""
         val startCharindex = fileName.lastIndexOf('.')
@@ -93,12 +101,14 @@ object FileUtils {
     }
 
     /** 在路径[filePath]下创建文件夹 */
+    @JvmStatic
     fun createFolder(filePath: String): Boolean {
         val folder: File? = create(filePath)
         return folder != null && !folder.exists() && folder.mkdirs()
     }
 
     /** 在路径[filePath]下创建一个文件 */
+    @JvmStatic
     fun createNewFile(filePath: String): Boolean {
         try {
             val file: File? = create(filePath)
@@ -110,6 +120,7 @@ object FileUtils {
     }
 
     /** 移动文件[fileName]从[fromPath]到[toPath] */
+    @JvmStatic
     fun moveFile(fromPath: String, toPath: String, fileName: String): Boolean {
         if (fromPath.isEmpty() || toPath.isEmpty() || fileName.isEmpty()) {
             return false
@@ -144,6 +155,7 @@ object FileUtils {
     }
 
     /** 复制文件[fileName]从[fromPath]到[toPath] */
+    @JvmStatic
     fun copyFile(fromPath: String, toPath: String, fileName: String): Boolean {
         if (fromPath.isEmpty() || toPath.isEmpty() || fileName.isEmpty()) {
             return false
@@ -191,9 +203,11 @@ object FileUtils {
     }
 
     /** 获取路径[filePath]下的文件总长度（返回结果携带单位） */
+    @JvmStatic
     fun getFileTotalLengthUnit(filePath: String): String = formetFileSize(getFileTotalLength(filePath))
 
     /** 获取路径[filePath]下的文件总长度 */
+    @JvmStatic
     fun getFileTotalLength(filePath: String): Long {
         val file: File? = create(filePath)
 
@@ -239,6 +253,7 @@ object FileUtils {
     }
 
     /** 将文件大小[fileSize]格式化单位：B、KB、MB、GB、TB */
+    @JvmStatic
     fun formetFileSize(fileSize: Long): String {
         if (fileSize <= 0) {
             return "0KB"
@@ -249,6 +264,7 @@ object FileUtils {
     }
 
     /** 删除路径[filePath]的文件 */
+    @JvmStatic
     fun delFile(filePath: String) {
         val file: File? = create(filePath)
         if (file == null || !isFileExists(file)) {
@@ -280,6 +296,7 @@ object FileUtils {
     }
 
     /** 文件路径[filePath]转byte数组 */
+    @JvmStatic
     fun fileToByte(filePath: String): ByteArray? {
         if (filePath.isEmpty()) {
             return null
@@ -306,6 +323,7 @@ object FileUtils {
     }
 
     /** 将[bytes]数组保存为文件，文件保存路径[savePath]，文件名称[fileName] */
+    @JvmStatic
     fun byteToFile(bytes: ByteArray, savePath: String, fileName: String) {
         if (bytes.isEmpty() || savePath.isEmpty() || fileName.isEmpty()) {
             return
@@ -336,6 +354,7 @@ object FileUtils {
     }
 
     /** 将[bitmap]保存为图片文件，保存路径[savePath]，文件名[fileName]，后缀[suffix]例如png或者.jpg，保存质量[quality] */
+    @JvmStatic
     fun bitmapToPath(bitmap: Bitmap, savePath: String, fileName: String, suffix: String, @IntRange(from = 0, to = 100) quality: Int) {
         if (savePath.isEmpty() || fileName.isEmpty() || suffix.isEmpty()) {
             return

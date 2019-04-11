@@ -34,6 +34,7 @@ object RSA {
     private const val MAX_DECRYPT_BLOCK = KEY_SIZE / 8
 
     /** 初始化密钥，[first]公钥，[second]私钥 */
+    @JvmStatic
     fun initKey(): Pair<RSAPublicKey, RSAPrivateKey> {
         // 实例化密钥对生成器
         val keyPairGen = KeyPairGenerator.getInstance(KEY_ALGORITHM)
@@ -45,6 +46,7 @@ object RSA {
     }
 
     /** 初始化密钥，用base64编码，[first]公钥，[second]私钥 */
+    @JvmStatic
     fun initKeyBase64(): Pair<String, String> {
         // 实例化密钥对生成器
         val keyPairGen = KeyPairGenerator.getInstance(KEY_ALGORITHM)
@@ -61,6 +63,7 @@ object RSA {
     }
 
     /** 用公钥加密数据 */
+    @JvmStatic
     fun encryptByPublicKey(data: String, key: String): String? {
         if (key.isEmpty() || data.isEmpty()) {
             return null
@@ -103,6 +106,7 @@ object RSA {
     }
 
     /** 私钥[key]解密数据[data] */
+    @JvmStatic
     fun decryptByPrivateKey(data: String, key: String): String? {
         if (key.isEmpty() || data.isEmpty()) {
             return null

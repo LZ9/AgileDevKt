@@ -18,6 +18,7 @@ object UiHandler {
     }
 
     /** 在UI线程执行[runnable] */
+    @JvmStatic
     fun post(runnable: Runnable) {
         if (Looper.myLooper() == Looper.getMainLooper()) {
             runnable.run()
@@ -27,6 +28,7 @@ object UiHandler {
     }
 
     /** 在UI线程执行[runnable]，并指定[token] */
+    @JvmStatic
     fun post(runnable: Runnable, token: Any) {
         if (Looper.myLooper() == Looper.getMainLooper()) {
             runnable.run()
@@ -38,11 +40,13 @@ object UiHandler {
     }
 
     /** 延迟[delay]毫秒执行[runnable] */
+    @JvmStatic
     fun postDelayed(runnable: Runnable, delay: Long) {
         sHandler.postDelayed(runnable, delay)
     }
 
     /** 延迟[delay]毫秒执行[runnable]，并指定[token] */
+    @JvmStatic
     fun postDelayed(runnable: Runnable, delay: Long, token: Any) {
         val message = Message.obtain(sHandler, runnable)
         message.obj = token
@@ -50,11 +54,13 @@ object UiHandler {
     }
 
     /** 移除指定[token]的Runnable（token传null则移除所有的Runnable） */
+    @JvmStatic
     fun remove(token: Any?) {
         sHandler.removeCallbacksAndMessages(token)
     }
 
     /** 销毁Handler */
+    @JvmStatic
     fun destroy(){
         remove(null)
     }
