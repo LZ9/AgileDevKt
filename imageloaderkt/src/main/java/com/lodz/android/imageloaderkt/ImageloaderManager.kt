@@ -14,6 +14,7 @@ class ImageloaderManager private constructor() {
 
     companion object {
         private val sInstance = ImageloaderManager()
+        @JvmStatic
         fun get(): ImageloaderManager = sInstance
     }
 

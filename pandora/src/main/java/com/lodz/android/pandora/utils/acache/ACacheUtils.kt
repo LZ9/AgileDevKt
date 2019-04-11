@@ -14,6 +14,7 @@ class ACacheUtils private constructor() {
 
     companion object {
         private val sInstance = ACacheUtils()
+        @JvmStatic
         fun get(): ACacheUtils = sInstance
     }
 

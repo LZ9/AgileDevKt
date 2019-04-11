@@ -21,31 +21,37 @@ import java.util.concurrent.TimeUnit
 object RxUtils {
 
     /** 在异步线程发起，在主线程订阅 */
+    @JvmStatic
     fun <T> ioToMainObservable(): ObservableTransformer<T, T> = ObservableTransformer { upstream ->
         return@ObservableTransformer upstream.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
     /** 在异步线程发起，在主线程订阅 */
+    @JvmStatic
     fun <T> ioToMainFlowable(): FlowableTransformer<T, T> = FlowableTransformer { upstream ->
         return@FlowableTransformer upstream.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
     /** 在异步线程发起，在主线程订阅 */
+    @JvmStatic
     fun <T> ioToMainMaybe(): MaybeTransformer<T, T> = MaybeTransformer { upstream ->
         return@MaybeTransformer upstream.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
     /** 在异步线程发起，在主线程订阅 */
+    @JvmStatic
     fun <T> ioToMainSingle(): SingleTransformer<T, T> = SingleTransformer { upstream ->
         return@SingleTransformer upstream.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
     /** 在异步线程发起，在主线程订阅 */
+    @JvmStatic
     fun ioToMainCompletable(): CompletableTransformer = CompletableTransformer { upstream ->
         return@CompletableTransformer upstream.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
     /** 获取异常[e]的提示语（配合订阅者使用），是否网络异常[isNetwork]，默认提示语[defaultTips] */
+    @JvmStatic
     fun getExceptionTips(e: Throwable, isNetwork: Boolean, defaultTips: String): String {
         if (isNetwork && e is RxException) {
             return e.getErrorMsg()
@@ -60,6 +66,7 @@ object RxUtils {
     }
 
     /** 获取[e]的网络异常提示语（配合订阅者使用），是否网络异常[isNetwork]，默认提示语[defaultTips] */
+    @JvmStatic
     fun getNetworkExceptionTips(e: Throwable, isNetwork: Boolean, defaultTips: String): String {
         if (isNetwork && e is RxException) {
             return e.getErrorMsg()
@@ -68,9 +75,11 @@ object RxUtils {
     }
 
     /** 获取接口数据状态，[e]异常 */
+    @JvmStatic
     fun getResponseStatus(e: Throwable): ResponseStatus? = if (e is DataException) e.getData() else null
 
     /** 把图片路径[path]转为指定宽[widthPx]高[heightPx]的base64 */
+    @JvmStatic
     fun decodePathToBase64(path: String, widthPx: Int, heightPx: Int): Observable<String> {
         return Observable.create(object : RxObservableOnSubscribe<String>(path, widthPx, heightPx) {
             override fun subscribe(emitter: ObservableEmitter<String>) {
@@ -110,6 +119,7 @@ object RxUtils {
     }
 
     /** 把批量图片路径[paths]转为指定宽[widthPx]高[heightPx]的base64 */
+    @JvmStatic
     fun decodePathToBase64(paths: ArrayList<String>, widthPx: Int, heightPx: Int): Observable<ArrayList<String>> {
         return Observable.create(object : RxObservableOnSubscribe<ArrayList<String>>(paths, widthPx, heightPx) {
             override fun subscribe(emitter: ObservableEmitter<ArrayList<String>>) {
@@ -158,6 +168,7 @@ object RxUtils {
     }
 
     /** [view]防抖点击，在时长[duration]默认1，单位[unit]默认秒内，只回调一次 */
+    @JvmStatic
     fun viewClick(view: View, duration: Long = 1, unit: TimeUnit = TimeUnit.SECONDS): Observable<View> {
         return Observable.create(object : RxObservableOnSubscribe<View>(view) {
             override fun subscribe(emitter: ObservableEmitter<View>) {
@@ -171,6 +182,7 @@ object RxUtils {
     }
 
     /** 文本[textView]每次变动都延迟[duration]默认500，单位[unit]默认毫秒后回调 */
+    @JvmStatic
     fun textChanges(textView: TextView, duration: Long = 500, unit: TimeUnit = TimeUnit.MILLISECONDS): Observable<CharSequence> {
         return Observable.create(object : RxObservableOnSubscribe<CharSequence>(textView) {
             override fun subscribe(emitter: ObservableEmitter<CharSequence>) {

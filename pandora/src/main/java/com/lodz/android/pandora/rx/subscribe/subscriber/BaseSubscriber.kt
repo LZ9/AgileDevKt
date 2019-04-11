@@ -89,6 +89,7 @@ abstract class BaseSubscriber<T> : Subscriber<T> {
 
     companion object {
         /** 创建空调用 */
+        @JvmStatic
         fun <T> empty(): Subscriber<T> = object : Subscriber<T> {
             override fun onComplete() {}
             override fun onSubscribe(s: Subscription?) {}

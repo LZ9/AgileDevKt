@@ -24,6 +24,7 @@ class GridItemDecoration private constructor(context: Context) : BaseItemDecorat
 
     companion object {
         /** 创建 */
+        @JvmStatic
         fun create(context: Context): GridItemDecoration = GridItemDecoration(context)
     }
 

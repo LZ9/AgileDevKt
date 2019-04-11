@@ -7,6 +7,7 @@ package com.lodz.android.imageloaderkt.utils
 object CompileUtils {
 
     /** 通过完整包名[classFullName]判断指定的类是否存在 */
+    @JvmStatic
     fun isClassExists(classFullName: String): Boolean {
         try {
             val c = Class.forName(classFullName)

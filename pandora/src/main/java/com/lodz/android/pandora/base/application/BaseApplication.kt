@@ -14,6 +14,7 @@ abstract class BaseApplication : Application() {
 
     companion object {
         private var sInstance: BaseApplication? = null
+        @JvmStatic
         fun get(): BaseApplication? = sInstance
     }
 

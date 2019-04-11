@@ -11,6 +11,7 @@ import java.net.SocketTimeoutException
 object RxExceptionFactory {
 
     /** 根据异常[t]生成对应的RxException */
+    @JvmStatic
     fun create(t: Throwable): RxException {
         if (t is RxException) {
             return t

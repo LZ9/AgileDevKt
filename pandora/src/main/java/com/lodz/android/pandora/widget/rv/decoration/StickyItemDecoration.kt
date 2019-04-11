@@ -13,6 +13,7 @@ class StickyItemDecoration<T> private constructor(context: Context) : SectionIte
 
     companion object {
         /** 创建 */
+        @JvmStatic
         fun <T> create(context: Context): StickyItemDecoration<T> = StickyItemDecoration(context)
     }
 

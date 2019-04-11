@@ -20,9 +20,11 @@ import com.lodz.android.corekt.anko.getColorCompat
 class RoundItemDecoration private constructor(context: Context) : BaseItemDecoration(context) {
     companion object {
         /** 创建 */
+        @JvmStatic
         fun create(context: Context): RoundItemDecoration = RoundItemDecoration(context)
 
         /** 创建底部分割线，间距[space]（单位dp），左右间隔[lrPaddingDp]，分割线颜色[color]（不传使用默认值），背景颜色[bgColor]（不传使用默认值） */
+        @JvmStatic
         fun createBottomDivider(context: Context, @IntRange(from = 1) space: Int, @IntRange(from = 0) lrPaddingDp: Int,
                                 @ColorRes color: Int = 0, @ColorRes bgColor: Int = 0): RoundItemDecoration =
                 RoundItemDecoration(context).setBottomDividerRes(space, lrPaddingDp, color, bgColor)

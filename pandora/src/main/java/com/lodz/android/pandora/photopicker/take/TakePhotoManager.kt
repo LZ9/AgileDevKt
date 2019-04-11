@@ -14,6 +14,7 @@ import java.io.File
 class TakePhotoManager internal constructor(private val takeBean: TakeBean) {
 
     companion object {
+        @JvmStatic
         fun create(): TakeBuilder = TakeBuilder()
     }
 

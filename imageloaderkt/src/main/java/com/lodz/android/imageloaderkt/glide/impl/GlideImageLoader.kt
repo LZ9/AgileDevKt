@@ -45,6 +45,7 @@ class GlideImageLoader private constructor() : ImageLoaderContract {
     companion object {
 
         /** 创建Glide加载库 */
+        @JvmStatic
         fun with(context: Context): GlideImageLoader {
             val imageLoader = GlideImageLoader()
             imageLoader.mGlideBuilderBean = getGlideBuilderBean(ImageloaderManager.get().getBuilder())
@@ -53,6 +54,7 @@ class GlideImageLoader private constructor() : ImageLoaderContract {
         }
 
         /** 创建Glide加载库 */
+        @JvmStatic
         fun with(activity: Activity): GlideImageLoader {
             val imageLoader = GlideImageLoader()
             imageLoader.mGlideBuilderBean = getGlideBuilderBean(ImageloaderManager.get().getBuilder())
@@ -61,6 +63,7 @@ class GlideImageLoader private constructor() : ImageLoaderContract {
         }
 
         /** 创建Glide加载库 */
+        @JvmStatic
         fun with(fragmentActivity: FragmentActivity): GlideImageLoader {
             val imageLoader = GlideImageLoader()
             imageLoader.mGlideBuilderBean = getGlideBuilderBean(ImageloaderManager.get().getBuilder())
@@ -69,6 +72,7 @@ class GlideImageLoader private constructor() : ImageLoaderContract {
         }
 
         /** 创建Glide加载库 */
+        @JvmStatic
         fun with(fragment: Fragment): GlideImageLoader {
             val imageLoader = GlideImageLoader()
             imageLoader.mGlideBuilderBean = getGlideBuilderBean(ImageloaderManager.get().getBuilder())
@@ -77,6 +81,7 @@ class GlideImageLoader private constructor() : ImageLoaderContract {
         }
 
         /** 创建Glide加载库 */
+        @JvmStatic
         fun with(view: View): GlideImageLoader {
             val imageLoader = GlideImageLoader()
             imageLoader.mGlideBuilderBean = getGlideBuilderBean(ImageloaderManager.get().getBuilder())

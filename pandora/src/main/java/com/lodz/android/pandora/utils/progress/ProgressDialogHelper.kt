@@ -32,6 +32,7 @@ class ProgressDialogHelper private constructor() {
     private var mIndeterminateDrawable: Int = 0
 
     companion object {
+        @JvmStatic
         fun get(): ProgressDialogHelper = ProgressDialogHelper()
     }
 

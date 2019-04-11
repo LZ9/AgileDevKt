@@ -15,6 +15,7 @@ import com.lodz.android.imageloaderkt.glide.impl.GlideImageLoader
 object ImageLoader {
 
     /** 构造加载器，[any]必须是Context、FragmentActivity、Activity、Fragment、View中的一种 */
+    @JvmStatic
     fun create(any: Any): ImageLoaderContract {
         if (any is FragmentActivity) {
             return GlideImageLoader.with(any)

@@ -12,6 +12,7 @@ import com.lodz.android.pandora.R
  */
 class PreviewManager<V : View, T : Any> internal constructor(private val previewBean: PreviewBean<V, T>) {
     companion object {
+        @JvmStatic
         fun <V : View, T : Any> create(): PreviewBuilder<V, T> = PreviewBuilder()
     }
 

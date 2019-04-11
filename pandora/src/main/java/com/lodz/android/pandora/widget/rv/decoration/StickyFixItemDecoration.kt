@@ -12,6 +12,7 @@ class StickyFixItemDecoration<T> private constructor(context: Context, sections:
 
     companion object {
         /** 创建，分组标题列表[sections]，各组数据列表集[sources] */
+        @JvmStatic
         fun <T> create(context: Context, sections: List<String>, sources: List<List<T>>): StickyFixItemDecoration<T> = StickyFixItemDecoration(context, sections, sources)
     }
 

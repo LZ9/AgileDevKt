@@ -72,6 +72,7 @@ abstract class BaseSingleObserver<T> : SingleObserver<T> {
 
     companion object {
         /** 创建空调用 */
+        @JvmStatic
         fun <T> empty(): SingleObserver<T> = object : SingleObserver<T> {
             override fun onSuccess(t: T) {}
             override fun onSubscribe(d: Disposable) {}

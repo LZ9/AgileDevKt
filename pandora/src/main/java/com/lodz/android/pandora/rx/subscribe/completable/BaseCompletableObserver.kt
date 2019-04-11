@@ -72,6 +72,7 @@ abstract class BaseCompletableObserver : CompletableObserver {
 
     companion object {
         /** 创建空调用 */
+        @JvmStatic
         fun empty(): CompletableObserver = object : CompletableObserver {
             override fun onComplete() {}
             override fun onSubscribe(d: Disposable) {}

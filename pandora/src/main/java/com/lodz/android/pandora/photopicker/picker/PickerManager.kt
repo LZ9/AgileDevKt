@@ -19,6 +19,7 @@ import java.io.File
 class PickerManager<V : View> internal constructor(private val pickerBean: PickerBean<V>) {
 
     companion object {
+        @JvmStatic
         fun <V : View> create(): PickerBuilder<V> = PickerBuilder()
     }
 

@@ -10,6 +10,7 @@ import androidx.annotation.DrawableRes
 class PickerUIConfig private constructor() {
 
     companion object {
+        @JvmStatic
         fun createDefault(): PickerUIConfig = PickerUIConfig()
     }
 

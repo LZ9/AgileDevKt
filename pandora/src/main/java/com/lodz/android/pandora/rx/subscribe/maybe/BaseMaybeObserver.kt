@@ -78,6 +78,7 @@ abstract class BaseMaybeObserver<T> : MaybeObserver<T> {
 
     companion object {
         /** 创建空调用 */
+        @JvmStatic
         fun <T> empty(): MaybeObserver<T> = object : MaybeObserver<T> {
             override fun onSuccess(t: T) {}
             override fun onComplete() {}

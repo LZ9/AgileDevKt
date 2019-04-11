@@ -16,6 +16,7 @@ open class SectionItemDecoration<T> protected constructor(context: Context) : Ba
 
     companion object {
         /** 创建 */
+        @JvmStatic
         fun <T> create(context: Context): SectionItemDecoration<T> = SectionItemDecoration(context)
     }
 
