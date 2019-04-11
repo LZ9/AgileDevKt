@@ -8,7 +8,9 @@ import com.lodz.android.corekt.anko.getAppName
 import com.lodz.android.corekt.anko.getVersionCode
 import com.lodz.android.corekt.anko.getVersionName
 import com.lodz.android.corekt.log.PrintLog
-import com.lodz.android.corekt.utils.*
+import com.lodz.android.corekt.utils.DateUtils
+import com.lodz.android.corekt.utils.DeviceUtils
+import com.lodz.android.corekt.utils.FileUtils
 import com.lodz.android.pandora.base.application.BaseApplication
 import java.io.*
 import java.util.*
@@ -21,7 +23,8 @@ class CrashManager private constructor() : Thread.UncaughtExceptionHandler {
 
     companion object {
         private val sInstance = CrashManager()
-        fun get() = sInstance
+        @JvmStatic
+        fun get(): CrashManager = sInstance
     }
 
     /** 日志标签 */

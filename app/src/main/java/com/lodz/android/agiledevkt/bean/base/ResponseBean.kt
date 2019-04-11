@@ -12,8 +12,10 @@ open class ResponseBean<T> : ResponseStatus {
         const val SUCCESS = 200
         const val FAIL = 500
 
+        @JvmStatic
         fun <T> createFail(): ResponseBean<T> = ResponseBean()
 
+        @JvmStatic
         fun <T> createSuccess(): ResponseBean<T> {
             val responseBean = ResponseBean<T>()
             responseBean.code = SUCCESS

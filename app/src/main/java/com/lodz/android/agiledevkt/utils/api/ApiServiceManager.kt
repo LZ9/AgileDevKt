@@ -24,6 +24,7 @@ class ApiServiceManager private constructor() {
         private const val TAG = "resultValue"
 
         private val sInstance = ApiServiceManager()
+        @JvmStatic
         fun get(): ApiServiceManager = sInstance
     }
 

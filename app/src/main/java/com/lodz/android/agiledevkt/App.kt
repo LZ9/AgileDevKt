@@ -27,6 +27,7 @@ import java.util.*
 class App : BaseApplication() {
 
     companion object {
+        @JvmStatic
         fun get(): App = BaseApplication.get() as App
     }
 

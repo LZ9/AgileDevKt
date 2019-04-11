@@ -25,6 +25,7 @@ object FileManager {
     /** 崩溃日志路径 */
     private var mCrashFolderPath = ""
 
+    @JvmStatic
     fun init() {
         initPath()
         if (isStorageCanUse) {
@@ -69,21 +70,27 @@ object FileManager {
     }
 
     /** 存储是否可用 */
+    @JvmStatic
     fun isStorageCanUse(): Boolean = isStorageCanUse
 
     /** 获取app主文件夹路径 */
+    @JvmStatic
     fun getAppFolderPath(): String = fixPath(mAppFolderPath)
 
     /** 获取缓存路径 */
+    @JvmStatic
     fun getCacheFolderPath(): String = fixPath(mCacheFolderPath)
 
     /** 获取下载路径 */
+    @JvmStatic
     fun getDownloadFolderPath(): String = fixPath(mDownloadFolderPath)
 
     /** 获取内容路径 */
+    @JvmStatic
     fun getContentFolderPath(): String = fixPath(mContentFolderPath)
 
     /** 获取崩溃日志路径 */
+    @JvmStatic
     fun getCrashFolderPath(): String = fixPath(mCrashFolderPath)
 
     /** 修复文件夹路径[path] */
