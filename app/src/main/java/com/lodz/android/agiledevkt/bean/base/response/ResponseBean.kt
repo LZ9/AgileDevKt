@@ -1,4 +1,4 @@
-package com.lodz.android.agiledevkt.bean.base
+package com.lodz.android.agiledevkt.bean.base.response
 
 import com.lodz.android.pandora.rx.status.ResponseStatus
 

@@ -7,7 +7,7 @@ import android.widget.*
 import androidx.core.widget.NestedScrollView
 import com.google.android.material.button.MaterialButton
 import com.lodz.android.agiledevkt.R
-import com.lodz.android.agiledevkt.bean.base.ResponseBean
+import com.lodz.android.agiledevkt.bean.base.response.ResponseBean
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.then
