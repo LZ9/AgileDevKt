@@ -28,10 +28,10 @@ fun Array<*>?.getSize(): Int = if (this == null) 0 else this.size
 /** 获取列表长度 */
 fun Collection<*>?.getSize(): Int = if (this == null) 0 else this.size
 
-/** 获取数组长度 */
+/** 数组是否为空 */
 fun Array<*>?.isNullOrEmpty(): Boolean = this == null || this.size == 0
 
-/** 获取列表长度 */
+/** 列表是否为空 */
 fun Collection<*>?.isNullOrEmpty(): Boolean = this == null || this.size == 0
 
 /** 将数据分组，泛型T可以为String或者实现了Groupable的任意类，[groups]为分组标题，[compareLength]为匹配长度 */

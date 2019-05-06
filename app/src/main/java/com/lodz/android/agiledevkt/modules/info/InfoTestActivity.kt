@@ -12,7 +12,8 @@ import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.corekt.anko.*
 import com.lodz.android.corekt.network.NetInfo
 import com.lodz.android.corekt.network.NetworkManager
-import com.lodz.android.corekt.utils.*
+import com.lodz.android.corekt.utils.AppUtils
+import com.lodz.android.corekt.utils.DeviceUtils
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
 import com.lodz.android.pandora.rx.utils.RxUtils
@@ -183,7 +184,7 @@ class InfoTestActivity : BaseActivity() {
     /** 显示应用信息 */
     private fun showAppInfo() {
         mMainThreadTv.text = getString(R.string.info_is_main_thread).format(AppUtils.isMainThread())
-        mUuidTv.text = getString(R.string.info_uuid).format(AppUtils.getUUID())
+        mUuidTv.text = getString(R.string.info_uuid).format(AppUtils.getUUID32())
         mAppNameTv.text = getString(R.string.info_app_name).format(getAppName())
         mVersionNameTv.text = getString(R.string.info_version_name).format(getVersionName())
         mVersionCodeTv.text = getString(R.string.info_version_code).format(getVersionCode())

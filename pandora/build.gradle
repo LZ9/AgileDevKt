@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-//apply plugin: "guru.stefma.bintrayrelease"
+//apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 28
@@ -10,7 +10,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 9
-        versionName "1.1.7"// 未上传
+        versionName "1.1.7"// 成功上传
     }
 
     buildTypes {
@@ -26,7 +26,7 @@ android {
 }
 
 dependencies {
-//    api 'com.lodz:core-kt:1.0.9'
+//    api 'com.lodz:core-kt:1.0.10'
     api project(':corekt')
 
     // RxJava
@@ -42,12 +42,11 @@ dependencies {
     api 'org.greenrobot:eventbus:3.1.1'
 }
 
-//version = "1.1.6"
-//group = "com.lodz"
 //publish {
 //    userOrg = 'lz9'
+//    groupId = 'com.lodz'
 //    artifactId = 'pandora'
-//    desc = 'Hi, this is a android base library'//描述，不重要
-//    //描述，不重要
-//    website = 'https://github.com/LZ9/AgileDevKt'//网站，不重要
+//    publishVersion = '1.1.7'
+//    desc = 'Hi, this is a android base library'
+//    website = 'https://github.com/LZ9/AgileDevKt'
 //}
