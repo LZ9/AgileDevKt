@@ -13,7 +13,12 @@ object AppUtils {
     @JvmStatic
     fun isMainThread(): Boolean = Looper.myLooper() == Looper.getMainLooper()
 
-    /** 获取随机的UUID */
+    /** 获取36位随机UUID */
     @JvmStatic
-    fun getUUID(): String = UUID.randomUUID().toString()
+    fun getUUID36(): String = UUID.randomUUID().toString()
+
+    /** 获取32位随机UUID */
+    @JvmStatic
+    fun getUUID32(): String = UUID.randomUUID().toString().replace("-","")
+
 }
