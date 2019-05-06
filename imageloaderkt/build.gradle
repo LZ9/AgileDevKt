@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-//apply plugin: "guru.stefma.bintrayrelease"
+//apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 28
@@ -11,7 +11,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 28
         versionCode 10
-        versionName "1.0.9"// 未上传
+        versionName "1.0.9"// 成功上传
     }
 
     buildTypes {
@@ -37,11 +37,11 @@ dependencies {
     api 'jp.wasabeef:glide-transformations:4.0.0'
 }
 
-//version = "1.0.8"
-//group = "com.lodz"
 //publish {
 //    userOrg = 'lz9'
+//    groupId = 'com.lodz'
 //    artifactId = 'imageloader-kt'
-//    desc = 'Hi, this is a image loader'//描述，不重要
-//    website = 'https://github.com/LZ9/AgileDevKt'//网站，不重要
+//    publishVersion = '1.0.9'
+//    desc = 'Hi, this is a image loader'
+//    website = 'https://github.com/LZ9/AgileDevKt'
 //}
