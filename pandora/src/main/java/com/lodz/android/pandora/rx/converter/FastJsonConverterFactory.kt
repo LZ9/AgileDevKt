@@ -18,6 +18,7 @@ import java.lang.reflect.Type
 class FastJsonConverterFactory private constructor() : Converter.Factory() {
 
     companion object {
+        @JvmStatic
         fun create(): FastJsonConverterFactory = FastJsonConverterFactory()
     }
 

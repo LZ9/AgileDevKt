@@ -5,8 +5,8 @@ import android.app.ActivityManager
 import android.content.Context
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
+import android.location.LocationManager
 import android.net.wifi.WifiManager
-import android.provider.Settings
 import androidx.annotation.RequiresPermission
 import androidx.core.app.ActivityCompat
 import java.io.BufferedReader
@@ -132,8 +132,8 @@ fun Context.getMetaData(key: String): Any? {
 
 /** 判断GPS是否打开 */
 fun Context.isGpsOpen(): Boolean {
-    val state = Settings.Secure.getInt(contentResolver, Settings.Secure.LOCATION_MODE, Settings.Secure.LOCATION_MODE_OFF)
-    return state != Settings.Secure.LOCATION_MODE_OFF
+    val manager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+    return manager.isProviderEnabled(LocationManager.GPS_PROVIDER)
 }
 
 /** wifi是否可用 */
