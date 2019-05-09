@@ -7,40 +7,68 @@ import android.content.res.TypedArray
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.os.Build
+import android.text.Editable
+import android.text.InputFilter
+import android.text.InputType
+import android.text.TextWatcher
+import android.text.method.DigitsKeyListener
+import android.text.method.ReplacementTransformationMethod
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.annotation.ColorInt
-import androidx.annotation.ColorRes
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
+import androidx.annotation.*
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.getColorCompat
 import com.lodz.android.corekt.anko.px2sp
 import com.lodz.android.pandora.R
 
 /**
- * 采集TextView
+ * 采集EditText
  * @author zhouL
- * @date 2019/3/13
+ * @date 2019/5/9
  */
-class CltTextView : FrameLayout {
+class CltEditView : FrameLayout {
+
+    companion object {
+        /** 输入文本 */
+        const val TYPE_TEXT = 0
+        /** 输入身份证 */
+        const val TYPE_ID_CARD = 1
+        /** 输入手机号 */
+        const val TYPE_PHONE = 2
+        /** 输入整型数字 */
+        const val TYPE_NUMBER = 3
+        /** 输入小数数字 */
+        const val TYPE_NUMBER_DECIMAL = 4
+        /** 外国证件 */
+        const val TYPE_FOREIGN_CERT = 5
+    }
+
+    @IntDef(TYPE_TEXT, TYPE_ID_CARD, TYPE_PHONE, TYPE_NUMBER, TYPE_NUMBER_DECIMAL, TYPE_FOREIGN_CERT)
+    @Retention(AnnotationRetention.SOURCE)
+    annotation class EditInputType
 
     /** 必填图标  */
     private val mRequiredImg by bindView<ImageView>(R.id.required_img)
     /** 标题控件  */
     private val mTitleTv by bindView<TextView>(R.id.title_tv)
-    /** 内容控件  */
-    private val mContentTv by bindView<TextView>(R.id.content_tv)
+    /** 内容输入框  */
+    private val mContentEdit by bindView<EditText>(R.id.content_edit)
     /** 单位控件  */
     private val mUnitTv by bindView<TextView>(R.id.unit_tv)
     /** 跳转按钮  */
     private val mJumpBtn by bindView<TextView>(R.id.jump_btn)
 
+    /** 当前输入类型 */
+    @EditInputType
+    private var mInputType = TYPE_TEXT
+    /** 文字监听器 */
+    private var mTextWatcher: TextWatcher? = null
     /** 内容标记  */
     private var mContentTag = ""
 
@@ -49,35 +77,36 @@ class CltTextView : FrameLayout {
     }
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-        init(attrs)
+        init(null)
     }
 
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        init(attrs)
+        init(null)
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
-        init(attrs)
+        init(null)
     }
 
     private fun init(attrs: AttributeSet?) {
         findViews()
         configLayout(attrs)
+        setListeners()
     }
 
     private fun findViews() {
-        LayoutInflater.from(context).inflate(R.layout.pandora_view_clt_text_view, this)
+        LayoutInflater.from(context).inflate(R.layout.pandora_view_clt_edit_view, this)
     }
 
     private fun configLayout(attrs: AttributeSet?) {
         var typedArray: TypedArray? = null
         if (attrs != null) {
-            typedArray = context.obtainStyledAttributes(attrs, R.styleable.CltTextView)
+            typedArray = context.obtainStyledAttributes(attrs, R.styleable.CltEditView)
         }
 
         // 设置必填图片是否显示
-        val visibility = typedArray?.getInt(R.styleable.CltTextView_requiredVisibility, 0) ?: 0
+        val visibility = typedArray?.getInt(R.styleable.CltEditView_requiredVisibility, 0) ?: 0
         if (visibility == 1) {
             setRequiredVisibility(View.INVISIBLE)
         } else if (visibility == 2) {
@@ -85,93 +114,92 @@ class CltTextView : FrameLayout {
         } else {
             setRequiredVisibility(View.VISIBLE)
         }
-
         // 设置必填图片
-        val src: Drawable? = typedArray?.getDrawable(R.styleable.CltTextView_requiredSrc)
+        val src: Drawable? = typedArray?.getDrawable(R.styleable.CltEditView_requiredSrc)
         if (src != null) {
             setRequiredImg(src)
         }
         // 设置标题文字
-        val titleText: String? = typedArray?.getString(R.styleable.CltTextView_titleText)
+        val titleText: String? = typedArray?.getString(R.styleable.CltEditView_titleText)
         if (titleText != null) {
             setTitleText(titleText)
         }
         // 设置标题文字颜色
-        val titleTextColor: ColorStateList? = typedArray?.getColorStateList(R.styleable.CltTextView_titleTextColor)
+        val titleTextColor: ColorStateList? = typedArray?.getColorStateList(R.styleable.CltEditView_titleTextColor)
         if (titleTextColor != null) {
             setTitleTextColor(titleTextColor)
         }
         // 设置标题文字大小
-        val titleTextSize: Int = typedArray?.getDimensionPixelSize(R.styleable.CltTextView_titleTextSize, 0)
+        val titleTextSize: Int = typedArray?.getDimensionPixelSize(R.styleable.CltEditView_titleTextSize, 0)
                 ?: 0
         if (titleTextSize > 0) {
             setTitleTextSize(px2sp(titleTextSize))
         }
         // 设置标题控件宽度
-        val titleWidth: Int = typedArray?.getDimensionPixelSize(R.styleable.CltTextView_titleWidth, 0)
+        val titleWidth: Int = typedArray?.getDimensionPixelSize(R.styleable.CltEditView_titleWidth, 0)
                 ?: 0
         if (titleWidth > 0) {
             setTitleWidth(titleWidth)
         }
         // 设置标题背景
-        val titleBackground: Drawable? = typedArray?.getDrawable(R.styleable.CltTextView_titleBackground)
+        val titleBackground: Drawable? = typedArray?.getDrawable(R.styleable.CltEditView_titleBackground)
         if (titleBackground != null) {
             setTitleBackground(titleBackground)
         }
         // 设置内容文字
-        val contentText: String? = typedArray?.getString(R.styleable.CltTextView_contentText)
+        val contentText: String? = typedArray?.getString(R.styleable.CltEditView_contentText)
         if (contentText != null) {
             setContentText(contentText)
         }
         // 设置内容文字颜色
-        val contentTextColor: ColorStateList? = typedArray?.getColorStateList(R.styleable.CltTextView_contentTextColor)
+        val contentTextColor: ColorStateList? = typedArray?.getColorStateList(R.styleable.CltEditView_contentTextColor)
         if (contentTextColor != null) {
             setContentTextColor(contentTextColor)
         }
         // 设置内容文字大小
-        val contentTextSize: Int = typedArray?.getDimensionPixelSize(R.styleable.CltTextView_contentTextSize, 0)
+        val contentTextSize: Int = typedArray?.getDimensionPixelSize(R.styleable.CltEditView_contentTextSize, 0)
                 ?: 0
         if (contentTextSize > 0) {
             setContentTextSize(px2sp(contentTextSize))
         }
         // 设置内容提示语
-        val contentHint: String? = typedArray?.getString(R.styleable.CltTextView_contentHint)
+        val contentHint: String? = typedArray?.getString(R.styleable.CltEditView_contentHint)
         if (contentHint != null) {
             setContentHint(contentHint)
         }
         // 设置内容提示语颜色
-        val contentHintColor: ColorStateList? = typedArray?.getColorStateList(R.styleable.CltTextView_contentHintColor)
+        val contentHintColor: ColorStateList? = typedArray?.getColorStateList(R.styleable.CltEditView_contentHintColor)
         if (contentHintColor != null) {
             setContentHintColor(contentHintColor)
         }
         // 设置内容右侧图标
-        val contentDrawableEnd: Drawable? = typedArray?.getDrawable(R.styleable.CltTextView_contentDrawableEnd)
+        val contentDrawableEnd: Drawable? = typedArray?.getDrawable(R.styleable.CltEditView_contentDrawableEnd)
         if (contentDrawableEnd != null) {
             setContentDrawableEnd(contentDrawableEnd)
         }
         // 设置内容右侧图标
-        val contentDrawableStart: Drawable? = typedArray?.getDrawable(R.styleable.CltTextView_contentDrawableStart)
+        val contentDrawableStart: Drawable? = typedArray?.getDrawable(R.styleable.CltEditView_contentDrawableStart)
         if (contentDrawableStart != null) {
             setContentDrawableStart(contentDrawableStart)
         }
         // 设置内容图标间距
-        val contentDrawablePadding: Int = typedArray?.getDimensionPixelSize(R.styleable.CltTextView_contentDrawablePadding, 0)
+        val contentDrawablePadding: Int = typedArray?.getDimensionPixelSize(R.styleable.CltEditView_contentDrawablePadding, 0)
                 ?: 0
         if (contentDrawablePadding > 0) {
             setContentDrawablePadding(contentDrawablePadding)
         }
         // 设置内容标记
-        val contentTag: String? = typedArray?.getString(R.styleable.CltTextView_contentTag)
+        val contentTag: String? = typedArray?.getString(R.styleable.CltEditView_contentTag)
         if (contentTag != null) {
             setContentTag(contentTag)
         }
         // 设置加载页背景
-        val contentBackground: Drawable? = typedArray?.getDrawable(R.styleable.CltTextView_contentBackground)
+        val contentBackground: Drawable? = typedArray?.getDrawable(R.styleable.CltEditView_contentBackground)
         if (contentBackground != null) {
             setContentBackground(contentBackground)
         }
         // 设置单位文字
-        val unitText: String? = typedArray?.getString(R.styleable.CltTextView_unitText)
+        val unitText: String? = typedArray?.getString(R.styleable.CltEditView_unitText)
         if (unitText != null) {
             setNeedUnit(true)
             setUnitText(unitText)
@@ -179,18 +207,18 @@ class CltTextView : FrameLayout {
             setNeedUnit(false)
         }
         // 设置单位文字颜色
-        val unitTextColor: ColorStateList? = typedArray?.getColorStateList(R.styleable.CltTextView_unitTextColor)
+        val unitTextColor: ColorStateList? = typedArray?.getColorStateList(R.styleable.CltEditView_unitTextColor)
         if (unitTextColor != null) {
             setUnitTextColor(unitTextColor)
         }
         // 设置单位文字大小
-        val unitTextSize: Int = typedArray?.getDimensionPixelSize(R.styleable.CltTextView_unitTextSize, 0)
+        val unitTextSize: Int = typedArray?.getDimensionPixelSize(R.styleable.CltEditView_unitTextSize, 0)
                 ?: 0
         if (unitTextSize > 0) {
             setUnitTextSize(px2sp(unitTextSize))
         }
         // 设置跳转按钮文字
-        val jumpText: String? = typedArray?.getString(R.styleable.CltTextView_jumpText)
+        val jumpText: String? = typedArray?.getString(R.styleable.CltEditView_jumpText)
         if (jumpText != null) {
             setNeedJumpBtn(true)
             setJumpBtnText(jumpText)
@@ -198,26 +226,65 @@ class CltTextView : FrameLayout {
             setNeedJumpBtn(false)
         }
         // 设置跳转按钮文字颜色
-        val jumpTextColor: ColorStateList? = typedArray?.getColorStateList(R.styleable.CltTextView_jumpTextColor)
+        val jumpTextColor: ColorStateList? = typedArray?.getColorStateList(R.styleable.CltEditView_jumpTextColor)
         if (jumpTextColor != null) {
             setJumpBtnTextColor(jumpTextColor)
         }
         // 设置跳转按钮文字大小
-        val jumpTextSize: Int = typedArray?.getDimensionPixelSize(R.styleable.CltTextView_jumpTextSize, 0)
+        val jumpTextSize: Int = typedArray?.getDimensionPixelSize(R.styleable.CltEditView_jumpTextSize, 0)
                 ?: 0
         if (jumpTextSize > 0) {
             setJumpBtnTextSize(px2sp(jumpTextSize))
         }
         // 设置内容右侧图标
-        val jumpBackground: Drawable? = typedArray?.getDrawable(R.styleable.CltTextView_jumpBackground)
+        val jumpBackground: Drawable? = typedArray?.getDrawable(R.styleable.CltEditView_jumpBackground)
         if (jumpBackground != null) {
             setJumpBackground(jumpBackground)
         }
         // 设置是否只读
-        setReadOnly(typedArray?.getBoolean(R.styleable.CltTextView_isReadOnly, false) ?: false)
+        setReadOnly(typedArray?.getBoolean(R.styleable.CltEditView_isReadOnly, false) ?: false)
+        // 设置输入类型
+        setEditInputType(typedArray?.getInt(R.styleable.CltEditView_inputType, TYPE_TEXT)
+                ?: TYPE_TEXT)
+        val max: Int = typedArray?.getInt(R.styleable.CltEditView_maxLength, -1) ?: -1
+        if (max >= 0){
+            setMaxLength(max)
+        }
+
         if (typedArray != null) {
             typedArray.recycle()
         }
+    }
+
+    private fun setListeners() {
+        mContentEdit.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                mTextWatcher?.beforeTextChanged(s, start, count, after)
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (mInputType == TYPE_NUMBER_DECIMAL) {
+                    val index = getContentText().indexOf(".")
+                    val lastIndex = getContentText().lastIndexOf(".")
+                    if (index == 0) {
+                        // 第一位输入点则默认头部加0
+                        setContentText("0.")
+                        mContentEdit.setSelection(getContentText().length)
+                    } else if (index != lastIndex) {
+                        // 输入了多个小数点只保留第一个
+                        val str = getContentText().substring(0, lastIndex)
+                        setContentText(str)
+                        mContentEdit.setSelection(str.length)
+                    }
+                }
+                mTextWatcher?.onTextChanged(s, start, before, count)
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                mTextWatcher?.afterTextChanged(s)
+            }
+        })
+
     }
 
     /** 设置必填图片资源[resId] */
@@ -303,16 +370,16 @@ class CltTextView : FrameLayout {
 
     /** 设置内容文字[content] */
     fun setContentText(content: String) {
-        mContentTv.setText(content)
+        mContentEdit.setText(content)
     }
 
     /** 设置内容文字资源[resId] */
     fun setContentText(@StringRes resId: Int) {
-        mContentTv.setText(resId)
+        mContentEdit.setText(resId)
     }
 
     /** 获取内容文字 */
-    fun getContentText(): String = mContentTv.text.toString()
+    fun getContentText(): String = mContentEdit.text.toString()
 
     /** 设置内容标记[tag] */
     fun setContentTag(tag: String) {
@@ -324,100 +391,95 @@ class CltTextView : FrameLayout {
 
     /** 设置内容文字颜色[color] */
     fun setContentTextColor(@ColorInt color: Int) {
-        mContentTv.setTextColor(color)
+        mContentEdit.setTextColor(color)
     }
 
     /** 设置内容文字颜色[color] */
     fun setContentTextColorRes(@ColorRes color: Int) {
-        mContentTv.setTextColor(getColorCompat(color))
+        mContentEdit.setTextColor(getColorCompat(color))
     }
 
     /** 设置内容文字颜色[color] */
     fun setContentTextColor(color: ColorStateList) {
-        mContentTv.setTextColor(color)
+        mContentEdit.setTextColor(color)
     }
 
     /** 设置内容文字大小[sp] */
     fun setContentTextSize(sp: Float) {
-        mContentTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, sp)
+        mContentEdit.setTextSize(TypedValue.COMPLEX_UNIT_SP, sp)
     }
 
     /** 设置内容提示语资源[resId] */
     fun setContentHint(@StringRes resId: Int) {
-        mContentTv.setHint(resId)
+        mContentEdit.setHint(resId)
     }
 
     /** 设置内容提示语[hint] */
     fun setContentHint(hint: String) {
-        mContentTv.hint = hint
+        mContentEdit.hint = hint
     }
 
     /** 获取内容提示语 */
-    fun getContentHint(): String = mContentTv.hint.toString()
+    fun getContentHint(): String = mContentEdit.hint.toString()
 
     /** 设置内容提示语颜色[color] */
     fun setContentHintColor(@ColorInt color: Int) {
-        mContentTv.setHintTextColor(color)
+        mContentEdit.setHintTextColor(color)
     }
 
     /** 设置内容提示语颜色[color] */
     fun setContentHintColorRes(@ColorRes color: Int) {
-        mContentTv.setHintTextColor(getColorCompat(color))
+        mContentEdit.setHintTextColor(getColorCompat(color))
     }
 
     /** 设置内容提示语颜色[color] */
     fun setContentHintColor(color: ColorStateList) {
-        mContentTv.setHintTextColor(color)
+        mContentEdit.setHintTextColor(color)
     }
 
     /** 设置内容右侧图标资源[resId] */
     fun setContentDrawableEnd(@DrawableRes resId: Int) {
-        mContentTv.setCompoundDrawablesWithIntrinsicBounds(0, 0, resId, 0)
+        mContentEdit.setCompoundDrawablesWithIntrinsicBounds(0, 0, resId, 0)
     }
 
     /** 设置内容右侧图标[drawable] */
     fun setContentDrawableEnd(drawable: Drawable) {
-        mContentTv.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null)
+        mContentEdit.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null)
     }
 
     /** 设置内容左侧图标资源[resId] */
     fun setContentDrawableStart(@DrawableRes resId: Int) {
-        mContentTv.setCompoundDrawablesWithIntrinsicBounds(resId, 0, 0, 0)
+        mContentEdit.setCompoundDrawablesWithIntrinsicBounds(resId, 0, 0, 0)
     }
 
     /** 设置内容左侧图标[drawable] */
     fun setContentDrawableStart(drawable: Drawable) {
-        mContentTv.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null)
+        mContentEdit.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null)
     }
 
     /** 设置内容图标间距[pad] */
     fun setContentDrawablePadding(pad: Int) {
-        mContentTv.compoundDrawablePadding = pad
+        mContentEdit.compoundDrawablePadding = pad
     }
 
-    /** 设置内容点击监听器[listener] */
-    fun setOnContentClickListener(listener: ((view: View) -> Unit)?) {
-        mContentTv.setOnClickListener(listener)
-    }
-
-    /** 设置内容点击监听器[listener] */
-    fun setOnContentClickListener(listener: View.OnClickListener?) {
-        mContentTv.setOnClickListener(listener)
+    /** 设置内容编辑文字监听[watcher] */
+    fun setContentTextChangedListener(watcher: TextWatcher?) {
+        mTextWatcher = watcher
     }
 
     /** 设置内容背景[drawable] */
     fun setContentBackground(drawable: Drawable) {
-        mContentTv.background = drawable
+        mContentEdit.background = drawable
     }
 
     /** 设置内容背景[color] */
     fun setContentBackground(@ColorInt color: Int) {
-        mContentTv.setBackgroundColor(color)
+        mContentEdit.setBackgroundColor(color)
     }
 
     /** 设置内容背景[resId] */
     fun setContentBackgroundRes(@DrawableRes resId: Int) {
-        mContentTv.setBackgroundResource(resId)
+        mContentEdit.setBackgroundResource(resId)
     }
 
     /** 设置是否需要单位[isNeed] */
@@ -534,10 +596,48 @@ class CltTextView : FrameLayout {
 
     /** 设置是否只读[isReadOnly] */
     fun setReadOnly(isReadOnly: Boolean) {
-        mContentTv.isEnabled = !isReadOnly
+        mContentEdit.isEnabled = !isReadOnly
         mJumpBtn.isEnabled = !isReadOnly
     }
 
     /** 是否只读 */
-    fun isReadOnly(): Boolean = !mContentTv.isEnabled && !mJumpBtn.isEnabled
+    fun isReadOnly(): Boolean = !mContentEdit.isEnabled && !mJumpBtn.isEnabled
+
+    /** 设置输入类型[type] */
+    fun setEditInputType(@EditInputType type: Int) {
+        mInputType = type
+        if (type == TYPE_ID_CARD) {
+            // 输入身份证号
+            mContentEdit.inputType = InputType.TYPE_CLASS_NUMBER
+            mContentEdit.keyListener = DigitsKeyListener.getInstance("1234567890xX")
+            mContentEdit.transformationMethod = UpperCaseTransformation()
+        } else if (type == TYPE_PHONE) {
+            // 输入手机号
+            mContentEdit.inputType = InputType.TYPE_CLASS_PHONE
+        } else if (type == TYPE_NUMBER) {
+            // 输入数字
+            mContentEdit.inputType = InputType.TYPE_CLASS_NUMBER
+        } else if (type == TYPE_NUMBER_DECIMAL) {
+            // 输入小数
+            mContentEdit.inputType = InputType.TYPE_CLASS_NUMBER
+            mContentEdit.keyListener = DigitsKeyListener.getInstance("1234567890.")
+        } else if (type == TYPE_NUMBER_DECIMAL) {
+            // 输入国外证件号
+            mContentEdit.inputType = InputType.TYPE_CLASS_NUMBER
+            mContentEdit.keyListener = DigitsKeyListener.getInstance("1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+            mContentEdit.transformationMethod = UpperCaseTransformation()
+        }
+    }
+
+    /** 设置文本最大长度[max] */
+    fun setMaxLength(max: Int) {
+        mContentEdit.filters = arrayOf(InputFilter.LengthFilter(max))
+    }
+
+    /** 所有字符转大写 */
+    private class UpperCaseTransformation : ReplacementTransformationMethod() {
+        override fun getOriginal(): CharArray = charArrayOf('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z')
+        override fun getReplacement(): CharArray = charArrayOf('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z')
+    }
+
 }

@@ -36,4 +36,8 @@
 
     <!-- 搜索标题栏 -->
     <string name="pandora_search_title_hint">请输入查询关键字</string>
+
+    <!-- 采集控件 -->
+    <string name="pandora_clt_hint">请输入内容</string>
+
 </resources>

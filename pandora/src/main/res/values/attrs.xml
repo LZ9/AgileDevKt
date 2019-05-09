@@ -219,5 +219,42 @@
         <attr name="isReadOnly" />
     </declare-styleable>
 
+    <!--采集输入控件-->
+    <declare-styleable name="CltEditView">
+        <attr name="titleText" />
+        <attr name="titleTextColor" />
+        <attr name="titleTextSize" />
+        <attr name="titleWidth" />
+        <attr name="titleBackground" />
+        <attr name="contentText" />
+        <attr name="contentTextColor" />
+        <attr name="contentTextSize" />
+        <attr name="contentHint" />
+        <attr name="contentHintColor" />
+        <attr name="contentDrawableStart" />
+        <attr name="contentDrawableEnd" />
+        <attr name="contentDrawablePadding" />
+        <attr name="contentTag" />
+        <attr name="contentBackground" />
+        <attr name="requiredVisibility" />
+        <attr name="requiredSrc" />
+        <attr name="unitText" />
+        <attr name="unitTextColor" />
+        <attr name="unitTextSize" />
+        <attr name="jumpText" />
+        <attr name="jumpTextColor" />
+        <attr name="jumpTextSize" />
+        <attr name="jumpBackground" />
+        <attr name="isReadOnly" />
+        <attr name="maxLength" format="integer" />
+        <attr name="inputType" format="integer">
+            <enum name="text" value="0" />
+            <enum name="idcard" value="1" />
+            <enum name="phone" value="2" />
+            <enum name="number" value="3" />
+            <enum name="numberDecimal" value="4" />
+            <enum name="foreignCert" value="5" />
+        </attr>
+    </declare-styleable>
 
 </resources>
