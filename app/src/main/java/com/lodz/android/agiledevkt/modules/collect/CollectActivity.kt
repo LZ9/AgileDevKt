@@ -46,19 +46,19 @@ class CollectActivity :BaseActivity(){
     override fun setListeners() {
         super.setListeners()
         mNameCltv.setOnContentClickListener {
-            toastShort("click NameCltv content")
+            toastShort(mNameCltv.getContentText())
         }
 
         mNameCltv.setOnJumpClickListener {
-            toastShort("click NameCltv jump")
+            toastShort(mNameCltv.getJumpBtnText())
         }
 
         mSexCltv.setOnContentClickListener {
-            toastShort("click SexCltv content")
+            toastShort(mSexCltv.getContentHint())
         }
 
         mAgeCltv.setOnContentClickListener {
-            toastShort("click AgeCltv content")
+            toastShort(mAgeCltv.getContentHint())
         }
     }
 

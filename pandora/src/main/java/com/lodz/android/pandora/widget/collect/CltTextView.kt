@@ -24,7 +24,7 @@ import com.lodz.android.corekt.anko.px2sp
 import com.lodz.android.pandora.R
 
 /**
- * 采集
+ * 采集TextView
  * @author zhouL
  * @date 2019/3/13
  */
@@ -352,6 +352,9 @@ class CltTextView : FrameLayout {
     fun setContentHint(hint: String) {
         mContentTv.hint = hint
     }
+
+    /** 获取内容提示语 */
+    fun getContentHint(): String = mContentTv.hint.toString()
 
     /** 设置内容提示语颜色[color] */
     fun setContentHintColor(@ColorInt color: Int) {
