@@ -53,7 +53,7 @@ class BottomMenuBar : LinearLayout {
         }
         for (config in configs) {
             val viewGroup = LayoutInflater.from(context).inflate(R.layout.pandora_view_menu_bar_item, null) as ViewGroup
-            val layoutParams = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1f)
+            val layoutParams = LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1f)
             addView(viewGroup, layoutParams)
             val iconImg = viewGroup.findViewById<ImageView>(R.id.ic_img)
             val textTv = viewGroup.findViewById<TextView>(R.id.text_tv)
@@ -74,6 +74,10 @@ class BottomMenuBar : LinearLayout {
                 textTv.textSize = config.getTextSize()
             }
             textTv.setTextColor(config.getTextColorState())
+            if (config.getDrawablePadding() > 0){
+                val lp = textTv.layoutParams as LayoutParams
+                lp.topMargin = config.getDrawablePadding()
+            }
 
             numTv.text = config.getNum().toString()
             if (config.getNumBackgroundDrawableResId() != 0) {
@@ -121,7 +125,7 @@ class BottomMenuBar : LinearLayout {
             if (config.getType() == type) {
                 val numTv = viewGroup.findViewById<TextView>(R.id.num_tv)
                 numTv.text = num.toString()
-                numTv.visibility = if (config.getNum() == 0) View.GONE else View.VISIBLE
+                numTv.visibility = if (num == 0) View.GONE else View.VISIBLE
             }
         }
     }

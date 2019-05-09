@@ -28,6 +28,8 @@ class MenuConfig {
     private var textSize = 0f
     /** 文字状态Drawable */
     private var textColorState: ColorStateList? = null
+    /** 文字和图片间距 */
+    private var drawablePadding = 0
     /** 数字 */
     private var num = 0
     /** 数字大小 */
@@ -89,6 +91,11 @@ class MenuConfig {
         textColorState = colorState
     }
 
+    /** 设置文字和图标的间距[px] */
+    fun setDrawablePadding(px: Int) {
+        drawablePadding = px
+    }
+
     /** 设置数字[value] */
     fun setNum(value: Int) {
         num = value
@@ -115,13 +122,13 @@ class MenuConfig {
     }
 
     /** 数字上间距[top] */
-    fun setNumTextMarginTop(top: Int) {
-        numTextMarginTop = top
+    fun setNumTextMarginTop(px: Int) {
+        numTextMarginTop = px
     }
 
     /** 数字右间距[end] */
-    fun setNumTextMarginEnd(end: Int) {
-        numTextMarginEnd = end
+    fun setNumTextMarginEnd(px: Int) {
+        numTextMarginEnd = px
     }
 
     /** 数字背景大小[end] */
@@ -146,6 +153,9 @@ class MenuConfig {
 
     /** 获取菜单文字颜色状态 */
     internal fun getTextColorState(): ColorStateList? = textColorState
+
+    /** 获取文字和图标的间距 */
+    internal fun getDrawablePadding(): Int = drawablePadding
 
     /** 获取数字 */
     internal fun getNum(): Int = num
