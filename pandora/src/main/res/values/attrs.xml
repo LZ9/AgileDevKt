@@ -35,6 +35,14 @@
     <attr name="contentDrawableEnd" format="reference" />
     <attr name="contentDrawablePadding" format="dimension" />
     <attr name="contentTag" format="string" />
+    <attr name="contentGravity" format="integer">
+        <enum name="center_vertical" value="0" />
+        <enum name="center" value="1" />
+        <enum name="start" value="2" />
+        <enum name="end" value="3" />
+        <enum name="start_vertical" value="4" />
+        <enum name="end_vertical" value="5" />
+    </attr>
     <attr name="requiredVisibility" format="integer">
         <enum name="visible" value="0" />
         <enum name="invisible" value="1" />
@@ -206,6 +214,7 @@
         <attr name="contentDrawableEnd" />
         <attr name="contentDrawablePadding" />
         <attr name="contentTag" />
+        <attr name="contentGravity" />
         <attr name="contentBackground" />
         <attr name="requiredVisibility" />
         <attr name="requiredSrc" />
@@ -235,6 +244,7 @@
         <attr name="contentDrawableEnd" />
         <attr name="contentDrawablePadding" />
         <attr name="contentTag" />
+        <attr name="contentGravity" />
         <attr name="contentBackground" />
         <attr name="requiredVisibility" />
         <attr name="requiredSrc" />
@@ -255,6 +265,7 @@
             <enum name="numberDecimal" value="4" />
             <enum name="foreignCert" value="5" />
         </attr>
+        <attr name="minLines" format="integer" />
     </declare-styleable>
 
 </resources>

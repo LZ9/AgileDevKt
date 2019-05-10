@@ -15,6 +15,7 @@ import android.text.method.DigitsKeyListener
 import android.text.method.ReplacementTransformationMethod
 import android.util.AttributeSet
 import android.util.TypedValue
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.EditText
@@ -77,16 +78,16 @@ class CltEditView : FrameLayout {
     }
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-        init(null)
+        init(attrs)
     }
 
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        init(null)
+        init(attrs)
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
-        init(null)
+        init(attrs)
     }
 
     private fun init(attrs: AttributeSet?) {
@@ -198,6 +199,21 @@ class CltEditView : FrameLayout {
         if (contentBackground != null) {
             setContentBackground(contentBackground)
         }
+        // 设置内容文字位置
+        val gravity = typedArray?.getInt(R.styleable.CltEditView_contentGravity, 0) ?: 0
+        if (gravity == 1){
+            setContentGravity(Gravity.CENTER)
+        }else if (gravity == 2){
+            setContentGravity(Gravity.START)
+        }else if (gravity == 3){
+            setContentGravity(Gravity.END )
+        }else if (gravity == 4){
+            setContentGravity(Gravity.START or Gravity.CENTER_VERTICAL)
+        }else if (gravity == 5){
+            setContentGravity(Gravity.END or Gravity.CENTER_VERTICAL)
+        }else{
+            setContentGravity(Gravity.CENTER_VERTICAL)
+        }
         // 设置单位文字
         val unitText: String? = typedArray?.getString(R.styleable.CltEditView_unitText)
         if (unitText != null) {
@@ -246,9 +262,15 @@ class CltEditView : FrameLayout {
         // 设置输入类型
         setEditInputType(typedArray?.getInt(R.styleable.CltEditView_inputType, TYPE_TEXT)
                 ?: TYPE_TEXT)
+        // 设置文本最大长度
         val max: Int = typedArray?.getInt(R.styleable.CltEditView_maxLength, -1) ?: -1
         if (max >= 0){
             setMaxLength(max)
+        }
+        // 最小行数
+        val minLines: Int = typedArray?.getInt(R.styleable.CltEditView_minLines, 0) ?: 0
+        if (minLines > 0){
+            setMinLines(minLines)
         }
 
         if (typedArray != null) {
@@ -482,6 +504,11 @@ class CltEditView : FrameLayout {
         mContentEdit.setBackgroundResource(resId)
     }
 
+    /** 设置内容文字位置 */
+    fun setContentGravity(gravity: Int) {
+        mContentEdit.gravity = gravity
+    }
+
     /** 设置是否需要单位[isNeed] */
     fun setNeedUnit(isNeed: Boolean) {
         mUnitTv.visibility = if (isNeed) View.VISIBLE else View.GONE
@@ -632,6 +659,11 @@ class CltEditView : FrameLayout {
     /** 设置文本最大长度[max] */
     fun setMaxLength(max: Int) {
         mContentEdit.filters = arrayOf(InputFilter.LengthFilter(max))
+    }
+
+    /** 最小行数[lines] */
+    fun setMinLines(lines: Int) {
+        mContentEdit.minLines = lines
     }
 
     /** 所有字符转大写 */

@@ -9,16 +9,17 @@ import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.widget.collect.CltTextView
+import kotlin.random.Random
 
 /**
  * 采集测试页
  * @author zhouL
  * @date 2019/3/18
  */
-class CollectActivity :BaseActivity(){
+class CollectActivity : BaseActivity() {
 
     companion object {
-        fun start(context: Context){
+        fun start(context: Context) {
             val intent = Intent(context, CollectActivity::class.java)
             context.startActivity(intent)
         }
@@ -50,15 +51,21 @@ class CollectActivity :BaseActivity(){
         }
 
         mNameCltv.setOnJumpClickListener {
-            toastShort(mNameCltv.getJumpBtnText())
+            val list = arrayListOf(getString(R.string.clt_name_zs), getString(R.string.clt_name_ls), getString(R.string.clt_name_ww))
+            list.forEachIndexed { index, name ->
+                if (mNameCltv.getContentText().equals(name)) {
+                    mNameCltv.setContentText(list.get((index + 1) % 3))
+                    return@setOnJumpClickListener
+                }
+            }
         }
 
         mSexCltv.setOnContentClickListener {
-            toastShort(mSexCltv.getContentHint())
+            mSexCltv.setContentText(if (mSexCltv.getContentText().equals("男")) "女" else "男")
         }
 
         mAgeCltv.setOnContentClickListener {
-            toastShort(mAgeCltv.getContentHint())
+            mAgeCltv.setContentText((Random.nextInt(50) + 1).toString())
         }
     }
 

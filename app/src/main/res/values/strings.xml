@@ -594,13 +594,16 @@
     <!-- 采集测试 -->
     <string name="clt_title">采集测试页</string>
     <string name="clt_name">姓名：</string>
-    <string name="clt_name_content">贝克汉姆</string>
+    <string name="clt_name_zs">张三</string>
+    <string name="clt_name_ls">李四</string>
+    <string name="clt_name_ww">王五</string>
     <string name="clt_name_jump">选择</string>
     <string name="clt_sex">性别：</string>
     <string name="clt_sex_hint">请选择性别</string>
     <string name="clt_age">年龄：</string>
-    <string name="clt_age_hint">请选择性别</string>
+    <string name="clt_age_hint">请选择年龄</string>
     <string name="clt_age_unit">岁</string>
+    <string name="clt_hobby">兴趣：</string>
 
     <!-- 接口测试 -->
     <string name="api_loading">正在获取</string>

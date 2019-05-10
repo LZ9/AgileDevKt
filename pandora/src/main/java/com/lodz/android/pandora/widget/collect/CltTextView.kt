@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable
 import android.os.Build
 import android.util.AttributeSet
 import android.util.TypedValue
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
@@ -169,6 +170,21 @@ class CltTextView : FrameLayout {
         val contentBackground: Drawable? = typedArray?.getDrawable(R.styleable.CltTextView_contentBackground)
         if (contentBackground != null) {
             setContentBackground(contentBackground)
+        }
+        // 设置内容文字位置
+        val gravity = typedArray?.getInt(R.styleable.CltTextView_contentGravity, 0) ?: 0
+        if (gravity == 1){
+            setContentGravity(Gravity.CENTER)
+        }else if (gravity == 2){
+            setContentGravity(Gravity.START)
+        }else if (gravity == 3){
+            setContentGravity(Gravity.END )
+        }else if (gravity == 4){
+            setContentGravity(Gravity.START or Gravity.CENTER_VERTICAL)
+        }else if (gravity == 5){
+            setContentGravity(Gravity.END or Gravity.CENTER_VERTICAL)
+        }else{
+            setContentGravity(Gravity.CENTER_VERTICAL)
         }
         // 设置单位文字
         val unitText: String? = typedArray?.getString(R.styleable.CltTextView_unitText)
@@ -418,6 +434,11 @@ class CltTextView : FrameLayout {
     /** 设置内容背景[resId] */
     fun setContentBackgroundRes(@DrawableRes resId: Int) {
         mContentTv.setBackgroundResource(resId)
+    }
+
+    /** 设置内容文字位置 */
+    fun setContentGravity(gravity: Int) {
+        mContentTv.gravity = gravity
     }
 
     /** 设置是否需要单位[isNeed] */
