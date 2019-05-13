@@ -48,7 +48,7 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:padding="5dp"
-        app:contentGravity="end"
+        app:contentGravity="end_vertical"
         app:contentHint="@string/clt_age_hint"
         app:contentHintColor="@color/color_3f51b5"
         app:requiredVisibility="gone"
@@ -68,6 +68,7 @@
         app:contentHintColor="@color/color_999999"
         app:contentTextColor="@color/color_00a0e9"
         app:jumpText="@string/app_img_name"
+        app:minLines="3"
         app:titleText="@string/clt_hobby"
         app:unitText="@string/app_img_name">
 

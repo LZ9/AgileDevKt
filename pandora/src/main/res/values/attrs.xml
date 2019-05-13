@@ -266,6 +266,7 @@
             <enum name="foreignCert" value="5" />
         </attr>
         <attr name="minLines" format="integer" />
+        <attr name="maxLines" format="integer" />
     </declare-styleable>
 
 </resources>

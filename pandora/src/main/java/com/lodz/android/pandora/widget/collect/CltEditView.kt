@@ -272,6 +272,11 @@ class CltEditView : FrameLayout {
         if (minLines > 0){
             setMinLines(minLines)
         }
+        // 最大行数
+        val maxLines: Int = typedArray?.getInt(R.styleable.CltEditView_maxLines, 0) ?: 0
+        if (maxLines > 1){
+            setMaxLines(maxLines)
+        }
 
         if (typedArray != null) {
             typedArray.recycle()
@@ -664,6 +669,11 @@ class CltEditView : FrameLayout {
     /** 最小行数[lines] */
     fun setMinLines(lines: Int) {
         mContentEdit.minLines = lines
+    }
+
+    /** 最大行数[lines] */
+    fun setMaxLines(lines: Int) {
+        mContentEdit.maxLines = lines
     }
 
     /** 所有字符转大写 */

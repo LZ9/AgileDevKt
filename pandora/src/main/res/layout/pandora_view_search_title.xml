@@ -25,8 +25,8 @@
                 android:drawableStart="@drawable/pandora_selector_btn_back"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
-                android:maxLines="1"
                 android:maxWidth="90dp"
+                android:maxLines="1"
                 android:paddingStart="10dp"
                 android:textColor="@android:color/white"
                 tools:ignore="RtlSymmetry" />
@@ -37,10 +37,10 @@
             android:id="@+id/input_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="10dp"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="10dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="10dp"
             android:background="@android:color/white"
             android:gravity="center_vertical">
 
@@ -53,16 +53,18 @@
                 android:background="@null"
                 android:gravity="center_vertical"
                 android:hint="@string/pandora_search_title_hint"
+                android:importantForAutofill="no"
                 android:inputType="text"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                tools:targetApi="o" />
 
             <ImageView
                 android:id="@+id/clear_btn"
                 android:layout_width="32dp"
                 android:layout_height="match_parent"
                 android:contentDescription="@string/pandora_app_img_name"
-                android:paddingEnd="8dp"
                 android:paddingStart="8dp"
+                android:paddingEnd="8dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/pandora_ic_clean"
                 android:visibility="gone" />
@@ -71,8 +73,8 @@
                 android:id="@+id/vertical_line"
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="8dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:background="#d9d9d9" />
 
             <ImageView
@@ -80,8 +82,8 @@
                 android:layout_width="32dp"
                 android:layout_height="match_parent"
                 android:contentDescription="@string/pandora_app_img_name"
-                android:paddingEnd="8dp"
                 android:paddingStart="8dp"
+                android:paddingEnd="8dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/pandora_ic_search" />
 
