@@ -122,7 +122,9 @@ class ThreadPoolActivity : BaseActivity() {
 
     /** 打印信息[result] */
     private fun printResult(result: String) {
-        mResultTv.text = (mResultTv.text.toString() + "\n" + result)
+        UiHandler.post(Runnable {
+            mResultTv.text = (mResultTv.text.toString() + "\n" + result)
+        })
         UiHandler.postDelayed(Runnable {
             mScrollView.fullScroll(ScrollView.FOCUS_DOWN)
         }, 100)
