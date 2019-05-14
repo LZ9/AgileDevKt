@@ -50,7 +50,7 @@ fun Context.isSim2Ready(): Boolean {
     return type.isNotEmpty() && type.toInt() == TelephonyManager.SIM_STATE_READY
 }
 
-/** sim卡数据连接状态 */
+/** sim卡数据连接状态，常见返回值包括TelephonyManager.DATA_DISCONNECTED或TelephonyManager.DATA_CONNECTED */
 fun Context.getSimDataState(): Int {
     try {
         val tm = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager

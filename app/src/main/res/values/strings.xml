@@ -216,7 +216,7 @@
     <string name="info_is_wechat_installed">是否安装微信：%s</string>
     <string name="info_installed_app_num">安装的应用数量：%s</string>
     <string name="info_is_gps_open">GPS是否打开：%s</string>
-    <string name="info_get_assets_text">获取assets内文本内容：%s</string>
+    <string name="info_get_assets_text">获取assets内文本内容：\n%s</string>
     <string name="info_internal_storage_path">内部存储路径：%s</string>
     <string name="info_external_storage_path">外部存储路径：%s</string>
 

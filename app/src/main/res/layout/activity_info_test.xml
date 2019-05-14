@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/info_is_main_thread"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/uuid_tv"
@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/info_uuid"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/app_name_tv"
@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/info_app_name"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/version_name_tv"
@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/info_version_name"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/version_code_tv"
@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/info_version_code"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/main_process_tv"
@@ -62,7 +62,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/info_is_main_process"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/process_name_tv"
@@ -70,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/info_process_name"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -83,7 +83,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/info_is_qq_installed"
                     android:textColor="@color/white"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/wechat_installed_tv"
@@ -92,7 +92,7 @@
                     android:layout_marginStart="15dp"
                     android:text="@string/info_is_wechat_installed"
                     android:textColor="@color/white"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <TextView
@@ -101,7 +101,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/info_installed_app_num"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/is_gps_open_tv"
@@ -109,15 +109,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/info_is_gps_open"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/assets_text_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/info_get_assets_text"
-                android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
         </LinearLayout>
 
@@ -135,7 +127,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/info_internal_storage_path"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/external_storage_path_tv"
@@ -143,7 +135,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/info_external_storage_path"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -160,7 +152,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/info_phone_ua"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -175,7 +167,7 @@
                     android:layout_weight="1"
                     android:text="@string/info_phone_language"
                     android:textColor="@color/white"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/country_tv"
@@ -184,7 +176,7 @@
                     android:layout_weight="1"
                     android:text="@string/info_phone_country"
                     android:textColor="@color/white"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
@@ -204,7 +196,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/info_phone_brand"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/model_tv"
@@ -212,7 +204,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/info_phone_model"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/board_tv"
@@ -220,7 +212,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/info_phone_board"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/cpu_abi_tv"
@@ -228,7 +220,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/info_phone_cpu_abi"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/cpu_abi2_tv"
@@ -236,7 +228,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/info_phone_cpu_abi2"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/manufacturer_tv"
@@ -244,7 +236,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/info_phone_manufacturer"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/product_tv"
@@ -252,7 +244,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/info_phone_product"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/device_tv"
@@ -260,7 +252,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/info_phone_device"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -277,7 +269,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/info_phone_imei1"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/imei2_tv"
@@ -285,7 +277,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/info_phone_imei2"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/dual_sim_tv"
@@ -293,7 +285,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/info_is_dual_sim"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -307,7 +299,7 @@
                     android:layout_weight="1"
                     android:text="@string/info_phone_imsi1"
                     android:textColor="@color/white"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/sim1_ready_tv"
@@ -315,7 +307,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/info_phone_sim1_ready"
                     android:textColor="@color/white"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
@@ -331,7 +323,7 @@
                     android:layout_weight="1"
                     android:text="@string/info_phone_imsi2"
                     android:textColor="@color/white"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/sim2_ready_tv"
@@ -339,7 +331,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/info_phone_sim2_ready"
                     android:textColor="@color/white"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <TextView
@@ -348,7 +340,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/info_phone_sim_data_state"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/sim_connected_data_tv"
@@ -356,7 +348,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/info_phone_is_connected_data"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/apn_name_tv"
@@ -364,7 +356,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/info_apn_name"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -381,7 +373,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/info_screen_height"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/screen_width_tv"
@@ -389,7 +381,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/info_screen_width"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/status_bar_height_tv"
@@ -397,7 +389,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/info_status_bar_height"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/has_navigation_bar_tv"
@@ -405,7 +397,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/info_has_navigation_bar"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/navigation_bar_height_tv"
@@ -413,7 +405,25 @@
                 android:layout_height="wrap_content"
                 android:text="@string/info_navigation_bar_height"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_00796b_corners_8"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/assets_text_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/info_get_assets_text"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
         </LinearLayout>
 
     </LinearLayout>

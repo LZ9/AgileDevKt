@@ -140,6 +140,7 @@ class InfoTestActivity : BaseActivity() {
         showScreenInfo()
         showAppInfo()
         showStorage()
+        showAssetsInfo()
         showStatusCompleted()
     }
 
@@ -196,7 +197,10 @@ class InfoTestActivity : BaseActivity() {
 
         registerGpsReceiver()
         mGpsOpenTv.text = getString(R.string.info_is_gps_open).format(isGpsOpen())
+    }
 
+    /** 显示Assets信息 */
+    private fun showAssetsInfo(){
         Observable.just("test.txt")
                 .map { fileName ->
                     getAssetsFileContent(fileName)
@@ -264,7 +268,7 @@ class InfoTestActivity : BaseActivity() {
             if (action.isNullOrEmpty()){
                 return
             }
-            if (action!!.equals(LocationManager.PROVIDERS_CHANGED_ACTION)) {
+            if (action.equals(LocationManager.PROVIDERS_CHANGED_ACTION)) {
                 mGpsOpenTv.text = getString(R.string.info_is_gps_open).format(isGpsOpen())
             }
         }
