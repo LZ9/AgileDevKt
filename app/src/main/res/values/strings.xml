@@ -632,6 +632,13 @@
     <string name="date_time_wheel">时间日期滚动选择框</string>
     <string name="date_pick_title">日期选择</string>
 
-
+    <!-- 协程测试 -->
+    <string name="coroutines_start">启动</string>
+    <string name="coroutines_cancel">取消</string>
+    <string name="coroutines_clean">清空</string>
+    <string name="coroutines_main">主线程执行</string>
+    <string name="coroutines_io">异步线程执行</string>
+    <string name="coroutines_join">等待协程执行</string>
+    <string name="coroutines_type_none_tips">您尚未选择协程执行类型</string>
 
 </resources>

@@ -21,6 +21,7 @@ import com.lodz.android.agiledevkt.modules.bottomsheet.BottomSheetsActivity
 import com.lodz.android.agiledevkt.modules.collect.CollectActivity
 import com.lodz.android.agiledevkt.modules.color.ColorAlphaTestActivity
 import com.lodz.android.agiledevkt.modules.coordinator.CoordinatorTestActivity
+import com.lodz.android.agiledevkt.modules.coroutines.CoroutinesActivity
 import com.lodz.android.agiledevkt.modules.crash.CrashTestActivity
 import com.lodz.android.agiledevkt.modules.date.DateActivity
 import com.lodz.android.agiledevkt.modules.dialog.DialogActivity
@@ -134,7 +135,8 @@ class MainActivity : BaseActivity() {
             MainBean("底部菜单栏测试类", "D", MenuBarTestActivity::class.java),
             MainBean("采集测试页", "C", CollectActivity::class.java),
             MainBean("接口测试类", "J", ApiTestActivity::class.java),
-            MainBean("日期测试类", "R", DateActivity::class.java)
+            MainBean("日期测试类", "R", DateActivity::class.java),
+            MainBean("协程测试类", "X", CoroutinesActivity::class.java)
     )
 
     /** 列表 */
