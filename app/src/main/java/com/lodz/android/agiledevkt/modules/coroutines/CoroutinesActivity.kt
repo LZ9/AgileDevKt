@@ -8,7 +8,9 @@ import android.widget.TextView
 import com.google.android.material.button.MaterialButton
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
-import com.lodz.android.corekt.anko.*
+import com.lodz.android.corekt.anko.bindView
+import com.lodz.android.corekt.anko.runOnMain
+import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.pandora.base.activity.BaseActivity
 import kotlinx.coroutines.*
 
@@ -92,7 +94,7 @@ class CoroutinesActivity : BaseActivity() {
                 return@setOnClickListener
             }
             if (mType == TYPE_JOIN){
-                runOnSuspend {
+                runBlocking {
                     mJob = join()
                 }
                 return@setOnClickListener
@@ -139,6 +141,7 @@ class CoroutinesActivity : BaseActivity() {
         return job
     }
 
+    /** 等待协程执行，join阻塞主线程 */
     private suspend fun join(): Job {
         val job = GlobalScope.launch {
             logResult("${Thread.currentThread().name} ---> 开始执行协程")
@@ -146,11 +149,9 @@ class CoroutinesActivity : BaseActivity() {
             logResult("完成")
             logResult("${Thread.currentThread().name} ---> 结束协程")
         }
-        runOnSuspendIO {
-            logResult("开始")
-            job.join() // 等待直到子协程执行结束
-            logResult("${Thread.currentThread().name} ---> 结束")
-        }
+        logResult("开始")
+        job.join() // 等待直到子协程执行结束
+        logResult("${Thread.currentThread().name} ---> 结束")
         return job
     }
 

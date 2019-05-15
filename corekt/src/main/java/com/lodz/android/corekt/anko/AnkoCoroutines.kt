@@ -1,6 +1,9 @@
 package com.lodz.android.corekt.anko
 
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 /**
  * 协程扩展类
@@ -19,8 +22,3 @@ fun runOnIO(block: () -> Unit): Job = GlobalScope.launch(Dispatchers.IO) { block
 
 /** 异步线程执行 */
 fun runOnSuspendIO(block: suspend () -> Unit): Job = GlobalScope.launch(Dispatchers.IO) { block() }
-
-/** 异步线程执行 */
-fun runOnSuspend(block: suspend () -> Unit) {
-    runBlocking { block() }
-}
