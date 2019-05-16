@@ -641,6 +641,7 @@
     <string name="coroutines_join">阻塞主线程等待协程执行</string>
     <string name="coroutines_repeat">协程执行重复数据</string>
     <string name="coroutines_timeout">超时限制</string>
+    <string name="coroutines_channel">协程通道</string>
     <string name="coroutines_type_none_tips">您尚未选择协程执行类型</string>
 
 </resources>

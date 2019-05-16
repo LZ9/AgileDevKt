@@ -13,6 +13,7 @@ import com.lodz.android.corekt.anko.runOnMain
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.pandora.base.activity.BaseActivity
 import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.Channel
 
 /**
  * 协程测试类
@@ -38,8 +39,11 @@ class CoroutinesActivity : BaseActivity() {
     private val TYPE_JOIN = 3
     /** 协程执行重复数据 */
     private val TYPE_REPEAT = 4
-    /** 协程执行重复数据 */
+    /** 超时限制 */
     private val TYPE_TIMEOUT = 5
+    /** 协程通道 */
+    private val TYPE_CHANNEL = 6
+
 
     /** 单选组 */
     private val mRadioGroup by bindView<RadioGroup>(R.id.radio_group)
@@ -81,6 +85,7 @@ class CoroutinesActivity : BaseActivity() {
                 R.id.join_rbtn -> TYPE_JOIN
                 R.id.repeat_rbtn -> TYPE_REPEAT
                 R.id.timeout_rbtn -> TYPE_TIMEOUT
+                R.id.channel_rbtn -> TYPE_CHANNEL
                 else -> TYPE_NONE
             }
         }
@@ -111,6 +116,10 @@ class CoroutinesActivity : BaseActivity() {
             }
             if (mType == TYPE_TIMEOUT) {
                 mJob = timeout()
+                return@setOnClickListener
+            }
+            if (mType == TYPE_CHANNEL) {
+                mJob = channel()
                 return@setOnClickListener
             }
         }
@@ -181,6 +190,7 @@ class CoroutinesActivity : BaseActivity() {
         }
     }
 
+    /** 超时限制 */
     private fun timeout(): Job {
         return GlobalScope.launch {
             withTimeout(1500) {
@@ -191,6 +201,27 @@ class CoroutinesActivity : BaseActivity() {
                 }
                 logResult("${Thread.currentThread().name} ---> 结束协程")
             }
+        }
+    }
+
+    /** 协程通道 */
+    private fun channel(): Job{
+        return GlobalScope.launch {
+            logResult("${Thread.currentThread().name} ---> 开始执行协程")
+            val channel = Channel<Int>()
+            launch {
+                for (i in 1..12) {
+                    if (i % 2 == 0) {
+                        channel.send(i)
+                    }
+                    delay(400)
+                }
+                channel.close()
+            }
+            for (c in channel){// 遍历通道内的元素，直到通道被关闭
+                logResult("${Thread.currentThread().name} ---> $c")
+            }
+            logResult("${Thread.currentThread().name} ---> 结束协程")
         }
     }
 

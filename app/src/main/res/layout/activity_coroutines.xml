@@ -17,47 +17,60 @@
 
     </androidx.core.widget.NestedScrollView>
 
-    <RadioGroup
-        android:id="@+id/radio_group"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="200dp">
 
-        <RadioButton
-            android:id="@+id/main_rbtn"
-            android:layout_width="wrap_content"
+        <RadioGroup
+            android:id="@+id/radio_group"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
-            android:text="@string/coroutines_main" />
+            android:orientation="vertical">
 
-        <RadioButton
-            android:id="@+id/io_rbtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
-            android:text="@string/coroutines_io" />
+            <RadioButton
+                android:id="@+id/main_rbtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:text="@string/coroutines_main" />
 
-        <RadioButton
-            android:id="@+id/join_rbtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
-            android:text="@string/coroutines_join" />
+            <RadioButton
+                android:id="@+id/io_rbtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:text="@string/coroutines_io" />
 
-        <RadioButton
-            android:id="@+id/repeat_rbtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
-            android:text="@string/coroutines_repeat" />
+            <RadioButton
+                android:id="@+id/join_rbtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:text="@string/coroutines_join" />
 
-        <RadioButton
-            android:id="@+id/timeout_rbtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
-            android:text="@string/coroutines_timeout" />
-    </RadioGroup>
+            <RadioButton
+                android:id="@+id/repeat_rbtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:text="@string/coroutines_repeat" />
+
+            <RadioButton
+                android:id="@+id/timeout_rbtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:text="@string/coroutines_timeout" />
+
+            <RadioButton
+                android:id="@+id/channel_rbtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:text="@string/coroutines_channel" />
+
+        </RadioGroup>
+    </androidx.core.widget.NestedScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"
