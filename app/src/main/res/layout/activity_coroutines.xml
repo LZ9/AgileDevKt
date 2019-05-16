@@ -5,11 +5,17 @@
     android:orientation="vertical"
     android:padding="10dp">
 
-    <TextView
-        android:id="@+id/result_tv"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/result_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </androidx.core.widget.NestedScrollView>
 
     <RadioGroup
         android:id="@+id/radio_group"
@@ -38,6 +44,12 @@
             android:layout_marginEnd="5dp"
             android:text="@string/coroutines_join" />
 
+        <RadioButton
+            android:id="@+id/repeat_rbtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:text="@string/coroutines_repeat" />
     </RadioGroup>
 
     <LinearLayout

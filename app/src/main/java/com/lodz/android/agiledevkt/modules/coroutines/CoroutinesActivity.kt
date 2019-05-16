@@ -34,8 +34,10 @@ class CoroutinesActivity : BaseActivity() {
     private val TYPE_MAIN = 1
     /** 异步线程执行 */
     private val TYPE_IO = 2
-    /** 等待协程执行 */
+    /** 阻塞主线程等待协程执行 */
     private val TYPE_JOIN = 3
+    /** 协程执行重复数据 */
+    private val TYPE_REPEAT = 4
 
     /** 单选组 */
     private val mRadioGroup by bindView<RadioGroup>(R.id.radio_group)
@@ -75,6 +77,7 @@ class CoroutinesActivity : BaseActivity() {
                 R.id.main_rbtn -> TYPE_MAIN
                 R.id.io_rbtn -> TYPE_IO
                 R.id.join_rbtn -> TYPE_JOIN
+                R.id.repeat_rbtn -> TYPE_REPEAT
                 else -> TYPE_NONE
             }
         }
@@ -85,18 +88,22 @@ class CoroutinesActivity : BaseActivity() {
                 return@setOnClickListener
             }
             cleanResult()
-            if (mType == TYPE_MAIN){
+            if (mType == TYPE_MAIN) {
                 mJob = main()
                 return@setOnClickListener
             }
-            if (mType == TYPE_IO){
+            if (mType == TYPE_IO) {
                 mJob = io()
                 return@setOnClickListener
             }
-            if (mType == TYPE_JOIN){
+            if (mType == TYPE_JOIN) {
                 runBlocking {
                     mJob = join()
                 }
+                return@setOnClickListener
+            }
+            if (mType == TYPE_REPEAT){
+                mJob = repeat()
                 return@setOnClickListener
             }
         }
@@ -155,13 +162,25 @@ class CoroutinesActivity : BaseActivity() {
         return job
     }
 
+    /** 协程执行重复数据 */
+    private fun repeat(): Job {
+        return GlobalScope.launch {
+            logResult("${Thread.currentThread().name} ---> 开始执行协程")
+            repeat(12, {i ->
+                logResult("${Thread.currentThread().name} ---> $i")
+                delay(500)
+            })
+            logResult("${Thread.currentThread().name} ---> 结束协程")
+        }
+    }
+
     private fun logResult(log: String) {
         runOnMain {
             mResultTv.text = StringBuilder(mResultTv.text).append("\n").append(log).toString()
         }
     }
 
-    private fun cleanResult(){
+    private fun cleanResult() {
         mResultTv.text = ""
     }
 
