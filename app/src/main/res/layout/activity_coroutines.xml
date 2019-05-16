@@ -50,6 +50,13 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
             android:text="@string/coroutines_repeat" />
+
+        <RadioButton
+            android:id="@+id/timeout_rbtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:text="@string/coroutines_timeout" />
     </RadioGroup>
 
     <LinearLayout

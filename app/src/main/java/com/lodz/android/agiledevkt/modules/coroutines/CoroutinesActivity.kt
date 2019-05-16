@@ -38,6 +38,8 @@ class CoroutinesActivity : BaseActivity() {
     private val TYPE_JOIN = 3
     /** 协程执行重复数据 */
     private val TYPE_REPEAT = 4
+    /** 协程执行重复数据 */
+    private val TYPE_TIMEOUT = 5
 
     /** 单选组 */
     private val mRadioGroup by bindView<RadioGroup>(R.id.radio_group)
@@ -78,6 +80,7 @@ class CoroutinesActivity : BaseActivity() {
                 R.id.io_rbtn -> TYPE_IO
                 R.id.join_rbtn -> TYPE_JOIN
                 R.id.repeat_rbtn -> TYPE_REPEAT
+                R.id.timeout_rbtn -> TYPE_TIMEOUT
                 else -> TYPE_NONE
             }
         }
@@ -102,8 +105,12 @@ class CoroutinesActivity : BaseActivity() {
                 }
                 return@setOnClickListener
             }
-            if (mType == TYPE_REPEAT){
+            if (mType == TYPE_REPEAT) {
                 mJob = repeat()
+                return@setOnClickListener
+            }
+            if (mType == TYPE_TIMEOUT) {
+                mJob = timeout()
                 return@setOnClickListener
             }
         }
@@ -166,11 +173,24 @@ class CoroutinesActivity : BaseActivity() {
     private fun repeat(): Job {
         return GlobalScope.launch {
             logResult("${Thread.currentThread().name} ---> 开始执行协程")
-            repeat(12, {i ->
+            repeat(12) { i ->
                 logResult("${Thread.currentThread().name} ---> $i")
                 delay(500)
-            })
+            }
             logResult("${Thread.currentThread().name} ---> 结束协程")
+        }
+    }
+
+    private fun timeout(): Job {
+        return GlobalScope.launch {
+            withTimeout(1500) {
+                logResult("${Thread.currentThread().name} ---> 开始执行协程")
+                repeat(12) { i ->
+                    logResult("${Thread.currentThread().name} ---> $i")
+                    delay(400)
+                }
+                logResult("${Thread.currentThread().name} ---> 结束协程")
+            }
         }
     }
 
