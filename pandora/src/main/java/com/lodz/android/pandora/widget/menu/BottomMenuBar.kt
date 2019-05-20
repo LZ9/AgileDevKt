@@ -65,8 +65,8 @@ class BottomMenuBar : LinearLayout {
 
             iconImg.setImageDrawable(config.getIconDrawableState())
             if (config.getIconSize() > 0){
-                iconImg.layoutParams.height = dp2px(config.getIconSize()).toInt()
-                iconImg.layoutParams.width = dp2px(config.getIconSize()).toInt()
+                iconImg.layoutParams.height = dp2px(config.getIconSize())
+                iconImg.layoutParams.width = dp2px(config.getIconSize())
             }
 
             textTv.text = config.getText()
@@ -99,8 +99,8 @@ class BottomMenuBar : LinearLayout {
             }
             if (config.getNumTextBgSizeDp() > 0){
                 val lp = numTv.layoutParams
-                lp.width = dp2px(config.getNumTextBgSizeDp()).toInt()
-                lp.width = dp2px(config.getNumTextBgSizeDp()).toInt()
+                lp.width = dp2px(config.getNumTextBgSizeDp())
+                lp.width = dp2px(config.getNumTextBgSizeDp())
             }
             numTv.visibility = if (config.getNum() == 0) View.GONE else View.VISIBLE
 

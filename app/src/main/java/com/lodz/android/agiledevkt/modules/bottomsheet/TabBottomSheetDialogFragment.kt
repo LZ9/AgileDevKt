@@ -49,7 +49,7 @@ class TabBottomSheetDialogFragment : BaseBottomSheetDialogFragment() {
     }
 
     override fun onBehaviorInit(behavior: BottomSheetBehavior<*>) {
-        behavior.peekHeight = dp2px(250).toInt()
+        behavior.peekHeight = dp2px(250)
         behavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 if (newState == BottomSheetBehavior.STATE_HIDDEN) {

@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.AppBarLayout
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.corekt.anko.bindView
-import com.lodz.android.corekt.anko.dp2px
+import com.lodz.android.corekt.anko.dp2pxRF
 import com.lodz.android.corekt.anko.getScreenWidth
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.imageloaderkt.ImageLoader
@@ -107,7 +107,7 @@ class CoorTranslationActivity : AbsActivity() {
 
                 // 订阅按钮位移
                 mSubscribeBtn.translationY = (mSubscribeBtnCenterY - mToolbarCenterY) * (delta.toFloat() - 1)
-                mSubscribeBtn.translationX = (getScreenWidth() - mSubscribeBtn.width / 2 - dp2px(BTN_MARGIN_END_DP) - mSubscribeBtnCenterX) * (1 - delta.toFloat())
+                mSubscribeBtn.translationX = (getScreenWidth() - mSubscribeBtn.width / 2 - dp2pxRF(BTN_MARGIN_END_DP) - mSubscribeBtnCenterX) * (1 - delta.toFloat())
             }
         })
     }

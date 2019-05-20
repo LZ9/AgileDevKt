@@ -72,30 +72,30 @@ class HeadFooterAdapter(context: Context) : BaseHeaderFooterRVAdapter<String, St
         }
         if (mLayoutManagerType == LayoutManagerPopupWindow.TYPE_LINEAR) {
             setItemViewWidth(holder.itemView, if (mOrientation == RecyclerView.VERTICAL) context.getScreenWidth() else ViewGroup.LayoutParams.WRAP_CONTENT)
-            setItemViewHeight(holder.itemView, if (mOrientation == RecyclerView.VERTICAL) ViewGroup.LayoutParams.WRAP_CONTENT else context.dp2px(200).toInt())
+            setItemViewHeight(holder.itemView, if (mOrientation == RecyclerView.VERTICAL) ViewGroup.LayoutParams.WRAP_CONTENT else context.dp2px(200))
         }
         if (mLayoutManagerType == LayoutManagerPopupWindow.TYPE_GRID) {
             setItemViewWidth(holder.itemView, if (mOrientation == RecyclerView.VERTICAL) context.getScreenWidth() / 3 else ViewGroup.LayoutParams.WRAP_CONTENT)
-            setItemViewHeight(holder.itemView, if (mOrientation == RecyclerView.VERTICAL) ViewGroup.LayoutParams.WRAP_CONTENT else context.dp2px(200).toInt() / 3)
+            setItemViewHeight(holder.itemView, if (mOrientation == RecyclerView.VERTICAL) ViewGroup.LayoutParams.WRAP_CONTENT else context.dp2px(200) / 3)
         }
         if (mLayoutManagerType == LayoutManagerPopupWindow.TYPE_STAGGERED) {
             if (mOrientation == RecyclerView.VERTICAL) {
                 setItemViewWidth(holder.itemView, context.getScreenWidth() / 3)
                 if (position % 3 == 0) {
-                    setItemViewHeight(holder.itemView, context.dp2px(300).toInt())
+                    setItemViewHeight(holder.itemView, context.dp2px(300))
                 } else if (position % 3 == 1) {
-                    setItemViewHeight(holder.itemView, context.dp2px(100).toInt())
+                    setItemViewHeight(holder.itemView, context.dp2px(100))
                 } else {
-                    setItemViewHeight(holder.itemView, context.dp2px(200).toInt())
+                    setItemViewHeight(holder.itemView, context.dp2px(200))
                 }
             } else {
-                setItemViewHeight(holder.itemView, context.dp2px(200).toInt() / 3)
+                setItemViewHeight(holder.itemView, context.dp2px(200) / 3)
                 if (position % 3 == 0) {
-                    setItemViewWidth(holder.itemView, context.dp2px(300).toInt())
+                    setItemViewWidth(holder.itemView, context.dp2px(300))
                 } else if (position % 3 == 1) {
-                    setItemViewWidth(holder.itemView, context.dp2px(100).toInt())
+                    setItemViewWidth(holder.itemView, context.dp2px(100))
                 } else {
-                    setItemViewWidth(holder.itemView, context.dp2px(200).toInt())
+                    setItemViewWidth(holder.itemView, context.dp2px(200))
                 }
             }
 
@@ -113,8 +113,8 @@ class HeadFooterAdapter(context: Context) : BaseHeaderFooterRVAdapter<String, St
     }
 
     private fun resizeHeaderAndFooter(view: View) {
-        setItemViewWidth(view, if (mOrientation == RecyclerView.VERTICAL) context.getScreenWidth() else context.dp2px(200).toInt())
-        setItemViewHeight(view, if (mOrientation == RecyclerView.VERTICAL) context.dp2px(200).toInt() else context.dp2px(200).toInt())
+        setItemViewWidth(view, if (mOrientation == RecyclerView.VERTICAL) context.getScreenWidth() else context.dp2px(200))
+        setItemViewHeight(view, if (mOrientation == RecyclerView.VERTICAL) context.dp2px(200) else context.dp2px(200))
     }
 
     private class HeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {

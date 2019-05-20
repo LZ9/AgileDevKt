@@ -391,7 +391,7 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
 
     /** 获取箭头图片，颜色[color] */
     private fun getArrowBitmap(@ColorRes color: Int): Bitmap {
-        val side = dp2px(20)
+        val side = dp2pxRF(20)
         val centerPoint = side / 2
 
         val bitmap = Bitmap.createBitmap(side.toInt(), side.toInt(), Bitmap.Config.ARGB_8888)
@@ -403,15 +403,15 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
         paint.isAntiAlias = true
         paint.style = Paint.Style.STROKE
         val path = Path()
-        path.moveTo(centerPoint, centerPoint + dp2px(3))
-        path.lineTo(centerPoint - dp2px(7), centerPoint - dp2px(3))
-        path.moveTo(centerPoint, centerPoint + dp2px(3))
-        path.lineTo(centerPoint + dp2px(7), centerPoint - dp2px(3))
+        path.moveTo(centerPoint, centerPoint + dp2pxRF(3))
+        path.lineTo(centerPoint - dp2pxRF(7), centerPoint - dp2pxRF(3))
+        path.moveTo(centerPoint, centerPoint + dp2pxRF(3))
+        path.lineTo(centerPoint + dp2pxRF(7), centerPoint - dp2pxRF(3))
         canvas.drawPath(path, paint)
 
         paint.isAntiAlias = true
         paint.style = Paint.Style.FILL
-        canvas.drawCircle(centerPoint, centerPoint + dp2px(3), 3f, paint)
+        canvas.drawCircle(centerPoint, centerPoint + dp2pxRF(3), 3f, paint)
         return bitmap
     }
 

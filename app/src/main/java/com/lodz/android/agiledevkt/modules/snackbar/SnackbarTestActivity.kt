@@ -62,7 +62,7 @@ class SnackbarTestActivity : AbsActivity() {
                     .setTextColor(Color.WHITE)
                     .setTextSize(17)
                     .setBackgroundColor(getColorCompat(R.color.color_00a0e9))
-                    .addLeftImage(R.drawable.ic_launcher, dp2px(5).toInt())
+                    .addLeftImage(R.drawable.ic_launcher, dp2px(5))
                     .getSnackbar()
                     .setActionTextColor(getColorCompat(R.color.color_ffa630))
                     .setAction(getString(R.string.snackbar_sign), { view ->
@@ -78,7 +78,7 @@ class SnackbarTestActivity : AbsActivity() {
                     .setTextColor(Color.WHITE)
                     .setTextSize(15)
                     .setBackgroundColor(getColorCompat(R.color.color_ea5e5e))
-                    .addRightImage(R.drawable.ic_launcher, dp2px(5).toInt())
+                    .addRightImage(R.drawable.ic_launcher, dp2px(5))
                     .getSnackbar()
                     .setActionTextColor(getColorCompat(R.color.color_ffa630))
                     .setAction(getString(R.string.snackbar_cancel_attention), { view ->

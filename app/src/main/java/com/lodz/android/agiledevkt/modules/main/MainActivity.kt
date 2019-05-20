@@ -161,7 +161,7 @@ class MainActivity : BaseActivity() {
         titleBarLayout.setTitleName(R.string.main_title)
         val refreshBtn = TextView(getContext())
         refreshBtn.text = getString(R.string.main_change_mood)
-        refreshBtn.setPadding(dp2px(15).toInt(), 0, dp2px(15).toInt(), 0)
+        refreshBtn.setPadding(dp2px(15), 0, dp2px(15), 0)
         refreshBtn.setTextColor(getColorCompat(R.color.white))
         refreshBtn.setOnClickListener {
             mAdapter.notifyDataSetChanged()

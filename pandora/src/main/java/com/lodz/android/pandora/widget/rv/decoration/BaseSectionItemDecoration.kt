@@ -48,18 +48,18 @@ open class BaseSectionItemDecoration(context: Context) : BaseItemDecoration(cont
         mTextPaint.textSize = getContext().sp2px(DEFAULT_TEXT_SIZE_SP)
         mTextPaint.textAlign = Paint.Align.LEFT
 
-        mSectionHeightPx = getContext().dp2px(DEFAULT_SECTION_HEIGHT_DP).toInt()
+        mSectionHeightPx = getContext().dp2px(DEFAULT_SECTION_HEIGHT_DP)
     }
 
     /** 设置分组的高度[height]（单位dp） */
     fun setSectionHeight(height: Int): BaseSectionItemDecoration {
-        mSectionHeightPx = getContext().dp2px(height).toInt()
+        mSectionHeightPx = getContext().dp2px(height)
         return this
     }
 
     /** 设置文字左侧间距[paddingLeft]（单位dp） */
     fun setSectionTextPaddingLeftDp(paddingLeft: Int): BaseSectionItemDecoration {
-        mTextPaddingLeftDp = getContext().dp2px(paddingLeft).toInt()
+        mTextPaddingLeftDp = getContext().dp2px(paddingLeft)
         return this
     }
 

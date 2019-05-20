@@ -101,7 +101,7 @@ class MenuBarTestActivity : BaseActivity() {
 //        config.setNumTextColor(getContext(), R.color.color_00a0e9)
 //        config.setNumTextSize(15f)
 //        config.setNumBackground(R.drawable.bg_ffffff_circle)
-        config.setDrawablePadding(dp2px(2).toInt())
+        config.setDrawablePadding(dp2px(2))
         return config
     }
 

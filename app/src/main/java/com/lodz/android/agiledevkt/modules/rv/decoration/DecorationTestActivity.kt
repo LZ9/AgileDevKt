@@ -161,7 +161,7 @@ class DecorationTestActivity : BaseActivity() {
     private fun getTextView(@StringRes resId: Int): TextView {
         val tv = TextView(getContext())
         tv.setText(resId)
-        tv.setPadding(dp2px(6).toInt(), 0, dp2px(6).toInt(), 0)
+        tv.setPadding(dp2px(6), 0, dp2px(6), 0)
         tv.setTextColor(getColorCompat(R.color.white))
         return tv
     }
@@ -291,7 +291,7 @@ class DecorationTestActivity : BaseActivity() {
     private fun configByType(type: Int) {
         mList = getList()
         if (type == DECORATION_TYPE_GRID) {
-            mRecyclerView.padding = dp2px(8).toInt()
+            mRecyclerView.padding = dp2px(8)
         }
         if (type == DECORATION_TYPE_SECTION_FIX || type == DECORATION_TYPE_STICKY_SECTION_FIX) {
             val list = ArrayList<String>()

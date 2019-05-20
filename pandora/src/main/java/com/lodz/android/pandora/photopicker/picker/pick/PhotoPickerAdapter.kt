@@ -11,7 +11,7 @@ import android.widget.ImageView
 import androidx.annotation.ColorRes
 import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.corekt.anko.bindView
-import com.lodz.android.corekt.anko.dp2px
+import com.lodz.android.corekt.anko.dp2pxRF
 import com.lodz.android.corekt.anko.getColorCompat
 import com.lodz.android.corekt.anko.getScreenWidth
 import com.lodz.android.pandora.R
@@ -117,7 +117,7 @@ internal class PhotoPickerAdapter(context: Context, imgLoader: OnImgLoader<Strin
         paint.strokeWidth = 4f
         paint.isAntiAlias = true
         paint.style = Paint.Style.STROKE
-        canvas.drawCircle(side / 2, side / 2, side / 2 - context.dp2px(4), paint)
+        canvas.drawCircle(side / 2, side / 2, side / 2 - context.dp2pxRF(4), paint)
         return bitmap
     }
 
@@ -133,11 +133,11 @@ internal class PhotoPickerAdapter(context: Context, imgLoader: OnImgLoader<Strin
         paint.strokeWidth = 4f
         paint.isAntiAlias = true
         paint.style = Paint.Style.STROKE
-        canvas.drawCircle(side / 2, side / 2, side / 2 - context.dp2px(4), paint)
+        canvas.drawCircle(side / 2, side / 2, side / 2 - context.dp2pxRF(4), paint)
 
         paint.isAntiAlias = true
         paint.style = Paint.Style.FILL
-        canvas.drawCircle(side / 2, side / 2, side / 2 - context.dp2px(10), paint)
+        canvas.drawCircle(side / 2, side / 2, side / 2 - context.dp2pxRF(10), paint)
         return bitmap
     }
 

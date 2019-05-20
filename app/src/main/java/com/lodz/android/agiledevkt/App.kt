@@ -95,8 +95,8 @@ class App : BaseApplication() {
 //        getBaseLayoutConfig().getLoadingLayoutConfig().backgroundColor = R.color.color_ff4081
         getBaseLayoutConfig().getLoadingLayoutConfig().isIndeterminate = true
 //        getBaseLayoutConfig().getLoadingLayoutConfig().indeterminateDrawable = R.drawable.anims_custom_progress
-//        getBaseLayoutConfig().getLoadingLayoutConfig().pbWidthPx = dp2px(70).toInt()
-//        getBaseLayoutConfig().getLoadingLayoutConfig().pbHeightPx = dp2px(70).toInt()
+//        getBaseLayoutConfig().getLoadingLayoutConfig().pbWidthPx = dp2px(70)
+//        getBaseLayoutConfig().getLoadingLayoutConfig().pbHeightPx = dp2px(70)
     }
 
     private fun configErrorLayout() {

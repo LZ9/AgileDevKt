@@ -102,7 +102,7 @@ open class TitleBarLayout : LinearLayout {
         val backTextSize: Int = typedArray?.getDimensionPixelSize(R.styleable.TitleBarLayout_backTextSize, 0)
                 ?: 0
         if (backTextSize != 0) {
-            setBackBtnTextSize(px2sp(backTextSize))
+            setBackBtnTextSize(px2spRF(backTextSize))
         } else if (mConfig.backBtnTextSize != 0) {
             setBackBtnTextSize(mConfig.backBtnTextSize.toFloat())
         }
@@ -125,7 +125,7 @@ open class TitleBarLayout : LinearLayout {
         val titleTextSize: Int = typedArray?.getDimensionPixelSize(R.styleable.TitleBarLayout_titleTextSize, 0)
                 ?: 0
         if (titleTextSize != 0) {
-            setTitleTextSize(px2sp(titleTextSize))
+            setTitleTextSize(px2spRF(titleTextSize))
         } else if (mConfig.titleTextSize != 0) {
             setTitleTextSize(mConfig.titleTextSize.toFloat())
         }
@@ -147,7 +147,7 @@ open class TitleBarLayout : LinearLayout {
         val divideLineHeight: Int = typedArray?.getDimensionPixelSize(R.styleable.TitleBarLayout_divideLineHeight, 0)
                 ?: 0
         if (divideLineHeight > 0) {
-            setDivideLineHeight(px2dp(divideLineHeight).toInt())
+            setDivideLineHeight(px2dp(divideLineHeight))
         } else if (mConfig.divideLineHeightDp > 0) {
             setDivideLineHeight(mConfig.divideLineHeightDp)
         }
@@ -326,7 +326,7 @@ open class TitleBarLayout : LinearLayout {
     /** 设置分割线高度[dp] */
     fun setDivideLineHeight(dp: Int) {
         val layoutParams = mDivideLineView.layoutParams
-        layoutParams.height = dp2px(dp).toInt()
+        layoutParams.height = dp2px(dp)
         mDivideLineView.layoutParams = layoutParams
     }
 }

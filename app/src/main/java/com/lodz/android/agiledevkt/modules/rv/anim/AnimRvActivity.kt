@@ -113,7 +113,7 @@ class AnimRvActivity : BaseActivity() {
     private fun getTextView(@StringRes resId: Int): TextView {
         val tv = TextView(getContext())
         tv.setText(resId)
-        tv.setPadding(dp2px(6).toInt(), 0, dp2px(6).toInt(), 0)
+        tv.setPadding(dp2px(6), 0, dp2px(6), 0)
         tv.textColor = Color.WHITE
         return tv
     }

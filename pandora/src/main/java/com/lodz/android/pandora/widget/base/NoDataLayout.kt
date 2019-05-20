@@ -15,7 +15,7 @@ import android.widget.TextView
 import androidx.annotation.*
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.getColorCompat
-import com.lodz.android.corekt.anko.px2sp
+import com.lodz.android.corekt.anko.px2spRF
 import com.lodz.android.pandora.R
 import com.lodz.android.pandora.base.application.BaseApplication
 import com.lodz.android.pandora.base.application.config.BaseLayoutConfig
@@ -111,7 +111,7 @@ class NoDataLayout : LinearLayout {
         val tipsSize: Int = typedArray?.getDimensionPixelSize(R.styleable.NoDataLayout_tipsSize, 0)
                 ?: 0
         if (tipsSize != 0) {
-            setTipsTextSize(px2sp(tipsSize))
+            setTipsTextSize(px2spRF(tipsSize))
         } else if (mConfig.textSize != 0) {
             setTipsTextSize(mConfig.textSize.toFloat())
         }

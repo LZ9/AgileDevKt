@@ -40,7 +40,7 @@ class GridItemDecoration private constructor(context: Context) : BaseItemDecorat
 
     /** 设置分割线间距[space]（单位dp） */
     fun setDividerSpace(@IntRange(from = 1) space: Int): GridItemDecoration {
-        mPx = getContext().dp2px(space).toInt()
+        mPx = getContext().dp2px(space)
         return this
     }
 

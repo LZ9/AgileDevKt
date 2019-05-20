@@ -59,27 +59,27 @@ class DragRvAdapter(context: Context) : BaseRecyclerViewAdapter<String>(context)
     private fun showItem(holder: DragViewHolder, data: String) {
         if (mLayoutManagerType == LayoutManagerPopupWindow.TYPE_LINEAR) {
             setItemViewWidth(holder.itemView, if (mOrientation == RecyclerView.VERTICAL) context.getScreenWidth() else ViewGroup.LayoutParams.WRAP_CONTENT)
-            setItemViewHeight(holder.itemView, if (mOrientation == RecyclerView.VERTICAL) ViewGroup.LayoutParams.WRAP_CONTENT else context.dp2px(200).toInt())
+            setItemViewHeight(holder.itemView, if (mOrientation == RecyclerView.VERTICAL) ViewGroup.LayoutParams.WRAP_CONTENT else context.dp2px(200))
         }
         if (mLayoutManagerType == LayoutManagerPopupWindow.TYPE_GRID) {
             setItemViewWidth(holder.itemView, if (mOrientation == RecyclerView.VERTICAL) context.getScreenWidth() / 3 else ViewGroup.LayoutParams.WRAP_CONTENT)
-            setItemViewHeight(holder.itemView, if (mOrientation == RecyclerView.VERTICAL) ViewGroup.LayoutParams.WRAP_CONTENT else context.dp2px(200).toInt() / 3)
+            setItemViewHeight(holder.itemView, if (mOrientation == RecyclerView.VERTICAL) ViewGroup.LayoutParams.WRAP_CONTENT else context.dp2px(200) / 3)
         }
         if (mLayoutManagerType == LayoutManagerPopupWindow.TYPE_STAGGERED) {
             val position = data.toInt()
             if (mOrientation == RecyclerView.VERTICAL) {
                 setItemViewWidth(holder.itemView, context.getScreenWidth() / 2)
                 if (position % 2 == 0) {
-                    setItemViewHeight(holder.itemView, context.dp2px(300).toInt())
+                    setItemViewHeight(holder.itemView, context.dp2px(300))
                 } else {
-                    setItemViewHeight(holder.itemView, context.dp2px(200).toInt())
+                    setItemViewHeight(holder.itemView, context.dp2px(200))
                 }
             } else {
-                setItemViewHeight(holder.itemView, context.dp2px(200).toInt() / 2)
+                setItemViewHeight(holder.itemView, context.dp2px(200) / 2)
                 if (position % 2 == 0) {
-                    setItemViewWidth(holder.itemView, context.dp2px(300).toInt())
+                    setItemViewWidth(holder.itemView, context.dp2px(300))
                 } else {
-                    setItemViewWidth(holder.itemView, context.dp2px(200).toInt())
+                    setItemViewWidth(holder.itemView, context.dp2px(200))
                 }
             }
         }

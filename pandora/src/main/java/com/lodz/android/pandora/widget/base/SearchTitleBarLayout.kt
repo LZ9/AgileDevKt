@@ -118,7 +118,7 @@ class SearchTitleBarLayout : FrameLayout {
         val backTextSize: Int = typedArray?.getDimensionPixelSize(R.styleable.SearchTitleBarLayout_backTextSize, 0)
                 ?: 0
         if (backTextSize != 0) {
-            setBackBtnTextSize(px2sp(backTextSize))
+            setBackBtnTextSize(px2spRF(backTextSize))
         } else if (mConfig.backBtnTextSize != 0) {
             setBackBtnTextSize(mConfig.backBtnTextSize.toFloat())
         }
@@ -140,7 +140,7 @@ class SearchTitleBarLayout : FrameLayout {
         val divideLineHeight: Int = typedArray?.getDimensionPixelSize(R.styleable.SearchTitleBarLayout_divideLineHeight, 0)
                 ?: 0
         if (divideLineHeight > 0) {
-            setDivideLineHeight(px2dp(divideLineHeight).toInt())
+            setDivideLineHeight(px2dp(divideLineHeight))
         } else if (mConfig.divideLineHeightDp > 0) {
             setDivideLineHeight(mConfig.divideLineHeightDp)
         }
@@ -218,7 +218,7 @@ class SearchTitleBarLayout : FrameLayout {
         val inputTextSize: Int = typedArray?.getDimensionPixelSize(R.styleable.SearchTitleBarLayout_inputTextSize, 0)
                 ?: 0
         if (inputTextSize != 0) {
-            setInputTextSize(px2sp(inputTextSize))
+            setInputTextSize(px2spRF(inputTextSize))
         }
 
         // 是否显示竖线
@@ -343,7 +343,7 @@ class SearchTitleBarLayout : FrameLayout {
     /** 设置分割线高度[dp] */
     fun setDivideLineHeight(dp: Int) {
         val layoutParams = mDivideLineView.layoutParams
-        layoutParams.height = dp2px(dp).toInt()
+        layoutParams.height = dp2px(dp)
         mDivideLineView.layoutParams = layoutParams
     }
 

@@ -35,7 +35,7 @@ class ImgBottomSheetDialog(context: Context) : BaseBottomSheetDialog(context) {
     override fun onBehaviorInit(behavior: BottomSheetBehavior<*>) {
         mBehavior = behavior
 
-        behavior.peekHeight = context.dp2px(200).toInt()
+        behavior.peekHeight = context.dp2px(200)
         behavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 if (!isUserDismiss) {

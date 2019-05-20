@@ -71,7 +71,7 @@ class IndexBar : LinearLayout {
 
         mTextColorStateList = typedArray?.getColorStateList(R.styleable.IndexBar_indexTextColor)
         if (typedArray != null) {
-            mTextSizeSp = px2sp(typedArray.getDimensionPixelSize(R.styleable.IndexBar_indexTextSize, 13)).toInt()
+            mTextSizeSp = px2sp(typedArray.getDimensionPixelSize(R.styleable.IndexBar_indexTextSize, 13))
             isTextBold = typedArray.getBoolean(R.styleable.IndexBar_isTextBold, true)
         }
         mPressBgDrawable = typedArray?.getDrawable(R.styleable.IndexBar_pressBackgroundColor)

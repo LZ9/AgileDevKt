@@ -52,20 +52,20 @@ class LoadMoreRvAdapter(context: Context) : SimpleLoadMoreRVAdapter<String>(cont
     private fun showItem(holder: DataViewHolder, data: String, position: Int) {
         if (mManagerType == LayoutManagerPopupWindow.TYPE_LINEAR) {
             setItemViewWidth(holder.itemView, context.getScreenWidth())
-            setItemViewHeight(holder.itemView, context.dp2px(100).toInt())
+            setItemViewHeight(holder.itemView, context.dp2px(100))
         }
         if (mManagerType == LayoutManagerPopupWindow.TYPE_GRID) {
             setItemViewWidth(holder.itemView, context.getScreenWidth() / 3)
-            setItemViewHeight(holder.itemView, context.dp2px(100).toInt())
+            setItemViewHeight(holder.itemView, context.dp2px(100))
         }
         if (mManagerType == LayoutManagerPopupWindow.TYPE_STAGGERED) {
             setItemViewWidth(holder.itemView, context.getScreenWidth() / 3)
             if (position % 3 == 0) {
-                setItemViewHeight(holder.itemView, context.dp2px(300).toInt())
+                setItemViewHeight(holder.itemView, context.dp2px(300))
             } else if (position % 3 == 1) {
-                setItemViewHeight(holder.itemView, context.dp2px(100).toInt())
+                setItemViewHeight(holder.itemView, context.dp2px(100))
             } else {
-                setItemViewHeight(holder.itemView, context.dp2px(200).toInt())
+                setItemViewHeight(holder.itemView, context.dp2px(200))
             }
         }
         holder.dataTv.text = data

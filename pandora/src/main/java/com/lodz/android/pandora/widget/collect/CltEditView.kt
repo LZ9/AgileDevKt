@@ -25,7 +25,7 @@ import android.widget.TextView
 import androidx.annotation.*
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.getColorCompat
-import com.lodz.android.corekt.anko.px2sp
+import com.lodz.android.corekt.anko.px2spRF
 import com.lodz.android.pandora.R
 
 /**
@@ -134,7 +134,7 @@ class CltEditView : FrameLayout {
         val titleTextSize: Int = typedArray?.getDimensionPixelSize(R.styleable.CltEditView_titleTextSize, 0)
                 ?: 0
         if (titleTextSize > 0) {
-            setTitleTextSize(px2sp(titleTextSize))
+            setTitleTextSize(px2spRF(titleTextSize))
         }
         // 设置标题控件宽度
         val titleWidth: Int = typedArray?.getDimensionPixelSize(R.styleable.CltEditView_titleWidth, 0)
@@ -161,7 +161,7 @@ class CltEditView : FrameLayout {
         val contentTextSize: Int = typedArray?.getDimensionPixelSize(R.styleable.CltEditView_contentTextSize, 0)
                 ?: 0
         if (contentTextSize > 0) {
-            setContentTextSize(px2sp(contentTextSize))
+            setContentTextSize(px2spRF(contentTextSize))
         }
         // 设置内容提示语
         val contentHint: String? = typedArray?.getString(R.styleable.CltEditView_contentHint)
@@ -231,7 +231,7 @@ class CltEditView : FrameLayout {
         val unitTextSize: Int = typedArray?.getDimensionPixelSize(R.styleable.CltEditView_unitTextSize, 0)
                 ?: 0
         if (unitTextSize > 0) {
-            setUnitTextSize(px2sp(unitTextSize))
+            setUnitTextSize(px2spRF(unitTextSize))
         }
         // 设置跳转按钮文字
         val jumpText: String? = typedArray?.getString(R.styleable.CltEditView_jumpText)
@@ -250,7 +250,7 @@ class CltEditView : FrameLayout {
         val jumpTextSize: Int = typedArray?.getDimensionPixelSize(R.styleable.CltEditView_jumpTextSize, 0)
                 ?: 0
         if (jumpTextSize > 0) {
-            setJumpBtnTextSize(px2sp(jumpTextSize))
+            setJumpBtnTextSize(px2spRF(jumpTextSize))
         }
         // 设置内容右侧图标
         val jumpBackground: Drawable? = typedArray?.getDrawable(R.styleable.CltEditView_jumpBackground)

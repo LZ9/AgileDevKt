@@ -87,7 +87,7 @@ class CoorStatusBarTestActivity : AbsActivity() {
         mFloatingActionBtn.setOnClickListener {
             SnackbarUtils.createShort(mRecyclerView, getString(R.string.snackbar_sign_title))
                     .setTextColor(Color.WHITE)
-                    .addLeftImage(R.drawable.ic_launcher, dp2px(5).toInt())
+                    .addLeftImage(R.drawable.ic_launcher, dp2px(5))
                     .getSnackbar()
                     .setActionTextColor(getColorCompat(R.color.color_ea5e5e))
                     .setAction(getString(R.string.snackbar_sign), { view ->
