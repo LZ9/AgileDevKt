@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.lodz.android.pandora.widget.collect.CltEditView
+        android:id="@+id/px_cedit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        app:contentHintColor="@color/color_999999"
+        app:contentTextColor="@color/color_00a0e9"
+        app:inputType="numberDecimal"
+        app:jumpBackground="@drawable/selector_bg_jump"
+        app:jumpText="@string/dimensions_transform"
+        app:requiredVisibility="gone"
+        app:titleText="@string/dimensions_px_title"
+        app:titleTextColor="@color/color_00a0e9">
+
+    </com.lodz.android.pandora.widget.collect.CltEditView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_00a0e9" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.lodz.android.pandora.widget.collect.CltTextView
+            android:id="@+id/px_dp_ctv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="5dp"
+            app:requiredVisibility="gone"
+            app:titleText="@string/dimensions_px_to_dp"
+            app:titleTextColor="@color/color_00a0e9">
+
+        </com.lodz.android.pandora.widget.collect.CltTextView>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/color_00a0e9" />
+
+        <com.lodz.android.pandora.widget.collect.CltTextView
+            android:id="@+id/px_sp_ctv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="5dp"
+            app:requiredVisibility="gone"
+            app:titleText="@string/dimensions_px_to_sp"
+            app:titleTextColor="@color/color_00a0e9">
+
+        </com.lodz.android.pandora.widget.collect.CltTextView>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_00a0e9" />
+
+    <com.lodz.android.pandora.widget.collect.CltEditView
+        android:id="@+id/dp_cedit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        app:contentHintColor="@color/color_999999"
+        app:contentTextColor="@color/color_00a0e9"
+        app:inputType="numberDecimal"
+        app:jumpBackground="@drawable/selector_bg_jump"
+        app:jumpText="@string/dimensions_transform"
+        app:requiredVisibility="gone"
+        app:titleText="@string/dimensions_dp_title"
+        app:titleTextColor="@color/color_00a0e9">
+
+    </com.lodz.android.pandora.widget.collect.CltEditView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_00a0e9" />
+
+    <com.lodz.android.pandora.widget.collect.CltTextView
+        android:id="@+id/dp_px_ctv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        app:requiredVisibility="gone"
+        app:titleText="@string/dimensions_dp_to_px"
+        app:titleTextColor="@color/color_00a0e9">
+
+    </com.lodz.android.pandora.widget.collect.CltTextView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_00a0e9" />
+
+    <com.lodz.android.pandora.widget.collect.CltEditView
+        android:id="@+id/sp_cedit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        app:contentHintColor="@color/color_999999"
+        app:contentTextColor="@color/color_00a0e9"
+        app:inputType="numberDecimal"
+        app:jumpBackground="@drawable/selector_bg_jump"
+        app:jumpText="@string/dimensions_transform"
+        app:requiredVisibility="gone"
+        app:titleText="@string/dimensions_sp_title"
+        app:titleTextColor="@color/color_00a0e9">
+
+    </com.lodz.android.pandora.widget.collect.CltEditView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_00a0e9" />
+
+    <com.lodz.android.pandora.widget.collect.CltTextView
+        android:id="@+id/sp_px_ctv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        app:requiredVisibility="gone"
+        app:titleText="@string/dimensions_sp_to_px"
+        app:titleTextColor="@color/color_00a0e9">
+
+    </com.lodz.android.pandora.widget.collect.CltTextView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_00a0e9" />
+
+</LinearLayout>

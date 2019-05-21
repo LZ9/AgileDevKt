@@ -645,4 +645,14 @@
     <string name="coroutines_async">协程异步</string>
     <string name="coroutines_type_none_tips">您尚未选择协程执行类型</string>
 
+    <!-- 单位转换测试 -->
+    <string name="dimensions_transform">转换</string>
+    <string name="dimensions_px_title">px值：</string>
+    <string name="dimensions_px_to_dp">px转dp：</string>
+    <string name="dimensions_px_to_sp">px转sp：</string>
+    <string name="dimensions_dp_title">dp值：</string>
+    <string name="dimensions_dp_to_px">dp转px：</string>
+    <string name="dimensions_sp_title">sp值：</string>
+    <string name="dimensions_sp_to_px">sp转px：</string>
+
 </resources>

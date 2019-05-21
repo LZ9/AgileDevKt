@@ -26,6 +26,7 @@ import com.lodz.android.agiledevkt.modules.crash.CrashTestActivity
 import com.lodz.android.agiledevkt.modules.date.DateActivity
 import com.lodz.android.agiledevkt.modules.dialog.DialogActivity
 import com.lodz.android.agiledevkt.modules.dialogfragment.DialogFragmentActivity
+import com.lodz.android.agiledevkt.modules.dimensions.DimensionsActivity
 import com.lodz.android.agiledevkt.modules.drawer.DrawerTestActivity
 import com.lodz.android.agiledevkt.modules.file.FileTestActivity
 import com.lodz.android.agiledevkt.modules.format.NumFormatTestActivity
@@ -136,7 +137,8 @@ class MainActivity : BaseActivity() {
             MainBean("采集测试页", "C", CollectActivity::class.java),
             MainBean("接口测试类", "J", ApiTestActivity::class.java),
             MainBean("日期测试类", "R", DateActivity::class.java),
-            MainBean("协程测试类", "X", CoroutinesActivity::class.java)
+            MainBean("协程测试类", "X", CoroutinesActivity::class.java),
+            MainBean("单位转换测试类", "D", DimensionsActivity::class.java)
     )
 
     /** 列表 */
