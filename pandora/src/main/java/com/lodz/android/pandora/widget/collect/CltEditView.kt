@@ -18,6 +18,7 @@ import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.ImageView
@@ -58,8 +59,12 @@ class CltEditView : FrameLayout {
     private val mRequiredImg by bindView<ImageView>(R.id.required_img)
     /** 标题控件  */
     private val mTitleTv by bindView<TextView>(R.id.title_tv)
+    /** 内容布局  */
+    private val mContentLayout by bindView<ViewGroup>(R.id.content_layout)
     /** 内容输入框  */
     private val mContentEdit by bindView<EditText>(R.id.content_edit)
+    /** 限制文字控件  */
+    private val mLimitTv by bindView<TextView>(R.id.limit_tv)
     /** 单位控件  */
     private val mUnitTv by bindView<TextView>(R.id.unit_tv)
     /** 跳转按钮  */
@@ -72,6 +77,10 @@ class CltEditView : FrameLayout {
     private var mTextWatcher: TextWatcher? = null
     /** 内容标记  */
     private var mContentTag = ""
+    /** 最大输入字数  */
+    private var mMaxCount = 0
+    /** 文字限制监听器  */
+    private var mLimitListener: ((s: CharSequence?, start: Int, before: Int, count: Int, max: Int) -> Unit)? = null
 
     constructor(context: Context) : super(context) {
         init(null)
@@ -201,17 +210,17 @@ class CltEditView : FrameLayout {
         }
         // 设置内容文字位置
         val gravity = typedArray?.getInt(R.styleable.CltEditView_contentGravity, 0) ?: 0
-        if (gravity == 1){
+        if (gravity == 1) {
             setContentGravity(Gravity.CENTER)
-        }else if (gravity == 2){
+        } else if (gravity == 2) {
             setContentGravity(Gravity.START)
-        }else if (gravity == 3){
-            setContentGravity(Gravity.END )
-        }else if (gravity == 4){
+        } else if (gravity == 3) {
+            setContentGravity(Gravity.END)
+        } else if (gravity == 4) {
             setContentGravity(Gravity.START or Gravity.CENTER_VERTICAL)
-        }else if (gravity == 5){
+        } else if (gravity == 5) {
             setContentGravity(Gravity.END or Gravity.CENTER_VERTICAL)
-        }else{
+        } else {
             setContentGravity(Gravity.CENTER_VERTICAL)
         }
         // 设置单位文字
@@ -264,18 +273,32 @@ class CltEditView : FrameLayout {
                 ?: TYPE_TEXT)
         // 设置文本最大长度
         val max: Int = typedArray?.getInt(R.styleable.CltEditView_maxLength, -1) ?: -1
-        if (max >= 0){
+        if (max >= 0) {
             setMaxLength(max)
         }
         // 最小行数
         val minLines: Int = typedArray?.getInt(R.styleable.CltEditView_minLines, 0) ?: 0
-        if (minLines > 0){
+        if (minLines > 0) {
             setMinLines(minLines)
         }
         // 最大行数
         val maxLines: Int = typedArray?.getInt(R.styleable.CltEditView_maxLines, 0) ?: 0
-        if (maxLines > 1){
+        if (maxLines > 1) {
             setMaxLines(maxLines)
+        }
+        // 设置限制文字是否显示
+        val limitVisibility = typedArray?.getInt(R.styleable.CltEditView_limitVisibility, 2) ?: 2
+        if (limitVisibility == 1) {
+            setLimitVisibility(View.INVISIBLE)
+        } else if (limitVisibility == 2) {
+            setLimitVisibility(View.GONE)
+        } else {
+            if (mMaxCount <= 0) {
+                mMaxCount = 100
+                setMaxLength(mMaxCount)
+            }
+            setLimitVisibility(View.VISIBLE)
+            updateLimitText(mContentEdit.text.length)
         }
 
         if (typedArray != null) {
@@ -304,6 +327,14 @@ class CltEditView : FrameLayout {
                         mContentEdit.setSelection(str.length)
                     }
                 }
+                if (mMaxCount > 0) {
+                    // 限制输入字数
+                    val length = mContentEdit.text.length
+                    if (length == mMaxCount && start != 0) {
+                        mLimitListener?.invoke(s, start, before, count, mMaxCount)
+                    }
+                    updateLimitText(length)
+                }
                 mTextWatcher?.onTextChanged(s, start, before, count)
             }
 
@@ -312,6 +343,11 @@ class CltEditView : FrameLayout {
             }
         })
 
+    }
+
+    /** 更新限制文字 */
+    private fun updateLimitText(count: Int) {
+        mLimitTv.text = StringBuilder().append(count).append("/").append(mMaxCount)
     }
 
     /** 设置必填图片资源[resId] */
@@ -496,17 +532,17 @@ class CltEditView : FrameLayout {
 
     /** 设置内容背景[drawable] */
     fun setContentBackground(drawable: Drawable) {
-        mContentEdit.background = drawable
+        mContentLayout.background = drawable
     }
 
     /** 设置内容背景[color] */
     fun setContentBackground(@ColorInt color: Int) {
-        mContentEdit.setBackgroundColor(color)
+        mContentLayout.setBackgroundColor(color)
     }
 
     /** 设置内容背景[resId] */
     fun setContentBackgroundRes(@DrawableRes resId: Int) {
-        mContentEdit.setBackgroundResource(resId)
+        mContentLayout.setBackgroundResource(resId)
     }
 
     /** 设置内容文字位置 */
@@ -663,6 +699,7 @@ class CltEditView : FrameLayout {
 
     /** 设置文本最大长度[max] */
     fun setMaxLength(max: Int) {
+        mMaxCount = max
         mContentEdit.filters = arrayOf(InputFilter.LengthFilter(max))
     }
 
@@ -674,6 +711,16 @@ class CltEditView : FrameLayout {
     /** 最大行数[lines] */
     fun setMaxLines(lines: Int) {
         mContentEdit.maxLines = lines
+    }
+
+    /** 设置限制文字显隐[visibility] */
+    fun setLimitVisibility(visibility: Int) {
+        mLimitTv.visibility = visibility
+    }
+
+    /** 设置文字限制监听器[listener] */
+    fun setOnInputTextLimit(listener: (s: CharSequence?, start: Int, before: Int, count: Int, max: Int) -> Unit) {
+        mLimitListener = listener
     }
 
     /** 所有字符转大写 */

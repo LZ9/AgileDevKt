@@ -8,6 +8,7 @@ import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.pandora.base.activity.BaseActivity
+import com.lodz.android.pandora.widget.collect.CltEditView
 import com.lodz.android.pandora.widget.collect.CltTextView
 import kotlin.random.Random
 
@@ -31,6 +32,9 @@ class CollectActivity : BaseActivity() {
     private val mSexCltv by bindView<CltTextView>(R.id.sex_cltv)
     /** 年龄 */
     private val mAgeCltv by bindView<CltTextView>(R.id.age_cltv)
+    /** 兴趣 */
+    private val mHobbyCedit by bindView<CltEditView>(R.id.hobby_cedit)
+
 
     override fun getLayoutId(): Int = R.layout.activity_collect
 
@@ -66,6 +70,10 @@ class CollectActivity : BaseActivity() {
 
         mAgeCltv.setOnContentClickListener {
             mAgeCltv.setContentText((Random.nextInt(50) + 1).toString())
+        }
+
+        mHobbyCedit.setOnInputTextLimit { s, start, before, count, max ->
+            toastShort("只能输入${max}字")
         }
     }
 

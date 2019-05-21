@@ -60,6 +60,7 @@
     </com.lodz.android.pandora.widget.collect.CltTextView>
 
     <com.lodz.android.pandora.widget.collect.CltEditView
+        android:id="@+id/hobby_cedit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="10dp"
@@ -68,7 +69,8 @@
         app:contentHintColor="@color/color_999999"
         app:contentTextColor="@color/color_00a0e9"
         app:jumpText="@string/app_img_name"
-        app:minLines="3"
+        app:maxLength="50"
+        app:limitVisibility="visible"
         app:titleText="@string/clt_hobby"
         app:unitText="@string/app_img_name">
 
