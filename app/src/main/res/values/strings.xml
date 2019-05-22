@@ -594,6 +594,7 @@
     <!-- 采集测试 -->
     <string name="clt_title">采集测试页</string>
     <string name="clt_name">姓名：</string>
+    <string name="clt_name_tips">请选择姓名</string>
     <string name="clt_name_jump">选择</string>
     <string name="clt_sex">性别：</string>
     <string name="clt_sex_hint">请选择性别</string>
@@ -602,6 +603,7 @@
     <string name="clt_age">年龄：</string>
     <string name="clt_age_unit">岁</string>
     <string name="clt_hobby">兴趣：</string>
+    <string name="clt_hobby_tips">请填写兴趣</string>
     <string name="clt_remark">备注：</string>
     <string name="clt_submit">提交</string>
     <string name="clt_confirm">确定</string>
@@ -609,6 +611,7 @@
     <string name="clt_name_title">姓名</string>
     <string name="clt_sex_title">性别</string>
     <string name="clt_birth_title">出生年月</string>
+    <string name="clt_success">采集成功</string>
 
     <!-- 接口测试 -->
     <string name="api_loading">正在获取</string>

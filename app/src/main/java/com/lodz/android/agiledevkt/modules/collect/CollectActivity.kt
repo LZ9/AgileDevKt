@@ -12,6 +12,7 @@ import com.bigkoo.pickerview.listener.OnTimeSelectListener
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.corekt.anko.bindView
+import com.lodz.android.corekt.anko.runOnMainDelay
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.corekt.utils.DateUtils
 import com.lodz.android.pandora.base.activity.BaseActivity
@@ -130,6 +131,29 @@ class CollectActivity : BaseActivity() {
 
         mRemarkCedit.setOnInputTextLimit { s, start, before, count, max ->
             toastShort("只能输入${max}字")
+        }
+
+        mSubmitBtn.setOnClickListener {
+            if (mNameCltv.getContentText().isEmpty()) {
+                toastShort(R.string.clt_name_tips)
+                return@setOnClickListener
+            }
+            if (mSexCltv.getContentText().isEmpty()) {
+                toastShort(R.string.clt_sex_hint)
+                return@setOnClickListener
+            }
+            if (mBirthCltv.getContentText().isEmpty()) {
+                toastShort(R.string.clt_birth_hint)
+                return@setOnClickListener
+            }
+            if (mHobbyCedit.getContentText().isEmpty()) {
+                toastShort(R.string.clt_hobby_tips)
+                return@setOnClickListener
+            }
+            toastShort(R.string.clt_success)
+            runOnMainDelay(500) {
+                finish()
+            }
         }
     }
 

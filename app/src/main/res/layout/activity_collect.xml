@@ -96,6 +96,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
+                app:contentHint="@string/clt_hobby_tips"
                 app:contentTextColor="@color/color_333333"
                 app:requiredVisibility="visible"
                 app:titleText="@string/clt_hobby"
