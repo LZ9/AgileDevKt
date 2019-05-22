@@ -19,7 +19,6 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
@@ -28,6 +27,7 @@ import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.getColorCompat
 import com.lodz.android.corekt.anko.px2spRF
 import com.lodz.android.pandora.R
+import com.lodz.android.pandora.widget.custom.ScrollEditText
 
 /**
  * 采集EditText
@@ -62,7 +62,7 @@ class CltEditView : FrameLayout {
     /** 内容布局  */
     private val mContentLayout by bindView<ViewGroup>(R.id.content_layout)
     /** 内容输入框  */
-    private val mContentEdit by bindView<EditText>(R.id.content_edit)
+    private val mContentEdit by bindView<ScrollEditText>(R.id.content_edit)
     /** 限制文字控件  */
     private val mLimitTv by bindView<TextView>(R.id.limit_tv)
     /** 单位控件  */
