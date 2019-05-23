@@ -120,9 +120,9 @@ class ToastUtils private constructor(val mContext: Context) {
         if (AppUtils.isMainThread()) {//主线程直接显示
             assembleShowToast()
         }
-        UiHandler.post(Runnable {
+        UiHandler.post {
             assembleShowToast()//非主线程post到主线程显示
-        })
+        }
     }
 
     /** 组装并显示Toast */

@@ -97,25 +97,25 @@ abstract class ProgressSingleObserver<T> : RxSingleObserver<T>() {
 
     /** 显示加载框 */
     private fun showProgress() {
-        UiHandler.post(Runnable {
+        UiHandler.post {
             try {
                 mProgressDialog?.show()
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-        })
+        }
     }
 
     /** 关闭加载框 */
     private fun dismissProgress() {
-        UiHandler.post(Runnable {
+        UiHandler.post {
             try {
                 mProgressDialog?.dismiss()
                 mProgressDialog = null
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-        })
+        }
     }
 
     override fun onErrorEnd() {// 抛异常关闭

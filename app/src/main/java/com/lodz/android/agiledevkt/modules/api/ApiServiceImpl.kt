@@ -30,20 +30,20 @@ object ApiServiceImpl : ApiService {
     override fun login(account: String, password: String): Observable<ResponseBean<String>> =
             Observable.create(object : RxObservableOnSubscribe<ResponseBean<String>>() {
                 override fun subscribe(emitter: ObservableEmitter<ResponseBean<String>>) {
-                    UiHandler.postDelayed(Runnable {
+                    UiHandler.postDelayed(2000){
                         val responseBean = ResponseBean.createSuccess<String>()
                         responseBean.msg = "success"
                         responseBean.data = "{\"id\":\"1\",\"loginName\":\"admin\"}"
                         doNext(emitter, responseBean)
                         doComplete(emitter)
-                    }, 2000)
+                    }
                 }
             })
 
     override fun postSpot(id: Int): Observable<ResponseBean<SpotBean>> =
             Observable.create(object : RxObservableOnSubscribe<ResponseBean<SpotBean>>(id) {
                 override fun subscribe(emitter: ObservableEmitter<ResponseBean<SpotBean>>) {
-                    UiHandler.postDelayed(Runnable {
+                    UiHandler.postDelayed(2000){
                         try {
                             if (id == NETWORK_FAIL) {
                                 throw SocketTimeoutException()
@@ -53,7 +53,7 @@ object ApiServiceImpl : ApiService {
                                 responseBean.msg = "fail"
                                 doNext(emitter, responseBean)
                                 doComplete(emitter)
-                                return@Runnable
+                                return@postDelayed
                             }
                             val responseBean = ResponseBean.createSuccess<SpotBean>()
                             responseBean.msg = "success"
@@ -67,14 +67,14 @@ object ApiServiceImpl : ApiService {
                             e.printStackTrace()
                             doError(emitter, e)
                         }
-                    }, 2000)
+                    }
                 }
             })
 
     override fun getSpot(id: Int): Observable<ResponseBean<SpotBean>> =
             Observable.create(object : RxObservableOnSubscribe<ResponseBean<SpotBean>>(id) {
                 override fun subscribe(emitter: ObservableEmitter<ResponseBean<SpotBean>>) {
-                    UiHandler.postDelayed(Runnable {
+                    UiHandler.postDelayed(2000){
                         try {
                             if (id == NETWORK_FAIL) {
                                 throw SocketTimeoutException()
@@ -84,7 +84,7 @@ object ApiServiceImpl : ApiService {
                                 responseBean.msg = "fail"
                                 doNext(emitter, responseBean)
                                 doComplete(emitter)
-                                return@Runnable
+                                return@postDelayed
                             }
                             val responseBean = ResponseBean.createSuccess<SpotBean>()
                             responseBean.msg = "success"
@@ -98,14 +98,14 @@ object ApiServiceImpl : ApiService {
                             e.printStackTrace()
                             doError(emitter, e)
                         }
-                    }, 2000)
+                    }
                 }
             })
 
     override fun querySpot(requestBody: RequestBody): Observable<ResponseBean<List<SpotBean>>> =
             Observable.create(object : RxObservableOnSubscribe<ResponseBean<List<SpotBean>>>(requestBody) {
                 override fun subscribe(emitter: ObservableEmitter<ResponseBean<List<SpotBean>>>) {
-                    UiHandler.postDelayed(Runnable {
+                    UiHandler.postDelayed(2000){
                         try {
                             val json = "{\"code\":200,\"msg\":\"success\",\"data\":[]}"
                             val responseBean = JSON.parseObject(json, object : TypeReference<ResponseBean<List<SpotBean>>>() {})
@@ -121,7 +121,7 @@ object ApiServiceImpl : ApiService {
                             e.printStackTrace()
                             doError(emitter, e)
                         }
-                    }, 2000)
+                    }
                 }
             })
 

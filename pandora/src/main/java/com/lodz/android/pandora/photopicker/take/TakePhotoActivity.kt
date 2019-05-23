@@ -12,7 +12,10 @@ import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.getColorCompat
 import com.lodz.android.corekt.anko.takePhoto
 import com.lodz.android.corekt.anko.toastShort
-import com.lodz.android.corekt.utils.*
+import com.lodz.android.corekt.utils.DateUtils
+import com.lodz.android.corekt.utils.FileUtils
+import com.lodz.android.corekt.utils.StatusBarUtil
+import com.lodz.android.corekt.utils.UiHandler
 import com.lodz.android.pandora.R
 import com.lodz.android.pandora.base.activity.AbsActivity
 
@@ -135,9 +138,9 @@ internal class TakePhotoActivity : AbsActivity() {
             handleConfirm()
             return
         }
-        UiHandler.postDelayed(Runnable {
+        UiHandler.postDelayed(300){
             handleCameraSuccess()
-        }, 300)
+        }
     }
 
     /** 处理确认照片 */

@@ -20,17 +20,17 @@ object ApiModule {
                     return
                 }
                 try {
-                    UiHandler.postDelayed(Runnable {
+                    UiHandler.postDelayed(1000){
                         if (emitter.isDisposed) {
-                            return@Runnable
+                            return@postDelayed
                         }
                         if (!success) {
                             emitter.onError(DataException("request fail"))
-                            return@Runnable
+                            return@postDelayed
                         }
                         emitter.onNext("result is ${System.currentTimeMillis()}")
                         emitter.onComplete()
-                    }, 1000)
+                    }
                 } catch (e: Exception) {
                     e.printStackTrace()
                     emitter.onError(e)

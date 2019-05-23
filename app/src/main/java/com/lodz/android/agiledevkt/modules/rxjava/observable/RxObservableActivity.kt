@@ -234,8 +234,8 @@ class RxObservableActivity : BaseActivity() {
             "${mResultTv.text}\n$text"
         }
         mResultTv.text = log
-        UiHandler.postDelayed(Runnable {
+        UiHandler.postDelayed(100){
             mScrollView.fullScroll(ScrollView.FOCUS_DOWN)
-        }, 100)
+        }
     }
 }

@@ -47,10 +47,10 @@ class CrashTestActivity : BaseActivity() {
         mCrashBtn.setOnClickListener {
             mCrashTips.visibility = View.VISIBLE
             mCrashBtn.visibility = View.GONE
-            UiHandler.postDelayed(Runnable {
+            UiHandler.postDelayed(100){
                 val case: String? = null
                 case!!.toInt()
-            }, 100)
+            }
         }
     }
 

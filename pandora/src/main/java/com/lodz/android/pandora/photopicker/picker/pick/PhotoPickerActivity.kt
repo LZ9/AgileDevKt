@@ -485,9 +485,9 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
         }
         // 拍照成功
         AlbumUtils.notifyScanImage(getContext(), mTempFilePath)
-        UiHandler.postDelayed(Runnable {
+        UiHandler.postDelayed(300){
             handleCameraSuccess()
-        }, 300)
+        }
     }
 
     /** 处理拍照成功 */

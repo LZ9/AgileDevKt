@@ -202,9 +202,9 @@ class EncryptTestActivity : BaseActivity() {
 
     private fun printResult(result: String) {
         mResultTv.text = (mResultTv.text.toString() + "\n" + result)
-        UiHandler.postDelayed(Runnable {
+        UiHandler.postDelayed(100){
             mScrollView.fullScroll(ScrollView.FOCUS_DOWN)
-        }, 100)
+        }
     }
 
 }

@@ -136,9 +136,9 @@ class RxFlowableActivity : BaseActivity() {
 
                         override fun onNext(str: String?) {
                             printLog(str ?: "")
-                            UiHandler.postDelayed(Runnable {
+                            UiHandler.postDelayed(100){
                                 mBpSubscription?.request(1)
-                            }, 100)
+                            }
                         }
 
                         override fun onError(t: Throwable?) {
@@ -325,8 +325,8 @@ class RxFlowableActivity : BaseActivity() {
             "${mResultTv.text}\n$text"
         }
         mResultTv.text = log
-        UiHandler.postDelayed(Runnable {
+        UiHandler.postDelayed(100){
             mScrollView.fullScroll(ScrollView.FOCUS_DOWN)
-        }, 100)
+        }
     }
 }

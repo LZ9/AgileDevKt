@@ -27,9 +27,37 @@ object UiHandler {
         }
     }
 
+    /** 在UI线程执行[block] */
+    @JvmStatic
+    fun post(block: () -> Unit) {
+        val runnable = Runnable {
+            block()
+        }
+        if (Looper.myLooper() == Looper.getMainLooper()) {
+            runnable.run()
+        } else {
+            sHandler.post(runnable)
+        }
+    }
+
     /** 在UI线程执行[runnable]，并指定[token] */
     @JvmStatic
     fun post(runnable: Runnable, token: Any) {
+        if (Looper.myLooper() == Looper.getMainLooper()) {
+            runnable.run()
+        } else {
+            val message = Message.obtain(sHandler, runnable)
+            message.obj = token
+            sHandler.sendMessage(message)
+        }
+    }
+
+    /** 在UI线程执行[block]，并指定[token] */
+    @JvmStatic
+    fun post(token: Any, block: () -> Unit) {
+        val runnable = Runnable {
+            block()
+        }
         if (Looper.myLooper() == Looper.getMainLooper()) {
             runnable.run()
         } else {
@@ -45,10 +73,24 @@ object UiHandler {
         sHandler.postDelayed(runnable, delay)
     }
 
+    /** 延迟[delay]毫秒执行[block] */
+    @JvmStatic
+    fun postDelayed(delay: Long, block: () -> Unit) {
+        sHandler.postDelayed({ block() }, delay)
+    }
+
     /** 延迟[delay]毫秒执行[runnable]，并指定[token] */
     @JvmStatic
     fun postDelayed(runnable: Runnable, delay: Long, token: Any) {
         val message = Message.obtain(sHandler, runnable)
+        message.obj = token
+        sHandler.sendMessageDelayed(message, delay)
+    }
+
+    /** 延迟[delay]毫秒执行[block]，并指定[token] */
+    @JvmStatic
+    fun postDelayed(delay: Long, token: Any, block: () -> Unit) {
+        val message = Message.obtain(sHandler) { block() }
         message.obj = token
         sHandler.sendMessageDelayed(message, delay)
     }
@@ -61,7 +103,7 @@ object UiHandler {
 
     /** 销毁Handler */
     @JvmStatic
-    fun destroy(){
+    fun destroy() {
         remove(null)
     }
 
