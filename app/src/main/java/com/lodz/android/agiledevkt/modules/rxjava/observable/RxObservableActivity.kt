@@ -112,15 +112,11 @@ class RxObservableActivity : BaseActivity() {
             createObservable()
                     .compose(RxUtils.ioToMainObservable())
                     .compose(bindDestroyEvent())
-                    .subscribe(object : BaseObserver<String>() {
-                        override fun onBaseNext(any: String) {
-                            printLog("onBaseNext num : $any")
-                        }
-
-                        override fun onBaseError(e: Throwable) {
-                            printLog("onBaseError message : ${e.message}")
-                        }
-                    })
+                    .subscribe(BaseObserver.action({ any ->
+                        printLog("onBaseNext num : $any")
+                    }, { e ->
+                        printLog("onBaseError message : ${e.message}")
+                    }))
         }
 
         // 响应数据封装
@@ -129,15 +125,11 @@ class RxObservableActivity : BaseActivity() {
             createObservable(false)
                     .compose(RxUtils.ioToMainObservable())
                     .compose(bindDestroyEvent())
-                    .subscribe(object : RxObserver<ResponseBean<String>>() {
-                        override fun onRxNext(any: ResponseBean<String>) {
-                            printLog("onRxNext : ${any.data}")
-                        }
-
-                        override fun onRxError(e: Throwable, isNetwork: Boolean) {
-                            printLog("onRxError message : ${RxUtils.getExceptionTips(e, isNetwork, "create fail")}")
-                        }
-                    })
+                    .subscribe(RxObserver.action({ any ->
+                        printLog("onRxNext : ${any.data}")
+                    }, { e, isNetwork ->
+                        printLog("onRxError message : ${RxUtils.getExceptionTips(e, isNetwork, "create fail")}")
+                    }))
         }
 
         // 进度条封装
@@ -146,15 +138,11 @@ class RxObservableActivity : BaseActivity() {
             createObservable(true)
                     .compose(RxUtils.ioToMainObservable())
                     .compose(bindDestroyEvent())
-                    .subscribe(object : ProgressObserver<ResponseBean<String>>() {
-                        override fun onPgNext(any: ResponseBean<String>) {
-                            printLog("onPgNext num : ${any.data}")
-                        }
-
-                        override fun onPgError(e: Throwable, isNetwork: Boolean) {
-                            printLog("onPgError message : ${RxUtils.getExceptionTips(e, isNetwork, "create fail")}")
-                        }
-                    }.create(getContext(), "loading", mCancelableSwitch.isChecked, mCanceledOutsideSwitch.isChecked))
+                    .subscribe(ProgressObserver.action({ any ->
+                        printLog("onPgNext num : ${any.data}")
+                    }, { e, isNetwork ->
+                        printLog("onPgError message : ${RxUtils.getExceptionTips(e, isNetwork, "create fail")}")
+                    }, getContext(), "loading", mCancelableSwitch.isChecked, mCanceledOutsideSwitch.isChecked))
         }
     }
 
@@ -234,7 +222,7 @@ class RxObservableActivity : BaseActivity() {
             "${mResultTv.text}\n$text"
         }
         mResultTv.text = log
-        UiHandler.postDelayed(100){
+        UiHandler.postDelayed(100) {
             mScrollView.fullScroll(ScrollView.FOCUS_DOWN)
         }
     }

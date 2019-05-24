@@ -84,5 +84,18 @@ abstract class BaseObserver<T> : Observer<T> {
             override fun onNext(t: T) {}
             override fun onError(e: Throwable) {}
         }
+
+        /** 创建lambda调用 */
+        @JvmStatic
+        fun <T> action(next: (any: T) -> Unit, error: (e: Throwable) -> Unit): BaseObserver<T> = object : BaseObserver<T>() {
+            override fun onBaseNext(any: T) {
+                next(any)
+            }
+
+            override fun onBaseError(e: Throwable) {
+                error(e)
+            }
+
+        }
     }
 }
