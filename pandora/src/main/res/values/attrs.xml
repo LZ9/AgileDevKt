@@ -16,21 +16,21 @@
     </attr>
     <attr name="isNeedTips" format="boolean" />
     <attr name="tips" format="string" />
-    <attr name="tipsColor" format="color" />
+    <attr name="tipsColor" format="reference|color" />
     <attr name="tipsSize" format="dimension" />
-    <attr name="contentBackground" format="reference" />
+    <attr name="contentBackground" format="reference|color" />
     <attr name="isNeedImg" format="boolean" />
     <attr name="src" format="reference" />
     <attr name="titleText" format="string" />
-    <attr name="titleTextColor" format="color" />
+    <attr name="titleTextColor" format="reference|color" />
     <attr name="titleTextSize" format="dimension" />
     <attr name="titleWidth" format="dimension" />
-    <attr name="titleBackground" format="reference" />
+    <attr name="titleBackground" format="reference|color" />
     <attr name="contentText" format="string" />
-    <attr name="contentTextColor" format="color" />
+    <attr name="contentTextColor" format="reference|color" />
     <attr name="contentTextSize" format="dimension" />
     <attr name="contentHint" format="string" />
-    <attr name="contentHintColor" format="color" />
+    <attr name="contentHintColor" format="reference|color" />
     <attr name="contentDrawableStart" format="reference" />
     <attr name="contentDrawableEnd" format="reference" />
     <attr name="contentDrawablePadding" format="dimension" />
@@ -50,13 +50,14 @@
     </attr>
     <attr name="requiredSrc" format="reference" />
     <attr name="unitText" format="string" />
-    <attr name="unitTextColor" format="color" />
+    <attr name="unitTextColor" format="reference|color" />
     <attr name="unitTextSize" format="dimension" />
     <attr name="jumpText" format="string" />
-    <attr name="jumpTextColor" format="color" />
+    <attr name="jumpTextColor" format="reference|color" />
     <attr name="jumpTextSize" format="dimension" />
-    <attr name="jumpBackground" format="reference" />
+    <attr name="jumpBackground" format="reference|color" />
     <attr name="isReadOnly" format="boolean" />
+    <attr name="spanCount" format="integer" />
 
     <!--加载页-->
     <declare-styleable name="LoadingLayout">
@@ -99,7 +100,7 @@
     <attr name="isNeedBackBtn" format="boolean" />
     <attr name="backDrawable" format="reference" />
     <attr name="backText" format="string" />
-    <attr name="backTextColor" format="color" />
+    <attr name="backTextColor" format="reference|color" />
     <attr name="backTextSize" format="dimension" />
     <attr name="isShowDivideLine" format="boolean" />
     <attr name="divideLineColor" format="color" />
@@ -146,9 +147,9 @@
         <attr name="cleanDrawable" format="reference" />
         <attr name="inputBackground" format="reference|color" />
         <attr name="inputHint" format="string" />
-        <attr name="inputHintTextColor" format="color" />
+        <attr name="inputHintTextColor" format="reference|color" />
         <attr name="inputText" format="string" />
-        <attr name="inputTextColor" format="color" />
+        <attr name="inputTextColor" format="reference|color" />
         <attr name="inputTextSize" format="dimension" />
         <attr name="isShowVerticalLine" format="boolean" />
         <attr name="verticalLineBackground" format="reference|color" />
@@ -168,13 +169,13 @@
         <attr name="isShowDeleteBtn" format="boolean" />
         <attr name="deleteDrawable" format="reference" />
         <attr name="maxPic" format="integer" />
-        <attr name="spanCount" format="integer" />
+        <attr name="spanCount" />
         <attr name="itemHigh" format="dimension" />
     </declare-styleable>
 
     <!--索引条-->
     <declare-styleable name="IndexBar">
-        <attr name="indexTextColor" format="color" />
+        <attr name="indexTextColor" format="reference|color" />
         <attr name="indexTextSize" format="dimension" />
         <attr name="isTextBold" format="boolean" />
         <attr name="pressBackgroundColor" format="reference|color" />
@@ -274,4 +275,30 @@
         </attr>
     </declare-styleable>
 
+    <!--采集单选控件-->
+    <declare-styleable name="CltRadioGroup">
+        <attr name="titleText" />
+        <attr name="titleTextColor" />
+        <attr name="titleTextSize" />
+        <attr name="titleWidth" />
+        <attr name="titleBackground" />
+        <attr name="requiredVisibility" />
+        <attr name="requiredSrc" />
+        <attr name="isReadOnly" />
+        <attr name="radioBtnSrc" format="reference" />
+        <attr name="radioBtnSquare" format="dimension" />
+        <attr name="radioTextColor" format="reference|color" />
+        <attr name="radioTextSize" format="dimension" />
+        <attr name="radioTextMarginStart" format="dimension" />
+        <attr name="radioGravity" format="integer">
+            <enum name="center" value="0" />
+            <enum name="start_vertical" value="1" />
+            <enum name="end_vertical" value="2" />
+        </attr>
+        <attr name="radioType" format="integer">
+            <enum name="single" value="0" />
+            <enum name="multiple" value="1" />
+        </attr>
+        <attr name="spanCount" />
+    </declare-styleable>
 </resources>

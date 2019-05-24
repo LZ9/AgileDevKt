@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
     android:orientation="vertical">
 
     <androidx.core.widget.NestedScrollView
@@ -127,6 +128,45 @@
                 app:unitTextColor="@color/color_333333">
 
             </com.lodz.android.pandora.widget.collect.CltEditView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/color_00a0e9" />
+
+            <com.lodz.android.pandora.widget.collect.radio.CltRadioGroup
+                android:id="@+id/person_type_crg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                app:radioType="single"
+                app:spanCount="3"
+                app:titleText="@string/clt_person_type">
+
+            </com.lodz.android.pandora.widget.collect.radio.CltRadioGroup>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/color_00a0e9" />
+
+            <com.lodz.android.pandora.widget.collect.radio.CltRadioGroup
+                android:id="@+id/sport_type_crg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                app:radioBtnSquare="20dp"
+                app:radioBtnSrc="@drawable/selector_btn_selected"
+                app:radioGravity="start_vertical"
+                app:radioTextColor="@color/color_00a0e9"
+                app:radioTextMarginStart="10dp"
+                app:radioTextSize="18sp"
+                app:radioType="multiple"
+                app:requiredVisibility="invisible"
+                app:spanCount="3"
+                app:titleText="@string/clt_sport_type">
+
+            </com.lodz.android.pandora.widget.collect.radio.CltRadioGroup>
 
             <View
                 android:layout_width="match_parent"

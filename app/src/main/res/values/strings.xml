@@ -612,6 +612,9 @@
     <string name="clt_sex_title">性别</string>
     <string name="clt_birth_title">出生年月</string>
     <string name="clt_success">采集成功</string>
+    <string name="clt_person_type">人员类型：</string>
+    <string name="clt_person_type_tips">请选择人员类型</string>
+    <string name="clt_sport_type">运动类型：</string>
 
     <!-- 接口测试 -->
     <string name="api_loading">正在获取</string>
