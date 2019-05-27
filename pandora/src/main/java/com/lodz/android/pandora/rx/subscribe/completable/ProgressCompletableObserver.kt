@@ -136,4 +136,19 @@ abstract class ProgressCompletableObserver : RxCompletableObserver() {
 
     /** 用户取消回调 */
     open fun onPgCancel() {}
+
+    companion object {
+        /** 创建lambda调用 */
+        @JvmStatic
+        fun action(complete: () -> Unit, error: (e: Throwable, isNetwork: Boolean) -> Unit, context: Context, msg: String = "",
+                   cancelable: Boolean = true, canceledOnTouchOutside: Boolean = false): ProgressCompletableObserver = object : ProgressCompletableObserver() {
+            override fun onPgComplete() {
+                complete()
+            }
+
+            override fun onPgError(e: Throwable, isNetwork: Boolean) {
+                error(e, isNetwork)
+            }
+        }.create(context, msg, cancelable, canceledOnTouchOutside)
+    }
 }

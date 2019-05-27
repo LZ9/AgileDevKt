@@ -131,15 +131,11 @@ class RxCompletableActivity : BaseActivity() {
             createCompletable()
                     .compose(RxUtils.ioToMainCompletable())
                     .compose(bindAnyDestroyEvent())
-                    .subscribe(object : BaseCompletableObserver() {
-                        override fun onBaseComplete() {
-                            printLog("onBaseComplete")
-                        }
-
-                        override fun onBaseError(e: Throwable) {
-                            printLog("onBaseError : ${e.message}")
-                        }
-                    })
+                    .subscribe(BaseCompletableObserver.action({
+                        printLog("onBaseComplete")
+                    }, { e ->
+                        printLog("onBaseError : ${e.message}")
+                    }))
         }
 
 
@@ -149,15 +145,11 @@ class RxCompletableActivity : BaseActivity() {
             createCompletable()
                     .compose(RxUtils.ioToMainCompletable())
                     .compose(bindAnyDestroyEvent())
-                    .subscribe(object : RxCompletableObserver() {
-                        override fun onRxComplete() {
-                            printLog("onRxComplete")
-                        }
-
-                        override fun onRxError(e: Throwable, isNetwork: Boolean) {
-                            printLog("onRxError message : ${RxUtils.getExceptionTips(e, isNetwork, "create fail")}")
-                        }
-                    })
+                    .subscribe(RxCompletableObserver.action({
+                        printLog("onRxComplete")
+                    }, { e, isNetwork ->
+                        printLog("onRxError message : ${RxUtils.getExceptionTips(e, isNetwork, "create fail")}")
+                    }))
         }
 
         // 返回键关闭开关
@@ -174,15 +166,11 @@ class RxCompletableActivity : BaseActivity() {
             createCompletable(true)
                     .compose(RxUtils.ioToMainCompletable())
                     .compose(bindAnyDestroyEvent())
-                    .subscribe(object : ProgressCompletableObserver() {
-                        override fun onPgComplete() {
-                            printLog("onPgComplete")
-                        }
-
-                        override fun onPgError(e: Throwable, isNetwork: Boolean) {
-                            printLog("onPgError message : ${RxUtils.getExceptionTips(e, isNetwork, "create fail")}")
-                        }
-                    }.create(getContext(), "loading", mCancelableSwitch.isChecked, mCanceledOutsideSwitch.isChecked))
+                    .subscribe(ProgressCompletableObserver.action({
+                        printLog("onPgComplete")
+                    }, { e, isNetwork ->
+                        printLog("onPgError message : ${RxUtils.getExceptionTips(e, isNetwork, "create fail")}")
+                    }, getContext(), "loading", mCancelableSwitch.isChecked, mCanceledOutsideSwitch.isChecked))
         }
     }
 
@@ -224,7 +212,7 @@ class RxCompletableActivity : BaseActivity() {
             "${mResultTv.text}\n$text"
         }
         mResultTv.text = log
-        UiHandler.postDelayed(100){
+        UiHandler.postDelayed(100) {
             mScrollView.fullScroll(ScrollView.FOCUS_DOWN)
         }
     }

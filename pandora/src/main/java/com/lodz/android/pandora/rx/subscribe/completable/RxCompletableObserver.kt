@@ -33,4 +33,19 @@ abstract class RxCompletableObserver : BaseCompletableObserver() {
 
     /** onError执行完后会调用该方法 */
     open fun onErrorEnd() {}
+
+    companion object {
+        /** 创建lambda调用 */
+        @JvmStatic
+        fun action(complete: () -> Unit, error: (e: Throwable, isNetwork: Boolean) -> Unit): RxCompletableObserver = object : RxCompletableObserver() {
+            override fun onRxComplete() {
+                complete()
+
+            }
+
+            override fun onRxError(e: Throwable, isNetwork: Boolean) {
+                error(e, isNetwork)
+            }
+        }
+    }
 }

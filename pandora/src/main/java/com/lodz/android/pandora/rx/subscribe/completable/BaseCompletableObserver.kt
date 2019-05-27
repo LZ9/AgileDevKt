@@ -78,5 +78,17 @@ abstract class BaseCompletableObserver : CompletableObserver {
             override fun onSubscribe(d: Disposable) {}
             override fun onError(e: Throwable) {}
         }
+
+        /** 创建lambda调用 */
+        @JvmStatic
+        fun action(complete: () -> Unit, error: (e: Throwable) -> Unit): BaseCompletableObserver = object : BaseCompletableObserver() {
+            override fun onBaseComplete() {
+                complete()
+            }
+
+            override fun onBaseError(e: Throwable) {
+                error(e)
+            }
+        }
     }
 }
