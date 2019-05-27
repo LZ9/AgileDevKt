@@ -54,4 +54,18 @@ abstract class RxSingleObserver<T> : BaseSingleObserver<T>() {
 
     /** onError执行完后会调用该方法 */
     open fun onErrorEnd() {}
+
+    companion object {
+        /** 创建lambda调用 */
+        @JvmStatic
+        fun <T> action(next: (any: T) -> Unit, error: (e: Throwable, isNetwork: Boolean) -> Unit): RxSingleObserver<T> = object : RxSingleObserver<T>() {
+            override fun onRxSuccess(any: T) {
+                next(any)
+            }
+
+            override fun onRxError(e: Throwable, isNetwork: Boolean) {
+                error(e, isNetwork)
+            }
+        }
+    }
 }

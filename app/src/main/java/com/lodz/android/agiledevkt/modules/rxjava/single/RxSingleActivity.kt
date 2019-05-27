@@ -83,15 +83,11 @@ class RxSingleActivity : BaseActivity() {
                     .compose(RxUtils.ioToMainSingle())
                     .compose(bindDestroyEvent())
                     .toObservable()
-                    .subscribe(object : BaseObserver<String>() {
-                        override fun onBaseNext(any: String) {
-                            printLog("onBaseNext data : $any")
-                        }
-
-                        override fun onBaseError(e: Throwable) {
-                            printLog("onBaseError message : ${e.message}")
-                        }
-                    })
+                    .subscribe(BaseObserver.action({ any ->
+                        printLog("onBaseNext data : $any")
+                    }, { e ->
+                        printLog("onBaseError message : ${e.message}")
+                    }))
         }
 
         // 原始订阅接口按钮
@@ -119,15 +115,11 @@ class RxSingleActivity : BaseActivity() {
             createSingle()
                     .compose(RxUtils.ioToMainSingle())
                     .compose(bindDestroyEvent())
-                    .subscribe(object : BaseSingleObserver<String>() {
-                        override fun onBaseSuccess(any: String) {
-                            printLog("onBaseSuccess data : $any")
-                        }
-
-                        override fun onBaseError(e: Throwable) {
-                            printLog("onBaseError message : ${e.message}")
-                        }
-                    })
+                    .subscribe(BaseSingleObserver.action({ any ->
+                        printLog("onBaseSuccess data : $any")
+                    }, { e ->
+                        printLog("onBaseError message : ${e.message}")
+                    }))
         }
 
         // 响应数据封装按钮
@@ -136,15 +128,11 @@ class RxSingleActivity : BaseActivity() {
             createSingle(false)
                     .compose(RxUtils.ioToMainSingle())
                     .compose(bindDestroyEvent())
-                    .subscribe(object : RxSingleObserver<ResponseBean<String>>() {
-                        override fun onRxSuccess(any: ResponseBean<String>) {
-                            printLog("onRxNext num : ${any.data}")
-                        }
-
-                        override fun onRxError(e: Throwable, isNetwork: Boolean) {
-                            printLog("onRxError message : ${RxUtils.getExceptionTips(e, isNetwork, "create fail")}")
-                        }
-                    })
+                    .subscribe(RxSingleObserver.action({ any ->
+                        printLog("onRxNext num : ${any.data}")
+                    }, { e, isNetwork ->
+                        printLog("onRxError message : ${RxUtils.getExceptionTips(e, isNetwork, "create fail")}")
+                    }))
         }
 
         // 返回键关闭开关
@@ -161,15 +149,11 @@ class RxSingleActivity : BaseActivity() {
             createSingle(true)
                     .compose(RxUtils.ioToMainSingle())
                     .compose(bindDestroyEvent())
-                    .subscribe(object : ProgressSingleObserver<ResponseBean<String>>() {
-                        override fun onPgSuccess(any: ResponseBean<String>) {
-                            printLog("onPgSuccess num : ${any.data}")
-                        }
-
-                        override fun onPgError(e: Throwable, isNetwork: Boolean) {
-                            printLog("onPgError message : ${RxUtils.getExceptionTips(e, isNetwork, "create fail")}")
-                        }
-                    }.create(getContext(), "loading", mCancelableSwitch.isChecked, mCanceledOutsideSwitch.isChecked))
+                    .subscribe(ProgressSingleObserver.action({ any ->
+                        printLog("onPgSuccess num : ${any.data}")
+                    }, { e, isNetwork ->
+                        printLog("onPgError message : ${RxUtils.getExceptionTips(e, isNetwork, "create fail")}")
+                    }, getContext(), "loading", mCancelableSwitch.isChecked, mCanceledOutsideSwitch.isChecked))
         }
     }
 
@@ -193,7 +177,8 @@ class RxSingleActivity : BaseActivity() {
     })
 
     private fun createSingle(isDelay: Boolean): Single<ResponseBean<String>> =
-            Single.create(object : RxSingleOnSubscribe<ResponseBean<String>>(isDelay.then { 3 } ?: 0) {
+            Single.create(object : RxSingleOnSubscribe<ResponseBean<String>>(isDelay.then { 3 }
+                    ?: 0) {
                 override fun subscribe(emitter: SingleEmitter<ResponseBean<String>>) {
                     val delayTime = getArgs()[0] as Int
                     if (emitter.isDisposed) {
@@ -236,7 +221,7 @@ class RxSingleActivity : BaseActivity() {
             "${mResultTv.text}\n$text"
         }
         mResultTv.text = log
-        UiHandler.postDelayed(100){
+        UiHandler.postDelayed(100) {
             mScrollView.fullScroll(ScrollView.FOCUS_DOWN)
         }
     }

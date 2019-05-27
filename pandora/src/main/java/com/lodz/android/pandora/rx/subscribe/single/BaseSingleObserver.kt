@@ -78,5 +78,17 @@ abstract class BaseSingleObserver<T> : SingleObserver<T> {
             override fun onSubscribe(d: Disposable) {}
             override fun onError(e: Throwable) {}
         }
+
+        /** 创建lambda调用 */
+        @JvmStatic
+        fun <T> action(next: (any: T) -> Unit, error: (e: Throwable) -> Unit): BaseSingleObserver<T> = object : BaseSingleObserver<T>() {
+            override fun onBaseSuccess(any: T) {
+                next(any)
+            }
+
+            override fun onBaseError(e: Throwable) {
+                error(e)
+            }
+        }
     }
 }
