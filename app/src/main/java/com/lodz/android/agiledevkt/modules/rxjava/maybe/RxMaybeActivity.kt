@@ -130,19 +130,13 @@ class RxMaybeActivity : BaseActivity() {
                 }
             }).compose(RxUtils.ioToMainMaybe())
                     .compose(bindDestroyEvent())
-                    .subscribe(object : BaseMaybeObserver<String>() {
-                        override fun onBaseSuccess(any: String) {
-                            printLog("onBaseSuccess : $any")
-                        }
-
-                        override fun onBaseComplete() {
-                            printLog("onBaseComplete")
-                        }
-
-                        override fun onBaseError(e: Throwable) {
-                            printLog("onBaseError : ${e.message}")
-                        }
-                    })
+                    .subscribe(BaseMaybeObserver.action({ any ->
+                        printLog("onBaseSuccess : $any")
+                    }, {
+                        printLog("onBaseComplete")
+                    }, { e ->
+                        printLog("onBaseError : ${e.message}")
+                    }))
         }
 
         // 完成订阅按钮
@@ -189,19 +183,13 @@ class RxMaybeActivity : BaseActivity() {
             createMaybe(false)
                     .compose(RxUtils.ioToMainMaybe())
                     .compose(bindDestroyEvent())
-                    .subscribe(object : RxMaybeObserver<ResponseBean<String>>() {
-                        override fun onRxSuccess(any: ResponseBean<String>) {
-                            printLog("onRxSuccess num : ${any.data}")
-                        }
-
-                        override fun onRxComplete() {
-                            printLog("onRxComplete")
-                        }
-
-                        override fun onRxError(e: Throwable, isNetwork: Boolean) {
-                            printLog("onRxError message : ${RxUtils.getExceptionTips(e, isNetwork, "create fail")}")
-                        }
-                    })
+                    .subscribe(RxMaybeObserver.action({ any ->
+                        printLog("onRxSuccess num : ${any.data}")
+                    }, {
+                        printLog("onRxComplete")
+                    }, { e, isNetwork ->
+                        printLog("onRxError message : ${RxUtils.getExceptionTips(e, isNetwork, "create fail")}")
+                    }))
         }
 
         // 返回键关闭开关
@@ -218,19 +206,13 @@ class RxMaybeActivity : BaseActivity() {
             createMaybe(true)
                     .compose(RxUtils.ioToMainMaybe())
                     .compose(bindDestroyEvent())
-                    .subscribe(object : ProgressMaybeObserver<ResponseBean<String>>() {
-                        override fun onPgSuccess(any: ResponseBean<String>) {
-                            printLog("onPgSuccess num : ${any.data}")
-                        }
-
-                        override fun onPgComplete() {
-                            printLog("onPgComplete")
-                        }
-
-                        override fun onPgError(e: Throwable, isNetwork: Boolean) {
-                            printLog("onPgError message : ${RxUtils.getExceptionTips(e, isNetwork, "create fail")}")
-                        }
-                    }.create(getContext(), "loading", mCancelableSwitch.isChecked, mCanceledOutsideSwitch.isChecked))
+                    .subscribe(ProgressMaybeObserver.action({ any ->
+                        printLog("onPgSuccess num : ${any.data}")
+                    }, {
+                        printLog("onPgComplete")
+                    }, { e, isNetwork ->
+                        printLog("onPgError message : ${RxUtils.getExceptionTips(e, isNetwork, "create fail")}")
+                    }, getContext(), "loading", mCancelableSwitch.isChecked, mCanceledOutsideSwitch.isChecked))
         }
     }
 
@@ -279,7 +261,7 @@ class RxMaybeActivity : BaseActivity() {
             "${mResultTv.text}\n$text"
         }
         mResultTv.text = log
-        UiHandler.postDelayed(100){
+        UiHandler.postDelayed(100) {
             mScrollView.fullScroll(ScrollView.FOCUS_DOWN)
         }
     }

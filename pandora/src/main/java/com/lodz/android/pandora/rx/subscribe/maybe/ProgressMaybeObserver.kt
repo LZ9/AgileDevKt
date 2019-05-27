@@ -143,4 +143,24 @@ abstract class ProgressMaybeObserver<T> : RxMaybeObserver<T>() {
 
     /** 用户取消回调 */
     open fun onPgCancel() {}
+
+    companion object {
+        /** 创建lambda调用 */
+        @JvmStatic
+        fun <T> action(success: (any: T) -> Unit, complete: () -> Unit, error: (e: Throwable, isNetwork: Boolean) -> Unit,
+                       context: Context, msg: String = "", cancelable: Boolean = true, canceledOnTouchOutside: Boolean = false)
+                : ProgressMaybeObserver<T> = object : ProgressMaybeObserver<T>() {
+            override fun onPgSuccess(any: T) {
+                success(any)
+            }
+
+            override fun onPgComplete() {
+                complete()
+            }
+
+            override fun onPgError(e: Throwable, isNetwork: Boolean) {
+                error(e, isNetwork)
+            }
+        }.create(context, msg, cancelable, canceledOnTouchOutside)
+    }
 }

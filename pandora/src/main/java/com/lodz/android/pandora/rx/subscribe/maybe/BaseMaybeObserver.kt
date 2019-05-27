@@ -85,5 +85,22 @@ abstract class BaseMaybeObserver<T> : MaybeObserver<T> {
             override fun onSubscribe(d: Disposable) {}
             override fun onError(e: Throwable) {}
         }
+
+        /** 创建lambda调用 */
+        @JvmStatic
+        fun <T> action(success: (any: T) -> Unit, complete: () -> Unit, error: (e: Throwable) -> Unit)
+                : BaseMaybeObserver<T> = object : BaseMaybeObserver<T>() {
+            override fun onBaseSuccess(any: T) {
+                success(any)
+            }
+
+            override fun onBaseComplete() {
+                complete()
+            }
+
+            override fun onBaseError(e: Throwable) {
+                error(e)
+            }
+        }
     }
 }

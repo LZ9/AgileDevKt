@@ -60,4 +60,23 @@ abstract class RxMaybeObserver<T> : BaseMaybeObserver<T>() {
 
     /** onError执行完后会调用该方法 */
     open fun onErrorEnd() {}
+
+    companion object {
+        /** 创建lambda调用 */
+        @JvmStatic
+        fun <T> action(success: (any: T) -> Unit, complete: () -> Unit, error: (e: Throwable, isNetwork: Boolean) -> Unit)
+                : RxMaybeObserver<T> = object : RxMaybeObserver<T>() {
+            override fun onRxSuccess(any: T) {
+                success(any)
+            }
+
+            override fun onRxComplete() {
+                complete()
+            }
+
+            override fun onRxError(e: Throwable, isNetwork: Boolean) {
+                error(e, isNetwork)
+            }
+        }
+    }
 }
