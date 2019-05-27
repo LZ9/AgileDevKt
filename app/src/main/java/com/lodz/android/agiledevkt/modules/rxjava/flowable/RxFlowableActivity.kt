@@ -136,7 +136,7 @@ class RxFlowableActivity : BaseActivity() {
 
                         override fun onNext(str: String?) {
                             printLog(str ?: "")
-                            UiHandler.postDelayed(100){
+                            UiHandler.postDelayed(100) {
                                 mBpSubscription?.request(1)
                             }
                         }
@@ -170,11 +170,12 @@ class RxFlowableActivity : BaseActivity() {
                     .onBackpressureBuffer()
                     .compose(RxUtils.ioToMainFlowable())
                     .compose(bindDestroyEvent())
-                    .subscribe(object :BaseSubscriber<Int>(){
+                    .subscribe(object : BaseSubscriber<Int>() {
                         override fun onBaseSubscribe(s: Subscription?) {
                             super.onBaseSubscribe(s)
                             mDataSubscription = s
                         }
+
                         override fun onBaseNext(any: Int) {
                             printLog("num : $any")
                         }
@@ -203,15 +204,11 @@ class RxFlowableActivity : BaseActivity() {
             createFlowable(false)
                     .compose(RxUtils.ioToMainFlowable())
                     .compose(bindDestroyEvent())
-                    .subscribe(object :RxSubscriber<ResponseBean<String>>(){
-                        override fun onRxNext(any: ResponseBean<String>) {
-                            printLog("onRxNext num : ${any.data}")
-                        }
-
-                        override fun onRxError(e: Throwable, isNetwork: Boolean) {
-                            printLog("onRxError message : ${RxUtils.getExceptionTips(e, isNetwork, "create fail")}")
-                        }
-                    })
+                    .subscribe(RxSubscriber.action({ any ->
+                        printLog("onRxNext num : ${any.data}")
+                    }, { e, isNetwork ->
+                        printLog("onRxError message : ${RxUtils.getExceptionTips(e, isNetwork, "create fail")}")
+                    }))
         }
 
         // 进度条封装
@@ -220,15 +217,11 @@ class RxFlowableActivity : BaseActivity() {
             createFlowable(true)
                     .compose(RxUtils.ioToMainFlowable())
                     .compose(bindDestroyEvent())
-                    .subscribe(object : ProgressSubscriber<ResponseBean<String>>() {
-                        override fun onPgNext(any: ResponseBean<String>) {
-                            printLog("onPgNext num : ${any.data}")
-                        }
-
-                        override fun onPgError(e: Throwable, isNetwork: Boolean) {
-                            printLog("onPgError message : ${RxUtils.getExceptionTips(e, isNetwork, "create fail")}")
-                        }
-                    }.create(getContext(), "loading", mCancelableSwitch.isChecked, mCanceledOutsideSwitch.isChecked))
+                    .subscribe(ProgressSubscriber.action({ any ->
+                        printLog("onPgNext num : ${any.data}")
+                    }, { e, isNetwork ->
+                        printLog("onPgError message : ${RxUtils.getExceptionTips(e, isNetwork, "create fail")}")
+                    }, getContext(), "loading", mCancelableSwitch.isChecked, mCanceledOutsideSwitch.isChecked))
         }
     }
 
@@ -279,10 +272,11 @@ class RxFlowableActivity : BaseActivity() {
 
     /** 创建自定义Flowable，[isDelay]是否延时 */
     private fun createFlowable(isDelay: Boolean): Flowable<ResponseBean<String>> {
-        return Flowable.create(object :RxFlowableOnSubscribe<ResponseBean<String>>(isDelay.then { 3 } ?: 0){
+        return Flowable.create(object : RxFlowableOnSubscribe<ResponseBean<String>>(isDelay.then { 3 }
+                ?: 0) {
             override fun subscribe(emitter: FlowableEmitter<ResponseBean<String>>) {
                 val delayTime = getArgs()[0] as Int
-                if (emitter.isCancelled){
+                if (emitter.isCancelled) {
                     return
                 }
                 val responseBean: ResponseBean<String> = if (mFailSwitch.isChecked) {
@@ -319,13 +313,13 @@ class RxFlowableActivity : BaseActivity() {
 
     /** 打印日志 */
     private fun printLog(text: String) {
-        val log = if (mResultTv.text.isEmpty()){
+        val log = if (mResultTv.text.isEmpty()) {
             text
-        }else{
+        } else {
             "${mResultTv.text}\n$text"
         }
         mResultTv.text = log
-        UiHandler.postDelayed(100){
+        UiHandler.postDelayed(100) {
             mScrollView.fullScroll(ScrollView.FOCUS_DOWN)
         }
     }

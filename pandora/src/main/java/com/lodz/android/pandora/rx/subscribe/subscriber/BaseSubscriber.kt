@@ -96,5 +96,17 @@ abstract class BaseSubscriber<T> : Subscriber<T> {
             override fun onNext(t: T) {}
             override fun onError(t: Throwable?) {}
         }
+
+        /** 创建lambda调用 */
+        @JvmStatic
+        fun <T> action(next: (any: T) -> Unit, error: (e: Throwable) -> Unit): BaseSubscriber<T> = object : BaseSubscriber<T>() {
+            override fun onBaseNext(any: T) {
+                next(any)
+            }
+
+            override fun onBaseError(e: Throwable) {
+                error(e)
+            }
+        }
     }
 }
