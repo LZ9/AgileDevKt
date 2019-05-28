@@ -75,7 +75,7 @@ class NoDataLayout : LinearLayout {
         setLayoutOrientation(orientation)
 
         // 是否需要提示语
-        val isNeedTips: Boolean = typedArray?.getBoolean(R.styleable.NoDataLayout_contentOrientation, mConfig.isNeedTips)
+        val isNeedTips: Boolean = typedArray?.getBoolean(R.styleable.NoDataLayout_isNeedTips, mConfig.isNeedTips)
                 ?: mConfig.isNeedTips
         needTips(isNeedTips)
 

@@ -177,11 +177,6 @@ open class TitleBarLayout : LinearLayout {
             }
         }
 
-        // 是否需要右侧扩展区域
-        val isNeedExpandView: Boolean = typedArray?.getBoolean(R.styleable.TitleBarLayout_isNeedExpandView, false)
-                ?: false
-        needExpandView(isNeedExpandView)
-
         // 加载扩展区布局
         val expandViewId: Int = typedArray?.getResourceId(R.styleable.TitleBarLayout_expandViewId, 0)
                 ?: 0
@@ -191,6 +186,11 @@ open class TitleBarLayout : LinearLayout {
                 addExpandView(view)
             }
         }
+
+        // 是否需要右侧扩展区域
+        val isNeedExpandView: Boolean = typedArray?.getBoolean(R.styleable.TitleBarLayout_isNeedExpandView, false)
+                ?: false
+        needExpandView(isNeedExpandView)
 
         if (typedArray != null) {
             typedArray.recycle()
