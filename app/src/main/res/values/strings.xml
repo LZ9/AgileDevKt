@@ -666,4 +666,13 @@
     <string name="dimensions_sp_title">sp值：</string>
     <string name="dimensions_sp_to_px">sp转px：</string>
 
+    <!-- 基础控件配置 -->
+    <string name="config_back_text">返回</string>
+    <string name="config_loading">加载</string>
+    <string name="config_no_data">无数据</string>
+    <string name="config_fail">失败</string>
+    <string name="config_no_data_tips">没黄鳝怎么直播啊！？</string>
+    <string name="config_loading_tips">前方高能预警</string>
+    <string name="config_fail_tips">加载不出来，你心里没点B数吗！？</string>
+
 </resources>

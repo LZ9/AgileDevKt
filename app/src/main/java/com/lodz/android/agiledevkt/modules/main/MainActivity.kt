@@ -20,6 +20,7 @@ import com.lodz.android.agiledevkt.modules.bluetooth.BluetoothTestActivity
 import com.lodz.android.agiledevkt.modules.bottomsheet.BottomSheetsActivity
 import com.lodz.android.agiledevkt.modules.collect.CollectActivity
 import com.lodz.android.agiledevkt.modules.color.ColorAlphaTestActivity
+import com.lodz.android.agiledevkt.modules.config.ConfigLayoutActivity
 import com.lodz.android.agiledevkt.modules.coordinator.CoordinatorTestActivity
 import com.lodz.android.agiledevkt.modules.coroutines.CoroutinesActivity
 import com.lodz.android.agiledevkt.modules.crash.CrashTestActivity
@@ -138,7 +139,8 @@ class MainActivity : BaseActivity() {
             MainBean("接口测试类", "J", ApiTestActivity::class.java),
             MainBean("日期测试类", "R", DateActivity::class.java),
             MainBean("协程测试类", "X", CoroutinesActivity::class.java),
-            MainBean("单位转换测试类", "D", DimensionsActivity::class.java)
+            MainBean("单位转换测试类", "D", DimensionsActivity::class.java),
+            MainBean("基础控件配置", "J", ConfigLayoutActivity::class.java)
     )
 
     /** 列表 */

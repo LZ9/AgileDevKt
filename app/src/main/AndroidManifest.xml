@@ -626,6 +626,13 @@
 
         </activity>
 
+        <activity
+            android:name=".modules.config.ConfigLayoutActivity"
+            android:label="基础控件配置"
+            android:screenOrientation="portrait">
+
+        </activity>
+
     </application>
 
 </manifest>

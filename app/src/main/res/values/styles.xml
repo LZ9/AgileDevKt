@@ -13,4 +13,10 @@
         <item name="android:windowTranslucentStatus" tools:ignore="NewApi">true</item>
     </style>
 
+
+    <style name="TextAppearance.TabText" parent="Base.TextAppearance.AppCompat">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>
