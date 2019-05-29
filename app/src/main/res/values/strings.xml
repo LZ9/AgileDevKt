@@ -93,11 +93,15 @@
 
 
     <!-- toast测试 -->
+    <string name="reflect_use_kclass">使用KClass</string>
+    <string name="reflect_use_type">使用类型</string>
+    <string name="reflect_get_class">获取Class</string>
     <string name="reflect_get_constructor_name">获取所有构造函数名称</string>
     <string name="reflect_get_field_name">获取对象里的变量名称</string>
     <string name="reflect_get_method_name">获取方法名</string>
     <string name="reflect_get_field_value">获取对象里变量的值</string>
-    <string name="reflect_execute_function">执行函数</string>
+    <string name="reflect_execute_function">执行无参函数</string>
+    <string name="reflect_execute_param_function">执行有参函数</string>
     <string name="reflect_set_value">设置值并读取测试</string>
     <string name="reflect_unfind_class">找不到该类</string>
     <string name="reflect_unfind_no_param_constructor">没有无参构造函数</string>
@@ -674,5 +678,9 @@
     <string name="config_no_data_tips">没黄鳝怎么直播啊！？</string>
     <string name="config_loading_tips">前方高能预警</string>
     <string name="config_fail_tips">加载不出来，你心里没点B数吗！？</string>
+
+    <!-- 注解 -->
+    <string name="annotation_use">使用注解</string>
+
 
 </resources>

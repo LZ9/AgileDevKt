@@ -14,6 +14,14 @@ class ReflectBean {
 
     internal var sex = "men"
 
+    var size = 16
+        set(value) {
+            field = value + 5
+        }
+        get() {
+            return field - 3
+        }
+
     constructor()
 
     constructor(age: Int, nationality: String) {
@@ -21,11 +29,15 @@ class ReflectBean {
         this.nationality = nationality
     }
 
-    fun getPersonName() = name
+    fun getPersonName(): String = name
 
-    protected fun getPersonAge() = age
+    protected fun getPersonAge(): Int = age
 
-    private fun getPersonNationality() = nationality
+    private fun getPersonNationality(): String = nationality
 
-    fun getAgeTest(num: Int = 0) = (age + num).toString()
+    fun getAgeTest(num: Int = 0): String = (age + num).toString()
+
+    fun setAgeTest(num: Int) {
+        age = num * 2
+    }
 }
