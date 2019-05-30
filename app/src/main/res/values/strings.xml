@@ -681,6 +681,9 @@
 
     <!-- 注解 -->
     <string name="annotation_use">使用注解</string>
+    <string name="annotation_decrypt">解密</string>
+    <string name="annotation_content">内容：</string>
+    <string name="annotation_content_hint">请输入内容</string>
 
 
 </resources>

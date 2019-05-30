@@ -13,6 +13,7 @@ import com.lodz.android.agiledevkt.bean.MainBean
 import com.lodz.android.agiledevkt.modules.acache.ACacheTestActivity
 import com.lodz.android.agiledevkt.modules.album.AlbumActivity
 import com.lodz.android.agiledevkt.modules.anko.AnkoLayoutActivity
+import com.lodz.android.agiledevkt.modules.annotation.AnnotationTestActivity
 import com.lodz.android.agiledevkt.modules.api.ApiTestActivity
 import com.lodz.android.agiledevkt.modules.array.ArrayTestActivity
 import com.lodz.android.agiledevkt.modules.bitmap.BitmapTestActivity
@@ -140,7 +141,8 @@ class MainActivity : BaseActivity() {
             MainBean("日期测试类", "R", DateActivity::class.java),
             MainBean("协程测试类", "X", CoroutinesActivity::class.java),
             MainBean("单位转换测试类", "D", DimensionsActivity::class.java),
-            MainBean("基础控件配置", "J", ConfigLayoutActivity::class.java)
+            MainBean("基础控件配置", "J", ConfigLayoutActivity::class.java),
+            MainBean("注解测试类", "Z", AnnotationTestActivity::class.java)
     )
 
     /** 列表 */

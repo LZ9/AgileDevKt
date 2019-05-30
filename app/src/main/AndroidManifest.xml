@@ -633,6 +633,13 @@
 
         </activity>
 
+        <activity
+            android:name=".modules.annotation.AnnotationTestActivity"
+            android:label="注解测试类"
+            android:screenOrientation="portrait">
+
+        </activity>
+
     </application>
 
 </manifest>
