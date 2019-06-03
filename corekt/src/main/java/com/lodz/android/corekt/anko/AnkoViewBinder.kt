@@ -3,7 +3,6 @@ package com.lodz.android.corekt.anko
 import android.app.Activity
 import android.app.Dialog
 import android.view.View
-import android.view.ViewGroup
 import android.widget.PopupWindow
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
@@ -36,7 +35,7 @@ fun <T : View> Dialog.bindView(id: Int): Lazy<T> = lazy {
 }
 
 /** 在ViewGroup中绑定view */
-fun <T : View> ViewGroup.bindView(id: Int): Lazy<T> = lazy {
+fun <T : View> View.bindView(id: Int): Lazy<T> = lazy {
     return@lazy findViewById<T>(id) ?: throw IllegalStateException("View ID $id for '${javaClass.name}' not found.")
 }
 
