@@ -64,6 +64,7 @@ import com.lodz.android.agiledevkt.modules.str.StrTestActivity
 import com.lodz.android.agiledevkt.modules.threadpool.ThreadPoolActivity
 import com.lodz.android.agiledevkt.modules.toast.ToastTestActivity
 import com.lodz.android.agiledevkt.modules.transition.TransitionActivity
+import com.lodz.android.agiledevkt.modules.webview.WebViewActivity
 import com.lodz.android.corekt.anko.*
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.widget.base.TitleBarLayout
@@ -142,7 +143,8 @@ class MainActivity : BaseActivity() {
             MainBean("协程测试类", "X", CoroutinesActivity::class.java),
             MainBean("单位转换测试类", "D", DimensionsActivity::class.java),
             MainBean("基础控件配置", "J", ConfigLayoutActivity::class.java),
-            MainBean("注解测试类", "Z", AnnotationTestActivity::class.java)
+            MainBean("注解测试类", "Z", AnnotationTestActivity::class.java),
+            MainBean("WebView测试类", "W", WebViewActivity::class.java)
     )
 
     /** 列表 */

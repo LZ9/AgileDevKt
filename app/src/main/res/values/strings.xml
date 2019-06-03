@@ -685,5 +685,10 @@
     <string name="annotation_content">内容：</string>
     <string name="annotation_content_hint">请输入内容</string>
 
+    <!-- WebView测试 -->
+    <string name="wv_pg">带加载控件的WebView</string>
+    <string name="wv_js">带JS交互的WebView</string>
+    <string name="wv_pg_title">带加载控件测试</string>
+    <string name="wv_js_title">JS交互测试</string>
 
 </resources>

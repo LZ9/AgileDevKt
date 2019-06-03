@@ -640,6 +640,27 @@
 
         </activity>
 
+        <activity
+            android:name=".modules.webview.WebViewActivity"
+            android:label="WebView测试类"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity
+            android:name=".modules.webview.PgWebViewActivity"
+            android:label="带加载控件的WebView测试类"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity
+            android:name=".modules.webview.JsWebViewActivity"
+            android:label="JS交互的WebView测试类"
+            android:screenOrientation="portrait">
+
+        </activity>
+
     </application>
 
 </manifest>
