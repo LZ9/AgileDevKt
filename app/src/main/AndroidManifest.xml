@@ -662,7 +662,7 @@
         </activity>
 
         <activity
-            android:name=".modules.webview.SimpleWebViewActivity"
+            android:name=".modules.webview.simple.SimpleWebViewActivity"
             android:label="简单配置的WebView测试类"
             android:screenOrientation="portrait">
 

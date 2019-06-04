@@ -123,6 +123,7 @@ open class PgWebView : FrameLayout {
                 override fun onProgressChanged(webView: WebView?, progress: Int) {
                     PrintLog.dS(TAG, "Progress : $progress")
                     mProgressBar.progress = progress
+                    mProgressBar.visibility = if (progress == 100) View.GONE else View.VISIBLE
                     mListener?.onProgressChanged(webView, progress)
                 }
 
@@ -149,8 +150,9 @@ open class PgWebView : FrameLayout {
         settings.defaultTextEncodingName = StandardCharsets.UTF_8.toString()
         // 是否自动加载图片
         settings.loadsImagesAutomatically = true
-        // 是否支持缩放
-        settings.setSupportZoom(false)
+        // 网页自适应webview
+        settings.useWideViewPort = true
+        settings.loadWithOverviewMode = true
         // 设置缓存模式
         settings.cacheMode = WebSettings.LOAD_NO_CACHE
     }

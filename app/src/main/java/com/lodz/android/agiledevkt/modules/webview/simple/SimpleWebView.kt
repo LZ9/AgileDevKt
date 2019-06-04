@@ -1,8 +1,9 @@
-package com.lodz.android.agiledevkt.modules.webview
+package com.lodz.android.agiledevkt.modules.webview.simple
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Build
 import android.util.AttributeSet
 import android.view.Gravity
@@ -18,7 +19,6 @@ import com.lodz.android.agiledevkt.R
 import com.lodz.android.corekt.anko.dp2px
 import com.lodz.android.corekt.anko.getColorCompat
 import com.lodz.android.corekt.anko.getDrawableCompat
-import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.pandora.widget.webview.PgWebChromeClient
 import com.lodz.android.pandora.widget.webview.PgWebView
 import com.lodz.android.pandora.widget.webview.PgWebViewClient
@@ -33,6 +33,8 @@ class SimpleWebView : PgWebView {
 
     /** 百分比 */
     private lateinit var mPercentageTv: TextView
+    /** 地址重定向回调 */
+    private var mListener: ((view: WebView?, uri: Uri) -> Boolean)? = null
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
@@ -91,15 +93,10 @@ class SimpleWebView : PgWebView {
 
         override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && request != null) {
-                val url = request.url
-                if ("bilibili".equals(url.scheme)){
-                    return true
+                if ("http".equals(request.url.scheme) || "https".equals(request.url.scheme)) {
+                    return super.shouldOverrideUrlLoading(view, request)
                 }
-                PrintLog.eS("PgWebViewTag", url.toString())
-                PrintLog.eS("PgWebViewTag", url.scheme)
-                PrintLog.eS("PgWebViewTag", url.host)
-                PrintLog.eS("PgWebViewTag", url.path)
-                PrintLog.vS("PgWebViewTag", url.pathSegments.toString())
+                return mListener?.invoke(view, request.url) ?: super.shouldOverrideUrlLoading(view, request)
             }
             return super.shouldOverrideUrlLoading(view, request)
         }
@@ -109,15 +106,13 @@ class SimpleWebView : PgWebView {
         override fun onProgressChanged(view: WebView?, newProgress: Int) {
             super.onProgressChanged(view, newProgress)
             mPercentageTv.text = StringBuilder(newProgress.toString()).append("%")
+            mPercentageTv.visibility = if (newProgress == 100) View.GONE else View.VISIBLE
         }
     }
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun initWebSettings(settings: WebSettings) {
         super.initWebSettings(settings)
-        // 网页自适应webview
-        settings.useWideViewPort = true
-        settings.loadWithOverviewMode = true
         // 开启JS
         settings.javaScriptEnabled = true
         // 使用DOM storage
@@ -128,5 +123,10 @@ class SimpleWebView : PgWebView {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             settings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
         }
+    }
+
+    /** 设置地址重定向回调监听器[listener] */
+    fun setOnOtherOverrideUrlLoading(listener: (view: WebView?, uri: Uri) -> Boolean) {
+        mListener = listener
     }
 }

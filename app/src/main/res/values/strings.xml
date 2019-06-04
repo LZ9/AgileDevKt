@@ -691,7 +691,9 @@
     <string name="wv_js">带JS交互的WebView</string>
     <string name="wv_js_title">JS交互测试</string>
     <string name="wv_simple">简单配置的WebView</string>
-    <string name="wv_simple_title">简单配置</string>
-
+    <string name="wv_simple_title">简单配置WebView</string>
+    <string name="wv_simple_check_bilibili_title">是否离开当前浏览器打开哔哩哔哩APP？</string>
+    <string name="wv_simple_check_confirm">走起</string>
+    <string name="wv_simple_check_cancel">慢着</string>
 
 </resources>

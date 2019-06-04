@@ -1,14 +1,17 @@
-package com.lodz.android.agiledevkt.modules.webview
+package com.lodz.android.agiledevkt.modules.webview.simple
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.widget.ImageView
 import com.lodz.android.agiledevkt.R
+import com.lodz.android.agiledevkt.modules.splash.CheckDialog
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.widget.webview.OnPgStatusChangeListener
@@ -89,6 +92,13 @@ class SimpleWebViewActivity : BaseActivity() {
                 mForwardBtn.isEnabled = mWebView.isCanForward()
             }
         })
+
+        mWebView.setOnOtherOverrideUrlLoading { view, uri ->
+            if ("bilibili".equals(uri.scheme)) {
+                showJumpBilibiliDialog(uri)
+            }
+            return@setOnOtherOverrideUrlLoading true
+        }
     }
 
     override fun initData() {
@@ -97,5 +107,25 @@ class SimpleWebViewActivity : BaseActivity() {
         mBackwardBtn.isEnabled = false
         mForwardBtn.isEnabled = false
         showStatusCompleted()
+    }
+
+    override fun finish() {
+        super.finish()
+        mWebView.release()
+    }
+
+    /** 显示跳转哔哩哔哩提示弹框 */
+    private fun showJumpBilibiliDialog(uri: Uri) {
+        val checkDialog = CheckDialog(getContext())
+        checkDialog.setContentMsg(R.string.wv_simple_check_bilibili_title)
+        checkDialog.setPositiveText(R.string.wv_simple_check_confirm, DialogInterface.OnClickListener { dialog, which ->
+            startActivity(Intent(Intent.ACTION_VIEW, uri))
+            dialog.dismiss()
+        })
+        checkDialog.setNegativeText(R.string.wv_simple_check_cancel, DialogInterface.OnClickListener { dialog, which ->
+            dialog.dismiss()
+        })
+        checkDialog.setCanceledOnTouchOutside(true)
+        checkDialog.show()
     }
 }
