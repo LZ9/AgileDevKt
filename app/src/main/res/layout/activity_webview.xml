@@ -23,4 +23,13 @@
         android:textAllCaps="false"
         android:textColor="@color/white" />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/simple_btn"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/wv_simple"
+        android:textAllCaps="false"
+        android:textColor="@color/white" />
+
 </LinearLayout>

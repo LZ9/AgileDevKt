@@ -27,6 +27,8 @@ class WebViewActivity : BaseActivity() {
     private val mPgBtn by bindView<MaterialButton>(R.id.pg_btn)
     /** JS交互的WebView */
     private val mJsBtn by bindView<MaterialButton>(R.id.js_btn)
+    /** 简单配置的WebView */
+    private val mFbBtn by bindView<MaterialButton>(R.id.simple_btn)
 
     override fun getLayoutId(): Int = R.layout.activity_webview
 
@@ -48,6 +50,10 @@ class WebViewActivity : BaseActivity() {
 
         mJsBtn.setOnClickListener {
             JsWebViewActivity.start(getContext())
+        }
+
+        mFbBtn.setOnClickListener {
+            SimpleWebViewActivity.start(getContext())
         }
     }
 
