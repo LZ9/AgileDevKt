@@ -8,7 +8,7 @@ import android.webkit.WebView
  * @author zhouL
  * @date 2019/6/3
  */
-class PgWebChromeClient : WebChromeClient() {
+open class PgWebChromeClient : WebChromeClient() {
 
     private var mListener: OnPgStatusChangeListener? = null
 

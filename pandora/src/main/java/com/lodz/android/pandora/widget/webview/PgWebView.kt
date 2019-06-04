@@ -61,6 +61,7 @@ open class PgWebView : FrameLayout {
     private fun init() {
         initViews()
         initWebView()
+        onInit()
     }
 
     private fun initViews() {
@@ -154,6 +155,8 @@ open class PgWebView : FrameLayout {
         settings.cacheMode = WebSettings.LOAD_NO_CACHE
     }
 
+    /** 初始化 */
+    protected open fun onInit() {}
 
     /** 设置日志标签[tag] */
     fun setLogTag(tag: String) {
@@ -175,6 +178,11 @@ open class PgWebView : FrameLayout {
     /** 回退 */
     fun goBack() {
         mWebView?.goBack()
+    }
+
+    /** 是否可以前进 */
+    fun isCanForward(): Boolean {
+        return mWebView?.canGoForward() ?: false
     }
 
     /** 前进 */
