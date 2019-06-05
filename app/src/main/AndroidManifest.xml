@@ -668,6 +668,13 @@
 
         </activity>
 
+        <activity
+            android:name=".modules.cardview.CardViewActivity"
+            android:label="CardView测试类"
+            android:screenOrientation="portrait">
+
+        </activity>
+
     </application>
 
 </manifest>

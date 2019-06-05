@@ -19,6 +19,7 @@ import com.lodz.android.agiledevkt.modules.array.ArrayTestActivity
 import com.lodz.android.agiledevkt.modules.bitmap.BitmapTestActivity
 import com.lodz.android.agiledevkt.modules.bluetooth.BluetoothTestActivity
 import com.lodz.android.agiledevkt.modules.bottomsheet.BottomSheetsActivity
+import com.lodz.android.agiledevkt.modules.cardview.CardViewActivity
 import com.lodz.android.agiledevkt.modules.collect.CollectActivity
 import com.lodz.android.agiledevkt.modules.color.ColorAlphaTestActivity
 import com.lodz.android.agiledevkt.modules.config.ConfigLayoutActivity
@@ -144,7 +145,8 @@ class MainActivity : BaseActivity() {
             MainBean("单位转换测试类", "D", DimensionsActivity::class.java),
             MainBean("基础控件配置", "J", ConfigLayoutActivity::class.java),
             MainBean("注解测试类", "Z", AnnotationTestActivity::class.java),
-            MainBean("WebView测试类", "W", WebViewActivity::class.java)
+            MainBean("WebView测试类", "W", WebViewActivity::class.java),
+            MainBean("CardView测试类", "C", CardViewActivity::class.java)
     )
 
     /** 列表 */
