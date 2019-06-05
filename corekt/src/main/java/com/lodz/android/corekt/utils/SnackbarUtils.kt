@@ -57,7 +57,7 @@ class SnackbarUtils private constructor() {
 
         /** 创建一个自定义时长Snackbar，控件容器[view]，内容文字[text]，时长[duration]以毫秒为单位 */
         @JvmStatic
-        fun createCustom(view: View, text: String, duration: Int): SnackbarUtils {
+        fun createDuration(view: View, text: String, duration: Int): SnackbarUtils {
             val utils = SnackbarUtils()
             utils.mSnackbar = Snackbar.make(view, text, Snackbar.LENGTH_INDEFINITE).setDuration(duration)
             return utils
@@ -65,7 +65,7 @@ class SnackbarUtils private constructor() {
 
         /** 创建一个自定义时长Snackbar，控件容器[view]，内容文字[textRes]，时长[duration]以毫秒为单位 */
         @JvmStatic
-        fun createCustom(view: View, @StringRes textRes: Int, duration: Int): SnackbarUtils {
+        fun createDuration(view: View, @StringRes textRes: Int, duration: Int): SnackbarUtils {
             val utils = SnackbarUtils()
             utils.mSnackbar = Snackbar.make(view, textRes, Snackbar.LENGTH_INDEFINITE).setDuration(duration)
             return utils
