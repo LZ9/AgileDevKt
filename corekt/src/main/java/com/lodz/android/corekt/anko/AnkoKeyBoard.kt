@@ -16,14 +16,14 @@ fun Context.isKeybordShow(): Boolean = (getSystemService(Context.INPUT_METHOD_SE
 fun View.isKeybordShow(): Boolean = (context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).isActive(this)
 
 /** 显示软键盘 */
-fun View.showInputMethod(){
+fun View.showInputMethod() {
     val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     imm.showSoftInput(this, InputMethodManager.RESULT_SHOWN)
     imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
 }
 
 /** 隐藏软键盘 */
-fun View.hideInputMethod(){
+fun View.hideInputMethod() {
     val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     imm.hideSoftInputFromWindow(windowToken, 0)
 }

@@ -32,14 +32,16 @@ class ThreadPoolManager private constructor() {
     }
 
     /** 重新配置 */
-    fun newBuilder(): ThreadPoolManager.Builder = mBuilder
+    fun newBuilder(): Builder = mBuilder
 
     /** 执行一个高优先级线程[runnable] */
     fun executeHighest(runnable: Runnable) {
         if (mHighestExecutor == null) {
-            mHighestExecutor = ThreadPoolExecutor(mBuilder.getCorePoolSize(), mBuilder.getMaximumPoolSize(),
-                    mBuilder.getKeepAliveTime(), mBuilder.getKeepAliveTimeUnit(), LinkedBlockingQueue<Runnable>(),
-                    PriorityThreadFactory.createHighestPriorityThread(), mBuilder.getRejectedExecutionHandler())
+            mHighestExecutor = ThreadPoolExecutor(
+                mBuilder.getCorePoolSize(), mBuilder.getMaximumPoolSize(),
+                mBuilder.getKeepAliveTime(), mBuilder.getKeepAliveTimeUnit(), LinkedBlockingQueue<Runnable>(),
+                PriorityThreadFactory.createHighestPriorityThread(), mBuilder.getRejectedExecutionHandler()
+            )
         }
         mHighestExecutor!!.execute(runnable)
     }
@@ -47,9 +49,11 @@ class ThreadPoolManager private constructor() {
     /** 执行一个普通优先级线程[runnable] */
     fun executeNormal(runnable: Runnable) {
         if (mNormalExecutor == null) {
-            mNormalExecutor = ThreadPoolExecutor(mBuilder.getCorePoolSize(), mBuilder.getMaximumPoolSize(),
-                    mBuilder.getKeepAliveTime(), mBuilder.getKeepAliveTimeUnit(), LinkedBlockingQueue<Runnable>(),
-                    PriorityThreadFactory.createNormPriorityThread(), mBuilder.getRejectedExecutionHandler())
+            mNormalExecutor = ThreadPoolExecutor(
+                mBuilder.getCorePoolSize(), mBuilder.getMaximumPoolSize(),
+                mBuilder.getKeepAliveTime(), mBuilder.getKeepAliveTimeUnit(), LinkedBlockingQueue<Runnable>(),
+                PriorityThreadFactory.createNormPriorityThread(), mBuilder.getRejectedExecutionHandler()
+            )
         }
         mNormalExecutor!!.execute(runnable)
     }
@@ -57,9 +61,11 @@ class ThreadPoolManager private constructor() {
     /** 执行一个低优先级线程[runnable] */
     fun executeLowest(runnable: Runnable) {
         if (mLowestExecutor == null) {
-            mLowestExecutor = ThreadPoolExecutor(mBuilder.getCorePoolSize(), mBuilder.getMaximumPoolSize(),
-                    mBuilder.getKeepAliveTime(), mBuilder.getKeepAliveTimeUnit(), LinkedBlockingQueue<Runnable>(),
-                    PriorityThreadFactory.createLowestPriorityThread(), mBuilder.getRejectedExecutionHandler())
+            mLowestExecutor = ThreadPoolExecutor(
+                mBuilder.getCorePoolSize(), mBuilder.getMaximumPoolSize(),
+                mBuilder.getKeepAliveTime(), mBuilder.getKeepAliveTimeUnit(), LinkedBlockingQueue<Runnable>(),
+                PriorityThreadFactory.createLowestPriorityThread(), mBuilder.getRejectedExecutionHandler()
+            )
         }
         mLowestExecutor!!.execute(runnable)
     }

@@ -21,6 +21,7 @@ object AnkoNumFormat {
 }
 
 /** 格式化[formatType]数字[data]（默认两位小数） */
+@JvmOverloads
 fun Double.format(formatType: String = AnkoNumFormat.TYPE_TWO_DECIMAL): String {
     try {
         val format = DecimalFormat(formatType)
@@ -32,6 +33,7 @@ fun Double.format(formatType: String = AnkoNumFormat.TYPE_TWO_DECIMAL): String {
 }
 
 /** 格式化[formatType]数字[data]（默认两位小数） */
+@JvmOverloads
 fun Float.format(formatType: String = AnkoNumFormat.TYPE_TWO_DECIMAL): String {
     try {
         val format = DecimalFormat(formatType)

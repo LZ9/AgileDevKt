@@ -12,16 +12,16 @@ import android.net.ConnectivityManager
 class ConnectBroadcastReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
-        if (context == null || intent == null){
+        if (context == null || intent == null) {
             return
         }
         val action = intent.action
-        if (action.isNullOrEmpty()){
+        if (action.isNullOrEmpty()) {
             return
         }
 
         try {
-            if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION)){
+            if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
                 val manager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
                 NetworkManager.get().updateNet(manager)
                 NetworkManager.get().notifyNetworkListeners()

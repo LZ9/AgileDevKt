@@ -134,5 +134,5 @@ internal object Utils {
         return bitmap
     }
 
-    fun bitmap2Drawable(bitmap: Bitmap):Drawable = BitmapDrawable(null, bitmap)
+    fun bitmap2Drawable(bitmap: Bitmap): Drawable = BitmapDrawable(null, bitmap)
 }

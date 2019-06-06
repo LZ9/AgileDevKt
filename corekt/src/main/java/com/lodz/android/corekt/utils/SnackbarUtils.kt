@@ -85,6 +85,7 @@ class SnackbarUtils private constructor() {
     }
 
     /** 添加文字左侧图片[resId]，图文间距[drawablePadding]（单位px，默认0） */
+    @JvmOverloads
     fun addLeftImage(@DrawableRes resId: Int, drawablePadding: Int = 0): SnackbarUtils {
         val textView = mSnackbar.view.findViewById<TextView>(R.id.snackbar_text)
         textView.gravity = Gravity.CENTER_VERTICAL
@@ -94,6 +95,7 @@ class SnackbarUtils private constructor() {
     }
 
     /** 添加文字右侧图片[resId]，图文间距[drawablePadding]（单位px，默认0） */
+    @JvmOverloads
     fun addRightImage(@DrawableRes resId: Int, drawablePadding: Int = 0): SnackbarUtils {
         val textView = mSnackbar.view.findViewById<TextView>(R.id.snackbar_text)
         textView.gravity = Gravity.CENTER_VERTICAL
@@ -109,6 +111,7 @@ class SnackbarUtils private constructor() {
     }
 
     /** 替换内容布局[layoutId]，布局宽度[width]（默认LinearLayout.LayoutParams.MATCH_PARENT），布局高度[height]（默认LinearLayout.LayoutParams.MATCH_PARENT） */
+    @JvmOverloads
     fun replaceLayoutView(@LayoutRes layoutId: Int, width: Int = LinearLayout.LayoutParams.MATCH_PARENT, height: Int = LinearLayout.LayoutParams.MATCH_PARENT): SnackbarUtils {
         val snackbarLayout = mSnackbar.view as Snackbar.SnackbarLayout
         snackbarLayout.removeAllViews()
@@ -120,6 +123,7 @@ class SnackbarUtils private constructor() {
     }
 
     /** 替换内容布局[view]，布局宽度[width]（默认LinearLayout.LayoutParams.MATCH_PARENT），布局高度[height]（默认LinearLayout.LayoutParams.MATCH_PARENT） */
+    @JvmOverloads
     fun replaceLayoutView(view: View, width: Int = LinearLayout.LayoutParams.MATCH_PARENT, height: Int = LinearLayout.LayoutParams.MATCH_PARENT): SnackbarUtils {
         val snackbarLayout = mSnackbar.view as Snackbar.SnackbarLayout
         snackbarLayout.removeAllViews()

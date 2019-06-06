@@ -58,8 +58,10 @@ object RSA {
         val publicKey = keyPair.public as RSAPublicKey
         val privateKey = keyPair.private as RSAPrivateKey
 
-        return Pair(Base64.encodeToString(publicKey.encoded, Base64.NO_WRAP),
-                Base64.encodeToString(privateKey.encoded, Base64.NO_WRAP))
+        return Pair(
+            Base64.encodeToString(publicKey.encoded, Base64.NO_WRAP),
+            Base64.encodeToString(privateKey.encoded, Base64.NO_WRAP)
+        )
     }
 
     /** 用公钥加密数据 */

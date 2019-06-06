@@ -84,9 +84,12 @@ object DeviceUtils {
 
     /** 校验su文件路径数组[paths]（不传或传null使用默认校验路径），不存在su文件返回null */
     @JvmStatic
+    @JvmOverloads
     fun checkRootFile(paths: Array<String>? = null): File? {
-        var checkPaths = arrayOf("/sbin/su", "/system/bin/su", "/system/xbin/su", "/data/local/xbin/su",
-                "/data/local/bin/su", "/system/sd/xbin/su", "/system/bin/failsafe/su", "/data/local/su")
+        var checkPaths = arrayOf(
+            "/sbin/su", "/system/bin/su", "/system/xbin/su", "/data/local/xbin/su",
+            "/data/local/bin/su", "/system/sd/xbin/su", "/system/bin/failsafe/su", "/data/local/su"
+        )
         if (paths != null && paths.size > 0) {//如果
             checkPaths = paths
         }

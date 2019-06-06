@@ -57,6 +57,7 @@ object ReflectUtils {
 
     /** 执行类[c]的某个函数，需要类的构造函数对象[constructor]，函数名字[functionName]，函数的参数类型[paramClassTypes]和具体入参[params] */
     @JvmStatic
+    @JvmOverloads
     fun executeFunction(c: Class<*>, constructor: Any, functionName: String, paramClassTypes: Array<Class<*>>? = null, params: Array<*>? = null): Any? {
         try {
             val method = if (paramClassTypes == null) c.getDeclaredMethod(functionName) else c.getDeclaredMethod(functionName, *paramClassTypes)// 方法名和参数类型
@@ -70,6 +71,7 @@ object ReflectUtils {
 
     /** 执行具有无参构造函数的类[c]的某个函数，函数名字[functionName]，函数的参数类型[paramClassTypes]和具体入参[params] */
     @JvmStatic
+    @JvmOverloads
     fun executeFunction(c: Class<*>, functionName: String, paramClassTypes: Array<Class<*>>? = null, params: Array<*>? = null): Any? {
         val constructor = getConstructor(c) ?: return null
         return executeFunction(c, constructor, functionName, paramClassTypes, params)
@@ -77,11 +79,13 @@ object ReflectUtils {
 
     /** 执行类型[T]的某个函数，需要类的构造函数对象[constructor]，函数名字[functionName]，函数的参数类型[paramClassTypes]和具体入参[params] */
     @JvmStatic
+    @JvmOverloads
     inline fun <reified T> executeFunctionByConstructor(constructor: Any, functionName: String, paramClassTypes: Array<Class<*>>? = null, params: Array<*>? = null)
             : Any? = executeFunction(T::class.java, constructor, functionName, paramClassTypes, params)
 
     /** 执行具有无参构造函数的类型[T]的某个函数，函数名字[functionName]，函数的参数类型[paramClassTypes]和具体入参[params] */
     @JvmStatic
+    @JvmOverloads
     inline fun <reified T> executeFunctions(functionName: String, paramClassTypes: Array<Class<*>>? = null, params: Array<*>? = null): Any? {
         val cls = T::class.java
         val constructor = getConstructor(cls) ?: return null

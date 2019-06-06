@@ -7,7 +7,9 @@ import android.graphics.drawable.Drawable
 import android.os.Build
 import android.util.Base64
 import android.view.View
+import androidx.annotation.FloatRange
 import androidx.annotation.IntDef
+import androidx.annotation.IntRange
 import com.lodz.android.corekt.anko.getScreenHeight
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
@@ -21,8 +23,11 @@ object BitmapUtils {
 
     /** 把[bitmap]转为Bsae64，质量[quality]（0-100，默认70），转码类型[flags]默认Base64.NO_WRAP */
     @JvmStatic
-    fun bitmapToBase64(bitmap: Bitmap, quality: Int = 70, flags: Int = Base64.NO_WRAP): String {
-        // @IntRange(from = 0, to = 100) quality: Int = 70
+    @JvmOverloads
+    fun bitmapToBase64(
+        bitmap: Bitmap, @IntRange(from = 0, to = 100) quality: Int = 70,
+        flags: Int = Base64.NO_WRAP
+    ): String {
         var reviseQuality = quality
         if (quality < 0) {
             reviseQuality = 0
@@ -38,6 +43,7 @@ object BitmapUtils {
 
     /** Base64转为Bitmap */
     @JvmStatic
+    @JvmOverloads
     fun base64ToBitmap(base64Data: String, flags: Int = Base64.NO_WRAP): Bitmap? {
         val bytes = base64ToByte(base64Data, flags)
         return BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
@@ -45,16 +51,21 @@ object BitmapUtils {
 
     /** Base64转为Byte数组 */
     @JvmStatic
+    @JvmOverloads
     fun base64ToByte(base64Data: String, flags: Int = Base64.NO_WRAP): ByteArray = Base64.decode(base64Data, flags)
 
     /** [drawable]转为Bitmap，宽度[widthPx]和高度[heightPx]默认取[drawable]的值 */
     @JvmStatic
-    fun drawableToBitmap(drawable: Drawable, widthPx: Int = drawable.intrinsicWidth, heightPx: Int = drawable.intrinsicHeight): Bitmap? {
-        // @IntRange(from = 1) widthPx: Int = drawable.intrinsicWidth, @IntRange(from = 1) heightPx: Int = drawable.intrinsicHeight
+    @JvmOverloads
+    fun drawableToBitmap(drawable: Drawable, @IntRange(from = 1) widthPx: Int = drawable.intrinsicWidth, @IntRange(from = 1) heightPx: Int = drawable.intrinsicHeight): Bitmap? {
         if (widthPx < 1 || heightPx < 1) {
             return null
         }
-        val bitmap = Bitmap.createBitmap(widthPx, heightPx, if (drawable.opacity != PixelFormat.OPAQUE) Bitmap.Config.ARGB_8888 else Bitmap.Config.RGB_565)
+        val bitmap = Bitmap.createBitmap(
+            widthPx,
+            heightPx,
+            if (drawable.opacity != PixelFormat.OPAQUE) Bitmap.Config.ARGB_8888 else Bitmap.Config.RGB_565
+        )
         val canvas = Canvas(bitmap)
         drawable.setBounds(0, 0, widthPx, heightPx)
         drawable.draw(canvas)
@@ -125,6 +136,7 @@ object BitmapUtils {
     /** 合并前景图[fg]和背景图[bgd] */
     @SuppressLint("SwitchIntDef")
     @JvmStatic
+    @JvmOverloads
     fun combineBitmap(fg: Bitmap, bg: Bitmap, @CombinekLocationType location: Int, marginPx: Int = 0): Bitmap {
         var newMargin = 0f
         if (marginPx > 0) {
@@ -165,7 +177,12 @@ object BitmapUtils {
             LEFT_BOTTOM -> canvas.drawBitmap(fg, newMargin, bgHeight - fgHeight - newMargin, paint)
             RIGHT_TOP -> canvas.drawBitmap(fg, bgWidth - fgWidth - newMargin, newMargin, paint)
             RIGHT_BOTTOM -> canvas.drawBitmap(fg, bgWidth - fgWidth - newMargin, bgHeight - fgHeight - newMargin, paint)
-            CENTER -> canvas.drawBitmap(fg, (bgWidth / 2.0 - fgWidth / 2.0).toFloat(), (bgHeight / 2.0 - fgHeight / 2.0).toFloat(), paint)
+            CENTER -> canvas.drawBitmap(
+                fg,
+                (bgWidth / 2.0 - fgWidth / 2.0).toFloat(),
+                (bgHeight / 2.0 - fgHeight / 2.0).toFloat(),
+                paint
+            )
             else -> throw IllegalArgumentException("please use location in @CombinekLocationType")
         }
         return bitmap
@@ -179,7 +196,11 @@ object BitmapUtils {
     /** 将水印图片[watermark]放置在原图片[src]上，水印位置[location]，间距[margin] */
     @SuppressLint("SwitchIntDef")
     @JvmStatic
-    fun createWatermarkBitmap(src: Bitmap, watermark: Bitmap, @WatermarkLocationType location: Int, marginPx: Int): Bitmap {
+    @JvmOverloads
+    fun createWatermarkBitmap(
+        src: Bitmap,
+        watermark: Bitmap, @WatermarkLocationType location: Int, @IntRange(from = 0) marginPx: Int = 0
+    ): Bitmap {
         var newMargin = 0f
         if (marginPx > 0) {
             newMargin = marginPx.toFloat()
@@ -237,7 +258,8 @@ object BitmapUtils {
 
     /** 将图片[bitmap]转为圆角[roundPx]图 */
     @JvmStatic
-    fun createRoundedCornerBitmap(bitmap: Bitmap, roundPx: Float = 12f): Bitmap {
+    @JvmOverloads
+    fun createRoundedCornerBitmap(bitmap: Bitmap, @FloatRange(from = 0.0) roundPx: Float = 12f): Bitmap {
 
         val output = Bitmap.createBitmap(bitmap.width, bitmap.height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(output)
@@ -280,13 +302,21 @@ object BitmapUtils {
         canvas.drawBitmap(reflectionImage, 0f, (height + reflectionGap).toFloat(), null)
 
         val paint = Paint()
-        val shader = LinearGradient(0f, bitmap.height.toFloat(), 0f,
-                (bitmapWithReflection.height + reflectionGap).toFloat(), 0x70ffffff, 0x00ffffff, Shader.TileMode.CLAMP)
+        val shader = LinearGradient(
+            0f, bitmap.height.toFloat(), 0f,
+            (bitmapWithReflection.height + reflectionGap).toFloat(), 0x70ffffff, 0x00ffffff, Shader.TileMode.CLAMP
+        )
         paint.shader = shader
         // Set the Transfer mode to be porter duff and destination in
         paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.DST_IN)
         // Draw a rectangle using the paint with our linear gradient
-        canvas.drawRect(0f, height.toFloat(), width.toFloat(), (bitmapWithReflection.height + reflectionGap).toFloat(), paint)
+        canvas.drawRect(
+            0f,
+            height.toFloat(),
+            width.toFloat(),
+            (bitmapWithReflection.height + reflectionGap).toFloat(),
+            paint
+        )
 
         return bitmapWithReflection
     }
@@ -379,8 +409,7 @@ object BitmapUtils {
 
     /** 更改图片[bitmap]色系，图片的亮暗程度值[delta]越小图片会越亮，取值范围(1,23) */
     @JvmStatic
-    fun setBitmapTone(bitmap: Bitmap, delta: Int): Bitmap {
-        // @IntRange(from = 1, to = 23) delta: Int
+    fun setBitmapTone(bitmap: Bitmap, @IntRange(from = 1, to = 23) delta: Int): Bitmap {
         var newDelta = delta
         if (delta > 23) {
             newDelta = 23
@@ -436,8 +465,7 @@ object BitmapUtils {
 
     /** 设置图片[bitmap]饱和度[value] */
     @JvmStatic
-    fun setBitmapSaturation(bitmap: Bitmap, value: Float): Bitmap {
-        // @FloatRange(from = 0.0, to = 2.0) value: Float
+    fun setBitmapSaturation(bitmap: Bitmap, @FloatRange(from = 0.0, to = 2.0) value: Float): Bitmap {
         var newValue = value
         if (value <= 0f) {
             newValue = 0f
@@ -463,8 +491,7 @@ object BitmapUtils {
 
     /** 设置图片[bitmap]的亮度值[value] */
     @JvmStatic
-    fun setBitmapLuminance(bitmap: Bitmap, value: Float): Bitmap {
-        // @FloatRange(from = 0.0, to = 2.0) value: Float
+    fun setBitmapLuminance(bitmap: Bitmap, @FloatRange(from = 0.0, to = 2.0) value: Float): Bitmap {
         var newValue = value
         if (value <= 0f) {
             newValue = 0f
@@ -490,8 +517,7 @@ object BitmapUtils {
 
     /** 设置图片[bitmap]的色相值[value] */
     @JvmStatic
-    fun setBitmapHue(bitmap: Bitmap, value: Float): Bitmap {
-        // @FloatRange(from = 0.0, to = 2.0) value: Float
+    fun setBitmapHue(bitmap: Bitmap, @FloatRange(from = 0.0, to = 2.0) value: Float): Bitmap {
         var newValue = value
         if (value <= 0f) {
             newValue = 0f
@@ -538,7 +564,12 @@ object BitmapUtils {
                 val newR = (0.393 * pixR + 0.769 * pixG + 0.189 * pixB).toInt()
                 val newG = (0.349 * pixR + 0.686 * pixG + 0.168 * pixB).toInt()
                 val newB = (0.272 * pixR + 0.534 * pixG + 0.131 * pixB).toInt()
-                val newColor = Color.argb(255, if (newR > 255) 255 else newR, if (newG > 255) 255 else newG, if (newB > 255) 255 else newB)
+                val newColor = Color.argb(
+                    255,
+                    if (newR > 255) 255 else newR,
+                    if (newG > 255) 255 else newG,
+                    if (newB > 255) 255 else newB
+                )
                 pixels[width * i + k] = newColor
             }
         }
@@ -552,8 +583,13 @@ object BitmapUtils {
 
     /** 对图片[bitmap]进行光照效果处理，光源位置为X轴[centerX]和Y轴[centerY]，光照强度[strength] */
     @JvmStatic
-    fun createSunshineBitmap(bitmap: Bitmap, centerX: Int, centerY: Int, strength: Float = 50f): Bitmap {
-        //  @FloatRange(from = 0.0, to = 100.0) strength: Float = 50f
+    @JvmOverloads
+    fun createSunshineBitmap(
+        bitmap: Bitmap, centerX: Int, centerY: Int, @FloatRange(
+            from = 0.0,
+            to = 100.0
+        ) strength: Float = 50f
+    ): Bitmap {
         var newStrength = strength + 100
         if (newStrength >= 200f) {
             newStrength = 200f

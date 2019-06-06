@@ -22,8 +22,15 @@ class ACache {
 
     private var mCache: ACacheManager
 
-    constructor(context: Context, cacheName: String = "ACache", maxSize: Long = MAX_SIZE.toLong(), maxCount: Int = MAX_COUNT) : this(File(context.getCacheDir(), cacheName), maxSize, maxCount)
+    @JvmOverloads
+    constructor(
+        context: Context,
+        cacheName: String = "ACache",
+        maxSize: Long = MAX_SIZE.toLong(),
+        maxCount: Int = MAX_COUNT
+    ) : this(File(context.getCacheDir(), cacheName), maxSize, maxCount)
 
+    @JvmOverloads
     constructor(cacheDir: File, maxSize: Long = MAX_SIZE.toLong(), maxCount: Int = MAX_COUNT) {
         if (!cacheDir.exists() && !cacheDir.mkdirs()) {
             throw RuntimeException("can't make dirs in ${cacheDir.absolutePath}")

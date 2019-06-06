@@ -20,10 +20,12 @@ object AES {
 
     /** 加密原始数据[dataBytes]，秘钥[key]必须为16位，填充方式[transformation]默认"AES/CBC/NoPadding"，偏移量[iv]默认"123456abc2345678" */
     @JvmStatic
+    @JvmOverloads
     fun encrypt(data: String, key: String, transformation: String = FORMAT, iv: String = IV): String? = encrypt(data.toByteArray(), key, transformation, iv)
 
     /** 加密原始数据[dataBytes]，秘钥[key]必须为16位，填充方式[transformation]默认"AES/CBC/NoPadding"，偏移量[iv]默认"123456abc2345678" */
     @JvmStatic
+    @JvmOverloads
     fun encrypt(dataBytes: ByteArray, key: String, transformation: String = FORMAT, iv: String = IV): String? {
         if (dataBytes.isEmpty() || key.isEmpty()) {
             return null
@@ -58,6 +60,7 @@ object AES {
 
     /** 解密密文[data]，秘钥[key]必须为16位，填充方式[transformation]默认"AES/CBC/NoPadding"，偏移量[iv]默认"123456abc2345678" */
     @JvmStatic
+    @JvmOverloads
     fun decrypt(data: String, key: String, transformation: String = FORMAT, iv: String = IV): String? {
         if (data.isEmpty() || key.isEmpty()) {
             return null

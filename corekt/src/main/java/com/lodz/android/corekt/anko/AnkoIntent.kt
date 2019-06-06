@@ -25,6 +25,7 @@ import java.io.File
  */
 
 /** 安装apk文件 */
+@JvmOverloads
 fun Context.installApk(apkPath: String, authority: String, newTask: Boolean = true) {
     val file: File? = FileUtils.create(apkPath)
     if (file == null || !FileUtils.isFileExists(file)) {
@@ -67,6 +68,7 @@ fun Context.uninstallApp(packageName: String) {
 }
 
 /** 通过LaunchIntent打开包名为[packageName]的应用 */
+@JvmOverloads
 fun Context.openAppByLaunch(packageName: String, newTask: Boolean = true) {
     if (packageName.isEmpty()) {
         throw IllegalArgumentException("packageName is null")
@@ -82,6 +84,7 @@ fun Context.openAppByLaunch(packageName: String, newTask: Boolean = true) {
 }
 
 /** 通过android.intent.action.MAIN来打开包名为[packageName]的应用 */
+@JvmOverloads
 fun Context.openAppByActionMain(packageName: String, newTask: Boolean = true) {
     if (packageName.isEmpty()) {
         throw IllegalArgumentException("packageName is null")
@@ -149,6 +152,7 @@ fun Context.goBluetoothSetting() {
 }
 
 /** 打开浏览器访问[url] */
+@JvmOverloads
 fun Context.browse(url: String, newTask: Boolean = true) {
     if (url.isEmpty()) {
         throw IllegalArgumentException("url is null")
@@ -162,6 +166,7 @@ fun Context.browse(url: String, newTask: Boolean = true) {
 }
 
 /** 分享标题为[subject]，内容为[text]的文字，应用选择框提示[tips] */
+@JvmOverloads
 fun Context.share(text: String, subject: String = "", tips: String = "") {
     val intent = Intent(android.content.Intent.ACTION_SEND)
     intent.type = "text/plain"
@@ -175,6 +180,7 @@ fun Context.share(text: String, subject: String = "", tips: String = "") {
 }
 
 /** 发送标题为[subject]，内容为[text]的邮件到[email]邮箱 */
+@JvmOverloads
 fun Context.email(email: String, subject: String = "", text: String = "") {
     val intent = Intent(Intent.ACTION_SENDTO)
     intent.data = Uri.parse("mailto:")
@@ -195,6 +201,7 @@ fun Context.makeCall(number: String) {
 }
 
 /** 发送短信[text]到号码[number] */
+@JvmOverloads
 fun Context.sendSMS(number: String, text: String = "") {
     val intent = Intent(Intent.ACTION_VIEW, Uri.parse("sms:$number"))
     intent.putExtra("sms_body", text)

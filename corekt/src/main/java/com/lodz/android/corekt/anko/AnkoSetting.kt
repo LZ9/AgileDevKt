@@ -24,6 +24,7 @@ fun Context.isScreenBrightnessModeAutomatic(): Boolean = getScreenBrightnessMode
 fun Context.setScreenBrightnessMode(mode: Int): Boolean = Settings.System.putInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS_MODE, mode)
 
 /** 获取手动模式下的系统亮度值，范围0-255（默认值255） */
+@JvmOverloads
 fun Context.getScreenBrightness(def: Int = 255): Int = Settings.System.getInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS, def)
 
 /** 设置手动模式下的系统亮度[brightness]（0-255）亮度显示的优先级：窗口>系统 */
@@ -60,6 +61,7 @@ fun Activity.setScreenAndWindowBrightness(@IntRange(from = 1, to = 255) brightne
 }
 
 /** 获取屏幕休眠时间（单位毫秒，默认30秒） */
+@JvmOverloads
 fun Context.getScreenDormantTime(def: Int = 30000): Int = Settings.System.getInt(contentResolver, Settings.System.SCREEN_OFF_TIMEOUT, def)
 
 /** 设置屏幕休眠时间[millis]（毫秒） */

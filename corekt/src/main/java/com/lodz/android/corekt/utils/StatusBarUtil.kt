@@ -37,6 +37,7 @@ object StatusBarUtil {
 
     /** 设置状态栏颜色[color]和透明度[alpha]（默认不透明） */
     @JvmStatic
+    @JvmOverloads
     fun setColor(window: Window, @ColorInt color: Int, @FloatRange(from = 0.0, to = 1.0) alpha: Float = 1.0f) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
@@ -73,6 +74,7 @@ object StatusBarUtil {
 
     /** 设置状态栏透明度[alpha]（默认45%） */
     @JvmStatic
+    @JvmOverloads
     fun setTransparent(window: Window, @FloatRange(from = 0.0, to = 1.0) alpha: Float = DEFAULT_ALPHA) {
         val color = getColor(window)
         setColor(window, color, alpha)
@@ -86,6 +88,7 @@ object StatusBarUtil {
 
     /** 为需要向下偏移的[needOffsetView]的界面设置状态栏透明度为[alpha]（默认45%），颜色为[colorBg]（默认黑色） */
     @JvmStatic
+    @JvmOverloads
     fun setTransparentForOffsetView(activity: Activity, needOffsetView: View, @FloatRange(from = 0.0, to = 1.0) alpha: Float = DEFAULT_ALPHA, @ColorInt colorBg: Int = Color.BLACK) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             return
@@ -103,6 +106,7 @@ object StatusBarUtil {
 
     /** 为侧滑栏[drawerLayout]布局设置状态栏透明度[alpha]（默认45%），需要向下偏移的控件为[needOffsetView]（不需要传null），状态栏颜色为[colorBg]（默认黑色） */
     @JvmStatic
+    @JvmOverloads
     fun setTransparentForDrawerLayout(activity: Activity, drawerLayout: DrawerLayout, needOffsetView: View, @FloatRange(from = 0.0, to = 1.0) alpha: Float = DEFAULT_ALPHA, @ColorInt colorBg: Int = Color.BLACK) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             return
@@ -132,10 +136,12 @@ object StatusBarUtil {
             return
         }
         val layoutParams = needOffsetView.layoutParams as ViewGroup.MarginLayoutParams
-        layoutParams.setMargins(layoutParams.leftMargin,
-                layoutParams.topMargin + needOffsetView.context.getStatusBarHeight(),
-                layoutParams.rightMargin,
-                layoutParams.bottomMargin)
+        layoutParams.setMargins(
+            layoutParams.leftMargin,
+            layoutParams.topMargin + needOffsetView.context.getStatusBarHeight(),
+            layoutParams.rightMargin,
+            layoutParams.bottomMargin
+        )
         needOffsetView.setTag(TAG_KEY_HAVE_SET_OFFSET, true)
     }
 

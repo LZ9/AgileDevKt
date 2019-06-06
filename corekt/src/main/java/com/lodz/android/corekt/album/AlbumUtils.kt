@@ -175,6 +175,7 @@ object AlbumUtils {
 
     /** 通知刷新相册，[imagePath]图片路径，[mimeTypes]图片格式默认jpeg/jpg/png/gif，[callback]回调默认为null */
     @JvmStatic
+    @JvmOverloads
     fun notifyScanImage(context: Context, imagePath: String, mimeTypes: Array<String> = arrayOf("image/jpeg", "image/jpg", "image/png", "image/gif"),
                         callback: MediaScannerConnection.OnScanCompletedListener? = null) {
         MediaScannerConnection.scanFile(context.applicationContext, arrayOf(imagePath), mimeTypes, callback)

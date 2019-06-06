@@ -19,6 +19,6 @@ object AppUtils {
 
     /** 获取32位随机UUID */
     @JvmStatic
-    fun getUUID32(): String = UUID.randomUUID().toString().replace("-","")
+    fun getUUID32(): String = UUID.randomUUID().toString().replace("-", "")
 
 }
