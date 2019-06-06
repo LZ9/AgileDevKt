@@ -57,7 +57,7 @@ class CropRoundedCornersTransformation : BitmapTransformation {
         val canvas = Canvas(bitmap)
         val paint = Paint()
         paint.isAntiAlias = true
-        paint.setShader(BitmapShader(crop, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP))
+        paint.shader = BitmapShader(crop, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
         drawRoundRect(canvas, paint, width.toFloat(), height.toFloat())
         return bitmap
     }
@@ -169,11 +169,11 @@ class CropRoundedCornersTransformation : BitmapTransformation {
         canvas.drawRect(RectF(mMargin + mRadius, mMargin + mRadius, right, bottom), paint)
     }
 
-    override fun toString() = ("RoundedTransformation(radius=$mRadius, margin=$mMargin, diameter=$mDiameter, cornerType=${mCornerType.name})")
+    override fun toString(): String = ("RoundedTransformation(radius=$mRadius, margin=$mMargin, diameter=$mDiameter, cornerType=${mCornerType.name})")
 
-    override fun equals(other: Any?) = other is CropRoundedCornersTransformation
+    override fun equals(other: Any?): Boolean = other is CropRoundedCornersTransformation
 
-    override fun hashCode() = ID.hashCode()
+    override fun hashCode(): Int = ID.hashCode()
 
     override fun updateDiskCacheKey(messageDigest: MessageDigest) {
         messageDigest.update(ID_BYTES)
