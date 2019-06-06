@@ -55,10 +55,7 @@ internal class ImageFolderAdapter(context: Context) : BaseRecyclerViewAdapter<Im
     }
 
     private fun showItem(holder: ImageFolderViewHolder, bean: ImageFolderItemBean) {
-        val imageFolder = bean.imageFolder
-        if (imageFolder == null) {
-            return
-        }
+        val imageFolder = bean.imageFolder ?: return
 
         mImgLoader?.displayImg(context, imageFolder.coverImgPath, holder.coverImg)
         holder.floderNameTv.text = imageFolder.name

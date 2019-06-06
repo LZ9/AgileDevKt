@@ -22,10 +22,7 @@ open class ViewPagerSnapHelper(val mStartPosition: Int) : PagerSnapHelper() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
 
-                val layoutManager = recyclerView.layoutManager
-                if (layoutManager == null) {
-                    return
-                }
+                val layoutManager = recyclerView.layoutManager ?: return
 
                 if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
                     val centerView = findSnapView(layoutManager)

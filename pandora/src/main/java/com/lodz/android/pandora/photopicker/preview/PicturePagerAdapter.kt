@@ -15,14 +15,9 @@ import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
 internal class PicturePagerAdapter<V : View, T : Any>(context: Context, view: AbsImageView<V, T>, controller: PreviewController) : BaseRecyclerViewAdapter<T>(context) {
 
     /** 图片控件 */
-    private val mView: AbsImageView<V, T>
+    private val mView: AbsImageView<V, T> = view
     /** 图片加载器 */
-    private var mController: PreviewController
-
-    init {
-        this.mView = view
-        this.mController = controller
-    }
+    private var mController: PreviewController = controller
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val frameLayout = FrameLayout(parent.context)
@@ -64,10 +59,9 @@ internal class PicturePagerAdapter<V : View, T : Any>(context: Context, view: Ab
     }
 
     private inner class DataViewHolder(itemView: ViewGroup) : RecyclerView.ViewHolder(itemView) {
-        val photoImg: V
+        val photoImg: V = mView.onCreateView(itemView.context)
 
         init {
-            photoImg = mView.onCreateView(itemView.context)
             itemView.addView(photoImg, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         }
     }

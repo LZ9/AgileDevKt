@@ -83,10 +83,7 @@ abstract class BaseBottomSheetDialog : BottomSheetDialog {
 
     /** 配置BottomSheetBehavior */
     private fun configBehavior() {
-        val cls = ReflectUtils.getClassForName("com.google.android.material.bottomsheet.BottomSheetDialog")
-        if (cls == null) {
-            return
-        }
+        val cls = ReflectUtils.getClassForName("com.google.android.material.bottomsheet.BottomSheetDialog") ?: return
         val behavior = ReflectUtils.getFieldValue(cls, this, "behavior")
         if (behavior != null && behavior is BottomSheetBehavior<*>) {
             onBehaviorInit(behavior)

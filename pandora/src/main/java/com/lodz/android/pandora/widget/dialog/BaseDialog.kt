@@ -53,7 +53,7 @@ abstract class BaseDialog : RxDialog {
     protected open fun endCreate() {}
 
     @StyleRes
-    protected open fun configAnimations() = -1
+    protected open fun configAnimations(): Int = -1
 
     /** 设置弹出动画 */
     private fun setWindowAnimations() {
@@ -65,10 +65,7 @@ abstract class BaseDialog : RxDialog {
 
     /** 设置阴影值[elevation]和背景[background]（需要设置背景才能设置阴影） */
     protected fun setElevation(elevation: Float, background: Drawable) {
-        val wd = window
-        if (wd == null) {
-            return
-        }
+        val wd = window ?: return
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             wd.decorView.elevation = elevation
             wd.decorView.background = background

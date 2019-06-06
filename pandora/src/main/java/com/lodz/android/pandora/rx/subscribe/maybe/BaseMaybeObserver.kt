@@ -37,10 +37,7 @@ abstract class BaseMaybeObserver<T> : MaybeObserver<T> {
 
     /** 打印标签日志 */
     private fun printTagLog(t: Throwable) {
-        val app = BaseApplication.get()
-        if (app == null) {
-            return
-        }
+        val app = BaseApplication.get() ?: return
         val tag = app.getMetaData(ERROR_TAG)
         if (tag != null && tag is String) {
             if (!tag.isEmpty()) {

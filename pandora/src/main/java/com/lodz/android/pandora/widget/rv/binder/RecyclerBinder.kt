@@ -26,6 +26,7 @@ abstract class RecyclerBinder<T>(private val context: Context, private val binde
     abstract fun getCount(): Int
 
     /** 在onCreateViewHolder方法中根据[layoutId]获取View */
+    @JvmOverloads
     protected fun getLayoutView(parent: ViewGroup, @LayoutRes layoutId: Int, attachToRoot: Boolean = false): View =
             LayoutInflater.from(context).inflate(layoutId, parent, attachToRoot)
 }

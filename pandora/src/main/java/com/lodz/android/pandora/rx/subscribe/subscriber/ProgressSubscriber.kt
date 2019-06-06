@@ -55,10 +55,12 @@ abstract class ProgressSubscriber<T> : RxSubscriber<T>() {
     }
 
     /** 创建加载框，配置提示文字资源[strResId]和取消参数[cancelable] */
+    @JvmOverloads
     fun create(context: Context, @StringRes strResId: Int, cancelable: Boolean = false, canceledOnTouchOutside: Boolean = false): ProgressSubscriber<T> =
             create(context, context.getString(strResId), cancelable, canceledOnTouchOutside)
 
     /** 创建加载框，配置提示文字[msg]和取消参数[cancelable] */
+    @JvmOverloads
     fun create(context: Context, msg: String, cancelable: Boolean = false, canceledOnTouchOutside: Boolean = false): ProgressSubscriber<T> {
         try {
             mProgressDialog = getProgressDialog(context, msg, cancelable, canceledOnTouchOutside)
@@ -146,6 +148,7 @@ abstract class ProgressSubscriber<T> : RxSubscriber<T>() {
     companion object {
         /** 创建lambda调用 */
         @JvmStatic
+        @JvmOverloads
         fun <T> action(next: (any: T) -> Unit, error: (e: Throwable, isNetwork: Boolean) -> Unit, context: Context, msg: String = "",
                        cancelable: Boolean = true, canceledOnTouchOutside: Boolean = false): ProgressSubscriber<T> = object : ProgressSubscriber<T>() {
             override fun onPgNext(any: T) {

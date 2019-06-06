@@ -8,7 +8,7 @@ import android.view.View
  * 缩放效果
  * Created by zhouL on 2018/6/28.
  */
-class ScaleInAnimation(private val from: Float = 0.5f, private val duration: Int = 300) : BaseAnimation {
+class ScaleInAnimation @JvmOverloads constructor(private val from: Float = 0.5f, private val duration: Int = 300) : BaseAnimation {
 
     override fun getAnimators(view: View): Array<Animator> {
         val scaleX = ObjectAnimator.ofFloat(view, "scaleX", from, 1f)

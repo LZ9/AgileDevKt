@@ -9,7 +9,7 @@ import com.lodz.android.pandora.R
  * 左侧DialogFragment基类
  * Created by zhouL on 2018/12/13.
  */
-abstract class BaseLeftDialogFragment() : BaseDialogFragment() {
+abstract class BaseLeftDialogFragment : BaseDialogFragment() {
 
     override fun configAnimations(): Int = R.style.animation_left_in_left_out
 

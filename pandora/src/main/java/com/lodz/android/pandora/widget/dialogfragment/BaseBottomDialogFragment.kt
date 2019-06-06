@@ -9,7 +9,7 @@ import com.lodz.android.pandora.R
  * 底部DialogFragment基类
  * Created by zhouL on 2018/12/13.
  */
-abstract class BaseBottomDialogFragment() : BaseDialogFragment() {
+abstract class BaseBottomDialogFragment : BaseDialogFragment() {
 
     override fun configAnimations(): Int = R.style.animation_bottom_in_bottom_out
 

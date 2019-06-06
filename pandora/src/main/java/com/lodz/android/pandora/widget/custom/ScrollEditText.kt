@@ -34,10 +34,7 @@ open class ScrollEditText : EditText {
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent?): Boolean {
-        val action = event?.action
-        if (action == null) {
-            return super.onTouchEvent(event)
-        }
+        val action = event?.action ?: return super.onTouchEvent(event)
         if ((action and MotionEvent.ACTION_MASK) == MotionEvent.ACTION_DOWN) {
             // 手指按下时判断控件文字是否允许滚动，-1检查向上滚动，1检查向下滚动。
             isCanScroll = canScrollVertically(1) || canScrollVertically(-1)

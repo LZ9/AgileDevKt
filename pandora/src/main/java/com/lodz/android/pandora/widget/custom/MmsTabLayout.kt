@@ -35,10 +35,7 @@ open class MmsTabLayout : TabLayout {
         if (attrs == null) {
             return
         }
-        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.MmsTabLayout)
-        if (typedArray == null) {
-            return
-        }
+        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.MmsTabLayout) ?: return
         mTabMarginPx = typedArray.getDimensionPixelSize(R.styleable.MmsTabLayout_tabMargin, 0)
         typedArray.recycle()
     }
@@ -54,10 +51,7 @@ open class MmsTabLayout : TabLayout {
 
     /** 设置底线两侧间距[marginDp] */
     fun setTabIndicatorMargin(marginDp: Float) {
-        val cls: Class<*>? = ReflectUtils.getClassForName("com.google.android.material.tabs.TabLayout")
-        if (cls == null) {
-            return
-        }
+        val cls: Class<*> = ReflectUtils.getClassForName("com.google.android.material.tabs.TabLayout") ?: return
         var layout: LinearLayout? = null
         try {
             layout = ReflectUtils.getFieldValue(cls, this, "slidingTabIndicator") as LinearLayout

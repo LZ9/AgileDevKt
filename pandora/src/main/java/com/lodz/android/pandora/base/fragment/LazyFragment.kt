@@ -215,10 +215,7 @@ abstract class LazyFragment : RxFragment(), IFragmentBackPressed {
                 return false
             }
             // 进行了UseAnkoLayout注解
-            val inject = javaClass.getAnnotation(UseAnkoLayout::class.java)
-            if (inject == null) {
-                return false
-            }
+            val inject = javaClass.getAnnotation(UseAnkoLayout::class.java) ?: return false
             return inject.value
         } catch (e: Exception) {
             e.printStackTrace()

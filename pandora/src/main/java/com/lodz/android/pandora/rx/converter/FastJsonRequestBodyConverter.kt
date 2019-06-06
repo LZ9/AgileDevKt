@@ -22,13 +22,13 @@ class FastJsonRequestBodyConverter<T>(private val config: SerializeConfig?, vara
 
     override fun convert(value: T): RequestBody {
         if (config != null) {
-            if (mFeatures.size > 0) {
+            if (mFeatures.isNotEmpty()) {
                 return RequestBody.create(MEDIA_TYPE, JSON.toJSONBytes(value, config, *mFeatures))
             } else {
                 return RequestBody.create(MEDIA_TYPE, JSON.toJSONBytes(value, config))
             }
         } else {
-            if (mFeatures.size > 0) {
+            if (mFeatures.isNotEmpty()) {
                 return RequestBody.create(MEDIA_TYPE, JSON.toJSONBytes(value, *mFeatures))
             } else {
                 return RequestBody.create(MEDIA_TYPE, JSON.toJSONBytes(value))

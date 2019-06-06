@@ -55,10 +55,12 @@ abstract class ProgressObserver<T> : RxObserver<T>() {
     }
 
     /** 创建加载框，配置提示文字资源[strResId]和取消参数[cancelable] */
+    @JvmOverloads
     fun create(context: Context, @StringRes strResId: Int, cancelable: Boolean = true, canceledOnTouchOutside: Boolean = false): ProgressObserver<T> =
             create(context, context.getString(strResId), cancelable, canceledOnTouchOutside)
 
     /** 创建加载框，配置提示文字[msg]和返回键关闭[cancelable]默认true，点击空白关闭[canceledOnTouchOutside]默认false */
+    @JvmOverloads
     fun create(context: Context, msg: String, cancelable: Boolean = true, canceledOnTouchOutside: Boolean = false): ProgressObserver<T> {
         try {
             mProgressDialog = getProgressDialog(context, msg, cancelable, canceledOnTouchOutside)
@@ -146,6 +148,7 @@ abstract class ProgressObserver<T> : RxObserver<T>() {
     companion object {
         /** 创建lambda调用 */
         @JvmStatic
+        @JvmOverloads
         fun <T> action(next: (any: T) -> Unit, error: (e: Throwable, isNetwork: Boolean) -> Unit, context: Context, msg: String = "",
                        cancelable: Boolean = true, canceledOnTouchOutside: Boolean = false): ProgressObserver<T> = object : ProgressObserver<T>() {
             override fun onPgNext(any: T) {

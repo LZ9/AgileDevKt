@@ -37,10 +37,7 @@ class SimpleNineGridView<V : View> : NineGridView {
     init {
         setListener(object : OnNineGridViewListener {
             override fun onAddPic(addCount: Int) {
-                val listener = mListener
-                if (listener == null) {
-                    return
-                }
+                val listener = mListener ?: return
                 PickerManager.create<V>()
                         .setImgLoader { context, source, imageView ->
                             mListener?.onDisplayPickerImg(context, source, imageView)
@@ -68,10 +65,7 @@ class SimpleNineGridView<V : View> : NineGridView {
             }
 
             override fun onClickPic(data: String, position: Int) {
-                val listener = mListener
-                if (listener == null) {
-                    return
-                }
+                val listener = mListener ?: return
                 PreviewManager.create<V, String>()
                         .setPosition(position)
                         .setBackgroundColor(android.R.color.black)

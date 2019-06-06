@@ -13,7 +13,7 @@ import androidx.viewpager.widget.ViewPager
 open class NoScrollViewPager : ViewPager {
 
     /** 是否可以滑动，默认不行 */
-    public var isScroll = false
+    var isScroll = false
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)

@@ -8,7 +8,7 @@ import android.view.View
  * 左侧进入
  * Created by zhouL on 2018/6/28.
  */
-class SlideInLeftAnimation(private val duration: Int = 300) : BaseAnimation {
+class SlideInLeftAnimation @JvmOverloads constructor(private val duration: Int = 300) : BaseAnimation {
 
     override fun getAnimators(view: View): Array<Animator> = arrayOf(ObjectAnimator.ofFloat(view, "translationX", -view.rootView.width.toFloat(), 0f))
 

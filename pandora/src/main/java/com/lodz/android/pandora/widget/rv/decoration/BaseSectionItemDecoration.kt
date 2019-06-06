@@ -113,10 +113,7 @@ open class BaseSectionItemDecoration(context: Context) : BaseItemDecoration(cont
 
     /** 是否是垂直列表 */
     protected fun isVerLinearLayout(parent: RecyclerView): Boolean {
-        val layoutManager = parent.layoutManager
-        if (layoutManager == null) {
-            return false
-        }
+        val layoutManager = parent.layoutManager ?: return false
         if (layoutManager is GridLayoutManager) {//GridLayoutManager继承LinearLayoutManager需要先判断
             return false
         }

@@ -442,19 +442,13 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
 
     /** 根据颜色[color]、宽[width]、高[height]来获取圆角Drawable */
     private fun getCornerDrawable(@ColorRes color: Int, width: Int, height: Int): Drawable {
-        val bitmap = BitmapUtils.drawableToBitmap(createColorDrawable(color), width, height)
-        if (bitmap == null) {
-            return createColorDrawable(color)
-        }
+        val bitmap = BitmapUtils.drawableToBitmap(createColorDrawable(color), width, height) ?: return createColorDrawable(color)
         return createBitmapDrawable(BitmapUtils.createRoundedCornerBitmap(bitmap, 8f))
     }
 
     /** 拍照 */
     private fun takeCameraPhoto() {
-        val bean = mPickerBean
-        if (bean == null) {
-            return
-        }
+        val bean = mPickerBean ?: return
         if (!FileUtils.isFileExists(bean.cameraSavePath) && !FileUtils.createFolder(bean.cameraSavePath)) {// 文件夹不存在且创建文件夹失败
             toastShort(R.string.pandora_photo_folder_fail)
             return
@@ -492,10 +486,7 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
 
     /** 处理拍照成功 */
     private fun handleCameraSuccess() {
-        val currentFolder = mCurrentImageFolder
-        if (currentFolder == null) {
-            return
-        }
+        val currentFolder = mCurrentImageFolder ?: return
         mTempFilePath = ""
         val list = AlbumUtils.getAllImageFolders(getContext())
         for (folder in list) {

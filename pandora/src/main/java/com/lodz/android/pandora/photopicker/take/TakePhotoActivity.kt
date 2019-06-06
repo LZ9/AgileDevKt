@@ -86,10 +86,7 @@ internal class TakePhotoActivity : AbsActivity() {
 
     override fun initData() {
         super.initData()
-        val bean = mTakeBean
-        if (bean == null) {
-            return
-        }
+        val bean = mTakeBean ?: return
         mRootLayout.setBackgroundColor(getColorCompat(bean.previewBgColor))
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//设置状态栏和导航栏颜色
             StatusBarUtil.setColor(window, getColorCompat(bean.statusBarColor))

@@ -20,10 +20,7 @@ open class RvBinderAdapter(private val context: Context) : RecyclerView.Adapter<
     override fun getItemViewType(position: Int): Int = getViewTypeByPosition(position)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val binder = getBinderByViewType(viewType)
-        if (binder == null) {
-            return DefaultRecyclerBinder(getContext(), DEFAULT_BINDER_TYPE).onCreateViewHolder(parent)
-        }
+        val binder = getBinderByViewType(viewType) ?: return DefaultRecyclerBinder(getContext(), DEFAULT_BINDER_TYPE).onCreateViewHolder(parent)
         return binder.onCreateViewHolder(parent)
     }
 
@@ -36,10 +33,7 @@ open class RvBinderAdapter(private val context: Context) : RecyclerView.Adapter<
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val binder = getBinderByViewType(getItemViewType(position))
-        if (binder == null) {
-            return
-        }
+        val binder = getBinderByViewType(getItemViewType(position)) ?: return
         binder.onBindViewHolder(holder, getBinderPosition(position))
     }
 

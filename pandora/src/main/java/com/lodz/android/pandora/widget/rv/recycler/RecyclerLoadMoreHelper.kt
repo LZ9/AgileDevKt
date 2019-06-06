@@ -10,6 +10,7 @@ class RecyclerLoadMoreHelper<T>(val mAdapter: BaseLoadMoreRVAdapter<T>) {
     private var mListener: Listener? = null
 
     /** 配置加载更多适配器（请在获得数据后调用该方法配置），数据[list]，总条数[sumSize]，每页条数[size]，是否显示底部提示界面[isShowBottomLayout]，预加载偏移量，滑动到倒数第[index]个item时就回调加载接口（默认值为0） */
+    @JvmOverloads
     fun config(list: MutableList<T>, sumSize: Int, size: Int, isShowBottomLayout: Boolean, index: Int = 0) {
         if (mAdapter.isOpenItemAnim()) {
             mAdapter.resetItemAnimPosition()

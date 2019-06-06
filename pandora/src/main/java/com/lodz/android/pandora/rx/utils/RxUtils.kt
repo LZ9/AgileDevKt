@@ -169,6 +169,7 @@ object RxUtils {
 
     /** [view]防抖点击，在时长[duration]默认1，单位[unit]默认秒内，只回调一次 */
     @JvmStatic
+    @JvmOverloads
     fun viewClick(view: View, duration: Long = 1, unit: TimeUnit = TimeUnit.SECONDS): Observable<View> {
         return Observable.create(object : RxObservableOnSubscribe<View>(view) {
             override fun subscribe(emitter: ObservableEmitter<View>) {
@@ -183,6 +184,7 @@ object RxUtils {
 
     /** 文本[textView]每次变动都延迟[duration]默认500，单位[unit]默认毫秒后回调 */
     @JvmStatic
+    @JvmOverloads
     fun textChanges(textView: TextView, duration: Long = 500, unit: TimeUnit = TimeUnit.MILLISECONDS): Observable<CharSequence> {
         return Observable.create(object : RxObservableOnSubscribe<CharSequence>(textView) {
             override fun subscribe(emitter: ObservableEmitter<CharSequence>) {
