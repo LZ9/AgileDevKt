@@ -41,7 +41,7 @@ class GlideBuilderBean {
     /** 保存到内存 */
     var saveToMemoryCache = true
     /** 磁盘缓存策略 */
-    var diskCacheStrategy = DiskCacheStrategy.AUTOMATIC
+    var diskCacheStrategy: DiskCacheStrategy = DiskCacheStrategy.AUTOMATIC
     /** 居中裁切 */
     var centerCrop = false
     /** 居中自适应 */

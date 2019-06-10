@@ -51,7 +51,7 @@ class CacheAppGlideModule : AppGlideModule() {
             }
         }
 
-        val diskCacheSize = 1024 * 1024 * 30;//最多可以缓存多少字节的数据
+        val diskCacheSize = 1024 * 1024 * 30//最多可以缓存多少字节的数据
         //设置磁盘缓存大小
         builder.setDiskCache(DiskLruCacheFactory(fileCacheDir!!.absolutePath, directoryName, diskCacheSize.toLong()))
     }

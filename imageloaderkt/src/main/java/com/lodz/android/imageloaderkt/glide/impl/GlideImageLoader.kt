@@ -494,7 +494,7 @@ class GlideImageLoader private constructor() : ImageLoaderContract {
         }
 
         val list = getTransformationList(bean)
-        if (list.size > 0) {
+        if (list.isNotEmpty()) {
             this.transforms(*list.toTypedArray())
         }
     }
