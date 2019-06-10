@@ -13,13 +13,11 @@ import kotlin.collections.HashMap
  * update by zhouL on 2018/11/7.
  */
 internal class ACacheManager(private var cacheDir: File, private var sizeLimit: Long, private var countLimit: Int) {
-    private var cacheSize: AtomicLong
-    private var cacheCount: AtomicInteger
+    private var cacheSize: AtomicLong = AtomicLong()
+    private var cacheCount: AtomicInteger = AtomicInteger()
     private val lastUsageDates = Collections.synchronizedMap(HashMap<File, Long>())
 
     init {
-        cacheSize = AtomicLong()
-        cacheCount = AtomicInteger()
         calculateCacheSizeAndCacheCount()
     }
 
@@ -33,7 +31,7 @@ internal class ACacheManager(private var cacheDir: File, private var sizeLimit: 
                 for (cachedFile in cachedFiles) {
                     size += cachedFile.length()
                     count += 1
-                    lastUsageDates.put(cachedFile, cachedFile.lastModified())
+                    lastUsageDates[cachedFile] = cachedFile.lastModified()
                 }
                 cacheSize.set(size)
                 cacheCount.set(count)
@@ -60,14 +58,14 @@ internal class ACacheManager(private var cacheDir: File, private var sizeLimit: 
 
         val currentTime = System.currentTimeMillis()
         file.setLastModified(currentTime)
-        lastUsageDates.put(file, currentTime)
+        lastUsageDates[file] = currentTime
     }
 
     fun get(key: String): File {
         val file = newFile(key)
         val currentTime = System.currentTimeMillis()
         file.setLastModified(currentTime)
-        lastUsageDates.put(file, currentTime)
+        lastUsageDates[file] = currentTime
         return file
     }
 

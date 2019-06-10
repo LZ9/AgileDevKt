@@ -60,7 +60,7 @@ object DeviceUtils {
             val fields = Build::class.java.declaredFields
             for (field in fields) {
                 field.isAccessible = true
-                infos.put(field.name, field.get(null).toString())
+                infos[field.name] = field.get(null).toString()
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -75,7 +75,7 @@ object DeviceUtils {
             return ""
         }
         try {
-            return getDeviceInfo().get(key) ?: ""
+            return getDeviceInfo()[key] ?: ""
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -90,7 +90,7 @@ object DeviceUtils {
             "/sbin/su", "/system/bin/su", "/system/xbin/su", "/data/local/xbin/su",
             "/data/local/bin/su", "/system/sd/xbin/su", "/system/bin/failsafe/su", "/data/local/su"
         )
-        if (paths != null && paths.size > 0) {//如果
+        if (paths != null && paths.isNotEmpty()) {//如果
             checkPaths = paths
         }
         for (path in checkPaths) {

@@ -7,7 +7,6 @@ import android.media.MediaScannerConnection
 import android.provider.MediaStore
 import com.lodz.android.corekt.anko.getSize
 import java.io.File
-import java.io.FilenameFilter
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -53,7 +52,7 @@ object AlbumUtils {
             }
         } while (cursor.moveToNext())
         cursor.close()
-        Collections.reverse(imageList)// 按时间降序
+        imageList.reverse()// 按时间降序
         return imageList
     }
 
@@ -108,22 +107,21 @@ object AlbumUtils {
         val imageFolder = ImageFolder()
         imageFolder.name = "所有图片"
         imageFolder.count = list.getSize()
-        imageFolder.coverImgPath = if (list.isEmpty()) "" else list.get(0)
+        imageFolder.coverImgPath = if (list.isEmpty()) "" else list[0]
         return imageFolder
     }
 
     /** 获取指定文件目录[file]下的图片文件夹信息，[coverImgPath]为封面图片路径 */
     @JvmStatic
     fun getImageFolder(file: File, coverImgPath: String): ImageFolder? {
-        val fileList = file.list(object : FilenameFilter {
-            override fun accept(dir: File?, name: String?): Boolean =
-                    name != null && (name.endsWith(".jpg")
-                            || name.endsWith(".gif")
-                            || name.endsWith(".png")
-                            || name.endsWith(".jpeg"))
-        })
+        val fileList = file.list { dir, name ->
+            name != null && (name.endsWith(".jpg")
+                    || name.endsWith(".gif")
+                    || name.endsWith(".png")
+                    || name.endsWith(".jpeg"))
+        }
 
-        if (fileList == null || fileList.size == 0) {
+        if (fileList == null || fileList.isEmpty()) {
             return null
         }
         var rootPath = file.absolutePath// 获取目录路径
@@ -154,14 +152,13 @@ object AlbumUtils {
         }
 
         val directoryFile = File(imageFolder.dir)
-        val files = directoryFile.listFiles(object : FilenameFilter {
-            override fun accept(dir: File?, name: String?): Boolean =
-                    name != null && (name.endsWith(".jpg")
-                            || name.endsWith(".gif")
-                            || name.endsWith(".png")
-                            || name.endsWith(".jpeg"))
-        })
-        if (files == null || files.size == 0) {
+        val files = directoryFile.listFiles { dir, name ->
+            name != null && (name.endsWith(".jpg")
+                    || name.endsWith(".gif")
+                    || name.endsWith(".png")
+                    || name.endsWith(".jpeg"))
+        }
+        if (files == null || files.isEmpty()) {
             return imageList
         }
 
@@ -198,9 +195,7 @@ object AlbumUtils {
                 isDelete = file.delete()
             }
         }
-        if (cursor != null) {
-            cursor.close()
-        }
+        cursor?.close()
         return isDelete
     }
 }

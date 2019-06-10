@@ -111,10 +111,10 @@ object BitmapUtils {
         if (pictureHeight <= heightPx && pictureWidth <= widthPx) {//图片宽高均小于屏幕宽高则不设置缩放比例
             return 1
         }
-        if (pictureHeight > pictureWidth) {//如果高大于宽
-            return Math.ceil(pictureHeight.toDouble() / heightPx.toDouble()).toInt()
+        return if (pictureHeight > pictureWidth) {//如果高大于宽
+            Math.ceil(pictureHeight.toDouble() / heightPx.toDouble()).toInt()
         } else {
-            return Math.ceil(pictureWidth.toDouble() / widthPx.toDouble()).toInt()
+            Math.ceil(pictureWidth.toDouble() / widthPx.toDouble()).toInt()
         }
     }
 
@@ -133,7 +133,7 @@ object BitmapUtils {
     @Retention(AnnotationRetention.SOURCE)
     annotation class CombinekLocationType
 
-    /** 合并前景图[fg]和背景图[bgd] */
+    /** 合并前景图[fg]和背景图[bg]，水印位置[location]，间距[marginPx]  */
     @SuppressLint("SwitchIntDef")
     @JvmStatic
     @JvmOverloads
@@ -193,7 +193,7 @@ object BitmapUtils {
     annotation class WatermarkLocationType
 
 
-    /** 将水印图片[watermark]放置在原图片[src]上，水印位置[location]，间距[margin] */
+    /** 将水印图片[watermark]放置在原图片[src]上，水印位置[location]，间距[marginPx] */
     @SuppressLint("SwitchIntDef")
     @JvmStatic
     @JvmOverloads
@@ -332,10 +332,10 @@ object BitmapUtils {
         val top: Float
         val right: Float
         val bottom: Float
-        val dst_left: Float
-        val dst_top: Float
-        val dst_right: Float
-        val dst_bottom: Float
+        val dstLeft: Float
+        val dstTop: Float
+        val dstRight: Float
+        val dstBottom: Float
 
         if (width <= height) {
             roundPx = (width / 2).toFloat()
@@ -345,10 +345,10 @@ object BitmapUtils {
             top = clip
             bottom = height - clip
             height = width
-            dst_left = 0f
-            dst_top = 0f
-            dst_right = width.toFloat()
-            dst_bottom = width.toFloat()
+            dstLeft = 0f
+            dstTop = 0f
+            dstRight = width.toFloat()
+            dstBottom = width.toFloat()
         } else {
             roundPx = (height / 2).toFloat()
             val clip = ((width - height) / 2).toFloat()
@@ -357,10 +357,10 @@ object BitmapUtils {
             top = 0f
             bottom = height.toFloat()
             width = height
-            dst_left = 0f
-            dst_top = 0f
-            dst_right = height.toFloat()
-            dst_bottom = height.toFloat()
+            dstLeft = 0f
+            dstTop = 0f
+            dstRight = height.toFloat()
+            dstBottom = height.toFloat()
         }
 
         val output = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
@@ -369,7 +369,7 @@ object BitmapUtils {
         val color = Color.parseColor("#424242")
         val paint = Paint()
         val src = Rect(left.toInt(), top.toInt(), right.toInt(), bottom.toInt())
-        val dst = Rect(dst_left.toInt(), dst_top.toInt(), dst_right.toInt(), dst_bottom.toInt())
+        val dst = Rect(dstLeft.toInt(), dstTop.toInt(), dstRight.toInt(), dstBottom.toInt())
         val rectF = RectF(dst)
 
         paint.isAntiAlias = true
@@ -647,7 +647,7 @@ object BitmapUtils {
     @JvmStatic
     fun createFilmBitmap(bitmap: Bitmap): Bitmap {
         // RGBA的最大值
-        val MAX_VALUE = 255
+        val maxValue = 255
         val width = bitmap.width
         val height = bitmap.height
         val newBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565)
@@ -662,15 +662,15 @@ object BitmapUtils {
                 val pos = i * width + k
                 val pixColor = pixels[pos]
 
-                var newR = MAX_VALUE - Color.red(pixColor)
-                var newG = MAX_VALUE - Color.green(pixColor)
-                var newB = MAX_VALUE - Color.blue(pixColor)
+                var newR = maxValue - Color.red(pixColor)
+                var newG = maxValue - Color.green(pixColor)
+                var newB = maxValue - Color.blue(pixColor)
 
-                newR = Math.min(MAX_VALUE, Math.max(0, newR))
-                newG = Math.min(MAX_VALUE, Math.max(0, newG))
-                newB = Math.min(MAX_VALUE, Math.max(0, newB))
+                newR = Math.min(maxValue, Math.max(0, newR))
+                newG = Math.min(maxValue, Math.max(0, newG))
+                newB = Math.min(maxValue, Math.max(0, newB))
 
-                pixels[pos] = Color.argb(MAX_VALUE, newR, newG, newB)
+                pixels[pos] = Color.argb(maxValue, newR, newG, newB)
             }
         }
         newBitmap.setPixels(pixels, 0, width, 0, 0, width, height)
@@ -705,9 +705,9 @@ object BitmapUtils {
                     for (n in -1..1) {
                         val pixColor = pixels[(i + n) * width + k + m]
 
-                        newR = newR + (Color.red(pixColor).toFloat() * laplacian[idx].toFloat() * alpha).toInt()
-                        newG = newG + (Color.green(pixColor).toFloat() * laplacian[idx].toFloat() * alpha).toInt()
-                        newB = newB + (Color.blue(pixColor).toFloat() * laplacian[idx].toFloat() * alpha).toInt()
+                        newR += (Color.red(pixColor).toFloat() * laplacian[idx].toFloat() * alpha).toInt()
+                        newG += (Color.green(pixColor).toFloat() * laplacian[idx].toFloat() * alpha).toInt()
+                        newB += (Color.blue(pixColor).toFloat() * laplacian[idx].toFloat() * alpha).toInt()
                         idx++
                     }
                 }

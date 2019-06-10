@@ -23,16 +23,16 @@ fun <T> Collection<T>.toArrayList(): ArrayList<T> = ArrayList(this)
 fun <T> Array<T>.toArrayList(): ArrayList<T> = ArrayList(this.toList())
 
 /** 获取数组长度 */
-fun Array<*>?.getSize(): Int = if (this == null) 0 else this.size
+fun Array<*>?.getSize(): Int = this?.size ?: 0
 
 /** 获取列表长度 */
-fun Collection<*>?.getSize(): Int = if (this == null) 0 else this.size
+fun Collection<*>?.getSize(): Int = this?.size ?: 0
 
 /** 数组是否为空 */
-fun Array<*>?.isNullOrEmpty(): Boolean = this == null || this.size == 0
+fun Array<*>?.isNullOrEmpty(): Boolean = this == null || this.isEmpty()
 
 /** 列表是否为空 */
-fun Collection<*>?.isNullOrEmpty(): Boolean = this == null || this.size == 0
+fun Collection<*>?.isNullOrEmpty(): Boolean = this == null || this.isEmpty()
 
 /** 将数据分组，泛型T可以为String或者实现了Groupable的任意类，[groups]为分组标题，[compareLength]为匹配长度 */
 @JvmOverloads
@@ -45,30 +45,30 @@ fun <T> Collection<T>.group(groups: Collection<String>, @IntRange(from = 1) comp
         return this
     }
 
-    val KEY = System.currentTimeMillis().toString()// 其他分组的key
+    val key = System.currentTimeMillis().toString()// 其他分组的key
 
     val map = LinkedHashMap<String, LinkedList<T>>()
     for (group in groups) {
         val tag = if (group.length <= compareLength) group else group.substring(0, compareLength)
-        map.put(tag, LinkedList())
+        map[tag] = LinkedList()
     }
-    map.put(KEY, LinkedList())
+    map[key] = LinkedList()
 
     for (t in this) {
         if (t is String || t is Groupable) {
             val item = if (t is Groupable) t.getSortStr() else t as String
             if (item.isEmpty()) {
-                map.getValue(KEY).add(t)
+                map.getValue(key).add(t)
                 continue
             }
             val tag = if (item.length <= compareLength) item else item.substring(0, compareLength)// 获取分组标签
-            if (map.get(tag) != null) {
-                map.get(tag)!!.add(t)//存在该分组则加入
+            if (map[tag] != null) {
+                map[tag]!!.add(t)//存在该分组则加入
             } else {
-                map.getValue(KEY).add(t)
+                map.getValue(key).add(t)
             }
         } else {
-            map.getValue(KEY).add(t)// 未实现Groupable接口直接加入到其他分组中
+            map.getValue(key).add(t)// 未实现Groupable接口直接加入到其他分组中
         }
     }
 
@@ -110,7 +110,7 @@ fun <T> Collection<T>.getPositionByIndex(groups: List<String>, indexText: String
     if (position <= 0) {
         return 0
     }
-    return getPositionByIndex(groups, groups.get(position - 1))
+    return getPositionByIndex(groups, groups[position - 1])
 }
 
 

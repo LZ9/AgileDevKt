@@ -80,10 +80,7 @@ object DateUtils {
     /** 将日期字符串[source]从旧格式[oldFormatType]改为新格式[newFormatType] */
     @JvmStatic
     fun changeFormatString(oldFormatType: String, newFormatType: String, source: String): String {
-        val date = parseFormatDate(oldFormatType, source)
-        if (date == null) {
-            return ""
-        }
+        val date = parseFormatDate(oldFormatType, source) ?: return ""
         return getFormatString(newFormatType, date)
     }
 

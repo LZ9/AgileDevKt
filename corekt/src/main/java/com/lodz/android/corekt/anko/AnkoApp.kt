@@ -63,10 +63,7 @@ fun Context.getProcessName(): String {
     val pid = android.os.Process.myPid()
     val am: ActivityManager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
 
-    val runningApps: List<ActivityManager.RunningAppProcessInfo>? = am.runningAppProcesses
-    if (runningApps == null) {
-        return ""
-    }
+    val runningApps: MutableList<ActivityManager.RunningAppProcessInfo> = am.runningAppProcesses ?: return ""
 
     for (procInfo in runningApps) {
         if (procInfo.pid == pid) {
@@ -91,10 +88,8 @@ fun Context.isPkgInstalled(packageName: String): Boolean {
 }
 
 /** 获取已安装的PackageInfo列表 */
-fun Context.getInstalledPackages(): List<PackageInfo> {
-    val packageInfos: List<PackageInfo>? = packageManager.getInstalledPackages(PackageManager.GET_ACTIVITIES or PackageManager.GET_SERVICES)
-    return if (packageInfos == null) Collections.emptyList() else packageInfos
-}
+fun Context.getInstalledPackages(): List<PackageInfo> =
+    packageManager.getInstalledPackages(PackageManager.GET_ACTIVITIES or PackageManager.GET_SERVICES) ?: Collections.emptyList()
 
 /** 获取包名为[packageName]的PackageInfo */
 fun Context.getPackageInfo(packageName: String): PackageInfo? {

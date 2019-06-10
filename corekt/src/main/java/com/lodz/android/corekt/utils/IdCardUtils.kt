@@ -34,7 +34,7 @@ object IdCardUtils {
     }
 
     /** 身份证[idCard]的省份是否存在 */
-    private fun isProvinceExist(idCard: String): Boolean = !getProvinceMap().get(idCard.substring(0, 2)).isNullOrEmpty()
+    private fun isProvinceExist(idCard: String): Boolean = !getProvinceMap()[idCard.substring(0, 2)].isNullOrEmpty()
 
     /** 校验身份证[idCard]的出生日期是否正确 */
     private fun validateBirth(idCard: String): Boolean {
@@ -42,10 +42,7 @@ object IdCardUtils {
             return false
         }
         val birth = idCard.substring(6, 14)
-        val date = DateUtils.parseFormatDate(DateUtils.TYPE_5, birth)
-        if (date == null) {
-            return false
-        }
+        val date = DateUtils.parseFormatDate(DateUtils.TYPE_5, birth) ?: return false
         val dateStr = DateUtils.getFormatString(DateUtils.TYPE_5, date)
         return dateStr.equals(birth)
     }
@@ -195,7 +192,7 @@ object IdCardUtils {
         }
         val provinceNum = idCard.substring(0, 2)
         val map = getProvinceMap()
-        return map.get(provinceNum) ?: ""
+        return map[provinceNum] ?: ""
     }
 
     /** 获取省份代码 */

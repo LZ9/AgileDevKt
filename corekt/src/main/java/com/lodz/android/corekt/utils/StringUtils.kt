@@ -35,7 +35,7 @@ object StringUtils {
         return ""
     }
 
-    /** 根据分隔符[separator]将字符串[source]转为列表 */
+    /** 根据分隔符[separator]将字符串[str]转为列表 */
     @JvmStatic
     fun getListBySeparator(str: String, separator: String): List<String> {
         var source = str
@@ -61,7 +61,7 @@ object StringUtils {
             return result
         }
         for (i in 0 until list.size) {
-            result = result + list.get(i) + if (i == (list.size - 1)) "" else separator
+            result = result + list[i] + if (i == (list.size - 1)) "" else separator
         }
         return result
     }

@@ -91,10 +91,7 @@ class NetworkManager private constructor() {
         }
 
         try {
-            val location: CellLocation? = telephonyManager.cellLocation
-            if (location == null) {
-                return null
-            }
+            val location: CellLocation = telephonyManager.cellLocation ?: return null
 
             // 电信
             if (info.type == OperatorInfo.OPERATOR_CTCC) {
@@ -180,9 +177,6 @@ class NetworkManager private constructor() {
         try {
             //这里做类型判断防止一些ROM被修改这个类型不是int型
             val type: Any? = info.type
-            if (type == null) {
-                return NetInfo.NETWORK_TYPE_UNKNOWN
-            }
             if (type is Int) {
                 return type.toInt()
             }
@@ -208,9 +202,6 @@ class NetworkManager private constructor() {
         try {
             //这里做类型判断防止一些ROM被修改这个类型不是int型
             val type: Any? = info.subtype
-            if (type == null) {
-                return TelephonyManager.NETWORK_TYPE_UNKNOWN
-            }
             if (type is Int) {
                 return type.toInt()
             }

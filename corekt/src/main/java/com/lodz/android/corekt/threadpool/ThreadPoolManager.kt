@@ -124,7 +124,7 @@ class ThreadPoolManager private constructor() {
     /** 队列满时线程池的拒绝策略（自定义） */
     private class DefaultRejectedExecutionHandler : RejectedExecutionHandler {
         override fun rejectedExecution(r: Runnable, executor: ThreadPoolExecutor) {
-            if (executor.isShutdown()) {
+            if (executor.isShutdown) {
                 return
             }
             //移除队头元素

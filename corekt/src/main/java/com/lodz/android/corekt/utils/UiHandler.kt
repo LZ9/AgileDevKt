@@ -10,12 +10,8 @@ import android.os.Message
  */
 object UiHandler {
 
-    private var sHandler: Handler
-
-    init {
-        // 获取主线程的Handler
-        sHandler = Handler(Looper.getMainLooper())
-    }
+    // 获取主线程的Handler
+    private var sHandler: Handler = Handler(Looper.getMainLooper())
 
     /** 在UI线程执行[runnable] */
     @JvmStatic

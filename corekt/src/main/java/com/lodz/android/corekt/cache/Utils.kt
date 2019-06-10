@@ -95,20 +95,20 @@ internal object Utils {
     private fun createDateInfo(second: Int): String {
         var currentTime = System.currentTimeMillis().toString()
         while (currentTime.length < 13) {
-            currentTime = "0" + currentTime
+            currentTime = "0$currentTime"
         }
-        return currentTime + "-" + second + SEPARATOR
+        return "$currentTime-$second$SEPARATOR"
     }
 
-    fun Bitmap2Bytes(bitmap: Bitmap): ByteArray {
+    fun bitmap2Bytes(bitmap: Bitmap): ByteArray {
         ByteArrayOutputStream().use { baos: ByteArrayOutputStream ->
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos)
             return baos.toByteArray()
         }
     }
 
-    fun Bytes2Bimap(b: ByteArray): Bitmap? {
-        if (b.size == 0) {
+    fun bytes2Bimap(b: ByteArray): Bitmap? {
+        if (b.isEmpty()) {
             return null
         }
         return BitmapFactory.decodeByteArray(b, 0, b.size)

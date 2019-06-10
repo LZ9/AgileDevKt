@@ -16,10 +16,7 @@ import com.lodz.android.corekt.utils.ReflectUtils
 @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
 fun Context.getApnName(): String {
     val manager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-    val info: NetworkInfo? = manager.activeNetworkInfo
-    if (info == null) {
-        return ""
-    }
+    val info: NetworkInfo = manager.activeNetworkInfo ?: return ""
     if (ConnectivityManager.TYPE_MOBILE == info.type && info.extraInfo.isNotEmpty()) {
         return info.extraInfo
     }

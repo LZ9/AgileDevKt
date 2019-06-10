@@ -17,7 +17,7 @@ object FileUtils {
     fun setFileRoot(filePath: String): Boolean {
         try {
             val permission = "777"
-            val command = "chmod " + permission + " " + filePath
+            val command = "chmod $permission $filePath"
             val runtime = Runtime.getRuntime()
             runtime.exec(command)
             return true
@@ -61,7 +61,7 @@ object FileUtils {
             return true
         }
 
-        val newFile = create(file.getParent() + File.separator + replaceName)
+        val newFile = create(file.parent + File.separator + replaceName)
         return file.renameTo(newFile)
     }
 
@@ -73,13 +73,13 @@ object FileUtils {
             return
         }
         val files: Array<File>? = file.listFiles()
-        if (files == null || files.size == 0) {// 该路径下没有其他文件
+        if (files == null || files.isEmpty()) {// 该路径下没有其他文件
             return
         }
 
         var replaceSuffix = suffix
         if (!suffix.startsWith(".")) {//校验后缀符号
-            replaceSuffix = "." + suffix
+            replaceSuffix = ".$suffix"
         }
 
         for (childFile in files) {
@@ -137,20 +137,14 @@ object FileUtils {
         if (!toPath.endsWith(File.separator)) {
             newToPath = toPath + File.separator
         }
-        val toDirectoryFile: File? = create(newToPath)
-        if (toDirectoryFile == null) {
-            return false
-        }
+        val toDirectoryFile: File = create(newToPath) ?: return false
         if (!toDirectoryFile.exists()) {
             toDirectoryFile.mkdirs()
         }
         if (!toDirectoryFile.isDirectory) {
             return false
         }
-        val toFile: File? = create(newToPath + fileName)
-        if (toFile == null) {
-            return false
-        }
+        val toFile: File = create(newToPath + fileName) ?: return false
         return fromFile.renameTo(toFile)
     }
 
@@ -172,20 +166,14 @@ object FileUtils {
         if (!toPath.endsWith(File.separator)) {
             newToPath = toPath + File.separator
         }
-        val toDirectoryFile: File? = create(newToPath)
-        if (toDirectoryFile == null) {
-            return false
-        }
+        val toDirectoryFile: File = create(newToPath) ?: return false
         if (!toDirectoryFile.exists()) {
             toDirectoryFile.mkdirs()
         }
         if (!toDirectoryFile.isDirectory) {
             return false
         }
-        val toFile: File? = create(newToPath + fileName)
-        if (toFile == null) {
-            return false
-        }
+        val toFile: File = create(newToPath + fileName) ?: return false
 
         FileInputStream(fromFile).use { fis: FileInputStream ->
             FileOutputStream(toFile).use { fos: FileOutputStream ->
@@ -216,11 +204,7 @@ object FileUtils {
         }
 
         try {
-            if (file.isDirectory) {
-                return getFileSizes(file)
-            } else {
-                return getFileSize(file)
-            }
+            return if (file.isDirectory) getFileSizes(file) else getFileSize(file)
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -238,15 +222,15 @@ object FileUtils {
     /** 计算文件夹[file]大小 */
     private fun getFileSizes(file: File): Long {
         val files: Array<File>? = file.listFiles()
-        if (files == null || files.size == 0) {
+        if (files == null || files.isEmpty()) {
             return 0
         }
         var size: Long = 0
         for (f in files) {
-            if (f.isDirectory) {
-                size = size + getFileSizes(f)
+            size += if (f.isDirectory) {
+                getFileSizes(f)
             } else {
-                size = size + getFileSize(f)
+                getFileSize(f)
             }
         }
         return size
@@ -274,13 +258,13 @@ object FileUtils {
         try {
             if (file.isDirectory) {
                 val files: Array<File>? = file.listFiles()
-                if (files == null || files.size == 0) {
+                if (files == null || files.isEmpty()) {
                     file.delete()
                     return
                 }
 
                 for (f in files) {
-                    if (f.isFile()) {
+                    if (f.isFile) {
                         f.delete()
                     } else if (f.isDirectory) {
                         delFile(f.absolutePath)
@@ -301,10 +285,7 @@ object FileUtils {
         if (filePath.isEmpty()) {
             return null
         }
-        val file: File? = create(filePath)
-        if (file == null) {
-            return null
-        }
+        val file: File = create(filePath) ?: return null
         FileInputStream(file).use { fis: FileInputStream ->
             ByteArrayOutputStream().use { baos: ByteArrayOutputStream ->
                 val b = ByteArray(1024)
@@ -332,20 +313,14 @@ object FileUtils {
         if (!savePath.endsWith(File.separator)) {
             newFilePath += File.separator
         }
-        val directory: File? = create(savePath)
-        if (directory == null) {
-            return
-        }
+        val directory: File = create(savePath) ?: return
         if (!directory.exists()) {
             directory.mkdirs()
         }
         if (!directory.isDirectory) {
             return
         }
-        val file: File? = create(newFilePath + fileName)
-        if (file == null) {
-            return
-        }
+        val file: File = create(newFilePath + fileName) ?: return
         FileOutputStream(file).use { fos: FileOutputStream ->
             BufferedOutputStream(fos).use { bos: BufferedOutputStream ->
                 bos.write(bytes)
@@ -363,10 +338,7 @@ object FileUtils {
         if (!savePath.endsWith(File.separator)) {
             newFilePath += File.separator
         }
-        val directory: File? = create(savePath)
-        if (directory == null) {
-            return
-        }
+        val directory: File = create(savePath) ?: return
         if (!directory.exists()) {
             directory.mkdirs()
         }
@@ -375,12 +347,9 @@ object FileUtils {
         }
         var newSuffix = suffix
         if (!suffix.startsWith(".")) {
-            newSuffix = "." + suffix
+            newSuffix = ".$suffix"
         }
-        val file: File? = create(newFilePath + fileName + newSuffix)
-        if (file == null) {
-            return
-        }
+        val file: File = create(newFilePath + fileName + newSuffix) ?: return
         if (file.exists()) {
             file.delete()
         }

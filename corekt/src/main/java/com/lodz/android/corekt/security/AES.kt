@@ -18,7 +18,7 @@ object AES {
     /** AES 偏移量，必须为16位 */
     private const val IV = "123456abc2345678"
 
-    /** 加密原始数据[dataBytes]，秘钥[key]必须为16位，填充方式[transformation]默认"AES/CBC/NoPadding"，偏移量[iv]默认"123456abc2345678" */
+    /** 加密原始数据[data]，秘钥[key]必须为16位，填充方式[transformation]默认"AES/CBC/NoPadding"，偏移量[iv]默认"123456abc2345678" */
     @JvmStatic
     @JvmOverloads
     fun encrypt(data: String, key: String, transformation: String = FORMAT, iv: String = IV): String? = encrypt(data.toByteArray(), key, transformation, iv)
@@ -40,7 +40,7 @@ object AES {
 
             var plaintextLength = dataBytes.size
             if (plaintextLength % blockSize != 0) {
-                plaintextLength = plaintextLength + (blockSize - (plaintextLength % blockSize))
+                plaintextLength += (blockSize - (plaintextLength % blockSize))
             }
 
             val plaintext = ByteArray(plaintextLength)

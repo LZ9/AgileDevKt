@@ -102,10 +102,10 @@ object SelectorUtils {
         val drawable = StateListDrawable()
 
         //设置默认值
-        val presseds = if (pressed == null) normal else pressed
-        val unables = if (unable == null) ColorDrawable(Color.LTGRAY) else unable
-        val selecteds = if (selected == null) normal else selected
-        val focuseds = if (focused == null) normal else focused
+        val presseds = pressed ?: normal
+        val unables = unable ?: ColorDrawable(Color.LTGRAY)
+        val selecteds = selected ?: normal
+        val focuseds = focused ?: normal
 
         drawable.addState(intArrayOf(android.R.attr.state_pressed, -android.R.attr.state_selected, android.R.attr.state_enabled), presseds)
         drawable.addState(intArrayOf(android.R.attr.state_selected, android.R.attr.state_enabled), selecteds)
@@ -166,10 +166,10 @@ object SelectorUtils {
         @ColorInt normal: Int, @ColorInt pressed: Int? = null, @ColorInt unable: Int? = null,
         @ColorInt selected: Int? = null, @ColorInt focused: Int? = null
     ): ColorStateList {
-        val presseds = if (pressed == null) normal else pressed
-        val unables = if (unable == null) Color.GRAY else unable
-        val selecteds = if (selected == null) normal else selected
-        val focuseds = if (focused == null) normal else focused
+        val presseds = pressed ?: normal
+        val unables = unable ?: Color.GRAY
+        val selecteds = selected ?: normal
+        val focuseds = focused ?: normal
 
         val colors = intArrayOf(presseds, selecteds, focuseds, normal, unables)
         val states: Array<IntArray> = Array(colors.size) { intArrayOf() }

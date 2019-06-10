@@ -28,7 +28,7 @@ class ACache {
         cacheName: String = "ACache",
         maxSize: Long = MAX_SIZE.toLong(),
         maxCount: Int = MAX_COUNT
-    ) : this(File(context.getCacheDir(), cacheName), maxSize, maxCount)
+    ) : this(File(context.cacheDir, cacheName), maxSize, maxCount)
 
     @JvmOverloads
     constructor(cacheDir: File, maxSize: Long = MAX_SIZE.toLong(), maxCount: Int = MAX_COUNT) {
@@ -76,11 +76,11 @@ class ACache {
                     readString += currentLine
                 } while (true)
 
-                if (!Utils.isDue(readString)) {
-                    return Utils.clearDateInfo(readString)
+                return if (!Utils.isDue(readString)) {
+                    Utils.clearDateInfo(readString)
                 } else {
                     remove(key)
-                    return ""
+                    ""
                 }
             }
         }
@@ -102,9 +102,9 @@ class ACache {
 
     /** 读取JSONObject数据，[key]键 */
     fun getAsJSONObject(key: String): JSONObject? {
-        val JSONString = getAsString(key)
+        val json = getAsString(key)
         try {
-            return JSONObject(JSONString)
+            return JSONObject(json)
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -127,9 +127,9 @@ class ACache {
 
     /** 读取JSONArray数据，[key]键 */
     fun getAsJSONArray(key: String): JSONArray? {
-        val JSONString = getAsString(key)
+        val json = getAsString(key)
         try {
-            return JSONArray(JSONString)
+            return JSONArray(json)
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -163,11 +163,11 @@ class ACache {
         RandomAccessFile(file, "r").use { raf: RandomAccessFile ->
             val byteArray = ByteArray(raf.length().toInt())
             raf.read(byteArray)
-            if (!Utils.isDue(byteArray)) {
-                return Utils.clearDateInfo(byteArray)
+            return if (!Utils.isDue(byteArray)) {
+                Utils.clearDateInfo(byteArray)
             } else {
                 remove(key)
-                return null
+                null
             }
         }
     }
@@ -199,10 +199,7 @@ class ACache {
 
     /** 读取Serializable数据，[key]键 */
     fun getAsAny(key: String): Any? {
-        val data = getAsByteArray(key)
-        if (data == null) {
-            return null
-        }
+        val data = getAsByteArray(key) ?: return null
         ByteArrayInputStream(data).use { bais: ByteArrayInputStream ->
             ObjectInputStream(bais).use { ois: ObjectInputStream ->
                 return ois.readObject()
@@ -216,21 +213,18 @@ class ACache {
 
     /** 保存Bitmap数据到缓存中，[key]键，[value]值 */
     fun put(key: String, value: Bitmap) {
-        put(key, Utils.Bitmap2Bytes(value))
+        put(key, Utils.bitmap2Bytes(value))
     }
 
     /** 保存Bitmap数据到缓存中，[key]键，[value]值，[saveTime]保存的时间（单位：秒） */
     fun put(key: String, value: Bitmap, saveTime: Int) {
-        put(key, Utils.Bitmap2Bytes(value), saveTime)
+        put(key, Utils.bitmap2Bytes(value), saveTime)
     }
 
     /** 读取Bitmap数据，[key]键 */
     fun getAsBitmap(key: String): Bitmap? {
-        val array = getAsByteArray(key)
-        if (array == null) {
-            return null
-        }
-        return Utils.Bytes2Bimap(array)
+        val array = getAsByteArray(key) ?: return null
+        return Utils.bytes2Bimap(array)
     }
 
     // =======================================
@@ -249,14 +243,8 @@ class ACache {
 
     /** 读取Drawable数据，[key]键 */
     fun getAsDrawable(key: String): Drawable? {
-        val array = getAsByteArray(key)
-        if (array == null) {
-            return null
-        }
-        val bitmap = Utils.Bytes2Bimap(array)
-        if (bitmap == null) {
-            return null
-        }
+        val array = getAsByteArray(key) ?: return null
+        val bitmap = Utils.bytes2Bimap(array) ?: return null
         return Utils.bitmap2Drawable(bitmap)
     }
 

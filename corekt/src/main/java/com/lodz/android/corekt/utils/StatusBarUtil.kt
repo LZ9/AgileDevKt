@@ -22,8 +22,8 @@ object StatusBarUtil {
 
     private val FAKE_STATUS_BAR_VIEW_ID = R.id.statusbarutil_fake_status_bar_view
     private val FAKE_TRANSLUCENT_VIEW_ID = R.id.statusbarutil_translucent_view
-    private val TAG_KEY_HAVE_SET_OFFSET = -123
-    private val DEFAULT_ALPHA = 0.45f
+    private const val TAG_KEY_HAVE_SET_OFFSET = -123
+    private const val DEFAULT_ALPHA = 0.45f
 
     /** 获取状态栏颜色 */
     @ColorInt
@@ -112,7 +112,7 @@ object StatusBarUtil {
             return
         }
         val drawer = drawerLayout.getChildAt(1)
-        if (drawer == null || !(drawer is ViewGroup)) {
+        if (drawer == null || drawer !is ViewGroup) {
             return
         }
 

@@ -33,7 +33,7 @@ object RSA {
     /** RSA最大解密密文大小  */
     private const val MAX_DECRYPT_BLOCK = KEY_SIZE / 8
 
-    /** 初始化密钥，[first]公钥，[second]私钥 */
+    /** 初始化密钥 */
     @JvmStatic
     fun initKey(): Pair<RSAPublicKey, RSAPrivateKey> {
         // 实例化密钥对生成器
@@ -45,7 +45,7 @@ object RSA {
         return Pair(keyPair.public as RSAPublicKey, keyPair.private as RSAPrivateKey)
     }
 
-    /** 初始化密钥，用base64编码，[first]公钥，[second]私钥 */
+    /** 初始化密钥，用base64编码 */
     @JvmStatic
     fun initKeyBase64(): Pair<String, String> {
         // 实例化密钥对生成器
@@ -94,10 +94,10 @@ object RSA {
             var i = 0
             // 对数据分段加密
             while (inputLen - offSet > 0) {
-                if (inputLen - offSet > MAX_ENCRYPT_BLOCK) {
-                    cache = cipher.doFinal(data, offSet, MAX_ENCRYPT_BLOCK)
+                cache = if (inputLen - offSet > MAX_ENCRYPT_BLOCK) {
+                    cipher.doFinal(data, offSet, MAX_ENCRYPT_BLOCK)
                 } else {
-                    cache = cipher.doFinal(data, offSet, inputLen - offSet)
+                    cipher.doFinal(data, offSet, inputLen - offSet)
                 }
                 baos.write(cache, 0, cache.size)
                 i++
@@ -136,14 +136,14 @@ object RSA {
             var i = 0
             // 对数据分段解密
             while (inputLen - offSet > 0) {
-                if (inputLen - offSet > MAX_DECRYPT_BLOCK) {
-                    cache = cipher.doFinal(data, offSet, MAX_DECRYPT_BLOCK)
+                cache = if (inputLen - offSet > MAX_DECRYPT_BLOCK) {
+                    cipher.doFinal(data, offSet, MAX_DECRYPT_BLOCK)
                 } else {
-                    cache = cipher.doFinal(data, offSet, inputLen - offSet)
+                    cipher.doFinal(data, offSet, inputLen - offSet)
                 }
                 baos.write(cache, 0, cache.size)
                 i++
-                offSet = i * MAX_DECRYPT_BLOCK;
+                offSet = i * MAX_DECRYPT_BLOCK
             }
             return baos.toByteArray()
         }

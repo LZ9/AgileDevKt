@@ -20,7 +20,7 @@ object AnkoNumFormat {
     const val TYPE_FIVE_DECIMAL = "0.00000"
 }
 
-/** 格式化[formatType]数字[data]（默认两位小数） */
+/** 格式化[formatType]数字（默认两位小数） */
 @JvmOverloads
 fun Double.format(formatType: String = AnkoNumFormat.TYPE_TWO_DECIMAL): String {
     try {
@@ -32,7 +32,7 @@ fun Double.format(formatType: String = AnkoNumFormat.TYPE_TWO_DECIMAL): String {
     return ""
 }
 
-/** 格式化[formatType]数字[data]（默认两位小数） */
+/** 格式化[formatType]数字（默认两位小数） */
 @JvmOverloads
 fun Float.format(formatType: String = AnkoNumFormat.TYPE_TWO_DECIMAL): String {
     try {

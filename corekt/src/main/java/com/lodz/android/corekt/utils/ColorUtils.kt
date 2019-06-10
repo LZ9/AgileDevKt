@@ -23,7 +23,7 @@ object ColorUtils {
     @JvmStatic
     fun getColorAlphaInt(@ColorInt color: Int, @FloatRange(from = 0.0, to = 1.0) alpha: Float): Int {
         // 透明度最大值
-        val MAX = 255
+        val max = 255
 
         var newAlpha = alpha
         if (alpha < 0f) {
@@ -36,24 +36,24 @@ object ColorUtils {
         var colorHex = Integer.toHexString(color)
         val length = colorHex.length
         if (length == 7) {
-            colorHex = "0" + colorHex
+            colorHex = "0$colorHex"
         }
 
         if (length == 6) {
-            colorHex = "ff" + colorHex
+            colorHex = "ff$colorHex"
         }
 
         if (length < 6) {
             for (i in 0 until (6 - length)) {
-                colorHex = "0" + colorHex;
+                colorHex = "0$colorHex"
             }
-            colorHex = "ff" + colorHex
+            colorHex = "ff$colorHex"
         }
 
-        val alphaInt = newAlpha * MAX// 获取alpha对应的十进制数值
+        val alphaInt = newAlpha * max// 获取alpha对应的十进制数值
         var hex = Integer.toHexString(alphaInt.toInt())//把十进制转为16进制
         if (hex.length == 1) {
-            hex = "0" + hex
+            hex = "0$hex"
         }
 
         if (colorHex.length == 8) {

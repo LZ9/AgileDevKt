@@ -19,16 +19,12 @@ import java.util.*
 class NotificationUtils private constructor(context: Context) {
 
     /** 通知管理 */
-    private val mNotificationManager: NotificationManager
+    private val mNotificationManager: NotificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
     companion object {
         /** 创建通知管理 */
         @JvmStatic
         fun create(context: Context): NotificationUtils = NotificationUtils(context)
-    }
-
-    init {
-        mNotificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     }
 
     /** 发送标志为[id]的通知[notification] */
@@ -114,7 +110,7 @@ class NotificationUtils private constructor(context: Context) {
 
         //---------------------- 不常用 ---------------------
         builder.setLargeIcon(bitmap)// 通知消息上的大图标（可传可不传）
-        builder.setColor(Color.RED)//这边设置颜色，可以给5.0及以上版本smallIcon设置背景色（基本不使用）
+        builder.color = Color.RED//这边设置颜色，可以给5.0及以上版本smallIcon设置背景色（基本不使用）
         builder.setWhen(System.currentTimeMillis())// 设置该条通知时间（基本不使用）
         builder.setOngoing(false)//设置是否为一个正在进行中的通知，这一类型的通知将无法删除（基本不使用）
 

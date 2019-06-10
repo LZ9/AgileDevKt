@@ -20,8 +20,7 @@ fun <T : View> Activity.bindView(id: Int): Lazy<T> = lazy {
 /** 在Fragment中绑定view */
 fun <T : View> Fragment.bindView(id: Int): Lazy<T> = lazy {
     val fragmentView = view ?: throw IllegalStateException("'${javaClass.name}' fragment view is null.")
-    val view = fragmentView.findViewById<T>(id) ?: throw IllegalStateException("View ID $id for '${javaClass.name}' not found.")
-    return@lazy view
+    return@lazy fragmentView.findViewById<T>(id) ?: throw IllegalStateException("View ID $id for '${javaClass.name}' not found.")
 }
 
 /** 在RecyclerView.ViewHolder中绑定view */

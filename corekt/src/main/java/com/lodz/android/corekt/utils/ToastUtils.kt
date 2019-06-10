@@ -13,7 +13,7 @@ import androidx.annotation.StringRes
  * Toast帮助类
  * Created by zhouL on 2018/6/26.
  */
-class ToastUtils private constructor(val mContext: Context) {
+class ToastUtils private constructor(private val mContext: Context) {
 
     /** 提示语 */
     private var mText: String? = null
@@ -45,7 +45,7 @@ class ToastUtils private constructor(val mContext: Context) {
             create(context).setText(text).setShort().show()
         }
 
-        /** 通过上下文[context]显示文字资源为[text]的短时间的Toast */
+        /** 通过上下文[context]显示文字资源为[strResId]的短时间的Toast */
         @JvmStatic
         fun showShort(context: Context, @StringRes strResId: Int) {
             create(context).setText(strResId).setShort().show()
@@ -57,7 +57,7 @@ class ToastUtils private constructor(val mContext: Context) {
             create(context).setText(text).setLong().show()
         }
 
-        /** 通过上下文[context]显示文字资源为[text]的长时间的Toast */
+        /** 通过上下文[context]显示文字资源为[strResId]的长时间的Toast */
         @JvmStatic
         fun showLong(context: Context, @StringRes strResId: Int) {
             create(context).setText(strResId).setLong().show()

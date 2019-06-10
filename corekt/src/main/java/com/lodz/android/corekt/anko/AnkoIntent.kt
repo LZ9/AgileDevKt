@@ -40,7 +40,7 @@ fun Context.installApk(apkPath: String, authority: String, newTask: Boolean = tr
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         if (!packageManager.canRequestPackageInstalls()) {
             //跳转至“安装未知应用”权限界面，引导用户开启权限
-            startActivity(Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, Uri.parse("package:" + packageName)))
+            startActivity(Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, Uri.parse("package:$packageName")))
             return
         }
     }
@@ -64,7 +64,7 @@ fun Context.uninstallApp(packageName: String) {
     if (packageName.isEmpty()) {
         return
     }
-    startActivity(Intent(Intent.ACTION_DELETE, Uri.parse("package:" + packageName)))
+    startActivity(Intent(Intent.ACTION_DELETE, Uri.parse("package:$packageName")))
 }
 
 /** 通过LaunchIntent打开包名为[packageName]的应用 */
@@ -73,10 +73,7 @@ fun Context.openAppByLaunch(packageName: String, newTask: Boolean = true) {
     if (packageName.isEmpty()) {
         throw IllegalArgumentException("packageName is null")
     }
-    val intent: Intent? = getPackageManager().getLaunchIntentForPackage(packageName)
-    if (intent == null) {
-        throw ActivityNotFoundException("no found packageName")
-    }
+    val intent: Intent = packageManager.getLaunchIntentForPackage(packageName) ?: throw ActivityNotFoundException("no found packageName")
     if (newTask) {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
     }
@@ -93,10 +90,7 @@ fun Context.openAppByActionMain(packageName: String, newTask: Boolean = true) {
     var mainActivityName: String? = ""// 启动页的路径
     val intent = Intent(Intent.ACTION_MAIN)
     for (resolve in packageManager.queryIntentActivities(intent, 0)) {
-        val info: ActivityInfo? = resolve.activityInfo
-        if (info == null) {
-            continue
-        }
+        val info: ActivityInfo = resolve.activityInfo ?: continue
         if (packageName.equals(info.packageName)) {
             mainActivityName = info.name
             break
@@ -107,7 +101,7 @@ fun Context.openAppByActionMain(packageName: String, newTask: Boolean = true) {
         throw ActivityNotFoundException("no found packageName")
     }
 
-    intent.setComponent(ComponentName(packageName, mainActivityName))
+    intent.component = ComponentName(packageName, mainActivityName)
     if (newTask) {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
     }
@@ -117,7 +111,7 @@ fun Context.openAppByActionMain(packageName: String, newTask: Boolean = true) {
 /** 打开应用设置界面 */
 fun Context.goAppDetailSetting() {
     val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-    intent.data = Uri.parse("package:" + getPackageName())
+    intent.data = Uri.parse("package:$packageName")
     startActivity(intent)
 }
 
