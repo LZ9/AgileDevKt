@@ -138,17 +138,13 @@ class LoadingLayout : LinearLayout {
 
         // 设置加载页背景
         val drawableBackground: Drawable? = typedArray?.getDrawable(R.styleable.LoadingLayout_contentBackground)
-        if (drawableBackground != null) {
-            background = drawableBackground
-        } else if (mConfig.backgroundColor != 0) {
-            setBackgroundColor(getColorCompat(mConfig.backgroundColor))
-        } else {
-            setBackgroundColor(getColorCompat(android.R.color.white))
+        when {
+            drawableBackground != null -> background = drawableBackground
+            mConfig.backgroundColor != 0 -> setBackgroundColor(getColorCompat(mConfig.backgroundColor))
+            else -> setBackgroundColor(getColorCompat(android.R.color.white))
         }
 
-        if (typedArray != null) {
-            typedArray.recycle()
-        }
+        typedArray?.recycle()
     }
 
     /** 是否需要[isNeed]提示文字 */

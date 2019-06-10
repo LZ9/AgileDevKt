@@ -10,19 +10,18 @@ import java.lang.reflect.Type
 /**
  * Created by zhouL on 2018/7/4.
  */
-class FastJsonResponseBodyConverter<T>(private val type: Type?, private val config: ParserConfig?, val featureValues: Int, vararg features: Feature?) : Converter<ResponseBody, T> {
+class FastJsonResponseBodyConverter<T>(
+    private val type: Type?,
+    private val config: ParserConfig?,
+    private val featureValues: Int,
+    vararg features: Feature?
+) : Converter<ResponseBody, T> {
 
-    private var mFeatures: Array<out Feature?>
-
-    init {
-        mFeatures = features
-    }
+    private var mFeatures: Array<out Feature?> = features
 
     override fun convert(value: ResponseBody?): T {
-        try {
-            return JSON.parseObject(value?.string() ?: "{}", type, config, featureValues, *mFeatures)
-        } finally {
-            value?.close()
+        value.use { rb ->
+            return JSON.parseObject(rb?.string() ?: "{}", type, config, featureValues, *mFeatures)
         }
     }
 }

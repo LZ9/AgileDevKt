@@ -162,7 +162,7 @@ open class PgWebView : FrameLayout {
 
     /** 设置日志标签[tag] */
     fun setLogTag(tag: String) {
-        if (!tag.isEmpty()) {
+        if (tag.isNotEmpty()) {
             TAG = tag
         }
     }

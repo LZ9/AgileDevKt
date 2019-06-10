@@ -76,9 +76,7 @@ class IndexBar : LinearLayout {
         }
         mPressBgDrawable = typedArray?.getDrawable(R.styleable.IndexBar_pressBackgroundColor)
 
-        if (typedArray != null) {
-            typedArray.recycle()
-        }
+        typedArray?.recycle()
     }
 
     /** 设置索引监听器[listener] */
@@ -123,7 +121,7 @@ class IndexBar : LinearLayout {
 
     /** 设置索引数据列表[list] */
     fun setIndexList(list: List<String>) {
-        if (list.size == 0) {
+        if (list.isEmpty()) {
             return
         }
         addTextView(list)
@@ -142,7 +140,7 @@ class IndexBar : LinearLayout {
                 textView.setTextColor(mTextColor)
             }
             textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, mTextSizeSp.toFloat())
-            textView.setTypeface(if (isTextBold) Typeface.DEFAULT_BOLD else Typeface.DEFAULT)
+            textView.typeface = if (isTextBold) Typeface.DEFAULT_BOLD else Typeface.DEFAULT
             textView.gravity = Gravity.CENTER
             val layoutParams = LinearLayout.LayoutParams(
                     if (orientation == VERTICAL) LinearLayout.LayoutParams.MATCH_PARENT else 0,
@@ -181,10 +179,7 @@ class IndexBar : LinearLayout {
     private fun callbackTouch(x: Float, y: Float) {
         val count = childCount
         for (i in 0 until count) {
-            val view = getChildAt(i)
-            if (!(view is TextView)) {
-                continue
-            }
+            val view = getChildAt(i) as? TextView ?: continue
             if (orientation == VERTICAL) {
                 if (y >= view.top && y <= view.bottom) {
                     if (mHintTextView != null) {

@@ -79,12 +79,10 @@ class CltTextView : FrameLayout {
 
         // 设置必填图片是否显示
         val visibility = typedArray?.getInt(R.styleable.CltTextView_requiredVisibility, 0) ?: 0
-        if (visibility == 1) {
-            setRequiredVisibility(View.INVISIBLE)
-        } else if (visibility == 2) {
-            setRequiredVisibility(View.GONE)
-        } else {
-            setRequiredVisibility(View.VISIBLE)
+        when (visibility) {
+            1 -> setRequiredVisibility(View.INVISIBLE)
+            2 -> setRequiredVisibility(View.GONE)
+            else -> setRequiredVisibility(View.VISIBLE)
         }
 
         // 设置必填图片
@@ -173,18 +171,13 @@ class CltTextView : FrameLayout {
         }
         // 设置内容文字位置
         val gravity = typedArray?.getInt(R.styleable.CltTextView_contentGravity, 0) ?: 0
-        if (gravity == 1){
-            setContentGravity(Gravity.CENTER)
-        }else if (gravity == 2){
-            setContentGravity(Gravity.START)
-        }else if (gravity == 3){
-            setContentGravity(Gravity.END )
-        }else if (gravity == 4){
-            setContentGravity(Gravity.START or Gravity.CENTER_VERTICAL)
-        }else if (gravity == 5){
-            setContentGravity(Gravity.END or Gravity.CENTER_VERTICAL)
-        }else{
-            setContentGravity(Gravity.CENTER_VERTICAL)
+        when (gravity) {
+            1 -> setContentGravity(Gravity.CENTER)
+            2 -> setContentGravity(Gravity.START)
+            3 -> setContentGravity(Gravity.END )
+            4 -> setContentGravity(Gravity.START or Gravity.CENTER_VERTICAL)
+            5 -> setContentGravity(Gravity.END or Gravity.CENTER_VERTICAL)
+            else -> setContentGravity(Gravity.CENTER_VERTICAL)
         }
         // 设置单位文字
         val unitText: String? = typedArray?.getString(R.styleable.CltTextView_unitText)
@@ -231,9 +224,7 @@ class CltTextView : FrameLayout {
         }
         // 设置是否只读
         setReadOnly(typedArray?.getBoolean(R.styleable.CltTextView_isReadOnly, false) ?: false)
-        if (typedArray != null) {
-            typedArray.recycle()
-        }
+        typedArray?.recycle()
     }
 
     /** 设置必填图片资源[resId] */
@@ -261,7 +252,7 @@ class CltTextView : FrameLayout {
 
     /** 设置标题文字[title] */
     fun setTitleText(title: String) {
-        mTitleTv.setText(title)
+        mTitleTv.text = title
     }
 
     /** 设置标题文字资源[resId] */
@@ -319,7 +310,7 @@ class CltTextView : FrameLayout {
 
     /** 设置内容文字[content] */
     fun setContentText(content: String) {
-        mContentTv.setText(content)
+        mContentTv.text = content
     }
 
     /** 设置内容文字资源[resId] */
@@ -451,7 +442,7 @@ class CltTextView : FrameLayout {
 
     /** 设置单位文字[unit] */
     fun setUnitText(unit: String) {
-        mUnitTv.setText(unit)
+        mUnitTv.text = unit
     }
 
     /** 设置单位文字资源[resId] */
@@ -492,7 +483,7 @@ class CltTextView : FrameLayout {
 
     /** 设置跳转按钮文字[unit] */
     fun setJumpBtnText(unit: String) {
-        mJumpBtn.setText(unit)
+        mJumpBtn.text = unit
     }
 
     /** 设置跳转按钮文字资源[resId] */

@@ -39,7 +39,7 @@ abstract class ProgressSubscriber<T> : RxSubscriber<T>() {
     }
 
     /** 加载框 */
-    var mProgressDialog: AlertDialog? = null
+    private var mProgressDialog: AlertDialog? = null
 
     /** 创建自定义加载框[dialog] */
     fun create(dialog: AlertDialog): ProgressSubscriber<T> {
@@ -77,7 +77,7 @@ abstract class ProgressSubscriber<T> : RxSubscriber<T>() {
         val progressDialog = AlertDialog.Builder(context, R.style.ProgressStyle)
                 .setView(view)
                 .create()
-        if (!msg.isEmpty()) {
+        if (msg.isNotEmpty()) {
             val msgTv = view.findViewById<TextView>(R.id.msg)
             msgTv.visibility = View.VISIBLE
             msgTv.text = msg
@@ -87,10 +87,7 @@ abstract class ProgressSubscriber<T> : RxSubscriber<T>() {
         progressDialog.setOnCancelListener {
             cancelDialog()
         }
-        val wd = progressDialog.window
-        if (wd != null) {
-            wd.setGravity(Gravity.CENTER)
-        }
+        progressDialog.window?.setGravity(Gravity.CENTER)
         return progressDialog
     }
 

@@ -2,17 +2,15 @@ package com.lodz.android.pandora.widget.custom
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.os.Build
 import android.util.AttributeSet
 import android.view.MotionEvent
-import android.widget.EditText
-import androidx.annotation.RequiresApi
+import androidx.appcompat.widget.AppCompatEditText
 
 /**
  * 外嵌ScrollView可滚动文字的EditText
  * Created by zhouL on 2018/12/11.
  */
-open class ScrollEditText : EditText {
+open class ScrollEditText : AppCompatEditText {
 
     /** 是否允许滚动 */
     private var isCanScroll = false
@@ -29,8 +27,6 @@ open class ScrollEditText : EditText {
     constructor(context: Context?) : super(context)
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes)
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent?): Boolean {

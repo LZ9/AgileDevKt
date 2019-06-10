@@ -152,10 +152,7 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
 
         // 文件夹按钮
         mFolderBtn.setOnClickListener {
-            val bean = mPickerBean
-            if (bean == null) {
-                return@setOnClickListener
-            }
+            val bean = mPickerBean ?: return@setOnClickListener
             if (mCurrentImageFolder == null) {
                 mCurrentImageFolder = AlbumUtils.getTotalImageFolder(getContext())
             }
@@ -181,10 +178,7 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
             }
             dialog.setListener { dialogInterface, folderItemBean ->
                 dialogInterface.dismiss()
-                val imageFolder = folderItemBean.imageFolder
-                if (imageFolder == null) {
-                    return@setListener
-                }
+                val imageFolder = folderItemBean.imageFolder ?: return@setListener
                 if (currentFolder.dir.equals(imageFolder.dir)) {// 选择了同一个文件夹
                     return@setListener
                 }
@@ -209,15 +203,8 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
 
         // 预览按钮
         mPreviewBtn.setOnClickListener {
-            val bean = mPickerBean
-            if (bean == null) {
-                return@setOnClickListener
-            }
-
-            val view = bean.imgView
-            if (view == null) {
-                return@setOnClickListener
-            }
+            val bean = mPickerBean ?: return@setOnClickListener
+            val view = bean.imgView ?: return@setOnClickListener
 
             val list = ArrayList<String>()
             for (itemBean in mSelectedList) {
@@ -240,10 +227,7 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
 
         mAdapter.setListener(object : PhotoPickerAdapter.Listener {
             override fun onSelected(bean: PickerItemBean, position: Int) {
-                val pickerBean = mPickerBean
-                if (pickerBean == null) {
-                    return
-                }
+                val pickerBean = mPickerBean ?: return
 
                 if (mSelectedList.size == pickerBean.maxCount && !bean.isSelected) {// 已经选满图片且用户点击了可选图
                     toastShort(getString(R.string.pandora_picker_photo_count_tips, pickerBean.maxCount.toString()))
@@ -252,11 +236,11 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
 
                 synchronized(this) {
                     for (i in mCurrentPhotoList.indices) {
-                        if (bean.path.equals(mCurrentPhotoList.get(i).path)) {
-                            mCurrentPhotoList.get(i).isSelected = !bean.isSelected//更改选中状态
+                        if (bean.path.equals(mCurrentPhotoList[i].path)) {
+                            mCurrentPhotoList[i].isSelected = !bean.isSelected//更改选中状态
                             mAdapter.setData(mCurrentPhotoList)
                             mAdapter.notifyItemChanged(position)//刷新数据
-                            if (mCurrentPhotoList.get(i).isSelected) {// 点击后是选中状态
+                            if (mCurrentPhotoList[i].isSelected) {// 点击后是选中状态
                                 mSelectedList.add(bean)
                             } else {// 点击后是非选中状态
                                 val iterator = mSelectedList.iterator()
@@ -294,17 +278,11 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
 
         // 图片点击回调
         mAdapter.setOnItemClickListener { viewHolder, item, position ->
-            val bean = mPickerBean
-            if (bean == null) {
-                return@setOnItemClickListener
-            }
+            val bean = mPickerBean ?: return@setOnItemClickListener
             if (!bean.isNeedItemPreview) {// 不需要预览
                 return@setOnItemClickListener
             }
-            val view = bean.imgView
-            if (view == null) {
-                return@setOnItemClickListener
-            }
+            val view = bean.imgView ?: return@setOnItemClickListener
             // 图片预览器
             PreviewManager.create<V, String>()
                     .setShowPagerText(false)

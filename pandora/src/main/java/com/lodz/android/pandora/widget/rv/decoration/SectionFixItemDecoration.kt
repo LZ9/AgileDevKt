@@ -16,7 +16,7 @@ open class SectionFixItemDecoration<T> protected constructor(context: Context, s
         /** 创建，分组标题列表[sections]，各组数据列表集[sources] */
         @JvmStatic
         fun <T> create(context: Context, sections: List<String>, sources: List<List<T>>): SectionFixItemDecoration<T> {
-            if (sections.size == 0 || sources.size == 0) {
+            if (sections.isEmpty() || sources.isEmpty()) {
                 throw IllegalArgumentException("sections or sources is can not be empty")
             }
             if (sections.size != sources.size) {
@@ -27,14 +27,9 @@ open class SectionFixItemDecoration<T> protected constructor(context: Context, s
     }
 
     /** 分组标题列表  */
-    private val mSections: List<String>
+    private val mSections: List<String> = sections
     /** 各组数据列表集  */
-    protected val mSources: List<List<T>>
-
-    init {
-        mSections = sections
-        mSources = sources
-    }
+    protected val mSources: List<List<T>> = sources
 
     override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
         super.getItemOffsets(outRect, view, parent, state)
@@ -88,14 +83,12 @@ open class SectionFixItemDecoration<T> protected constructor(context: Context, s
 
     /** 获取位置[position]对应的分组标题文字 */
     protected fun getSectionText(position: Int): String {
-        var index = 0
         var size = 0
-        for (list in mSources) {
+        for ((index, list) in mSources.withIndex()) {
             if (position >= size && position < size + list.size) {
-                return mSections.get(index)
+                return mSections[index]
             }
             size += list.size
-            index++
         }
         return ""
     }

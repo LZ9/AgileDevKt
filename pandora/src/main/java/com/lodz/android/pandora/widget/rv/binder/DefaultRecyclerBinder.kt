@@ -20,5 +20,5 @@ class DefaultRecyclerBinder(context: Context, binderType: Int) : RecyclerBinder<
 
     override fun getData(position: Int): String = ""
 
-    private inner class DefaultViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {}
+    private inner class DefaultViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 }

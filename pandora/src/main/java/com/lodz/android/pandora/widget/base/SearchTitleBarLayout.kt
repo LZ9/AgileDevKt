@@ -147,14 +147,11 @@ class SearchTitleBarLayout : FrameLayout {
 
         // 标题背景
         val drawableBackground: Drawable? = typedArray?.getDrawable(R.styleable.SearchTitleBarLayout_titleBarBackground)
-        if (drawableBackground != null) {
-            background = drawableBackground
-        } else if (mConfig.backgroundResId != 0) {
-            setBackgroundResource(mConfig.backgroundResId)
-        } else if (mConfig.backgroundColor != 0) {
-            setBackgroundColor(getColorCompat(mConfig.backgroundColor))
-        } else {
-            setBackgroundColor(getColorCompat(android.R.color.holo_blue_light))
+        when {
+            drawableBackground != null -> background = drawableBackground
+            mConfig.backgroundResId != 0 -> setBackgroundResource(mConfig.backgroundResId)
+            mConfig.backgroundColor != 0 -> setBackgroundColor(getColorCompat(mConfig.backgroundColor))
+            else -> setBackgroundColor(getColorCompat(android.R.color.holo_blue_light))
         }
 
         // 是否需要阴影
@@ -231,9 +228,7 @@ class SearchTitleBarLayout : FrameLayout {
             setVerticalLineBackground(verticalLineBackground)
         }
 
-        if (typedArray != null) {
-            typedArray.recycle()
-        }
+        typedArray?.recycle()
     }
 
     /** 设置监听器 */
@@ -337,7 +332,7 @@ class SearchTitleBarLayout : FrameLayout {
 
     /** 设置分割线背景[drawable] */
     fun setDivideLineDrawable(drawable: Drawable) {
-        mDivideLineView.setBackground(drawable)
+        mDivideLineView.background = drawable
     }
 
     /** 设置分割线高度[dp] */
@@ -390,7 +385,7 @@ class SearchTitleBarLayout : FrameLayout {
     }
 
     /** 获取输入框内容 */
-    fun getInputText(): String = mInputEdit.getText().toString()
+    fun getInputText(): String = mInputEdit.text.toString()
 
     /** 设置输入框背景[drawable] */
     fun setInputBackground(drawable: Drawable) {

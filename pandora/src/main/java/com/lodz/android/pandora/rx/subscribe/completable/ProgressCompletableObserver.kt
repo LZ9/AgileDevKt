@@ -73,7 +73,7 @@ abstract class ProgressCompletableObserver : RxCompletableObserver() {
         val progressDialog = AlertDialog.Builder(context, R.style.ProgressStyle)
                 .setView(view)
                 .create()
-        if (!msg.isEmpty()) {
+        if (msg.isNotEmpty()) {
             val msgTv = view.findViewById<TextView>(R.id.msg)
             msgTv.visibility = View.VISIBLE
             msgTv.text = msg
@@ -83,10 +83,7 @@ abstract class ProgressCompletableObserver : RxCompletableObserver() {
         progressDialog.setOnCancelListener {
             cancelDialog()
         }
-        val wd = progressDialog.window
-        if (wd != null) {
-            wd.setGravity(Gravity.CENTER)
-        }
+        progressDialog.window?.setGravity(Gravity.CENTER)
         return progressDialog
     }
 

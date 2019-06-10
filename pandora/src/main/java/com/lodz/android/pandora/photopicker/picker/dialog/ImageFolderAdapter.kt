@@ -48,7 +48,7 @@ internal class ImageFolderAdapter(context: Context) : BaseRecyclerViewAdapter<Im
 
     override fun onBind(holder: RecyclerView.ViewHolder, position: Int) {
         val bean = getItem(position)
-        if (bean == null || !(holder is ImageFolderViewHolder)) {
+        if (bean == null || holder !is ImageFolderViewHolder) {
             return
         }
         showItem(holder, bean)

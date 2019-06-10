@@ -27,10 +27,7 @@ abstract class BaseCenterDialog : BaseDialog {
     open fun hasAnimations(): Boolean = true
 
     override fun show() {
-        val wd = window
-        if (wd != null) {
-            wd.setGravity(Gravity.CENTER)
-        }
+        window?.setGravity(Gravity.CENTER)
         super.show()
     }
 }

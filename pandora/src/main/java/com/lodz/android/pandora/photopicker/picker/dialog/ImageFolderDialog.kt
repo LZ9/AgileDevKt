@@ -84,8 +84,7 @@ class ImageFolderDialog(context: Context) : BaseTopDialog(context) {
             return
         }
 
-        val config = mConfig
-        configAdapter(list, if (config == null) PickerUIConfig.createDefault() else config)
+        configAdapter(list, mConfig ?: PickerUIConfig.createDefault())
     }
 
     /** 配置适配器 */

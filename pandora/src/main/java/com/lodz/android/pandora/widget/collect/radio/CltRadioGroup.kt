@@ -112,12 +112,10 @@ class CltRadioGroup : FrameLayout {
 
         // 设置必填图片是否显示
         val visibility = typedArray?.getInt(R.styleable.CltRadioGroup_requiredVisibility, 0) ?: 0
-        if (visibility == 1) {
-            setRequiredVisibility(View.INVISIBLE)
-        } else if (visibility == 2) {
-            setRequiredVisibility(View.GONE)
-        } else {
-            setRequiredVisibility(View.VISIBLE)
+        when (visibility) {
+            1 -> setRequiredVisibility(View.INVISIBLE)
+            2 -> setRequiredVisibility(View.GONE)
+            else -> setRequiredVisibility(View.VISIBLE)
         }
 
         // 设置必填图片
@@ -199,15 +197,13 @@ class CltRadioGroup : FrameLayout {
             setRadioGravity(Gravity.END or Gravity.CENTER_VERTICAL)
         }
 
-        if (typedArray != null) {
-            typedArray.recycle()
-        }
+        typedArray?.recycle()
     }
 
     private fun initRecyclerView() {
-        mLayoutManager = GridLayoutManager(getContext(), mSpanCount)
+        mLayoutManager = GridLayoutManager(context, mSpanCount)
         mLayoutManager.orientation = RecyclerView.VERTICAL
-        mAdapter = RadioGroupAdapter(getContext())
+        mAdapter = RadioGroupAdapter(context)
         mRadioRv.layoutManager = mLayoutManager
         mRadioRv.setHasFixedSize(true)
         mRadioRv.isNestedScrollingEnabled = false
@@ -222,8 +218,8 @@ class CltRadioGroup : FrameLayout {
 
             if (mRadioType == TYPE_SINGLE) {// 单选
                 for (i in mList.indices) {
-                    mList.get(i).isSelected = if (item.radioable.getIdTag().equals(mList.get(i).getIdTag())) {
-                        if (!mList.get(i).isSelected) {// 原来未选中 现在选中了则回调监听器
+                    mList[i].isSelected = if (item.radioable.getIdTag().equals(mList[i].getIdTag())) {
+                        if (!mList[i].isSelected) {// 原来未选中 现在选中了则回调监听器
                             mOnCheckedChangeListener?.invoke(item, true)
                         }
                         true
@@ -234,9 +230,9 @@ class CltRadioGroup : FrameLayout {
             }
             if (mRadioType == TYPE_MULTIPLE) {// 多选
                 for (i in mList.indices) {
-                    if (item.radioable.getIdTag().equals(mList.get(i).getIdTag())) {
-                        mList.get(i).isSelected = !mList.get(i).isSelected
-                        mOnCheckedChangeListener?.invoke(item, mList.get(i).isSelected)
+                    if (item.radioable.getIdTag().equals(mList[i].getIdTag())) {
+                        mList[i].isSelected = !mList[i].isSelected
+                        mOnCheckedChangeListener?.invoke(item, mList[i].isSelected)
                     }
 
                 }
@@ -271,7 +267,7 @@ class CltRadioGroup : FrameLayout {
 
     /** 设置标题文字[title] */
     fun setTitleText(title: String) {
-        mTitleTv.setText(title)
+        mTitleTv.text = title
     }
 
     /** 设置标题文字资源[resId] */
@@ -443,7 +439,7 @@ class CltRadioGroup : FrameLayout {
     /** 设置单选选中的[id] */
     fun setSelectedId(id: String) {
         for (i in mList.indices) {
-            mList.get(i).isSelected = id.equals(mList.get(i).getIdTag())
+            mList[i].isSelected = id.equals(mList[i].getIdTag())
         }
         mAdapter.setData(mList)
         mAdapter.notifyDataSetChanged()
@@ -452,10 +448,10 @@ class CltRadioGroup : FrameLayout {
     /** 设置多选选中的[ids] */
     fun setSelectedId(ids: List<String>) {
         for (i in mList.indices) {
-            mList.get(i).isSelected = false
+            mList[i].isSelected = false
             ids.forEachIndexed { index, id ->
-                if (id.equals(mList.get(i).getIdTag())) {
-                    mList.get(i).isSelected = true
+                if (id.equals(mList[i].getIdTag())) {
+                    mList[i].isSelected = true
                 }
             }
         }
@@ -484,7 +480,7 @@ class CltRadioGroup : FrameLayout {
         return false
     }
 
-    /** 设置选中变化监听器[radioable]*/
+    /** 设置选中变化监听器[listener]*/
     fun setOnCheckedChangeListener(listener: ((radioable: Radioable, isSelected: Boolean) -> Unit)?) {
         mOnCheckedChangeListener = listener
     }

@@ -66,7 +66,7 @@ abstract class AbsActivity : RxAppCompatActivity() {
     final override fun onBackPressed() {
         if (supportFragmentManager != null) {
             val list: List<Fragment>? = supportFragmentManager.fragments// 获取activity下的fragment
-            if (list != null && list.size > 0) {
+            if (list != null && list.isNotEmpty()) {
                 for (fragment in list) {
                     if (isFragmentConsumeBackPressed(fragment)) {
                         return
@@ -115,7 +115,7 @@ abstract class AbsActivity : RxAppCompatActivity() {
             val itf = fragment as IFragmentBackPressed
             return itf.onPressBack()// fragment是否消耗返回按钮事件
         }
-        return false;
+        return false
     }
 
     /** 点击返回按钮 */
@@ -144,10 +144,7 @@ abstract class AbsActivity : RxAppCompatActivity() {
     /** 被回收后从后台回到前台调用 */
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
         super.onRestoreInstanceState(savedInstanceState)
-        val app = BaseApplication.get()
-        if (app == null) {
-            return
-        }
+        val app = BaseApplication.get() ?: return
 
         val bundle = app.getSaveInstanceState(javaClass.simpleName)
         if (bundle != null) {
@@ -203,10 +200,7 @@ abstract class AbsActivity : RxAppCompatActivity() {
                 return false
             }
             // 进行了UseAnkoLayout注解
-            val inject = javaClass.getAnnotation(UseAnkoLayout::class.java)
-            if (inject == null) {
-                return false
-            }
+            val inject = javaClass.getAnnotation(UseAnkoLayout::class.java) ?: return false
             return inject.value
         } catch (e: Exception) {
             e.printStackTrace()

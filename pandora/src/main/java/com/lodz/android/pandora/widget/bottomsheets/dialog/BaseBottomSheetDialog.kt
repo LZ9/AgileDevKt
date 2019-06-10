@@ -65,10 +65,7 @@ abstract class BaseBottomSheetDialog : BottomSheetDialog {
 
     /** 配置状态栏 */
     private fun configStatusBar() {
-        val wd = window
-        if (wd == null) {
-            return
-        }
+        val wd = window ?: return
         if (!configTransparentStatusBar()) {
             wd.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
             return

@@ -83,9 +83,9 @@ object RxUtils {
     fun decodePathToBase64(path: String, widthPx: Int, heightPx: Int): Observable<String> {
         return Observable.create(object : RxObservableOnSubscribe<String>(path, widthPx, heightPx) {
             override fun subscribe(emitter: ObservableEmitter<String>) {
-                val pathArg = getArgs().get(0) as String
-                val widthPxArg = getArgs().get(1) as Int
-                val heightPxArg = getArgs().get(2) as Int
+                val pathArg = getArgs()[0] as String
+                val widthPxArg = getArgs()[1] as Int
+                val heightPxArg = getArgs()[2] as Int
                 if (pathArg.isEmpty()) {
                     emitter.onError(IllegalArgumentException("path is empty"))
                     return
@@ -123,9 +123,9 @@ object RxUtils {
     fun decodePathToBase64(paths: ArrayList<String>, widthPx: Int, heightPx: Int): Observable<ArrayList<String>> {
         return Observable.create(object : RxObservableOnSubscribe<ArrayList<String>>(paths, widthPx, heightPx) {
             override fun subscribe(emitter: ObservableEmitter<ArrayList<String>>) {
-                val pathsArg = getArgs().get(0) as ArrayList<*>
-                val widthPxArg = getArgs().get(1) as Int
-                val heightPxArg = getArgs().get(2) as Int
+                val pathsArg = getArgs()[0] as ArrayList<*>
+                val widthPxArg = getArgs()[1] as Int
+                val heightPxArg = getArgs()[2] as Int
 
                 if (pathsArg.size == 0) {
                     emitter.onError(IllegalArgumentException("paths size is 0"))
@@ -138,7 +138,7 @@ object RxUtils {
                         if (emitter.isDisposed) {
                             return
                         }
-                        if (!(p is String)) {
+                        if (p !is String) {
                             continue
                         }
                         val bitmap = BitmapUtils.compressBitmap(p, widthPxArg, heightPxArg)
@@ -173,7 +173,7 @@ object RxUtils {
     fun viewClick(view: View, duration: Long = 1, unit: TimeUnit = TimeUnit.SECONDS): Observable<View> {
         return Observable.create(object : RxObservableOnSubscribe<View>(view) {
             override fun subscribe(emitter: ObservableEmitter<View>) {
-                val viewArg = getArgs().get(0) as View
+                val viewArg = getArgs()[0] as View
                 viewArg.setOnClickListener { v ->
                     emitter.onNext(v)
                 }
@@ -188,7 +188,7 @@ object RxUtils {
     fun textChanges(textView: TextView, duration: Long = 500, unit: TimeUnit = TimeUnit.MILLISECONDS): Observable<CharSequence> {
         return Observable.create(object : RxObservableOnSubscribe<CharSequence>(textView) {
             override fun subscribe(emitter: ObservableEmitter<CharSequence>) {
-                val editTextArg = getArgs().get(0) as EditText
+                val editTextArg = getArgs()[0] as EditText
                 editTextArg.addTextChangedListener(object : TextWatcher {
                     override fun afterTextChanged(s: Editable?) {
                     }

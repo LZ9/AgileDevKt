@@ -92,9 +92,7 @@ open class NineGridView : FrameLayout {
                 ?: DEFAULT_MAX_PIC)
         mAdapter.setItemHigh(typedArray?.getDimensionPixelSize(R.styleable.NineGridView_itemHigh, 0)
                 ?: 0)
-        if (typedArray != null) {
-            typedArray.recycle()
-        }
+        typedArray?.recycle()
     }
 
     /** 拖拽回调  */
@@ -115,7 +113,7 @@ open class NineGridView : FrameLayout {
             if (mDataList.isEmpty()) {
                 return false
             }
-            if (!(viewHolder is NineGridAdapter.NineGridViewHolder) || !(target is NineGridAdapter.NineGridViewHolder)) {
+            if (viewHolder !is NineGridAdapter.NineGridViewHolder || target !is NineGridAdapter.NineGridViewHolder) {
                 return false
             }
 
@@ -211,7 +209,7 @@ open class NineGridView : FrameLayout {
         //如果数据大于最大图片数，则取前n位数据
         val length = if (data.size > mAdapter.getMaxPic()) mAdapter.getMaxPic() else data.size
         for (i in 0 until length) {
-            mDataList.add(data.get(i))
+            mDataList.add(data[i])
         }
         mAdapter.setData(mDataList)
         mAdapter.notifyDataSetChanged()
@@ -222,7 +220,7 @@ open class NineGridView : FrameLayout {
         // 判断添加的数据长度和已有数据长度之和是否超过总长度
         val length = if ((data.size + mDataList.size) > mAdapter.getMaxPic()) mAdapter.getMaxPic() - mDataList.size else data.size
         for (i in 0 until length) {
-            mDataList.add(data.get(i))
+            mDataList.add(data[i])
         }
         mAdapter.setData(mDataList)
         mAdapter.notifyDataSetChanged()

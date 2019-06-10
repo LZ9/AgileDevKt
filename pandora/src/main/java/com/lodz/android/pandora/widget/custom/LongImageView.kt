@@ -100,9 +100,7 @@ class LongImageView : FrameLayout {
                 ?: true
         showPlaceholder(isShowPlaceholder)
 
-        if (typedArray != null) {
-            typedArray.recycle()
-        }
+        typedArray?.recycle()
     }
 
     /** 通过id获取ScaleType类型 */

@@ -76,7 +76,7 @@ class ACacheUtils private constructor() {
         /** 完成ACache构建 */
         fun build(context: Context) {
             if (mCacheDir == null) {
-                mCacheDir = File(context.getCacheDir(), "ACache")
+                mCacheDir = File(context.cacheDir, "ACache")
             }
         }
 
@@ -84,11 +84,7 @@ class ACacheUtils private constructor() {
         internal fun getCacheDir(): File {
             if (mCacheDir == null) {
                 val context = BaseApplication.get()
-                if (context != null) {
-                    mCacheDir = File(context.getCacheDir(), "ACache")
-                } else {
-                    mCacheDir = Environment.getDownloadCacheDirectory()
-                }
+                mCacheDir = if (context != null) File(context.cacheDir, "ACache") else Environment.getDownloadCacheDirectory()
             }
             return mCacheDir!!
         }

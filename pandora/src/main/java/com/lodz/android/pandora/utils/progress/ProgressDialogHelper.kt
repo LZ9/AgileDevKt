@@ -87,10 +87,7 @@ class ProgressDialogHelper private constructor() {
         if (mListener != null) {
             progressDialog.setOnCancelListener(mListener)
         }
-        val wd = progressDialog.window
-        if (wd != null) {
-            wd.setGravity(Gravity.CENTER)
-        }
+        progressDialog.window?.setGravity(Gravity.CENTER)
         return progressDialog
     }
 }

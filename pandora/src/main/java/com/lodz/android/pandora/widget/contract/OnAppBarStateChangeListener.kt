@@ -26,17 +26,14 @@ abstract class OnAppBarStateChangeListener : AppBarLayout.OnOffsetChangedListene
         if (appBarLayout == null) {
             return
         }
-        if (verticalOffset == 0) {
-            // 张开
-            onStateChanged(appBarLayout, EXPANDED, 1.0)
-        } else if (Math.abs(verticalOffset) >= appBarLayout.totalScrollRange) {
-            //收缩
-            onStateChanged(appBarLayout, COLLAPSED, 0.0)
-        } else {
-            val delta = Math.abs(verticalOffset) / appBarLayout.totalScrollRange.toDouble()
-            onStateChanged(appBarLayout, SCROLLING, 1.0 - delta)
+        when {
+            verticalOffset == 0 -> onStateChanged(appBarLayout, EXPANDED, 1.0)// 张开
+            Math.abs(verticalOffset) >= appBarLayout.totalScrollRange -> onStateChanged(appBarLayout, COLLAPSED, 0.0)//收缩
+            else -> {
+                val delta = Math.abs(verticalOffset) / appBarLayout.totalScrollRange.toDouble()
+                onStateChanged(appBarLayout, SCROLLING, 1.0 - delta)
+            }
         }
-
     }
 
     /** 控件[appBarLayout]偏移状态[state]回调，偏移参数[delta]范围：0展开 1折叠 0.0-1.0滚动  */

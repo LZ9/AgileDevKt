@@ -9,11 +9,7 @@ import io.reactivex.SingleOnSubscribe
  */
 abstract class RxSingleOnSubscribe<T>(vararg args: Any?) : SingleOnSubscribe<T> {
 
-    private var mArgs: Array<out Any?>
-
-    init {
-        mArgs = args
-    }
+    private var mArgs: Array<out Any?> = args
 
     fun getArgs(): Array<out Any?> = mArgs
 

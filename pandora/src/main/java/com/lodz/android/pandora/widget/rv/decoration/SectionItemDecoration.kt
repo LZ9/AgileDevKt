@@ -92,7 +92,7 @@ open class SectionItemDecoration<T> protected constructor(context: Context) : Ba
             return ""
         }
         val t = callback.getSourceItem(position)
-        if (!(t is Groupable) && !(t is String)) {
+        if (t !is Groupable && t !is String) {
             return ""
         }
         val item = if (t is Groupable) t.getSortStr() else t as String

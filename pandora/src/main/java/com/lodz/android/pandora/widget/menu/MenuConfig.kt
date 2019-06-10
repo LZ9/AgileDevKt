@@ -121,17 +121,17 @@ class MenuConfig {
         numBackgroundDrawableResId = resId
     }
 
-    /** 数字上间距[top] */
+    /** 数字上间距[px] */
     fun setNumTextMarginTop(px: Int) {
         numTextMarginTop = px
     }
 
-    /** 数字右间距[end] */
+    /** 数字右间距[px] */
     fun setNumTextMarginEnd(px: Int) {
         numTextMarginEnd = px
     }
 
-    /** 数字背景大小[end] */
+    /** 数字背景大小[dp] */
     fun setNumTextBgSizeDp(dp: Int) {
         numTextBgSizeDp = dp
     }

@@ -118,7 +118,7 @@ internal class NineGridAdapter(context: Context) : BaseRecyclerViewAdapter<Strin
             return
         }
         val data = getItem(position)
-        if (data.isNullOrEmpty() || !(holder is NineGridViewHolder)) {
+        if (data.isNullOrEmpty() || holder !is NineGridViewHolder) {
             return
         }
         showItem(holder, data)

@@ -72,7 +72,7 @@ internal class PhotoPickerAdapter(context: Context, imgLoader: OnImgLoader<Strin
         }
 
         val bean = getItem(if (isNeedCamera) position - 1 else position)
-        if (bean == null || !(holder is PickerViewHolder)) {
+        if (bean == null || holder !is PickerViewHolder) {
             return
         }
         showItem(holder, bean, position)

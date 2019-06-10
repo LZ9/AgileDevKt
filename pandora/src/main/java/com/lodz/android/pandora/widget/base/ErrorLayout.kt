@@ -86,12 +86,10 @@ class ErrorLayout : LinearLayout {
         needTips(isNeedTips)
 
         val src: Drawable? = typedArray?.getDrawable(R.styleable.ErrorLayout_src)
-        if (src != null) {
-            setImg(src)
-        } else if (mConfig.drawableResId != 0) {
-            setImg(mConfig.drawableResId)
-        } else {
-            setImg(R.drawable.pandora_ic_data_fail)
+        when {
+            src != null -> setImg(src)
+            mConfig.drawableResId != 0 -> setImg(mConfig.drawableResId)
+            else -> setImg(R.drawable.pandora_ic_data_fail)
         }
 
         // 默认提示语
@@ -118,17 +116,13 @@ class ErrorLayout : LinearLayout {
 
         // 设置加载页背景
         val drawableBackground: Drawable? = typedArray?.getDrawable(R.styleable.ErrorLayout_contentBackground)
-        if (drawableBackground != null) {
-            background = drawableBackground
-        } else if (mConfig.backgroundColor != 0) {
-            setBackgroundColor(getColorCompat(mConfig.backgroundColor))
-        } else {
-            setBackgroundColor(getColorCompat(android.R.color.white))
+        when {
+            drawableBackground != null -> background = drawableBackground
+            mConfig.backgroundColor != 0 -> setBackgroundColor(getColorCompat(mConfig.backgroundColor))
+            else -> setBackgroundColor(getColorCompat(android.R.color.white))
         }
 
-        if (typedArray != null) {
-            typedArray.recycle()
-        }
+        typedArray?.recycle()
     }
 
     /** 是否需要[isNeed]提示图片 */

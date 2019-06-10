@@ -2,6 +2,7 @@ package com.lodz.android.pandora.widget.custom
 
 import android.content.Context
 import android.content.res.Resources
+import android.content.res.TypedArray
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.widget.LinearLayout
@@ -32,12 +33,12 @@ open class MmsTabLayout : TabLayout {
     }
 
     private fun init(attrs: AttributeSet?) {
-        if (attrs == null) {
-            return
+        var typedArray: TypedArray? = null
+        if (attrs != null) {
+            typedArray = context.obtainStyledAttributes(attrs, R.styleable.MmsTabLayout)
         }
-        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.MmsTabLayout) ?: return
-        mTabMarginPx = typedArray.getDimensionPixelSize(R.styleable.MmsTabLayout_tabMargin, 0)
-        typedArray.recycle()
+        mTabMarginPx = typedArray?.getDimensionPixelSize(R.styleable.MmsTabLayout_tabMargin, 0) ?: 0
+        typedArray?.recycle()
     }
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {

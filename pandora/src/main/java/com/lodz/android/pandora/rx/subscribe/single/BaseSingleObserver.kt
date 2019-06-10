@@ -36,7 +36,7 @@ abstract class BaseSingleObserver<T> : SingleObserver<T> {
         val app = BaseApplication.get() ?: return
         val tag = app.getMetaData(ERROR_TAG)
         if (tag != null && tag is String) {
-            if (!tag.isEmpty()) {
+            if (tag.isNotEmpty()) {
                 PrintLog.e(tag, t.toString(), t)
             }
         }

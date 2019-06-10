@@ -9,11 +9,7 @@ import io.reactivex.ObservableOnSubscribe
  */
 abstract class RxObservableOnSubscribe<T>(vararg args: Any?) : ObservableOnSubscribe<T> {
 
-    private var mArgs: Array<out Any?>
-
-    init {
-        mArgs = args
-    }
+    private var mArgs: Array<out Any?> = args
 
     fun getArgs(): Array<out Any?> = mArgs
 

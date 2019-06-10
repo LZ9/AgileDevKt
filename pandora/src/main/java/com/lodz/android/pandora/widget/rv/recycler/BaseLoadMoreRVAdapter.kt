@@ -16,16 +16,18 @@ import com.lodz.android.corekt.anko.getSize
  */
 abstract class BaseLoadMoreRVAdapter<T>(context: Context) : BaseRecyclerViewAdapter<T>(context) {
 
-    /** 列表内容  */
-    protected val VIEW_TYPE_ITEM = 0
-    /** 正在加载更多  */
-    protected val VIEW_TYPE_LOADING_MORE = 1
-    /** 已加载完全部数据  */
-    protected val VIEW_TYPE_LOAD_FINISH = 2
-    /** 加载失败  */
-    protected val VIEW_TYPE_LOAD_FAIL = 3
-    /** 隐藏数据  */
-    protected val VIEW_TYPE_HIDE_ITEM = 4
+    companion object {
+        /** 列表内容  */
+        protected const val VIEW_TYPE_ITEM = 0
+        /** 正在加载更多  */
+        protected const val VIEW_TYPE_LOADING_MORE = 1
+        /** 已加载完全部数据  */
+        protected const val VIEW_TYPE_LOAD_FINISH = 2
+        /** 加载失败  */
+        protected const val VIEW_TYPE_LOAD_FAIL = 3
+        /** 隐藏数据  */
+        protected const val VIEW_TYPE_HIDE_ITEM = 4
+    }
 
     /** 总条数  */
     private var mSumSize = 0
@@ -55,7 +57,7 @@ abstract class BaseLoadMoreRVAdapter<T>(context: Context) : BaseRecyclerViewAdap
     protected var isGridLayoutManager = false
 
     override fun getItemViewType(position: Int): Int {
-        if (isShowBottomLayout && (position == getItemCount() - 1)) {// 启用底部提示页面 && 滑动到底部
+        if (isShowBottomLayout && (position == itemCount - 1)) {// 启用底部提示页面 && 滑动到底部
             if (isShowLoadFail) {
                 return VIEW_TYPE_LOAD_FAIL
             }
@@ -131,19 +133,19 @@ abstract class BaseLoadMoreRVAdapter<T>(context: Context) : BaseRecyclerViewAdap
     abstract fun getItemViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is BaseLoadMoreRVAdapter<*>.LoadFinishViewHolder) {
-            showLoadFinish(holder)
-        } else if (holder is BaseLoadMoreRVAdapter<*>.LoadingMoreViewHolder) {
-            showLoadingMore(holder)
-        } else if (holder is BaseLoadMoreRVAdapter<*>.LoadFailViewHolder) {
-            holder.itemView.setOnClickListener {
-                mOnLoadFailClickListener?.invoke(mPage + 1, mSize)
+        when (holder) {
+            is BaseLoadMoreRVAdapter<*>.LoadFinishViewHolder -> showLoadFinish(holder)
+            is BaseLoadMoreRVAdapter<*>.LoadingMoreViewHolder -> showLoadingMore(holder)
+            is BaseLoadMoreRVAdapter<*>.LoadFailViewHolder -> {
+                holder.itemView.setOnClickListener {
+                    mOnLoadFailClickListener?.invoke(mPage + 1, mSize)
+                }
+                showLoadFail(holder)
             }
-            showLoadFail(holder)
-        } else if (holder is BaseLoadMoreRVAdapter<*>.BlankViewHolder) {
-            // 空白占位不需要操作
-        } else {
-            super.onBindViewHolder(holder, position)
+            is BaseLoadMoreRVAdapter<*>.BlankViewHolder -> {
+                // 空白占位不需要操作
+            }
+            else -> super.onBindViewHolder(holder, position)
         }
         handleLoadMore(position)
     }

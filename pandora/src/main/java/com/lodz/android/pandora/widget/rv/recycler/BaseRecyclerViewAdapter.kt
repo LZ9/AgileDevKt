@@ -64,7 +64,7 @@ abstract class BaseRecyclerViewAdapter<T>(protected val context: Context) : Recy
             return null
         }
         try {
-            return data.get(position)
+            return data[position]
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -180,7 +180,7 @@ abstract class BaseRecyclerViewAdapter<T>(protected val context: Context) : Recy
         this.mData = data
     }
 
-    /** 获取数据列表[data] */
+    /** 获取数据列表 */
     fun getData(): List<T>? = mData
 
     /** 在onCreateViewHolder方法中根据[layoutId]获取View */
@@ -195,7 +195,7 @@ abstract class BaseRecyclerViewAdapter<T>(protected val context: Context) : Recy
         itemView.layoutParams = layoutParams
     }
 
-    /** 设置[itemView]的高度值[width] */
+    /** 设置[itemView]的高度值[height] */
     protected fun setItemViewHeight(itemView: View, height: Int) {
         val layoutParams = itemView.layoutParams
         layoutParams.height = height

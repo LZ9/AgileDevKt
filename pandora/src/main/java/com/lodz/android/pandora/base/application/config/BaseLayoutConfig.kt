@@ -13,20 +13,13 @@ class BaseLayoutConfig {
     annotation class OrientationType
 
     /** 异常页面配置  */
-    private var mErrorLayoutConfig: ErrorLayoutConfig
+    private var mErrorLayoutConfig: ErrorLayoutConfig = ErrorLayoutConfig()
     /** 加载页面配置 */
-    private var mLoadingLayoutConfig: LoadingLayoutConfig
+    private var mLoadingLayoutConfig: LoadingLayoutConfig = LoadingLayoutConfig()
     /** 无数据页面配置 */
-    private var mNoDataLayoutConfig: NoDataLayoutConfig
+    private var mNoDataLayoutConfig: NoDataLayoutConfig = NoDataLayoutConfig()
     /** 标题栏配置  */
-    private var mTitleBarLayoutConfig: TitleBarLayoutConfig
-
-    init {
-        mErrorLayoutConfig = ErrorLayoutConfig()
-        mLoadingLayoutConfig = LoadingLayoutConfig()
-        mNoDataLayoutConfig = NoDataLayoutConfig()
-        mTitleBarLayoutConfig = TitleBarLayoutConfig()
-    }
+    private var mTitleBarLayoutConfig: TitleBarLayoutConfig = TitleBarLayoutConfig()
 
     /** 获取异常页面配置 */
     fun getErrorLayoutConfig(): ErrorLayoutConfig = mErrorLayoutConfig

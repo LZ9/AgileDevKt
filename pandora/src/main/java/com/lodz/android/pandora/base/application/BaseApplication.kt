@@ -53,10 +53,10 @@ abstract class BaseApplication : Application() {
 
     /** 当APP在后台被回收时可以调用该方法保存关键数据 */
     fun putSaveInstanceState(key: String, bundle: Bundle) {
-        mRestoreMap.put(key, bundle)
+        mRestoreMap[key] = bundle
     }
 
     /** 当APP被回收后从后台回到前台时调用该方法获取保存的关键数据 */
-    fun getSaveInstanceState(key: String): Bundle? = mRestoreMap.get(key)
+    fun getSaveInstanceState(key: String): Bundle? = mRestoreMap[key]
 
 }

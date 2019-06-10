@@ -76,7 +76,7 @@ class SimpleNineGridView<V : View> : NineGridView {
                         .setShowPagerText(true)
                         .setImageView(listener.createImageView())
                         .build(getPicData())
-                        .open(getContext())
+                        .open(context)
             }
         })
     }

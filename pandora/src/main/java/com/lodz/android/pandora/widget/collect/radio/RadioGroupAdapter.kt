@@ -70,7 +70,7 @@ internal class RadioGroupAdapter(context: Context) : BaseRecyclerViewAdapter<Rad
 
     override fun onBind(holder: RecyclerView.ViewHolder, position: Int) {
         val data = getItem(position)
-        if (data == null || !(holder is DataViewHolder)) {
+        if (data == null || holder !is DataViewHolder) {
             return
         }
         showItem(holder, data)

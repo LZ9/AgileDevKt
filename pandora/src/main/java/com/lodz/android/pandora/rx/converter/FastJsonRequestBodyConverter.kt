@@ -14,24 +14,20 @@ class FastJsonRequestBodyConverter<T>(private val config: SerializeConfig?, vara
 
     private val MEDIA_TYPE = MediaType.parse("application/json; charset=UTF-8")
 
-    private var mFeatures: Array<out SerializerFeature?>
-
-    init {
-        mFeatures = features
-    }
+    private var mFeatures: Array<out SerializerFeature?> = features
 
     override fun convert(value: T): RequestBody {
-        if (config != null) {
+        return if (config != null) {
             if (mFeatures.isNotEmpty()) {
-                return RequestBody.create(MEDIA_TYPE, JSON.toJSONBytes(value, config, *mFeatures))
+                RequestBody.create(MEDIA_TYPE, JSON.toJSONBytes(value, config, *mFeatures))
             } else {
-                return RequestBody.create(MEDIA_TYPE, JSON.toJSONBytes(value, config))
+                RequestBody.create(MEDIA_TYPE, JSON.toJSONBytes(value, config))
             }
         } else {
             if (mFeatures.isNotEmpty()) {
-                return RequestBody.create(MEDIA_TYPE, JSON.toJSONBytes(value, *mFeatures))
+                RequestBody.create(MEDIA_TYPE, JSON.toJSONBytes(value, *mFeatures))
             } else {
-                return RequestBody.create(MEDIA_TYPE, JSON.toJSONBytes(value))
+                RequestBody.create(MEDIA_TYPE, JSON.toJSONBytes(value))
             }
         }
     }

@@ -12,12 +12,14 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
  */
 abstract class BaseHeaderFooterRVAdapter<H, T, F>(context: Context) : BaseRecyclerViewAdapter<T>(context) {
 
-    /** 头部  */
-    protected val VIEW_TYPE_HEADER = 0
-    /** 数据列表  */
-    protected val VIEW_TYPE_ITEM = 1
-    /** 底部  */
-    protected val VIEW_TYPE_FOOTER = 2
+    companion object {
+        /** 头部  */
+        protected const val VIEW_TYPE_HEADER = 0
+        /** 数据列表  */
+        protected const val VIEW_TYPE_ITEM = 1
+        /** 底部  */
+        protected const val VIEW_TYPE_FOOTER = 2
+    }
 
     /** 头信息数据 */
     private var mHeaderData: H? = null
@@ -41,7 +43,7 @@ abstract class BaseHeaderFooterRVAdapter<H, T, F>(context: Context) : BaseRecycl
             }
         }
         if (mFooterData != null) {
-            if (position == getItemCount() - 1) {
+            if (position == itemCount - 1) {
                 return VIEW_TYPE_FOOTER
             }
         }
@@ -123,7 +125,7 @@ abstract class BaseHeaderFooterRVAdapter<H, T, F>(context: Context) : BaseRecycl
             }
 
             if (mHeaderData == null) {// 没有头部 有底部
-                if (position == getItemCount() - 1) {
+                if (position == itemCount - 1) {
                     mOnFooterClickListener?.invoke(holder, mFooterData!!, position)
                     return@setOnClickListener
                 }
@@ -139,7 +141,7 @@ abstract class BaseHeaderFooterRVAdapter<H, T, F>(context: Context) : BaseRecycl
                 mOnHeaderClickListener?.invoke(holder, mHeaderData!!, position)
                 return@setOnClickListener
             }
-            if (position == getItemCount() - 1) {
+            if (position == itemCount - 1) {
                 mOnFooterClickListener?.invoke(holder, mFooterData!!, position)
                 return@setOnClickListener
             }
@@ -173,7 +175,7 @@ abstract class BaseHeaderFooterRVAdapter<H, T, F>(context: Context) : BaseRecycl
             }
 
             if (mHeaderData == null) {// 没有头部 有底部
-                if (position == getItemCount() - 1) {
+                if (position == itemCount - 1) {
                     mOnFooterLongClickListener?.invoke(holder, mFooterData!!, position)
                     return@setOnLongClickListener true
                 }
@@ -188,7 +190,7 @@ abstract class BaseHeaderFooterRVAdapter<H, T, F>(context: Context) : BaseRecycl
             if (position == 0) {
                 mOnHeaderLongClickListener?.invoke(holder, mHeaderData!!, position)
             }
-            if (position == getItemCount() - 1) {
+            if (position == itemCount - 1) {
                 mOnFooterLongClickListener?.invoke(holder, mFooterData!!, position)
             }
             if (mOnItemLongClickListener != null) {
@@ -240,10 +242,10 @@ abstract class BaseHeaderFooterRVAdapter<H, T, F>(context: Context) : BaseRecycl
                     return if (position == 0) layoutManager.spanCount else 1
                 }
                 if (mHeaderData == null) {// 没有头部 有底部
-                    return if (position == getItemCount() - 1) layoutManager.spanCount else 1
+                    return if (position == itemCount - 1) layoutManager.spanCount else 1
                 }
                 // 有头部 有底部
-                if (position == 0 || position == getItemCount() - 1) {
+                if (position == 0 || position == itemCount - 1) {
                     return layoutManager.spanCount
                 }
                 return 1

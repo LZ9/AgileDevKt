@@ -22,22 +22,23 @@ import com.lodz.android.corekt.anko.sp2px
  */
 open class BaseSectionItemDecoration(context: Context) : BaseItemDecoration(context) {
 
-    /** 默认文字大小  */
-    protected val DEFAULT_TEXT_SIZE_SP = 20f
-    /** 默认分组高度  */
-    protected val DEFAULT_SECTION_HEIGHT_DP = 32
+    companion object {
+        /** 默认文字大小  */
+        protected const val DEFAULT_TEXT_SIZE_SP = 20f
+        /** 默认分组高度  */
+        protected const val DEFAULT_SECTION_HEIGHT_DP = 32
+    }
 
     /** 文字画笔  */
     private val mTextPaint: TextPaint
     /** 背景画笔  */
-    private val mBgPaint: Paint
+    private val mBgPaint: Paint = Paint()
     /** 分组高度  */
     protected var mSectionHeightPx = 0
     /** 文字左侧间距  */
     private var mTextPaddingLeftDp = 0
 
     init {
-        mBgPaint = Paint()
         mBgPaint.color = Color.GRAY
 
         mTextPaint = TextPaint()

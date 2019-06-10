@@ -66,10 +66,7 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val ctx = context
-        if (ctx == null) {
-            return super.onCreateDialog(savedInstanceState)
-        }
+        val ctx = context ?: return super.onCreateDialog(savedInstanceState)
         return BottomSheetDialog(ctx, R.style.TransparentBottomSheetStyle)//使用自定义style创建Dialog
     }
 
@@ -80,10 +77,7 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
     /** 配置状态栏 */
     private fun setStatusBar() {
-        val window = dialog?.window
-        if (window == null) {
-            return
-        }
+        val window = dialog?.window ?: return
         if (!configTransparentStatusBar()) {
             window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
             return

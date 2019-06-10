@@ -16,12 +16,11 @@ import androidx.annotation.LayoutRes
  */
 abstract class BasePopupWindow(context: Context) {
     /** 上下文 */
-    private val mContext: Context
+    private val mContext: Context = context
     /** PopupWindow */
     private val mPopupWindow: PopupWindow
 
     init {
-        mContext = context
         mPopupWindow = createPopupWindow(mContext)
     }
 

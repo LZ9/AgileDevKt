@@ -10,11 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 open class BaseItemDecoration(context: Context) : RecyclerView.ItemDecoration() {
 
     /** 上下文 */
-    private val mContext: Context
-
-    init {
-        mContext = context
-    }
+    private val mContext: Context = context
 
     fun getContext(): Context = mContext
 

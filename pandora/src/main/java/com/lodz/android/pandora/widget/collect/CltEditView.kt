@@ -117,12 +117,10 @@ class CltEditView : FrameLayout {
 
         // 设置必填图片是否显示
         val visibility = typedArray?.getInt(R.styleable.CltEditView_requiredVisibility, 0) ?: 0
-        if (visibility == 1) {
-            setRequiredVisibility(View.INVISIBLE)
-        } else if (visibility == 2) {
-            setRequiredVisibility(View.GONE)
-        } else {
-            setRequiredVisibility(View.VISIBLE)
+        when (visibility) {
+            1 -> setRequiredVisibility(View.INVISIBLE)
+            2 -> setRequiredVisibility(View.GONE)
+            else -> setRequiredVisibility(View.VISIBLE)
         }
         // 设置必填图片
         val src: Drawable? = typedArray?.getDrawable(R.styleable.CltEditView_requiredSrc)
@@ -210,18 +208,13 @@ class CltEditView : FrameLayout {
         }
         // 设置内容文字位置
         val gravity = typedArray?.getInt(R.styleable.CltEditView_contentGravity, 0) ?: 0
-        if (gravity == 1) {
-            setContentGravity(Gravity.CENTER)
-        } else if (gravity == 2) {
-            setContentGravity(Gravity.START)
-        } else if (gravity == 3) {
-            setContentGravity(Gravity.END)
-        } else if (gravity == 4) {
-            setContentGravity(Gravity.START or Gravity.CENTER_VERTICAL)
-        } else if (gravity == 5) {
-            setContentGravity(Gravity.END or Gravity.CENTER_VERTICAL)
-        } else {
-            setContentGravity(Gravity.CENTER_VERTICAL)
+        when (gravity) {
+            1 -> setContentGravity(Gravity.CENTER)
+            2 -> setContentGravity(Gravity.START)
+            3 -> setContentGravity(Gravity.END)
+            4 -> setContentGravity(Gravity.START or Gravity.CENTER_VERTICAL)
+            5 -> setContentGravity(Gravity.END or Gravity.CENTER_VERTICAL)
+            else -> setContentGravity(Gravity.CENTER_VERTICAL)
         }
         // 设置单位文字
         val unitText: String? = typedArray?.getString(R.styleable.CltEditView_unitText)
@@ -288,22 +281,20 @@ class CltEditView : FrameLayout {
         }
         // 设置限制文字是否显示
         val limitVisibility = typedArray?.getInt(R.styleable.CltEditView_limitVisibility, 2) ?: 2
-        if (limitVisibility == 1) {
-            setLimitVisibility(View.INVISIBLE)
-        } else if (limitVisibility == 2) {
-            setLimitVisibility(View.GONE)
-        } else {
-            if (mMaxCount <= 0) {
-                mMaxCount = 100
-                setMaxLength(mMaxCount)
+        when (limitVisibility) {
+            1 -> setLimitVisibility(View.INVISIBLE)
+            2 -> setLimitVisibility(View.GONE)
+            else -> {
+                if (mMaxCount <= 0) {
+                    mMaxCount = 100
+                    setMaxLength(mMaxCount)
+                }
+                setLimitVisibility(View.VISIBLE)
+                updateLimitText(mContentEdit.text?.length ?: 0)
             }
-            setLimitVisibility(View.VISIBLE)
-            updateLimitText(mContentEdit.text.length)
         }
 
-        if (typedArray != null) {
-            typedArray.recycle()
-        }
+        typedArray?.recycle()
     }
 
     private fun setListeners() {
@@ -329,7 +320,7 @@ class CltEditView : FrameLayout {
                 }
                 if (mMaxCount > 0) {
                     // 限制输入字数
-                    val length = mContentEdit.text.length
+                    val length = mContentEdit.text?.length ?: 0
                     if (length == mMaxCount && start != 0) {
                         mLimitListener?.invoke(s, start, before, count, mMaxCount)
                     }
@@ -375,7 +366,7 @@ class CltEditView : FrameLayout {
 
     /** 设置标题文字[title] */
     fun setTitleText(title: String) {
-        mTitleTv.setText(title)
+        mTitleTv.text = title
     }
 
     /** 设置标题文字资源[resId] */
@@ -560,7 +551,7 @@ class CltEditView : FrameLayout {
 
     /** 设置单位文字[unit] */
     fun setUnitText(unit: String) {
-        mUnitTv.setText(unit)
+        mUnitTv.text = unit
     }
 
     /** 设置单位文字资源[resId] */
@@ -601,7 +592,7 @@ class CltEditView : FrameLayout {
 
     /** 设置跳转按钮文字[unit] */
     fun setJumpBtnText(unit: String) {
-        mJumpBtn.setText(unit)
+        mJumpBtn.text = unit
     }
 
     /** 设置跳转按钮文字资源[resId] */
@@ -674,26 +665,26 @@ class CltEditView : FrameLayout {
     /** 设置输入类型[type] */
     fun setEditInputType(@EditInputType type: Int) {
         mInputType = type
-        if (type == TYPE_ID_CARD) {
-            // 输入身份证号
-            mContentEdit.inputType = InputType.TYPE_CLASS_NUMBER
-            mContentEdit.keyListener = DigitsKeyListener.getInstance("1234567890xX")
-            mContentEdit.transformationMethod = UpperCaseTransformation()
-        } else if (type == TYPE_PHONE) {
-            // 输入手机号
-            mContentEdit.inputType = InputType.TYPE_CLASS_PHONE
-        } else if (type == TYPE_NUMBER) {
-            // 输入数字
-            mContentEdit.inputType = InputType.TYPE_CLASS_NUMBER
-        } else if (type == TYPE_NUMBER_DECIMAL) {
-            // 输入小数
-            mContentEdit.inputType = InputType.TYPE_CLASS_NUMBER
-            mContentEdit.keyListener = DigitsKeyListener.getInstance("1234567890.")
-        } else if (type == TYPE_NUMBER_DECIMAL) {
-            // 输入国外证件号
-            mContentEdit.inputType = InputType.TYPE_CLASS_NUMBER
-            mContentEdit.keyListener = DigitsKeyListener.getInstance("1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
-            mContentEdit.transformationMethod = UpperCaseTransformation()
+        when (type) {
+            TYPE_ID_CARD -> {
+                // 输入身份证号
+                mContentEdit.inputType = InputType.TYPE_CLASS_NUMBER
+                mContentEdit.keyListener = DigitsKeyListener.getInstance("1234567890xX")
+                mContentEdit.transformationMethod = UpperCaseTransformation()
+            }
+            TYPE_PHONE -> mContentEdit.inputType = InputType.TYPE_CLASS_PHONE// 输入手机号
+            TYPE_NUMBER -> mContentEdit.inputType = InputType.TYPE_CLASS_NUMBER// 输入数字
+            TYPE_NUMBER_DECIMAL -> {
+                // 输入小数
+                mContentEdit.inputType = InputType.TYPE_CLASS_NUMBER
+                mContentEdit.keyListener = DigitsKeyListener.getInstance("1234567890.")
+            }
+            TYPE_FOREIGN_CERT -> {
+                // 输入国外证件号
+                mContentEdit.inputType = InputType.TYPE_CLASS_NUMBER
+                mContentEdit.keyListener = DigitsKeyListener.getInstance("1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+                mContentEdit.transformationMethod = UpperCaseTransformation()
+            }
         }
     }
 

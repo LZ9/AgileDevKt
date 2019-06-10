@@ -31,10 +31,9 @@ class GridItemDecoration private constructor(context: Context) : BaseItemDecorat
     /** 外部间距  */
     private var mPx = 0
     /** 顶部画笔  */
-    private val mPaint: Paint
+    private val mPaint: Paint = Paint()
 
     init {
-        mPaint = Paint()
         mPaint.color = Color.GRAY
     }
 

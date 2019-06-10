@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
  * RecyclerView拖拽帮助类
  * Created by zhouL on 2018/11/21.
  */
-class RecyclerViewDragHelper<T>(val mContext: Context) {
+class RecyclerViewDragHelper<T>(private val mContext: Context) {
 
     /** 允许拖拽  */
     private var mUseDrag = true

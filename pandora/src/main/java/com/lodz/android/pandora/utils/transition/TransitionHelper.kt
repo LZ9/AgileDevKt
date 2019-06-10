@@ -17,7 +17,7 @@ object TransitionHelper {
     /** 使用过度动画跳转，[list]为共享元素列表 */
     @JvmStatic
     fun jumpTransition(activity: Activity, intent: Intent, list: List<Pair<View, String>>) {
-        if (list.size == 0 || Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+        if (list.isEmpty() || Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             activity.startActivity(intent)
         } else {
             activity.startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(activity, *list.toTypedArray()).toBundle())

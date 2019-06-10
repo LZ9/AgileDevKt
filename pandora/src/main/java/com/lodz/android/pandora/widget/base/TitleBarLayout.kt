@@ -154,14 +154,11 @@ open class TitleBarLayout : LinearLayout {
 
         // 标题背景
         val drawableBackground: Drawable? = typedArray?.getDrawable(R.styleable.TitleBarLayout_titleBarBackground)
-        if (drawableBackground != null) {
-            background = drawableBackground
-        } else if (mConfig.backgroundResId != 0) {
-            setBackgroundResource(mConfig.backgroundResId)
-        } else if (mConfig.backgroundColor != 0) {
-            setBackgroundColor(getColorCompat(mConfig.backgroundColor))
-        } else {
-            setBackgroundColor(getColorCompat(android.R.color.holo_blue_light))
+        when {
+            drawableBackground != null -> background = drawableBackground
+            mConfig.backgroundResId != 0 -> setBackgroundResource(mConfig.backgroundResId)
+            mConfig.backgroundColor != 0 -> setBackgroundColor(getColorCompat(mConfig.backgroundColor))
+            else -> setBackgroundColor(getColorCompat(android.R.color.holo_blue_light))
         }
 
         // 是否需要阴影
@@ -170,11 +167,7 @@ open class TitleBarLayout : LinearLayout {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && isNeedElevation) {
             val elevationVale: Int = typedArray?.getDimensionPixelSize(R.styleable.TitleBarLayout_elevationVale, 0)
                     ?: 0
-            if (elevationVale != 0) {
-                elevation = elevationVale.toFloat()
-            } else {
-                elevation = mConfig.elevationVale
-            }
+            elevation = if (elevationVale != 0) elevationVale.toFloat() else mConfig.elevationVale
         }
 
         // 加载扩展区布局
@@ -192,9 +185,7 @@ open class TitleBarLayout : LinearLayout {
                 ?: false
         needExpandView(isNeedExpandView)
 
-        if (typedArray != null) {
-            typedArray.recycle()
-        }
+        typedArray?.recycle()
     }
 
     /** 是否需要[isNeed]显示返回按钮 */
@@ -320,7 +311,7 @@ open class TitleBarLayout : LinearLayout {
 
     /** 设置分割线背景[drawable] */
     fun setDivideLineDrawable(drawable: Drawable) {
-        mDivideLineView.setBackground(drawable)
+        mDivideLineView.background = drawable
     }
 
     /** 设置分割线高度[dp] */
