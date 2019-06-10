@@ -65,10 +65,10 @@ class SnackbarTestActivity : AbsActivity() {
                     .addLeftImage(R.drawable.ic_launcher, dp2px(5))
                     .getSnackbar()
                     .setActionTextColor(getColorCompat(R.color.color_ffa630))
-                    .setAction(getString(R.string.snackbar_sign), { view ->
+                    .setAction(getString(R.string.snackbar_sign)) { view ->
                         toastShort(R.string.snackbar_sign)
-                    })
-                    .show()
+                    }
+                .show()
 
         }
 
@@ -81,10 +81,10 @@ class SnackbarTestActivity : AbsActivity() {
                     .addRightImage(R.drawable.ic_launcher, dp2px(5))
                     .getSnackbar()
                     .setActionTextColor(getColorCompat(R.color.color_ffa630))
-                    .setAction(getString(R.string.snackbar_cancel_attention), { view ->
+                    .setAction(getString(R.string.snackbar_cancel_attention)) { view ->
                         toastShort(R.string.snackbar_cancel_attention)
-                    })
-                    .show()
+                    }
+                .show()
         }
 
         // 自定义图片按钮

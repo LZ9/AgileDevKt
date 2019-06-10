@@ -90,30 +90,31 @@ class CoorStatusBarTestActivity : AbsActivity() {
                     .addLeftImage(R.drawable.ic_launcher, dp2px(5))
                     .getSnackbar()
                     .setActionTextColor(getColorCompat(R.color.color_ea5e5e))
-                    .setAction(getString(R.string.snackbar_sign), { view ->
+                    .setAction(getString(R.string.snackbar_sign)) { view ->
                         toastShort(R.string.snackbar_sign)
-                    })
-                    .show()
+                    }
+                .show()
         }
 
         mAppBarLayout.addOnOffsetChangedListener(object : OnAppBarStateChangeListener() {
             override fun onStateChanged(appBarLayout: AppBarLayout, state: Int, delta: Double) {
-                if (state == OnAppBarStateChangeListener.EXPANDED) {
-                    // 完全展开
-                    mRightBtn.visibility = View.VISIBLE
-                    mRightBtn.alpha = 1f
-                    mTitleBarLayout.visibility = View.GONE
-                } else if (state == OnAppBarStateChangeListener.COLLAPSED) {
-                    // 完全折叠
-                    mRightBtn.visibility = View.GONE
-                    mTitleBarLayout.visibility = View.VISIBLE
-                    mTitleBarLayout.alpha = 1f
-                } else {
-                    // 滑动中
-                    mRightBtn.alpha = delta.toFloat()
-                    mTitleBarLayout.alpha = (1 - delta).toFloat()
-                    mRightBtn.visibility = View.VISIBLE
-                    mTitleBarLayout.visibility = View.VISIBLE
+                when (state) {
+                    OnAppBarStateChangeListener.EXPANDED -> {// 完全展开
+                        mRightBtn.visibility = View.VISIBLE
+                        mRightBtn.alpha = 1f
+                        mTitleBarLayout.visibility = View.GONE
+                    }
+                    OnAppBarStateChangeListener.COLLAPSED -> {// 完全折叠
+                        mRightBtn.visibility = View.GONE
+                        mTitleBarLayout.visibility = View.VISIBLE
+                        mTitleBarLayout.alpha = 1f
+                    }
+                    else -> { // 滑动中
+                        mRightBtn.alpha = delta.toFloat()
+                        mTitleBarLayout.alpha = (1 - delta).toFloat()
+                        mRightBtn.visibility = View.VISIBLE
+                        mTitleBarLayout.visibility = View.VISIBLE
+                    }
                 }
 
             }

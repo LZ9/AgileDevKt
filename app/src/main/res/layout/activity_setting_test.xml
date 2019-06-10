@@ -187,7 +187,9 @@
                 android:layout_weight="1"
                 android:hint="@string/setting_screen_dormant_time_hint"
                 android:inputType="number"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                android:importantForAutofill="no"
+                tools:targetApi="o"/>
 
             <Button
                 android:id="@+id/screen_dormant_time_setting_btn"

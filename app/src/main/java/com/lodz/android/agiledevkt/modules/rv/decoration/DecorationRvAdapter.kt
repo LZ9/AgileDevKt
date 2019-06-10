@@ -38,7 +38,7 @@ class DecorationRvAdapter(context: Context) : BaseRecyclerViewAdapter<String>(co
 
     override fun onBind(holder: RecyclerView.ViewHolder, position: Int) {
         val data = getItem(position)
-        if (data.isNullOrEmpty() || !(holder is DecorationViewHolder)) {
+        if (data.isNullOrEmpty() || holder !is DecorationViewHolder) {
             return
         }
         showItem(holder, data)

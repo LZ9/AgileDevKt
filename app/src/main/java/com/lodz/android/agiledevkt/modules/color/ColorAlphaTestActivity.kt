@@ -50,7 +50,7 @@ class ColorAlphaTestActivity : BaseActivity() {
                 if (!fromUser){
                     return
                 }
-                mPercentageTv.text = (progress.toString() + "%")
+                mPercentageTv.text = ("$progress%")
                 val colorInt = ColorUtils.getColorAlphaRes(getContext(), R.color.yellow, (progress / 100.0).toFloat())
                 mCoverView.setBackgroundColor(colorInt)
             }

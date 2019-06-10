@@ -163,9 +163,9 @@ class ArrayTestActivity : BaseActivity() {
             val staffs = ArrayList<StaffBean>()
             for (i in 0..5) {
                 val bean = StaffBean()
-                bean.id = NUM_LIST_LONG.get(i)
-                bean.name = STR_LIST.get(i)
-                bean.age = NUM_LIST.get(i)
+                bean.id = NUM_LIST_LONG[i]
+                bean.name = STR_LIST[i]
+                bean.age = NUM_LIST[i]
                 staffs.add(bean)
             }
 

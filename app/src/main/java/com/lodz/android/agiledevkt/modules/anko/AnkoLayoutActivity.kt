@@ -71,7 +71,7 @@ class AnkoLayoutActivity : AbsActivity() {
                 toastShort(R.string.al_pswd_empty)
                 return@setOnClickListener
             }
-            mResultTv.text = "账号：${mAccountEdit.text} ; 密码：${mPswdEdit.text}"
+            mResultTv.text = StringBuilder("账号：${mAccountEdit.text} ; 密码：${mPswdEdit.text}")
             FragmentChangeActivity.start(getContext(), mAccountEdit.text.toString(), mPswdEdit.text.toString())
         }
     }

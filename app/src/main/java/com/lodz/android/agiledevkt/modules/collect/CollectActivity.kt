@@ -3,7 +3,6 @@ package com.lodz.android.agiledevkt.modules.collect
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.TextView
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder
 import com.bigkoo.pickerview.builder.TimePickerBuilder
@@ -82,30 +81,26 @@ class CollectActivity : BaseActivity() {
         super.setListeners()
         mNameCltv.setOnJumpClickListener {
             val dialog = OptionsPickerBuilder(getContext(),
-                    object : OnOptionsSelectListener {
-                        override fun onOptionsSelect(options1: Int, options2: Int, options3: Int, v: View?) {
-                            mNameCltv.setContentText(NAME_LIST[options1])
-                        }
-                    })
-                    .setSubmitText(getString(R.string.clt_confirm))
-                    .setCancelText(getString(R.string.clt_cancel))
-                    .setTitleText(getString(R.string.clt_name_title))
-                    .build<String>()
+                OnOptionsSelectListener { options1, options2, options3, v ->
+                    mNameCltv.setContentText(NAME_LIST[options1])
+                })
+                .setSubmitText(getString(R.string.clt_confirm))
+                .setCancelText(getString(R.string.clt_cancel))
+                .setTitleText(getString(R.string.clt_name_title))
+                .build<String>()
             dialog.setPicker(NAME_LIST)
             dialog.show()
         }
 
         mSexCltv.setOnContentClickListener {
             val dialog = OptionsPickerBuilder(getContext(),
-                    object : OnOptionsSelectListener {
-                        override fun onOptionsSelect(options1: Int, options2: Int, options3: Int, v: View?) {
-                            mSexCltv.setContentText(SEX_LIST[options1])
-                        }
-                    })
-                    .setSubmitText(getString(R.string.clt_confirm))
-                    .setCancelText(getString(R.string.clt_cancel))
-                    .setTitleText(getString(R.string.clt_sex_title))
-                    .build<String>()
+                OnOptionsSelectListener { options1, options2, options3, v ->
+                    mSexCltv.setContentText(SEX_LIST[options1])
+                })
+                .setSubmitText(getString(R.string.clt_confirm))
+                .setCancelText(getString(R.string.clt_cancel))
+                .setTitleText(getString(R.string.clt_sex_title))
+                .build<String>()
             dialog.setPicker(SEX_LIST)
             dialog.show()
         }
@@ -121,16 +116,14 @@ class CollectActivity : BaseActivity() {
             endDate.set(endDate.get(Calendar.YEAR) + 100, Calendar.DECEMBER, 31)
 
             val dialog = TimePickerBuilder(getContext(),
-                    object : OnTimeSelectListener {
-                        override fun onTimeSelect(date: Date?, v: View?) {
-                            val time = if (date != null) DateUtils.getFormatString(DateUtils.TYPE_13, date) else ""
-                            if (time.isNotEmpty()) {
-                                mBirthCltv.setContentText(time)
-                                val age = DateUtils.getCurrentFormatString(DateUtils.TYPE_14).toInt() - DateUtils.changeFormatString(DateUtils.TYPE_13, DateUtils.TYPE_14, time).toInt()
-                                mAgeCltv.setContentText(if (age > 0) age.toString() else "")
-                            }
-                        }
-                    })
+                OnTimeSelectListener { date, v ->
+                    val time = if (date != null) DateUtils.getFormatString(DateUtils.TYPE_13, date) else ""
+                    if (time.isNotEmpty()) {
+                        mBirthCltv.setContentText(time)
+                        val age = DateUtils.getCurrentFormatString(DateUtils.TYPE_14).toInt() - DateUtils.changeFormatString(DateUtils.TYPE_13, DateUtils.TYPE_14, time).toInt()
+                        mAgeCltv.setContentText(if (age > 0) age.toString() else "")
+                    }
+                })
                     .setTitleText(getString(R.string.clt_birth_title))
                     .setDate(calendar)
                     .setRangDate(startDate, endDate)

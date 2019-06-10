@@ -5,10 +5,7 @@ import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
-import android.widget.DatePicker
 import android.widget.TextView
-import android.widget.TimePicker
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder
 import com.bigkoo.pickerview.builder.TimePickerBuilder
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener
@@ -77,13 +74,11 @@ class DateActivity : BaseActivity() {
         super.setListeners()
         mFormatTypeClttv.setOnContentClickListener {
             val dialog = OptionsPickerBuilder(getContext(),
-                    object : OnOptionsSelectListener {
-                        override fun onOptionsSelect(options1: Int, options2: Int, options3: Int, v: View?) {
-                            mFormatTypeClttv.setContentText(FORMAT_TYPE_LIST[options1])
-                            mFormatTypeClttv.setContentTag(options1.toString())
-                            updateUI()
-                        }
-                    })
+                OnOptionsSelectListener { options1, options2, options3, v ->
+                    mFormatTypeClttv.setContentText(FORMAT_TYPE_LIST[options1])
+                    mFormatTypeClttv.setContentTag(options1.toString())
+                    updateUI()
+                })
                     .setSubmitText(getString(R.string.date_confirm))
                     .setCancelText(getString(R.string.date_cancel))
                     .setTitleText(getString(R.string.date_format_title))
@@ -105,11 +100,7 @@ class DateActivity : BaseActivity() {
             endDate.set(endDate.get(Calendar.YEAR) + 100, Calendar.DECEMBER, 31)
 
             val dialog = TimePickerBuilder(getContext(),
-                    object : OnTimeSelectListener {
-                        override fun onTimeSelect(date: Date?, v: View?) {
-                            mTimeWheelTv.setText(if (date != null) DateUtils.getFormatString(DateUtils.TYPE_2, date) else "")
-                        }
-                    })
+                OnTimeSelectListener { date, v -> mTimeWheelTv.text = if (date != null) DateUtils.getFormatString(DateUtils.TYPE_2, date) else "" })
                     .setTitleText(getString(R.string.date_pick_title))
                     .setDate(calendar)
                     .setRangDate(startDate, endDate)
@@ -127,15 +118,14 @@ class DateActivity : BaseActivity() {
                 calendar = DateUtils.parseFormatToCalendar(DateUtils.TYPE_6, dateStr)
             }
 
-            DateUtils.showDatePicker(getContext(), object : DatePickerDialog.OnDateSetListener {
-                override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+            DateUtils.showDatePicker(getContext(),
+                DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
                     val c = Calendar.getInstance()
                     c.set(Calendar.YEAR, year)
                     c.set(Calendar.MONTH, month)
                     c.set(Calendar.DAY_OF_MONTH, dayOfMonth)
                     mDatePickerTv.text = DateUtils.parseFormatCalendar(DateUtils.TYPE_6, c)
-                }
-            }, calendar)
+                }, calendar)
         }
 
         mTimePickerBtn.setOnClickListener {
@@ -145,14 +135,13 @@ class DateActivity : BaseActivity() {
                 calendar = DateUtils.parseFormatToCalendar(DateUtils.TYPE_8, dateStr)
             }
 
-            DateUtils.showTimePicker(getContext(), object : TimePickerDialog.OnTimeSetListener {
-                override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
+            DateUtils.showTimePicker(getContext(),
+                TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
                     val c = Calendar.getInstance()
                     c.set(Calendar.HOUR_OF_DAY, hourOfDay)
                     c.set(Calendar.MINUTE, minute)
                     mTimePickerTv.text = DateUtils.parseFormatCalendar(DateUtils.TYPE_8, c)
-                }
-            }, calendar)
+                }, calendar)
         }
     }
 

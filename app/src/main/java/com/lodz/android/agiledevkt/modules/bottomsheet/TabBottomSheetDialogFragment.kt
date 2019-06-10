@@ -64,11 +64,11 @@ class TabBottomSheetDialogFragment : BaseBottomSheetDialogFragment() {
 
     private class TabAdapter(val context: Context, fm: FragmentManager, val tabs: ArrayList<Int>) : FragmentPagerAdapter(fm) {
 
-        override fun getItem(position: Int): Fragment = TestFragment.newInstance(context.getString(tabs.get(position)))
+        override fun getItem(position: Int): Fragment = TestFragment.newInstance(context.getString(tabs[position]))
 
         override fun getCount(): Int = tabs.size
 
-        override fun getPageTitle(position: Int): CharSequence? = context.getString(tabs.get(position))
+        override fun getPageTitle(position: Int): CharSequence? = context.getString(tabs[position])
 
     }
 }

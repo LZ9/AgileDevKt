@@ -62,7 +62,7 @@ class CrashManager private constructor() : Thread.UncaughtExceptionHandler {
         return this
     }
 
-    /** 设置日志文件名及后缀[logFileName]（不设置使用默认文件名） */
+    /** 设置日志文件名及后缀[fileName]（不设置使用默认文件名） */
     fun setFileName(fileName: String): CrashManager {
         mFileName = fileName
         return this
@@ -121,9 +121,7 @@ class CrashManager private constructor() : Thread.UncaughtExceptionHandler {
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             app.startActivity(intent)
         }
-        if (app != null) {
-            app.exit()
-        }
+        app?.exit()
         android.os.Process.killProcess(android.os.Process.myPid())
         System.exit(1)// 非0表示异常退出
     }
@@ -151,15 +149,12 @@ class CrashManager private constructor() : Thread.UncaughtExceptionHandler {
 
     /** 获取设备信息 */
     private fun getDeviceInfos(): Map<String, String> {
-        val app = BaseApplication.get()
-        if (app == null) {
-            return HashMap()
-        }
+        val app = BaseApplication.get() ?: return HashMap()
         val infos = DeviceUtils.getDeviceInfo().toMutableMap()
-        infos.put("appName", app.getAppName())
-        infos.put("packageName", app.packageName)
-        infos.put("versionName", app.getVersionName())
-        infos.put("versionCode", app.getVersionCode().toString())
+        infos["appName"] = app.getAppName()
+        infos["packageName"] = app.packageName
+        infos["versionName"] = app.getVersionName()
+        infos["versionCode"] = app.getVersionCode().toString()
         for (info in infos) {
             PrintLog.i(mTag, info.key + " : " + info.value)
         }
@@ -204,7 +199,7 @@ class CrashManager private constructor() : Thread.UncaughtExceptionHandler {
         if (mFileName.isEmpty()) {// 文件名为空时使用默认名称
             val timestamp = System.currentTimeMillis()
             val time = DateUtils.getFormatString(DateUtils.TYPE_4, Date(timestamp))
-            mFileName = "crash-" + time + "-" + timestamp + ".log"
+            mFileName = "crash-$time-$timestamp.log"
         }
         FileOutputStream(mSaveFolderPath + mFileName).use { fos: FileOutputStream ->
             try {

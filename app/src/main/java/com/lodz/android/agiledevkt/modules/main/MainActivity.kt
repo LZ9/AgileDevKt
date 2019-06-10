@@ -193,7 +193,7 @@ class MainActivity : BaseActivity() {
     private fun getItemDecoration(): RecyclerView.ItemDecoration =
             StickyItemDecoration.create<String>(getContext())
                     .setOnSectionCallback(object : SectionItemDecoration.OnSectionCallback<String> {
-                        override fun getSourceItem(position: Int): String = mList.get(position).getSortStr()
+                        override fun getSourceItem(position: Int): String = mList[position].getSortStr()
                     })
                     .setSectionTextSize(16f)
                     .setSectionHeight(30)

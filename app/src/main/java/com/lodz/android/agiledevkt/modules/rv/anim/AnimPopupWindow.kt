@@ -19,7 +19,7 @@ class AnimPopupWindow(context: Context) : BasePopupWindow(context) {
 
     companion object {
         /** 自定义  */
-        val TYPE_CUSTOM = 0
+        const val TYPE_CUSTOM = 0
     }
 
     /** 淡入 */

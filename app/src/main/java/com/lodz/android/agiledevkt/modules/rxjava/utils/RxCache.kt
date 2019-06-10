@@ -18,12 +18,10 @@ class RxCache private constructor(private val memorySuccess: Boolean, private va
     fun requestData(): Observable<String> = Observable
             .zip(memory(), disk(), BiFunction<String, String, Observable<String>> { memory, disk ->
 
-                val cache = if (memory.isNotEmpty()) {
-                    memory
-                } else if (disk.isNotEmpty()) {
-                    disk
-                } else {
-                    "暂无缓存数据"
+                val cache = when {
+                    memory.isNotEmpty() -> memory
+                    disk.isNotEmpty() -> disk
+                    else -> "暂无缓存数据"
                 }
                 return@BiFunction Observable.concat(Observable.just(cache), network())
             })

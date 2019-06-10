@@ -22,7 +22,7 @@ class FirstBinderAdapter(context: Context) : BaseRecyclerViewAdapter<NationBean>
 
     override fun onBind(holder: RecyclerView.ViewHolder, position: Int) {
         val bean = getItem(position)
-        if (bean == null || !(holder is DataViewHolder)) {
+        if (bean == null || holder !is DataViewHolder) {
             return
         }
         showItem(holder, bean)

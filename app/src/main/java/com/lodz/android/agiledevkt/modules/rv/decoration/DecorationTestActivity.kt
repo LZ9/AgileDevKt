@@ -131,7 +131,7 @@ class DecorationTestActivity : BaseActivity() {
         linearLayout.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         linearLayout.orientation = LinearLayout.HORIZONTAL
 
-        val orientationTv = getTextView(R.string.rvpopup_orientation);//方向
+        val orientationTv = getTextView(R.string.rvpopup_orientation)//方向
         orientationTv.setOnClickListener { view ->
             if (mDecorationType == DECORATION_TYPE_ROUND_BOTTOM || mDecorationType == DECORATION_TYPE_SECTION
                     || mDecorationType == DECORATION_TYPE_SECTION_FIX || mDecorationType == DECORATION_TYPE_STICKY_SECTION
@@ -143,7 +143,7 @@ class DecorationTestActivity : BaseActivity() {
         }
         linearLayout.addView(orientationTv, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
 
-        val layoutManagerTv = getTextView(R.string.rvpopup_layout_manager);//布局
+        val layoutManagerTv = getTextView(R.string.rvpopup_layout_manager)//布局
         layoutManagerTv.setOnClickListener { view ->
             if (mDecorationType == DECORATION_TYPE_ROUND_BOTTOM || mDecorationType == DECORATION_TYPE_ROUND
                     || mDecorationType == DECORATION_TYPE_SECTION || mDecorationType == DECORATION_TYPE_SECTION_FIX
@@ -210,7 +210,7 @@ class DecorationTestActivity : BaseActivity() {
         if (type == DECORATION_TYPE_SECTION) {// 根据数据自动生成分组标签
             return SectionItemDecoration.create<String>(getContext())
                     .setOnSectionCallback(object : SectionItemDecoration.OnSectionCallback<String> {
-                        override fun getSourceItem(position: Int): String = mList.get(position)
+                        override fun getSourceItem(position: Int): String = mList[position]
                     })
                     .setSectionBgColorRes(R.color.color_ea6662)
                     .setSectionTextColorRes(R.color.color_ffa630)
@@ -232,7 +232,7 @@ class DecorationTestActivity : BaseActivity() {
         if (type == DECORATION_TYPE_STICKY_SECTION) {// 根据数据自动生成分组标签
             return StickyItemDecoration.create<String>(getContext())
                     .setOnSectionCallback(object : SectionItemDecoration.OnSectionCallback<String> {
-                        override fun getSourceItem(position: Int): String = mList.get(position)
+                        override fun getSourceItem(position: Int): String = mList[position]
                     })
                     .setSectionBgColorRes(R.color.color_ea6662)
                     .setSectionTextColorRes(R.color.color_ffa630)

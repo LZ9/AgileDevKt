@@ -200,7 +200,7 @@ class PicPreviewTestActivity : BaseActivity() {
                         override fun onViewDetached(view: PhotoView, isScale: Boolean) {
                             super.onViewDetached(view, isScale)
                             if (isScale){
-                                view.getAttacher().update()
+                                view.attacher.update()
                             }
                         }
                     })

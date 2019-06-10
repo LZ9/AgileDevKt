@@ -11,7 +11,6 @@ import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.RemoteViews
@@ -257,17 +256,15 @@ class GlideActivity : BaseActivity() {
     /** 动画显示 */
     private fun showAnimImg() {
         ImageLoader.create(getContext())
-                .loadUrl(IMG_URL)
-                .setAnim(object : ViewPropertyTransition.Animator {
-                    override fun animate(view: View) {
-                        view.alpha = 0.5f
-                        val fadeAnim = ObjectAnimator.ofFloat(view, "alpha", 0.5f, 1f)
-                        fadeAnim.duration = 5000
-                        fadeAnim.start()
-                    }
-                })
-                .setFitCenter()
-                .into(mAnimImg)
+            .loadUrl(IMG_URL)
+            .setAnim(ViewPropertyTransition.Animator { view ->
+                view.alpha = 0.5f
+                val fadeAnim = ObjectAnimator.ofFloat(view, "alpha", 0.5f, 1f)
+                fadeAnim.duration = 5000
+                fadeAnim.start()
+            })
+            .setFitCenter()
+            .into(mAnimImg)
     }
 
     /** 网络gif */

@@ -23,7 +23,7 @@ class SecondBinder(context: Context, binderType: Int) : RecyclerBinder<List<Nati
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val list = mData
-        if (list.isNullOrEmpty() || !(holder is DataViewHolder)) {
+        if (list.isNullOrEmpty() || holder !is DataViewHolder) {
             return
         }
         holder.setData(list)

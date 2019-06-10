@@ -25,7 +25,7 @@ class CardViewAdapter(context:Context) :BaseRecyclerViewAdapter<String>(context)
         if (str.isNullOrEmpty()){
             return
         }
-        if (!(holder is DataViewHolder)){
+        if (holder !is DataViewHolder){
             return
         }
         showItem(holder, str)

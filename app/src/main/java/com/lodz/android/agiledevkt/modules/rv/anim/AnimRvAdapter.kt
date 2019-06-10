@@ -27,7 +27,7 @@ class AnimRvAdapter(context: Context) : BaseRecyclerViewAdapter<String>(context)
 
     override fun onBind(holder: RecyclerView.ViewHolder, position: Int) {
         val name = getItem(position)
-        if (name.isNullOrEmpty() || !(holder is AnimViewHolder)) {
+        if (name.isNullOrEmpty() || holder !is AnimViewHolder) {
             return
         }
         showItem(holder, name, position)

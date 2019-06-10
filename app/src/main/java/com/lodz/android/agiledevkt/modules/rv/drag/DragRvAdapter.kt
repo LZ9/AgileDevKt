@@ -50,7 +50,7 @@ class DragRvAdapter(context: Context) : BaseRecyclerViewAdapter<String>(context)
 
     override fun onBind(holder: RecyclerView.ViewHolder, position: Int) {
         val data = getItem(position)
-        if (data.isNullOrEmpty() || !(holder is DragViewHolder)) {
+        if (data.isNullOrEmpty() || holder !is DragViewHolder) {
             return
         }
         showItem(holder, data)

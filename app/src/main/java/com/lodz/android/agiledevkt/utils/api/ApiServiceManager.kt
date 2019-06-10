@@ -69,20 +69,14 @@ class ApiServiceManager private constructor() {
         private fun getRequestString(request: Request): String =
                 Buffer().use { buffer ->
                     val copy = request.newBuilder().build()
-                    val body = copy.body()
-                    if (body == null) {
-                        return ""
-                    }
+                    val body = copy.body() ?: return ""
                     body.writeTo(buffer)
                     return buffer.readUtf8()
                 }
 
         /** 打印返回数据日志，[response]返回数据 */
         private fun logResponse(response: okhttp3.Response): okhttp3.Response {
-            val body = response.body()
-            if (body == null) {
-                return response
-            }
+            val body = response.body() ?: return response
             var log = ""
             try {
                 log = body.string()

@@ -212,7 +212,7 @@ class LocationTestActivity : BaseActivity() {
     }
 
     /** 初始化 */
-    fun initLogic() {
+    private fun initLogic() {
         mIntervalTv.text = getString(R.string.location_interval, (LOCATION_INTERVAL_TIME / 1000).toString())
         mUpdateTimeTv.text = getString(R.string.location_update_time, "无")
         mLongitudeTv.text = getString(R.string.location_longitude, "无")

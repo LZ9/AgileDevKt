@@ -92,15 +92,15 @@ class ThreadPoolActivity : BaseActivity() {
     }
 
     /** 带标记[index]的Runnable内部类 */
-    inner class IndexRunnable(val index: Int) : Runnable {
+    inner class IndexRunnable(private val index: Int) : Runnable {
         override fun run() {
             try {
-                printResult("short " + index + " start")
+                printResult("short $index start")
                 Thread.sleep(2000)
-                printResult("short " + index + " end")
+                printResult("short $index end")
             } catch (e: Exception) {
                 e.printStackTrace()
-                printResult("short " + index + " InterruptedException")
+                printResult("short $index InterruptedException")
             }
 
         }

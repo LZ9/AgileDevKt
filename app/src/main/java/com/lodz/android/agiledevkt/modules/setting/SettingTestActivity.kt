@@ -110,7 +110,7 @@ class SettingTestActivity : BaseActivity() {
                 }
                 mWindowBrightnessSeekBar.progress = progress
                 setWindowBrightness(progress)
-                mWindowBrightnessTv.setText(getWindowBrightness().toString())
+                mWindowBrightnessTv.text = getWindowBrightness().toString()
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
@@ -164,7 +164,7 @@ class SettingTestActivity : BaseActivity() {
                     .compose(RxUtils.ioToMainObservable())
                     .subscribe(object : BaseObserver<Int>() {
                         override fun onBaseNext(any: Int) {
-                            mSystemBrightnessTv.setText(any.toString())
+                            mSystemBrightnessTv.text = any.toString()
                             mSystemBrightnessSeekBar.progress = any
                         }
 
@@ -236,7 +236,7 @@ class SettingTestActivity : BaseActivity() {
     @RequiresApi(Build.VERSION_CODES.M)
     private fun requestWriteSettingsPermission() {
         val intent = Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS)
-        intent.data = Uri.parse("package:" + packageName)
+        intent.data = Uri.parse("package:$packageName")
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivityForResult(intent, REQUEST_CODE_WRITE_SETTINGS)
         toastShort(R.string.setting_request_permission_tips)
@@ -269,12 +269,12 @@ class SettingTestActivity : BaseActivity() {
 
         mSystemBrightnessSeekBar.isEnabled = true
         val systemValue = getScreenBrightness()
-        mSystemBrightnessTv.setText(systemValue.toString())
+        mSystemBrightnessTv.text = systemValue.toString()
         mSystemBrightnessSeekBar.progress = systemValue
 
         mWindowBrightnessSeekBar.isEnabled = true
         val windowValue = getWindowBrightness()
-        mWindowBrightnessTv.setText(windowValue.toString())
+        mWindowBrightnessTv.text = windowValue.toString()
         mWindowBrightnessSeekBar.progress = windowValue
     }
 

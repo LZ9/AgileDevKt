@@ -134,7 +134,7 @@ class PicPickerTestActivity : BaseActivity() {
                         override fun onViewDetached(view: ImageView, isScale: Boolean) {
                             super.onViewDetached(view, isScale)
                             if (isScale && view is PhotoView){
-                                view.getAttacher().update()
+                                view.attacher.update()
                             }
                         }
                     })
@@ -181,7 +181,7 @@ class PicPickerTestActivity : BaseActivity() {
                         override fun onViewDetached(view: ImageView, isScale: Boolean) {
                             super.onViewDetached(view, isScale)
                             if (isScale && view is PhotoView){
-                                view.getAttacher().update()
+                                view.attacher.update()
                             }
                         }
                     })

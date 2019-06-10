@@ -22,7 +22,7 @@ class CoordinatorDataAdapter(context: Context) : BaseRecyclerViewAdapter<String>
         if (data.isNullOrEmpty()) {
             return
         }
-        showItem(holder as DataViewHolder, data!!)
+        showItem(holder as DataViewHolder, data)
     }
 
     private fun showItem(viewHolder: DataViewHolder, data: String) {

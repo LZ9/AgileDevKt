@@ -97,7 +97,7 @@ class AnnotationTestActivity : BaseActivity() {
 
         mDecryptBtn.setOnClickListener {
             val content = mContentTv.text.toString()
-            if (!content.isEmpty()) {
+            if (content.isNotEmpty()) {
                 val result = AES.decrypt(content, AES_KEY) ?: ""
                 mContentTv.text = result
             }

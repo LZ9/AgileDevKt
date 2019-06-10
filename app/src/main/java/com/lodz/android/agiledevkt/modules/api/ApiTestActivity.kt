@@ -67,23 +67,19 @@ class ApiTestActivity : BaseActivity() {
 
         // 网络异常
         mNetSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked) {
-                mRequestType = ApiServiceImpl.NETWORK_FAIL
-            } else if (mDataSwitch.isChecked) {
-                mRequestType = ApiServiceImpl.API_FAIL
-            } else {
-                mRequestType = ApiServiceImpl.API_SUCCESS
+            mRequestType = when {
+                isChecked -> ApiServiceImpl.NETWORK_FAIL
+                mDataSwitch.isChecked -> ApiServiceImpl.API_FAIL
+                else -> ApiServiceImpl.API_SUCCESS
             }
         }
 
         // 接口失败
         mDataSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked) {
-                mRequestType = ApiServiceImpl.API_FAIL
-            } else if (mNetSwitch.isChecked) {
-                mRequestType = ApiServiceImpl.NETWORK_FAIL
-            } else {
-                mRequestType = ApiServiceImpl.API_SUCCESS
+            mRequestType = when {
+                isChecked -> ApiServiceImpl.API_FAIL
+                mNetSwitch.isChecked -> ApiServiceImpl.NETWORK_FAIL
+                else -> ApiServiceImpl.API_SUCCESS
             }
         }
 
@@ -114,7 +110,7 @@ class ApiTestActivity : BaseActivity() {
                         override fun onPgNext(any: ResponseBean<SpotBean>) {
                             val data = any.data
                             if (data != null){
-                                mResultTv.text = "spotName : ${data.spotName} ; score : ${data.score}"
+                                mResultTv.text = java.lang.StringBuilder("spotName : ${data.spotName} ; score : ${data.score}")
                             }
                         }
 
@@ -132,7 +128,7 @@ class ApiTestActivity : BaseActivity() {
                         override fun onPgNext(any: ResponseBean<SpotBean>) {
                             val data = any.data
                             if (data != null){
-                                mResultTv.text = "spotName : ${data.spotName} ; score : ${data.score}"
+                                mResultTv.text = java.lang.StringBuilder("spotName : ${data.spotName} ; score : ${data.score}")
                             }
                         }
 
@@ -152,7 +148,7 @@ class ApiTestActivity : BaseActivity() {
                         override fun onPgNext(any: ResponseBean<List<SpotBean>>) {
                             val data = any.data
                             if (data != null){
-                                mResultTv.text = "spotName : ${data.get(0).spotName} ; score : ${data.get(0).score}"
+                                mResultTv.text = StringBuilder("spotName : ${data[0].spotName} ; score : ${data[0].score}")
                             }
                         }
 

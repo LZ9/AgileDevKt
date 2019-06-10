@@ -51,7 +51,7 @@ class AlbumActivity : BaseActivity() {
         // 获取相册所有图片路径
         mAllPicPathBtn.setOnClickListener {
             val list = AlbumUtils.getAllImages(getContext())
-            if (list.size == 0) {
+            if (list.isEmpty()) {
                 mResultTv.text = getString(R.string.album_no_pic)
                 return@setOnClickListener
             }
@@ -65,7 +65,7 @@ class AlbumActivity : BaseActivity() {
         // 获取所有图片的文件夹
         mAllImgFoldersBtn.setOnClickListener {
             val list = AlbumUtils.getAllImageFolders(getContext())
-            if (list.size == 0) {
+            if (list.isEmpty()) {
                 mResultTv.text = getString(R.string.album_no_pic)
                 return@setOnClickListener
             }
@@ -141,7 +141,7 @@ class AlbumActivity : BaseActivity() {
         val results = ArrayList<String>()
         for (i in 0..4) {
             val index = Random.nextInt(list.size)
-            results.add(list.get(index))
+            results.add(list[index])
         }
         return results
     }
@@ -150,7 +150,7 @@ class AlbumActivity : BaseActivity() {
     private fun getRandomPath(): String {
         val list = AlbumUtils.getAllImages(getContext())
         val index = Random.nextInt(list.size)
-        return list.get(index)
+        return list[index]
     }
 
     override fun initData() {

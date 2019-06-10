@@ -13,8 +13,6 @@ import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.pandora.base.activity.BaseActivity
-import com.lodz.android.pandora.utils.transition.TransitionHelper.finish
-import com.trello.rxlifecycle3.android.RxLifecycleAndroid.bindView
 
 /**
  * 共享元素动画
@@ -91,7 +89,7 @@ class TransitionActivity : BaseActivity() {
     override fun setListeners() {
         super.setListeners()
         mAdapter.setOnItemClickListener { viewHolder, item, position ->
-            if (!(viewHolder is TransitionAdapter.DataViewHolder)){
+            if (viewHolder !is TransitionAdapter.DataViewHolder){
                 toastShort(R.string.share_element_unable)
                 return@setOnItemClickListener
             }
@@ -112,8 +110,8 @@ class TransitionActivity : BaseActivity() {
         val list = ArrayList<TransitionBean>()
         for (i in 0 until IMGS.size) {
             val bean = TransitionBean()
-            bean.imgRes = IMGS.get(i)
-            bean.title = TITLES.get(i)
+            bean.imgRes = IMGS[i]
+            bean.title = TITLES[i]
             list.add(bean)
         }
         return list

@@ -21,7 +21,7 @@ class SecondBinderAdapter(context: Context) : BaseRecyclerViewAdapter<NationBean
 
     override fun onBind(holder: RecyclerView.ViewHolder, position: Int) {
         val bean = getItem(position)
-        if (bean == null || !(holder is DataViewHolder)) {
+        if (bean == null || holder !is DataViewHolder) {
             return
         }
         showItem(holder, bean)
@@ -32,7 +32,7 @@ class SecondBinderAdapter(context: Context) : BaseRecyclerViewAdapter<NationBean
                 .loadUrl(bean.imgUrl)
                 .setCenterCrop()
                 .into(holder.nationImg)
-        holder.nationTv.text = "${bean.code}-${bean.name}"
+        holder.nationTv.text = StringBuilder("${bean.code}-${bean.name}")
     }
 
     private inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

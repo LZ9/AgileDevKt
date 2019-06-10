@@ -131,7 +131,7 @@ class RxUtilsTestActivity : BaseActivity() {
                 printResult(getString(R.string.rx_utils_pic_empty))
                 return@setOnClickListener
             }
-            val path = list.get(0)
+            val path = list[0]
             printResult("图片路径：$path")
             ImageLoader.create(getContext())
                     .loadFilePath(path)
@@ -162,16 +162,14 @@ class RxUtilsTestActivity : BaseActivity() {
                 printResult(getString(R.string.rx_utils_pic_empty))
                 return@setOnClickListener
             }
-            val paths = if (list.size > 3){
-                arrayListOf(list.get(2))
-            }else if (list.size > 2){
-                arrayListOf(list.get(1))
-            }else{
-                arrayListOf(list.get(0))
+            val paths = when {
+                list.size > 3 -> arrayListOf(list[2])
+                list.size > 2 -> arrayListOf(list[1])
+                else -> arrayListOf(list[0])
             }
             printResult("图片路径：$paths")
             ImageLoader.create(getContext())
-                    .loadFilePath(paths.get(0))
+                    .loadFilePath(paths[0])
                     .setCenterInside()
                     .into(mPathImg)
             RxUtils.decodePathToBase64(paths, getScreenWidth() / 8, getScreenHeight() / 8)
@@ -181,7 +179,7 @@ class RxUtilsTestActivity : BaseActivity() {
                         override fun onPgNext(any: ArrayList<String>) {
                             printResult("\nBase64路径：$any")
                             ImageLoader.create(getContext())
-                                    .loadBase64(any.get(0))
+                                    .loadBase64(any[0])
                                     .setCenterInside()
                                     .into(mBase64Img)
                         }

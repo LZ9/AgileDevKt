@@ -30,10 +30,7 @@ class MainAdapter(context: Context) : BaseRecyclerViewAdapter<MainBean>(context)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder = MainViewHolder(getLayoutView(parent, R.layout.rv_item_main))
 
     override fun onBind(holder: RecyclerView.ViewHolder, position: Int) {
-        val bean: MainBean? = getItem(position)
-        if (bean == null) {
-            return
-        }
+        val bean: MainBean = getItem(position) ?: return
         showItem(holder as MainViewHolder, bean)
     }
 

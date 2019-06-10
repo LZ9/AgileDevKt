@@ -245,11 +245,11 @@ class RxFlowableActivity : BaseActivity() {
                         while (!mBackpressureSwitch.isChecked && emitter.requested() == 0L) {
                             //下游无法处理数据时循环等待
                             PrintLog.d("testtag", "等待下游")
-                            if (emitter.isCancelled()) {
+                            if (emitter.isCancelled) {
                                 break
                             }
                         }
-                        if (emitter.isCancelled()) {
+                        if (emitter.isCancelled) {
                             break
                         }
                         PrintLog.i("testtag", "发送数据：$line")

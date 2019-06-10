@@ -307,16 +307,11 @@ class BitmapTestActivity : BaseActivity() {
                 .map { id ->
                     val bitmap = BitmapFactory.decodeResource(resources, id)
                     val base64 = BitmapUtils.bitmapToBase64(bitmap, 10)
-                    PrintLog.dS("testtag", "base64 : " + base64)
+                    PrintLog.dS("testtag", "base64 : $base64")
                     base64
                 }
                 .map { base64 ->
-                    val bitmap = BitmapUtils.base64ToBitmap(base64)
-                    if (bitmap == null) {
-                        throw KotlinNullPointerException("bitmap is null")
-                    } else {
-                        bitmap
-                    }
+                    BitmapUtils.base64ToBitmap(base64) ?: throw KotlinNullPointerException("bitmap is null")
                 }
                 .compose(RxUtils.ioToMainObservable())
                 .subscribe(object : BaseObserver<Bitmap>() {
@@ -338,12 +333,7 @@ class BitmapTestActivity : BaseActivity() {
                 }
                 .map { drawable ->
                     mDrawableImg.setImageDrawable(drawable)
-                    val bitmap = BitmapUtils.drawableToBitmap(drawable, 331, 162)
-                    if (bitmap == null) {
-                        throw KotlinNullPointerException("bitmap is null")
-                    } else {
-                        bitmap
-                    }
+                    BitmapUtils.drawableToBitmap(drawable, 331, 162) ?: throw KotlinNullPointerException("bitmap is null")
                 }
                 .compose(RxUtils.ioToMainObservable())
                 .subscribe(object : BaseObserver<Bitmap>() {
@@ -362,12 +352,7 @@ class BitmapTestActivity : BaseActivity() {
         Observable.just(mViewImg)
                 .delay(500, TimeUnit.MILLISECONDS)
                 .map { view ->
-                    val bitmap = BitmapUtils.viewToBitmap(view)
-                    if (bitmap == null) {
-                        throw KotlinNullPointerException("bitmap is null")
-                    } else {
-                        bitmap
-                    }
+                    BitmapUtils.viewToBitmap(view) ?: throw KotlinNullPointerException("bitmap is null")
                 }
                 .compose(RxUtils.ioToMainObservable())
                 .subscribe(object : BaseObserver<Bitmap>() {

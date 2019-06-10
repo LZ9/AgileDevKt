@@ -26,7 +26,7 @@ class ThirdBinder(context: Context, binderType: Int) : RecyclerBinder<NationBean
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val bean = getData(position)
-        if (bean == null || !(holder is DataViewHolder)) {
+        if (bean == null || holder !is DataViewHolder) {
             return
         }
         showItem(holder, bean)
@@ -38,7 +38,7 @@ class ThirdBinder(context: Context, binderType: Int) : RecyclerBinder<NationBean
                 .useCircle()
                 .setCenterCrop()
                 .into(holder.nationImg)
-        holder.nationTv.text = "${bean.code}-${bean.name}"
+        holder.nationTv.text = StringBuilder("${bean.code}-${bean.name}")
 
         holder.nationTv.setOnClickListener {
             if (mListener != null) {

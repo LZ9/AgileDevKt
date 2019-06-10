@@ -53,7 +53,7 @@ class AnkoAccountFragment : LazyFragment() {
                 }
                 mNameTv = textView {
                     textSize = 16f
-                    text = getString(R.string.al_name) + "  Jack"
+                    text = StringBuilder(getString(R.string.al_name) + "  Jack")
                 }
                 mChangeBtn = button {
                     setText(R.string.al_change_detail)
@@ -78,7 +78,7 @@ class AnkoAccountFragment : LazyFragment() {
 
     override fun initData(view: View) {
         super.initData(view)
-        mAccountTv.text = getString(R.string.al_account) + "  " + mAccount
+        mAccountTv.text = StringBuilder(getString(R.string.al_account) + "  " + mAccount)
     }
 
     /** 设置页面切换监听器[listener] */

@@ -19,10 +19,7 @@ class BleDeviceAdapter(context: Context) : BaseRecyclerViewAdapter<BluetoothDevi
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = DataViewHolder(getLayoutView(parent, R.layout.rv_item_ble_device))
 
     override fun onBind(holder: RecyclerView.ViewHolder, position: Int) {
-        val device: BluetoothDevice? = getItem(position)
-        if (device == null) {
-            return
-        }
+        val device: BluetoothDevice = getItem(position) ?: return
         showItem(holder as DataViewHolder, device)
     }
 

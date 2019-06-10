@@ -43,7 +43,7 @@ class LoadMoreRvAdapter(context: Context) : SimpleLoadMoreRVAdapter<String>(cont
 
     override fun onBind(holder: RecyclerView.ViewHolder, position: Int) {
         val data = getItem(position)
-        if (data.isNullOrEmpty() || !(holder is DataViewHolder)) {
+        if (data.isNullOrEmpty() || holder !is DataViewHolder) {
             return
         }
         showItem(holder, data, position)
@@ -60,12 +60,10 @@ class LoadMoreRvAdapter(context: Context) : SimpleLoadMoreRVAdapter<String>(cont
         }
         if (mManagerType == LayoutManagerPopupWindow.TYPE_STAGGERED) {
             setItemViewWidth(holder.itemView, context.getScreenWidth() / 3)
-            if (position % 3 == 0) {
-                setItemViewHeight(holder.itemView, context.dp2px(300))
-            } else if (position % 3 == 1) {
-                setItemViewHeight(holder.itemView, context.dp2px(100))
-            } else {
-                setItemViewHeight(holder.itemView, context.dp2px(200))
+            when {
+                position % 3 == 0 -> setItemViewHeight(holder.itemView, context.dp2px(300))
+                position % 3 == 1 -> setItemViewHeight(holder.itemView, context.dp2px(100))
+                else -> setItemViewHeight(holder.itemView, context.dp2px(200))
             }
         }
         holder.dataTv.text = data

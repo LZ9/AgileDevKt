@@ -91,13 +91,13 @@ class FileTestActivity : BaseActivity() {
         // 创建一个文件
         mCreateNewFileBtn.setOnClickListener {
             val isSuccess = FileUtils.createNewFile(NEW_FILE_PATH)
-            toastShort("创建 : " + isSuccess)
+            toastShort("创建 : $isSuccess")
         }
 
         // 创建一个文件夹
         mCreateDirectoryBtn.setOnClickListener {
             val isSuccess = FileUtils.createFolder(NEW_FOLDER_PATH)
-            toastShort("创建 : " + isSuccess)
+            toastShort("创建 : $isSuccess")
         }
 
         // 文件（文件夹）是否存在
@@ -109,7 +109,7 @@ class FileTestActivity : BaseActivity() {
         // 重命名文件（文件夹）
         mFileRenameBtn.setOnClickListener {
             val isSuccess = FileUtils.renameFile(FileUtils.create(NEW_FILE_PATH), "asdsada.txt")
-            toastShort("修改 : " + isSuccess)
+            toastShort("修改 : $isSuccess")
         }
 
         // 删除jpg后缀文件
@@ -121,19 +121,19 @@ class FileTestActivity : BaseActivity() {
         // 移动文件
         mMoveFileBtn.setOnClickListener {
             val isSuccess = FileUtils.moveFile(ROOT_PATH, NEW_FOLDER_PATH, "test.txt")
-            toastShort("移动 : " + isSuccess)
+            toastShort("移动 : $isSuccess")
         }
 
         // 复制文件
         mCopyFileBtn.setOnClickListener {
             val isSuccess = FileUtils.copyFile(ROOT_PATH, NEW_FOLDER_PATH, "test.txt")
-            toastShort("复制 : " + isSuccess)
+            toastShort("复制 : $isSuccess")
         }
 
         // 获取路径下的文件总大小
         mGetFileLengthBtn.setOnClickListener {
             val size = FileUtils.getFileTotalLengthUnit(NEW_FILE_PATH)
-            toastShort("大小 : " + size)
+            toastShort("大小 : $size")
         }
 
         // 删除路径下文件
@@ -162,7 +162,7 @@ class FileTestActivity : BaseActivity() {
 
     override fun initData() {
         super.initData()
-        mRootPathTv.text = ("根目录地址：" + ROOT_PATH)
+        mRootPathTv.text = ("根目录地址：$ROOT_PATH")
         showStatusCompleted()
     }
 

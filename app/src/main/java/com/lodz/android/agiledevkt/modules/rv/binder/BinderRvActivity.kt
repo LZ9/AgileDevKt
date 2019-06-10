@@ -142,9 +142,9 @@ class BinderRvActivity : BaseActivity() {
         val list = ArrayList<NationBean>()
         for (i in 0 until NATION_IMGS.size) {
             val bean = NationBean()
-            bean.imgUrl = NATION_IMGS.get(i)
-            bean.name = NATION_NAMES.get(i)
-            bean.code = NATION_CODES.get(i)
+            bean.imgUrl = NATION_IMGS[i]
+            bean.name = NATION_NAMES[i]
+            bean.code = NATION_CODES[i]
             list.add(bean)
         }
         return list

@@ -53,8 +53,8 @@ class MenuBarTestActivity : BaseActivity() {
     override fun findViews(savedInstanceState: Bundle?) {
         super.findViews(savedInstanceState)
         getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME))
-        initMenuBar();
-        initTabLayout();
+        initMenuBar()
+        initTabLayout()
     }
 
     private fun initTabLayout() {

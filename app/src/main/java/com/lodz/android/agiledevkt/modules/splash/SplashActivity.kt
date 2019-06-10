@@ -116,7 +116,7 @@ class SplashActivity : AbsActivity() {
     }
 
     /** 初始化 */
-    fun init() {
+    private fun init() {
         goMianActivity()
     }
 

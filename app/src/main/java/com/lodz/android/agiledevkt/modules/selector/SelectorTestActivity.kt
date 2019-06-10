@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
-import android.widget.CompoundButton
 import android.widget.Switch
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
@@ -104,25 +103,19 @@ class SelectorTestActivity : BaseActivity() {
         super.setListeners()
 
         // 禁用开关
-        mUnableSwitchBtn.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener {
-            override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-                setAllBtnEnabled(!isChecked)
-            }
-        })
+        mUnableSwitchBtn.setOnCheckedChangeListener { buttonView, isChecked ->
+            setAllBtnEnabled(!isChecked)
+        }
 
         // 选中开关
-        mSelectSwitchBtn.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener {
-            override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-                setAllBtnSelected(isChecked)
-            }
-        })
+        mSelectSwitchBtn.setOnCheckedChangeListener { buttonView, isChecked ->
+            setAllBtnSelected(isChecked)
+        }
 
         // 焦点开关
-        mFocusedSwitchBtn.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener {
-            override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-                setAllBtnFocusable(isChecked)
-            }
-        })
+        mFocusedSwitchBtn.setOnCheckedChangeListener { buttonView, isChecked ->
+            setAllBtnFocusable(isChecked)
+        }
     }
 
     /** 设置所有按钮是否启用[isEnabled] */

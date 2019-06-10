@@ -81,21 +81,17 @@ class HeadFooterAdapter(context: Context) : BaseHeaderFooterRVAdapter<String, St
         if (mLayoutManagerType == LayoutManagerPopupWindow.TYPE_STAGGERED) {
             if (mOrientation == RecyclerView.VERTICAL) {
                 setItemViewWidth(holder.itemView, context.getScreenWidth() / 3)
-                if (position % 3 == 0) {
-                    setItemViewHeight(holder.itemView, context.dp2px(300))
-                } else if (position % 3 == 1) {
-                    setItemViewHeight(holder.itemView, context.dp2px(100))
-                } else {
-                    setItemViewHeight(holder.itemView, context.dp2px(200))
+                when {
+                    position % 3 == 0 -> setItemViewHeight(holder.itemView, context.dp2px(300))
+                    position % 3 == 1 -> setItemViewHeight(holder.itemView, context.dp2px(100))
+                    else -> setItemViewHeight(holder.itemView, context.dp2px(200))
                 }
             } else {
                 setItemViewHeight(holder.itemView, context.dp2px(200) / 3)
-                if (position % 3 == 0) {
-                    setItemViewWidth(holder.itemView, context.dp2px(300))
-                } else if (position % 3 == 1) {
-                    setItemViewWidth(holder.itemView, context.dp2px(100))
-                } else {
-                    setItemViewWidth(holder.itemView, context.dp2px(200))
+                when {
+                    position % 3 == 0 -> setItemViewWidth(holder.itemView, context.dp2px(300))
+                    position % 3 == 1 -> setItemViewWidth(holder.itemView, context.dp2px(100))
+                    else -> setItemViewWidth(holder.itemView, context.dp2px(200))
                 }
             }
 

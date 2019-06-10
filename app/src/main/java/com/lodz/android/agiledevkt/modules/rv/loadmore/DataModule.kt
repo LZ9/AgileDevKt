@@ -18,7 +18,7 @@ class DataModule private constructor() {
     fun requestData(page: Int): Observable<List<String>> =
             Observable.create(object : RxObservableOnSubscribe<List<String>>(page) {
                 override fun subscribe(emitter: ObservableEmitter<List<String>>) {
-                    val pages = getArgs().get(0) as Int
+                    val pages = getArgs()[0] as Int
                     try {
 
                         Thread.sleep(1000)

@@ -128,8 +128,8 @@ class EncryptTestActivity : BaseActivity() {
                 val pair = RSA.initKeyBase64()
                 mRSAPublicKey = pair.first
                 mRSAPrivateKey = pair.second
-                printResult("生成RSA私钥：" + mRSAPrivateKey)
-                printResult("生成RSA公钥：" + mRSAPublicKey)
+                printResult("生成RSA私钥：$mRSAPrivateKey")
+                printResult("生成RSA公钥：$mRSAPublicKey")
             } catch (e: Exception) {
                 e.printStackTrace()
                 mRSAPrivateKey = ""

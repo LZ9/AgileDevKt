@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
-import android.widget.CompoundButton
 import android.widget.Switch
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -89,11 +88,9 @@ class BluetoothTestActivity : BaseActivity() {
         }
 
         // 蓝牙开关
-        mBleSwitchBtn.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener {
-            override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-                BleSimpleHelper.get().setBluetoothState(isChecked)
-            }
-        })
+        mBleSwitchBtn.setOnCheckedChangeListener { buttonView, isChecked ->
+            BleSimpleHelper.get().setBluetoothState(isChecked)
+        }
 
         // 列表点击
         mAdapter.setOnItemClickListener { viewHolder, item, position ->

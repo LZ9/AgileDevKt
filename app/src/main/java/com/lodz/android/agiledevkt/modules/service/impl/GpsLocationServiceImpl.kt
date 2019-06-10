@@ -67,10 +67,10 @@ class GpsLocationServiceImpl : ServiceContract {
             val longitude = location.longitude.toString() // 经度
             val latitude = location.latitude.toString() // 纬度
             val info = NetworkManager.get().getOperatorInfo(App.get())
-            val mcc = if (info == null) "" else info.mcc
-            val mnc = if (info == null) "" else info.mnc
-            val lac = if (info == null) "" else info.lac
-            val cid = if (info == null) "" else info.cid
+            val mcc = info?.mcc ?: ""
+            val mnc = info?.mnc ?: ""
+            val lac = info?.lac ?: ""
+            val cid = info?.cid ?: ""
             val log = "更新成功"
 
             EventBus.getDefault().post(LocationUpdateEvent(true, longitude, latitude, mcc, mnc, lac, cid, log))

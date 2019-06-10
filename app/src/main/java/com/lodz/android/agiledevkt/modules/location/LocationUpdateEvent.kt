@@ -20,6 +20,4 @@ class LocationUpdateEvent(
         /** 基站信息cid */
         val cid: String,
         /** 日志信息 */
-        val log: String) {
-
-}
+        val log: String)
