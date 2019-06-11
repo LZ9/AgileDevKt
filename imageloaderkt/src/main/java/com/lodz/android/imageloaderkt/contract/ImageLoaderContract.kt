@@ -2,8 +2,6 @@ package com.lodz.android.imageloaderkt.contract
 
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
-import android.net.Uri
-import android.util.Base64
 import android.widget.ImageView
 import androidx.annotation.AnimRes
 import androidx.annotation.ColorInt
@@ -12,37 +10,14 @@ import androidx.annotation.IntRange
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.gif.GifDrawable
 import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.ViewPropertyTransition
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
-import java.io.File
 
 /**
  * 图片加载库接口
  * Created by zhouL on 2018/7/9.
  */
 interface ImageLoaderContract {
-
-    /** 加载网页图片[url] */
-    fun loadUrl(url: String): ImageLoaderContract
-
-    /** 加载URI[uri] */
-    fun loadUri(uri: Uri): ImageLoaderContract
-
-    /** 加载本地文件[file] */
-    fun loadFile(file: File): ImageLoaderContract
-
-    /** 加载本地文件路径[path] */
-    fun loadFilePath(path: String): ImageLoaderContract
-
-    /** 加载资源图片[resId] */
-    fun loadResId(@DrawableRes resId: Int): ImageLoaderContract
-
-    /** 加载Base64图片[base64] */
-    fun loadBase64(base64: String, flags: Int = Base64.NO_WRAP): ImageLoaderContract
-
-    /** 在家比特数组[bytes] */
-    fun loadBytes(bytes: ByteArray): ImageLoaderContract
 
     /** 设置加载图资源[placeholderResId] */
     fun setPlaceholder(@DrawableRes placeholderResId: Int): ImageLoaderContract
@@ -129,19 +104,19 @@ interface ImageLoaderContract {
     fun into(imageView: ImageView)
 
     /** 将图片装载进[target] */
-    fun into(target: SimpleTarget<Drawable>)
+    fun into(target: com.bumptech.glide.request.target.Target<Drawable>)
 
     /** 将图片转为bitmap并装载到[imageView] */
     fun asBitmapInto(imageView: ImageView)
 
     /** 将图片转为bitmap并装载到[target] */
-    fun asBitmapInto(target: SimpleTarget<Bitmap>)
+    fun asBitmapInto(target: com.bumptech.glide.request.target.Target<Bitmap>)
 
     /** 将图片转为gif并装载到[imageView] */
     fun asGifInto(imageView: ImageView)
 
     /** 将图片转为gif并装载到[target] */
-    fun asGifInto(target: SimpleTarget<GifDrawable>)
+    fun asGifInto(target: com.bumptech.glide.request.target.Target<GifDrawable>)
 
     /** 下载图片 */
     fun download()

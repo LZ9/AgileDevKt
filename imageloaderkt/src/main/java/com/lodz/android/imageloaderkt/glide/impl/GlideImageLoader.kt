@@ -1,15 +1,8 @@
 package com.lodz.android.imageloaderkt.glide.impl
 
-import android.app.Activity
-import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
-import android.net.Uri
-import android.util.Base64
-import android.view.View
 import android.widget.ImageView
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import com.bumptech.glide.GenericTransitionOptions
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.load.Transformation
@@ -19,12 +12,9 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.load.resource.gif.GifDrawable
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.ViewPropertyTransition
 import com.bumptech.glide.signature.ObjectKey
-import com.lodz.android.imageloaderkt.ImageloaderManager
 import com.lodz.android.imageloaderkt.contract.ImageLoaderContract
-import com.lodz.android.imageloaderkt.glide.config.GlideApp
 import com.lodz.android.imageloaderkt.glide.transformations.CropRoundedCornersTransformation
 import jp.wasabeef.glide.transformations.*
 import java.io.File
@@ -35,115 +25,10 @@ import kotlin.collections.ArrayList
  * Glide图片加载库
  * Created by zhouL on 2018/7/11.
  */
-class GlideImageLoader private constructor() : ImageLoaderContract {
-
-    /** 构造对象实体 */
-    private lateinit var mGlideBuilderBean: GlideBuilderBean
-    /** 请求管理对象 */
-    private lateinit var mRequestManager: RequestManager
-
-    companion object {
-
-        /** 创建Glide加载库 */
-        @JvmStatic
-        fun with(context: Context): GlideImageLoader {
-            val imageLoader = GlideImageLoader()
-            imageLoader.mGlideBuilderBean = getGlideBuilderBean(ImageloaderManager.get().getBuilder())
-            imageLoader.mRequestManager = GlideApp.with(context)
-            return imageLoader
-        }
-
-        /** 创建Glide加载库 */
-        @JvmStatic
-        fun with(activity: Activity): GlideImageLoader {
-            val imageLoader = GlideImageLoader()
-            imageLoader.mGlideBuilderBean = getGlideBuilderBean(ImageloaderManager.get().getBuilder())
-            imageLoader.mRequestManager = GlideApp.with(activity)
-            return imageLoader
-        }
-
-        /** 创建Glide加载库 */
-        @JvmStatic
-        fun with(fragmentActivity: FragmentActivity): GlideImageLoader {
-            val imageLoader = GlideImageLoader()
-            imageLoader.mGlideBuilderBean = getGlideBuilderBean(ImageloaderManager.get().getBuilder())
-            imageLoader.mRequestManager = GlideApp.with(fragmentActivity)
-            return imageLoader
-        }
-
-        /** 创建Glide加载库 */
-        @JvmStatic
-        fun with(fragment: Fragment): GlideImageLoader {
-            val imageLoader = GlideImageLoader()
-            imageLoader.mGlideBuilderBean = getGlideBuilderBean(ImageloaderManager.get().getBuilder())
-            imageLoader.mRequestManager = GlideApp.with(fragment)
-            return imageLoader
-        }
-
-        /** 创建Glide加载库 */
-        @JvmStatic
-        fun with(view: View): GlideImageLoader {
-            val imageLoader = GlideImageLoader()
-            imageLoader.mGlideBuilderBean = getGlideBuilderBean(ImageloaderManager.get().getBuilder())
-            imageLoader.mRequestManager = GlideApp.with(view)
-            return imageLoader
-        }
-
-        private fun getGlideBuilderBean(builder: ImageloaderManager.Builder): GlideBuilderBean {
-            val bean = GlideBuilderBean()
-            if (builder.getPlaceholderResId() != 0) {// 获取配置参数
-                bean.placeholderResId = builder.getPlaceholderResId()
-            }
-            if (builder.getErrorResId() != 0) {
-                bean.errorResId = builder.getErrorResId()
-            }
-            return bean
-        }
-
-    }
-
-    override fun loadUrl(url: String): ImageLoaderContract {
-        mGlideBuilderBean.path = url
-        return this
-    }
-
-    override fun loadUri(uri: Uri): ImageLoaderContract {
-        mGlideBuilderBean.path = uri
-        return this
-    }
-
-    override fun loadFile(file: File): ImageLoaderContract {
-        mGlideBuilderBean.path = file
-        return this
-    }
-
-    override fun loadFilePath(path: String): ImageLoaderContract {
-        val file = File(path)
-        if (file.exists()) {
-            mGlideBuilderBean.path = file
-            return this
-        }
-        return loadUrl("")
-    }
-
-    override fun loadResId(resId: Int): ImageLoaderContract {
-        mGlideBuilderBean.path = resId
-        return this
-    }
-
-    override fun loadBase64(base64: String, flags: Int): ImageLoaderContract {
-        try {
-            return loadBytes(Base64.decode(base64, flags))
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        return loadUrl("")
-    }
-
-    override fun loadBytes(bytes: ByteArray): ImageLoaderContract {
-        mGlideBuilderBean.path = bytes
-        return this
-    }
+internal class GlideImageLoader internal constructor(
+    private val mGlideBuilderBean: GlideBuilderBean,
+    private val mRequestManager: RequestManager
+) : ImageLoaderContract {
 
     override fun setPlaceholder(placeholderResId: Int): ImageLoaderContract {
         mGlideBuilderBean.placeholderResId = placeholderResId
@@ -323,7 +208,7 @@ class GlideImageLoader private constructor() : ImageLoaderContract {
         }
     }
 
-    override fun into(target: SimpleTarget<Drawable>) {
+    override fun into(target: com.bumptech.glide.request.target.Target<Drawable>) {
         val bean = mGlideBuilderBean
 
         mRequestManager.load(bean.path).apply {
@@ -371,7 +256,7 @@ class GlideImageLoader private constructor() : ImageLoaderContract {
         }
     }
 
-    override fun asBitmapInto(target: SimpleTarget<Bitmap>) {
+    override fun asBitmapInto(target: com.bumptech.glide.request.target.Target<Bitmap>) {
         val bean = mGlideBuilderBean
 
         mRequestManager.asBitmap().load(bean.path).apply {
@@ -416,7 +301,7 @@ class GlideImageLoader private constructor() : ImageLoaderContract {
         }
     }
 
-    override fun asGifInto(target: SimpleTarget<GifDrawable>) {
+    override fun asGifInto(target: com.bumptech.glide.request.target.Target<GifDrawable>) {
         val bean = mGlideBuilderBean
 
         mRequestManager.asGif().load(bean.path).apply {
@@ -473,7 +358,7 @@ class GlideImageLoader private constructor() : ImageLoaderContract {
 
         val list = getTransformationList(bean)
         if (list.isNotEmpty()) {
-            this.transforms(*list.toTypedArray())
+            this.transform(*list.toTypedArray())
         }
     }
 
