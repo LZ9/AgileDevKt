@@ -207,10 +207,11 @@ abstract class BaseRecyclerViewAdapter<T>(protected val context: Context) : Recy
         if (getDataSize() == 0) {
             return
         }
-        mData!!.removeAt(position)
+        mData?.removeAt(position)
         notifyItemRemoved(position)
-        if (position != mData!!.size) {// 如果移除的是最后一个，忽略
-            notifyItemRangeChanged(position, mData!!.size - position)
+        val size = mData?.size ?: 0
+        if (position != size) {// 如果移除的是最后一个，忽略
+            notifyItemRangeChanged(position, size - position)
         }
     }
 

@@ -154,24 +154,16 @@ abstract class BaseSandwichActivity : AbsActivity() {
         mSwipeRefreshLayout.visibility = View.VISIBLE
         mContentLayout.visibility = View.GONE
         getNoDataLayout().visibility = View.VISIBLE
-        if (mLoadingLayout != null) {
-            mLoadingLayout!!.visibility = View.GONE
-        }
-        if (mErrorLayout != null) {
-            mErrorLayout!!.visibility = View.GONE
-        }
+        mLoadingLayout?.visibility = View.GONE
+        mErrorLayout?.visibility = View.GONE
     }
 
     /** 显示错误页面 */
     protected open fun showStatusError() {
         mSwipeRefreshLayout.visibility = View.GONE
         mContentLayout.visibility = View.GONE
-        if (mLoadingLayout != null) {
-            mLoadingLayout!!.visibility = View.GONE
-        }
-        if (mNoDataLayout != null) {
-            mNoDataLayout!!.visibility = View.GONE
-        }
+        mLoadingLayout?.visibility = View.GONE
+        mNoDataLayout?.visibility = View.GONE
         getErrorLayout().visibility = View.VISIBLE
     }
 
@@ -179,35 +171,25 @@ abstract class BaseSandwichActivity : AbsActivity() {
     protected open fun showStatusLoading() {
         mSwipeRefreshLayout.visibility = View.GONE
         mContentLayout.visibility = View.GONE
-        if (mErrorLayout != null) {
-            mErrorLayout!!.visibility = View.GONE
-        }
+        mErrorLayout?.visibility = View.GONE
         getLoadingLayout().visibility = View.VISIBLE
-        if (mNoDataLayout != null) {
-            mNoDataLayout!!.visibility = View.GONE
-        }
+        mNoDataLayout?.visibility = View.GONE
     }
 
     /** 显示内容页面 */
     protected open fun showStatusCompleted() {
         mSwipeRefreshLayout.visibility = View.VISIBLE
         mContentLayout.visibility = View.VISIBLE
-        if (mLoadingLayout != null) {
-            mLoadingLayout!!.visibility = View.GONE
-        }
-        if (mErrorLayout != null) {
-            mErrorLayout!!.visibility = View.GONE
-        }
-        if (mNoDataLayout != null) {
-            mNoDataLayout!!.visibility = View.GONE
-        }
+        mLoadingLayout?.visibility = View.GONE
+        mErrorLayout?.visibility = View.GONE
+        mNoDataLayout?.visibility = View.GONE
     }
 
     /** 获取加载控件 */
     protected fun getLoadingLayout(): LoadingLayout {
         if (mLoadingLayout == null) {
             mLoadingLayout = mLoadingViewStub.inflate() as LoadingLayout
-            mLoadingLayout!!.visibility = View.GONE
+            mLoadingLayout?.visibility = View.GONE
         }
         return mLoadingLayout!!
     }
@@ -216,7 +198,7 @@ abstract class BaseSandwichActivity : AbsActivity() {
     protected fun getNoDataLayout(): NoDataLayout {
         if (mNoDataLayout == null) {
             mNoDataLayout = mNoDataViewStub.inflate() as NoDataLayout
-            mNoDataLayout!!.visibility = View.GONE
+            mNoDataLayout?.visibility = View.GONE
         }
         return mNoDataLayout!!
     }
@@ -225,8 +207,8 @@ abstract class BaseSandwichActivity : AbsActivity() {
     protected fun getErrorLayout(): ErrorLayout {
         if (mErrorLayout == null) {
             mErrorLayout = mErrorViewStub.inflate() as ErrorLayout
-            mErrorLayout!!.visibility = View.GONE
-            mErrorLayout!!.setReloadListener {
+            mErrorLayout?.visibility = View.GONE
+            mErrorLayout?.setReloadListener {
                 onClickReload()
             }
         }

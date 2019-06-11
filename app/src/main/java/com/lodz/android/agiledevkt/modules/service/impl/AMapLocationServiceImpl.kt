@@ -46,9 +46,9 @@ class AMapLocationServiceImpl : ServiceContract {
         }
 
         mAMapLocationClient = AMapLocationClient(mContext.applicationContext)
-        mAMapLocationClient!!.setLocationOption(getLocationOption())
-        mAMapLocationClient!!.setLocationListener(mAMapLocationListener)
-        mAMapLocationClient!!.startLocation()
+        mAMapLocationClient?.setLocationOption(getLocationOption())
+        mAMapLocationClient?.setLocationListener(mAMapLocationListener)
+        mAMapLocationClient?.startLocation()
     }
 
     private fun getLocationOption(): AMapLocationClientOption {
@@ -94,11 +94,9 @@ class AMapLocationServiceImpl : ServiceContract {
     }
 
     override fun onDestroy() {
-        if (mAMapLocationClient != null) {
-            mAMapLocationClient!!.stopLocation()
-            mAMapLocationClient!!.unRegisterLocationListener(mAMapLocationListener)
-            mAMapLocationClient!!.onDestroy()
-            mAMapLocationClient = null
-        }
+        mAMapLocationClient?.stopLocation()
+        mAMapLocationClient?.unRegisterLocationListener(mAMapLocationListener)
+        mAMapLocationClient?.onDestroy()
+        mAMapLocationClient = null
     }
 }

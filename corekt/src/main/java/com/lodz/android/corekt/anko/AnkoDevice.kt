@@ -86,8 +86,7 @@ fun Context.isDualSim(): Boolean = getIMEI2().isNotEmpty()
 private fun Context.getOperatorBySlot(predictedMethodName: String, slotId: Int): String {
     try {
         val tm = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-        val cls = ReflectUtils.getClassForName(tm.javaClass.name)!!
-        val value = ReflectUtils.executeFunction(cls, tm, predictedMethodName, arrayOf(Int::class.java), arrayOf(slotId))
+        val value = ReflectUtils.executeFunction(tm::class.java, tm, predictedMethodName, arrayOf(Int::class.java), arrayOf(slotId))
         if (value != null) {
             return value.toString()
         }

@@ -32,8 +32,9 @@ class TestFragment : LazyFragment() {
 
     override fun startCreate() {
         super.startCreate()
-        if (arguments != null){
-            mContent = arguments!!.getString(EXTRA_CONTENT, "")
+        val arg = arguments
+        if (arg != null){
+            mContent = arg.getString(EXTRA_CONTENT, "")
         }
     }
 

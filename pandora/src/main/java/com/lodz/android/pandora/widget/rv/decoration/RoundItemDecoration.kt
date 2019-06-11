@@ -92,12 +92,12 @@ class RoundItemDecoration private constructor(context: Context) : BaseItemDecora
         if (mTopPaint == null) {
             mTopPaint = Paint()
         }
-        mTopPaint!!.color = color
+        mTopPaint?.color = color
 
         if (mTopBgPaint == null) {
             mTopBgPaint = Paint()
         }
-        mTopBgPaint!!.color = bgColor
+        mTopBgPaint?.color = bgColor
         return this
     }
 
@@ -119,12 +119,12 @@ class RoundItemDecoration private constructor(context: Context) : BaseItemDecora
         if (mBottomPaint == null) {
             mBottomPaint = Paint()
         }
-        mBottomPaint!!.color = color
+        mBottomPaint?.color = color
 
         if (mBottomBgPaint == null) {
             mBottomBgPaint = Paint()
         }
-        mBottomBgPaint!!.color = bgColor
+        mBottomBgPaint?.color = bgColor
         return this
     }
 
@@ -146,12 +146,12 @@ class RoundItemDecoration private constructor(context: Context) : BaseItemDecora
         if (mLeftPaint == null) {
             mLeftPaint = Paint()
         }
-        mLeftPaint!!.color = color
+        mLeftPaint?.color = color
 
         if (mLeftBgPaint == null) {
             mLeftBgPaint = Paint()
         }
-        mLeftBgPaint!!.color = bgColor
+        mLeftBgPaint?.color = bgColor
         return this
     }
 
@@ -173,12 +173,12 @@ class RoundItemDecoration private constructor(context: Context) : BaseItemDecora
         if (mRightPaint == null) {
             mRightPaint = Paint()
         }
-        mRightPaint!!.color = color
+        mRightPaint?.color = color
 
         if (mRightBgPaint == null) {
             mRightBgPaint = Paint()
         }
-        mRightBgPaint!!.color = bgColor
+        mRightBgPaint?.color = bgColor
         return this
     }
 

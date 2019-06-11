@@ -104,9 +104,7 @@ class DragRvAdapter(context: Context) : BaseRecyclerViewAdapter<String>(context)
                 return false
             }
             if (event.action == MotionEvent.ACTION_DOWN) {
-                if (mItemTouchHelper != null) {
-                    mItemTouchHelper!!.startDrag(this)
-                }
+                mItemTouchHelper?.startDrag(this)
             }
             return false
         }

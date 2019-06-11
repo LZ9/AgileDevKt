@@ -76,51 +76,33 @@ abstract class BaseFragment : LazyFragment() {
     /** 显示无数据页面 */
     protected open fun showStatusNoData() {
         mContentLayout.visibility = View.GONE
-        if (mLoadingLayout != null) {
-            mLoadingLayout!!.visibility = View.GONE
-        }
-        if (mErrorLayout != null) {
-            mErrorLayout!!.visibility = View.GONE
-        }
+        mLoadingLayout?.visibility = View.GONE
+        mErrorLayout?.visibility = View.GONE
         getNoDataLayout().visibility = View.VISIBLE
     }
 
     /** 显示错误页面 */
     protected open fun showStatusError() {
         mContentLayout.visibility = View.GONE
-        if (mLoadingLayout != null) {
-            mLoadingLayout!!.visibility = View.GONE
-        }
+        mLoadingLayout?.visibility = View.GONE
         getErrorLayout().visibility = View.VISIBLE
-        if (mNoDataLayout != null) {
-            mNoDataLayout!!.visibility = View.GONE
-        }
+        mNoDataLayout?.visibility = View.GONE
     }
 
     /** 显示加载页面 */
     protected open fun showStatusLoading() {
         mContentLayout.visibility = View.GONE
         getLoadingLayout().visibility = View.VISIBLE
-        if (mErrorLayout != null) {
-            mErrorLayout!!.visibility = View.GONE
-        }
-        if (mNoDataLayout != null) {
-            mNoDataLayout!!.visibility = View.GONE
-        }
+        mErrorLayout?.visibility = View.GONE
+        mNoDataLayout?.visibility = View.GONE
     }
 
     /** 显示内容页面 */
     protected open fun showStatusCompleted() {
         mContentLayout.visibility = View.VISIBLE
-        if (mLoadingLayout != null) {
-            mLoadingLayout!!.visibility = View.GONE
-        }
-        if (mErrorLayout != null) {
-            mErrorLayout!!.visibility = View.GONE
-        }
-        if (mNoDataLayout != null) {
-            mNoDataLayout!!.visibility = View.GONE
-        }
+        mLoadingLayout?.visibility = View.GONE
+        mErrorLayout?.visibility = View.GONE
+        mNoDataLayout?.visibility = View.GONE
     }
 
     /** 隐藏TitleBar */
@@ -137,8 +119,8 @@ abstract class BaseFragment : LazyFragment() {
     protected fun getTitleBarLayout(): TitleBarLayout {
         if (mTitleBarLayout == null) {
             mTitleBarLayout = mTitleBarViewStub.inflate() as TitleBarLayout
-            mTitleBarLayout!!.visibility = View.GONE
-            mTitleBarLayout!!.setOnBackBtnClickListener {
+            mTitleBarLayout?.visibility = View.GONE
+            mTitleBarLayout?.setOnBackBtnClickListener {
                 onClickBackBtn()
             }
         }
@@ -149,7 +131,7 @@ abstract class BaseFragment : LazyFragment() {
     protected fun getLoadingLayout(): LoadingLayout {
         if (mLoadingLayout == null) {
             mLoadingLayout = mLoadingViewStub.inflate() as LoadingLayout
-            mLoadingLayout!!.visibility = View.GONE
+            mLoadingLayout?.visibility = View.GONE
         }
         return mLoadingLayout!!
     }
@@ -158,7 +140,7 @@ abstract class BaseFragment : LazyFragment() {
     protected fun getNoDataLayout(): NoDataLayout {
         if (mNoDataLayout == null) {
             mNoDataLayout = mNoDataViewStub.inflate() as NoDataLayout
-            mNoDataLayout!!.visibility = View.GONE
+            mNoDataLayout?.visibility = View.GONE
         }
         return mNoDataLayout!!
     }
@@ -167,8 +149,8 @@ abstract class BaseFragment : LazyFragment() {
     protected fun getErrorLayout(): ErrorLayout {
         if (mErrorLayout == null) {
             mErrorLayout = mErrorViewStub.inflate() as ErrorLayout
-            mErrorLayout!!.visibility = View.GONE
-            mErrorLayout!!.setReloadListener {
+            mErrorLayout?.visibility = View.GONE
+            mErrorLayout?.setReloadListener {
                 onClickReload()
             }
         }

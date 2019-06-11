@@ -55,14 +55,12 @@ class SecondBinder(context: Context, binderType: Int) : RecyclerBinder<List<Nati
                 rv.layoutManager = layoutManager
                 rv.setHasFixedSize(true)
                 rv.adapter = mAdapter
-                mAdapter!!.setOnItemClickListener { viewHolder, item, position ->
-                    if (mListener != null) {
-                        mListener!!.onClick(item)
-                    }
+                mAdapter?.setOnItemClickListener { viewHolder, item, position ->
+                    mListener?.onClick(item)
                 }
             }
-            mAdapter!!.setData(list.toMutableList())
-            mAdapter!!.notifyDataSetChanged()
+            mAdapter?.setData(list.toMutableList())
+            mAdapter?.notifyDataSetChanged()
         }
     }
 

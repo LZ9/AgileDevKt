@@ -41,9 +41,7 @@ class ThirdBinder(context: Context, binderType: Int) : RecyclerBinder<NationBean
         holder.nationTv.text = StringBuilder("${bean.code}-${bean.name}")
 
         holder.nationTv.setOnClickListener {
-            if (mListener != null) {
-                mListener!!.onClick(bean)
-            }
+            mListener?.onClick(bean)
         }
     }
 

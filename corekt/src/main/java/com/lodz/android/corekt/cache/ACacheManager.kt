@@ -107,8 +107,8 @@ internal class ACacheManager(private var cacheDir: File, private var sizeLimit: 
             }
         }
 
-        val fileSize = if (mostLongUsedFile != null) mostLongUsedFile!!.length() else 0
-        if (mostLongUsedFile != null && mostLongUsedFile!!.delete()) {
+        val fileSize = mostLongUsedFile?.length() ?: 0
+        if (mostLongUsedFile != null && mostLongUsedFile?.delete() == true) {
             lastUsageDates.remove(mostLongUsedFile)
         }
         return fileSize

@@ -147,8 +147,9 @@ class FileTestActivity : BaseActivity() {
             val bytes: ByteArray? = FileUtils.fileToByte(NEW_FILE_PATH)
             if (bytes == null){
                 toastShort("转换失败")
+                return@setOnClickListener
             }
-            FileUtils.byteToFile(bytes!!, SAVE_PATH, "17283971234654.txt")
+            FileUtils.byteToFile(bytes, SAVE_PATH, "17283971234654.txt")
             toastShort("转换完成")
         }
 

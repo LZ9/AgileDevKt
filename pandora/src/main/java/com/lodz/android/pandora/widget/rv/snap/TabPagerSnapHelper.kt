@@ -53,7 +53,7 @@ class TabPagerSnapHelper(mStartPosition: Int) : ViewPagerSnapHelper(mStartPositi
     /** 与TabLayout联动 */
     fun setupWithTabLayout(tabLayout: TabLayout) {
         mTabLayout = tabLayout
-        mTabLayout!!.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+        mTabLayout?.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 if (isScrollRv) {//RV滚动的tab设置不做处理
                     isScrollRv = false
@@ -61,7 +61,7 @@ class TabPagerSnapHelper(mStartPosition: Int) : ViewPagerSnapHelper(mStartPositi
                 }
                 isSelectedTab = true
                 if (mRecyclerView != null && tab != null) {
-                    mRecyclerView!!.smoothScrollToPosition(tab.position)
+                    mRecyclerView?.smoothScrollToPosition(tab.position)
                 }
             }
 

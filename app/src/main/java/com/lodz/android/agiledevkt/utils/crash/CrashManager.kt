@@ -105,7 +105,7 @@ class CrashManager private constructor() : Thread.UncaughtExceptionHandler {
 
         if (mDefaultHandler != null) {// 系统处理
             PrintLog.d(mTag, "system handle")
-            mDefaultHandler!!.uncaughtException(thread, t)
+            mDefaultHandler?.uncaughtException(thread, t)
             return
         }
         PrintLog.d(mTag, "unhandle")

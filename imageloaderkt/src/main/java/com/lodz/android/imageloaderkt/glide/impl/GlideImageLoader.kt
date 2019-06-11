@@ -38,9 +38,9 @@ import kotlin.collections.ArrayList
 class GlideImageLoader private constructor() : ImageLoaderContract {
 
     /** 构造对象实体 */
-    private var mGlideBuilderBean: GlideBuilderBean? = null
+    private lateinit var mGlideBuilderBean: GlideBuilderBean
     /** 请求管理对象 */
-    private var mRequestManager: RequestManager? = null
+    private lateinit var mRequestManager: RequestManager
 
     companion object {
 
@@ -103,31 +103,31 @@ class GlideImageLoader private constructor() : ImageLoaderContract {
     }
 
     override fun loadUrl(url: String): ImageLoaderContract {
-        mGlideBuilderBean!!.path = url
+        mGlideBuilderBean.path = url
         return this
     }
 
     override fun loadUri(uri: Uri): ImageLoaderContract {
-        mGlideBuilderBean!!.path = uri
+        mGlideBuilderBean.path = uri
         return this
     }
 
     override fun loadFile(file: File): ImageLoaderContract {
-        mGlideBuilderBean!!.path = file
+        mGlideBuilderBean.path = file
         return this
     }
 
     override fun loadFilePath(path: String): ImageLoaderContract {
         val file = File(path)
         if (file.exists()) {
-            mGlideBuilderBean!!.path = file
+            mGlideBuilderBean.path = file
             return this
         }
         return loadUrl("")
     }
 
     override fun loadResId(resId: Int): ImageLoaderContract {
-        mGlideBuilderBean!!.path = resId
+        mGlideBuilderBean.path = resId
         return this
     }
 
@@ -141,160 +141,156 @@ class GlideImageLoader private constructor() : ImageLoaderContract {
     }
 
     override fun loadBytes(bytes: ByteArray): ImageLoaderContract {
-        mGlideBuilderBean!!.path = bytes
+        mGlideBuilderBean.path = bytes
         return this
     }
 
     override fun setPlaceholder(placeholderResId: Int): ImageLoaderContract {
-        mGlideBuilderBean!!.placeholderResId = placeholderResId
+        mGlideBuilderBean.placeholderResId = placeholderResId
         return this
     }
 
     override fun setError(errorResId: Int): ImageLoaderContract {
-        mGlideBuilderBean!!.errorResId = errorResId
+        mGlideBuilderBean.errorResId = errorResId
         return this
     }
 
     override fun setImageSize(widthPx: Int, heightPx: Int): ImageLoaderContract {
-        mGlideBuilderBean!!.widthPx = widthPx
-        mGlideBuilderBean!!.heightPx = heightPx
+        mGlideBuilderBean.widthPx = widthPx
+        mGlideBuilderBean.heightPx = heightPx
         return this
     }
 
     override fun useBlur(): ImageLoaderContract {
-        mGlideBuilderBean!!.useBlur = true
+        mGlideBuilderBean.useBlur = true
         return this
     }
 
     override fun setBlurRadius(radius: Int): ImageLoaderContract {
         useBlur()
-        mGlideBuilderBean!!.blurRadius = radius
+        mGlideBuilderBean.blurRadius = radius
         return this
     }
 
     override fun useRoundCorner(): ImageLoaderContract {
-        mGlideBuilderBean!!.useRoundCorner = true
+        mGlideBuilderBean.useRoundCorner = true
         return this
     }
 
     override fun setRoundCorner(radius: Int): ImageLoaderContract {
         useRoundCorner()
-        mGlideBuilderBean!!.roundCornerRadius = radius
+        mGlideBuilderBean.roundCornerRadius = radius
         return this
     }
 
     override fun useCircle(): ImageLoaderContract {
-        mGlideBuilderBean!!.useCircle = true
+        mGlideBuilderBean.useCircle = true
         return this
     }
 
     override fun skipMemoryCache(): ImageLoaderContract {
-        mGlideBuilderBean!!.saveToMemoryCache = false
+        mGlideBuilderBean.saveToMemoryCache = false
         return this
     }
 
     override fun diskCacheStrategy(diskCacheStrategy: DiskCacheStrategy): ImageLoaderContract {
-        mGlideBuilderBean!!.diskCacheStrategy = diskCacheStrategy
+        mGlideBuilderBean.diskCacheStrategy = diskCacheStrategy
         return this
     }
 
     override fun setCenterCrop(): ImageLoaderContract {
-        mGlideBuilderBean!!.centerCrop = true
+        mGlideBuilderBean.centerCrop = true
         return this
     }
 
     override fun setFitCenter(): ImageLoaderContract {
-        mGlideBuilderBean!!.fitCenter = true
+        mGlideBuilderBean.fitCenter = true
         return this
     }
 
     override fun setCenterInside(): ImageLoaderContract {
-        mGlideBuilderBean!!.centerInside = true
+        mGlideBuilderBean.centerInside = true
         return this
     }
 
     override fun dontAnimate(): ImageLoaderContract {
-        mGlideBuilderBean!!.dontAnimate = true
+        mGlideBuilderBean.dontAnimate = true
         return this
     }
 
     override fun userCrossFade(): ImageLoaderContract {
-        mGlideBuilderBean!!.crossFade = true
-        mGlideBuilderBean!!.dontAnimate = false
+        mGlideBuilderBean.crossFade = true
+        mGlideBuilderBean.dontAnimate = false
         return this
     }
 
     override fun setAnimResId(animResId: Int): ImageLoaderContract {
-        mGlideBuilderBean!!.animResId = animResId
-        mGlideBuilderBean!!.dontAnimate = false
+        mGlideBuilderBean.animResId = animResId
+        mGlideBuilderBean.dontAnimate = false
         return this
     }
 
     override fun setAnim(animator: ViewPropertyTransition.Animator): ImageLoaderContract {
-        mGlideBuilderBean!!.animator = animator
-        mGlideBuilderBean!!.dontAnimate = false
+        mGlideBuilderBean.animator = animator
+        mGlideBuilderBean.dontAnimate = false
         return this
     }
 
     override fun useFilterColor(): ImageLoaderContract {
-        mGlideBuilderBean!!.useFilterColor = true
+        mGlideBuilderBean.useFilterColor = true
         return this
     }
 
     override fun setFilterColor(color: Int): ImageLoaderContract {
         useFilterColor()
-        mGlideBuilderBean!!.filterColor = color
+        mGlideBuilderBean.filterColor = color
         return this
     }
 
     override fun setRoundedCornersMargin(margin: Int): ImageLoaderContract {
-        mGlideBuilderBean!!.roundedCornersMargin = margin
+        mGlideBuilderBean.roundedCornersMargin = margin
         return this
     }
 
     override fun setRoundedCornerType(type: RoundedCornersTransformation.CornerType): ImageLoaderContract {
-        mGlideBuilderBean!!.cornerType = type
+        mGlideBuilderBean.cornerType = type
         return this
     }
 
     override fun useGrayscale(): ImageLoaderContract {
-        mGlideBuilderBean!!.useGrayscale = true
+        mGlideBuilderBean.useGrayscale = true
         return this
     }
 
     override fun useCropSquare(): ImageLoaderContract {
-        mGlideBuilderBean!!.useCropSquare = true
+        mGlideBuilderBean.useCropSquare = true
         return this
     }
 
     override fun useMask(): ImageLoaderContract {
-        mGlideBuilderBean!!.useMask = true
+        mGlideBuilderBean.useMask = true
         return this
     }
 
     override fun setMaskResId(maskResId: Int): ImageLoaderContract {
         useMask()
-        mGlideBuilderBean!!.maskResId = maskResId
+        mGlideBuilderBean.maskResId = maskResId
         return this
     }
 
     override fun setVideo(): ImageLoaderContract {
-        mGlideBuilderBean!!.isVideo = true
+        mGlideBuilderBean.isVideo = true
         return this
     }
 
     override fun setRequestListener(listener: RequestListener<*>): ImageLoaderContract {
-        mGlideBuilderBean!!.requestListener = listener
+        mGlideBuilderBean.requestListener = listener
         return this
     }
 
     override fun download() {
-        if (mRequestManager == null || mGlideBuilderBean == null) {
-            return
-        }
-        val bean = mGlideBuilderBean!!
-
-        mRequestManager!!.download(bean.path).apply {
+        val bean = mGlideBuilderBean
+        mRequestManager.download(bean.path).apply {
             this.apply(getRequestOptions(bean))
         }.apply {
             if (bean.requestListener != null) {// 设置请求监听器
@@ -304,12 +300,9 @@ class GlideImageLoader private constructor() : ImageLoaderContract {
     }
 
     override fun into(imageView: ImageView) {
-        if (mRequestManager == null || mGlideBuilderBean == null) {
-            return
-        }
-        val bean = mGlideBuilderBean!!
+        val bean = mGlideBuilderBean
 
-        mRequestManager!!.load(bean.path).apply {
+        mRequestManager.load(bean.path).apply {
             this.apply(getRequestOptions(bean))
         }.apply {
             if (bean.crossFade) {
@@ -331,12 +324,9 @@ class GlideImageLoader private constructor() : ImageLoaderContract {
     }
 
     override fun into(target: SimpleTarget<Drawable>) {
-        if (mRequestManager == null || mGlideBuilderBean == null) {
-            return
-        }
-        val bean = mGlideBuilderBean!!
+        val bean = mGlideBuilderBean
 
-        mRequestManager!!.load(bean.path).apply {
+        mRequestManager.load(bean.path).apply {
             this.apply(getRequestOptions(bean))
         }.apply {
             if (bean.crossFade) {
@@ -358,12 +348,9 @@ class GlideImageLoader private constructor() : ImageLoaderContract {
     }
 
     override fun asBitmapInto(imageView: ImageView) {
-        if (mRequestManager == null || mGlideBuilderBean == null) {
-            return
-        }
-        val bean = mGlideBuilderBean!!
+        val bean = mGlideBuilderBean
 
-        mRequestManager!!.asBitmap().load(bean.path).apply {
+        mRequestManager.asBitmap().load(bean.path).apply {
             this.apply(getRequestOptions(bean))
         }.apply {
             if (bean.crossFade) {
@@ -385,12 +372,9 @@ class GlideImageLoader private constructor() : ImageLoaderContract {
     }
 
     override fun asBitmapInto(target: SimpleTarget<Bitmap>) {
-        if (mRequestManager == null || mGlideBuilderBean == null) {
-            return
-        }
-        val bean = mGlideBuilderBean!!
+        val bean = mGlideBuilderBean
 
-        mRequestManager!!.asBitmap().load(bean.path).apply {
+        mRequestManager.asBitmap().load(bean.path).apply {
             this.apply(getRequestOptions(bean))
         }.apply {
             if (bean.crossFade) {
@@ -412,12 +396,9 @@ class GlideImageLoader private constructor() : ImageLoaderContract {
     }
 
     override fun asGifInto(imageView: ImageView) {
-        if (mRequestManager == null || mGlideBuilderBean == null) {
-            return
-        }
-        val bean = mGlideBuilderBean!!
+        val bean = mGlideBuilderBean
 
-        mRequestManager!!.asGif().load(bean.path).apply {
+        mRequestManager.asGif().load(bean.path).apply {
             this.apply(getRequestOptions(bean))
         }.apply {
             if (bean.animResId != -1) {
@@ -436,12 +417,9 @@ class GlideImageLoader private constructor() : ImageLoaderContract {
     }
 
     override fun asGifInto(target: SimpleTarget<GifDrawable>) {
-        if (mRequestManager == null || mGlideBuilderBean == null) {
-            return
-        }
-        val bean = mGlideBuilderBean!!
+        val bean = mGlideBuilderBean
 
-        mRequestManager!!.asGif().load(bean.path).apply {
+        mRequestManager.asGif().load(bean.path).apply {
             this.apply(getRequestOptions(bean))
         }.apply {
             if (bean.animResId != -1) {

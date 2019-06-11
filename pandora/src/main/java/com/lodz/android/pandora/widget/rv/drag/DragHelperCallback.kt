@@ -133,9 +133,7 @@ open class DragHelperCallback<T> : ItemTouchHelper.Callback() {
                 Collections.swap(mList, i, i - 1)
             }
         }
-        if (mAdapter != null) {
-            mAdapter!!.notifyItemMoved(fromPosition, toPosition)
-        }
+        mAdapter?.notifyItemMoved(fromPosition, toPosition)
         mListener?.invoke(mList!!)
         return true
     }
@@ -146,11 +144,11 @@ open class DragHelperCallback<T> : ItemTouchHelper.Callback() {
             return
         }
         val position = viewHolder.adapterPosition
-        mList!!.removeAt(position)
+        mList?.removeAt(position)
         if (mAdapter != null) {
-            mAdapter!!.notifyItemRemoved(position)
+            mAdapter?.notifyItemRemoved(position)
             if (position != mList.getSize()) { // 如果移除的是最后一个，忽略
-                mAdapter!!.notifyItemRangeChanged(position, mList.getSize() - position)
+                mAdapter?.notifyItemRangeChanged(position, mList.getSize() - position)
             }
         }
         mListener?.invoke(mList!!)
@@ -160,8 +158,8 @@ open class DragHelperCallback<T> : ItemTouchHelper.Callback() {
     override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
         if (actionState != ItemTouchHelper.ACTION_STATE_IDLE) {
             if (isVibrate && mContext != null) {
-                if (mContext!!.hasVibrator()) {
-                    mContext!!.createVibrator(100)//长按震动
+                if (mContext?.hasVibrator() == true) {
+                    mContext?.createVibrator(100)//长按震动
                 }
             }
         }

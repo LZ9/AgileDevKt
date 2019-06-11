@@ -143,8 +143,9 @@ class IndexBar : LinearLayout {
             textView.typeface = if (isTextBold) Typeface.DEFAULT_BOLD else Typeface.DEFAULT
             textView.gravity = Gravity.CENTER
             val layoutParams = LinearLayout.LayoutParams(
-                    if (orientation == VERTICAL) LinearLayout.LayoutParams.MATCH_PARENT else 0,
-                    if (orientation == VERTICAL) 0 else LinearLayout.LayoutParams.MATCH_PARENT, 1f)
+                if (orientation == VERTICAL) LinearLayout.LayoutParams.MATCH_PARENT else 0,
+                if (orientation == VERTICAL) 0 else LinearLayout.LayoutParams.MATCH_PARENT, 1f
+            )
             addView(textView, layoutParams)
         }
     }
@@ -158,18 +159,12 @@ class IndexBar : LinearLayout {
             if (mPressBgDrawable != null) {
                 background = mPressBgDrawable
             }
-            if (mHintTextView != null) {
-                mHintTextView!!.visibility = View.VISIBLE
-            }
+            mHintTextView?.visibility = View.VISIBLE
             callbackTouch(event.x, event.y)
         }
         if (event.action == MotionEvent.ACTION_UP) {
-            if (mOnIndexListener != null) {
-                mOnIndexListener!!.onEnd()
-            }
-            if (mHintTextView != null) {
-                mHintTextView!!.visibility = View.GONE
-            }
+            mOnIndexListener?.onEnd()
+            mHintTextView?.visibility = View.GONE
             background = ColorDrawable(Color.TRANSPARENT)
         }
         return true
@@ -182,22 +177,14 @@ class IndexBar : LinearLayout {
             val view = getChildAt(i) as? TextView ?: continue
             if (orientation == VERTICAL) {
                 if (y >= view.top && y <= view.bottom) {
-                    if (mHintTextView != null) {
-                        mHintTextView!!.text = view.text
-                    }
-                    if (mOnIndexListener != null) {
-                        mOnIndexListener!!.onStart(i, view.text.toString())
-                    }
+                    mHintTextView?.text = view.text
+                    mOnIndexListener?.onStart(i, view.text.toString())
                     return
                 }
             } else {
                 if (x >= view.left && x <= view.right) {
-                    if (mHintTextView != null) {
-                        mHintTextView!!.text = view.text
-                    }
-                    if (mOnIndexListener != null) {
-                        mOnIndexListener!!.onStart(i, view.text.toString())
-                    }
+                    mHintTextView?.text = view.text
+                    mOnIndexListener?.onStart(i, view.text.toString())
                     return
                 }
             }

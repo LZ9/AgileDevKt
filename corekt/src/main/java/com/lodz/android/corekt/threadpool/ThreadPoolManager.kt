@@ -43,7 +43,7 @@ class ThreadPoolManager private constructor() {
                 PriorityThreadFactory.createHighestPriorityThread(), mBuilder.getRejectedExecutionHandler()
             )
         }
-        mHighestExecutor!!.execute(runnable)
+        mHighestExecutor?.execute(runnable)
     }
 
     /** 执行一个普通优先级线程[runnable] */
@@ -55,7 +55,7 @@ class ThreadPoolManager private constructor() {
                 PriorityThreadFactory.createNormPriorityThread(), mBuilder.getRejectedExecutionHandler()
             )
         }
-        mNormalExecutor!!.execute(runnable)
+        mNormalExecutor?.execute(runnable)
     }
 
     /** 执行一个低优先级线程[runnable] */
@@ -67,7 +67,7 @@ class ThreadPoolManager private constructor() {
                 PriorityThreadFactory.createLowestPriorityThread(), mBuilder.getRejectedExecutionHandler()
             )
         }
-        mLowestExecutor!!.execute(runnable)
+        mLowestExecutor?.execute(runnable)
     }
 
     /** 释放所有线程池 */

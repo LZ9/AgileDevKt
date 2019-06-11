@@ -63,7 +63,7 @@ fun <T> Collection<T>.group(groups: Collection<String>, @IntRange(from = 1) comp
             }
             val tag = if (item.length <= compareLength) item else item.substring(0, compareLength)// 获取分组标签
             if (map[tag] != null) {
-                map[tag]!!.add(t)//存在该分组则加入
+                map[tag]?.add(t)//存在该分组则加入
             } else {
                 map.getValue(key).add(t)
             }

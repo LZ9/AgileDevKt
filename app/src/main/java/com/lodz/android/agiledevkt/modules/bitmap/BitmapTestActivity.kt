@@ -15,6 +15,7 @@ import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.getDrawableCompat
+import com.lodz.android.corekt.anko.runOnMain
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.corekt.utils.BitmapUtils
@@ -680,7 +681,10 @@ class BitmapTestActivity : BaseActivity() {
         val url = "http://bmob-cdn-15177.b0.upaiyun.com/2018/08/23/8fa7f1c2404bafbd808bde10ff072ceb.jpg"
         ImageLoader.create(this).loadUrl(url).setRequestListener(object : RequestListener<File> {
             override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<File>?, isFirstResource: Boolean): Boolean {
-                mLargeImg.setImageResource(R.drawable.ic_launcher)
+                runOnMain {
+                    // 监听器回调可能不在主线程
+                    mLargeImg.setImageResource(R.drawable.ic_launcher)
+                }
                 return false
             }
 

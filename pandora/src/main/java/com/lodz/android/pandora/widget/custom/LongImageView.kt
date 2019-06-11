@@ -29,11 +29,11 @@ import java.io.File
 class LongImageView : FrameLayout {
 
     /** 图片布局 */
-    private var mImgLayout: LinearLayout? = null
+    private lateinit var mImgLayout: LinearLayout
     /** 滑动布局 */
-    private var mScrollView: NestedScrollView? = null
+    private lateinit var mScrollView: NestedScrollView
     /** 占位符 */
-    private var mPlaceholderImg: ImageView? = null
+    private lateinit var mPlaceholderImg: ImageView
     /** 临时位图 */
     private var mTempBitmaps: List<Bitmap>? = null
 
@@ -89,15 +89,13 @@ class LongImageView : FrameLayout {
                 ?: ViewGroup.LayoutParams.WRAP_CONTENT)
 
         // 占位符图片类型
-        val scaleType: Int = typedArray?.getInt(R.styleable.LongImageView_placeholderScaleType, -1)
-                ?: -1
+        val scaleType: Int = typedArray?.getInt(R.styleable.LongImageView_placeholderScaleType, -1) ?: -1
         if (scaleType != -1) {
             setPlaceholderScaleType(getTypeById(scaleType))
         }
 
         // 是否显示占位符
-        val isShowPlaceholder: Boolean = typedArray?.getBoolean(R.styleable.LongImageView_showPlaceholder, true)
-                ?: true
+        val isShowPlaceholder: Boolean = typedArray?.getBoolean(R.styleable.LongImageView_showPlaceholder, true) ?: true
         showPlaceholder(isShowPlaceholder)
 
         typedArray?.recycle()
@@ -118,55 +116,56 @@ class LongImageView : FrameLayout {
 
     /** 设置占位符图片[resId] */
     fun setPlaceholderRes(@DrawableRes resId: Int) {
-        mPlaceholderImg?.setImageResource(resId)
+        mPlaceholderImg.setImageResource(resId)
     }
 
     /** 设置占位符图片[drawable] */
     fun setPlaceholderDrawable(drawable: Drawable) {
-        mPlaceholderImg?.setImageDrawable(drawable)
+        mPlaceholderImg.setImageDrawable(drawable)
     }
 
     /** 设置占位符图片类型[scaleType] */
     fun setPlaceholderScaleType(scaleType: ImageView.ScaleType) {
-        mPlaceholderImg?.scaleType = scaleType
+        mPlaceholderImg.scaleType = scaleType
     }
 
     /** 设置占位符宽度[width] */
     fun setPlaceholderWidth(width: Int) {
-        val layoutParams = mPlaceholderImg?.layoutParams
+        val layoutParams = mPlaceholderImg.layoutParams
         layoutParams?.width = width
     }
 
     /** 设置占位符高度[height] */
     fun setPlaceholderHeight(height: Int) {
-        val layoutParams = mPlaceholderImg?.layoutParams
+        val layoutParams = mPlaceholderImg.layoutParams
         layoutParams?.height = height
     }
 
     /** 显示占位符[isShow] */
+    @JvmOverloads
     fun showPlaceholder(isShow: Boolean = true) {
-        mPlaceholderImg?.visibility = if (isShow) View.VISIBLE else View.GONE
-        mScrollView?.visibility = if (isShow) View.GONE else View.VISIBLE
+        mPlaceholderImg.visibility = if (isShow) View.VISIBLE else View.GONE
+        mScrollView.visibility = if (isShow) View.GONE else View.VISIBLE
     }
 
     /** 获取占位符控件 */
-    fun getPlaceholderImageView(): ImageView = mPlaceholderImg!!
+    fun getPlaceholderImageView(): ImageView = mPlaceholderImg
 
     /** 设置长图资源[resId] */
     fun setImageRes(@DrawableRes resId: Int) {
         showPlaceholder()
         clearViews()
         Observable.just(resId)
-                .map { id ->
-                    return@map BitmapFactory.decodeResource(context.resources, id)
-                }.compose(RxUtils.ioToMainObservable())
-                .subscribe(object : BaseObserver<Bitmap>() {
-                    override fun onBaseNext(any: Bitmap) {
-                        setImageBitmap(any)
-                    }
+            .map { id ->
+                return@map BitmapFactory.decodeResource(context.resources, id)
+            }.compose(RxUtils.ioToMainObservable())
+            .subscribe(object : BaseObserver<Bitmap>() {
+                override fun onBaseNext(any: Bitmap) {
+                    setImageBitmap(any)
+                }
 
-                    override fun onBaseError(e: Throwable) {}
-                })
+                override fun onBaseError(e: Throwable) {}
+            })
     }
 
     /** 设置长图文件[file] */
@@ -174,16 +173,16 @@ class LongImageView : FrameLayout {
         showPlaceholder()
         clearViews()
         Observable.just(file)
-                .map { f ->
-                    return@map BitmapFactory.decodeFile(f.absolutePath)
-                }.compose(RxUtils.ioToMainObservable())
-                .subscribe(object : BaseObserver<Bitmap>() {
-                    override fun onBaseNext(any: Bitmap) {
-                        setImageBitmap(any)
-                    }
+            .map { f ->
+                return@map BitmapFactory.decodeFile(f.absolutePath)
+            }.compose(RxUtils.ioToMainObservable())
+            .subscribe(object : BaseObserver<Bitmap>() {
+                override fun onBaseNext(any: Bitmap) {
+                    setImageBitmap(any)
+                }
 
-                    override fun onBaseError(e: Throwable) {}
-                })
+                override fun onBaseError(e: Throwable) {}
+            })
     }
 
     /** 设置长图位图[bitmap] */
@@ -191,16 +190,16 @@ class LongImageView : FrameLayout {
         showPlaceholder()
         clearViews()
         Observable.just(bitmap)
-                .map { bmp ->
-                    return@map BitmapUtils.createLongLargeBitmaps(context, bmp)
-                }.compose(RxUtils.ioToMainObservable())
-                .subscribe(object : BaseObserver<List<Bitmap>>() {
-                    override fun onBaseNext(any: List<Bitmap>) {
-                        loadImageBitmaps(any)
-                    }
+            .map { bmp ->
+                return@map BitmapUtils.createLongLargeBitmaps(context, bmp)
+            }.compose(RxUtils.ioToMainObservable())
+            .subscribe(object : BaseObserver<List<Bitmap>>() {
+                override fun onBaseNext(any: List<Bitmap>) {
+                    loadImageBitmaps(any)
+                }
 
-                    override fun onBaseError(e: Throwable) {}
-                })
+                override fun onBaseError(e: Throwable) {}
+            })
     }
 
     /** 加载位图列表[bitmaps] */
@@ -216,14 +215,14 @@ class LongImageView : FrameLayout {
             imageView.setOnLongClickListener { v ->
                 mLongClickListener?.onLongClick(v) ?: false
             }
-            mImgLayout?.addView(imageView, ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT))
+            mImgLayout.addView(imageView, ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT))
         }
-        mPlaceholderImg?.visibility = View.GONE
-        mScrollView?.visibility = View.VISIBLE
+        mPlaceholderImg.visibility = View.GONE
+        mScrollView.visibility = View.VISIBLE
     }
 
     private fun clearViews() {
-        mImgLayout?.removeAllViews()
+        mImgLayout.removeAllViews()
         if (mTempBitmaps.getSize() > 0) {
             for (bitmap in mTempBitmaps!!) {
                 bitmap.recycle()

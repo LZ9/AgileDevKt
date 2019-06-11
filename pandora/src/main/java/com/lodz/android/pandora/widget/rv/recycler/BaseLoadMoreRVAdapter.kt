@@ -186,10 +186,8 @@ abstract class BaseLoadMoreRVAdapter<T>(context: Context) : BaseRecyclerViewAdap
         this.mSize = size
         this.isShowBottomLayout = isShowBottomLayout
         this.mPage = 1
-        if (mHidePositionList != null) {
-            mHidePositionList!!.clear()
-            mHidePositionList = null
-        }
+        mHidePositionList?.clear()
+        mHidePositionList = null
         this.mHidePositionList = ArrayList()
     }
 
@@ -221,11 +219,9 @@ abstract class BaseLoadMoreRVAdapter<T>(context: Context) : BaseRecyclerViewAdap
 
     /** 隐藏某个位置[position]的Item */
     fun hideItem(position: Int) {
-        if (mHidePositionList != null) {
-            mHidePositionList!!.add(position)
-            if (mHidePositionList.getSize() == mSumSize) {// 隐藏的item数等于总数
-                mOnAllItemHideListener?.invoke()
-            }
+        mHidePositionList?.add(position)
+        if (mHidePositionList.getSize() == mSumSize) {// 隐藏的item数等于总数
+            mOnAllItemHideListener?.invoke()
         }
     }
 

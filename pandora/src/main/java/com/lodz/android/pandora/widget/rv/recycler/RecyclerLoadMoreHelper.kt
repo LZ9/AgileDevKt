@@ -55,18 +55,14 @@ class RecyclerLoadMoreHelper<T>(val mAdapter: BaseLoadMoreRVAdapter<T>) {
         mListener = listener
         mAdapter.setOnLoadMoreListener { currentPage, nextPage, size, position ->
             mAdapter.setIsLoadMore(false)
-            if (mListener != null) {
-                mListener!!.onLoadMore(currentPage, nextPage, size, position)
-            }
+            mListener?.onLoadMore(currentPage, nextPage, size, position)
         }
 
         mAdapter.setOnLoadFailClickListener { reloadPage, size ->
             mAdapter.setIsShowLoadFail(false)
             mAdapter.setIsLoadMore(false)
             mAdapter.notifyDataSetChanged()
-            if (mListener != null) {
-                mListener!!.onClickLoadFail(reloadPage, size)
-            }
+            mListener?.onClickLoadFail(reloadPage, size)
         }
     }
 

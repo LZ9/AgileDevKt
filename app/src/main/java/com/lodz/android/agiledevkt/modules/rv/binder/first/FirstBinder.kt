@@ -59,14 +59,12 @@ class FirstBinder(context: Context, binderType: Int) : RecyclerBinder<List<Natio
                 horRv.layoutManager = layoutManager
                 horRv.setHasFixedSize(true)
                 horRv.adapter = mAdapter
-                mAdapter!!.setOnItemClickListener { viewHolder, item, position ->
-                    if (mListener != null) {
-                        mListener!!.onClick(item)
-                    }
+                mAdapter?.setOnItemClickListener { viewHolder, item, position ->
+                    mListener?.onClick(item)
                 }
             }
-            mAdapter!!.setData(list.toMutableList())
-            mAdapter!!.notifyDataSetChanged()
+            mAdapter?.setData(list.toMutableList())
+            mAdapter?.notifyDataSetChanged()
         }
     }
 
