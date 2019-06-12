@@ -678,39 +678,42 @@ class BitmapTestActivity : BaseActivity() {
 
     /** 显示长图 */
     private fun showLargeBitmap() {
-        val url = "http://bmob-cdn-15177.b0.upaiyun.com/2018/08/23/8fa7f1c2404bafbd808bde10ff072ceb.jpg"
-        ImageLoader.create(this).loadUrl(url).setRequestListener(object : RequestListener<File> {
-            override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<File>?, isFirstResource: Boolean): Boolean {
-                runOnMain {
-                    // 监听器回调可能不在主线程
-                    mLargeImg.setImageResource(R.drawable.ic_launcher)
+        val url = "https://wx1.sinaimg.cn/mw690/71696c12ly1g3qj9n8qo8j20m8209wr2.jpg"
+        ImageLoader.create(this).loadUrl(url)
+            .download(object :RequestListener<File>{
+                override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<File>?, isFirstResource: Boolean): Boolean {
+                    runOnMain {
+                        // 监听器回调可能不在主线程
+                        mLargeImg.setImageResource(R.drawable.ic_launcher)
+                    }
+                    return false
                 }
-                return false
-            }
 
-            override fun onResourceReady(resource: File?, model: Any?, target: Target<File>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                if (resource == null) {
-                    mLargeImg.setImageResource(R.drawable.ic_launcher)
-                } else {
-                    Observable.just(resource)
-                            .map { file ->
-                                return@map BitmapUtils.createLongLargeBitmap(getContext(), BitmapFactory.decodeFile(file.absolutePath))
+                override fun onResourceReady(resource: File?, model: Any?, target: Target<File>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                    runOnMain {
+                        if (resource == null) {
+                            mLargeImg.setImageResource(R.drawable.ic_launcher)
+                        } else {
+                            Observable.just(resource)
+                                .map { file ->
+                                    return@map BitmapUtils.createLongLargeBitmap(getContext(), BitmapFactory.decodeFile(file.absolutePath))
 
-                            }.compose(RxUtils.ioToMainObservable())
-                            .subscribe(object : BaseObserver<Bitmap>() {
-                                override fun onBaseNext(any: Bitmap) {
-                                    mLargeImg.setImageBitmap(any)
-                                }
+                                }.compose(RxUtils.ioToMainObservable())
+                                .subscribe(object : BaseObserver<Bitmap>() {
+                                    override fun onBaseNext(any: Bitmap) {
+                                        mLargeImg.setImageBitmap(any)
+                                    }
 
-                                override fun onBaseError(e: Throwable) {
-                                    mLargeImg.setImageResource(R.drawable.ic_launcher)
-                                }
+                                    override fun onBaseError(e: Throwable) {
+                                        mLargeImg.setImageResource(R.drawable.ic_launcher)
+                                    }
 
-                            })
+                                })
+                        }
+                    }
+                    return false
                 }
-                return false
-            }
-        }).download()
+            })
     }
 
     /** 显示长图 */

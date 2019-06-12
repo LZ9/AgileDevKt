@@ -5,7 +5,6 @@ import androidx.annotation.AnimRes
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.transition.ViewPropertyTransition
 import com.lodz.android.imageloaderkt.R
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
@@ -77,6 +76,4 @@ class GlideBuilderBean {
     var maskResId = R.drawable.imageloaderkt_mask_starfish
     /** 是否显示视频第一帧 */
     var isVideo = false
-    /** 图片请求监听器 */
-    var requestListener: RequestListener<*>? = null
 }

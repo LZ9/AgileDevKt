@@ -168,23 +168,26 @@ internal class GlideImageLoader internal constructor(
         return this
     }
 
-    override fun setRequestListener(listener: RequestListener<*>): ImageLoaderContract {
-        mGlideBuilderBean.requestListener = listener
-        return this
+    override fun download() {
+        download(null)
     }
 
-    override fun download() {
+    override fun download(listener: RequestListener<File>?) {
         val bean = mGlideBuilderBean
         mRequestManager.download(bean.path).apply {
             this.apply(getRequestOptions(bean))
         }.apply {
-            if (bean.requestListener != null) {// 设置请求监听器
-                this.listener(bean.requestListener as RequestListener<File>)
+            if (listener != null) {// 设置请求监听器
+                this.listener(listener)
             }
         }.submit()
     }
 
     override fun into(imageView: ImageView) {
+        into(imageView, null)
+    }
+
+    override fun into(imageView: ImageView, listener: RequestListener<Drawable>?) {
         val bean = mGlideBuilderBean
 
         mRequestManager.load(bean.path).apply {
@@ -200,8 +203,8 @@ internal class GlideImageLoader internal constructor(
                 this.transition(DrawableTransitionOptions().transition(bean.animator!!))
             }
         }.apply {
-            if (bean.requestListener != null) {// 设置请求监听器
-                this.listener(bean.requestListener as RequestListener<Drawable>)
+            if (listener != null) {// 设置请求监听器
+                this.listener(listener)
             }
         }.apply {
             this.into(imageView)
@@ -209,6 +212,10 @@ internal class GlideImageLoader internal constructor(
     }
 
     override fun into(target: com.bumptech.glide.request.target.Target<Drawable>) {
+        into(target, null)
+    }
+
+    override fun into(target: com.bumptech.glide.request.target.Target<Drawable>, listener: RequestListener<Drawable>?) {
         val bean = mGlideBuilderBean
 
         mRequestManager.load(bean.path).apply {
@@ -224,8 +231,8 @@ internal class GlideImageLoader internal constructor(
                 this.transition(DrawableTransitionOptions().transition(bean.animator!!))
             }
         }.apply {
-            if (bean.requestListener != null) {// 设置请求监听器
-                this.listener(bean.requestListener as RequestListener<Drawable>)
+            if (listener != null) {// 设置请求监听器
+                this.listener(listener)
             }
         }.apply {
             this.into(target)
@@ -233,6 +240,10 @@ internal class GlideImageLoader internal constructor(
     }
 
     override fun asBitmapInto(imageView: ImageView) {
+        asBitmapInto(imageView, null)
+    }
+
+    override fun asBitmapInto(imageView: ImageView, listener: RequestListener<Bitmap>?) {
         val bean = mGlideBuilderBean
 
         mRequestManager.asBitmap().load(bean.path).apply {
@@ -248,8 +259,8 @@ internal class GlideImageLoader internal constructor(
                 this.transition(BitmapTransitionOptions().transition(bean.animator!!))
             }
         }.apply {
-            if (bean.requestListener != null) {// 设置请求监听器
-                this.listener(bean.requestListener as RequestListener<Bitmap>)
+            if (listener != null) {// 设置请求监听器
+                this.listener(listener)
             }
         }.apply {
             this.into(imageView)
@@ -257,6 +268,10 @@ internal class GlideImageLoader internal constructor(
     }
 
     override fun asBitmapInto(target: com.bumptech.glide.request.target.Target<Bitmap>) {
+        asBitmapInto(target, null)
+    }
+
+    override fun asBitmapInto(target: com.bumptech.glide.request.target.Target<Bitmap>, listener: RequestListener<Bitmap>?) {
         val bean = mGlideBuilderBean
 
         mRequestManager.asBitmap().load(bean.path).apply {
@@ -272,8 +287,8 @@ internal class GlideImageLoader internal constructor(
                 this.transition(BitmapTransitionOptions().transition(bean.animator!!))
             }
         }.apply {
-            if (bean.requestListener != null) {// 设置请求监听器
-                this.listener(bean.requestListener as RequestListener<Bitmap>)
+            if (listener != null) {// 设置请求监听器
+                this.listener(listener)
             }
         }.apply {
             this.into(target)
@@ -281,6 +296,10 @@ internal class GlideImageLoader internal constructor(
     }
 
     override fun asGifInto(imageView: ImageView) {
+        asGifInto(imageView, null)
+    }
+
+    override fun asGifInto(imageView: ImageView, listener: RequestListener<GifDrawable>?) {
         val bean = mGlideBuilderBean
 
         mRequestManager.asGif().load(bean.path).apply {
@@ -293,8 +312,8 @@ internal class GlideImageLoader internal constructor(
                 this.transition(GenericTransitionOptions<GifDrawable>().transition(bean.animator!!))
             }
         }.apply {
-            if (bean.requestListener != null) {// 设置请求监听器
-                this.listener(bean.requestListener as RequestListener<GifDrawable>)
+            if (listener != null) {// 设置请求监听器
+                this.listener(listener)
             }
         }.apply {
             this.into(imageView)
@@ -302,6 +321,10 @@ internal class GlideImageLoader internal constructor(
     }
 
     override fun asGifInto(target: com.bumptech.glide.request.target.Target<GifDrawable>) {
+        asGifInto(target, null)
+    }
+
+    override fun asGifInto(target: com.bumptech.glide.request.target.Target<GifDrawable>, listener: RequestListener<GifDrawable>?) {
         val bean = mGlideBuilderBean
 
         mRequestManager.asGif().load(bean.path).apply {
@@ -314,8 +337,8 @@ internal class GlideImageLoader internal constructor(
                 this.transition(GenericTransitionOptions<GifDrawable>().transition(bean.animator!!))
             }
         }.apply {
-            if (bean.requestListener != null) {// 设置请求监听器
-                this.listener(bean.requestListener as RequestListener<GifDrawable>)
+            if (listener != null) {// 设置请求监听器
+                this.listener(listener)
             }
         }.apply {
             this.into(target)

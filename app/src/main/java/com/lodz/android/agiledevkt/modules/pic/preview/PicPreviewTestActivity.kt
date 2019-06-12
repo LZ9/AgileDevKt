@@ -18,6 +18,7 @@ import com.github.chrisbanes.photoview.PhotoView
 import com.google.android.material.button.MaterialButton
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.corekt.anko.bindView
+import com.lodz.android.corekt.anko.runOnMain
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.base.activity.BaseActivity
@@ -226,19 +227,24 @@ class PicPreviewTestActivity : BaseActivity() {
                         }
 
                         override fun onDisplayImg(context: Context, source: String, view: SubsamplingScaleImageView) {
-                            ImageLoader.create(context).loadUrl(source).setRequestListener(object : RequestListener<File> {
-                                override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<File>?, isFirstResource: Boolean): Boolean {
-                                    view.setImage(ImageSource.resource(R.drawable.ic_launcher))
-                                    return false
-                                }
-
-                                override fun onResourceReady(resource: File?, model: Any?, target: Target<File>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                                    if (resource != null){
-                                        view.setImage(ImageSource.uri(Uri.fromFile(resource)))
+                            ImageLoader.create(context).loadUrl(source)
+                                .download(object :RequestListener<File>{
+                                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<File>?, isFirstResource: Boolean): Boolean {
+                                        runOnMain {
+                                            view.setImage(ImageSource.resource(R.drawable.ic_launcher))
+                                        }
+                                        return false
                                     }
-                                    return false
-                                }
-                            }).download()
+
+                                    override fun onResourceReady(resource: File?, model: Any?, target: Target<File>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                                        runOnMain {
+                                            if (resource != null){
+                                                view.setImage(ImageSource.uri(Uri.fromFile(resource)))
+                                            }
+                                        }
+                                        return false
+                                    }
+                                })
                         }
 
                         override fun onClickImpl(viewHolder: RecyclerView.ViewHolder, view: SubsamplingScaleImageView, item: String, position: Int, controller: PreviewController) {
@@ -293,18 +299,21 @@ class PicPreviewTestActivity : BaseActivity() {
                         }
 
                         override fun onDisplayImg(context: Context, source: String, view: LongImageView) {
-                            ImageLoader.create(context).loadUrl(source).setRequestListener(object : RequestListener<File> {
-                                override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<File>?, isFirstResource: Boolean): Boolean {
-                                    return false
-                                }
-
-                                override fun onResourceReady(resource: File?, model: Any?, target: Target<File>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                                    if (resource != null){
-                                        view.setImageFile(resource)
+                            ImageLoader.create(context).loadUrl(source)
+                                .download(object :RequestListener<File>{
+                                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<File>?, isFirstResource: Boolean): Boolean {
+                                        return false
                                     }
-                                    return false
-                                }
-                            }).download()
+
+                                    override fun onResourceReady(resource: File?, model: Any?, target: Target<File>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                                        runOnMain {
+                                            if (resource != null){
+                                                view.setImageFile(resource)
+                                            }
+                                        }
+                                        return false
+                                    }
+                                })
                         }
 
                         override fun onClickImpl(viewHolder: RecyclerView.ViewHolder, view: LongImageView, item: String, position: Int, controller: PreviewController) {

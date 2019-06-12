@@ -12,6 +12,7 @@ import com.bumptech.glide.load.resource.gif.GifDrawable
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.transition.ViewPropertyTransition
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
+import java.io.File
 
 /**
  * 图片加载库接口
@@ -97,27 +98,45 @@ interface ImageLoaderContract {
     /** 显示视频第一帧  */
     fun setVideo(): ImageLoaderContract
 
-    /** 添加图片请求监听器[listener]  */
-    fun setRequestListener(listener: RequestListener<*>): ImageLoaderContract
-
     /** 将图片装载进[imageView] */
     fun into(imageView: ImageView)
+
+    /** 将图片装载进[imageView]，设置请求监听器[listener] */
+    fun into(imageView: ImageView, listener: RequestListener<Drawable>? = null)
 
     /** 将图片装载进[target] */
     fun into(target: com.bumptech.glide.request.target.Target<Drawable>)
 
+    /** 将图片装载进[target]，设置请求监听器[listener]  */
+    fun into(target: com.bumptech.glide.request.target.Target<Drawable>, listener: RequestListener<Drawable>? = null)
+
     /** 将图片转为bitmap并装载到[imageView] */
     fun asBitmapInto(imageView: ImageView)
+
+    /** 将图片转为bitmap并装载到[imageView]，设置请求监听器[listener]  */
+    fun asBitmapInto(imageView: ImageView, listener: RequestListener<Bitmap>? = null)
 
     /** 将图片转为bitmap并装载到[target] */
     fun asBitmapInto(target: com.bumptech.glide.request.target.Target<Bitmap>)
 
+    /** 将图片转为bitmap并装载到[target]，设置请求监听器[listener] */
+    fun asBitmapInto(target: com.bumptech.glide.request.target.Target<Bitmap>, listener: RequestListener<Bitmap>? = null)
+
     /** 将图片转为gif并装载到[imageView] */
     fun asGifInto(imageView: ImageView)
+
+    /** 将图片转为gif并装载到[imageView]，设置请求监听器[listener] */
+    fun asGifInto(imageView: ImageView, listener: RequestListener<GifDrawable>? = null)
 
     /** 将图片转为gif并装载到[target] */
     fun asGifInto(target: com.bumptech.glide.request.target.Target<GifDrawable>)
 
+    /** 将图片转为gif并装载到[target]，设置请求监听器[listener] */
+    fun asGifInto(target: com.bumptech.glide.request.target.Target<GifDrawable>, listener: RequestListener<GifDrawable>? = null)
+
     /** 下载图片 */
     fun download()
+
+    /** 下载图片 */
+    fun download(listener: RequestListener<File>? = null)
 }

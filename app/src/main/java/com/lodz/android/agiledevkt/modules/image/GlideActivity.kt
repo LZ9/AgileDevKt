@@ -237,7 +237,7 @@ class GlideActivity : BaseActivity() {
         ImageLoader.create(getContext())
                 .loadUrl(IMG_URL)
                 .setFitCenter()
-                .setRequestListener(object : RequestListener<Drawable> {
+                .into(mUrlImg, object :RequestListener<Drawable>{
                     override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
                         if (e != null) {
                             PrintLog.e("testtag", model?.toString() ?: "", e)
@@ -250,7 +250,6 @@ class GlideActivity : BaseActivity() {
                         return false
                     }
                 })
-                .into(mUrlImg)
     }
 
     /** 动画显示 */
