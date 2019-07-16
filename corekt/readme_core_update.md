@@ -1,5 +1,21 @@
 # core-kt库更新记录
 
+##### 2019/07/16
+1. 修复GPS开关判断BUG
+2. 添加协程依赖和扩展类AnkoCoroutines
+3. 重构优化AnkoDimensions
+4. UiHandler增加lambda入参方法
+5. AnkoDrawable增加View扩展
+6. 重构优化ReflectUtils代码
+7. 重构优化AnkoViewBinder代码
+8. 新增注解扩展类AnkoAnnotation
+9. 修改SnackbarUtils的调用方法名
+10. 优化代码，增加方法重载注解@JvmOverloads
+11. 更新依赖库版本
+12. 更新kotlin插件版本
+13. AnkoApp添加对APP堆栈情况的判断方法
+14. 发布1.1.0版本
+
 ##### 2019/05/06
 1. 数组列表帮助类增加判空辅助方法
 2. 添加日期格式类型
