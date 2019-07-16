@@ -198,6 +198,14 @@
         </activity>
 
         <activity
+            android:name=".modules.notification.MsgDetailActivity"
+            android:label="消息详情"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity
             android:name=".modules.toast.ToastTestActivity"
             android:label="Toast测试类"
             android:screenOrientation="portrait">

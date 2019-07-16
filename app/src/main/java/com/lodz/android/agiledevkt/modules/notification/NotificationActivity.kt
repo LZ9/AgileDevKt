@@ -49,6 +49,9 @@ class NotificationActivity : BaseActivity() {
     private val mLargeImgBtn by bindView<Button>(R.id.large_img_btn)
     /** 自定义内容样式 */
     private val mCustomBtn by bindView<Button>(R.id.custom_btn)
+    /** 跳转详情页通知 */
+    private val mMsgBtn by bindView<Button>(R.id.msg_btn)
+
 
     override fun getLayoutId() = R.layout.activity_notification
 
@@ -97,6 +100,10 @@ class NotificationActivity : BaseActivity() {
         // 自定义内容样式
         mCustomBtn.setOnClickListener {
             showCustomNotify()
+        }
+
+        mMsgBtn.setOnClickListener {
+            goMsgDetail()
         }
     }
 
@@ -249,6 +256,21 @@ class NotificationActivity : BaseActivity() {
         remoteViews.setTextViewText(R.id.remoteview_msg, "周杰伦，铃木杏，陈冠希，黄秋生，余文乐，陈小春等主演悉数参加首映式")//设置对应id的内容
         builder.setContent(remoteViews)
 
+        NotificationUtils.create(getContext()).send(builder.build())
+    }
+
+    /** 跳转消息详情 */
+    private fun goMsgDetail(){
+        val money = Random().nextInt(999999) + 1
+        val builder = NotificationCompat.Builder(getContext(), Constant.NOTIFI_CHANNEL_MAIN_ID)// 获取构造器
+        builder.setTicker("您收到一条消息")// 通知栏显示的文字
+        builder.setContentTitle("您有一笔支付宝收款已到账")// 通知栏通知的标题
+        builder.setContentText("支付宝到账${money}元")// 通知栏通知的详细内容（只有一行）
+        builder.setAutoCancel(true)// 设置为true，点击该条通知会自动删除，false时只能通过滑动来删除（一般都是true）
+        builder.setSmallIcon(R.mipmap.ic_launcher)//通知上面的小图标（必传）
+        builder.setDefaults(NotificationCompat.DEFAULT_ALL)//通知默认的声音 震动 呼吸灯
+        builder.priority = NotificationCompat.PRIORITY_DEFAULT//设置优先级，级别高的排在前面
+        builder.setContentIntent(MsgDetailActivity.startPendingIntent(getContext(), "支付宝到账${money}元"))// 将意图设置到通知上
         NotificationUtils.create(getContext()).send(builder.build())
     }
 

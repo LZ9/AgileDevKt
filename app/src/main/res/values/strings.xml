@@ -80,6 +80,10 @@
     <string name="notify_multi_txt">多行大文本样式</string>
     <string name="notify_large_img">大图文本样式</string>
     <string name="notify_custom">自定义内容样式</string>
+    <string name="notify_msg">跳转详情页通知</string>
+
+    <!-- 通知详情页 -->
+    <string name="msg_detail_title">通知详情</string>
 
     <!-- toast测试 -->
     <string name="toast_short_time">短时间</string>

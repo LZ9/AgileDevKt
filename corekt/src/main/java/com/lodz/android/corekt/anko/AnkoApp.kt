@@ -3,6 +3,7 @@ package com.lodz.android.corekt.anko
 import android.Manifest
 import android.app.ActivityManager
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.location.LocationManager
@@ -13,6 +14,7 @@ import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.nio.charset.StandardCharsets
 import java.util.*
+
 /**
  * 应用扩展类
  * Created by zhouL on 2019/2/1.
@@ -156,4 +158,26 @@ fun Context.getAssetsFileContent(fileName: String): String {
             return builder.toString()
         }
     }
+}
+
+/** 获堆栈的Activity信息 */
+fun Context.getActivityRunningTaskInfo(): ActivityManager.RunningTaskInfo? {
+    val manager = getSystemService(Context.ACTIVITY_SERVICE) as? ActivityManager
+    val list = manager?.getRunningTasks(1)
+    return list?.get(0)
+}
+
+/** 堆栈顶部和底部Activity是否一致 */
+fun Context.isTopAndBottomActivityTheSame(): Boolean {
+    val info = getActivityRunningTaskInfo()
+    val topActivityName = info?.topActivity?.className
+    val baseActivityName = info?.baseActivity?.className
+    return topActivityName?.equals(baseActivityName) ?: false
+}
+
+/** 重启APP */
+fun Context.restartApp() {
+    val intent = packageManager.getLaunchIntentForPackage(packageName) ?: return
+    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+    startActivity(intent)
 }
