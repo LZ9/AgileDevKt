@@ -1,5 +1,22 @@
 # Pandora更新记录
 
+##### 2019/07/16
+1. 优化BottomMenuBar代码
+2. 优化CltTextView代码
+3. 增加CltEditView采集输入框
+4. 修改单位转换方法和调用方式
+5. 重构优化ScrollEditText，修复滚动bug
+6. 优化UiHandler调用的方法
+7. 增加CltRadioGroup单选组控件
+8. Rx相关订阅器增加lambda方法调用
+9. 修复无数据页面提示语属性获取BUG
+10. 修改标题栏扩展区是否展示属性赋值顺序
+11. 增加带进度条的PgWebView
+12. 增加方法重载注解@JvmOverloads
+13. 优化工程代码
+14. 更新依赖库版本
+15. 发布1.1.8版本
+
 ##### 2019/05/06
 1. 静态方法添加JvmStatic注解
 2. 更新依赖库版本
