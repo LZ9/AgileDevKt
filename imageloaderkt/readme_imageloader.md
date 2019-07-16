@@ -91,7 +91,14 @@
 
             }
         })
-        .setRequestListener(object :RequestListener<String>{// 添加图片请求监听器
+        .useFilterColor()// 使用覆盖颜色
+        .setFilterColor(Color.YELLOW)// 设置覆盖颜色
+        .useGrayscale()// 使用灰度化
+        .useCropSquare()// 切正方形图
+        .useMask()// 使用蒙板图片
+        .setMaskResId(R.drawable.imageloaderkt_mask_starfish)// 设置蒙板图片资源id
+        .setVideo()// 显示视频第一帧
+        .into(imageView, object :RequestListener<Drawable>{// 添加图片请求监听器
             override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<String>?, isFirstResource: Boolean): Boolean {
                 return false
             }
@@ -100,14 +107,6 @@
                 return false
             }
         })
-        .useFilterColor()// 使用覆盖颜色
-        .setFilterColor(Color.YELLOW)// 设置覆盖颜色
-        .useGrayscale()// 使用灰度化
-        .useCropSquare()// 切正方形图
-        .useMask()// 使用蒙板图片
-        .setMaskResId(R.drawable.imageloaderkt_mask_starfish)// 设置蒙板图片资源id
-        .setVideo()// 显示视频第一帧
-        .into(imageView)
 ```
 
 ## 扩展
