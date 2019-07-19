@@ -32,8 +32,8 @@ class SplashActivity : AbsActivity() {
     override fun initData() {
         super.initData()
         if (!isTopAndBottomActivityTheSame()){
-            // 非首次启动直接跳转主页
-            goMianActivity()
+            // 非常规启动则关闭当前页面
+            finish()
             return
         }
         UiHandler.postDelayed(1000){
