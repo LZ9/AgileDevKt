@@ -8,6 +8,7 @@ import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.location.LocationManager
 import android.net.wifi.WifiManager
+import android.nfc.NfcAdapter
 import androidx.annotation.RequiresPermission
 import androidx.core.app.ActivityCompat
 import java.io.BufferedReader
@@ -143,6 +144,17 @@ fun Context.setWifiEnabled(enabled: Boolean) {
     if (manager.isWifiEnabled) {
         manager.isWifiEnabled = enabled
     }
+}
+
+/** 手机是否有NFC */
+@RequiresPermission(Manifest.permission.NFC)
+fun Context.hasNfc(): Boolean = packageManager.hasSystemFeature(PackageManager.FEATURE_NFC)
+
+/** NFC是否打开 */
+@RequiresPermission(Manifest.permission.NFC)
+fun Context.isNfcOpen(): Boolean {
+    val adapter = NfcAdapter.getDefaultAdapter(this) ?: return false
+    return adapter.isEnabled
 }
 
 /** 获取Assets下的文件内容 */

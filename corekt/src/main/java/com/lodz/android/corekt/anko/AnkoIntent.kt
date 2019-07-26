@@ -145,6 +145,11 @@ fun Context.goBluetoothSetting() {
     startActivity(Intent(Settings.ACTION_BLUETOOTH_SETTINGS))
 }
 
+/** 跳转到NFC设置页 */
+fun Context.goNfcSetting() {
+    startActivity(Intent(Settings.ACTION_NFC_SETTINGS))
+}
+
 /** 打开浏览器访问[url] */
 @JvmOverloads
 fun Context.browse(url: String, newTask: Boolean = true) {
