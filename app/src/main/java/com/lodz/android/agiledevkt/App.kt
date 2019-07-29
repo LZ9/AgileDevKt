@@ -76,7 +76,7 @@ class App : BaseApplication() {
     private fun configNoDataLayout() {
         getBaseLayoutConfig().getNoDataLayoutConfig().orientation = LinearLayout.VERTICAL
         getBaseLayoutConfig().getNoDataLayoutConfig().isNeedImg = true
-        getBaseLayoutConfig().getNoDataLayoutConfig().isNeedTips = false
+        getBaseLayoutConfig().getNoDataLayoutConfig().isNeedTips = true
 //        getBaseLayoutConfig().getNoDataLayoutConfig().drawableResId = R.drawable.pandora_ic_launcher
 //        getBaseLayoutConfig().getNoDataLayoutConfig().tips = "没数据飞走了"
 //        getBaseLayoutConfig().getNoDataLayoutConfig().textColor = R.color.color_ffa630
@@ -95,6 +95,7 @@ class App : BaseApplication() {
 //        getBaseLayoutConfig().getLoadingLayoutConfig().backgroundColor = R.color.color_ff4081
         getBaseLayoutConfig().getLoadingLayoutConfig().isIndeterminate = true
 //        getBaseLayoutConfig().getLoadingLayoutConfig().indeterminateDrawable = R.drawable.anims_custom_progress
+        getBaseLayoutConfig().getLoadingLayoutConfig().useSysDefDrawable = true
 //        getBaseLayoutConfig().getLoadingLayoutConfig().pbWidthPx = dp2px(70)
 //        getBaseLayoutConfig().getLoadingLayoutConfig().pbHeightPx = dp2px(70)
     }
@@ -102,7 +103,7 @@ class App : BaseApplication() {
     private fun configErrorLayout() {
         getBaseLayoutConfig().getErrorLayoutConfig().orientation = LinearLayout.VERTICAL
         getBaseLayoutConfig().getErrorLayoutConfig().isNeedImg = true
-        getBaseLayoutConfig().getErrorLayoutConfig().isNeedTips = false
+        getBaseLayoutConfig().getErrorLayoutConfig().isNeedTips = true
 //        getBaseLayoutConfig().getErrorLayoutConfig().drawableResId = R.drawable.pandora_ic_launcher
 //        getBaseLayoutConfig().getErrorLayoutConfig().backgroundColor = R.color.color_ffa630
 //        getBaseLayoutConfig().getErrorLayoutConfig().tips = "接口出错啦"

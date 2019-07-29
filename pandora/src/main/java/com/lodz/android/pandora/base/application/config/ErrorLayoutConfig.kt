@@ -13,7 +13,7 @@ class ErrorLayoutConfig {
     /** 需要提示图片  */
     var isNeedImg = true
     /** 需要提示文字  */
-    var isNeedTips = false
+    var isNeedTips = true
     /** 错误图片  */
     @DrawableRes
     var drawableResId = 0

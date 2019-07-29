@@ -16,10 +16,7 @@ import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
-import com.lodz.android.corekt.anko.bindView
-import com.lodz.android.corekt.anko.getColorCompat
-import com.lodz.android.corekt.anko.getDrawableCompat
-import com.lodz.android.corekt.anko.px2spRF
+import com.lodz.android.corekt.anko.*
 import com.lodz.android.pandora.R
 import com.lodz.android.pandora.base.application.BaseApplication
 import com.lodz.android.pandora.base.application.config.BaseLayoutConfig
@@ -115,20 +112,32 @@ class LoadingLayout : LinearLayout {
                 ?: mConfig.isIndeterminate
         mLoadingProgressBar.isIndeterminate = isIndeterminate
 
+        // 是否使用默认加载资源
+        val useSysDefDrawable: Boolean = typedArray?.getBoolean(R.styleable.LoadingLayout_useSysDefDrawable, mConfig.useSysDefDrawable)
+            ?: mConfig.useSysDefDrawable
+
         // 设置ProgressBar的Drawable
         val drawable: Drawable? = typedArray?.getDrawable(R.styleable.LoadingLayout_indeterminateDrawable)
         if (drawable != null) {
             mLoadingProgressBar.indeterminateDrawable = drawable
         } else if (mConfig.indeterminateDrawable != 0) {
             mLoadingProgressBar.indeterminateDrawable = getDrawableCompat(mConfig.indeterminateDrawable)
+        } else if(!useSysDefDrawable){
+            mLoadingProgressBar.indeterminateDrawable = getDrawableCompat(R.drawable.pandora_anims_loading)
         }
 
         // 设置ProgressBar宽高
         val layoutParams = mLoadingProgressBar.layoutParams
-        val pbWidth: Int = typedArray?.getDimensionPixelSize(R.styleable.LoadingLayout_pbWidth, mConfig.pbWidthPx)
+        var pbWidth: Int = typedArray?.getDimensionPixelSize(R.styleable.LoadingLayout_pbWidth, mConfig.pbWidthPx)
                 ?: mConfig.pbWidthPx
-        val pbHeight: Int = typedArray?.getDimensionPixelSize(R.styleable.LoadingLayout_pbHeight, mConfig.pbHeightPx)
+        var pbHeight: Int = typedArray?.getDimensionPixelSize(R.styleable.LoadingLayout_pbHeight, mConfig.pbHeightPx)
                 ?: mConfig.pbHeightPx
+        if (pbWidth == 0 && !useSysDefDrawable){
+            pbWidth = dp2px(110)
+        }
+        if (pbHeight == 0 && !useSysDefDrawable){
+            pbHeight = dp2px(110)
+        }
         if (pbWidth != 0) {
             layoutParams.width = pbWidth
         }

@@ -12,7 +12,7 @@ class NoDataLayoutConfig {
     /** 需要提示图片  */
     var isNeedImg = true
     /** 需要提示文字  */
-    var isNeedTips = false
+    var isNeedTips = true
     /** 无数据图片  */
     @DrawableRes
     var drawableResId = 0

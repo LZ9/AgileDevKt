@@ -69,6 +69,7 @@
         <attr name="contentBackground" />
         <attr name="indeterminateDrawable" format="reference" />
         <attr name="isIndeterminate" format="boolean" />
+        <attr name="useSysDefDrawable" format="boolean" />
         <attr name="pbWidth" format="dimension" />
         <attr name="pbHeight" format="dimension" />
     </declare-styleable>
