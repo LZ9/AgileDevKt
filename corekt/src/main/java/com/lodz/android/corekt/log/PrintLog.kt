@@ -11,7 +11,7 @@ import androidx.annotation.IntDef
 object PrintLog {
 
     /** 日志分段长度  */
-    private const val LOG_SEGMENTED_LENGTH = 3000
+    private const val LOG_SEGMENTED_LENGTH = 2500
 
     private const val LOG_I = 0
     private const val LOG_V = 1
