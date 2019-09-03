@@ -93,4 +93,6 @@ class ApiServiceManager private constructor() {
     /** 创建对应的接口类[service]实体 */
     fun <T> create(service: Class<T>): T = mRetrofit.create(service)
 
+    /** 得到Retrofit对象 */
+    fun getRetrofit(): Retrofit = mRetrofit
 }
