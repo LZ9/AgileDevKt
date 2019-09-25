@@ -16,14 +16,14 @@
 该库引用了下方这些support库，如果您的app有重复引用可以选择去掉顶层引用或者保证版本一致
 ```
     dependencies {
-        api 'androidx.appcompat:appcompat:1.0.2'
+        api 'androidx.appcompat:appcompat:1.1.0'
         api 'com.google.android.material:material:1.0.0'
         api 'androidx.recyclerview:recyclerview:1.0.0'
         api 'androidx.cardview:cardview:1.0.0'
         api 'androidx.annotation:annotation:1.1.0'
         api 'androidx.constraintlayout:constraintlayout:1.1.3'
-        api 'androidx.core:core-ktx:1.0.2'
-        api 'com.google.android:flexbox:1.1.0'
+        api 'androidx.core:core-ktx:1.1.0'
+        api 'com.google.android:flexbox:1.1.1'
         api 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.50'
         api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.2.2'
     }
