@@ -16,9 +16,9 @@
         implementation 'androidx.annotation:annotation:1.1.0'
         implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.50'
 
-        api 'com.github.bumptech.glide:glide:4.9.0'
-        kapt 'com.github.bumptech.glide:compiler:4.9.0'
-        implementation "com.github.bumptech.glide:okhttp3-integration:4.9.0"
+        api 'com.github.bumptech.glide:glide:4.10.0'
+        kapt 'com.github.bumptech.glide:compiler:4.10.0'
+        implementation "com.github.bumptech.glide:okhttp3-integration:4.10.0"
         api 'jp.wasabeef:glide-transformations:4.0.0'
     }
 ```
