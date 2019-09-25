@@ -52,7 +52,7 @@ abstract class BaseDialogFragment : RxDialogFragment() {
 
     override fun onStart() {
         super.onStart()
-        val wd = dialog.window
+        val wd = dialog?.window
         if (wd != null) {
             setWindowAnimations(wd)
             configDialogWindow(wd)

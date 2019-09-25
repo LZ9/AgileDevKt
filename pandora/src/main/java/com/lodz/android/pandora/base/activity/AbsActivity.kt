@@ -128,8 +128,7 @@ abstract class AbsActivity : RxAppCompatActivity() {
         }
     }
 
-    /** 当APP处于后台被系统回收时回调 */
-    override fun onSaveInstanceState(outState: Bundle?) {
+    override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         val bundle = getSaveBundle()
         val app = BaseApplication.get()

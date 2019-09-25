@@ -41,8 +41,9 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        val dg = dialog ?: return
         val cls = ReflectUtils.getClassForName("com.google.android.material.bottomsheet.BottomSheetDialog") ?: return
-        val behavior = ReflectUtils.getFieldValue(cls, dialog, "behavior")
+        val behavior = ReflectUtils.getFieldValue(cls, dg, "behavior")
         if (behavior != null && behavior is BottomSheetBehavior<*>) {
             onBehaviorInit(behavior)
         }

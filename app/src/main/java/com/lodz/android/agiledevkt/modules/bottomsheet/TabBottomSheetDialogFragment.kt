@@ -53,7 +53,7 @@ class TabBottomSheetDialogFragment : BaseBottomSheetDialogFragment() {
         behavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 if (newState == BottomSheetBehavior.STATE_HIDDEN) {
-                    dialog.cancel()
+                    dialog?.cancel()
                 }
                 setDim(if (newState == BottomSheetBehavior.STATE_EXPANDED) 0f else 0.6f)
             }
