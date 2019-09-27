@@ -19,6 +19,7 @@
         android:id="@+id/no_data_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/pandora_no_data" />
+        android:text="@string/pandora_no_data"
+        android:textSize="15sp" />
 
 </LinearLayout>

@@ -19,6 +19,7 @@
         android:id="@+id/error_tips_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/pandora_load_fail" />
+        android:text="@string/pandora_load_fail"
+        android:textSize="15sp" />
 
 </LinearLayout>

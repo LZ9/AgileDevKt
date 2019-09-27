@@ -85,7 +85,7 @@ class MvcTestSandwichFragment : BaseSandwichFragment(){
                     }
 
                     override fun onRxError(e: Throwable, isNetwork: Boolean) {
-                        showStatusError()
+                        showStatusError(e)
                     }
                 })
     }

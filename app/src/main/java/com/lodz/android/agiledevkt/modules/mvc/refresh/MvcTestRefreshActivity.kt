@@ -91,7 +91,7 @@ class MvcTestRefreshActivity : BaseRefreshActivity(){
                     }
 
                     override fun onRxError(e: Throwable, isNetwork: Boolean) {
-                        showStatusError()
+                        showStatusError(e)
                     }
                 })
     }

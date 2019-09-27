@@ -82,10 +82,12 @@ abstract class BaseFragment : LazyFragment() {
     }
 
     /** 显示错误页面 */
-    protected open fun showStatusError() {
+    @JvmOverloads
+    protected open fun showStatusError(t: Throwable? = null) {
         mContentLayout.visibility = View.GONE
         mLoadingLayout?.visibility = View.GONE
         getErrorLayout().visibility = View.VISIBLE
+        getErrorLayout().showAuto(t)
         mNoDataLayout?.visibility = View.GONE
     }
 

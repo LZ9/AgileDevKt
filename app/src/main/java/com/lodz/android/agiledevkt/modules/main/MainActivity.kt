@@ -159,7 +159,7 @@ class MainActivity : BaseActivity() {
     private lateinit var mAdapter: MainAdapter
     private lateinit var mList: List<MainBean>
 
-    override fun getLayoutId() = R.layout.activity_main
+    override fun getLayoutId(): Int = R.layout.activity_main
 
     override fun findViews(savedInstanceState: Bundle?) {
         initTitleBar(getTitleBarLayout())

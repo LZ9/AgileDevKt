@@ -85,7 +85,7 @@ class MvcTestBaseActivity : BaseActivity() {
                     }
 
                     override fun onRxError(e: Throwable, isNetwork: Boolean) {
-                        showStatusError()
+                        showStatusError(e)
                     }
                 })
     }

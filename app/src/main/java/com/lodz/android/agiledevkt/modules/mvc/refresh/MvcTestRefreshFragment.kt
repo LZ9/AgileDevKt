@@ -72,7 +72,7 @@ class MvcTestRefreshFragment : BaseRefreshFragment() {
                     }
 
                     override fun onRxError(e: Throwable, isNetwork: Boolean) {
-                        showStatusError()
+                        showStatusError(e)
                     }
                 })
     }

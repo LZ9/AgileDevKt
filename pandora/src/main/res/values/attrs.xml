@@ -90,9 +90,11 @@
     <declare-styleable name="ErrorLayout">
         <attr name="isNeedImg" />
         <attr name="src" />
+        <attr name="srcNet" format="reference" />
         <attr name="contentOrientation" />
         <attr name="isNeedTips" />
         <attr name="tips" />
+        <attr name="netTips" format="string" />
         <attr name="tipsColor" />
         <attr name="tipsSize" />
         <attr name="contentBackground" />

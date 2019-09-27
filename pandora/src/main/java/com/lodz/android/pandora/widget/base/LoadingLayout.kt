@@ -133,10 +133,10 @@ class LoadingLayout : LinearLayout {
         var pbHeight: Int = typedArray?.getDimensionPixelSize(R.styleable.LoadingLayout_pbHeight, mConfig.pbHeightPx)
                 ?: mConfig.pbHeightPx
         if (pbWidth == 0 && !useSysDefDrawable){
-            pbWidth = dp2px(110)
+            pbWidth = dp2px(90)
         }
         if (pbHeight == 0 && !useSysDefDrawable){
-            pbHeight = dp2px(110)
+            pbHeight = dp2px(90)
         }
         if (pbWidth != 0) {
             layoutParams.width = pbWidth

@@ -5,7 +5,8 @@
     <!-- 数据状态提示语 -->
     <string name="pandora_loading">加载中…</string>
     <string name="pandora_no_data">暂无数据…</string>
-    <string name="pandora_load_fail">加载失败…</string>
+    <string name="pandora_load_fail">加载失败，请点击重试…</string>
+    <string name="pandora_load_fail_net">网络异常，请点击重试…</string>
 
     <!-- 加载更多 -->
     <string name="pandora_load_finish_tips">已经全部加载完毕了哟~</string>

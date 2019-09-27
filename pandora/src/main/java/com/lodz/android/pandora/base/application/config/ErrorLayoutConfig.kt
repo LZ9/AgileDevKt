@@ -17,8 +17,13 @@ class ErrorLayoutConfig {
     /** 错误图片  */
     @DrawableRes
     var drawableResId = 0
+    /** 网络异常图片  */
+    @DrawableRes
+    var drawableNetResId = 0
     /** 提示文字  */
     var tips = ""
+    /** 网络异常提示文字  */
+    var netTips = ""
     /** 文字颜色  */
     @ColorRes
     var textColor = 0
