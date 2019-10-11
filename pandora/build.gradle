@@ -35,7 +35,7 @@ dependencies {
     // Retrofit
     api 'com.squareup.retrofit2:retrofit:2.6.1'
     api 'com.squareup.retrofit2:adapter-rxjava2:2.6.1'
-    api 'com.alibaba:fastjson:1.2.61'
+    api 'com.alibaba:fastjson:1.2.62'
     // RxJava生命周期
     api 'com.trello.rxlifecycle3:rxlifecycle-components:3.1.0'
     // EventBus
