@@ -4,13 +4,13 @@ apply plugin: 'kotlin-android-extensions'
 //apply plugin: 'com.novoda.bintray-release'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
         minSdkVersion 19
-        targetSdkVersion 28
-        versionCode 13
-        versionName "1.1.1"// 成功上传
+        targetSdkVersion 29
+        versionCode 14
+        versionName "1.1.2"// 未上传
     }
 
     buildTypes {

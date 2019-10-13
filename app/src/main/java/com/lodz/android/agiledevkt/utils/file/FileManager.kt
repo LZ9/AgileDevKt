@@ -35,10 +35,16 @@ object FileManager {
 
     /** 初始化路径 */
     private fun initPath() {
-        val storagePathPair = App.get().getStoragePath()
-        var rootPath: String? = storagePathPair.first // 先获取内置存储路径
-        if (rootPath.isNullOrEmpty()) {// 内置为空再获取外置
-            rootPath = storagePathPair.second
+        var rootPath: String? = null
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+            rootPath = App.get().getExternalFilesDir("")?.absolutePath
+        }
+        if (rootPath.isNullOrEmpty()) {
+            val storagePathPair = App.get().getStoragePath()
+            rootPath = storagePathPair.first // 先获取内置存储路径
+            if (rootPath.isNullOrEmpty()) {// 内置为空再获取外置
+                rootPath = storagePathPair.second
+            }
         }
         if (rootPath.isNullOrEmpty()) {// 没有可用的存储路径
             isStorageCanUse = false
