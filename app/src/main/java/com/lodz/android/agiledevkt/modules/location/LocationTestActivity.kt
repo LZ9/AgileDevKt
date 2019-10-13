@@ -90,7 +90,7 @@ class LocationTestActivity : BaseActivity() {
     override fun getLayoutId(): Int = R.layout.activity_location_test
 
     override fun findViews(savedInstanceState: Bundle?) {
-        getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME))
+        getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME) ?: "")
     }
 
     override fun onClickBackBtn() {
@@ -120,8 +120,9 @@ class LocationTestActivity : BaseActivity() {
 
     /** 权限申请成功 */
     @NeedsPermission(
-            Manifest.permission.ACCESS_FINE_LOCATION,// 定位
-            Manifest.permission.ACCESS_COARSE_LOCATION// 定位
+        Manifest.permission.ACCESS_FINE_LOCATION,// 定位
+        Manifest.permission.ACCESS_COARSE_LOCATION,// 定位
+        Manifest.permission.ACCESS_BACKGROUND_LOCATION// 后台定位
     )
     fun onRequestPermission() {
         if (!isPermissionGranted(Manifest.permission.ACCESS_FINE_LOCATION)) {
@@ -130,13 +131,17 @@ class LocationTestActivity : BaseActivity() {
         if (!isPermissionGranted(Manifest.permission.ACCESS_COARSE_LOCATION)) {
             return
         }
+        if (!isPermissionGranted(Manifest.permission.ACCESS_BACKGROUND_LOCATION)) {
+            return
+        }
         initLogic()
     }
 
     /** 用户拒绝后再次申请前告知用户为什么需要该权限 */
     @OnShowRationale(
-            Manifest.permission.ACCESS_FINE_LOCATION,// 定位
-            Manifest.permission.ACCESS_COARSE_LOCATION// 定位
+        Manifest.permission.ACCESS_FINE_LOCATION,// 定位
+        Manifest.permission.ACCESS_COARSE_LOCATION,// 定位
+        Manifest.permission.ACCESS_BACKGROUND_LOCATION// 后台定位
     )
     fun onShowRationaleBeforeRequest(request: PermissionRequest) {
         request.proceed()//请求权限
@@ -144,8 +149,9 @@ class LocationTestActivity : BaseActivity() {
 
     /** 被拒绝 */
     @OnPermissionDenied(
-            Manifest.permission.ACCESS_FINE_LOCATION,// 定位
-            Manifest.permission.ACCESS_COARSE_LOCATION// 定位
+        Manifest.permission.ACCESS_FINE_LOCATION,// 定位
+        Manifest.permission.ACCESS_COARSE_LOCATION,// 定位
+        Manifest.permission.ACCESS_BACKGROUND_LOCATION// 后台定位
     )
     fun onDenied() {
         toastShort(R.string.location_denied_permission_tips)
@@ -154,8 +160,9 @@ class LocationTestActivity : BaseActivity() {
 
     /** 被拒绝并且勾选了不再提醒 */
     @OnNeverAskAgain(
-            Manifest.permission.ACCESS_FINE_LOCATION,// 定位
-            Manifest.permission.ACCESS_COARSE_LOCATION// 定位
+        Manifest.permission.ACCESS_FINE_LOCATION,// 定位
+        Manifest.permission.ACCESS_COARSE_LOCATION,// 定位
+        Manifest.permission.ACCESS_BACKGROUND_LOCATION// 后台定位
     )
     fun onNeverAskAgain() {
         toastShort(R.string.location_check_permission_tips)
