@@ -64,13 +64,11 @@ abstract class AbsActivity : RxAppCompatActivity() {
     }
 
     final override fun onBackPressed() {
-        if (supportFragmentManager != null) {
-            val list: List<Fragment>? = supportFragmentManager.fragments// 获取activity下的fragment
-            if (list != null && list.isNotEmpty()) {
-                for (fragment in list) {
-                    if (isFragmentConsumeBackPressed(fragment)) {
-                        return
-                    }
+        val list: List<Fragment>? = supportFragmentManager.fragments// 获取activity下的fragment
+        if (list != null && list.isNotEmpty()) {
+            for (fragment in list) {
+                if (isFragmentConsumeBackPressed(fragment)) {
+                    return
                 }
             }
         }
@@ -141,7 +139,7 @@ abstract class AbsActivity : RxAppCompatActivity() {
     protected open fun getSaveBundle(): Bundle? = null
 
     /** 被回收后从后台回到前台调用 */
-    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         val app = BaseApplication.get() ?: return
 

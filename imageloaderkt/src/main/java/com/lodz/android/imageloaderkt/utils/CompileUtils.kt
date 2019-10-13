@@ -10,10 +10,8 @@ object CompileUtils {
     @JvmStatic
     fun isClassExists(classFullName: String): Boolean {
         try {
-            val c = Class.forName(classFullName)
-            if (c != null) {
-                return true
-            }
+            val c: Class<*>? = Class.forName(classFullName)
+            return c != null
         } catch (e: Exception) {
             e.printStackTrace()
         }

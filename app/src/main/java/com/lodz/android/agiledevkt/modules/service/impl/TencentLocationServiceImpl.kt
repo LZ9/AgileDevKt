@@ -56,7 +56,7 @@ class TencentLocationServiceImpl : ServiceContract {
                     val cid = info?.cid ?: ""
 
                     val bundle = location.extra
-                    val log = if (bundle == null) "" else bundle.getString("resp_json")
+                    val log = (if (bundle == null) "" else bundle.getString("resp_json")) ?: ""
 
                     EventBus.getDefault().post(LocationUpdateEvent(true, longitude, latitude, mcc, mnc, lac, cid, log))
                 }else if (type == TencentLocation.ERROR_UNKNOWN) {// android8.1需要打开定位开关才能定位到
