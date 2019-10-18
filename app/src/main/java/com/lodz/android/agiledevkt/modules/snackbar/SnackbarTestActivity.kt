@@ -47,7 +47,7 @@ class SnackbarTestActivity : AbsActivity() {
     override fun getAbsLayoutId() = R.layout.activity_snackbar_test
 
     override fun findViews(savedInstanceState: Bundle?) {
-        mTitleBarLayout.setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME))
+        mTitleBarLayout.setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME) ?: "")
     }
 
     override fun setListeners() {

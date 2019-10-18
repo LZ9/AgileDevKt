@@ -91,7 +91,7 @@ class SelectorTestActivity : BaseActivity() {
     override fun getLayoutId() = R.layout.activity_selector_test
 
     override fun findViews(savedInstanceState: Bundle?) {
-        getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME))
+        getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME) ?: "")
     }
 
     override fun onClickBackBtn() {

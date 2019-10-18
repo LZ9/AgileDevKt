@@ -78,7 +78,7 @@ class AnnotationTestActivity : BaseActivity() {
     override fun findViews(savedInstanceState: Bundle?) {
         super.findViews(savedInstanceState)
         AnnotationTestUtils.bind(this)
-        getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME))
+        getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME) ?: "")
     }
 
     override fun setListeners() {

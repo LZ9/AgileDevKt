@@ -47,7 +47,7 @@ class ConfigLayoutActivity : AbsActivity() {
     override fun findViews(savedInstanceState: Bundle?) {
         super.findViews(savedInstanceState)
         StatusBarUtil.setColor(window, getColorCompat(R.color.color_ea413c))
-        mTitleBarLayout.setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME))
+        mTitleBarLayout.setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME) ?: "")
         initTitleBar()
     }
 

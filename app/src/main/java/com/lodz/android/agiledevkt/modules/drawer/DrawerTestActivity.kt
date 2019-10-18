@@ -71,7 +71,7 @@ class DrawerTestActivity : AbsActivity() {
     override fun getAbsLayoutId() = R.layout.activity_drawer_test
 
     override fun findViews(savedInstanceState: Bundle?) {
-        mTitleBarLayout.setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME))
+        mTitleBarLayout.setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME) ?: "")
         mTitleTv.text = getString(R.string.drawer_title, TITLES[Random().nextInt(TITLES.size)])
         StatusBarUtil.setTransparentForDrawerLayout(this@DrawerTestActivity, mDrawerLayout, mContentLayout, mAlphaSeekBar.progress / 100.0f)
     }

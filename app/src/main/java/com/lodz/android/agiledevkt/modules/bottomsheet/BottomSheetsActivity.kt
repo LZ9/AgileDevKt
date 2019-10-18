@@ -43,7 +43,7 @@ class BottomSheetsActivity : AbsActivity() {
     override fun getAbsLayoutId(): Int = R.layout.activity_bottom_sheets
 
     override fun findViews(savedInstanceState: Bundle?) {
-        mTitleBarLayout.setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME))
+        mTitleBarLayout.setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME) ?: "")
         mBottomSheetBehavior = BottomSheetBehavior.from(mBottomSheet)
     }
 

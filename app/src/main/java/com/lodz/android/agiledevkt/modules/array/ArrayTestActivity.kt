@@ -71,7 +71,7 @@ class ArrayTestActivity : BaseActivity() {
     override fun getLayoutId(): Int = R.layout.activity_array_test
 
     override fun findViews(savedInstanceState: Bundle?) {
-        getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME))
+        getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME) ?: "")
     }
 
     override fun onClickBackBtn() {

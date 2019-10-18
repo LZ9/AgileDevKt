@@ -47,7 +47,7 @@ class StatusBarTestActivity : BaseActivity() {
     override fun getLayoutId() = R.layout.activity_statusbar_test
 
     override fun findViews(savedInstanceState: Bundle?) {
-        getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME))
+        getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME) ?: "")
         getTitleBarLayout().setBackgroundColor(DEFAULT_COLOR)
     }
 

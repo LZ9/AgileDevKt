@@ -65,7 +65,7 @@ class RxSingleActivity : BaseActivity() {
 
     override fun findViews(savedInstanceState: Bundle?) {
         super.findViews(savedInstanceState)
-        getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME))
+        getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME) ?: "")
     }
 
     override fun onClickBackBtn() {

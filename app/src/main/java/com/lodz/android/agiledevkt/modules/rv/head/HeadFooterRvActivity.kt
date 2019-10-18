@@ -54,7 +54,7 @@ class HeadFooterRvActivity : BaseActivity() {
     override fun getLayoutId(): Int = R.layout.activity_head_rv
 
     override fun findViews(savedInstanceState: Bundle?) {
-        getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME))
+        getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME) ?: "")
         initRecyclerView()
     }
 

@@ -58,7 +58,7 @@ class SnapRvActivity : BaseActivity() {
     override fun getLayoutId(): Int = R.layout.activity_snap
 
     override fun findViews(savedInstanceState: Bundle?) {
-        getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME))
+        getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME) ?: "")
         initTab()
         initPager()
     }

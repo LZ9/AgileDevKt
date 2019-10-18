@@ -52,7 +52,7 @@ class AnimRvActivity : BaseActivity() {
 
     /** 初始化标题栏 */
     private fun initTitleBar(titleBarLayout: TitleBarLayout) {
-        titleBarLayout.setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME))
+        titleBarLayout.setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME) ?: "")
         titleBarLayout.needExpandView(true)
         titleBarLayout.addExpandView(getExpandView())
     }

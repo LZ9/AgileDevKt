@@ -43,7 +43,7 @@ class ThreadPoolActivity : BaseActivity() {
     override fun getLayoutId() = R.layout.activity_thread_pool
 
     override fun findViews(savedInstanceState: Bundle?) {
-        getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME))
+        getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME) ?: "")
     }
 
     override fun onClickBackBtn() {
