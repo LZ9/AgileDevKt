@@ -17,7 +17,10 @@ inline fun <reified T : Annotation> Any.inject(block: (c: Class<out Any>, obj: A
             if (!field.isAnnotationPresent(T::class.java)) {
                 continue
             }
-            block(cls, this, field.getAnnotation(T::class.java), field)
+            val inject = field.getAnnotation(T::class.java)
+            if (inject != null){
+                block(cls, this, inject, field)
+            }
         }
     } catch (e: Exception) {
         e.printStackTrace()
@@ -33,7 +36,10 @@ inline fun <reified T : Annotation, reified R> injects(obj: R, block: (c: Class<
             if (!field.isAnnotationPresent(T::class.java)) {
                 continue
             }
-            block(cls, obj, field.getAnnotation(T::class.java), field)
+            val inject = field.getAnnotation(T::class.java)
+            if (inject != null){
+                block(cls, obj, inject, field)
+            }
         }
     } catch (e: Exception) {
         e.printStackTrace()
