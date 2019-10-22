@@ -4,50 +4,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_f4f4f4"
     android:orientation="vertical">
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tab_layout"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/white"
-        app:tabIndicatorColor="@color/color_00a0e9"
-        app:tabIndicatorHeight="2dp"
-        app:tabMode="fixed">
-
-    </com.google.android.material.tabs.TabLayout>
-
-    <LinearLayout
+    <TextView
+        android:id="@+id/tab_tv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tab_tv"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:textSize="20sp"
-            tools:ignore="NestedWeights" />
-
-        <TextView
-            android:id="@+id/tips_tv"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:textSize="20sp" />
-    </LinearLayout>
-
+        android:gravity="center"
+        android:textSize="20sp" />
 
     <com.lodz.android.pandora.widget.menu.BottomMenuBar
         android:id="@+id/menu_bar"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="@color/color_00a0e9">
+        android:background="@color/white" />
 
-    </com.lodz.android.pandora.widget.menu.BottomMenuBar>
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        app:tabIndicatorHeight="0dp"
+        app:tabMode="fixed" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_nv"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/menu_navigation" />
 
 </LinearLayout>

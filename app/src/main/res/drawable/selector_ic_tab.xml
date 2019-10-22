@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <item android:drawable="@drawable/pandora_ic_take_photo_confirm" android:state_selected="true" />
-    <item android:drawable="@drawable/pandora_ic_take_photo_cancel" android:state_selected="false" />
+    <item android:drawable="@drawable/ic_person_sel" android:state_selected="true" />
+    <item android:drawable="@drawable/ic_person" android:state_selected="false" />
 </selector>

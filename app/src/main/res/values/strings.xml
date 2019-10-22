@@ -700,4 +700,10 @@
     <string name="wv_simple_check_confirm">走起</string>
     <string name="wv_simple_check_cancel">慢着</string>
 
+    <!-- 底部菜单栏测试类 -->
+    <string name="menu_bar_home">首页</string>
+    <string name="menu_bar_module">功能</string>
+    <string name="menu_bar_msg">消息</string>
+    <string name="menu_bar_mine">我的</string>
+
 </resources>
