@@ -30,12 +30,13 @@
         app:tabIndicatorHeight="0dp"
         app:tabMode="fixed" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
+    <com.lodz.android.pandora.widget.navigation.BaseNavigationView
         android:id="@+id/bottom_nv"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginTop="10dp"
         android:background="@color/white"
+        app:badgeMode="custom"
         app:labelVisibilityMode="labeled"
         app:menu="@menu/menu_navigation" />
 

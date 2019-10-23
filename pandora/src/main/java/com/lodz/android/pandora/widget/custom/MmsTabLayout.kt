@@ -52,10 +52,9 @@ open class MmsTabLayout : TabLayout {
 
     /** 设置底线两侧间距[marginDp] */
     fun setTabIndicatorMargin(marginDp: Float) {
-        val cls: Class<*> = ReflectUtils.getClassForName("com.google.android.material.tabs.TabLayout") ?: return
         var layout: LinearLayout? = null
         try {
-            layout = ReflectUtils.getFieldValue(cls, this, "slidingTabIndicator") as LinearLayout
+            layout = ReflectUtils.getFieldValue<TabLayout>(this, "slidingTabIndicator") as? LinearLayout
         } catch (e: Exception) {
             e.printStackTrace()
         }

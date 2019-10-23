@@ -304,4 +304,16 @@
         </attr>
         <attr name="spanCount" />
     </declare-styleable>
+
+    <!--基础导航栏-->
+    <declare-styleable name="BaseNavigationView">
+        <attr name="isShowOriginalIcon" format="boolean" />
+        <attr name="badgeMode" format="integer">
+            <enum name="none" value="0" />
+            <enum name="all_num" value="1" />
+            <enum name="all_point" value="2" />
+            <enum name="custom" value="3" />
+        </attr>
+    </declare-styleable>
+
 </resources>

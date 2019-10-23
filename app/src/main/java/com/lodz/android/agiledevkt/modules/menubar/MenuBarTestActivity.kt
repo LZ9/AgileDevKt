@@ -7,9 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import com.google.android.material.bottomnavigation.BottomNavigationItemView
-import com.google.android.material.bottomnavigation.BottomNavigationMenuView
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayout
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
@@ -18,6 +15,7 @@ import com.lodz.android.corekt.anko.dp2px
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.widget.menu.BottomMenuBar
 import com.lodz.android.pandora.widget.menu.MenuConfig
+import com.lodz.android.pandora.widget.navigation.BaseNavigationView
 
 /**
  * 底部菜单栏测试类
@@ -49,7 +47,7 @@ class MenuBarTestActivity : BaseActivity() {
     /** 底部菜单栏 */
     private val mMenuBar by bindView<BottomMenuBar>(R.id.menu_bar)
     /** 底部菜单栏 */
-    private val mBottomNavigationView by bindView<BottomNavigationView>(R.id.bottom_nv)
+    private val mBottomNavigationView by bindView<BaseNavigationView>(R.id.bottom_nv)
 
 
     override fun getLayoutId(): Int = R.layout.activity_menu_bar_test
@@ -113,16 +111,8 @@ class MenuBarTestActivity : BaseActivity() {
     }
 
     private fun initNavigation() {
-        mBottomNavigationView.itemIconTintList = null
-        val menuView = mBottomNavigationView.getChildAt(0) as BottomNavigationMenuView
-        for (i in 0 until menuView.childCount) {
-            val itemView = menuView.getChildAt(i) as BottomNavigationItemView
-            val badge = LayoutInflater.from(getContext()).inflate(R.layout.view_badge, itemView, false)
-            itemView.addView(badge)
-            val numTv = badge.findViewById<TextView>(R.id.num_tv)
-            numTv.text = (i + 8).toString()
-            numTv.visibility = View.VISIBLE
-        }
+        mBottomNavigationView.setItemBadgeNum(0, 2)
+        mBottomNavigationView.setItemBadgePoint(2, true)
     }
 
     override fun onClickBackBtn() {
@@ -160,7 +150,6 @@ class MenuBarTestActivity : BaseActivity() {
                 TYPE_MINE -> "我的"
                 else -> ""
             }
-//            mMenuBar.updateNum(type, 0)`
         }
 
         mBottomNavigationView.setOnNavigationItemSelectedListener { item ->
