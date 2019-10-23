@@ -52,15 +52,7 @@ open class MmsTabLayout : TabLayout {
 
     /** 设置底线两侧间距[marginDp] */
     fun setTabIndicatorMargin(marginDp: Float) {
-        var layout: LinearLayout? = null
-        try {
-            layout = ReflectUtils.getFieldValue<TabLayout>(this, "slidingTabIndicator") as? LinearLayout
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        if (layout == null) {
-            return
-        }
+        val layout = ReflectUtils.getFieldValue<TabLayout>(this, "slidingTabIndicator") as? LinearLayout ?: return
         val margin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, marginDp, Resources.getSystem().displayMetrics)
         for (i in 0 until layout.childCount) {
             val child = layout.getChildAt(i)
