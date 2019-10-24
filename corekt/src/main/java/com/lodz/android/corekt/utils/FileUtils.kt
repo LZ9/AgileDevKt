@@ -5,6 +5,7 @@ import androidx.annotation.IntRange
 import java.io.*
 import java.nio.channels.FileChannel
 import java.text.DecimalFormat
+import java.util.*
 
 /**
  * 文件操作帮助类
@@ -83,7 +84,7 @@ object FileUtils {
         }
 
         for (childFile in files) {
-            if (childFile.name.toLowerCase().endsWith(replaceSuffix.toLowerCase())) {
+            if (childFile.name.toLowerCase(Locale.getDefault()).endsWith(replaceSuffix.toLowerCase(Locale.getDefault()))) {
                 childFile.delete()
             }
         }

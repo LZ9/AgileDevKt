@@ -167,10 +167,10 @@ fun Context.browse(url: String, newTask: Boolean = true) {
 /** 分享标题为[subject]，内容为[text]的文字，应用选择框提示[tips] */
 @JvmOverloads
 fun Context.share(text: String, subject: String = "", tips: String = "") {
-    val intent = Intent(android.content.Intent.ACTION_SEND)
+    val intent = Intent(Intent.ACTION_SEND)
     intent.type = "text/plain"
-    intent.putExtra(android.content.Intent.EXTRA_SUBJECT, subject)// 主题
-    intent.putExtra(android.content.Intent.EXTRA_TEXT, text)// 内容
+    intent.putExtra(Intent.EXTRA_SUBJECT, subject)// 主题
+    intent.putExtra(Intent.EXTRA_TEXT, text)// 内容
     var title: String? = null// 应用选择框提示
     if (tips.isNotEmpty()) {
         title = tips

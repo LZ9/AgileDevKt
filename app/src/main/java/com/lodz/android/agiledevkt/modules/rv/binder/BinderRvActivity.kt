@@ -140,7 +140,7 @@ class BinderRvActivity : BaseActivity() {
     /** 获取数据 */
     private fun getNationList(): ArrayList<NationBean> {
         val list = ArrayList<NationBean>()
-        for (i in 0 until NATION_IMGS.size) {
+        for (i in NATION_IMGS.indices) {
             val bean = NationBean()
             bean.imgUrl = NATION_IMGS[i]
             bean.name = NATION_NAMES[i]

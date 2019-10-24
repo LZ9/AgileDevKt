@@ -104,7 +104,7 @@ class BaseNavigationView : BottomNavigationView {
     /** 设置角标布局资源id[layoutId] */
     fun setBadgeLayout(@LayoutRes layoutId: Int) {
         mItemViews?.forEachIndexed { index, itemView ->
-            itemView.addView(LayoutInflater.from(getContext()).inflate(layoutId, itemView, false))
+            itemView.addView(LayoutInflater.from(context).inflate(layoutId, itemView, false))
         }
     }
 

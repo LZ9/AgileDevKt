@@ -1,6 +1,7 @@
 package com.lodz.android.corekt.security
 
 import java.security.MessageDigest
+import java.util.*
 
 
 /**
@@ -26,7 +27,7 @@ object SHA1 {
                 }
                 hexString.append(shaHex)
             }
-            return hexString.toString().toUpperCase()
+            return hexString.toString().toUpperCase(Locale.getDefault())
         } catch (e: Exception) {
             e.printStackTrace()
         }

@@ -60,7 +60,7 @@ object StringUtils {
         if (list.isEmpty()) {
             return result
         }
-        for (i in 0 until list.size) {
+        for (i in list.indices) {
             result = result + list[i] + if (i == (list.size - 1)) "" else separator
         }
         return result

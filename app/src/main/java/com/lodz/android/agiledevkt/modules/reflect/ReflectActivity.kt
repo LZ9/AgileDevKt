@@ -109,7 +109,7 @@ class ReflectActivity : BaseActivity() {
     /** 通过路径获取Class */
     private fun getClassName() {
         val c = if (mTypeSwitch.isChecked) ReflectUtils.getClassForType<ReflectBean>() else ReflectUtils.getClassForName(BEAN_PATH)
-        mMsgTv.text = if (c == null) getString(R.string.reflect_unfind_class) else c.name
+        mMsgTv.text = c?.name ?: getString(R.string.reflect_unfind_class)
     }
 
     /** 获取所有构造函数名称 */

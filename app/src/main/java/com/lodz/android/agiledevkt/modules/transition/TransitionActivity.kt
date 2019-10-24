@@ -108,7 +108,7 @@ class TransitionActivity : BaseActivity() {
 
     private fun getData(): ArrayList<TransitionBean> {
         val list = ArrayList<TransitionBean>()
-        for (i in 0 until IMGS.size) {
+        for (i in IMGS.indices) {
             val bean = TransitionBean()
             bean.imgRes = IMGS[i]
             bean.title = TITLES[i]

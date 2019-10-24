@@ -9,6 +9,7 @@ import android.content.pm.PackageManager
 import android.location.LocationManager
 import android.net.wifi.WifiManager
 import android.nfc.NfcAdapter
+import android.os.Build
 import androidx.annotation.RequiresPermission
 import androidx.core.app.ActivityCompat
 import java.io.BufferedReader
@@ -42,9 +43,13 @@ fun Context.getVersionName(): String {
 }
 
 /** 获取客户端版本号 */
-fun Context.getVersionCode(): Int {
+fun Context.getVersionCode(): Long {
     try {
-        return packageManager.getPackageInfo(packageName, 0).versionCode
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            packageManager.getPackageInfo(packageName, 0).longVersionCode
+        } else {
+            packageManager.getPackageInfo(packageName, 0).versionCode.toLong()
+        }
     } catch (e: Exception) {
         e.printStackTrace()
     }

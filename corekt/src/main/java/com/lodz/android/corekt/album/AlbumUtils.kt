@@ -32,6 +32,7 @@ object AlbumUtils {
         val cursor: Cursor? = context.contentResolver.query(uri, null, selection, selectionArgs, sortOrder)
 
         if (cursor == null) {
+            cursor?.close()
             return imageList
         }
         if (cursor.count == 0) {

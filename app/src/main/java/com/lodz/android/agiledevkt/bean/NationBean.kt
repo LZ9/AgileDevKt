@@ -1,6 +1,7 @@
 package com.lodz.android.agiledevkt.bean
 
 import com.lodz.android.corekt.array.Groupable
+import java.util.*
 
 /**
  * 国家数据类
@@ -16,7 +17,7 @@ class NationBean : Groupable {
     /** 拼音首字母缩写 */
     var pinYin = ""
 
-    override fun getSortStr(): String = code.toUpperCase()
+    override fun getSortStr(): String = code.toUpperCase(Locale.getDefault())
 
     /** 获取标题 */
     fun getTitle(): String = "$code-$name"
