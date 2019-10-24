@@ -28,6 +28,7 @@ import com.lodz.android.pandora.photopicker.picker.dialog.ImageFolderDialog
 import com.lodz.android.pandora.photopicker.picker.dialog.ImageFolderItemBean
 import com.lodz.android.pandora.photopicker.preview.PreviewManager
 import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
+import com.lodz.android.pandora.rx.subscribe.observer.ProgressObserver
 import com.lodz.android.pandora.rx.utils.RxUtils
 import io.reactivex.Observable
 
@@ -153,42 +154,52 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
         // 文件夹按钮
         mFolderBtn.setOnClickListener {
             val bean = mPickerBean ?: return@setOnClickListener
-            if (mCurrentImageFolder == null) {
-                mCurrentImageFolder = AlbumUtils.getTotalImageFolder(getContext())
-            }
-            val currentFolder = mCurrentImageFolder!!
+            Observable.just("")
+                .map {
+                    if (mCurrentImageFolder == null) {
+                        mCurrentImageFolder = AlbumUtils.getTotalImageFolder(getContext())
+                    }
 
-            val list = ArrayList<ImageFolderItemBean>()
-            val folders = AlbumUtils.getAllImageFolders(getContext())
-            // 组装数据
-            for (folder in folders) {
-                val itemBean = ImageFolderItemBean()
-                itemBean.imageFolder = folder
-                itemBean.isSelected = currentFolder.dir.equals(folder.dir)
-                list.add(itemBean)
-            }
-
-            val dialog = ImageFolderDialog(getContext())
-            dialog.setOnImgLoader(bean.imgLoader)
-            dialog.setPickerUIConfig(bean.pickerUIConfig)
-            dialog.setData(list)
-            dialog.setOnCancelListener { dialogInterface ->
-                dialogInterface.dismiss()
-                mMoreImg.startRotateSelf(-180, 0, 500, true)
-            }
-            dialog.setListener { dialogInterface, folderItemBean ->
-                dialogInterface.dismiss()
-                val imageFolder = folderItemBean.imageFolder ?: return@setListener
-                if (currentFolder.dir.equals(imageFolder.dir)) {// 选择了同一个文件夹
-                    return@setListener
+                    val list = ArrayList<ImageFolderItemBean>()
+                    val folders = AlbumUtils.getAllImageFolders(getContext())
+                    // 组装数据
+                    for (folder in folders) {
+                        val itemBean = ImageFolderItemBean()
+                        itemBean.imageFolder = folder
+                        itemBean.isSelected = mCurrentImageFolder?.dir.equals(folder.dir)
+                        list.add(itemBean)
+                    }
+                    return@map list
                 }
-                mCurrentImageFolder = imageFolder
-                mFolderNameTv.text = imageFolder.name
-                configAdapterData(AlbumUtils.getImageListOfFolder(getContext(), imageFolder))
-                mMoreImg.startRotateSelf(-180, 0, 500, true)
-            }
-            dialog.show()
-            mMoreImg.startRotateSelf(0, -180, 500, true)
+                .compose(RxUtils.ioToMainObservable())
+                .compose(bindDestroyEvent())
+                .subscribe(object : ProgressObserver<List<ImageFolderItemBean>>() {
+                    override fun onPgNext(any: List<ImageFolderItemBean>) {
+                        val dialog = ImageFolderDialog(getContext())
+                        dialog.setOnImgLoader(bean.imgLoader)
+                        dialog.setPickerUIConfig(bean.pickerUIConfig)
+                        dialog.setData(any)
+                        dialog.setOnCancelListener { dialogInterface ->
+                            dialogInterface.dismiss()
+                            mMoreImg.startRotateSelf(-180, 0, 500, true)
+                        }
+                        dialog.setListener { dialogInterface, folderItemBean ->
+                            dialogInterface.dismiss()
+                            val imageFolder = folderItemBean.imageFolder ?: return@setListener
+                            if (mCurrentImageFolder?.dir.equals(imageFolder.dir)) {// 选择了同一个文件夹
+                                return@setListener
+                            }
+                            mCurrentImageFolder = imageFolder
+                            mFolderNameTv.text = imageFolder.name
+                            configAdapterData(AlbumUtils.getImageListOfFolder(getContext(), imageFolder))
+                            mMoreImg.startRotateSelf(-180, 0, 500, true)
+                        }
+                        dialog.show()
+                        mMoreImg.startRotateSelf(0, -180, 500, true)
+                    }
+
+                    override fun onPgError(e: Throwable, isNetwork: Boolean) {}
+                }.create(getContext(), R.string.pandora_picker_folder_loading, true))
         }
 
         // 确定按钮

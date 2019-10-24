@@ -20,6 +20,7 @@
     <string name="pandora_preview_source_list_empty">图片数据为空</string>
     <string name="pandora_photo_source_list_empty">您没有可以选择的图片</string>
     <string name="pandora_photo_selected_listener_unset">您尚未设置图片选中监听器</string>
+    <string name="pandora_picker_folder_loading">正在读取图片文件夹</string>
     <string name="pandora_picker_title">图片选择</string>
     <string name="pandora_picker_confirm">确定</string>
     <string name="pandora_picker_confirm_num">确定(%1$s/%2$s)</string>
