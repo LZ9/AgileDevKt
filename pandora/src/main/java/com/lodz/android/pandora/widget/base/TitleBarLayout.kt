@@ -11,7 +11,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.annotation.*
+import androidx.annotation.ColorInt
+import androidx.annotation.ColorRes
+import androidx.annotation.FloatRange
+import androidx.annotation.StringRes
 import com.lodz.android.corekt.anko.*
 import com.lodz.android.pandora.R
 import com.lodz.android.pandora.base.application.BaseApplication
@@ -48,12 +51,6 @@ open class TitleBarLayout : LinearLayout {
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
         init(attrs)
     }
-
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
-        init(attrs)
-    }
-
 
     private fun init(attrs: AttributeSet?) {
         val app = BaseApplication.get()

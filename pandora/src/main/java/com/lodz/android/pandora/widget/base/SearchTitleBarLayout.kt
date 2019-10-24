@@ -64,11 +64,6 @@ class SearchTitleBarLayout : FrameLayout {
         init(attrs)
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
-        init(attrs)
-    }
-
     private fun init(attrs: AttributeSet?) {
         val app = BaseApplication.get()
         if (app != null) {
