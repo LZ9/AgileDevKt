@@ -6,16 +6,21 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.lodz.android.pandora.widget.base.SearchTitleBarLayout
+    <com.lodz.android.pandora.widget.search.SearchTitleBarLayout
         android:id="@+id/search_title_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:inputBackground="@drawable/bg_ffffff_corners_4_stroke_9b9b9b"
-        app:inputHint="@string/idcard_input_hint">
+        app:inputHint="@string/idcard_input_hint"
+        app:isShowVerticalLine="false"
+        app:searchBtnVisibility="gone"
+        app:searchText="@string/idcard_search"
+        app:searchTextColor="@color/white"
+        app:searchTextVisibility="visible">
 
-    </com.lodz.android.pandora.widget.base.SearchTitleBarLayout>
+    </com.lodz.android.pandora.widget.search.SearchTitleBarLayout>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/color_f0f0f0">
@@ -27,6 +32,6 @@
             android:padding="10dp"
             android:textColor="@color/color_1a1a1a"
             tools:text="不是身份证" />
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>

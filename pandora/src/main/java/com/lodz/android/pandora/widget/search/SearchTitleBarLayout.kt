@@ -1,4 +1,4 @@
-package com.lodz.android.pandora.widget.base
+package com.lodz.android.pandora.widget.search
 
 import android.content.Context
 import android.content.res.ColorStateList
@@ -14,10 +14,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.*
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.corekt.anko.*
 import com.lodz.android.pandora.R
 import com.lodz.android.pandora.base.application.BaseApplication
 import com.lodz.android.pandora.base.application.config.TitleBarLayoutConfig
+import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
+import com.lodz.android.pandora.rx.utils.RxUtils
+import java.util.concurrent.TimeUnit
 
 /**
  * 搜索标题栏
@@ -28,22 +33,28 @@ class SearchTitleBarLayout : FrameLayout {
     /** 标题栏配置 */
     private var mConfig = TitleBarLayoutConfig()
 
-    /** 返回按钮布局  */
+    /** 返回按钮布局 */
     private val mBackLayout by bindView<LinearLayout>(R.id.back_layout)
-    /** 返回按钮  */
+    /** 返回按钮 */
     private val mBackBtn by bindView<TextView>(R.id.back_btn)
-    /** 输入框布局  */
+    /** 输入框布局 */
     private val mInputLayout by bindView<ViewGroup>(R.id.input_layout)
-    /** 输入框  */
+    /** 输入框 */
     private val mInputEdit by bindView<EditText>(R.id.input_edit)
-    /** 扩展区清空按钮布局  */
+    /** 扩展区清空按钮布局 */
     private val mClearBtn by bindView<ImageView>(R.id.clear_btn)
-    /** 竖线  */
+    /** 竖线 */
     private val mVerticalLineView by bindView<View>(R.id.vertical_line)
-    /** 搜索按钮  */
+    /** 搜索按钮 */
     private val mSearchBtn by bindView<ImageView>(R.id.search_btn)
-    /** 分割线  */
+    /** 分割线 */
     private val mDivideLineView by bindView<View>(R.id.divide_line)
+    /** 搜索文字按钮 */
+    private val mSearchTxBtn by bindView<TextView>(R.id.search_tx_btn)
+    /** 搜索联想列表 */
+    private val mRecyclerView by bindView<RecyclerView>(R.id.recycler_view)
+    /** 搜索联想列表适配器 */
+    private lateinit var mAdapter: RecomdListAdapter
 
     /** 是否需要清空按钮 */
     private var isNeedCleanBtn = true
@@ -51,6 +62,12 @@ class SearchTitleBarLayout : FrameLayout {
     private var mTextWatcher: TextWatcher? = null
     /** 清空按钮点击回调 */
     private var mCleanClickListener: ((view: View) -> Unit)? = null
+    /** 搜索联想监听器 */
+    private var mOnSearchRecomdListener: OnSearchRecomdListener? = null
+    /** 输入回调间隔时长 */
+    private var mInputDuration: Long = 500
+    /** 输入回调间隔单位 */
+    private var mInputDurationUnit: TimeUnit = TimeUnit.MILLISECONDS
 
     constructor(context: Context) : super(context) {
         init(null)
@@ -71,6 +88,7 @@ class SearchTitleBarLayout : FrameLayout {
         }
         LayoutInflater.from(context).inflate(R.layout.pandora_view_search_title, this)
         configLayout(attrs)
+        initRecyclerView()
         setListeners()
     }
 
@@ -151,21 +169,27 @@ class SearchTitleBarLayout : FrameLayout {
 
         // 是否需要阴影
         val isNeedElevation: Boolean = typedArray?.getBoolean(R.styleable.SearchTitleBarLayout_isNeedElevation, mConfig.isNeedElevation)
-                ?: mConfig.isNeedElevation
+            ?: mConfig.isNeedElevation
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && isNeedElevation) {
-            val elevationVale: Int = typedArray?.getDimensionPixelSize(R.styleable.SearchTitleBarLayout_elevationVale, 0)
-                    ?: 0
+            val elevationVale: Int = typedArray?.getDimensionPixelSize(R.styleable.SearchTitleBarLayout_elevationVale, 0) ?: 0
             elevation = if (elevationVale != 0) elevationVale.toFloat() else mConfig.elevationVale
         }
 
         // 是否需要清空按钮
-        setNeedCleanBtn(typedArray?.getBoolean(R.styleable.SearchTitleBarLayout_isNeedCleanBtn, true)
-                ?: true)
+        setNeedCleanBtn(typedArray?.getBoolean(R.styleable.SearchTitleBarLayout_isNeedCleanBtn, true) ?: true)
 
         // 搜索按钮图标
         val searchDrawable: Drawable? = typedArray?.getDrawable(R.styleable.SearchTitleBarLayout_searchDrawable)
         if (searchDrawable != null) {
             setSearchIcon(searchDrawable)
+        }
+
+        // 搜索按钮是否显示
+        val searchBtnVisibility = typedArray?.getInt(R.styleable.SearchTitleBarLayout_searchBtnVisibility, 0) ?: 0
+        when (searchBtnVisibility) {
+            1 -> setSearchBtnVisibility(View.INVISIBLE)
+            2 -> setSearchBtnVisibility(View.GONE)
+            else -> setSearchBtnVisibility(View.VISIBLE)
         }
 
         // 清除按钮图标
@@ -181,8 +205,7 @@ class SearchTitleBarLayout : FrameLayout {
         }
 
         // 输入框提示语
-        val hintText: String = typedArray?.getString(R.styleable.SearchTitleBarLayout_inputHint)
-                ?: ""
+        val hintText: String = typedArray?.getString(R.styleable.SearchTitleBarLayout_inputHint) ?: ""
         if (hintText.isNotEmpty()) {
             setInputHint(hintText)
         }
@@ -194,8 +217,7 @@ class SearchTitleBarLayout : FrameLayout {
         }
 
         // 输入框内容文字
-        val inputText: String = typedArray?.getString(R.styleable.SearchTitleBarLayout_inputText)
-                ?: ""
+        val inputText: String = typedArray?.getString(R.styleable.SearchTitleBarLayout_inputText) ?: ""
         if (inputText.isNotEmpty()) {
             setInputText(inputText)
         }
@@ -207,15 +229,13 @@ class SearchTitleBarLayout : FrameLayout {
         }
 
         // 标题文字大小
-        val inputTextSize: Int = typedArray?.getDimensionPixelSize(R.styleable.SearchTitleBarLayout_inputTextSize, 0)
-                ?: 0
+        val inputTextSize: Int = typedArray?.getDimensionPixelSize(R.styleable.SearchTitleBarLayout_inputTextSize, 0) ?: 0
         if (inputTextSize != 0) {
             setInputTextSize(px2spRF(inputTextSize))
         }
 
         // 是否显示竖线
-        setShowVerticalLine(typedArray?.getBoolean(R.styleable.SearchTitleBarLayout_isShowVerticalLine, true)
-                ?: true)
+        setShowVerticalLine(typedArray?.getBoolean(R.styleable.SearchTitleBarLayout_isShowVerticalLine, true) ?: true)
 
         // 竖线背景
         val verticalLineBackground: Drawable? = typedArray?.getDrawable(R.styleable.SearchTitleBarLayout_verticalLineBackground)
@@ -223,7 +243,46 @@ class SearchTitleBarLayout : FrameLayout {
             setVerticalLineBackground(verticalLineBackground)
         }
 
+        // 搜索按钮文字
+        val searchText: String = typedArray?.getString(R.styleable.SearchTitleBarLayout_searchText) ?: ""
+        if (searchText.isNotEmpty()) {
+            setSearchText(searchText)
+        }
+
+        // 搜索按钮文字大小
+        val searchTextSize: Int = typedArray?.getDimensionPixelSize(R.styleable.SearchTitleBarLayout_searchTextSize, 0) ?: 0
+        if (searchTextSize != 0) {
+            setSearchTextSize(px2spRF(searchTextSize))
+        }
+
+        // 搜索按钮文字颜色
+        val searchTextColor: ColorStateList? = typedArray?.getColorStateList(R.styleable.SearchTitleBarLayout_searchTextColor)
+        if (searchTextColor != null) {
+            setSearchTextColor(searchTextColor)
+        }
+
+        // 搜索按钮文字是否显示
+        val searchTextVisibility = typedArray?.getInt(R.styleable.SearchTitleBarLayout_searchTextVisibility, 2) ?: 2
+        when (searchTextVisibility) {
+            1 -> setSearchTextVisibility(View.INVISIBLE)
+            2 -> setSearchTextVisibility(View.GONE)
+            else -> setSearchTextVisibility(View.VISIBLE)
+        }
+
+        // 是否开启推搜索联想列表
+        setOpenRecomdList(typedArray?.getBoolean(R.styleable.SearchTitleBarLayout_isOpenRecomdList, false) ?: false)
+
         typedArray?.recycle()
+    }
+
+    private fun initRecyclerView() {
+        mAdapter = RecomdListAdapter(getContext())
+        val layoutManager = LinearLayoutManager(getContext())
+        layoutManager.orientation = RecyclerView.VERTICAL
+        mRecyclerView.layoutManager = layoutManager
+        mAdapter.onAttachedToRecyclerView(mRecyclerView)// 如果使用网格布局请设置此方法
+        mRecyclerView.setHasFixedSize(true)
+        mRecyclerView.adapter = mAdapter
     }
 
     /** 设置监听器 */
@@ -252,6 +311,25 @@ class SearchTitleBarLayout : FrameLayout {
             mInputEdit.setText("")
             mCleanClickListener?.invoke(it)
         }
+
+        // 联想文字点击
+        mAdapter.setOnItemClickListener { viewHolder, item, position ->
+            mOnSearchRecomdListener?.onItemClick(viewHolder, item, position)
+        }
+
+        // 联想搜索
+        RxUtils.textChanges(mInputEdit, mInputDuration, mInputDurationUnit)
+            .compose(RxUtils.ioToMainObservable())
+            .subscribe(object : BaseObserver<CharSequence>(){
+                override fun onBaseNext(any: CharSequence) {
+                    mOnSearchRecomdListener?.onInputTextChange(any.toString())
+                }
+
+                override fun onBaseError(e: Throwable) {
+
+                }
+
+            })
     }
 
     /** 是否需要[isNeed]显示返回按钮 */
@@ -340,6 +418,7 @@ class SearchTitleBarLayout : FrameLayout {
     /** 设置搜索按钮监听[listener] */
     fun setOnSearchClickListener(listener: (View) -> Unit) {
         mSearchBtn.setOnClickListener(listener)
+        mSearchTxBtn.setOnClickListener(listener)
     }
 
     /** 设置搜索图标[drawable] */
@@ -350,6 +429,11 @@ class SearchTitleBarLayout : FrameLayout {
     /** 设置搜索图标资源[resId] */
     fun setSearchIcon(@DrawableRes resId: Int) {
         mSearchBtn.setImageResource(resId)
+    }
+
+    /** 设置搜索按钮显隐[visibility] */
+    fun setSearchBtnVisibility(visibility: Int) {
+        mSearchBtn.visibility = visibility
     }
 
     /** 设置是否需要[isNeed]清空按钮 */
@@ -474,4 +558,62 @@ class SearchTitleBarLayout : FrameLayout {
     fun setVerticalLineBackgroundColor(@ColorInt color: Int) {
         mVerticalLineView.setBackgroundColor(color)
     }
+
+    /** 设置搜索按钮文字[text] */
+    fun setSearchText(text: String) {
+        mSearchTxBtn.text = text
+    }
+
+    /** 设置搜索按钮文字资源[resId] */
+    fun setSearchText(@StringRes resId: Int) {
+        mSearchTxBtn.setText(resId)
+    }
+
+    /** 设置搜索按钮文字大小[sp] */
+    fun setSearchTextSize(sp: Float) {
+        mSearchTxBtn.setTextSize(TypedValue.COMPLEX_UNIT_SP, sp)
+    }
+
+    /** 设置搜索按钮文字颜色资源[colorRes] */
+    fun setSearchTextColor(@ColorRes colorRes: Int) {
+        mSearchTxBtn.setTextColor(getColorCompat(colorRes))
+    }
+
+    /** 设置搜索按钮文字颜色[color] */
+    fun setSearchTextColorInt(@ColorInt color: Int) {
+        mSearchTxBtn.setTextColor(color)
+    }
+
+    /** 设置搜索按钮文字颜色[colorStateList] */
+    fun setSearchTextColor(colorStateList: ColorStateList) {
+        mSearchTxBtn.setTextColor(colorStateList)
+    }
+
+    /** 设置搜索按钮文字显隐[visibility] */
+    fun setSearchTextVisibility(visibility: Int) {
+        mSearchTxBtn.visibility = visibility
+    }
+
+    /** 设置是否开启推搜索联想列表[isOpen] */
+    fun setOpenRecomdList(isOpen: Boolean) {
+        mRecyclerView.visibility = if (isOpen) View.VISIBLE else View.GONE
+    }
+
+    /** 设置联想列表数据[datas] */
+    fun setRecomListData(datas: MutableList<RecomdData>) {
+        mAdapter.setData(datas)
+        mAdapter.notifyDataSetChanged()
+    }
+
+    /** 设置输入回调间隔，间隔时长[duration]，间隔单位[unit] */
+    fun setInputDuration(duration: Long, unit: TimeUnit) {
+        mInputDuration = duration
+        mInputDurationUnit = unit
+    }
+
+    /** 设置搜索联想监听器[listener] */
+    fun setOnSearchRecomdListener(listener: OnSearchRecomdListener) {
+        mOnSearchRecomdListener = listener
+    }
+
 }

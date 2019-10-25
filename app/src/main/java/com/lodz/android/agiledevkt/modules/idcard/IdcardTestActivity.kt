@@ -10,7 +10,7 @@ import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.utils.DateUtils
 import com.lodz.android.corekt.utils.IdCardUtils
 import com.lodz.android.pandora.base.activity.AbsActivity
-import com.lodz.android.pandora.widget.base.SearchTitleBarLayout
+import com.lodz.android.pandora.widget.search.SearchTitleBarLayout
 
 /**
  * 身份证号码测试类
@@ -30,7 +30,7 @@ class IdcardTestActivity : AbsActivity() {
     /** 结果 */
     private val mResultTv by bindView<TextView>(R.id.result)
 
-    override fun getAbsLayoutId() = R.layout.activity_id_card_test
+    override fun getAbsLayoutId(): Int = R.layout.activity_id_card_test
 
     override fun findViews(savedInstanceState: Bundle?) {
     }

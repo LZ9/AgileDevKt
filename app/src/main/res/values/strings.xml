@@ -95,7 +95,6 @@
     <string name="toast_custom_content">我是内容</string>
     <string name="toast_io_thread">异步线程</string>
 
-
     <!-- toast测试 -->
     <string name="reflect_use_kclass">使用KClass</string>
     <string name="reflect_use_type">使用类型</string>
@@ -134,6 +133,7 @@
     <string name="idcard_month">月：</string>
     <string name="idcard_day">日：</string>
     <string name="idcard_age">年龄：</string>
+    <string name="idcard_search">搜索</string>
 
     <!-- 数字格式化测试类 -->
     <string name="format_num_one">18.49382716</string>

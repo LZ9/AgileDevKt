@@ -147,6 +147,11 @@
         <attr name="elevationVale" />
         <attr name="isNeedCleanBtn" format="boolean" />
         <attr name="searchDrawable" format="reference" />
+        <attr name="searchBtnVisibility" format="integer">
+            <enum name="visible" value="0" />
+            <enum name="invisible" value="1" />
+            <enum name="gone" value="2" />
+        </attr>
         <attr name="cleanDrawable" format="reference" />
         <attr name="inputBackground" format="reference|color" />
         <attr name="inputHint" format="string" />
@@ -156,6 +161,16 @@
         <attr name="inputTextSize" format="dimension" />
         <attr name="isShowVerticalLine" format="boolean" />
         <attr name="verticalLineBackground" format="reference|color" />
+        <attr name="searchText" format="string" />
+        <attr name="searchTextSize" format="dimension" />
+        <attr name="searchTextColor" format="reference|color" />
+        <attr name="searchTextVisibility" format="integer">
+            <enum name="visible" value="0" />
+            <enum name="invisible" value="1" />
+            <enum name="gone" value="2" />
+        </attr>
+        <attr name="isOpenRecomdList" format="boolean" />
+
     </declare-styleable>
 
     <!--自定义TabLayout-->

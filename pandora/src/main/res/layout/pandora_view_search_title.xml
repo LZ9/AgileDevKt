@@ -35,12 +35,13 @@
 
         <LinearLayout
             android:id="@+id/input_layout"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginStart="8dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="10dp"
+            android:layout_weight="1"
             android:background="@android:color/white"
             android:gravity="center_vertical">
 
@@ -56,6 +57,7 @@
                 android:importantForAutofill="no"
                 android:inputType="text"
                 android:textSize="13sp"
+                tools:ignore="NestedWeights"
                 tools:targetApi="o" />
 
             <ImageView
@@ -89,6 +91,15 @@
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/search_tx_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="8dp"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:visibility="gone" />
+
     </LinearLayout>
 
     <View
@@ -96,5 +107,11 @@
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="#d9d9d9" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
 
 </LinearLayout>
