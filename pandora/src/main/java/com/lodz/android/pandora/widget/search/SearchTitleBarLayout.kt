@@ -68,6 +68,8 @@ class SearchTitleBarLayout : FrameLayout {
     private var mInputDuration: Long = 500
     /** 输入回调间隔单位 */
     private var mInputDurationUnit: TimeUnit = TimeUnit.MILLISECONDS
+    /** 是否选择推荐项 */
+    private var isSelectedRecomItem = false
 
     constructor(context: Context) : super(context) {
         init(null)
@@ -314,6 +316,9 @@ class SearchTitleBarLayout : FrameLayout {
 
         // 联想文字点击
         mAdapter.setOnItemClickListener { viewHolder, item, position ->
+            isSelectedRecomItem = true
+            setInputText(item.getTitleText())
+            setRecomListData(null)
             mOnSearchRecomdListener?.onItemClick(viewHolder, item, position)
         }
 
@@ -322,7 +327,10 @@ class SearchTitleBarLayout : FrameLayout {
             .compose(RxUtils.ioToMainObservable())
             .subscribe(object : BaseObserver<CharSequence>(){
                 override fun onBaseNext(any: CharSequence) {
-                    mOnSearchRecomdListener?.onInputTextChange(any.toString())
+                    if (!isSelectedRecomItem){
+                        mOnSearchRecomdListener?.onInputTextChange(any.toString())
+                    }
+                    isSelectedRecomItem = false
                 }
 
                 override fun onBaseError(e: Throwable) {

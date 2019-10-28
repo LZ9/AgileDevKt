@@ -84,8 +84,6 @@ class IdcardTestActivity : AbsActivity() {
             }
 
             override fun onItemClick(viewHolder: RecyclerView.ViewHolder, data: RecomdData, position: Int) {
-                mSearchTitleBarLayout.setInputText(data.getTitleText())
-                mSearchTitleBarLayout.setRecomListData(null)
                 checkIdcard(data.getTitleText())
             }
         })
