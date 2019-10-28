@@ -509,11 +509,13 @@ class SearchTitleBarLayout : FrameLayout {
     /** 设置输入框文字[text] */
     fun setInputText(text: String) {
         mInputEdit.setText(text)
+        mInputEdit.setSelection(text.length)
     }
 
     /** 设置输入框文字资源[resId] */
     fun setInputText(@StringRes resId: Int) {
         mInputEdit.setText(resId)
+        mInputEdit.setSelection(mInputEdit.text.length)
     }
 
     /** 设置输入框文字颜色资源[colorRes] */
@@ -600,8 +602,8 @@ class SearchTitleBarLayout : FrameLayout {
     }
 
     /** 设置联想列表数据[datas] */
-    fun setRecomListData(datas: MutableList<RecomdData>) {
-        mAdapter.setData(datas)
+    fun setRecomListData(datas: MutableList<RecomdData>?) {
+        mAdapter.setData(datas ?: ArrayList())
         mAdapter.notifyDataSetChanged()
     }
 
