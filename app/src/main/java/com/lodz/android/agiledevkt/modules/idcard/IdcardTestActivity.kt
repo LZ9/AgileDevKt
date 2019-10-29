@@ -5,16 +5,18 @@ import android.content.Intent
 import android.graphics.Color
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.alibaba.fastjson.JSON
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.SearchRecomBean
 import com.lodz.android.corekt.anko.bindView
+import com.lodz.android.corekt.anko.toArrayList
 import com.lodz.android.corekt.utils.DateUtils
 import com.lodz.android.corekt.utils.IdCardUtils
 import com.lodz.android.pandora.base.activity.AbsActivity
+import com.lodz.android.pandora.utils.acache.ACacheUtils
 import com.lodz.android.pandora.widget.search.OnSearchRecomdListener
 import com.lodz.android.pandora.widget.search.RecomdData
 import com.lodz.android.pandora.widget.search.SearchTitleBarLayout
-import java.util.*
 
 /**
  * 身份证号码测试类
@@ -23,22 +25,7 @@ import java.util.*
 class IdcardTestActivity : AbsActivity() {
 
     companion object {
-        val CACHE = arrayListOf(
-            "650202199109251234",
-            "653222199010111234",
-            "350624197711251234",
-            "142730198204021234",
-            "513002199007111234",
-            "350627199311021234",
-            "422128197608291234",
-            "372925197710241234",
-            "350322198802051234",
-            "350122197812161234",
-            "130823197012151234",
-            "350211199311021234",
-            "513001198604041234",
-            "130221196302031234"
-        )
+        val CACHE_KEY = "cache_key"
 
         fun start(context: Context) {
             val intent = Intent(context, IdcardTestActivity::class.java)
@@ -89,6 +76,7 @@ class IdcardTestActivity : AbsActivity() {
         })
     }
 
+
     /** 校验身份证号[idcard] */
     private fun checkIdcard(idcard: String) {
         if (!IdCardUtils.validateIdCard(idcard)){
@@ -96,7 +84,7 @@ class IdcardTestActivity : AbsActivity() {
             mResultTv.setTextColor(Color.RED)
             return
         }
-
+        putCache(idcard)
         mResultTv.setTextColor(Color.BLACK)
         val result = StringBuilder()
         result.append(getString(R.string.idcard_check_success)).append("\n")
@@ -111,16 +99,36 @@ class IdcardTestActivity : AbsActivity() {
         mResultTv.text = result
     }
 
-    private fun getCacheList(text: String): MutableList<RecomdData> {
-        val list = ArrayList<RecomdData>()
+    private fun getCacheList(text: String): MutableList<SearchRecomBean> {
+        val list = ArrayList<SearchRecomBean>()
+        val json = ACacheUtils.get().create().getAsString(CACHE_KEY)
+        val cacheList = if (json.isEmpty()) ArrayList<SearchRecomBean>() else JSON.parseArray(json, SearchRecomBean::class.java).toArrayList()
         if (text.isEmpty()) {
             return list
         }
-        CACHE.forEach { cache ->
-            if (cache.contains(text)) {
-                list.add(SearchRecomBean(cache))
+        cacheList.forEach { cache ->
+            if (cache.getTitleText().contains(text)) {
+                list.add(cache)
             }
         }
         return list
+    }
+
+    private fun putCache(text: String) {
+        val json = ACacheUtils.get().create().getAsString(CACHE_KEY)
+        val list = if (json.isEmpty()) ArrayList<SearchRecomBean>() else JSON.parseArray(json, SearchRecomBean::class.java).toArrayList()
+        var hasCache = false
+        for (bean in list) {
+            if (bean.getTitleText() == text) {
+                hasCache = true
+                break
+            }
+        }
+        if (!hasCache) {
+            val bean = SearchRecomBean()
+            bean.text = text
+            list.add(bean)
+        }
+        ACacheUtils.get().create().put(CACHE_KEY, JSON.toJSONString(list))
     }
 }

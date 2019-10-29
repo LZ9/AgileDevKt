@@ -610,8 +610,8 @@ class SearchTitleBarLayout : FrameLayout {
     }
 
     /** 设置联想列表数据[datas] */
-    fun setRecomListData(datas: MutableList<RecomdData>?) {
-        mAdapter.setData(datas ?: ArrayList())
+    fun setRecomListData(datas: List<RecomdData>?) {
+        mAdapter.setData(datas?.toMutableList() ?: ArrayList())
         mAdapter.notifyDataSetChanged()
     }
 
