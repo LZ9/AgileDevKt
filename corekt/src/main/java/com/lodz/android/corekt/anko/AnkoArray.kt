@@ -94,11 +94,11 @@ fun <T> Collection<T>.getPositionByIndex(groups: List<String>, indexText: String
                 continue
             }
             if (item.length <= indexText.length) {// 列表文字长度小于等于索引字符长度
-                if (item.equals(indexText.substring(0, item.length))) {
+                if (item == indexText.substring(0, item.length)) {
                     return i
                 }
             } else {
-                if (indexText.equals(item.substring(0, indexText.length))) {
+                if (indexText == item.substring(0, indexText.length)) {
                     return i
                 }
             }

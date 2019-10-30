@@ -15,7 +15,7 @@ interface BleDiscoveryListener {
     fun onFinishedDiscovery()
 
     /** 发现设备 */
-    fun onFoundDevice(device: BluetoothDevice)
+    fun onFoundDevice(device: BluetoothDevice?)
 
     /** 设备断开 */
     fun onDeviceDisconnected()

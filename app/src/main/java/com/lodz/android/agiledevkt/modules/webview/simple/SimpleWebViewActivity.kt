@@ -94,7 +94,7 @@ class SimpleWebViewActivity : BaseActivity() {
         })
 
         mWebView.setOnOtherOverrideUrlLoading { view, uri ->
-            if ("bilibili".equals(uri.scheme)) {
+            if ("bilibili" == uri.scheme) {
                 showJumpBilibiliDialog(uri)
             }
             return@setOnOtherOverrideUrlLoading true

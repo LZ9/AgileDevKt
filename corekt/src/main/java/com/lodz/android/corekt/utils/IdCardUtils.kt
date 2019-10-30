@@ -44,7 +44,7 @@ object IdCardUtils {
         val birth = idCard.substring(6, 14)
         val date = DateUtils.parseFormatDate(DateUtils.TYPE_5, birth) ?: return false
         val dateStr = DateUtils.getFormatString(DateUtils.TYPE_5, date)
-        return dateStr.equals(birth)
+        return dateStr == birth
     }
 
     /** 获取17位待补全的身份证号[idCard]的校验位 */

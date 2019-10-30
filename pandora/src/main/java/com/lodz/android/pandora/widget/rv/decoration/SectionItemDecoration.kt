@@ -83,7 +83,7 @@ open class SectionItemDecoration<T> protected constructor(context: Context) : Ba
         if (current.isEmpty() || previous.isEmpty()) {
             return false
         }
-        return !current.substring(0, 1).equals(previous.substring(0, 1))
+        return current.substring(0, 1) != previous.substring(0, 1)
     }
 
     /** 获取对应位置[position]的数据，数据回调[callback] */

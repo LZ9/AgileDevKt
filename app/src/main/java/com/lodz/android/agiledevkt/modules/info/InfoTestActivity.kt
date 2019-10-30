@@ -268,7 +268,7 @@ class InfoTestActivity : BaseActivity() {
             if (action.isNullOrEmpty()){
                 return
             }
-            if (action.equals(LocationManager.PROVIDERS_CHANGED_ACTION)) {
+            if (action == LocationManager.PROVIDERS_CHANGED_ACTION) {
                 mGpsOpenTv.text = getString(R.string.info_is_gps_open).format(isGpsOpen())
             }
         }

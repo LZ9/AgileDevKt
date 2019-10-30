@@ -93,7 +93,7 @@ class SimpleWebView : PgWebView {
 
         override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && request != null) {
-                if ("http".equals(request.url.scheme) || "https".equals(request.url.scheme)) {
+                if ("http" == request.url.scheme || "https" == request.url.scheme) {
                     return super.shouldOverrideUrlLoading(view, request)
                 }
                 return mListener?.invoke(view, request.url) ?: super.shouldOverrideUrlLoading(view, request)

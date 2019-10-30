@@ -158,33 +158,33 @@ class BleSimpleHelper private constructor() {
                 return
             }
 
-            if (action.equals(BluetoothAdapter.ACTION_STATE_CHANGED)) {// 蓝牙状态变化
+            if (action == BluetoothAdapter.ACTION_STATE_CHANGED) {// 蓝牙状态变化
                 val state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.STATE_OFF)
                 for (listener in mBleStateListener) {
                     listener.onStateChange(state)
                 }
             }
 
-            if (action.equals(BluetoothAdapter.ACTION_DISCOVERY_STARTED)) {// 蓝牙扫描过程开始
+            if (action == BluetoothAdapter.ACTION_DISCOVERY_STARTED) {// 蓝牙扫描过程开始
                 for (listener in mBleDiscoveryListener) {
                     listener.onStartDiscovery()
                 }
             }
 
-            if (action.equals(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)) {// 蓝牙扫描过程结束
+            if (action == BluetoothAdapter.ACTION_DISCOVERY_FINISHED) {// 蓝牙扫描过程结束
                 for (listener in mBleDiscoveryListener) {
                     listener.onFinishedDiscovery()
                 }
             }
 
-            if (action.equals(BluetoothDevice.ACTION_FOUND)) {// 蓝牙扫描时，扫描到任一远程蓝牙设备时，会发送此广播
+            if (action == BluetoothDevice.ACTION_FOUND) {// 蓝牙扫描时，扫描到任一远程蓝牙设备时，会发送此广播
                 val device = intent.getParcelableExtra<BluetoothDevice>(BluetoothDevice.EXTRA_DEVICE)
                 for (listener in mBleDiscoveryListener) {
                     listener.onFoundDevice(device)
                 }
             }
 
-            if (action.equals(BluetoothDevice.ACTION_ACL_DISCONNECTED)) {// 蓝牙设备断开
+            if (action == BluetoothDevice.ACTION_ACL_DISCONNECTED) {// 蓝牙设备断开
                 for (listener in mBleDiscoveryListener) {
                     listener.onDeviceDisconnected()
                 }

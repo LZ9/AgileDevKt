@@ -79,6 +79,6 @@ class StickyItemDecoration<T> private constructor(context: Context) : SectionIte
         if (current.isEmpty() || next.isEmpty()) {
             return false
         }
-        return !current.substring(0, 1).equals(next.substring(0, 1))
+        return current.substring(0, 1) != next.substring(0, 1)
     }
 }

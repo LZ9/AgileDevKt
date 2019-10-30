@@ -247,7 +247,7 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
 
                 synchronized(this) {
                     for (i in mCurrentPhotoList.indices) {
-                        if (bean.path.equals(mCurrentPhotoList[i].path)) {
+                        if (bean.path == mCurrentPhotoList[i].path) {
                             mCurrentPhotoList[i].isSelected = !bean.isSelected//更改选中状态
                             mAdapter.setData(mCurrentPhotoList)
                             mAdapter.notifyItemChanged(position)//刷新数据
@@ -256,7 +256,7 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
                             } else {// 点击后是非选中状态
                                 val iterator = mSelectedList.iterator()
                                 while (iterator.hasNext()) {
-                                    if (iterator.next().path.equals(bean.path)) {
+                                    if (iterator.next().path == bean.path) {
                                         iterator.remove()// 从选中列表里去除
                                         break
                                     }
@@ -333,7 +333,7 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
             val itemBean = PickerItemBean()
             itemBean.path = path
             for (selectedBean in mSelectedList) {
-                if (selectedBean.path.equals(path)) {
+                if (selectedBean.path == path) {
                     itemBean.isSelected = true
                     break
                 }
@@ -479,7 +479,7 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
         mTempFilePath = ""
         val list = AlbumUtils.getAllImageFolders(getContext())
         for (folder in list) {
-            if (folder.dir.equals(currentFolder.dir)) {
+            if (folder.dir == currentFolder.dir) {
                 configAdapterData(AlbumUtils.getImageListOfFolder(getContext(), folder))
                 break
             }

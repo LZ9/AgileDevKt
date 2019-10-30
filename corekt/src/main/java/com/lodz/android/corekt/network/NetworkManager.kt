@@ -69,11 +69,11 @@ class NetworkManager private constructor() {
         if (opeator.isNullOrEmpty()) {
             return OperatorInfo.OPERATOR_UNKNOWN
         }
-        if (opeator.equals("46000") || opeator.equals("46002") || opeator.equals("46007")) {// 中国移动
+        if (opeator == "46000" || opeator == "46002" || opeator == "46007") {// 中国移动
             return OperatorInfo.OPERATOR_CMCC
-        } else if (opeator.equals("46001")) {// 中国联通
+        } else if (opeator == "46001") {// 中国联通
             return OperatorInfo.OPERATOR_CUCC
-        } else if (opeator.equals("46003")) {// 中国电信
+        } else if (opeator == "46003") {// 中国电信
             return OperatorInfo.OPERATOR_CTCC
         }
         // 未知

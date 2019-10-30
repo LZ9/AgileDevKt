@@ -91,7 +91,7 @@ fun Context.openAppByActionMain(packageName: String, newTask: Boolean = true) {
     val intent = Intent(Intent.ACTION_MAIN)
     for (resolve in packageManager.queryIntentActivities(intent, 0)) {
         val info: ActivityInfo = resolve.activityInfo ?: continue
-        if (packageName.equals(info.packageName)) {
+        if (packageName == info.packageName) {
             mainActivityName = info.name
             break
         }

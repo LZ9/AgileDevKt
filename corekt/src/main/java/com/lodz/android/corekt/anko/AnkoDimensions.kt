@@ -18,7 +18,7 @@ inline fun <reified T> changeDimensions(param: T, block: (original: Float) -> Fl
         Int::class -> param as Float
         Long::class -> (param as Long).toFloat()
         Double::class -> (param as Double).toFloat()
-        String::class -> if ((param as String).equals("")) 0f else (param as String).toFloat()
+        String::class -> if ((param as String) == "") 0f else (param as String).toFloat()
         else -> throw IllegalArgumentException("Unsupported type")
     }
 

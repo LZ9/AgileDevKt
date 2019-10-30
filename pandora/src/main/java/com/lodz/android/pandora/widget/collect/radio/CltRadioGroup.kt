@@ -218,7 +218,7 @@ class CltRadioGroup : FrameLayout {
 
             if (mRadioType == TYPE_SINGLE) {// 单选
                 for (i in mList.indices) {
-                    mList[i].isSelected = if (item.radioable.getIdTag().equals(mList[i].getIdTag())) {
+                    mList[i].isSelected = if (item.radioable.getIdTag() == mList[i].getIdTag()) {
                         if (!mList[i].isSelected) {// 原来未选中 现在选中了则回调监听器
                             mOnCheckedChangeListener?.invoke(item, true)
                         }
@@ -230,7 +230,7 @@ class CltRadioGroup : FrameLayout {
             }
             if (mRadioType == TYPE_MULTIPLE) {// 多选
                 for (i in mList.indices) {
-                    if (item.radioable.getIdTag().equals(mList[i].getIdTag())) {
+                    if (item.radioable.getIdTag() == mList[i].getIdTag()) {
                         mList[i].isSelected = !mList[i].isSelected
                         mOnCheckedChangeListener?.invoke(item, mList[i].isSelected)
                     }
@@ -439,7 +439,7 @@ class CltRadioGroup : FrameLayout {
     /** 设置单选选中的[id] */
     fun setSelectedId(id: String) {
         for (i in mList.indices) {
-            mList[i].isSelected = id.equals(mList[i].getIdTag())
+            mList[i].isSelected = id == mList[i].getIdTag()
         }
         mAdapter.setData(mList)
         mAdapter.notifyDataSetChanged()
@@ -450,7 +450,7 @@ class CltRadioGroup : FrameLayout {
         for (i in mList.indices) {
             mList[i].isSelected = false
             ids.forEachIndexed { index, id ->
-                if (id.equals(mList[i].getIdTag())) {
+                if (id == mList[i].getIdTag()) {
                     mList[i].isSelected = true
                 }
             }

@@ -58,12 +58,12 @@ object FileUtils {
         if (file == null || !isFileExists(file)) {//文件为空或者文件不存在
             return false
         }
-        if (newName.equals(file.name)) {// 新名称与旧名称一致
+        if (newName == file.name) {// 新名称与旧名称一致
             return true
         }
-
-        val newFile = create(file.parent + File.separator + replaceName)
-        return file.renameTo(newFile)
+        val parentPath = file.parent ?: return false
+        val newFile = create(parentPath + File.separator + replaceName)
+        return if (newFile != null) file.renameTo(newFile) else  false
     }
 
     /** 删除指定路径[filePath]下以后缀[suffix]结尾的文件，例如：.apk、.png等等 */
