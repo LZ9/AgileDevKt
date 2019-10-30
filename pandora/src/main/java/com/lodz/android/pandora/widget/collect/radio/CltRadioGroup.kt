@@ -263,7 +263,7 @@ class CltRadioGroup : FrameLayout {
     }
 
     /** 获取必填图片是否显示 */
-    fun isRequired(isShow: Boolean): Boolean = mRequiredImg.visibility == View.VISIBLE
+    fun isRequired(): Boolean = mRequiredImg.visibility == View.VISIBLE
 
     /** 设置标题文字[title] */
     fun setTitleText(title: String) {

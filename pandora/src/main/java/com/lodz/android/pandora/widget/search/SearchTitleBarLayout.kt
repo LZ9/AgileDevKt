@@ -278,8 +278,8 @@ class SearchTitleBarLayout : FrameLayout {
     }
 
     private fun initRecyclerView() {
-        mAdapter = RecomdListAdapter(getContext())
-        val layoutManager = LinearLayoutManager(getContext())
+        mAdapter = RecomdListAdapter(context)
+        val layoutManager = LinearLayoutManager(context)
         layoutManager.orientation = RecyclerView.VERTICAL
         mRecyclerView.layoutManager = layoutManager
         mAdapter.onAttachedToRecyclerView(mRecyclerView)// 如果使用网格布局请设置此方法

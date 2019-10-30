@@ -22,4 +22,11 @@
         android:drawable="@drawable/pandora_ic_progress_loading_64_6"
         android:duration="100" />
 
+    <item
+        android:drawable="@drawable/pandora_ic_progress_loading_64_7"
+        android:duration="100" />
+
+    <item
+        android:drawable="@drawable/pandora_ic_progress_loading_64_8"
+        android:duration="100" />
 </animation-list>

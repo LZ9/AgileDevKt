@@ -89,7 +89,7 @@ object DateUtils {
     fun getAfterDay(formatType: String, source: String, n: Int): String {
         try {
             val cal = Calendar.getInstance()
-            cal.time = parseFormatDate(formatType, source)
+            cal.time = parseFormatDate(formatType, source) ?: return ""
             cal.set(Calendar.DATE, cal.get(Calendar.DATE) + n)
             return parseFormatCalendar(formatType, cal)
         } catch (e: Exception) {
@@ -103,7 +103,7 @@ object DateUtils {
     fun getBeforeDay(formatType: String, source: String, n: Int): String {
         try {
             val cal = Calendar.getInstance()
-            cal.time = parseFormatDate(formatType, source)
+            cal.time = parseFormatDate(formatType, source) ?: return ""
             cal.set(Calendar.DATE, cal.get(Calendar.DATE) - n)
             return parseFormatCalendar(formatType, cal)
         } catch (e: Exception) {

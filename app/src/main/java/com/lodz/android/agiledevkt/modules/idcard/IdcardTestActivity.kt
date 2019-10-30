@@ -26,7 +26,7 @@ import kotlin.random.Random
 class IdcardTestActivity : AbsActivity() {
 
     companion object {
-        val CACHE_KEY = "cache_key"
+        const val CACHE_KEY = "cache_key"
 
         fun start(context: Context) {
             val intent = Intent(context, IdcardTestActivity::class.java)

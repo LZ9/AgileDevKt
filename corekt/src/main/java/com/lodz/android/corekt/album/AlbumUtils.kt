@@ -85,7 +85,7 @@ object AlbumUtils {
                 continue
             }
 
-            val parentFile = file.parentFile
+            val parentFile = file.parentFile ?: continue
             val parentPath = parentFile.absolutePath
             if (directoryList.contains(parentPath)) {// 已经添加
                 continue

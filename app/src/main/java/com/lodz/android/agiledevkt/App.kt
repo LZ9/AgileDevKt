@@ -6,6 +6,7 @@ import android.app.NotificationChannelGroup
 import android.app.NotificationManager
 import android.content.Context
 import android.graphics.Color
+import android.os.Build
 import android.widget.LinearLayout
 import androidx.multidex.MultiDex
 import com.lodz.android.agiledevkt.config.Constant
@@ -113,7 +114,7 @@ class App : BaseApplication() {
 
     /** 初始化通知通道 */
     private fun initNotificationChannel() {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val group = NotificationChannelGroup(Constant.NOTIFI_GROUP_ID, "通知组")
             NotificationUtils.create(applicationContext).createNotificationChannelGroup(group)// 设置通知组
 
@@ -136,7 +137,7 @@ class App : BaseApplication() {
 
     /** 获取主通道 */
     private fun getMainChannel(): NotificationChannel? {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(Constant.NOTIFI_CHANNEL_MAIN_ID, "主通知", NotificationManager.IMPORTANCE_DEFAULT)
             channel.enableLights(true)// 开启指示灯，如果设备有的话。
             channel.lightColor = Color.GREEN// 设置指示灯颜色
@@ -156,7 +157,7 @@ class App : BaseApplication() {
 
     /** 获取下载通道 */
     private fun getDownloadChannel(): NotificationChannel? {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(Constant.NOTIFI_CHANNEL_DOWNLOAD_ID, "下载通知", NotificationManager.IMPORTANCE_DEFAULT)
             channel.enableLights(false)// 开启指示灯，如果设备有的话。
             channel.description = "应用下载通知频道"// 通道描述
@@ -174,7 +175,7 @@ class App : BaseApplication() {
 
     /** 获取前台服务通道 */
     private fun getServiceChannel(): NotificationChannel? {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(Constant.NOTIFI_CHANNEL_SERVICE_ID, "服务通知", NotificationManager.IMPORTANCE_HIGH)
             channel.enableLights(true)// 开启指示灯，如果设备有的话。
             channel.lightColor = Color.GREEN// 设置指示灯颜色

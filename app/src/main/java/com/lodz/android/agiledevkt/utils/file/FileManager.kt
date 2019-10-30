@@ -1,5 +1,6 @@
 package com.lodz.android.agiledevkt.utils.file
 
+import android.os.Build
 import android.text.TextUtils
 import com.lodz.android.agiledevkt.App
 import com.lodz.android.corekt.anko.getStoragePath
@@ -36,7 +37,7 @@ object FileManager {
     /** 初始化路径 */
     private fun initPath() {
         var rootPath: String? = null
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             rootPath = App.get().getExternalFilesDir("")?.absolutePath
         }
         if (rootPath.isNullOrEmpty()) {

@@ -69,8 +69,8 @@ dependencies {
     implementation project(':imageloaderkt')
     //    implementation 'com.lodz:imageloader-kt:1.0.4'
     // 权限申请
-    implementation 'org.permissionsdispatcher:permissionsdispatcher:4.5.0'
-    kapt 'org.permissionsdispatcher:permissionsdispatcher-processor:4.5.0'
+    implementation 'org.permissionsdispatcher:permissionsdispatcher:4.6.0'
+    kapt 'org.permissionsdispatcher:permissionsdispatcher-processor:4.6.0'
     // anko layout
     implementation 'org.jetbrains.anko:anko-sdk25:0.10.8'
     implementation 'org.jetbrains.anko:anko-appcompat-v7:0.10.8'

@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import android.widget.RemoteViews
 import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
@@ -39,7 +40,7 @@ class NotificationUtils private constructor(context: Context) {
 
     /** 创建一个通知通道[channel] */
     fun createNotificationChannel(channel: NotificationChannel): NotificationUtils {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             mNotificationManager.createNotificationChannel(channel)
         }
         return this
@@ -47,7 +48,7 @@ class NotificationUtils private constructor(context: Context) {
 
     /** 创建多个通知通道[channels] */
     fun createNotificationChannels(channels: List<NotificationChannel>): NotificationUtils {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             mNotificationManager.createNotificationChannels(channels)
         }
         return this
@@ -55,7 +56,7 @@ class NotificationUtils private constructor(context: Context) {
 
     /** 创建一个通知通道组[group] */
     fun createNotificationChannelGroup(group: NotificationChannelGroup): NotificationUtils {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             mNotificationManager.createNotificationChannelGroup(group)
         }
         return this
@@ -63,7 +64,7 @@ class NotificationUtils private constructor(context: Context) {
 
     /** 创建多个通知通道组[groups] */
     fun createNotificationChannelGroups(groups: List<NotificationChannelGroup>): NotificationUtils {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             mNotificationManager.createNotificationChannelGroups(groups)
         }
         return this
@@ -76,7 +77,7 @@ class NotificationUtils private constructor(context: Context) {
 
     /** 如何创建一个NotificationChannel */
     private fun notificationChannelBuild() {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val group = NotificationChannelGroup("g0001", "测试分组")
 
             val channelId = "c00001"

@@ -145,7 +145,10 @@ class BluetoothTestActivity : BaseActivity() {
             mBleStatusTv.text = getString(R.string.ble_status).format(getString(R.string.ble_finish_discovery))
         }
 
-        override fun onFoundDevice(device: BluetoothDevice) {
+        override fun onFoundDevice(device: BluetoothDevice?) {
+            if (device == null){
+                return
+            }
             if (mDeviceList.contains(device)){
                 return
             }

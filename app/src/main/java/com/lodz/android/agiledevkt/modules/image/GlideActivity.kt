@@ -10,6 +10,7 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
@@ -189,7 +190,7 @@ class GlideActivity : BaseActivity() {
 
     /** 初始化通知通道 */
     private fun initNotificationChannel() {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = getMainChannel()
             if (channel != null) {
                 NotificationUtils.create(getContext()).createNotificationChannel(channel) // 设置频道
@@ -199,7 +200,7 @@ class GlideActivity : BaseActivity() {
 
     /** 获取主通道 */
     private fun getMainChannel(): NotificationChannel? {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(NOTIFI_CHANNEL_MAIN_ID, "主通知", NotificationManager.IMPORTANCE_DEFAULT)
             channel.enableLights(true)// 开启指示灯，如果设备有的话。
             channel.lightColor = Color.GREEN// 设置指示灯颜色

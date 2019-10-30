@@ -126,11 +126,11 @@ open class DragHelperCallback<T> : ItemTouchHelper.Callback() {
 
         if (fromPosition < toPosition) {//顺序小到大
             for (i in fromPosition until toPosition) {
-                Collections.swap(mList, i, i + 1)
+                Collections.swap(mList!!, i, i + 1)
             }
         } else {//顺序大到小
             for (i in fromPosition downTo (toPosition + 1)) {
-                Collections.swap(mList, i, i - 1)
+                Collections.swap(mList!!, i, i - 1)
             }
         }
         mAdapter?.notifyItemMoved(fromPosition, toPosition)

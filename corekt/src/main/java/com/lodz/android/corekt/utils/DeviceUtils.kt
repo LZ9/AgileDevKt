@@ -60,7 +60,7 @@ object DeviceUtils {
             val fields = Build::class.java.declaredFields
             for (field in fields) {
                 field.isAccessible = true
-                infos[field.name] = field.get(null).toString()
+                infos[field.name] = field.get(null)?.toString() ?: ""
             }
         } catch (e: Exception) {
             e.printStackTrace()

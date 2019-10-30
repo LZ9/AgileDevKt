@@ -53,7 +53,12 @@ class PickerManager<V : View> internal constructor(private val pickerBean: Picke
             pickerBean.isNeedCamera = false// 不允许使用拍照模式
         }
         if (pickerBean.isNeedCamera && pickerBean.cameraSavePath.isEmpty()) {// 开启拍照功能要校验拍照保存地址
-            pickerBean.cameraSavePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).absolutePath
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                pickerBean.cameraSavePath = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)?.absolutePath ?: ""
+            }
+            if (pickerBean.cameraSavePath.isEmpty()){
+                pickerBean.cameraSavePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).absolutePath
+            }
         }
         if (pickerBean.isNeedCamera && !pickerBean.cameraSavePath.endsWith(File.separator)) {//补全地址
             pickerBean.cameraSavePath += File.separator

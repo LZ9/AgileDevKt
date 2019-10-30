@@ -17,7 +17,7 @@ fun Context.getStoragePath(): Pair<String?, String?> {
         val getVolumeList = storageManager.javaClass.getMethod("getVolumeList")
         val getPath = storageVolumeClass.getMethod("getPath")
         val isRemovable = storageVolumeClass.getMethod("isRemovable")
-        val result = getVolumeList.invoke(storageManager)
+        val result = getVolumeList.invoke(storageManager) ?: return Pair(null, null)
         val length = Array.getLength(result)
 
         var internal: String? = null
