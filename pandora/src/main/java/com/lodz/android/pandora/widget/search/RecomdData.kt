@@ -15,6 +15,13 @@ interface RecomdData {
     @DrawableRes
     fun getItemBackgroundDrawableRes(): Int = 0
 
+    /** item背景 */
+    @ColorInt
+    fun getItemBackgroundColor(): Int = 0
+
+    /** item高度 */
+    fun getItemHigthPx(): Int = 0
+
     /** 左侧图标资源 */
     @DrawableRes
     fun getIconDrawableRes(): Int = 0
@@ -85,7 +92,7 @@ interface RecomdData {
 
     /** 第二标签文字颜色 */
     @ColorInt
-    fun geSecondTagTextColor(): Int = 0
+    fun getSecondTagTextColor(): Int = 0
 
     /** 第二标签文字大小（单位SP） */
     fun getSecondTagTextSize(): Float = 0f
@@ -94,4 +101,10 @@ interface RecomdData {
     @DrawableRes
     fun getSecondTagTextBackground(): Int = 0
 
+    /** 分割线颜色 */
+    @ColorInt
+    fun getDivideLineColor(): Int = 0
+
+    /** 分割线显隐 */
+    fun getDivideLineVisibility(): Int = View.VISIBLE
 }

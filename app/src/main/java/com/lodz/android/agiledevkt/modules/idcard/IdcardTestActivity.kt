@@ -17,6 +17,7 @@ import com.lodz.android.pandora.utils.acache.ACacheUtils
 import com.lodz.android.pandora.widget.search.OnSearchRecomdListener
 import com.lodz.android.pandora.widget.search.RecomdData
 import com.lodz.android.pandora.widget.search.SearchTitleBarLayout
+import kotlin.random.Random
 
 /**
  * 身份证号码测试类
@@ -61,6 +62,7 @@ class IdcardTestActivity : AbsActivity() {
                 mResultTv.setText(R.string.idcard_length_error)
                 return@setOnSearchClickListener
             }
+            mSearchTitleBarLayout.setRecomListData(null)
             checkIdcard(idcard)
         }
 
@@ -127,6 +129,22 @@ class IdcardTestActivity : AbsActivity() {
         if (!hasCache) {
             val bean = SearchRecomBean()
             bean.text = text
+            val index = Random.nextInt(6)
+            if (index > 1){
+                bean.desc = bean.text.hashCode().toString()
+            }
+            if (index > 2){
+                bean.titleTag = "认证"
+            }
+            if (index > 3){
+                bean.firstTag = "身份证"
+            }
+            if (index > 4){
+                bean.tips = index.toString()
+            }
+            if (index > 5){
+                bean.secondTag = "证件号"
+            }
             list.add(bean)
         }
         ACacheUtils.get().create().put(CACHE_KEY, JSON.toJSONString(list))

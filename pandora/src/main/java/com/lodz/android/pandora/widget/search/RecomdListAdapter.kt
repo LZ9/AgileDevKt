@@ -33,6 +33,13 @@ class RecomdListAdapter(context: Context) : BaseRecyclerViewAdapter<RecomdData>(
         if (bean.getItemBackgroundDrawableRes() != 0){
             holder.itemView.setBackgroundResource(bean.getItemBackgroundDrawableRes())
         }
+        if (bean.getItemBackgroundColor() != 0){
+            holder.itemView.setBackgroundColor(bean.getItemBackgroundColor())
+        }
+        if (bean.getItemHigthPx() != 0){
+            setItemViewHeight(holder.contentLayout, bean.getItemHigthPx())
+        }
+
         configIconImg(holder.iconImg, bean)
         configTitle(holder.titleTv, bean)
         configTitleTag(holder.titleTagTv, bean)
@@ -40,6 +47,7 @@ class RecomdListAdapter(context: Context) : BaseRecyclerViewAdapter<RecomdData>(
         configFirstTag(holder.firstTagTv, bean)
         configSecondTag(holder.secondTagTv, bean)
         configTips(holder.tipsTv, bean)
+        configDivideLine(holder.divideLineView, bean)
     }
 
     /** 配置图标 */
@@ -108,8 +116,8 @@ class RecomdListAdapter(context: Context) : BaseRecyclerViewAdapter<RecomdData>(
     private fun configSecondTag(secondTagTv: TextView, bean: RecomdData) {
         secondTagTv.visibility = if (bean.getSecondTagText().isEmpty()) View.GONE else View.VISIBLE
         secondTagTv.text = bean.getSecondTagText()
-        if (bean.geSecondTagTextColor() != 0) {
-            secondTagTv.setTextColor(bean.geSecondTagTextColor())
+        if (bean.getSecondTagTextColor() != 0) {
+            secondTagTv.setTextColor(bean.getSecondTagTextColor())
         }
         if (bean.getSecondTagTextSize() != 0f) {
             secondTagTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, bean.getSecondTagTextSize())
@@ -131,10 +139,18 @@ class RecomdListAdapter(context: Context) : BaseRecyclerViewAdapter<RecomdData>(
         }
     }
 
+    /** 配置分割线 */
+    private fun configDivideLine(divideLineView: View, bean: RecomdData) {
+        divideLineView.visibility = bean.getDivideLineVisibility()
+        if (bean.getDivideLineColor() != 0) {
+            divideLineView.setBackgroundColor(bean.getDivideLineColor())
+        }
+    }
+
     private inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        /** 根布局 */
-        val rootLayout by bindView<ViewGroup>(R.id.root_layout)
+        /** 内容布局 */
+        val contentLayout by bindView<ViewGroup>(R.id.content_layout)
         /** 图标 */
         val iconImg by bindView<ImageView>(R.id.icon_img)
         /** 标题文字 */
@@ -149,5 +165,7 @@ class RecomdListAdapter(context: Context) : BaseRecyclerViewAdapter<RecomdData>(
         val secondTagTv by bindView<TextView>(R.id.second_tag_tv)
         /** 提示文字 */
         val tipsTv by bindView<TextView>(R.id.tips_tv)
+        /** 分割线 */
+        val divideLineView by bindView<View>(R.id.divide_line_view)
     }
 }
