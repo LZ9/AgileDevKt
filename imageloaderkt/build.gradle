@@ -11,7 +11,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 29
         versionCode 13
-        versionName "1.1.2"// 未上传
+        versionName "1.1.2"// 已上传
     }
 
     buildTypes {
@@ -41,7 +41,7 @@ dependencies {
 //    userOrg = 'lz9'
 //    groupId = 'com.lodz'
 //    artifactId = 'imageloader-kt'
-//    publishVersion = '1.1.1'
+//    publishVersion = '1.1.2'
 //    desc = 'Hi, this is a image loader'
 //    website = 'https://github.com/LZ9/AgileDevKt'
 //}
