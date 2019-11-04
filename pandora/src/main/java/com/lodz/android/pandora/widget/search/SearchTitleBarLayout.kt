@@ -223,6 +223,9 @@ class SearchTitleBarLayout : FrameLayout {
         if (inputText.isNotEmpty()) {
             setInputText(inputText)
         }
+        if (isNeedCleanBtn) {
+            mClearBtn.visibility = if (inputText.isEmpty()) View.GONE else View.VISIBLE
+        }
 
         // 输入框内容文字颜色
         val inputTextColor: ColorStateList? = typedArray?.getColorStateList(R.styleable.SearchTitleBarLayout_inputTextColor)
