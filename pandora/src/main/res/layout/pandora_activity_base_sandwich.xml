@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <FrameLayout
-        android:id="@+id/top_layout"
+        android:id="@+id/pdr_top_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone">
@@ -19,7 +19,7 @@
         android:layout_weight="1">
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/swipe_refresh_layout"
+            android:id="@+id/pdr_swipe_refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -28,7 +28,7 @@
                 android:layout_height="match_parent">
 
                 <LinearLayout
-                    android:id="@+id/content_layout"
+                    android:id="@+id/pdr_content_layout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
@@ -37,7 +37,7 @@
                 </LinearLayout>
 
                 <ViewStub
-                    android:id="@+id/view_stub_no_data_layout"
+                    android:id="@+id/pdr_view_stub_no_data_layout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout="@layout/pandora_viewstub_no_data" />
@@ -47,20 +47,20 @@
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <ViewStub
-            android:id="@+id/view_stub_loading_layout"
+            android:id="@+id/pdr_view_stub_loading_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout="@layout/pandora_viewstub_loading" />
 
         <ViewStub
-            android:id="@+id/view_stub_error_layout"
+            android:id="@+id/pdr_view_stub_error_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout="@layout/pandora_viewstub_error" />
     </FrameLayout>
 
     <FrameLayout
-        android:id="@+id/bottom_layout"
+        android:id="@+id/pdr_bottom_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone">

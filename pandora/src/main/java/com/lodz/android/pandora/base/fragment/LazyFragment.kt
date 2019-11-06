@@ -20,29 +20,29 @@ import com.trello.rxlifecycle3.components.support.RxFragment
 abstract class LazyFragment : RxFragment(), IFragmentBackPressed {
 
     /** 是否使用Anko Layout */
-    private var isUseAnko = false
+    private var isPdrUseAnko = false
 
     /** 父控件布局  */
-    private var mParentView: View? = null
+    private var mPdrParentView: View? = null
     /** 是否使用懒加载  */
-    private var isLazyLoad = true
+    private var isPdrLazyLoad = true
     /** 是否完成加载  */
-    private var isLoadComplete = false
+    private var isPdrLoadComplete = false
     /** 是否首次启动  */
-    private var isFirstCreate = true
+    private var isPdrFirstCreate = true
     /** 是否首次启动Resume  */
-    private var isFirstResume = true
+    private var isPdrFirstResume = true
     /** 当前的fragment是否已经暂停  */
-    private var isAlreadyPause = false
+    private var isPdrAlreadyPause = false
     /** 是否从OnPause离开  */
-    private var isOnPauseOut = false
+    private var isPdrOnPauseOut = false
 
     /** 是否使用AnkoLayout */
-    protected fun isUseAnkoLayout(): Boolean = isUseAnko
+    protected fun isUseAnkoLayout(): Boolean = isPdrUseAnko
 
     final override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        isUseAnko = injectAnko()
-        if (!isUseAnko) {//不使用AnkoLayout再加载布局
+        isPdrUseAnko = injectAnko()
+        if (!isPdrUseAnko) {//不使用AnkoLayout再加载布局
             return inflater.inflate(getAbsLayoutId(), container, false)
         }
         val view = getAnkoLayoutView()
@@ -59,20 +59,20 @@ abstract class LazyFragment : RxFragment(), IFragmentBackPressed {
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
-        isLazyLoad = configIsLazyLoad()
+        isPdrLazyLoad = configIsLazyLoad()
         var isInit = false
-        if (isVisibleToUser && isLazyLoad && !isFirstCreate && !isLoadComplete) {// fragment可见 && 启用懒加载 && 不是第一次启动 && 未加载完成
-            init(mParentView!!, null)
-            isLoadComplete = true
+        if (isVisibleToUser && isPdrLazyLoad && !isPdrFirstCreate && !isPdrLoadComplete) {// fragment可见 && 启用懒加载 && 不是第一次启动 && 未加载完成
+            init(mPdrParentView!!, null)
+            isPdrLoadComplete = true
             isInit = true
         }
-        if (isVisibleToUser && isLoadComplete) {
+        if (isVisibleToUser && isPdrLoadComplete) {
             onFragmentResume()
             if (!isInit) {
                 notifyChildResume(this)
             }
         }
-        if (!isVisibleToUser && isLoadComplete) {
+        if (!isVisibleToUser && isPdrLoadComplete) {
             onFragmentPause()
             notifyChildPause(this)
         }
@@ -80,19 +80,19 @@ abstract class LazyFragment : RxFragment(), IFragmentBackPressed {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        isLoadComplete = false// fragment被回收时重置加载状态
-        mParentView = null
+        isPdrLoadComplete = false// fragment被回收时重置加载状态
+        mPdrParentView = null
     }
 
     final override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mParentView = view
-        if (!isLazyLoad || userVisibleHint) {// 不使用懒加载 || fragment可见
+        mPdrParentView = view
+        if (!isPdrLazyLoad || userVisibleHint) {// 不使用懒加载 || fragment可见
             init(view, savedInstanceState)
-            isLoadComplete = true
+            isPdrLoadComplete = true
             onFragmentResume()
         }
-        isFirstCreate = false
+        isPdrFirstCreate = false
     }
 
 
@@ -122,25 +122,25 @@ abstract class LazyFragment : RxFragment(), IFragmentBackPressed {
 
     override fun onResume() {
         super.onResume()
-        if (isFirstResume) {
-            isFirstResume = false
+        if (isPdrFirstResume) {
+            isPdrFirstResume = false
             return
         }
-        if (userVisibleHint && isLoadComplete) {//自己显示 && 已经加载
+        if (userVisibleHint && isPdrLoadComplete) {//自己显示 && 已经加载
             val parent = parentFragment
             if (parent != null && !parent.userVisibleHint) {// 父类不显示
                 return
             }
-            if (isOnPauseOut) {//自己是从OnPause回来的
+            if (isPdrOnPauseOut) {//自己是从OnPause回来的
                 onFragmentResume()
-                isOnPauseOut = false
+                isPdrOnPauseOut = false
             }
         }
     }
 
     /** FragmentResume时调用，与activity生命周期保持一致 */
     protected open fun onFragmentResume() {
-        isAlreadyPause = false
+        isPdrAlreadyPause = false
     }
 
     /** 通知内部显示着的fragment显示 */
@@ -163,24 +163,24 @@ abstract class LazyFragment : RxFragment(), IFragmentBackPressed {
 
     override fun onPause() {
         super.onPause()
-        if (userVisibleHint && isLoadComplete && !isAlreadyPause) {// 自己显示 && 已加载完成 && 未调用过pause方法
+        if (userVisibleHint && isPdrLoadComplete && !isPdrAlreadyPause) {// 自己显示 && 已加载完成 && 未调用过pause方法
             val parent = parentFragment
             if (parent != null && !parent.userVisibleHint) {//父类没有显示
                 return
             }
             if (parent != null && parent is LazyFragment) {
-                if (parent.isAlreadyPause) {// 父类已经暂停了
+                if (parent.isPdrAlreadyPause) {// 父类已经暂停了
                     return
                 }
             }
-            isOnPauseOut = true
+            isPdrOnPauseOut = true
             onFragmentPause()
         }
     }
 
     /** FragmentPause时调用，与activity生命周期保持一致 */
     protected open fun onFragmentPause() {
-        isAlreadyPause = true
+        isPdrAlreadyPause = true
     }
 
     private fun notifyChildPause(fragment: Fragment) {
@@ -190,7 +190,7 @@ abstract class LazyFragment : RxFragment(), IFragmentBackPressed {
         }
         for (f in fragments) {
             if (f.userVisibleHint && f is LazyFragment) {
-                if (!f.isAlreadyPause) {//子类的fragment没有暂停过
+                if (!f.isPdrAlreadyPause) {//子类的fragment没有暂停过
                     f.onFragmentPause()
                 }
             }

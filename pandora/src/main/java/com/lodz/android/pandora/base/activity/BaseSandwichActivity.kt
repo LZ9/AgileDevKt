@@ -22,27 +22,27 @@ import com.lodz.android.pandora.widget.base.NoDataLayout
 abstract class BaseSandwichActivity : AbsActivity() {
 
     /** 加载页 */
-    private val mLoadingViewStub by bindView<ViewStub>(R.id.view_stub_loading_layout)
+    private val mPdrLoadingViewStub by bindView<ViewStub>(R.id.pdr_view_stub_loading_layout)
     /** 无数据页 */
-    private val mNoDataViewStub by bindView<ViewStub>(R.id.view_stub_no_data_layout)
+    private val mPdrNoDataViewStub by bindView<ViewStub>(R.id.pdr_view_stub_no_data_layout)
     /** 失败页 */
-    private val mErrorViewStub by bindView<ViewStub>(R.id.view_stub_error_layout)
+    private val mPdrErrorViewStub by bindView<ViewStub>(R.id.pdr_view_stub_error_layout)
 
     /** 加载布局  */
-    private var mLoadingLayout: LoadingLayout? = null
+    private var mPdrLoadingLayout: LoadingLayout? = null
     /** 无数据布局  */
-    private var mNoDataLayout: NoDataLayout? = null
+    private var mPdrNoDataLayout: NoDataLayout? = null
     /** 错误布局  */
-    private var mErrorLayout: ErrorLayout? = null
+    private var mPdrErrorLayout: ErrorLayout? = null
 
     /** 顶部布局  */
-    private val mTopLayout by bindView<FrameLayout>(R.id.top_layout)
+    private val mPdrTopLayout by bindView<FrameLayout>(R.id.pdr_top_layout)
     /** 内容布局  */
-    private val mContentLayout by bindView<LinearLayout>(R.id.content_layout)
+    private val mPdrContentLayout by bindView<LinearLayout>(R.id.pdr_content_layout)
     /** 下拉刷新  */
-    private val mSwipeRefreshLayout by bindView<SwipeRefreshLayout>(R.id.swipe_refresh_layout)
+    private val mPdrSwipeRefreshLayout by bindView<SwipeRefreshLayout>(R.id.pdr_swipe_refresh_layout)
     /** 底部布局  */
-    private val mBottomLayout by bindView<FrameLayout>(R.id.bottom_layout)
+    private val mPdrBottomLayout by bindView<FrameLayout>(R.id.pdr_bottom_layout)
 
     final override fun getAbsLayoutId(): Int = R.layout.pandora_activity_base_sandwich
 
@@ -74,13 +74,13 @@ abstract class BaseSandwichActivity : AbsActivity() {
     /** 把顶部布局设置进来 */
     private fun setTopView() {
         if (getTopLayoutId() == 0) {
-            mTopLayout.visibility = View.GONE
+            mPdrTopLayout.visibility = View.GONE
             return
         }
         val view = LayoutInflater.from(this).inflate(getTopLayoutId(), null)
         val layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        mTopLayout.addView(view, layoutParams)
-        mTopLayout.visibility = View.VISIBLE
+        mPdrTopLayout.addView(view, layoutParams)
+        mPdrTopLayout.visibility = View.VISIBLE
     }
 
     @LayoutRes
@@ -89,13 +89,13 @@ abstract class BaseSandwichActivity : AbsActivity() {
     /** 把底部布局设置进来 */
     private fun setBottomView() {
         if (getBottomLayoutId() == 0) {
-            mBottomLayout.visibility = View.GONE
+            mPdrBottomLayout.visibility = View.GONE
             return
         }
         val view = LayoutInflater.from(this).inflate(getBottomLayoutId(), null)
         val layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        mBottomLayout.addView(view, layoutParams)
-        mBottomLayout.visibility = View.VISIBLE
+        mPdrBottomLayout.addView(view, layoutParams)
+        mPdrBottomLayout.visibility = View.VISIBLE
     }
 
     @LayoutRes
@@ -109,7 +109,7 @@ abstract class BaseSandwichActivity : AbsActivity() {
         }
         val view = LayoutInflater.from(this).inflate(getLayoutId(), null)
         val layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-        mContentLayout.addView(view, layoutParams)
+        mPdrContentLayout.addView(view, layoutParams)
     }
 
     @LayoutRes
@@ -118,7 +118,7 @@ abstract class BaseSandwichActivity : AbsActivity() {
     override fun setListeners() {
         super.setListeners()
         // 下拉刷新
-        mSwipeRefreshLayout.setOnRefreshListener {
+        mPdrSwipeRefreshLayout.setOnRefreshListener {
             onDataRefresh()
         }
     }
@@ -128,22 +128,22 @@ abstract class BaseSandwichActivity : AbsActivity() {
 
     /** 设置下拉进度的切换颜色[colorResIds] */
     protected fun setSwipeRefreshColorScheme(@ColorRes vararg colorResIds: Int) {
-        mSwipeRefreshLayout.setColorSchemeResources(*colorResIds)
+        mPdrSwipeRefreshLayout.setColorSchemeResources(*colorResIds)
     }
 
     /** 设置下拉进度的背景颜色[colorResId] */
     protected fun setSwipeRefreshBackgroundColor(@ColorRes colorResId: Int) {
-        mSwipeRefreshLayout.setProgressBackgroundColorSchemeResource(colorResId)
+        mPdrSwipeRefreshLayout.setProgressBackgroundColorSchemeResource(colorResId)
     }
 
     /** 设置刷新结束（隐藏刷新进度条） */
     protected fun setSwipeRefreshFinish() {
-        mSwipeRefreshLayout.isRefreshing = false
+        mPdrSwipeRefreshLayout.isRefreshing = false
     }
 
     /** 设置刷新控件是否启用[enabled] */
     protected fun setSwipeRefreshEnabled(enabled: Boolean) {
-        mSwipeRefreshLayout.isEnabled = enabled
+        mPdrSwipeRefreshLayout.isEnabled = enabled
     }
 
     /** 点击错误页面的重试按钮 */
@@ -151,76 +151,76 @@ abstract class BaseSandwichActivity : AbsActivity() {
 
     /** 显示无数据页面 */
     protected open fun showStatusNoData() {
-        mSwipeRefreshLayout.visibility = View.VISIBLE
-        mContentLayout.visibility = View.GONE
+        mPdrSwipeRefreshLayout.visibility = View.VISIBLE
+        mPdrContentLayout.visibility = View.GONE
         getNoDataLayout().visibility = View.VISIBLE
-        mLoadingLayout?.visibility = View.GONE
-        mErrorLayout?.visibility = View.GONE
+        mPdrLoadingLayout?.visibility = View.GONE
+        mPdrErrorLayout?.visibility = View.GONE
     }
 
     /** 显示错误页面 */
     @JvmOverloads
     protected open fun showStatusError(t: Throwable? = null) {
-        mSwipeRefreshLayout.visibility = View.GONE
-        mContentLayout.visibility = View.GONE
-        mLoadingLayout?.visibility = View.GONE
-        mNoDataLayout?.visibility = View.GONE
+        mPdrSwipeRefreshLayout.visibility = View.GONE
+        mPdrContentLayout.visibility = View.GONE
+        mPdrLoadingLayout?.visibility = View.GONE
+        mPdrNoDataLayout?.visibility = View.GONE
         getErrorLayout().visibility = View.VISIBLE
         getErrorLayout().showAuto(t)
     }
 
     /** 显示加载页面 */
     protected open fun showStatusLoading() {
-        mSwipeRefreshLayout.visibility = View.GONE
-        mContentLayout.visibility = View.GONE
-        mErrorLayout?.visibility = View.GONE
+        mPdrSwipeRefreshLayout.visibility = View.GONE
+        mPdrContentLayout.visibility = View.GONE
+        mPdrErrorLayout?.visibility = View.GONE
         getLoadingLayout().visibility = View.VISIBLE
-        mNoDataLayout?.visibility = View.GONE
+        mPdrNoDataLayout?.visibility = View.GONE
     }
 
     /** 显示内容页面 */
     protected open fun showStatusCompleted() {
-        mSwipeRefreshLayout.visibility = View.VISIBLE
-        mContentLayout.visibility = View.VISIBLE
-        mLoadingLayout?.visibility = View.GONE
-        mErrorLayout?.visibility = View.GONE
-        mNoDataLayout?.visibility = View.GONE
+        mPdrSwipeRefreshLayout.visibility = View.VISIBLE
+        mPdrContentLayout.visibility = View.VISIBLE
+        mPdrLoadingLayout?.visibility = View.GONE
+        mPdrErrorLayout?.visibility = View.GONE
+        mPdrNoDataLayout?.visibility = View.GONE
     }
 
     /** 获取加载控件 */
     protected fun getLoadingLayout(): LoadingLayout {
-        if (mLoadingLayout == null) {
-            mLoadingLayout = mLoadingViewStub.inflate() as LoadingLayout
-            mLoadingLayout?.visibility = View.GONE
+        if (mPdrLoadingLayout == null) {
+            mPdrLoadingLayout = mPdrLoadingViewStub.inflate() as LoadingLayout
+            mPdrLoadingLayout?.visibility = View.GONE
         }
-        return mLoadingLayout!!
+        return mPdrLoadingLayout!!
     }
 
     /** 获取无数据控件 */
     protected fun getNoDataLayout(): NoDataLayout {
-        if (mNoDataLayout == null) {
-            mNoDataLayout = mNoDataViewStub.inflate() as NoDataLayout
-            mNoDataLayout?.visibility = View.GONE
+        if (mPdrNoDataLayout == null) {
+            mPdrNoDataLayout = mPdrNoDataViewStub.inflate() as NoDataLayout
+            mPdrNoDataLayout?.visibility = View.GONE
         }
-        return mNoDataLayout!!
+        return mPdrNoDataLayout!!
     }
 
     /** 获取加载失败界面 */
     protected fun getErrorLayout(): ErrorLayout {
-        if (mErrorLayout == null) {
-            mErrorLayout = mErrorViewStub.inflate() as ErrorLayout
-            mErrorLayout?.visibility = View.GONE
-            mErrorLayout?.setReloadListener {
+        if (mPdrErrorLayout == null) {
+            mPdrErrorLayout = mPdrErrorViewStub.inflate() as ErrorLayout
+            mPdrErrorLayout?.visibility = View.GONE
+            mPdrErrorLayout?.setReloadListener {
                 onClickReload()
             }
         }
-        return mErrorLayout!!
+        return mPdrErrorLayout!!
     }
 
     /** 获取顶部布局 */
-    protected fun getTopView(): View = mTopLayout
+    protected fun getTopView(): View = mPdrTopLayout
 
     /** 获取底部布局 */
-    protected fun getBottomView(): View = mBottomLayout
+    protected fun getBottomView(): View = mPdrBottomLayout
 
 }

@@ -20,25 +20,25 @@ import com.lodz.android.pandora.widget.base.TitleBarLayout
 abstract class BaseActivity : AbsActivity() {
 
     /** 标题栏 */
-    private val mTitleBarViewStub by bindView<ViewStub>(R.id.view_stub_title_bar_layout)
+    private val mPdrTitleBarViewStub by bindView<ViewStub>(R.id.pdr_view_stub_title_bar_layout)
     /** 加载页 */
-    private val mLoadingViewStub by bindView<ViewStub>(R.id.view_stub_loading_layout)
+    private val mPdrLoadingViewStub by bindView<ViewStub>(R.id.pdr_view_stub_loading_layout)
     /** 无数据页 */
-    private val mNoDataViewStub by bindView<ViewStub>(R.id.view_stub_no_data_layout)
+    private val mPdrNoDataViewStub by bindView<ViewStub>(R.id.pdr_view_stub_no_data_layout)
     /** 失败页 */
-    private val mErrorViewStub by bindView<ViewStub>(R.id.view_stub_error_layout)
+    private val mPdrErrorViewStub by bindView<ViewStub>(R.id.pdr_view_stub_error_layout)
 
     /** 顶部标题布局  */
-    private var mTitleBarLayout: TitleBarLayout? = null
+    private var mPdrTitleBarLayout: TitleBarLayout? = null
     /** 加载布局  */
-    private var mLoadingLayout: LoadingLayout? = null
+    private var mPdrLoadingLayout: LoadingLayout? = null
     /** 无数据布局  */
-    private var mNoDataLayout: NoDataLayout? = null
+    private var mPdrNoDataLayout: NoDataLayout? = null
     /** 错误布局  */
-    private var mErrorLayout: ErrorLayout? = null
+    private var mPdrErrorLayout: ErrorLayout? = null
 
     /** 内容布局  */
-    private val mContentLayout by bindView<LinearLayout>(R.id.content_layout)
+    private val mPdrContentLayout by bindView<LinearLayout>(R.id.pdr_content_layout)
 
     @LayoutRes
     final override fun getAbsLayoutId(): Int = R.layout.pandora_activity_base
@@ -60,7 +60,7 @@ abstract class BaseActivity : AbsActivity() {
         }
         val view = LayoutInflater.from(this).inflate(getLayoutId(), null)
         val layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-        mContentLayout.addView(view, layoutParams)
+        mPdrContentLayout.addView(view, layoutParams)
     }
 
     @LayoutRes
@@ -81,36 +81,36 @@ abstract class BaseActivity : AbsActivity() {
 
     /** 显示无数据页面 */
     protected open fun showStatusNoData() {
-        mContentLayout.visibility = View.GONE
-        mLoadingLayout?.visibility = View.GONE
-        mErrorLayout?.visibility = View.GONE
+        mPdrContentLayout.visibility = View.GONE
+        mPdrLoadingLayout?.visibility = View.GONE
+        mPdrErrorLayout?.visibility = View.GONE
         getNoDataLayout().visibility = View.VISIBLE
     }
 
     /** 显示错误页面 */
     @JvmOverloads
     protected open fun showStatusError(t: Throwable? = null) {
-        mContentLayout.visibility = View.GONE
-        mLoadingLayout?.visibility = View.GONE
+        mPdrContentLayout.visibility = View.GONE
+        mPdrLoadingLayout?.visibility = View.GONE
         getErrorLayout().visibility = View.VISIBLE
         getErrorLayout().showAuto(t)
-        mNoDataLayout?.visibility = View.GONE
+        mPdrNoDataLayout?.visibility = View.GONE
     }
 
     /** 显示加载页面 */
     protected open fun showStatusLoading() {
-        mContentLayout.visibility = View.GONE
+        mPdrContentLayout.visibility = View.GONE
         getLoadingLayout().visibility = View.VISIBLE
-        mErrorLayout?.visibility = View.GONE
-        mNoDataLayout?.visibility = View.GONE
+        mPdrErrorLayout?.visibility = View.GONE
+        mPdrNoDataLayout?.visibility = View.GONE
     }
 
     /** 显示内容页面 */
     protected open fun showStatusCompleted() {
-        mContentLayout.visibility = View.VISIBLE
-        mLoadingLayout?.visibility = View.GONE
-        mErrorLayout?.visibility = View.GONE
-        mNoDataLayout?.visibility = View.GONE
+        mPdrContentLayout.visibility = View.VISIBLE
+        mPdrLoadingLayout?.visibility = View.GONE
+        mPdrErrorLayout?.visibility = View.GONE
+        mPdrNoDataLayout?.visibility = View.GONE
     }
 
     /** 隐藏TitleBar */
@@ -125,39 +125,39 @@ abstract class BaseActivity : AbsActivity() {
 
     /** 获取顶部标题栏控件 */
     protected fun getTitleBarLayout(): TitleBarLayout {
-        if (mTitleBarLayout == null) {
-            mTitleBarLayout = mTitleBarViewStub.inflate() as TitleBarLayout
+        if (mPdrTitleBarLayout == null) {
+            mPdrTitleBarLayout = mPdrTitleBarViewStub.inflate() as TitleBarLayout
         }
-        return mTitleBarLayout!!
+        return mPdrTitleBarLayout!!
     }
 
     /** 获取加载控件 */
     protected fun getLoadingLayout(): LoadingLayout {
-        if (mLoadingLayout == null) {
-            mLoadingLayout = mLoadingViewStub.inflate() as LoadingLayout
-            mLoadingLayout?.visibility = View.GONE
+        if (mPdrLoadingLayout == null) {
+            mPdrLoadingLayout = mPdrLoadingViewStub.inflate() as LoadingLayout
+            mPdrLoadingLayout?.visibility = View.GONE
         }
-        return mLoadingLayout!!
+        return mPdrLoadingLayout!!
     }
 
     /** 获取无数据控件 */
     protected fun getNoDataLayout(): NoDataLayout {
-        if (mNoDataLayout == null) {
-            mNoDataLayout = mNoDataViewStub.inflate() as NoDataLayout
-            mNoDataLayout?.visibility = View.GONE
+        if (mPdrNoDataLayout == null) {
+            mPdrNoDataLayout = mPdrNoDataViewStub.inflate() as NoDataLayout
+            mPdrNoDataLayout?.visibility = View.GONE
         }
-        return mNoDataLayout!!
+        return mPdrNoDataLayout!!
     }
 
     /** 获取加载失败界面 */
     protected fun getErrorLayout(): ErrorLayout {
-        if (mErrorLayout == null) {
-            mErrorLayout = mErrorViewStub.inflate() as ErrorLayout
-            mErrorLayout?.visibility = View.GONE
-            mErrorLayout?.setReloadListener {
+        if (mPdrErrorLayout == null) {
+            mPdrErrorLayout = mPdrErrorViewStub.inflate() as ErrorLayout
+            mPdrErrorLayout?.visibility = View.GONE
+            mPdrErrorLayout?.setReloadListener {
                 onClickReload()
             }
         }
-        return mErrorLayout!!
+        return mPdrErrorLayout!!
     }
 }

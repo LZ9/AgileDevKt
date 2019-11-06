@@ -24,14 +24,14 @@ import org.greenrobot.eventbus.ThreadMode
 abstract class AbsActivity : RxAppCompatActivity() {
 
     /** 是否使用Anko Layout */
-    private var isUseAnko = false
+    private var isPdrUseAnko = false
 
     final override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        isUseAnko = injectAnko()
+        isPdrUseAnko = injectAnko()
         EventBus.getDefault().register(this)
         startCreate()
-        if (!isUseAnko) {//不使用AnkoLayout再加载布局
+        if (!isPdrUseAnko) {//不使用AnkoLayout再加载布局
             setContentView(getAbsLayoutId())
         }
         afterSetContentView()
@@ -188,7 +188,7 @@ abstract class AbsActivity : RxAppCompatActivity() {
     }
 
     /** 是否使用AnkoLayout */
-    protected fun isUseAnkoLayout(): Boolean = isUseAnko
+    protected fun isUseAnkoLayout(): Boolean = isPdrUseAnko
 
     /** 解析AnkoLayout注解 */
     private fun injectAnko(): Boolean {
