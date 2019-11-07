@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/root_layout"
+    android:id="@+id/pdr_root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/black">
 
     <ImageView
-        android:id="@+id/photo_img"
+        android:id="@+id/pdr_photo_img"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="@string/pandora_app_img_name"
@@ -21,7 +21,7 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/cancel_btn"
+            android:id="@+id/pdr_cancel_btn"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="40dp"
@@ -34,7 +34,7 @@
             android:layout_weight="1" />
 
         <ImageView
-            android:id="@+id/confirm_btn"
+            android:id="@+id/pdr_confirm_btn"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginEnd="40dp"

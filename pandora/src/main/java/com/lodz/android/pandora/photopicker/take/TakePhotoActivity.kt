@@ -45,22 +45,22 @@ internal class TakePhotoActivity : AbsActivity() {
 
 
     /** 根布局 */
-    private val mRootLayout by bindView<ViewGroup>(R.id.root_layout)
+    private val mPdrRootLayout by bindView<ViewGroup>(R.id.pdr_root_layout)
     /** 照片图片 */
-    private val mPhotoImg by bindView<ImageView>(R.id.photo_img)
+    private val mPdrPhotoImg by bindView<ImageView>(R.id.pdr_photo_img)
     /** 取消按钮 */
-    private val mCancelBtn by bindView<ImageView>(R.id.cancel_btn)
+    private val mPdrCancelBtn by bindView<ImageView>(R.id.pdr_cancel_btn)
     /** 确定按钮 */
-    private val mConfirmBtn by bindView<ImageView>(R.id.confirm_btn)
+    private val mPdrConfirmBtn by bindView<ImageView>(R.id.pdr_confirm_btn)
 
     /** 拍照数据 */
-    private var mTakeBean: TakeBean? = null
+    private var mPdrTakeBean: TakeBean? = null
     /** 临时文件路径 */
-    private var mTempFilePath = ""
+    private var mPdrTempFilePath = ""
 
     override fun startCreate() {
         super.startCreate()
-        mTakeBean = sTakeBean
+        mPdrTakeBean = sTakeBean
     }
 
     override fun getAbsLayoutId(): Int = R.layout.pandora_activity_take_photo
@@ -74,20 +74,20 @@ internal class TakePhotoActivity : AbsActivity() {
         super.setListeners()
 
         // 取消按钮
-        mCancelBtn.setOnClickListener {
+        mPdrCancelBtn.setOnClickListener {
             handleCameraCancel()
         }
 
         // 确定按钮
-        mConfirmBtn.setOnClickListener {
+        mPdrConfirmBtn.setOnClickListener {
             handleConfirm()
         }
     }
 
     override fun initData() {
         super.initData()
-        val bean = mTakeBean ?: return
-        mRootLayout.setBackgroundColor(getColorCompat(bean.previewBgColor))
+        val bean = mPdrTakeBean ?: return
+        mPdrRootLayout.setBackgroundColor(getColorCompat(bean.previewBgColor))
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//设置状态栏和导航栏颜色
             StatusBarUtil.setColor(window, getColorCompat(bean.statusBarColor))
             StatusBarUtil.setNavigationBarColor(window, getColorCompat(bean.navigationBarColor))
@@ -101,8 +101,8 @@ internal class TakePhotoActivity : AbsActivity() {
             toastShort(R.string.pandora_photo_folder_fail)
             return
         }
-        mTempFilePath = "${bean.cameraSavePath}P_${DateUtils.getCurrentFormatString(DateUtils.TYPE_4)}.jpg"
-        if (!FileUtils.createNewFile(mTempFilePath)) {
+        mPdrTempFilePath = "${bean.cameraSavePath}P_${DateUtils.getCurrentFormatString(DateUtils.TYPE_4)}.jpg"
+        if (!FileUtils.createNewFile(mPdrTempFilePath)) {
             toastShort(R.string.pandora_photo_temp_file_fail)
             return
         }
@@ -110,7 +110,7 @@ internal class TakePhotoActivity : AbsActivity() {
             toastShort(R.string.pandora_no_camera)
             return
         }
-        if (!takePhoto(mTempFilePath, bean.authority, REQUEST_CAMERA)) {
+        if (!takePhoto(mPdrTempFilePath, bean.authority, REQUEST_CAMERA)) {
             toastShort(R.string.pandora_photo_temp_file_fail)
         }
     }
@@ -120,7 +120,7 @@ internal class TakePhotoActivity : AbsActivity() {
         if (requestCode != REQUEST_CAMERA) {//不是拍照请求码
             return
         }
-        val bean = mTakeBean
+        val bean = mPdrTakeBean
         if (bean == null) {//数据为空
             handleCameraCancel()
             return
@@ -130,7 +130,7 @@ internal class TakePhotoActivity : AbsActivity() {
             return
         }
         // 拍照成功
-        AlbumUtils.notifyScanImage(getContext(), mTempFilePath)// 更新相册
+        AlbumUtils.notifyScanImage(getContext(), mPdrTempFilePath)// 更新相册
         if (bean.isImmediately) {
             handleConfirm()
             return
@@ -142,29 +142,29 @@ internal class TakePhotoActivity : AbsActivity() {
 
     /** 处理确认照片 */
     private fun handleConfirm() {
-        mTakeBean?.photoTakeListener?.onTake(mTempFilePath)
+        mPdrTakeBean?.photoTakeListener?.onTake(mPdrTempFilePath)
         finish()
     }
 
     /** 处理拍照取消 */
     private fun handleCameraCancel() {
-        if (mTempFilePath.isNotEmpty()) {
-            FileUtils.delFile(mTempFilePath)// 删除临时文件
+        if (mPdrTempFilePath.isNotEmpty()) {
+            FileUtils.delFile(mPdrTempFilePath)// 删除临时文件
         }
         finish()
     }
 
     /** 处理拍照成功 */
     private fun handleCameraSuccess() {
-        mTakeBean?.imgLoader?.displayImg(getContext(), mTempFilePath, mPhotoImg)
+        mPdrTakeBean?.imgLoader?.displayImg(getContext(), mPdrTempFilePath, mPdrPhotoImg)
     }
 
     override fun finish() {
-        mTakeBean?.clear()
-        mTakeBean = null
+        mPdrTakeBean?.clear()
+        mPdrTakeBean = null
         sTakeBean?.clear()
         sTakeBean = null
-        mTempFilePath = ""
+        mPdrTempFilePath = ""
         super.finish()
     }
 

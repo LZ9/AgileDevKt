@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tool="http://schemas.android.com/tools"
-    android:id="@+id/root_layout"
+    android:id="@+id/pdr_root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/black"
     android:orientation="vertical">
 
     <RelativeLayout
-        android:id="@+id/top_layout"
+        android:id="@+id/pdr_top_layout"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:elevation="8dp"
         tool:targetApi="lollipop">
 
         <ImageView
-            android:id="@+id/back_btn"
+            android:id="@+id/pdr_back_btn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
@@ -23,12 +23,12 @@
             android:padding="10dp" />
 
         <TextView
-            android:id="@+id/title_tv"
+            android:id="@+id/pdr_title_tv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
-            android:layout_toStartOf="@+id/confirm_btn"
-            android:layout_toEndOf="@+id/back_btn"
+            android:layout_toStartOf="@+id/pdr_confirm_btn"
+            android:layout_toEndOf="@+id/pdr_back_btn"
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="1"
@@ -37,7 +37,7 @@
             android:textSize="19sp" />
 
         <TextView
-            android:id="@+id/confirm_btn"
+            android:id="@+id/pdr_confirm_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -58,7 +58,7 @@
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
+        android:id="@+id/pdr_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
@@ -66,7 +66,7 @@
     </androidx.recyclerview.widget.RecyclerView>
 
     <LinearLayout
-        android:id="@+id/bottom_layout"
+        android:id="@+id/pdr_bottom_layout"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:background="@android:color/black"
@@ -74,7 +74,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
-            android:id="@+id/folder_btn"
+            android:id="@+id/pdr_folder_btn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
@@ -82,7 +82,7 @@
             tool:ignore="UseCompoundDrawables">
 
             <TextView
-                android:id="@+id/folder_name_tv"
+                android:id="@+id/pdr_folder_name_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginStart="15dp"
@@ -92,7 +92,7 @@
                 android:textSize="16sp" />
 
             <ImageView
-                android:id="@+id/more_img"
+                android:id="@+id/pdr_more_img"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginStart="3dp"
@@ -108,7 +108,7 @@
             android:background="@android:color/transparent" />
 
         <TextView
-            android:id="@+id/preview_btn"
+            android:id="@+id/pdr_preview_btn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:clickable="true"

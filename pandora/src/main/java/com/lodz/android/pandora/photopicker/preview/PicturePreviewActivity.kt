@@ -41,33 +41,33 @@ internal class PicturePreviewActivity<V : View, T : Any> : AbsActivity() {
     }
 
     /** 背景控件 */
-    private val mRootView by bindView<ViewGroup>(R.id.root_view)
+    private val mPdrRootView by bindView<ViewGroup>(R.id.pdr_root_view)
     /** 翻页控件 */
-    private val mRecyclerView by bindView<RecyclerView>(R.id.recycler_view)
+    private val mPdrRecyclerView by bindView<RecyclerView>(R.id.pdr_recycler_view)
     /** 页码提示 */
-    private val mPagerTv by bindView<TextView>(R.id.pager_tv)
+    private val mPdrPagerTv by bindView<TextView>(R.id.pdr_pager_tv)
 
     /** 预览控制器 */
-    private lateinit var mPreviewController: PreviewController
+    private lateinit var mPdrPreviewController: PreviewController
     /** 预览数据 */
-    private var mPreviewBean: PreviewBean<V, T>? = null
+    private var mPdrPreviewBean: PreviewBean<V, T>? = null
     /** 适配器 */
-    private lateinit var mAdapter: PicturePagerAdapter<V, T>
+    private lateinit var mPdrAdapter: PicturePagerAdapter<V, T>
     /** 滑动帮助类 */
-    private lateinit var mSnapHelper: ViewPagerSnapHelper
+    private lateinit var mPdrSnapHelper: ViewPagerSnapHelper
 
     @Suppress("UNCHECKED_CAST")
     override fun startCreate() {
         super.startCreate()
-        mPreviewBean = sPreviewBean as PreviewBean<V, T>
-        mPreviewController = PreviewControllerImpl(this)
+        mPdrPreviewBean = sPreviewBean as PreviewBean<V, T>
+        mPdrPreviewController = PreviewControllerImpl(this)
     }
 
     override fun getAbsLayoutId(): Int = R.layout.pandora_activity_preview
 
     override fun findViews(savedInstanceState: Bundle?) {
         super.findViews(savedInstanceState)
-        val bean = mPreviewBean
+        val bean = mPdrPreviewBean
         if (bean == null) {
             finish()
             return
@@ -84,24 +84,24 @@ internal class PicturePreviewActivity<V : View, T : Any> : AbsActivity() {
     private fun initRecyclerView(bean: PreviewBean<V, T>, view: AbsImageView<V, T>) {
         val layoutManager = LinearLayoutManager(getContext())
         layoutManager.orientation = RecyclerView.HORIZONTAL
-        mAdapter = PicturePagerAdapter(getContext(), view, mPreviewController)
-        mRecyclerView.layoutManager = layoutManager
-        mRecyclerView.setHasFixedSize(true)
-        mRecyclerView.adapter = mAdapter
-        mSnapHelper = ViewPagerSnapHelper(bean.showPosition)
-        mSnapHelper.attachToRecyclerView(mRecyclerView)
+        mPdrAdapter = PicturePagerAdapter(getContext(), view, mPdrPreviewController)
+        mPdrRecyclerView.layoutManager = layoutManager
+        mPdrRecyclerView.setHasFixedSize(true)
+        mPdrRecyclerView.adapter = mPdrAdapter
+        mPdrSnapHelper = ViewPagerSnapHelper(bean.showPosition)
+        mPdrSnapHelper.attachToRecyclerView(mPdrRecyclerView)
     }
 
     override fun setListeners() {
         super.setListeners()
-        mSnapHelper.setOnPageChangeListener { position ->
+        mPdrSnapHelper.setOnPageChangeListener { position ->
             setPagerNum(position)
         }
     }
 
     override fun initData() {
         super.initData()
-        val bean = mPreviewBean
+        val bean = mPdrPreviewBean
         if (bean == null) {
             finish()
             return
@@ -112,25 +112,25 @@ internal class PicturePreviewActivity<V : View, T : Any> : AbsActivity() {
             return
         }
 
-        mRootView.setBackgroundColor(getColorCompat(bean.backgroundColor))
+        mPdrRootView.setBackgroundColor(getColorCompat(bean.backgroundColor))
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             StatusBarUtil.setColor(window, getColorCompat(bean.statusBarColor))
             StatusBarUtil.setNavigationBarColor(window, getColorCompat(bean.navigationBarColor))
         }
         setPagerNum(bean.showPosition)
-        mPagerTv.visibility = if (bean.isShowPagerText) View.VISIBLE else View.GONE
-        mPagerTv.setTextColor(getColorCompat(bean.pagerTextColor))
-        mPagerTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, bean.pagerTextSize.toFloat())
+        mPdrPagerTv.visibility = if (bean.isShowPagerText) View.VISIBLE else View.GONE
+        mPdrPagerTv.setTextColor(getColorCompat(bean.pagerTextColor))
+        mPdrPagerTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, bean.pagerTextSize.toFloat())
 
-        mAdapter.setData(list.toMutableList())
-        mAdapter.notifyDataSetChanged()
-        mRecyclerView.scrollToPosition(bean.showPosition)
+        mPdrAdapter.setData(list.toMutableList())
+        mPdrAdapter.notifyDataSetChanged()
+        mPdrRecyclerView.scrollToPosition(bean.showPosition)
     }
 
     /** 设置页码[position] */
     private fun setPagerNum(position: Int) {
-        if (mPreviewBean != null) {
-            mPagerTv.text = StringBuffer().append(position + 1).append(" / ").append(mPreviewBean!!.sourceList.getSize())
+        if (mPdrPreviewBean != null) {
+            mPdrPagerTv.text = StringBuffer().append(position + 1).append(" / ").append(mPdrPreviewBean!!.sourceList.getSize())
         }
     }
 
@@ -141,9 +141,9 @@ internal class PicturePreviewActivity<V : View, T : Any> : AbsActivity() {
     }
 
     override fun finish() {
-        mAdapter.release()
-        mPreviewBean?.clear()
-        mPreviewBean = null
+        mPdrAdapter.release()
+        mPdrPreviewBean?.clear()
+        mPdrPreviewBean = null
         sPreviewBean?.clear()
         sPreviewBean = null
         super.finish()

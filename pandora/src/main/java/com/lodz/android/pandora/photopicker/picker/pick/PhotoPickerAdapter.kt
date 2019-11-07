@@ -32,31 +32,31 @@ internal class PhotoPickerAdapter(context: Context, imgLoader: OnImgLoader<Strin
     private val VIEW_TYPE_ITEM = 1
 
     /** 图片加载接口 */
-    private var mImgLoader: OnImgLoader<String>?
+    private var mPdrImgLoader: OnImgLoader<String>?
     /** 监听器 */
-    private var mListener: Listener? = null
+    private var mPdrListener: Listener? = null
 
     /** 未选中图标 */
-    private val mUnselectBitmap: Bitmap
+    private val mPdrUnselectBitmap: Bitmap
     /** 已选中图标 */
-    private val mSelectedBitmap: Bitmap
+    private val mPdrSelectedBitmap: Bitmap
 
     /** 是否需要相机 */
-    private val isNeedCamera: Boolean
+    private val isPdrNeedCamera: Boolean
     /** UI配置 */
-    private val mConfig: PickerUIConfig
+    private val mPdrConfig: PickerUIConfig
 
     init {
-        this.mImgLoader = imgLoader
-        this.isNeedCamera = isNeedCamera
-        this.mConfig = config
-        mUnselectBitmap = getUnselectBitmap(mConfig.getSelectedBtnUnselect())
-        mSelectedBitmap = getSelectedBitmap(mConfig.getSelectedBtnSelected())
+        this.mPdrImgLoader = imgLoader
+        this.isPdrNeedCamera = isNeedCamera
+        this.mPdrConfig = config
+        mPdrUnselectBitmap = getUnselectBitmap(mPdrConfig.getSelectedBtnUnselect())
+        mPdrSelectedBitmap = getSelectedBitmap(mPdrConfig.getSelectedBtnSelected())
     }
 
-    override fun getItemViewType(position: Int): Int = if (isNeedCamera && position == 0) VIEW_TYPE_CAMERA else VIEW_TYPE_ITEM
+    override fun getItemViewType(position: Int): Int = if (isPdrNeedCamera && position == 0) VIEW_TYPE_CAMERA else VIEW_TYPE_ITEM
 
-    override fun getItemCount(): Int = if (isNeedCamera) super.getItemCount() + 1 else super.getItemCount()
+    override fun getItemCount(): Int = if (isPdrNeedCamera) super.getItemCount() + 1 else super.getItemCount()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
             if (viewType == VIEW_TYPE_CAMERA) {
@@ -71,7 +71,7 @@ internal class PhotoPickerAdapter(context: Context, imgLoader: OnImgLoader<Strin
             return
         }
 
-        val bean = getItem(if (isNeedCamera) position - 1 else position)
+        val bean = getItem(if (isPdrNeedCamera) position - 1 else position)
         if (bean == null || holder !is PickerViewHolder) {
             return
         }
@@ -81,26 +81,26 @@ internal class PhotoPickerAdapter(context: Context, imgLoader: OnImgLoader<Strin
     /** 显示拍照item */
     private fun showCameraItem(holder: PickerCameraViewHolder) {
         setItemViewHeight(holder.itemView, context.getScreenWidth() / 3)
-        holder.itemView.setBackgroundColor(context.getColorCompat(mConfig.getCameraBgColor()))
-        if (mConfig.getCameraImg() != 0) {
-            holder.cameraBtn.setImageResource(mConfig.getCameraImg())
+        holder.itemView.setBackgroundColor(context.getColorCompat(mPdrConfig.getCameraBgColor()))
+        if (mPdrConfig.getCameraImg() != 0) {
+            holder.cameraBtn.setImageResource(mPdrConfig.getCameraImg())
         }
         holder.cameraBtn.setOnClickListener {
-            mListener?.onClickCamera()
+            mPdrListener?.onClickCamera()
         }
     }
 
     /** 显示图片item */
     private fun showItem(holder: PickerViewHolder, bean: PickerItemBean, position: Int) {
         setItemViewHeight(holder.itemView, context.getScreenWidth() / 3)
-        holder.itemView.setBackgroundColor(context.getColorCompat(mConfig.getItemBgColor()))
-        mImgLoader?.displayImg(context, bean.path, holder.photoImg)
-        holder.selectIconBtn.setImageBitmap(if (bean.isSelected) mSelectedBitmap else mUnselectBitmap)
+        holder.itemView.setBackgroundColor(context.getColorCompat(mPdrConfig.getItemBgColor()))
+        mPdrImgLoader?.displayImg(context, bean.path, holder.photoImg)
+        holder.selectIconBtn.setImageBitmap(if (bean.isSelected) mPdrSelectedBitmap else mPdrUnselectBitmap)
         holder.selectIconBtn.setOnClickListener {
-            mListener?.onSelected(bean, position)
+            mPdrListener?.onSelected(bean, position)
         }
-        if (mConfig.getMaskColor() != 0) {
-            holder.maskView.setBackgroundColor(context.getColorCompat(mConfig.getMaskColor()))
+        if (mPdrConfig.getMaskColor() != 0) {
+            holder.maskView.setBackgroundColor(context.getColorCompat(mPdrConfig.getMaskColor()))
         }
         holder.maskView.visibility = if (bean.isSelected) View.VISIBLE else View.GONE
     }
@@ -143,20 +143,20 @@ internal class PhotoPickerAdapter(context: Context, imgLoader: OnImgLoader<Strin
 
     /** 释放资源 */
     fun release() {
-        mImgLoader = null
+        mPdrImgLoader = null
     }
 
     override fun setItemClick(holder: RecyclerView.ViewHolder, position: Int) {
-        super.setItemClick(holder, if (isNeedCamera) position - 1 else position)
+        super.setItemClick(holder, if (isPdrNeedCamera) position - 1 else position)
     }
 
     override fun setItemLongClick(holder: RecyclerView.ViewHolder, position: Int) {
-        super.setItemLongClick(holder, if (isNeedCamera) position - 1 else position)
+        super.setItemLongClick(holder, if (isPdrNeedCamera) position - 1 else position)
     }
 
     /** 设置监听器[listener] */
     fun setListener(listener: Listener) {
-        mListener = listener
+        mPdrListener = listener
     }
 
     interface Listener {
@@ -166,15 +166,15 @@ internal class PhotoPickerAdapter(context: Context, imgLoader: OnImgLoader<Strin
 
     private inner class PickerCameraViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         /** 拍照按钮 */
-        val cameraBtn by bindView<ImageView>(R.id.camera_btn)
+        val cameraBtn by bindView<ImageView>(R.id.pdr_camera_btn)
     }
 
     private inner class PickerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         /** 照片 */
-        val photoImg by bindView<ImageView>(R.id.photo_img)
+        val photoImg by bindView<ImageView>(R.id.pdr_photo_img)
         /** 选中图标 */
-        val selectIconBtn by bindView<ImageView>(R.id.select_icon_btn)
+        val selectIconBtn by bindView<ImageView>(R.id.pdr_select_icon_btn)
         /** 遮罩层 */
-        val maskView by bindView<View>(R.id.mask_view)
+        val maskView by bindView<View>(R.id.pdr_mask_view)
     }
 }

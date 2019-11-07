@@ -57,51 +57,51 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
     private val REQUEST_CAMERA = 777
 
     /** 返回按钮 */
-    private val mBackBtn by bindView<ImageView>(R.id.back_btn)
+    private val mPdrBackBtn by bindView<ImageView>(R.id.pdr_back_btn)
     /** 确定按钮 */
-    private val mConfirmBtn by bindView<TextView>(R.id.confirm_btn)
+    private val mPdrConfirmBtn by bindView<TextView>(R.id.pdr_confirm_btn)
     /** 列表 */
-    private val mRecyclerView by bindView<RecyclerView>(R.id.recycler_view)
+    private val mPdrRecyclerView by bindView<RecyclerView>(R.id.pdr_recycler_view)
     /** 文件夹按钮 */
-    private val mFolderBtn by bindView<ViewGroup>(R.id.folder_btn)
+    private val mPdrFolderBtn by bindView<ViewGroup>(R.id.pdr_folder_btn)
     /** 文件夹名称 */
-    private val mFolderNameTv by bindView<TextView>(R.id.folder_name_tv)
+    private val mPdrFolderNameTv by bindView<TextView>(R.id.pdr_folder_name_tv)
     /** 更多图片 */
-    private val mMoreImg by bindView<ImageView>(R.id.more_img)
+    private val mPdrMoreImg by bindView<ImageView>(R.id.pdr_more_img)
     /** 预览按钮 */
-    private val mPreviewBtn by bindView<TextView>(R.id.preview_btn)
+    private val mPdrPreviewBtn by bindView<TextView>(R.id.pdr_preview_btn)
 
     /** 列表适配器 */
-    private lateinit var mAdapter: PhotoPickerAdapter
+    private lateinit var mPdrAdapter: PhotoPickerAdapter
 
     /** 选择器数据 */
-    private var mPickerBean: PickerBean<V>? = null
+    private var mPdrPickerBean: PickerBean<V>? = null
     /** 当前照片 */
-    private val mCurrentPhotoList = ArrayList<PickerItemBean>()
+    private val mPdrCurrentPhotoList = ArrayList<PickerItemBean>()
     /** 已选中的照片 */
-    private val mSelectedList = ArrayList<PickerItemBean>()
+    private val mPdrSelectedList = ArrayList<PickerItemBean>()
 
     /** 临时文件路径 */
-    private var mTempFilePath = ""
+    private var mPdrTempFilePath = ""
     /** 当前展示的图片文件夹 */
-    private var mCurrentImageFolder: ImageFolder? = null
+    private var mPdrCurrentImageFolder: ImageFolder? = null
 
     @Suppress("UNCHECKED_CAST")
     override fun startCreate() {
         super.startCreate()
-        mPickerBean = sPickerBean as PickerBean<V>
+        mPdrPickerBean = sPickerBean as PickerBean<V>
     }
 
     override fun getAbsLayoutId(): Int = R.layout.pandora_activity_picker
 
     override fun findViews(savedInstanceState: Bundle?) {
         super.findViews(savedInstanceState)
-        val rootLayout = findViewById<ViewGroup>(R.id.root_layout)
-        val topLayout = findViewById<ViewGroup>(R.id.top_layout)
-        val bottomLayout = findViewById<ViewGroup>(R.id.bottom_layout)
-        val titleTv = findViewById<TextView>(R.id.title_tv)
+        val rootLayout = findViewById<ViewGroup>(R.id.pdr_root_layout)
+        val topLayout = findViewById<ViewGroup>(R.id.pdr_top_layout)
+        val bottomLayout = findViewById<ViewGroup>(R.id.pdr_bottom_layout)
+        val titleTv = findViewById<TextView>(R.id.pdr_title_tv)
 
-        val bean = mPickerBean
+        val bean = mPdrPickerBean
         if (bean == null) {
             finish()
             return
@@ -112,22 +112,22 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
         topLayout.setBackgroundColor(getColorCompat(bean.pickerUIConfig.getTopLayoutColor()))//设置顶部栏背景色
         bottomLayout.setBackgroundColor(getColorCompat(bean.pickerUIConfig.getBottomLayoutColor()))//设置底部栏背景色
         titleTv.setTextColor(getColorCompat(bean.pickerUIConfig.getMainTextColor()))//设置标题文字颜色
-        mFolderNameTv.setTextColor(getColorCompat(bean.pickerUIConfig.getMainTextColor()))//设置文件夹名称文字颜色
+        mPdrFolderNameTv.setTextColor(getColorCompat(bean.pickerUIConfig.getMainTextColor()))//设置文件夹名称文字颜色
         drawBackBtn(bean.pickerUIConfig.getBackBtnColor())//绘制返回按钮
         if (bean.pickerUIConfig.getMoreFolderImg() != 0) {
-            mMoreImg.setImageResource(bean.pickerUIConfig.getMoreFolderImg())//设置更多文件夹图片
+            mPdrMoreImg.setImageResource(bean.pickerUIConfig.getMoreFolderImg())//设置更多文件夹图片
         } else {
             drawMoreImg(bean.pickerUIConfig.getMainTextColor())//绘制默认更多文件夹图标
         }
         drawConfirmBtn(bean)//绘制确认按钮
-        mPreviewBtn.setTextColor(SelectorUtils.createTxPressedUnableColor(//绘制预览按钮
+        mPdrPreviewBtn.setTextColor(SelectorUtils.createTxPressedUnableColor(//绘制预览按钮
                 getContext(),
                 bean.pickerUIConfig.getPreviewBtnNormal(),
                 bean.pickerUIConfig.getPreviewBtnPressed(),
                 bean.pickerUIConfig.getPreviewBtnUnable()
         ))
-        mConfirmBtn.isEnabled = false
-        mPreviewBtn.isEnabled = false
+        mPdrConfirmBtn.isEnabled = false
+        mPdrPreviewBtn.isEnabled = false
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//设置状态栏和导航栏颜色
             StatusBarUtil.setColor(window, getColorCompat(bean.pickerUIConfig.getStatusBarColor()))
             StatusBarUtil.setNavigationBarColor(window, getColorCompat(bean.pickerUIConfig.getNavigationBarColor()))
@@ -138,26 +138,26 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
     private fun initRecyclerView(bean: PickerBean<V>) {
         val layoutManager = GridLayoutManager(getContext(), 3)
         layoutManager.orientation = RecyclerView.VERTICAL
-        mAdapter = PhotoPickerAdapter(getContext(), bean.imgLoader, bean.isNeedCamera, bean.pickerUIConfig)
-        mRecyclerView.layoutManager = layoutManager
-        mRecyclerView.setHasFixedSize(true)
-        mRecyclerView.adapter = mAdapter
+        mPdrAdapter = PhotoPickerAdapter(getContext(), bean.imgLoader, bean.isNeedCamera, bean.pickerUIConfig)
+        mPdrRecyclerView.layoutManager = layoutManager
+        mPdrRecyclerView.setHasFixedSize(true)
+        mPdrRecyclerView.adapter = mPdrAdapter
     }
 
     override fun setListeners() {
         super.setListeners()
         // 返回按钮
-        mBackBtn.setOnClickListener {
+        mPdrBackBtn.setOnClickListener {
             finish()
         }
 
         // 文件夹按钮
-        mFolderBtn.setOnClickListener {
-            val bean = mPickerBean ?: return@setOnClickListener
+        mPdrFolderBtn.setOnClickListener {
+            val bean = mPdrPickerBean ?: return@setOnClickListener
             Observable.just("")
                 .map {
-                    if (mCurrentImageFolder == null) {
-                        mCurrentImageFolder = AlbumUtils.getTotalImageFolder(getContext())
+                    if (mPdrCurrentImageFolder == null) {
+                        mPdrCurrentImageFolder = AlbumUtils.getTotalImageFolder(getContext())
                     }
 
                     val list = ArrayList<ImageFolderItemBean>()
@@ -166,7 +166,7 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
                     for (folder in folders) {
                         val itemBean = ImageFolderItemBean()
                         itemBean.imageFolder = folder
-                        itemBean.isSelected = mCurrentImageFolder?.dir.equals(folder.dir)
+                        itemBean.isSelected = mPdrCurrentImageFolder?.dir.equals(folder.dir)
                         list.add(itemBean)
                     }
                     return@map list
@@ -181,21 +181,21 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
                         dialog.setData(any)
                         dialog.setOnCancelListener { dialogInterface ->
                             dialogInterface.dismiss()
-                            mMoreImg.startRotateSelf(-180, 0, 500, true)
+                            mPdrMoreImg.startRotateSelf(-180, 0, 500, true)
                         }
                         dialog.setListener { dialogInterface, folderItemBean ->
                             dialogInterface.dismiss()
                             val imageFolder = folderItemBean.imageFolder ?: return@setListener
-                            if (mCurrentImageFolder?.dir.equals(imageFolder.dir)) {// 选择了同一个文件夹
+                            if (mPdrCurrentImageFolder?.dir.equals(imageFolder.dir)) {// 选择了同一个文件夹
                                 return@setListener
                             }
-                            mCurrentImageFolder = imageFolder
-                            mFolderNameTv.text = imageFolder.name
+                            mPdrCurrentImageFolder = imageFolder
+                            mPdrFolderNameTv.text = imageFolder.name
                             configAdapterData(AlbumUtils.getImageListOfFolder(getContext(), imageFolder))
-                            mMoreImg.startRotateSelf(-180, 0, 500, true)
+                            mPdrMoreImg.startRotateSelf(-180, 0, 500, true)
                         }
                         dialog.show()
-                        mMoreImg.startRotateSelf(0, -180, 500, true)
+                        mPdrMoreImg.startRotateSelf(0, -180, 500, true)
                     }
 
                     override fun onPgError(e: Throwable, isNetwork: Boolean) {}
@@ -203,22 +203,22 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
         }
 
         // 确定按钮
-        mConfirmBtn.setOnClickListener {
+        mPdrConfirmBtn.setOnClickListener {
             val list = ArrayList<String>()
-            for (itemBean in mSelectedList) {
+            for (itemBean in mPdrSelectedList) {
                 list.add(itemBean.path)
             }
-            mPickerBean?.photoPickerListener?.onPickerSelected(list)
+            mPdrPickerBean?.photoPickerListener?.onPickerSelected(list)
             finish()
         }
 
         // 预览按钮
-        mPreviewBtn.setOnClickListener {
-            val bean = mPickerBean ?: return@setOnClickListener
+        mPdrPreviewBtn.setOnClickListener {
+            val bean = mPdrPickerBean ?: return@setOnClickListener
             val view = bean.imgView ?: return@setOnClickListener
 
             val list = ArrayList<String>()
-            for (itemBean in mSelectedList) {
+            for (itemBean in mPdrSelectedList) {
                 list.add(itemBean.path)// 组装数据
             }
 
@@ -236,25 +236,25 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
                     .open(getContext())
         }
 
-        mAdapter.setListener(object : PhotoPickerAdapter.Listener {
+        mPdrAdapter.setListener(object : PhotoPickerAdapter.Listener {
             override fun onSelected(bean: PickerItemBean, position: Int) {
-                val pickerBean = mPickerBean ?: return
+                val pickerBean = mPdrPickerBean ?: return
 
-                if (mSelectedList.size == pickerBean.maxCount && !bean.isSelected) {// 已经选满图片且用户点击了可选图
+                if (mPdrSelectedList.size == pickerBean.maxCount && !bean.isSelected) {// 已经选满图片且用户点击了可选图
                     toastShort(getString(R.string.pandora_picker_photo_count_tips, pickerBean.maxCount.toString()))
                     return
                 }
 
                 synchronized(this) {
-                    for (i in mCurrentPhotoList.indices) {
-                        if (bean.path == mCurrentPhotoList[i].path) {
-                            mCurrentPhotoList[i].isSelected = !bean.isSelected//更改选中状态
-                            mAdapter.setData(mCurrentPhotoList)
-                            mAdapter.notifyItemChanged(position)//刷新数据
-                            if (mCurrentPhotoList[i].isSelected) {// 点击后是选中状态
-                                mSelectedList.add(bean)
+                    for (i in mPdrCurrentPhotoList.indices) {
+                        if (bean.path == mPdrCurrentPhotoList[i].path) {
+                            mPdrCurrentPhotoList[i].isSelected = !bean.isSelected//更改选中状态
+                            mPdrAdapter.setData(mPdrCurrentPhotoList)
+                            mPdrAdapter.notifyItemChanged(position)//刷新数据
+                            if (mPdrCurrentPhotoList[i].isSelected) {// 点击后是选中状态
+                                mPdrSelectedList.add(bean)
                             } else {// 点击后是非选中状态
-                                val iterator = mSelectedList.iterator()
+                                val iterator = mPdrSelectedList.iterator()
                                 while (iterator.hasNext()) {
                                     if (iterator.next().path == bean.path) {
                                         iterator.remove()// 从选中列表里去除
@@ -263,15 +263,15 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
                                 }
                             }
                             // 设置按钮状态
-                            mConfirmBtn.isEnabled = mSelectedList.isNotEmpty()
-                            mConfirmBtn.text = if (mSelectedList.isNotEmpty()) {
-                                getString(R.string.pandora_picker_confirm_num, mSelectedList.size.toString(), pickerBean.maxCount.toString())
+                            mPdrConfirmBtn.isEnabled = mPdrSelectedList.isNotEmpty()
+                            mPdrConfirmBtn.text = if (mPdrSelectedList.isNotEmpty()) {
+                                getString(R.string.pandora_picker_confirm_num, mPdrSelectedList.size.toString(), pickerBean.maxCount.toString())
                             } else {
                                 getString(R.string.pandora_picker_confirm)
                             }
-                            mPreviewBtn.isEnabled = mSelectedList.isNotEmpty()
-                            mPreviewBtn.text = if (mSelectedList.isNotEmpty()) {
-                                getString(R.string.pandora_picker_preview_num, mSelectedList.size.toString())
+                            mPdrPreviewBtn.isEnabled = mPdrSelectedList.isNotEmpty()
+                            mPdrPreviewBtn.text = if (mPdrSelectedList.isNotEmpty()) {
+                                getString(R.string.pandora_picker_preview_num, mPdrSelectedList.size.toString())
                             } else {
                                 getString(R.string.pandora_picker_preview)
                             }
@@ -288,8 +288,8 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
         })
 
         // 图片点击回调
-        mAdapter.setOnItemClickListener { viewHolder, item, position ->
-            val bean = mPickerBean ?: return@setOnItemClickListener
+        mPdrAdapter.setOnItemClickListener { viewHolder, item, position ->
+            val bean = mPdrPickerBean ?: return@setOnItemClickListener
             if (!bean.isNeedItemPreview) {// 不需要预览
                 return@setOnItemClickListener
             }
@@ -309,40 +309,40 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
 
     override fun initData() {
         super.initData()
-        val bean = mPickerBean
+        val bean = mPdrPickerBean
         if (bean == null) {
             finish()
             return
         }
         if (bean.sourceList.isNullOrEmpty()) {// 挑选相册图片
-            mCurrentImageFolder = AlbumUtils.getTotalImageFolder(getContext())
+            mPdrCurrentImageFolder = AlbumUtils.getTotalImageFolder(getContext())
             configAdapterData(AlbumUtils.getAllImages(getContext()))
         } else {// 挑选指定图片
-            mCurrentImageFolder = null
+            mPdrCurrentImageFolder = null
             configAdapterData(bean.sourceList!!)//让用户选择指定的图片
-            mFolderBtn.isEnabled = false
-            mFolderNameTv.setText(R.string.pandora_picker_custom_photo)
-            mMoreImg.visibility = View.GONE
+            mPdrFolderBtn.isEnabled = false
+            mPdrFolderNameTv.setText(R.string.pandora_picker_custom_photo)
+            mPdrMoreImg.visibility = View.GONE
         }
     }
 
     /** 配置适配器数据 */
     private fun configAdapterData(source: List<String>) {
-        mCurrentPhotoList.clear()
+        mPdrCurrentPhotoList.clear()
         for (path in source) {
             val itemBean = PickerItemBean()
             itemBean.path = path
-            for (selectedBean in mSelectedList) {
+            for (selectedBean in mPdrSelectedList) {
                 if (selectedBean.path == path) {
                     itemBean.isSelected = true
                     break
                 }
             }
-            mCurrentPhotoList.add(itemBean)
+            mPdrCurrentPhotoList.add(itemBean)
         }
-        mAdapter.setData(mCurrentPhotoList)
-        mRecyclerView.smoothScrollToPosition(0)
-        mAdapter.notifyDataSetChanged()
+        mPdrAdapter.setData(mPdrCurrentPhotoList)
+        mPdrRecyclerView.smoothScrollToPosition(0)
+        mPdrAdapter.notifyDataSetChanged()
     }
 
     /** 绘制返回按钮，颜色[color] */
@@ -354,7 +354,7 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
                 .compose(RxUtils.ioToMainObservable())
                 .subscribe(object : BaseObserver<Bitmap>() {
                     override fun onBaseNext(any: Bitmap) {
-                        mBackBtn.setImageBitmap(any)
+                        mPdrBackBtn.setImageBitmap(any)
                     }
 
                     override fun onBaseError(e: Throwable) {}
@@ -371,7 +371,7 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
                 .compose(RxUtils.ioToMainObservable())
                 .subscribe(object : BaseObserver<Bitmap>() {
                     override fun onBaseNext(any: Bitmap) {
-                        mMoreImg.setImageBitmap(any)
+                        mPdrMoreImg.setImageBitmap(any)
                     }
 
                     override fun onBaseError(e: Throwable) {}
@@ -406,19 +406,19 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
 
     /** 绘制确定按钮 */
     private fun drawConfirmBtn(bean: PickerBean<V>) {
-        mConfirmBtn.viewTreeObserver.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
+        mPdrConfirmBtn.viewTreeObserver.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
             override fun onPreDraw(): Boolean {
-                mConfirmBtn.viewTreeObserver.removeOnPreDrawListener(this)
-                val width = mConfirmBtn.measuredWidth
-                val height = mConfirmBtn.measuredHeight
+                mPdrConfirmBtn.viewTreeObserver.removeOnPreDrawListener(this)
+                val width = mPdrConfirmBtn.measuredWidth
+                val height = mPdrConfirmBtn.measuredHeight
 
-                mConfirmBtn.background = SelectorUtils.createBgPressedUnableDrawable(
+                mPdrConfirmBtn.background = SelectorUtils.createBgPressedUnableDrawable(
                         getCornerDrawable(bean.pickerUIConfig.getConfirmBtnNormal(), width, height),
                         getCornerDrawable(bean.pickerUIConfig.getConfirmBtnPressed(), width, height),
                         getCornerDrawable(bean.pickerUIConfig.getConfirmBtnUnable(), width, height)
                 )
 
-                mConfirmBtn.setTextColor(SelectorUtils.createTxPressedUnableColor(
+                mPdrConfirmBtn.setTextColor(SelectorUtils.createTxPressedUnableColor(
                         getContext(),
                         bean.pickerUIConfig.getConfirmTextNormal(),
                         bean.pickerUIConfig.getConfirmTextPressed(),
@@ -437,13 +437,13 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
 
     /** 拍照 */
     private fun takeCameraPhoto() {
-        val bean = mPickerBean ?: return
+        val bean = mPdrPickerBean ?: return
         if (!FileUtils.isFileExists(bean.cameraSavePath) && !FileUtils.createFolder(bean.cameraSavePath)) {// 文件夹不存在且创建文件夹失败
             toastShort(R.string.pandora_photo_folder_fail)
             return
         }
-        mTempFilePath = "${bean.cameraSavePath}P_${DateUtils.getCurrentFormatString(DateUtils.TYPE_4)}.jpg"
-        if (!FileUtils.createNewFile(mTempFilePath)) {
+        mPdrTempFilePath = "${bean.cameraSavePath}P_${DateUtils.getCurrentFormatString(DateUtils.TYPE_4)}.jpg"
+        if (!FileUtils.createNewFile(mPdrTempFilePath)) {
             toastShort(R.string.pandora_photo_temp_file_fail)
             return
         }
@@ -451,7 +451,7 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
             toastShort(R.string.pandora_no_camera)
             return
         }
-        if (!takePhoto(mTempFilePath, bean.authority, REQUEST_CAMERA)) {
+        if (!takePhoto(mPdrTempFilePath, bean.authority, REQUEST_CAMERA)) {
             toastShort(R.string.pandora_photo_temp_file_fail)
         }
     }
@@ -462,12 +462,12 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
             return
         }
         if (resultCode != Activity.RESULT_OK) {//拍照不成功
-            FileUtils.delFile(mTempFilePath)// 删除临时文件
-            mTempFilePath = ""
+            FileUtils.delFile(mPdrTempFilePath)// 删除临时文件
+            mPdrTempFilePath = ""
             return
         }
         // 拍照成功
-        AlbumUtils.notifyScanImage(getContext(), mTempFilePath)
+        AlbumUtils.notifyScanImage(getContext(), mPdrTempFilePath)
         UiHandler.postDelayed(300){
             handleCameraSuccess()
         }
@@ -475,8 +475,8 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
 
     /** 处理拍照成功 */
     private fun handleCameraSuccess() {
-        val currentFolder = mCurrentImageFolder ?: return
-        mTempFilePath = ""
+        val currentFolder = mPdrCurrentImageFolder ?: return
+        mPdrTempFilePath = ""
         val list = AlbumUtils.getAllImageFolders(getContext())
         for (folder in list) {
             if (folder.dir == currentFolder.dir) {
@@ -487,9 +487,9 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
     }
 
     override fun finish() {
-        mAdapter.release()
-        mPickerBean?.clear()
-        mPickerBean = null
+        mPdrAdapter.release()
+        mPdrPickerBean?.clear()
+        mPdrPickerBean = null
         sPickerBean?.clear()
         sPickerBean = null
         super.finish()

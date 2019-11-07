@@ -18,18 +18,18 @@ import com.lodz.android.pandora.widget.dialog.BaseTopDialog
 class ImageFolderDialog(context: Context) : BaseTopDialog(context) {
 
     /** 列表 */
-    private val mRecyclerView by bindView<RecyclerView>(R.id.recycler_view)
+    private val mPdrRecyclerView by bindView<RecyclerView>(R.id.pdr_recycler_view)
     /** 适配器 */
-    private lateinit var mAdapter: ImageFolderAdapter
+    private lateinit var mPdrAdapter: ImageFolderAdapter
 
     /** 监听器 */
-    private var mListener: ((dialog: DialogInterface, bean: ImageFolderItemBean) -> Unit)? = null
+    private var mPdrListener: ((dialog: DialogInterface, bean: ImageFolderItemBean) -> Unit)? = null
     /** 图片加载器 */
-    private var mImgLoader: OnImgLoader<String>? = null
+    private var mPdrImgLoader: OnImgLoader<String>? = null
     /** 图片文件夹列表 */
-    private var mList: List<ImageFolderItemBean>? = null
+    private var mPdrList: List<ImageFolderItemBean>? = null
     /** UI配置 */
-    private var mConfig: PickerUIConfig? = null
+    private var mPdrConfig: PickerUIConfig? = null
 
     override fun getLayoutId(): Int = R.layout.pandora_dialog_img_folder
 
@@ -41,59 +41,59 @@ class ImageFolderDialog(context: Context) : BaseTopDialog(context) {
     private fun initRecyclerView() {
         val layoutManager = LinearLayoutManager(context)
         layoutManager.orientation = RecyclerView.VERTICAL
-        mAdapter = ImageFolderAdapter(context)
-        mRecyclerView.layoutManager = layoutManager
-        mRecyclerView.setHasFixedSize(true)
-        mRecyclerView.adapter = mAdapter
+        mPdrAdapter = ImageFolderAdapter(context)
+        mPdrRecyclerView.layoutManager = layoutManager
+        mPdrRecyclerView.setHasFixedSize(true)
+        mPdrRecyclerView.adapter = mPdrAdapter
     }
 
     /** 设置图片加载器[imgLoader] */
     fun setOnImgLoader(imgLoader: OnImgLoader<String>?) {
-        mImgLoader = imgLoader
+        mPdrImgLoader = imgLoader
     }
 
     /** 设置图片文件夹列表[list] */
     fun setData(list: List<ImageFolderItemBean>) {
-        mList = list
+        mPdrList = list
     }
 
     /** 设置UI配置[config] */
     fun setPickerUIConfig(config: PickerUIConfig) {
-        mConfig = config
+        mPdrConfig = config
     }
 
     /** 设置监听器[listener] */
     fun setListener(listener: (dialog: DialogInterface, bean: ImageFolderItemBean) -> Unit) {
-        mListener = listener
+        mPdrListener = listener
     }
 
     override fun setListeners() {
         super.setListeners()
-        mAdapter.setOnItemClickListener { viewHolder, item, position ->
-            mListener?.invoke(getDialogInterface(), item)
+        mPdrAdapter.setOnItemClickListener { viewHolder, item, position ->
+            mPdrListener?.invoke(getDialogInterface(), item)
         }
 
-        mAdapter.setOnImgLoader(mImgLoader)
+        mPdrAdapter.setOnImgLoader(mPdrImgLoader)
     }
 
     override fun initData() {
         super.initData()
-        val list = mList
+        val list = mPdrList
         if (list.isNullOrEmpty()) {
-            mRecyclerView.visibility = View.GONE
+            mPdrRecyclerView.visibility = View.GONE
             return
         }
 
-        configAdapter(list, mConfig ?: PickerUIConfig.createDefault())
+        configAdapter(list, mPdrConfig ?: PickerUIConfig.createDefault())
     }
 
     /** 配置适配器 */
     private fun configAdapter(list: List<ImageFolderItemBean>, config: PickerUIConfig) {
-        mAdapter.setPickerUIConfig(config)
-        mRecyclerView.visibility = View.VISIBLE
-        mAdapter.setData(list.toMutableList())
-        mRecyclerView.scrollToPosition(getSelectedPosition(list))
-        mAdapter.notifyDataSetChanged()
+        mPdrAdapter.setPickerUIConfig(config)
+        mPdrRecyclerView.visibility = View.VISIBLE
+        mPdrAdapter.setData(list.toMutableList())
+        mPdrRecyclerView.scrollToPosition(getSelectedPosition(list))
+        mPdrAdapter.notifyDataSetChanged()
     }
 
     /** 获取选中的位置 */
