@@ -97,9 +97,9 @@ class MenuBarTestActivity : BaseActivity() {
         )
         titles.forEachIndexed { i, title ->
             val tabView = LayoutInflater.from(getContext()).inflate(R.layout.view_tab, null)
-            val iconImg = tabView.findViewById<ImageView>(com.lodz.android.pandora.R.id.ic_img)
-            val textTv = tabView.findViewById<TextView>(com.lodz.android.pandora.R.id.text_tv)
-            val numTv = tabView.findViewById<TextView>(com.lodz.android.pandora.R.id.num_tv)
+            val iconImg = tabView.findViewById<ImageView>(R.id.ic_img)
+            val textTv = tabView.findViewById<TextView>(R.id.text_tv)
+            val numTv = tabView.findViewById<TextView>(R.id.num_tv)
 
             iconImg.setImageResource(R.drawable.selector_ic_tab)
             textTv.text = title
