@@ -27,9 +27,9 @@ open class SectionFixItemDecoration<T> protected constructor(context: Context, s
     }
 
     /** 分组标题列表  */
-    private val mSections: List<String> = sections
+    private val mPdrSections: List<String> = sections
     /** 各组数据列表集  */
-    protected val mSources: List<List<T>> = sources
+    protected val mPdrSources: List<List<T>> = sources
 
     override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
         super.getItemOffsets(outRect, view, parent, state)
@@ -37,7 +37,7 @@ open class SectionFixItemDecoration<T> protected constructor(context: Context, s
             return
         }
         val position = parent.getChildAdapterPosition(view)
-        outRect.top = if (isFirstGroupItem(position)) mSectionHeightPx else 0// 设置分组高度
+        outRect.top = if (isFirstGroupItem(position)) mPdrSectionHeightPx else 0// 设置分组高度
     }
 
     override fun onDraw(canvas: Canvas, parent: RecyclerView, state: RecyclerView.State) {
@@ -59,7 +59,7 @@ open class SectionFixItemDecoration<T> protected constructor(context: Context, s
                 continue
             }
 
-            val top = view.top - mSectionHeightPx
+            val top = view.top - mPdrSectionHeightPx
             val bottom = view.top
             drawBgPaint(canvas, left, top, right, bottom)
             drawTextPaint(canvas, getSectionText(position), left, top, right, bottom)
@@ -69,7 +69,7 @@ open class SectionFixItemDecoration<T> protected constructor(context: Context, s
     /** 该位置[position]数据是否是分组的第一个数据 */
     protected fun isFirstGroupItem(position: Int): Boolean {
         var size = 0
-        for (list in mSources) {
+        for (list in mPdrSources) {
             if (position == size) {
                 return true
             }
@@ -84,9 +84,9 @@ open class SectionFixItemDecoration<T> protected constructor(context: Context, s
     /** 获取位置[position]对应的分组标题文字 */
     protected fun getSectionText(position: Int): String {
         var size = 0
-        for ((index, list) in mSources.withIndex()) {
+        for ((index, list) in mPdrSources.withIndex()) {
             if (position >= size && position < size + list.size) {
-                return mSections[index]
+                return mPdrSections[index]
             }
             size += list.size
         }

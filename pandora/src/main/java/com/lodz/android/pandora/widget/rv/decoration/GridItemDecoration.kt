@@ -29,35 +29,35 @@ class GridItemDecoration private constructor(context: Context) : BaseItemDecorat
     }
 
     /** 外部间距  */
-    private var mPx = 0
+    private var mPdrPx = 0
     /** 顶部画笔  */
-    private val mPaint: Paint = Paint()
+    private val mPdrPaint: Paint = Paint()
 
     init {
-        mPaint.color = Color.GRAY
+        mPdrPaint.color = Color.GRAY
     }
 
     /** 设置分割线间距[space]（单位dp） */
     fun setDividerSpace(@IntRange(from = 1) space: Int): GridItemDecoration {
-        mPx = getContext().dp2px(space)
+        mPdrPx = getContext().dp2px(space)
         return this
     }
 
     /** 设置分割线颜色[color] */
     fun setDividerRes(@ColorRes color: Int): GridItemDecoration {
-        mPaint.color = getContext().getColorCompat(color)
+        mPdrPaint.color = getContext().getColorCompat(color)
         return this
     }
 
     /** 设置分割线颜色[color] */
     fun setDividerInt(@ColorInt color: Int): GridItemDecoration {
-        mPaint.color = color
+        mPdrPaint.color = color
         return this
     }
 
     override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
         super.getItemOffsets(outRect, view, parent, state)
-        if (mPx <= 0) {
+        if (mPdrPx <= 0) {
             return
         }
 
@@ -81,28 +81,28 @@ class GridItemDecoration private constructor(context: Context) : BaseItemDecorat
 
     /** 设置StaggeredGridLayoutManager的边距 */
     private fun setStaggeredGridOffsets(outRect: Rect) {
-        outRect.top = mPx
-        outRect.bottom = mPx
-        outRect.left = mPx
-        outRect.right = mPx
+        outRect.top = mPdrPx
+        outRect.bottom = mPdrPx
+        outRect.left = mPdrPx
+        outRect.right = mPdrPx
     }
 
     /** 设置LinearLayoutManager的边距 */
     private fun setLinearOffsets(outRect: Rect, view: View, parent: RecyclerView, layoutManager: LinearLayoutManager) {
         val position = parent.getChildAdapterPosition(view)
         if (layoutManager.orientation == RecyclerView.VERTICAL) {//纵向
-            outRect.top = if (position == 0) mPx else 0
-            outRect.bottom = mPx
-            outRect.left = mPx
-            outRect.right = mPx
+            outRect.top = if (position == 0) mPdrPx else 0
+            outRect.bottom = mPdrPx
+            outRect.left = mPdrPx
+            outRect.right = mPdrPx
             return
         }
 
         // 横向
-        outRect.top = mPx
-        outRect.bottom = mPx
-        outRect.left = if (position == 0) mPx else 0
-        outRect.right = mPx
+        outRect.top = mPdrPx
+        outRect.bottom = mPdrPx
+        outRect.left = if (position == 0) mPdrPx else 0
+        outRect.right = mPdrPx
     }
 
     /** 设置GridLayoutManager的边距 */
@@ -112,63 +112,63 @@ class GridItemDecoration private constructor(context: Context) : BaseItemDecorat
 
         if (layoutManager.orientation == RecyclerView.VERTICAL) {//纵向
             if (position == 0) {// 第一个
-                outRect.top = mPx
-                outRect.bottom = mPx
-                outRect.left = mPx
-                outRect.right = mPx
+                outRect.top = mPdrPx
+                outRect.bottom = mPdrPx
+                outRect.left = mPdrPx
+                outRect.right = mPdrPx
                 return
             }
             if (position < spanCount) {//第一排
-                outRect.top = mPx
-                outRect.bottom = mPx
+                outRect.top = mPdrPx
+                outRect.bottom = mPdrPx
                 outRect.left = 0
-                outRect.right = mPx
+                outRect.right = mPdrPx
                 return
             }
             if (position % spanCount == 0) {//最左侧
                 outRect.top = 0
-                outRect.bottom = mPx
-                outRect.left = mPx
-                outRect.right = mPx
+                outRect.bottom = mPdrPx
+                outRect.left = mPdrPx
+                outRect.right = mPdrPx
                 return
             }
 
             outRect.top = 0
-            outRect.bottom = mPx
+            outRect.bottom = mPdrPx
             outRect.left = 0
-            outRect.right = mPx
+            outRect.right = mPdrPx
             return
         }
 
         // 横向
         parent.setPadding(parent.paddingStart, parent.paddingTop, parent.paddingEnd,
-                if (parent.paddingBottom >= mPx) parent.paddingBottom else parent.paddingBottom + mPx)
+                if (parent.paddingBottom >= mPdrPx) parent.paddingBottom else parent.paddingBottom + mPdrPx)
         if (position < spanCount) {//最左侧
-            outRect.top = mPx
+            outRect.top = mPdrPx
             outRect.bottom = 0
-            outRect.left = mPx
-            outRect.right = mPx
+            outRect.left = mPdrPx
+            outRect.right = mPdrPx
             return
         }
-        outRect.top = mPx
+        outRect.top = mPdrPx
         outRect.bottom = 0
         outRect.left = 0
-        outRect.right = mPx
+        outRect.right = mPdrPx
     }
 
     override fun onDraw(canvas: Canvas, parent: RecyclerView, state: RecyclerView.State) {
         super.onDraw(canvas, parent, state)
-        if (mPx <= 0) {
+        if (mPdrPx <= 0) {
             return
         }
         val childCount = parent.childCount
         if (childCount == 0) {
             return
         }
-        drawTopDivider(canvas, parent, childCount, mPx, mPaint)
-        drawBottomDivider(canvas, parent, childCount, mPx, mPaint)
-        drawLeftDivider(canvas, parent, childCount, mPx, mPaint)
-        drawRightDivider(canvas, parent, childCount, mPx, mPaint)
+        drawTopDivider(canvas, parent, childCount, mPdrPx, mPdrPaint)
+        drawBottomDivider(canvas, parent, childCount, mPdrPx, mPdrPaint)
+        drawLeftDivider(canvas, parent, childCount, mPdrPx, mPdrPaint)
+        drawRightDivider(canvas, parent, childCount, mPdrPx, mPdrPaint)
     }
 
     /** 绘制顶部分割线，画布[canvas]，父控件[parent]，子项数量[childCount]，间距[px]，画笔[paint] */

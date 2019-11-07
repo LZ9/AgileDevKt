@@ -34,29 +34,29 @@ import java.net.SocketTimeoutException
 class ErrorLayout : LinearLayout {
 
     /** 异常界面配置 */
-    private var mConfig = ErrorLayoutConfig()
+    private var mPdrConfig = ErrorLayoutConfig()
 
     /** 根布局 */
-    private val mRootView by bindView<LinearLayout>(R.id.error_root_layout)
+    private val mPdrRootView by bindView<LinearLayout>(R.id.pdr_error_root_layout)
     /** 失败图片 */
-    private val mErrorImg by bindView<ImageView>(R.id.error_img)
+    private val mPdrErrorImg by bindView<ImageView>(R.id.pdr_error_img)
     /** 提示语 */
-    private val mErrorTipsTv by bindView<TextView>(R.id.error_tips_tv)
+    private val mPdrErrorTipsTv by bindView<TextView>(R.id.pdr_error_tips_tv)
 
     /** 通用异常图标 */
     @DrawableRes
-    private var mSrcResId = R.drawable.pandora_ic_data_fail
-    private var mSrc: Drawable? = null
+    private var mPdrSrcResId = R.drawable.pandora_ic_data_fail
+    private var mPdrSrc: Drawable? = null
 
     /** 网络异常图标 */
     @DrawableRes
-    private var mSrcNetResId = R.drawable.pandora_ic_network_fail
-    private var mSrcNet: Drawable? = null
+    private var mPdrSrcNetResId = R.drawable.pandora_ic_network_fail
+    private var mPdrSrcNet: Drawable? = null
 
     /** 通用异常提示语 */
-    private var mTips = context.getString(R.string.pandora_load_fail)
+    private var mPdrTips = context.getString(R.string.pandora_load_fail)
     /** 网络异常提示语 */
-    private var mNetTips = context.getString(R.string.pandora_load_fail_net)
+    private var mPdrNetTips = context.getString(R.string.pandora_load_fail_net)
 
     constructor(context: Context?) : super(context) {
         init(null)
@@ -73,7 +73,7 @@ class ErrorLayout : LinearLayout {
     private fun init(attrs: AttributeSet?) {
         val app = BaseApplication.get()
         if (app != null) {
-            mConfig = app.getBaseLayoutConfig().getErrorLayoutConfig()
+            mPdrConfig = app.getBaseLayoutConfig().getErrorLayoutConfig()
         }
         LayoutInflater.from(context).inflate(R.layout.pandora_view_error, this)
         configLayout(attrs)
@@ -86,41 +86,41 @@ class ErrorLayout : LinearLayout {
         }
 
         // 布局方向
-        val orientation: Int = typedArray?.getInt(R.styleable.ErrorLayout_contentOrientation, mConfig.orientation)
-                ?: mConfig.orientation
+        val orientation: Int = typedArray?.getInt(R.styleable.ErrorLayout_contentOrientation, mPdrConfig.orientation)
+                ?: mPdrConfig.orientation
         setLayoutOrientation(orientation)
 
         // 是否需要图片
-        val isNeedImg: Boolean = typedArray?.getBoolean(R.styleable.ErrorLayout_isNeedImg, mConfig.isNeedImg)
-                ?: mConfig.isNeedImg
+        val isNeedImg: Boolean = typedArray?.getBoolean(R.styleable.ErrorLayout_isNeedImg, mPdrConfig.isNeedImg)
+                ?: mPdrConfig.isNeedImg
         needImg(isNeedImg)
 
         // 是否需要提示语
-        val isNeedTips: Boolean = typedArray?.getBoolean(R.styleable.ErrorLayout_isNeedTips, mConfig.isNeedTips)
-                ?: mConfig.isNeedTips
+        val isNeedTips: Boolean = typedArray?.getBoolean(R.styleable.ErrorLayout_isNeedTips, mPdrConfig.isNeedTips)
+                ?: mPdrConfig.isNeedTips
         needTips(isNeedTips)
 
         val src: Drawable? = typedArray?.getDrawable(R.styleable.ErrorLayout_src)
         when {
             src != null -> setImg(src)
-            mConfig.drawableResId != 0 -> setImg(mConfig.drawableResId)
+            mPdrConfig.drawableResId != 0 -> setImg(mPdrConfig.drawableResId)
             else -> setImg(R.drawable.pandora_ic_data_fail)
         }
 
         val srcNet: Drawable? = typedArray?.getDrawable(R.styleable.ErrorLayout_srcNet)
         when {
             srcNet != null -> setNetImg(srcNet)
-            mConfig.drawableNetResId != 0 -> setNetImg(mConfig.drawableNetResId)
+            mPdrConfig.drawableNetResId != 0 -> setNetImg(mPdrConfig.drawableNetResId)
             else -> setNetImg(R.drawable.pandora_ic_network_fail)
         }
 
         // 默认提示语
-        val defaultTips = if (mConfig.tips.isEmpty()) context.getString(R.string.pandora_load_fail) else mConfig.tips
+        val defaultTips = if (mPdrConfig.tips.isEmpty()) context.getString(R.string.pandora_load_fail) else mPdrConfig.tips
         val attrsTips: String = typedArray?.getString(R.styleable.ErrorLayout_tips) ?: defaultTips
         setTips(if (attrsTips.isEmpty()) defaultTips else attrsTips)
 
         // 网络提示语
-        val netTips = if (mConfig.netTips.isEmpty()) context.getString(R.string.pandora_load_fail_net) else mConfig.netTips
+        val netTips = if (mPdrConfig.netTips.isEmpty()) context.getString(R.string.pandora_load_fail_net) else mPdrConfig.netTips
         val attrsNetTips: String = typedArray?.getString(R.styleable.ErrorLayout_netTips) ?: netTips
         setNetTips(if (attrsNetTips.isEmpty()) netTips else attrsNetTips)
 
@@ -128,8 +128,8 @@ class ErrorLayout : LinearLayout {
         val tipsColor: ColorStateList? = typedArray?.getColorStateList(R.styleable.ErrorLayout_tipsColor)
         if (tipsColor != null) {
             setTipsTextColor(tipsColor)
-        } else if (mConfig.textColor != 0) {
-            setTipsTextColor(mConfig.textColor)
+        } else if (mPdrConfig.textColor != 0) {
+            setTipsTextColor(mPdrConfig.textColor)
         }
 
         // 提示语大小
@@ -137,15 +137,15 @@ class ErrorLayout : LinearLayout {
                 ?: 0
         if (tipsSize != 0) {
             setTipsTextSize(px2spRF(tipsSize))
-        } else if (mConfig.textSize != 0) {
-            setTipsTextSize(mConfig.textSize.toFloat())
+        } else if (mPdrConfig.textSize != 0) {
+            setTipsTextSize(mPdrConfig.textSize.toFloat())
         }
 
         // 设置加载页背景
         val drawableBackground: Drawable? = typedArray?.getDrawable(R.styleable.ErrorLayout_contentBackground)
         when {
             drawableBackground != null -> background = drawableBackground
-            mConfig.backgroundColor != 0 -> setBackgroundColor(getColorCompat(mConfig.backgroundColor))
+            mPdrConfig.backgroundColor != 0 -> setBackgroundColor(getColorCompat(mPdrConfig.backgroundColor))
             else -> setBackgroundColor(getColorCompat(android.R.color.white))
         }
 
@@ -154,104 +154,104 @@ class ErrorLayout : LinearLayout {
 
     /** 是否需要[isNeed]提示图片 */
     fun needImg(isNeed: Boolean) {
-        mErrorImg.visibility = if (isNeed) View.VISIBLE else View.GONE
+        mPdrErrorImg.visibility = if (isNeed) View.VISIBLE else View.GONE
     }
 
     /** 是否需要[isNeed]提示文字 */
     fun needTips(isNeed: Boolean) {
-        mErrorTipsTv.visibility = if (isNeed) View.VISIBLE else View.GONE
+        mPdrErrorTipsTv.visibility = if (isNeed) View.VISIBLE else View.GONE
     }
 
     /** 设置界面错误图片资源[drawableResId] */
     fun setImg(@DrawableRes drawableResId: Int) {
-        mSrcResId = drawableResId
+        mPdrSrcResId = drawableResId
     }
 
     /** 设置界面错误图片[drawable] */
     fun setImg(drawable: Drawable) {
-        mSrc = drawable
+        mPdrSrc = drawable
     }
 
     /** 设置网络错误图片资源[drawableResId] */
     fun setNetImg(@DrawableRes drawableResId: Int) {
-        mSrcNetResId = drawableResId
+        mPdrSrcNetResId = drawableResId
     }
 
     /** 设置网络错误图片[drawable] */
     fun setNetImg(drawable: Drawable) {
-        mSrcNet = drawable
+        mPdrSrcNet = drawable
     }
 
     /** 设置提示文字[str] */
     fun setTips(str: String) {
-        mTips = str
+        mPdrTips = str
     }
 
     /** 设置提示文字资源[strResId] */
     fun setTips(@StringRes strResId: Int) {
-        mTips = context.getString(strResId)
+        mPdrTips = context.getString(strResId)
     }
 
     /** 设置提示文字[str] */
     fun setNetTips(str: String) {
-        mNetTips = str
+        mPdrNetTips = str
     }
 
     /** 设置提示文字资源[strResId] */
     fun setNetTips(@StringRes strResId: Int) {
-        mNetTips = context.getString(strResId)
+        mPdrNetTips = context.getString(strResId)
     }
 
     /** 设置文字颜色资源[colorRes] */
     fun setTipsTextColor(@ColorRes colorRes: Int) {
-        mErrorTipsTv.setTextColor(getColorCompat(colorRes))
+        mPdrErrorTipsTv.setTextColor(getColorCompat(colorRes))
     }
 
     /** 设置文字颜色[color] */
     fun setTipsTextColorInt(@ColorInt color: Int) {
-        mErrorTipsTv.setTextColor(color)
+        mPdrErrorTipsTv.setTextColor(color)
     }
 
     /** 设置文字颜色[colorStateList] */
     fun setTipsTextColor(colorStateList: ColorStateList) {
-        mErrorTipsTv.setTextColor(colorStateList)
+        mPdrErrorTipsTv.setTextColor(colorStateList)
     }
 
     /** 设置文字大小[sp] */
     fun setTipsTextSize(sp: Float) {
-        mErrorTipsTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, sp)
+        mPdrErrorTipsTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, sp)
     }
 
     /** 设置重载监听器[listener] */
     fun setReloadListener(listener: (view: View) -> Unit) {
-        mRootView.setOnClickListener(listener)
+        mPdrRootView.setOnClickListener(listener)
     }
 
     /** 设置加载页面的布局方向[orientation] */
     fun setLayoutOrientation(@BaseLayoutConfig.OrientationType orientation: Int) {
         if (orientation == LinearLayout.HORIZONTAL || orientation == LinearLayout.VERTICAL) {
-            mRootView.orientation = orientation
+            mPdrRootView.orientation = orientation
         }
     }
 
     /** 显示数据异常 */
     fun showDataFail(){
-        mErrorTipsTv.text = mTips
-        if (mSrc != null){
-            mErrorImg.setImageDrawable(mSrc)
+        mPdrErrorTipsTv.text = mPdrTips
+        if (mPdrSrc != null){
+            mPdrErrorImg.setImageDrawable(mPdrSrc)
             return
         }
-        mErrorImg.setImageResource(mSrcResId)
+        mPdrErrorImg.setImageResource(mPdrSrcResId)
     }
 
     /** 显示网络异常 */
     fun showNetFail(){
-        mErrorTipsTv.text = mNetTips
-        if (mSrcNet != null){
-            mErrorImg.setImageDrawable(mSrcNet)
+        mPdrErrorTipsTv.text = mPdrNetTips
+        if (mPdrSrcNet != null){
+            mPdrErrorImg.setImageDrawable(mPdrSrcNet)
             return
         }
-        mErrorImg.setImageResource(mSrcNetResId)
+        mPdrErrorImg.setImageResource(mPdrSrcNetResId)
     }
 
     /** 自动判断界面显示 */

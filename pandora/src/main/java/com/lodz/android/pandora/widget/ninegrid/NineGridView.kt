@@ -37,18 +37,18 @@ open class NineGridView : FrameLayout {
     private val DEFAULT_SPAN_COUNT = 3
 
     /** 列表 */
-    private val mRecyclerView by bindView<RecyclerView>(R.id.recycler_view)
+    private val mPdrRecyclerView by bindView<RecyclerView>(R.id.pdr_recycler_view)
     /** 适配器 */
-    private lateinit var mAdapter: NineGridAdapter
+    private lateinit var mPdrAdapter: NineGridAdapter
     /** 网格布局管理器 */
-    private lateinit var mGridLayoutManager: GridLayoutManager
+    private lateinit var mPdrGridLayoutManager: GridLayoutManager
 
     /** 数据列表 */
-    private var mDataList = ArrayList<String>()
+    private var mPdrDataList = ArrayList<String>()
     /** 是否需要拖拽 */
-    private var isNeedDrag = false
+    private var isPdrNeedDrag = false
     /** 是否需要拖拽震动提醒 */
-    private var isNeedDragVibrate = true
+    private var isPdrNeedDragVibrate = true
 
     constructor(context: Context) : super(context) {
         init(null)
@@ -79,27 +79,27 @@ open class NineGridView : FrameLayout {
         if (attrs != null) {
             typedArray = context.obtainStyledAttributes(attrs, R.styleable.NineGridView)
         }
-        isNeedDrag = typedArray?.getBoolean(R.styleable.NineGridView_isNeedDrag, false) ?: false
-        isNeedDragVibrate = typedArray?.getBoolean(R.styleable.NineGridView_isNeedDragVibrate, true) ?: true
-        mAdapter.setNeedAddBtn(typedArray?.getBoolean(R.styleable.NineGridView_isNeedAddBtn, true)
+        isPdrNeedDrag = typedArray?.getBoolean(R.styleable.NineGridView_isNeedDrag, false) ?: false
+        isPdrNeedDragVibrate = typedArray?.getBoolean(R.styleable.NineGridView_isNeedDragVibrate, true) ?: true
+        mPdrAdapter.setNeedAddBtn(typedArray?.getBoolean(R.styleable.NineGridView_isNeedAddBtn, true)
                 ?: true)
-        mAdapter.setAddBtnDrawable(typedArray?.getDrawable(R.styleable.NineGridView_addBtnDrawable))
-        mAdapter.setShowDelete(typedArray?.getBoolean(R.styleable.NineGridView_isShowDeleteBtn, true)
+        mPdrAdapter.setAddBtnDrawable(typedArray?.getDrawable(R.styleable.NineGridView_addBtnDrawable))
+        mPdrAdapter.setShowDelete(typedArray?.getBoolean(R.styleable.NineGridView_isShowDeleteBtn, true)
                 ?: true)
-        mAdapter.setDeleteBtnDrawable(typedArray?.getDrawable(R.styleable.NineGridView_deleteDrawable))
-        mGridLayoutManager.spanCount = typedArray?.getInt(R.styleable.NineGridView_spanCount, DEFAULT_SPAN_COUNT) ?: DEFAULT_SPAN_COUNT
-        mAdapter.setMaxPic(typedArray?.getInt(R.styleable.NineGridView_maxPic, DEFAULT_MAX_PIC)
+        mPdrAdapter.setDeleteBtnDrawable(typedArray?.getDrawable(R.styleable.NineGridView_deleteDrawable))
+        mPdrGridLayoutManager.spanCount = typedArray?.getInt(R.styleable.NineGridView_spanCount, DEFAULT_SPAN_COUNT) ?: DEFAULT_SPAN_COUNT
+        mPdrAdapter.setMaxPic(typedArray?.getInt(R.styleable.NineGridView_maxPic, DEFAULT_MAX_PIC)
                 ?: DEFAULT_MAX_PIC)
-        mAdapter.setItemHigh(typedArray?.getDimensionPixelSize(R.styleable.NineGridView_itemHigh, 0)
+        mPdrAdapter.setItemHigh(typedArray?.getDimensionPixelSize(R.styleable.NineGridView_itemHigh, 0)
                 ?: 0)
         typedArray?.recycle()
     }
 
     /** 拖拽回调  */
-    private val mItemTouchHelperCallback = object : ItemTouchHelper.Callback() {
+    private val mPdrItemTouchHelperCallback = object : ItemTouchHelper.Callback() {
         // 配置拖拽类型
         override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
-            val dragFlags = if (isNeedDrag && viewHolder is NineGridAdapter.NineGridViewHolder) {
+            val dragFlags = if (isPdrNeedDrag && viewHolder is NineGridAdapter.NineGridViewHolder) {
                 ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
             } else {
                 0
@@ -110,7 +110,7 @@ open class NineGridView : FrameLayout {
 
         // 拖拽
         override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
-            if (mDataList.isEmpty()) {
+            if (mPdrDataList.isEmpty()) {
                 return false
             }
             if (viewHolder !is NineGridAdapter.NineGridViewHolder || target !is NineGridAdapter.NineGridViewHolder) {
@@ -124,14 +124,14 @@ open class NineGridView : FrameLayout {
 
             if (fromPosition < toPosition) {//顺序小到大
                 for (i in fromPosition until toPosition) {
-                    Collections.swap(mDataList, i, i + 1)
+                    Collections.swap(mPdrDataList, i, i + 1)
                 }
             } else {//顺序大到小
                 for (i in fromPosition downTo (toPosition + 1)) {
-                    Collections.swap(mDataList, i, i - 1)
+                    Collections.swap(mPdrDataList, i, i - 1)
                 }
             }
-            mAdapter.notifyItemMoved(fromPosition, toPosition)
+            mPdrAdapter.notifyItemMoved(fromPosition, toPosition)
             return true
         }
 
@@ -140,7 +140,7 @@ open class NineGridView : FrameLayout {
 
         // 当长按选中item时（拖拽开始时）调用
         override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
-            if (actionState != ItemTouchHelper.ACTION_STATE_IDLE && isNeedDragVibrate) {
+            if (actionState != ItemTouchHelper.ACTION_STATE_IDLE && isPdrNeedDragVibrate) {
                 context.createVibrator(100)
             }
             if (actionState == ItemTouchHelper.ACTION_STATE_DRAG && viewHolder != null) {//开始拖拽
@@ -161,82 +161,82 @@ open class NineGridView : FrameLayout {
     }
 
     private fun initRecyclerView() {
-        mGridLayoutManager = GridLayoutManager(context, DEFAULT_SPAN_COUNT)
-        mGridLayoutManager.orientation = RecyclerView.VERTICAL
-        mAdapter = NineGridAdapter(context)
-        mRecyclerView.layoutManager = mGridLayoutManager
-        mRecyclerView.setHasFixedSize(true)
-        mRecyclerView.addItemDecoration(GridItemDecoration.create(context).setDividerSpace(1).setDividerInt(Color.TRANSPARENT))
-        mRecyclerView.adapter = mAdapter
-        val itemTouchHelper = ItemTouchHelper(mItemTouchHelperCallback)
-        itemTouchHelper.attachToRecyclerView(mRecyclerView)
+        mPdrGridLayoutManager = GridLayoutManager(context, DEFAULT_SPAN_COUNT)
+        mPdrGridLayoutManager.orientation = RecyclerView.VERTICAL
+        mPdrAdapter = NineGridAdapter(context)
+        mPdrRecyclerView.layoutManager = mPdrGridLayoutManager
+        mPdrRecyclerView.setHasFixedSize(true)
+        mPdrRecyclerView.addItemDecoration(GridItemDecoration.create(context).setDividerSpace(1).setDividerInt(Color.TRANSPARENT))
+        mPdrRecyclerView.adapter = mPdrAdapter
+        val itemTouchHelper = ItemTouchHelper(mPdrItemTouchHelperCallback)
+        itemTouchHelper.attachToRecyclerView(mPdrRecyclerView)
     }
 
     /** 设置是否需要添加图标[isNeed] */
     fun setNeedAddBtn(isNeed: Boolean) {
-        mAdapter.setNeedAddBtn(isNeed)
-        mAdapter.notifyDataSetChanged()
+        mPdrAdapter.setNeedAddBtn(isNeed)
+        mPdrAdapter.notifyDataSetChanged()
     }
 
     /** 设置添加图标[resId] */
     fun setAddBtnDrawable(@DrawableRes resId: Int) {
-        mAdapter.setAddBtnDrawable(getDrawableCompat(resId))
-        mAdapter.notifyDataSetChanged()
+        mPdrAdapter.setAddBtnDrawable(getDrawableCompat(resId))
+        mPdrAdapter.notifyDataSetChanged()
     }
 
     /** 设置是否显示删除按钮[isShow] */
     fun setShowDelete(isShow: Boolean) {
-        mAdapter.setShowDelete(isShow)
-        mAdapter.notifyDataSetChanged()
+        mPdrAdapter.setShowDelete(isShow)
+        mPdrAdapter.notifyDataSetChanged()
     }
 
     /** 设置删除图标[resId] */
     fun setDeleteBtnDrawable(@DrawableRes resId: Int) {
-        mAdapter.setDeleteBtnDrawable(getDrawableCompat(resId))
-        mAdapter.notifyDataSetChanged()
+        mPdrAdapter.setDeleteBtnDrawable(getDrawableCompat(resId))
+        mPdrAdapter.notifyDataSetChanged()
     }
 
     /** 设置最大图片数[count] */
     fun setMaxPic(@IntRange(from = 1) count: Int) {
-        mAdapter.setMaxPic(count)
+        mPdrAdapter.setMaxPic(count)
         clearData()
-        mAdapter.notifyDataSetChanged()
+        mPdrAdapter.notifyDataSetChanged()
     }
 
     /** 设置数据 */
     fun setData(data: ArrayList<String>) {
-        mDataList = ArrayList()
+        mPdrDataList = ArrayList()
         //如果数据大于最大图片数，则取前n位数据
-        val length = if (data.size > mAdapter.getMaxPic()) mAdapter.getMaxPic() else data.size
+        val length = if (data.size > mPdrAdapter.getMaxPic()) mPdrAdapter.getMaxPic() else data.size
         for (i in 0 until length) {
-            mDataList.add(data[i])
+            mPdrDataList.add(data[i])
         }
-        mAdapter.setData(mDataList)
-        mAdapter.notifyDataSetChanged()
+        mPdrAdapter.setData(mPdrDataList)
+        mPdrAdapter.notifyDataSetChanged()
     }
 
     /** 添加数据 */
     open fun addData(data: ArrayList<String>) {
         // 判断添加的数据长度和已有数据长度之和是否超过总长度
-        val length = if ((data.size + mDataList.size) > mAdapter.getMaxPic()) mAdapter.getMaxPic() - mDataList.size else data.size
+        val length = if ((data.size + mPdrDataList.size) > mPdrAdapter.getMaxPic()) mPdrAdapter.getMaxPic() - mPdrDataList.size else data.size
         for (i in 0 until length) {
-            mDataList.add(data[i])
+            mPdrDataList.add(data[i])
         }
-        mAdapter.setData(mDataList)
-        mAdapter.notifyDataSetChanged()
+        mPdrAdapter.setData(mPdrDataList)
+        mPdrAdapter.notifyDataSetChanged()
     }
 
     /** 删除数据 */
     open fun removeData(position: Int) {
-        if (position < 0 || position >= mDataList.size) {
+        if (position < 0 || position >= mPdrDataList.size) {
             return
         }
-        mAdapter.notifyItemRemovedChanged(position)
-        mRecyclerView.requestLayout()
+        mPdrAdapter.notifyItemRemovedChanged(position)
+        mPdrRecyclerView.requestLayout()
     }
 
     /** 获取图片数据 */
-    fun getPicData(): List<String> = mDataList
+    fun getPicData(): List<String> = mPdrDataList
 
     /** 清空数据 */
     fun clearData() {
@@ -245,17 +245,17 @@ open class NineGridView : FrameLayout {
 
     /** 是否允许拖拽 */
     fun setNeedDrag(isNeed: Boolean) {
-        isNeedDrag = isNeed
+        isPdrNeedDrag = isNeed
     }
 
     /** 是否允许拖拽震动提醒 */
     fun setNeedDragVibrate(isNeed: Boolean) {
-        isNeedDragVibrate = isNeed
+        isPdrNeedDragVibrate = isNeed
     }
 
     /** 设置监听器 */
     open fun setOnNineGridViewListener(listener: OnNineGridViewListener) {
-        mAdapter.setOnNineGridViewListener(listener)
+        mPdrAdapter.setOnNineGridViewListener(listener)
     }
 
 }

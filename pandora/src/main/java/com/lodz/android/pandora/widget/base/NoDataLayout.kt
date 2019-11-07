@@ -30,14 +30,14 @@ import com.lodz.android.pandora.base.application.config.NoDataLayoutConfig
 class NoDataLayout : LinearLayout {
 
     /** 加载页配置 */
-    private var mConfig = NoDataLayoutConfig()
+    private var mPdrConfig = NoDataLayoutConfig()
 
     /** 根布局  */
-    private val mRootView by bindView<LinearLayout>(R.id.root_view)
+    private val mPdrRootView by bindView<LinearLayout>(R.id.pdr_root_view)
     /** 无数据图片  */
-    private val mNoDataImg by bindView<ImageView>(R.id.no_data_img)
+    private val mPdrNoDataImg by bindView<ImageView>(R.id.pdr_no_data_img)
     /** 无数据提示语  */
-    private val mNoDataTv by bindView<TextView>(R.id.no_data_tv)
+    private val mPdrNoDataTv by bindView<TextView>(R.id.pdr_no_data_tv)
 
     constructor(context: Context?) : super(context) {
         init(null)
@@ -54,7 +54,7 @@ class NoDataLayout : LinearLayout {
     private fun init(attrs: AttributeSet?) {
         val app = BaseApplication.get()
         if (app != null) {
-            mConfig = app.getBaseLayoutConfig().getNoDataLayoutConfig()
+            mPdrConfig = app.getBaseLayoutConfig().getNoDataLayoutConfig()
         }
         LayoutInflater.from(context).inflate(R.layout.pandora_view_no_data, this)
         configLayout(attrs)
@@ -67,30 +67,30 @@ class NoDataLayout : LinearLayout {
         }
 
         // 布局方向
-        val orientation: Int = typedArray?.getInt(R.styleable.NoDataLayout_contentOrientation, mConfig.orientation)
-                ?: mConfig.orientation
+        val orientation: Int = typedArray?.getInt(R.styleable.NoDataLayout_contentOrientation, mPdrConfig.orientation)
+                ?: mPdrConfig.orientation
         setLayoutOrientation(orientation)
 
         // 是否需要提示语
-        val isNeedTips: Boolean = typedArray?.getBoolean(R.styleable.NoDataLayout_isNeedTips, mConfig.isNeedTips)
-                ?: mConfig.isNeedTips
+        val isNeedTips: Boolean = typedArray?.getBoolean(R.styleable.NoDataLayout_isNeedTips, mPdrConfig.isNeedTips)
+                ?: mPdrConfig.isNeedTips
         needTips(isNeedTips)
 
         // 是否需要图片
-        val isNeedImg: Boolean = typedArray?.getBoolean(R.styleable.NoDataLayout_isNeedImg, mConfig.isNeedImg)
-                ?: mConfig.isNeedImg
+        val isNeedImg: Boolean = typedArray?.getBoolean(R.styleable.NoDataLayout_isNeedImg, mPdrConfig.isNeedImg)
+                ?: mPdrConfig.isNeedImg
         needImg(isNeedImg)
 
         // 无数据图片
         val src: Drawable? = typedArray?.getDrawable(R.styleable.NoDataLayout_src)
         when {
             src != null -> setImg(src)
-            mConfig.drawableResId != 0 -> setImg(mConfig.drawableResId)
+            mPdrConfig.drawableResId != 0 -> setImg(mPdrConfig.drawableResId)
             else -> setImg(R.drawable.pandora_ic_no_data)
         }
 
         // 默认提示语
-        val defaultTips = if (mConfig.tips.isEmpty()) context.getString(R.string.pandora_no_data) else mConfig.tips
+        val defaultTips = if (mPdrConfig.tips.isEmpty()) context.getString(R.string.pandora_no_data) else mPdrConfig.tips
         val attrsTips: String = typedArray?.getString(R.styleable.NoDataLayout_tips) ?: defaultTips
         setTips(if (attrsTips.isEmpty()) defaultTips else attrsTips)
 
@@ -98,8 +98,8 @@ class NoDataLayout : LinearLayout {
         val tipsColor: ColorStateList? = typedArray?.getColorStateList(R.styleable.NoDataLayout_tipsColor)
         if (tipsColor != null) {
             setTipsTextColor(tipsColor)
-        } else if (mConfig.textColor != 0) {
-            setTipsTextColor(mConfig.textColor)
+        } else if (mPdrConfig.textColor != 0) {
+            setTipsTextColor(mPdrConfig.textColor)
         }
 
         // 提示语大小
@@ -107,15 +107,15 @@ class NoDataLayout : LinearLayout {
                 ?: 0
         if (tipsSize != 0) {
             setTipsTextSize(px2spRF(tipsSize))
-        } else if (mConfig.textSize != 0) {
-            setTipsTextSize(mConfig.textSize.toFloat())
+        } else if (mPdrConfig.textSize != 0) {
+            setTipsTextSize(mPdrConfig.textSize.toFloat())
         }
 
         // 设置加载页背景
         val drawableBackground: Drawable? = typedArray?.getDrawable(R.styleable.NoDataLayout_contentBackground)
         when {
             drawableBackground != null -> background = drawableBackground
-            mConfig.backgroundColor != 0 -> setBackgroundColor(getColorCompat(mConfig.backgroundColor))
+            mPdrConfig.backgroundColor != 0 -> setBackgroundColor(getColorCompat(mPdrConfig.backgroundColor))
             else -> setBackgroundColor(getColorCompat(android.R.color.white))
         }
 
@@ -124,59 +124,58 @@ class NoDataLayout : LinearLayout {
 
     /** 是否需要[isNeed]提示图片 */
     fun needImg(isNeed: Boolean) {
-        mNoDataImg.visibility = if (isNeed) View.VISIBLE else View.GONE
+        mPdrNoDataImg.visibility = if (isNeed) View.VISIBLE else View.GONE
     }
 
     /** 是否需要[isNeed]提示文字 */
     fun needTips(isNeed: Boolean) {
-        mNoDataTv.visibility = if (isNeed) View.VISIBLE else View.GONE
+        mPdrNoDataTv.visibility = if (isNeed) View.VISIBLE else View.GONE
     }
 
     /** 设置无数据图片资源[drawableResId] */
     fun setImg(@DrawableRes drawableResId: Int) {
-        mNoDataImg.setImageResource(drawableResId)
+        mPdrNoDataImg.setImageResource(drawableResId)
     }
 
     /** 设置无数据图片[drawable] */
     fun setImg(drawable: Drawable) {
-        mNoDataImg.setImageDrawable(drawable)
+        mPdrNoDataImg.setImageDrawable(drawable)
     }
 
     /** 设置提示文字[str] */
     fun setTips(str: String) {
-        mNoDataTv.text = str
+        mPdrNoDataTv.text = str
     }
 
     /** 设置提示文字资源[strResId] */
     fun setTips(@StringRes strResId: Int) {
-        mNoDataTv.text = context.getString(strResId)
+        mPdrNoDataTv.text = context.getString(strResId)
     }
-
 
     /** 设置文字颜色资源[colorRes] */
     fun setTipsTextColor(@ColorRes colorRes: Int) {
-        mNoDataTv.setTextColor(getColorCompat(colorRes))
+        mPdrNoDataTv.setTextColor(getColorCompat(colorRes))
     }
 
     /** 设置文字颜色[color] */
     fun setTipsTextColorInt(@ColorInt color: Int) {
-        mNoDataTv.setTextColor(color)
+        mPdrNoDataTv.setTextColor(color)
     }
 
     /** 设置文字颜色[colorStateList] */
     fun setTipsTextColor(colorStateList: ColorStateList) {
-        mNoDataTv.setTextColor(colorStateList)
+        mPdrNoDataTv.setTextColor(colorStateList)
     }
 
     /** 设置文字大小[sp] */
     fun setTipsTextSize(sp: Float) {
-        mNoDataTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, sp)
+        mPdrNoDataTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, sp)
     }
 
     /** 设置加载页面的布局方向[orientation] */
     fun setLayoutOrientation(@BaseLayoutConfig.OrientationType orientation: Int) {
         if (orientation == LinearLayout.HORIZONTAL || orientation == LinearLayout.VERTICAL) {
-            mRootView.orientation = orientation
+            mPdrRootView.orientation = orientation
         }
     }
 }

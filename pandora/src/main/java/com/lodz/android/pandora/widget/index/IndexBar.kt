@@ -31,20 +31,20 @@ class IndexBar : LinearLayout {
 
     /** 索引文字颜色  */
     @ColorInt
-    private var mTextColor = Color.BLACK
+    private var mPdrTextColor = Color.BLACK
     /** 索引文字颜色  */
-    private var mTextColorStateList: ColorStateList? = null
+    private var mPdrTextColorStateList: ColorStateList? = null
     /** 索引文字大小  */
-    private var mTextSizeSp = 13
+    private var mPdrTextSizeSp = 13
     /** 文字是否粗体  */
-    private var isTextBold = true
+    private var isPdrTextBold = true
     /** 按下索引栏的背景色  */
-    private var mPressBgDrawable: Drawable? = null
+    private var mPdrPressBgDrawable: Drawable? = null
     /** 索引监听器  */
-    private var mOnIndexListener: OnIndexListener? = null
+    private var mPdrOnIndexListener: OnIndexListener? = null
 
     /** 提示控件  */
-    private var mHintTextView: TextView? = null
+    private var mPdrHintTextView: TextView? = null
 
     constructor(context: Context?) : super(context) {
         init(null)
@@ -69,54 +69,54 @@ class IndexBar : LinearLayout {
             typedArray = context.obtainStyledAttributes(attrs, R.styleable.IndexBar)
         }
 
-        mTextColorStateList = typedArray?.getColorStateList(R.styleable.IndexBar_indexTextColor)
+        mPdrTextColorStateList = typedArray?.getColorStateList(R.styleable.IndexBar_indexTextColor)
         if (typedArray != null) {
-            mTextSizeSp = px2sp(typedArray.getDimensionPixelSize(R.styleable.IndexBar_indexTextSize, 13))
-            isTextBold = typedArray.getBoolean(R.styleable.IndexBar_isTextBold, true)
+            mPdrTextSizeSp = px2sp(typedArray.getDimensionPixelSize(R.styleable.IndexBar_indexTextSize, 13))
+            isPdrTextBold = typedArray.getBoolean(R.styleable.IndexBar_isTextBold, true)
         }
-        mPressBgDrawable = typedArray?.getDrawable(R.styleable.IndexBar_pressBackgroundColor)
+        mPdrPressBgDrawable = typedArray?.getDrawable(R.styleable.IndexBar_pressBackgroundColor)
 
         typedArray?.recycle()
     }
 
     /** 设置索引监听器[listener] */
     fun setOnIndexListener(listener: OnIndexListener) {
-        mOnIndexListener = listener
+        mPdrOnIndexListener = listener
     }
 
     /** 设置索引文字颜色[color] */
     fun setIndexTextColorInt(@ColorInt color: Int) {
-        mTextColor = color
+        mPdrTextColor = color
     }
 
     /** 设置索引文字颜色[color] */
     fun setIndexTextColorRes(@ColorRes color: Int) {
-        mTextColor = getColorCompat(color)
+        mPdrTextColor = getColorCompat(color)
     }
 
     /** 设置索引文字大小[textSize]（单位sp） */
     fun setIndexTextSize(textSize: Int) {
-        mTextSizeSp = textSize
+        mPdrTextSizeSp = textSize
     }
 
     /** 文字是否粗体[isBold] */
     fun setTextBold(isBold: Boolean) {
-        isTextBold = isBold
+        isPdrTextBold = isBold
     }
 
     /** 设置按下索引栏的背景色[color] */
     fun setPressBgColorInt(@ColorInt color: Int) {
-        mPressBgDrawable = ColorDrawable(color)
+        mPdrPressBgDrawable = ColorDrawable(color)
     }
 
     /** 设置按下索引栏的背景色[color] */
     fun setPressBgColorRes(@ColorRes color: Int) {
-        mPressBgDrawable = ColorDrawable(getColorCompat(color))
+        mPdrPressBgDrawable = ColorDrawable(getColorCompat(color))
     }
 
     /** 设置提示控件[textView] */
     fun setHintTextView(textView: TextView) {
-        mHintTextView = textView
+        mPdrHintTextView = textView
     }
 
     /** 设置索引数据列表[list] */
@@ -134,13 +134,13 @@ class IndexBar : LinearLayout {
         for (str in list) {
             val textView = TextView(context)
             textView.text = str
-            if (mTextColorStateList != null) {
-                textView.setTextColor(mTextColorStateList)
+            if (mPdrTextColorStateList != null) {
+                textView.setTextColor(mPdrTextColorStateList)
             } else {
-                textView.setTextColor(mTextColor)
+                textView.setTextColor(mPdrTextColor)
             }
-            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, mTextSizeSp.toFloat())
-            textView.typeface = if (isTextBold) Typeface.DEFAULT_BOLD else Typeface.DEFAULT
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, mPdrTextSizeSp.toFloat())
+            textView.typeface = if (isPdrTextBold) Typeface.DEFAULT_BOLD else Typeface.DEFAULT
             textView.gravity = Gravity.CENTER
             val layoutParams = LinearLayout.LayoutParams(
                 if (orientation == VERTICAL) LinearLayout.LayoutParams.MATCH_PARENT else 0,
@@ -156,15 +156,15 @@ class IndexBar : LinearLayout {
             return super.onTouchEvent(event)
         }
         if (event.action == MotionEvent.ACTION_DOWN || event.action == MotionEvent.ACTION_MOVE) {
-            if (mPressBgDrawable != null) {
-                background = mPressBgDrawable
+            if (mPdrPressBgDrawable != null) {
+                background = mPdrPressBgDrawable
             }
-            mHintTextView?.visibility = View.VISIBLE
+            mPdrHintTextView?.visibility = View.VISIBLE
             callbackTouch(event.x, event.y)
         }
         if (event.action == MotionEvent.ACTION_UP) {
-            mOnIndexListener?.onEnd()
-            mHintTextView?.visibility = View.GONE
+            mPdrOnIndexListener?.onEnd()
+            mPdrHintTextView?.visibility = View.GONE
             background = ColorDrawable(Color.TRANSPARENT)
         }
         return true
@@ -177,14 +177,14 @@ class IndexBar : LinearLayout {
             val view = getChildAt(i) as? TextView ?: continue
             if (orientation == VERTICAL) {
                 if (y >= view.top && y <= view.bottom) {
-                    mHintTextView?.text = view.text
-                    mOnIndexListener?.onStart(i, view.text.toString())
+                    mPdrHintTextView?.text = view.text
+                    mPdrOnIndexListener?.onStart(i, view.text.toString())
                     return
                 }
             } else {
                 if (x >= view.left && x <= view.right) {
-                    mHintTextView?.text = view.text
-                    mOnIndexListener?.onStart(i, view.text.toString())
+                    mPdrHintTextView?.text = view.text
+                    mPdrOnIndexListener?.onStart(i, view.text.toString())
                     return
                 }
             }

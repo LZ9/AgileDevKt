@@ -13,7 +13,7 @@ open class RvBinderAdapter(private val context: Context) : RecyclerView.Adapter<
     /** 默认的Binder类型  */
     private val DEFAULT_BINDER_TYPE = -1
     /** RecyclerBinder列表 */
-    private val mBinderList = ArrayList<RecyclerBinder<*>>()
+    private val mPdrBinderList = ArrayList<RecyclerBinder<*>>()
 
     fun getContext(): Context = context
 
@@ -26,7 +26,7 @@ open class RvBinderAdapter(private val context: Context) : RecyclerView.Adapter<
 
     override fun getItemCount(): Int {
         var sumCount = 0
-        for (binder in mBinderList) {
+        for (binder in mPdrBinderList) {
             sumCount += binder.getCount()
         }
         return sumCount
@@ -39,25 +39,25 @@ open class RvBinderAdapter(private val context: Context) : RecyclerView.Adapter<
 
     /** 添加RecyclerBinder */
     fun addBinder(binder: RecyclerBinder<*>) {
-        mBinderList.add(binder)
+        mPdrBinderList.add(binder)
     }
 
     /** 删除RecyclerBinder */
     fun removeBinder(viewType: Int) {
         val binder = getBinderByViewType(viewType)
         if (binder != null) {
-            mBinderList.remove(binder)
+            mPdrBinderList.remove(binder)
         }
     }
 
     /** 清除所有RecyclerBinder */
     fun clearBinder() {
-        mBinderList.clear()
+        mPdrBinderList.clear()
     }
 
     /** 根据界面类型[viewType]获取对于的Binder */
     private fun getBinderByViewType(viewType: Int): RecyclerBinder<*>? {
-        for (binder in mBinderList) {
+        for (binder in mPdrBinderList) {
             if (binder.getViewType() == viewType) {
                 return binder
             }
@@ -68,7 +68,7 @@ open class RvBinderAdapter(private val context: Context) : RecyclerView.Adapter<
     /** 根据总位置[position]获取对应的ViewType */
     private fun getViewTypeByPosition(position: Int): Int {
         var size = 0
-        for (binder in mBinderList) {
+        for (binder in mPdrBinderList) {
             size += binder.getCount()
             if (position < size) {
                 return binder.getViewType()
@@ -81,7 +81,7 @@ open class RvBinderAdapter(private val context: Context) : RecyclerView.Adapter<
     private fun getBinderPosition(position: Int): Int {
         var currentSize = 0//当前总数
         var lastSize = 0//上一次总数
-        for (binder in mBinderList) {
+        for (binder in mPdrBinderList) {
             currentSize += binder.getCount()
             if (position < currentSize) {
                 return position - lastSize//当前Binder的相对position

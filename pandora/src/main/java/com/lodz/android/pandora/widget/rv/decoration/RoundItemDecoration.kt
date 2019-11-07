@@ -39,40 +39,40 @@ class RoundItemDecoration private constructor(context: Context) : BaseItemDecora
     private val DEFAULT_DIVIDER_BG_COLOR = Color.WHITE
 
     /** 顶部间距  */
-    private var mTopPx = 0
+    private var mPdrTopPx = 0
     /** 顶部左右间隔  */
-    private var mTopLrPadding = 0
+    private var mPdrTopLrPadding = 0
     /** 顶部画笔  */
-    private var mTopPaint: Paint? = null
+    private var mPdrTopPaint: Paint? = null
     /** 顶部背景画笔  */
-    private var mTopBgPaint: Paint? = null
+    private var mPdrTopBgPaint: Paint? = null
 
     /** 底部间距  */
-    private var mBottomPx = 0
+    private var mPdrBottomPx = 0
     /** 底部左右间隔  */
-    private var mBottomLrPadding = 0
+    private var mPdrBottomLrPadding = 0
     /** 底部画笔  */
-    private var mBottomPaint: Paint? = null
+    private var mPdrBottomPaint: Paint? = null
     /** 底部背景画笔  */
-    private var mBottomBgPaint: Paint? = null
+    private var mPdrBottomBgPaint: Paint? = null
 
     /** 左侧间距  */
-    private var mLeftPx = 0
+    private var mPdrLeftPx = 0
     /** 左侧上下间隔  */
-    private var mLeftTbPadding = 0
+    private var mPdrLeftTbPadding = 0
     /** 左侧画笔  */
-    private var mLeftPaint: Paint? = null
+    private var mPdrLeftPaint: Paint? = null
     /** 左侧背景画笔  */
-    private var mLeftBgPaint: Paint? = null
+    private var mPdrLeftBgPaint: Paint? = null
 
     /** 右侧间距  */
-    private var mRightPx = 0
+    private var mPdrRightPx = 0
     /** 右侧上下间隔  */
-    private var mRightTbPadding = 0
+    private var mPdrRightTbPadding = 0
     /** 右侧画笔  */
-    private var mRightPaint: Paint? = null
+    private var mPdrRightPaint: Paint? = null
     /** 右侧背景画笔  */
-    private var mRightBgPaint: Paint? = null
+    private var mPdrRightBgPaint: Paint? = null
 
     /** 设置顶部分割线，间距[spaceDp]（单位dp），左右间隔[lrPaddingDp]，分割线颜色[color]（不传使用默认值），背景颜色[bgColor]（不传使用默认值） */
     @JvmOverloads
@@ -86,18 +86,18 @@ class RoundItemDecoration private constructor(context: Context) : BaseItemDecora
     @JvmOverloads
     fun setTopDividerInt(@IntRange(from = 1) spaceDp: Int = 1, @IntRange(from = 0) lrPaddingDp: Int = 0,
                          @ColorInt color: Int = DEFAULT_DIVIDER_COLOR, @ColorInt bgColor: Int = DEFAULT_DIVIDER_BG_COLOR): RoundItemDecoration {
-        mTopPx = getContext().dp2px(spaceDp)
-        mTopLrPadding = getContext().dp2px(lrPaddingDp)
+        mPdrTopPx = getContext().dp2px(spaceDp)
+        mPdrTopLrPadding = getContext().dp2px(lrPaddingDp)
 
-        if (mTopPaint == null) {
-            mTopPaint = Paint()
+        if (mPdrTopPaint == null) {
+            mPdrTopPaint = Paint()
         }
-        mTopPaint?.color = color
+        mPdrTopPaint?.color = color
 
-        if (mTopBgPaint == null) {
-            mTopBgPaint = Paint()
+        if (mPdrTopBgPaint == null) {
+            mPdrTopBgPaint = Paint()
         }
-        mTopBgPaint?.color = bgColor
+        mPdrTopBgPaint?.color = bgColor
         return this
     }
 
@@ -113,18 +113,18 @@ class RoundItemDecoration private constructor(context: Context) : BaseItemDecora
     @JvmOverloads
     fun setBottomDividerInt(@IntRange(from = 1) spaceDp: Int = 1, @IntRange(from = 0) lrPaddingDp: Int = 0,
                             @ColorInt color: Int = DEFAULT_DIVIDER_COLOR, @ColorInt bgColor: Int = DEFAULT_DIVIDER_BG_COLOR): RoundItemDecoration {
-        mBottomPx = getContext().dp2px(spaceDp)
-        mBottomLrPadding = getContext().dp2px(lrPaddingDp)
+        mPdrBottomPx = getContext().dp2px(spaceDp)
+        mPdrBottomLrPadding = getContext().dp2px(lrPaddingDp)
 
-        if (mBottomPaint == null) {
-            mBottomPaint = Paint()
+        if (mPdrBottomPaint == null) {
+            mPdrBottomPaint = Paint()
         }
-        mBottomPaint?.color = color
+        mPdrBottomPaint?.color = color
 
-        if (mBottomBgPaint == null) {
-            mBottomBgPaint = Paint()
+        if (mPdrBottomBgPaint == null) {
+            mPdrBottomBgPaint = Paint()
         }
-        mBottomBgPaint?.color = bgColor
+        mPdrBottomBgPaint?.color = bgColor
         return this
     }
 
@@ -140,18 +140,18 @@ class RoundItemDecoration private constructor(context: Context) : BaseItemDecora
     @JvmOverloads
     fun setLeftDividerInt(@IntRange(from = 1) spaceDp: Int = 1, @IntRange(from = 0) lrPaddingDp: Int = 0,
                           @ColorInt color: Int = DEFAULT_DIVIDER_COLOR, @ColorInt bgColor: Int = DEFAULT_DIVIDER_BG_COLOR): RoundItemDecoration {
-        mLeftPx = getContext().dp2px(spaceDp)
-        mLeftTbPadding = getContext().dp2px(lrPaddingDp)
+        mPdrLeftPx = getContext().dp2px(spaceDp)
+        mPdrLeftTbPadding = getContext().dp2px(lrPaddingDp)
 
-        if (mLeftPaint == null) {
-            mLeftPaint = Paint()
+        if (mPdrLeftPaint == null) {
+            mPdrLeftPaint = Paint()
         }
-        mLeftPaint?.color = color
+        mPdrLeftPaint?.color = color
 
-        if (mLeftBgPaint == null) {
-            mLeftBgPaint = Paint()
+        if (mPdrLeftBgPaint == null) {
+            mPdrLeftBgPaint = Paint()
         }
-        mLeftBgPaint?.color = bgColor
+        mPdrLeftBgPaint?.color = bgColor
         return this
     }
 
@@ -167,56 +167,56 @@ class RoundItemDecoration private constructor(context: Context) : BaseItemDecora
     @JvmOverloads
     fun setRightDividerInt(@IntRange(from = 1) spaceDp: Int = 1, @IntRange(from = 0) lrPaddingDp: Int = 0,
                            @ColorInt color: Int = DEFAULT_DIVIDER_COLOR, @ColorInt bgColor: Int = DEFAULT_DIVIDER_BG_COLOR): RoundItemDecoration {
-        mRightPx = getContext().dp2px(spaceDp)
-        mRightTbPadding = getContext().dp2px(lrPaddingDp)
+        mPdrRightPx = getContext().dp2px(spaceDp)
+        mPdrRightTbPadding = getContext().dp2px(lrPaddingDp)
 
-        if (mRightPaint == null) {
-            mRightPaint = Paint()
+        if (mPdrRightPaint == null) {
+            mPdrRightPaint = Paint()
         }
-        mRightPaint?.color = color
+        mPdrRightPaint?.color = color
 
-        if (mRightBgPaint == null) {
-            mRightBgPaint = Paint()
+        if (mPdrRightBgPaint == null) {
+            mPdrRightBgPaint = Paint()
         }
-        mRightBgPaint?.color = bgColor
+        mPdrRightBgPaint?.color = bgColor
         return this
     }
 
     override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
         super.getItemOffsets(outRect, view, parent, state)
-        if (mTopPx > 0) {
-            outRect.top = mTopPx
+        if (mPdrTopPx > 0) {
+            outRect.top = mPdrTopPx
         }
-        if (mBottomPx > 0) {
-            outRect.bottom = mBottomPx
+        if (mPdrBottomPx > 0) {
+            outRect.bottom = mPdrBottomPx
         }
-        if (mLeftPx > 0) {
-            outRect.left = mLeftPx
+        if (mPdrLeftPx > 0) {
+            outRect.left = mPdrLeftPx
         }
-        if (mRightPx > 0) {
-            outRect.right = mRightPx
+        if (mPdrRightPx > 0) {
+            outRect.right = mPdrRightPx
         }
     }
 
     override fun onDraw(canvas: Canvas, parent: RecyclerView, state: RecyclerView.State) {
-        if (mTopPx <= 0 && mBottomPx <= 0 && mLeftPx <= 0 && mRightPx <= 0) {
+        if (mPdrTopPx <= 0 && mPdrBottomPx <= 0 && mPdrLeftPx <= 0 && mPdrRightPx <= 0) {
             return
         }
         val childCount = parent.childCount
         if (childCount == 0) {
             return
         }
-        if (mTopPx > 0) {
-            drawTopDivider(canvas, parent, childCount, mTopPx, mTopLrPadding, mTopPaint, mTopBgPaint)
+        if (mPdrTopPx > 0) {
+            drawTopDivider(canvas, parent, childCount, mPdrTopPx, mPdrTopLrPadding, mPdrTopPaint, mPdrTopBgPaint)
         }
-        if (mBottomPx > 0) {
-            drawBottomDivider(canvas, parent, childCount, mBottomPx, mBottomLrPadding, mBottomPaint, mBottomBgPaint)
+        if (mPdrBottomPx > 0) {
+            drawBottomDivider(canvas, parent, childCount, mPdrBottomPx, mPdrBottomLrPadding, mPdrBottomPaint, mPdrBottomBgPaint)
         }
-        if (mLeftPx > 0) {
-            drawLeftDivider(canvas, parent, childCount, mLeftPx, mLeftTbPadding, mLeftPaint, mLeftBgPaint)
+        if (mPdrLeftPx > 0) {
+            drawLeftDivider(canvas, parent, childCount, mPdrLeftPx, mPdrLeftTbPadding, mPdrLeftPaint, mPdrLeftBgPaint)
         }
-        if (mRightPx > 0) {
-            drawRightDivider(canvas, parent, childCount, mRightPx, mRightTbPadding, mRightPaint, mRightBgPaint)
+        if (mPdrRightPx > 0) {
+            drawRightDivider(canvas, parent, childCount, mPdrRightPx, mPdrRightTbPadding, mPdrRightPaint, mPdrRightBgPaint)
         }
     }
 

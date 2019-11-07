@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 open class HorRecyclerView : RecyclerView {
 
     /** 按下时的X和Y */
-    private var mTouchX: Float = 0f
-    private var mTouchY: Float = 0f
+    private var mPdrTouchX: Float = 0f
+    private var mPdrTouchY: Float = 0f
     /** 偏移量差值，当X轴的滑动偏移量差值大于这个值时，默认由内部来处理这个滑动事件 */
     private var mOffset = 20
 
@@ -27,12 +27,12 @@ open class HorRecyclerView : RecyclerView {
         }
         val action = e.action
         if (action == MotionEvent.ACTION_DOWN) {
-            mTouchX = e.x
-            mTouchY = e.y
+            mPdrTouchX = e.x
+            mPdrTouchY = e.y
         }
         if (action == MotionEvent.ACTION_MOVE) {
-            val dx = e.x - mTouchX
-            val dy = e.y - mTouchY
+            val dx = e.x - mPdrTouchX
+            val dy = e.y - mPdrTouchY
             if (Math.abs(dx) > mOffset) {
                 parent.requestDisallowInterceptTouchEvent(true)
             } else {

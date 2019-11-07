@@ -21,27 +21,27 @@ open class SectionItemDecoration<T> protected constructor(context: Context) : Ba
     }
 
     /** 数据回调 */
-    protected var mOnSectionCallback: OnSectionCallback<T>? = null
+    protected var mPdrOnSectionCallback: OnSectionCallback<T>? = null
 
     /** 设置回调[callback] */
     fun setOnSectionCallback(callback: OnSectionCallback<T>?): SectionItemDecoration<*> {
-        mOnSectionCallback = callback
+        mPdrOnSectionCallback = callback
         return this
     }
 
     override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
         super.getItemOffsets(outRect, view, parent, state)
-        if (mOnSectionCallback == null) {
+        if (mPdrOnSectionCallback == null) {
             return
         }
         if (!isVerLinearLayout(parent)) {
             return
         }
         val position = parent.getChildAdapterPosition(view)
-        if (getItem(position, mOnSectionCallback!!).isEmpty()) {
+        if (getItem(position, mPdrOnSectionCallback!!).isEmpty()) {
             return
         }
-        outRect.top = if (isFirstGroupItem(position, mOnSectionCallback!!)) mSectionHeightPx else 0// 设置分组高度
+        outRect.top = if (isFirstGroupItem(position, mPdrOnSectionCallback!!)) mPdrSectionHeightPx else 0// 设置分组高度
     }
 
     override fun onDraw(canvas: Canvas, parent: RecyclerView, state: RecyclerView.State) {
@@ -49,7 +49,7 @@ open class SectionItemDecoration<T> protected constructor(context: Context) : Ba
         if (!isVerLinearLayout(parent)) {
             return
         }
-        if (mOnSectionCallback == null) {
+        if (mPdrOnSectionCallback == null) {
             return
         }
         val childCount = parent.childCount
@@ -62,14 +62,14 @@ open class SectionItemDecoration<T> protected constructor(context: Context) : Ba
         for (i in 0 until childCount) {
             val view = parent.getChildAt(i)
             val position = parent.getChildAdapterPosition(view)
-            if (!isFirstGroupItem(position, mOnSectionCallback!!)) {
+            if (!isFirstGroupItem(position, mPdrOnSectionCallback!!)) {
                 continue
             }
 
-            val top = view.top - mSectionHeightPx
+            val top = view.top - mPdrSectionHeightPx
             val bottom = view.top
             drawBgPaint(canvas, left, top, right, bottom)
-            drawTextPaint(canvas, getItem(position, mOnSectionCallback!!), left, top, right, bottom)
+            drawTextPaint(canvas, getItem(position, mPdrOnSectionCallback!!), left, top, right, bottom)
         }
     }
 

@@ -15,7 +15,7 @@
         tools:ignore="UseCompoundDrawables">
 
         <ImageView
-            android:id="@+id/required_img"
+            android:id="@+id/pdr_required_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
@@ -23,7 +23,7 @@
             android:src="@drawable/ic_required" />
 
         <TextView
-            android:id="@+id/title_tv"
+            android:id="@+id/pdr_title_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
@@ -31,7 +31,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/content_layout"
+        android:id="@+id/pdr_content_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
@@ -39,7 +39,7 @@
         android:orientation="vertical">
 
         <com.lodz.android.pandora.widget.custom.ScrollEditText
-            android:id="@+id/content_edit"
+            android:id="@+id/pdr_content_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
@@ -58,7 +58,7 @@
             tools:targetApi="o" />
 
         <TextView
-            android:id="@+id/limit_tv"
+            android:id="@+id/pdr_limit_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
@@ -77,7 +77,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/unit_tv"
+            android:id="@+id/pdr_unit_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
@@ -86,7 +86,7 @@
             android:visibility="gone" />
 
         <TextView
-            android:id="@+id/jump_btn"
+            android:id="@+id/pdr_jump_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"

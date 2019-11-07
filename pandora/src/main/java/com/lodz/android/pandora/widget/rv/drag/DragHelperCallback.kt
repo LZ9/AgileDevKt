@@ -14,76 +14,76 @@ import java.util.*
 open class DragHelperCallback<T> : ItemTouchHelper.Callback() {
 
     /** 允许拖拽  */
-    private var mContext: Context? = null
+    private var mPdrContext: Context? = null
 
     /** 允许拖拽  */
-    private var mUseDrag = true
+    private var mPdrUseDrag = true
     /** 允许从右往左滑动  */
-    private var mUseRightToLeftSwipe = true
+    private var mPdrUseRightToLeftSwipe = true
     /** 允许从左往右滑动  */
-    private var mUseLeftToRightSwipe = true
+    private var mPdrUseLeftToRightSwipe = true
     /** 启用长按拖拽效果  */
-    private var isLongPressDrag = true
+    private var isPdrLongPressDrag = true
     /** 启用滑动效果  */
-    private var isSwipe = true
+    private var isPdrSwipe = true
     /** 启用震动效果  */
-    private var isVibrate = false
+    private var isPdrVibrate = false
 
     /** 监听器  */
-    private var mListener: ((list: List<T>) -> Unit)? = null// 列表数据
+    private var mPdrListener: ((list: List<T>) -> Unit)? = null// 列表数据
     /** 数据列表  */
-    private var mList: MutableList<T>? = null
+    private var mPdrList: MutableList<T>? = null
     /** 适配器  */
-    private var mAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>? = null
+    private var mPdrAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>? = null
 
     /** 设置上下文[context] */
     fun setContext(context: Context) {
-        this.mContext = context
+        this.mPdrContext = context
     }
 
     /** 设置允许拖拽[useDrag] */
     fun setUseDrag(useDrag: Boolean) {
-        this.mUseDrag = useDrag
+        this.mPdrUseDrag = useDrag
     }
 
     /** 设置允许从右往左滑动[rightToLeftSwipe] */
     fun setUseRightToLeftSwipe(rightToLeftSwipe: Boolean) {
-        this.mUseRightToLeftSwipe = rightToLeftSwipe
+        this.mPdrUseRightToLeftSwipe = rightToLeftSwipe
     }
 
     /** 设置允许从左往右滑动[leftToRightSwipe] */
     fun setUseLeftToRightSwipe(leftToRightSwipe: Boolean) {
-        this.mUseLeftToRightSwipe = leftToRightSwipe
+        this.mPdrUseLeftToRightSwipe = leftToRightSwipe
     }
 
     /** 设置启用长按拖拽效果[enabled] */
     fun setLongPressDrag(enabled: Boolean) {
-        isLongPressDrag = enabled
+        isPdrLongPressDrag = enabled
     }
 
     /** 设置启用滑动效果[enabled] */
     fun setSwipe(enabled: Boolean) {
-        isSwipe = enabled
+        isPdrSwipe = enabled
     }
 
     /** 设置启用震动效果[enabled] */
     fun setVibrate(enabled: Boolean) {
-        isVibrate = enabled
+        isPdrVibrate = enabled
     }
 
     /** 设置适配器[adapter] */
     fun setAdapter(adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>) {
-        this.mAdapter = adapter
+        this.mPdrAdapter = adapter
     }
 
     /** 设置监听器[listener] */
     fun setListener(listener: ((list: List<T>) -> Unit)?) {
-        this.mListener = listener
+        this.mPdrListener = listener
     }
 
     /** 设置数据列表[list] */
     fun setList(list: MutableList<T>?) {
-        this.mList = list
+        this.mPdrList = list
     }
 
     // 配置拖拽类型
@@ -91,32 +91,32 @@ open class DragHelperCallback<T> : ItemTouchHelper.Callback() {
         val dragFlags: Int
         val swipeFlags: Int
         if (recyclerView.layoutManager is GridLayoutManager) {// 网格布局
-            dragFlags = if (mUseDrag) ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT else 0
+            dragFlags = if (mPdrUseDrag) ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT else 0
             swipeFlags = 0
         } else if (recyclerView.layoutManager is LinearLayoutManager) {// 线性布局
             val layoutManager = recyclerView.layoutManager as LinearLayoutManager
             if (layoutManager.orientation == RecyclerView.VERTICAL) {//纵向
-                dragFlags = if (mUseDrag) ItemTouchHelper.UP or ItemTouchHelper.DOWN else 0
-                swipeFlags = (if (mUseRightToLeftSwipe) ItemTouchHelper.START else 0) or // START允许从右往左
-                        (if (mUseLeftToRightSwipe) ItemTouchHelper.END else 0)// END允许从左往右
+                dragFlags = if (mPdrUseDrag) ItemTouchHelper.UP or ItemTouchHelper.DOWN else 0
+                swipeFlags = (if (mPdrUseRightToLeftSwipe) ItemTouchHelper.START else 0) or // START允许从右往左
+                        (if (mPdrUseLeftToRightSwipe) ItemTouchHelper.END else 0)// END允许从左往右
             } else {//横向
-                dragFlags = if (mUseDrag) ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT else 0
+                dragFlags = if (mPdrUseDrag) ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT else 0
                 swipeFlags = 0//横向不允许侧滑
             }
         } else if (recyclerView.layoutManager is StaggeredGridLayoutManager) {// 瀑布流布局
-            dragFlags = if (mUseDrag) ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT else 0
+            dragFlags = if (mPdrUseDrag) ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT else 0
             swipeFlags = 0
         } else {// 其他布局
-            dragFlags = if (mUseDrag) ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT else 0
-            swipeFlags = (if (mUseRightToLeftSwipe) ItemTouchHelper.START else 0) or // START允许从右往左
-                    (if (mUseLeftToRightSwipe) ItemTouchHelper.END else 0)// END允许从左往右
+            dragFlags = if (mPdrUseDrag) ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT else 0
+            swipeFlags = (if (mPdrUseRightToLeftSwipe) ItemTouchHelper.START else 0) or // START允许从右往左
+                    (if (mPdrUseLeftToRightSwipe) ItemTouchHelper.END else 0)// END允许从左往右
         }
         return ItemTouchHelper.Callback.makeMovementFlags(dragFlags, swipeFlags)
     }
 
     // 拖拽
     override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
-        if (mList == null) {
+        if (mPdrList == null) {
             return false
         }
         // 得到拖动ViewHolder的Position
@@ -126,40 +126,40 @@ open class DragHelperCallback<T> : ItemTouchHelper.Callback() {
 
         if (fromPosition < toPosition) {//顺序小到大
             for (i in fromPosition until toPosition) {
-                Collections.swap(mList!!, i, i + 1)
+                Collections.swap(mPdrList!!, i, i + 1)
             }
         } else {//顺序大到小
             for (i in fromPosition downTo (toPosition + 1)) {
-                Collections.swap(mList!!, i, i - 1)
+                Collections.swap(mPdrList!!, i, i - 1)
             }
         }
-        mAdapter?.notifyItemMoved(fromPosition, toPosition)
-        mListener?.invoke(mList!!)
+        mPdrAdapter?.notifyItemMoved(fromPosition, toPosition)
+        mPdrListener?.invoke(mPdrList!!)
         return true
     }
 
     // 滑动
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-        if (mList == null) {
+        if (mPdrList == null) {
             return
         }
         val position = viewHolder.adapterPosition
-        mList?.removeAt(position)
-        if (mAdapter != null) {
-            mAdapter?.notifyItemRemoved(position)
-            if (position != mList.getSize()) { // 如果移除的是最后一个，忽略
-                mAdapter?.notifyItemRangeChanged(position, mList.getSize() - position)
+        mPdrList?.removeAt(position)
+        if (mPdrAdapter != null) {
+            mPdrAdapter?.notifyItemRemoved(position)
+            if (position != mPdrList.getSize()) { // 如果移除的是最后一个，忽略
+                mPdrAdapter?.notifyItemRangeChanged(position, mPdrList.getSize() - position)
             }
         }
-        mListener?.invoke(mList!!)
+        mPdrListener?.invoke(mPdrList!!)
     }
 
     // 当长按选中item时（拖拽开始时）调用
     override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
         if (actionState != ItemTouchHelper.ACTION_STATE_IDLE) {
-            if (isVibrate && mContext != null) {
-                if (mContext?.hasVibrator() == true) {
-                    mContext?.createVibrator(100)//长按震动
+            if (isPdrVibrate && mPdrContext != null) {
+                if (mPdrContext?.hasVibrator() == true) {
+                    mPdrContext?.createVibrator(100)//长按震动
                 }
             }
         }
@@ -174,11 +174,11 @@ open class DragHelperCallback<T> : ItemTouchHelper.Callback() {
 
     // 是否启用长按拖拽效果
     override fun isLongPressDragEnabled(): Boolean {
-        return isLongPressDrag
+        return isPdrLongPressDrag
     }
 
     // 启用滑动效果
     override fun isItemViewSwipeEnabled(): Boolean {
-        return isSwipe
+        return isPdrSwipe
     }
 }

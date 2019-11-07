@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <ImageView
-        android:id="@+id/add_btn"
+        android:id="@+id/pdr_add_btn"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="@string/pandora_app_img_name"

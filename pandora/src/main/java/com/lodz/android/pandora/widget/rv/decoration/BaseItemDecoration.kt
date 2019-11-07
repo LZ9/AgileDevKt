@@ -10,9 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 open class BaseItemDecoration(context: Context) : RecyclerView.ItemDecoration() {
 
     /** 上下文 */
-    private val mContext: Context = context
+    private val mPdrContext: Context = context
 
-    fun getContext(): Context = mContext
+    fun getContext(): Context = mPdrContext
 
     /** 校验数值[value] */
     protected fun checkValue(value: Int): Int = if (value <= 0) 0 else value

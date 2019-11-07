@@ -18,7 +18,7 @@ import com.lodz.android.pandora.R
 open class MmsTabLayout : TabLayout {
 
     /** 两侧间距 */
-    private var mTabMarginPx = 0
+    private var mPdrTabMarginPx = 0
 
     constructor(context: Context?) : super(context) {
         init(null)
@@ -37,15 +37,15 @@ open class MmsTabLayout : TabLayout {
         if (attrs != null) {
             typedArray = context.obtainStyledAttributes(attrs, R.styleable.MmsTabLayout)
         }
-        mTabMarginPx = typedArray?.getDimensionPixelSize(R.styleable.MmsTabLayout_tabMargin, 0) ?: 0
+        mPdrTabMarginPx = typedArray?.getDimensionPixelSize(R.styleable.MmsTabLayout_tabMargin, 0) ?: 0
         typedArray?.recycle()
     }
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
         super.onLayout(changed, l, t, r, b)
         if (changed) {
-            if (mTabMarginPx != 0) {
-                setTabIndicatorMargin(px2dpRF(mTabMarginPx))
+            if (mPdrTabMarginPx != 0) {
+                setTabIndicatorMargin(px2dpRF(mPdrTabMarginPx))
             }
         }
     }

@@ -35,11 +35,11 @@ class BaseNavigationView : BottomNavigationView {
     }
 
     /** 默认的ItemIconTintList */
-    private var mDefaultItemIconTintList: ColorStateList? = null
+    private var mPdrDefaultItemIconTintList: ColorStateList? = null
     /** Item布局列表 */
-    private var mItemViews: ArrayList<BottomNavigationItemView>? = null
+    private var mPdrItemViews: ArrayList<BottomNavigationItemView>? = null
     /** 角标模式 */
-    private var mBadgeMode = BADGE_NONE_MODE
+    private var mPdrBadgeMode = BADGE_NONE_MODE
 
     constructor(context: Context?) : super(context){
         init(null)
@@ -61,7 +61,7 @@ class BaseNavigationView : BottomNavigationView {
             typedArray = context.obtainStyledAttributes(attrs, R.styleable.BaseNavigationView)
         }
         // 是否显示原始图标图案
-        mDefaultItemIconTintList = itemIconTintList
+        mPdrDefaultItemIconTintList = itemIconTintList
         val isShowOriginalIcon: Boolean = typedArray?.getBoolean(R.styleable.BaseNavigationView_isShowOriginalIcon, true) ?: true
         setShowOriginalIcon(isShowOriginalIcon)
 
@@ -78,10 +78,10 @@ class BaseNavigationView : BottomNavigationView {
         if (menuView != null) {
             val itemView = ReflectUtils.getFieldValue<BottomNavigationMenuView>(menuView, "buttons") as? Array<*>
             if (itemView != null) {
-                mItemViews = ArrayList()
+                mPdrItemViews = ArrayList()
                 itemView.forEach { any ->
                     if (any is BottomNavigationItemView) {
-                        mItemViews?.add(any)
+                        mPdrItemViews?.add(any)
                     }
                 }
             }
@@ -91,42 +91,42 @@ class BaseNavigationView : BottomNavigationView {
 
     /** 设置显示原始图标[isShow] */
     fun setShowOriginalIcon(isShow: Boolean) {
-        itemIconTintList = if (isShow) null else mDefaultItemIconTintList
+        itemIconTintList = if (isShow) null else mPdrDefaultItemIconTintList
     }
 
     /** 设置角标布局[view] */
     fun setBadgeLayout(view: View) {
-        mItemViews?.forEachIndexed { index, itemView ->
+        mPdrItemViews?.forEachIndexed { index, itemView ->
             itemView.addView(view)
         }
     }
 
     /** 设置角标布局资源id[layoutId] */
     fun setBadgeLayout(@LayoutRes layoutId: Int) {
-        mItemViews?.forEachIndexed { index, itemView ->
+        mPdrItemViews?.forEachIndexed { index, itemView ->
             itemView.addView(LayoutInflater.from(context).inflate(layoutId, itemView, false))
         }
     }
 
     /** 设置角标类型[badgeMode] */
     fun setBadgeMode(badgeMode: Int) {
-        mBadgeMode = badgeMode
+        mPdrBadgeMode = badgeMode
     }
 
     /** 设置Item的角标数字，位置[position]，数字[num] */
     fun setItemBadgeNum(position: Int, num: Int) {
-        if (mBadgeMode == BADGE_NONE_MODE) {
+        if (mPdrBadgeMode == BADGE_NONE_MODE) {
             return
         }
-        if (mBadgeMode == BADGE_ALL_POINT_MODE) {
+        if (mPdrBadgeMode == BADGE_ALL_POINT_MODE) {
             return
         }
-        if (position < mItemViews?.size ?: 0) {
-            val pointView = mItemViews?.get(position)?.findViewById<View>(R.id.point_view)
+        if (position < mPdrItemViews?.size ?: 0) {
+            val pointView = mPdrItemViews?.get(position)?.findViewById<View>(R.id.pdr_point_view)
             if (pointView != null) {
                 pointView.visibility = View.GONE
             }
-            val numTv = mItemViews?.get(position)?.findViewById<TextView>(R.id.num_tv)
+            val numTv = mPdrItemViews?.get(position)?.findViewById<TextView>(R.id.pdr_num_tv)
             if (numTv != null) {
                 numTv.text = num.toString()
                 numTv.visibility = if (num == 0) View.GONE else View.VISIBLE
@@ -136,7 +136,7 @@ class BaseNavigationView : BottomNavigationView {
 
     /** 设置Item的角标数字，菜单项[item]，数字[num] */
     fun setItemBadgeNum(item: MenuItem, num: Int) {
-        mItemViews?.forEachIndexed { index, itemView ->
+        mPdrItemViews?.forEachIndexed { index, itemView ->
             val itemData = ReflectUtils.getFieldValue<BottomNavigationItemView>(itemView, "itemData") as? MenuItemImpl
             if (itemData != null){
                 if (itemData.itemId == item.itemId){
@@ -148,18 +148,18 @@ class BaseNavigationView : BottomNavigationView {
 
     /** 设置Item的角标红点提示，位置[position]，是否显示[isVisibility] */
     fun setItemBadgePoint(position: Int, isVisibility: Boolean) {
-        if (mBadgeMode == BADGE_NONE_MODE) {
+        if (mPdrBadgeMode == BADGE_NONE_MODE) {
             return
         }
-        if (mBadgeMode == BADGE_ALL_NUM_MODE) {
+        if (mPdrBadgeMode == BADGE_ALL_NUM_MODE) {
             return
         }
-        if (position < mItemViews?.size ?: 0) {
-            val numTv = mItemViews?.get(position)?.findViewById<TextView>(R.id.num_tv)
+        if (position < mPdrItemViews?.size ?: 0) {
+            val numTv = mPdrItemViews?.get(position)?.findViewById<TextView>(R.id.pdr_num_tv)
             if (numTv != null) {
                 numTv.visibility = View.GONE
             }
-            val pointView = mItemViews?.get(position)?.findViewById<View>(R.id.point_view)
+            val pointView = mPdrItemViews?.get(position)?.findViewById<View>(R.id.pdr_point_view)
             if (pointView != null) {
                 pointView.visibility = if (isVisibility) View.VISIBLE else View.GONE
             }
@@ -168,7 +168,7 @@ class BaseNavigationView : BottomNavigationView {
 
     /** 设置Item的角标红点提示，菜单项[item]，是否显示[isVisibility] */
     fun setItemBadgePoint(item: MenuItem, isVisibility: Boolean) {
-        mItemViews?.forEachIndexed { index, itemView ->
+        mPdrItemViews?.forEachIndexed { index, itemView ->
             val itemData = ReflectUtils.getFieldValue<BottomNavigationItemView>(itemView, "itemData") as? MenuItemImpl
             if (itemData != null){
                 if (itemData.itemId == item.itemId){

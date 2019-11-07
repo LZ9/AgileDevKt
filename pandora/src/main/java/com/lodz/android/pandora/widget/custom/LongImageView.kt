@@ -29,18 +29,18 @@ import java.io.File
 class LongImageView : FrameLayout {
 
     /** 图片布局 */
-    private lateinit var mImgLayout: LinearLayout
+    private lateinit var mPdrImgLayout: LinearLayout
     /** 滑动布局 */
-    private lateinit var mScrollView: NestedScrollView
+    private lateinit var mPdrScrollView: NestedScrollView
     /** 占位符 */
-    private lateinit var mPlaceholderImg: ImageView
+    private lateinit var mPdrPlaceholderImg: ImageView
     /** 临时位图 */
-    private var mTempBitmaps: List<Bitmap>? = null
+    private var mPdrTempBitmaps: List<Bitmap>? = null
 
     /** 点击监听器 */
-    private var mClickListener: OnClickListener? = null
+    private var mPdrClickListener: OnClickListener? = null
     /** 长按监听器 */
-    private var mLongClickListener: OnLongClickListener? = null
+    private var mPdrLongClickListener: OnLongClickListener? = null
 
     constructor(context: Context) : super(context) {
         init(null)
@@ -61,9 +61,9 @@ class LongImageView : FrameLayout {
 
     private fun findViews() {
         LayoutInflater.from(context).inflate(R.layout.pandora_view_long_img, this)
-        mImgLayout = findViewById(R.id.root_layout)
-        mScrollView = findViewById(R.id.scroll_view)
-        mPlaceholderImg = findViewById(R.id.placeholder_img)
+        mPdrImgLayout = findViewById(R.id.pdr_root_layout)
+        mPdrScrollView = findViewById(R.id.pdr_scroll_view)
+        mPdrPlaceholderImg = findViewById(R.id.pdr_placeholder_img)
     }
 
     private fun configLayout(attrs: AttributeSet?) {
@@ -116,40 +116,40 @@ class LongImageView : FrameLayout {
 
     /** 设置占位符图片[resId] */
     fun setPlaceholderRes(@DrawableRes resId: Int) {
-        mPlaceholderImg.setImageResource(resId)
+        mPdrPlaceholderImg.setImageResource(resId)
     }
 
     /** 设置占位符图片[drawable] */
     fun setPlaceholderDrawable(drawable: Drawable) {
-        mPlaceholderImg.setImageDrawable(drawable)
+        mPdrPlaceholderImg.setImageDrawable(drawable)
     }
 
     /** 设置占位符图片类型[scaleType] */
     fun setPlaceholderScaleType(scaleType: ImageView.ScaleType) {
-        mPlaceholderImg.scaleType = scaleType
+        mPdrPlaceholderImg.scaleType = scaleType
     }
 
     /** 设置占位符宽度[width] */
     fun setPlaceholderWidth(width: Int) {
-        val layoutParams = mPlaceholderImg.layoutParams
+        val layoutParams = mPdrPlaceholderImg.layoutParams
         layoutParams?.width = width
     }
 
     /** 设置占位符高度[height] */
     fun setPlaceholderHeight(height: Int) {
-        val layoutParams = mPlaceholderImg.layoutParams
+        val layoutParams = mPdrPlaceholderImg.layoutParams
         layoutParams?.height = height
     }
 
     /** 显示占位符[isShow] */
     @JvmOverloads
     fun showPlaceholder(isShow: Boolean = true) {
-        mPlaceholderImg.visibility = if (isShow) View.VISIBLE else View.GONE
-        mScrollView.visibility = if (isShow) View.GONE else View.VISIBLE
+        mPdrPlaceholderImg.visibility = if (isShow) View.VISIBLE else View.GONE
+        mPdrScrollView.visibility = if (isShow) View.GONE else View.VISIBLE
     }
 
     /** 获取占位符控件 */
-    fun getPlaceholderImageView(): ImageView = mPlaceholderImg
+    fun getPlaceholderImageView(): ImageView = mPdrPlaceholderImg
 
     /** 设置长图资源[resId] */
     fun setImageRes(@DrawableRes resId: Int) {
@@ -204,48 +204,48 @@ class LongImageView : FrameLayout {
 
     /** 加载位图列表[bitmaps] */
     private fun loadImageBitmaps(bitmaps: List<Bitmap>) {
-        mTempBitmaps = bitmaps
+        mPdrTempBitmaps = bitmaps
         for (bitmap in bitmaps) {
             val imageView = ImageView(context)
             imageView.adjustViewBounds = true
             imageView.setImageBitmap(bitmap)
             imageView.setOnClickListener { v ->
-                mClickListener?.onClick(v)
+                mPdrClickListener?.onClick(v)
             }
             imageView.setOnLongClickListener { v ->
-                mLongClickListener?.onLongClick(v) ?: false
+                mPdrLongClickListener?.onLongClick(v) ?: false
             }
-            mImgLayout.addView(imageView, ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT))
+            mPdrImgLayout.addView(imageView, ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT))
         }
-        mPlaceholderImg.visibility = View.GONE
-        mScrollView.visibility = View.VISIBLE
+        mPdrPlaceholderImg.visibility = View.GONE
+        mPdrScrollView.visibility = View.VISIBLE
     }
 
     private fun clearViews() {
-        mImgLayout.removeAllViews()
-        if (mTempBitmaps.getSize() > 0) {
-            for (bitmap in mTempBitmaps!!) {
+        mPdrImgLayout.removeAllViews()
+        if (mPdrTempBitmaps.getSize() > 0) {
+            for (bitmap in mPdrTempBitmaps!!) {
                 bitmap.recycle()
             }
-            mTempBitmaps = null
+            mPdrTempBitmaps = null
         }
     }
 
     /** 释放图片资源 */
     fun release() {
         clearViews()
-        mClickListener = null
-        mLongClickListener = null
+        mPdrClickListener = null
+        mPdrLongClickListener = null
     }
 
     override fun setOnClickListener(l: OnClickListener?) {
         super.setOnClickListener(l)
-        mClickListener = l
+        mPdrClickListener = l
     }
 
     override fun setOnLongClickListener(l: OnLongClickListener?) {
         super.setOnLongClickListener(l)
-        mLongClickListener = l
+        mPdrLongClickListener = l
     }
 
 }

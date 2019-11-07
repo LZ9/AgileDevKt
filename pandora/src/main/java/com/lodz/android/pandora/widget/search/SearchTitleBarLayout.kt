@@ -31,45 +31,45 @@ import java.util.concurrent.TimeUnit
 class SearchTitleBarLayout : FrameLayout {
 
     /** 标题栏配置 */
-    private var mConfig = TitleBarLayoutConfig()
+    private var mPdrConfig = TitleBarLayoutConfig()
 
     /** 返回按钮布局 */
-    private val mBackLayout by bindView<LinearLayout>(R.id.back_layout)
+    private val mPdrBackLayout by bindView<LinearLayout>(R.id.back_layout)
     /** 返回按钮 */
-    private val mBackBtn by bindView<TextView>(R.id.back_btn)
+    private val mPdrBackBtn by bindView<TextView>(R.id.back_btn)
     /** 输入框布局 */
-    private val mInputLayout by bindView<ViewGroup>(R.id.input_layout)
+    private val mPdrInputLayout by bindView<ViewGroup>(R.id.input_layout)
     /** 输入框 */
-    private val mInputEdit by bindView<EditText>(R.id.input_edit)
+    private val mPdrInputEdit by bindView<EditText>(R.id.input_edit)
     /** 扩展区清空按钮布局 */
-    private val mClearBtn by bindView<ImageView>(R.id.clear_btn)
+    private val mPdrClearBtn by bindView<ImageView>(R.id.clear_btn)
     /** 竖线 */
-    private val mVerticalLineView by bindView<View>(R.id.vertical_line)
+    private val mPdrVerticalLineView by bindView<View>(R.id.vertical_line)
     /** 搜索按钮 */
-    private val mSearchBtn by bindView<ImageView>(R.id.search_btn)
+    private val mPdrSearchBtn by bindView<ImageView>(R.id.search_btn)
     /** 分割线 */
-    private val mDivideLineView by bindView<View>(R.id.divide_line)
+    private val mPdrDivideLineView by bindView<View>(R.id.divide_line)
     /** 搜索文字按钮 */
-    private val mSearchTxBtn by bindView<TextView>(R.id.search_tx_btn)
+    private val mPdrSearchTxBtn by bindView<TextView>(R.id.search_tx_btn)
     /** 搜索联想列表 */
-    private val mRecyclerView by bindView<RecyclerView>(R.id.recycler_view)
+    private val mPdrRecyclerView by bindView<RecyclerView>(R.id.recycler_view)
     /** 搜索联想列表适配器 */
-    private lateinit var mAdapter: RecomdListAdapter
+    private lateinit var mPdrAdapter: RecomdListAdapter
 
     /** 是否需要清空按钮 */
-    private var isNeedCleanBtn = true
+    private var isPdrNeedCleanBtn = true
     /** 输入框监听 */
-    private var mTextWatcher: TextWatcher? = null
+    private var mPdrTextWatcher: TextWatcher? = null
     /** 清空按钮点击回调 */
-    private var mCleanClickListener: ((view: View) -> Unit)? = null
+    private var mPdrCleanClickListener: ((view: View) -> Unit)? = null
     /** 搜索联想监听器 */
-    private var mOnSearchRecomdListener: OnSearchRecomdListener? = null
+    private var mPdrOnSearchRecomdListener: OnSearchRecomdListener? = null
     /** 输入回调间隔时长 */
-    private var mInputDuration: Long = 500
+    private var mPdrInputDuration: Long = 500
     /** 输入回调间隔单位 */
-    private var mInputDurationUnit: TimeUnit = TimeUnit.MILLISECONDS
+    private var mPdrInputDurationUnit: TimeUnit = TimeUnit.MILLISECONDS
     /** 是否选择推荐项 */
-    private var isSelectedRecomItem = false
+    private var isPdrSelectedRecomItem = false
 
     constructor(context: Context) : super(context) {
         init(null)
@@ -86,7 +86,7 @@ class SearchTitleBarLayout : FrameLayout {
     private fun init(attrs: AttributeSet?) {
         val app = BaseApplication.get()
         if (app != null) {
-            mConfig = app.getBaseLayoutConfig().getTitleBarLayoutConfig()
+            mPdrConfig = app.getBaseLayoutConfig().getTitleBarLayoutConfig()
         }
         LayoutInflater.from(context).inflate(R.layout.pandora_view_search_title, this)
         configLayout(attrs)
@@ -101,15 +101,15 @@ class SearchTitleBarLayout : FrameLayout {
         }
 
         // 返回按钮
-        needBackButton(typedArray?.getBoolean(R.styleable.SearchTitleBarLayout_isNeedBackBtn, mConfig.isNeedBackBtn)
-                ?: mConfig.isNeedBackBtn)
+        needBackButton(typedArray?.getBoolean(R.styleable.SearchTitleBarLayout_isNeedBackBtn, mPdrConfig.isNeedBackBtn)
+                ?: mPdrConfig.isNeedBackBtn)
 
         // 返回按钮图标
         val backDrawable: Drawable? = typedArray?.getDrawable(R.styleable.SearchTitleBarLayout_backDrawable)
         if (backDrawable != null) {
-            mBackBtn.setCompoundDrawablesWithIntrinsicBounds(backDrawable, null, null, null)
-        } else if (mConfig.backBtnResId != 0) {
-            mBackBtn.setCompoundDrawablesWithIntrinsicBounds(mConfig.backBtnResId, 0, 0, 0)
+            mPdrBackBtn.setCompoundDrawablesWithIntrinsicBounds(backDrawable, null, null, null)
+        } else if (mPdrConfig.backBtnResId != 0) {
+            mPdrBackBtn.setCompoundDrawablesWithIntrinsicBounds(mPdrConfig.backBtnResId, 0, 0, 0)
         }
 
         // 返回按钮文字
@@ -117,16 +117,16 @@ class SearchTitleBarLayout : FrameLayout {
                 ?: ""
         if (backText.isNotEmpty()) {
             setBackBtnName(backText)
-        } else if (mConfig.backBtnText.isNotEmpty()) {
-            setBackBtnName(mConfig.backBtnText)
+        } else if (mPdrConfig.backBtnText.isNotEmpty()) {
+            setBackBtnName(mPdrConfig.backBtnText)
         }
 
         // 返回按钮文字颜色
         val backTextColor: ColorStateList? = typedArray?.getColorStateList(R.styleable.SearchTitleBarLayout_backTextColor)
         if (backTextColor != null) {
             setBackBtnTextColor(backTextColor)
-        } else if (mConfig.backBtnTextColor != 0) {
-            setBackBtnTextColor(mConfig.backBtnTextColor)
+        } else if (mPdrConfig.backBtnTextColor != 0) {
+            setBackBtnTextColor(mPdrConfig.backBtnTextColor)
         }
 
         // 返回按钮文字大小
@@ -134,21 +134,21 @@ class SearchTitleBarLayout : FrameLayout {
                 ?: 0
         if (backTextSize != 0) {
             setBackBtnTextSize(px2spRF(backTextSize))
-        } else if (mConfig.backBtnTextSize != 0) {
-            setBackBtnTextSize(mConfig.backBtnTextSize.toFloat())
+        } else if (mPdrConfig.backBtnTextSize != 0) {
+            setBackBtnTextSize(mPdrConfig.backBtnTextSize.toFloat())
         }
 
         // 是否显示分割线
-        val isShowDivideLine: Boolean = typedArray?.getBoolean(R.styleable.SearchTitleBarLayout_isShowDivideLine, mConfig.isShowDivideLine)
-                ?: mConfig.isShowDivideLine
+        val isShowDivideLine: Boolean = typedArray?.getBoolean(R.styleable.SearchTitleBarLayout_isShowDivideLine, mPdrConfig.isShowDivideLine)
+                ?: mPdrConfig.isShowDivideLine
         needDivideLine(isShowDivideLine)
 
         // 分割线背景色
         val divideLineDrawable: Drawable? = typedArray?.getDrawable(R.styleable.SearchTitleBarLayout_divideLineColor)
         if (divideLineDrawable != null) {
             setDivideLineDrawable(divideLineDrawable)
-        } else if (mConfig.divideLineColor != 0) {
-            setDivideLineColor(mConfig.divideLineColor)
+        } else if (mPdrConfig.divideLineColor != 0) {
+            setDivideLineColor(mPdrConfig.divideLineColor)
         }
 
         // 分割线高度
@@ -156,25 +156,25 @@ class SearchTitleBarLayout : FrameLayout {
                 ?: 0
         if (divideLineHeight > 0) {
             setDivideLineHeight(px2dp(divideLineHeight))
-        } else if (mConfig.divideLineHeightDp > 0) {
-            setDivideLineHeight(mConfig.divideLineHeightDp)
+        } else if (mPdrConfig.divideLineHeightDp > 0) {
+            setDivideLineHeight(mPdrConfig.divideLineHeightDp)
         }
 
         // 标题背景
         val drawableBackground: Drawable? = typedArray?.getDrawable(R.styleable.SearchTitleBarLayout_titleBarBackground)
         when {
             drawableBackground != null -> background = drawableBackground
-            mConfig.backgroundResId != 0 -> setBackgroundResource(mConfig.backgroundResId)
-            mConfig.backgroundColor != 0 -> setBackgroundColor(getColorCompat(mConfig.backgroundColor))
+            mPdrConfig.backgroundResId != 0 -> setBackgroundResource(mPdrConfig.backgroundResId)
+            mPdrConfig.backgroundColor != 0 -> setBackgroundColor(getColorCompat(mPdrConfig.backgroundColor))
             else -> setBackgroundColor(getColorCompat(android.R.color.holo_blue_light))
         }
 
         // 是否需要阴影
-        val isNeedElevation: Boolean = typedArray?.getBoolean(R.styleable.SearchTitleBarLayout_isNeedElevation, mConfig.isNeedElevation)
-            ?: mConfig.isNeedElevation
+        val isNeedElevation: Boolean = typedArray?.getBoolean(R.styleable.SearchTitleBarLayout_isNeedElevation, mPdrConfig.isNeedElevation)
+            ?: mPdrConfig.isNeedElevation
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && isNeedElevation) {
             val elevationVale: Int = typedArray?.getDimensionPixelSize(R.styleable.SearchTitleBarLayout_elevationVale, 0) ?: 0
-            elevation = if (elevationVale != 0) elevationVale.toFloat() else mConfig.elevationVale
+            elevation = if (elevationVale != 0) elevationVale.toFloat() else mPdrConfig.elevationVale
         }
 
         // 是否需要清空按钮
@@ -223,8 +223,8 @@ class SearchTitleBarLayout : FrameLayout {
         if (inputText.isNotEmpty()) {
             setInputText(inputText)
         }
-        if (isNeedCleanBtn) {
-            mClearBtn.visibility = if (inputText.isEmpty()) View.GONE else View.VISIBLE
+        if (isPdrNeedCleanBtn) {
+            mPdrClearBtn.visibility = if (inputText.isEmpty()) View.GONE else View.VISIBLE
         }
 
         // 输入框内容文字颜色
@@ -281,59 +281,59 @@ class SearchTitleBarLayout : FrameLayout {
     }
 
     private fun initRecyclerView() {
-        mAdapter = RecomdListAdapter(context)
+        mPdrAdapter = RecomdListAdapter(context)
         val layoutManager = LinearLayoutManager(context)
         layoutManager.orientation = RecyclerView.VERTICAL
-        mRecyclerView.layoutManager = layoutManager
-        mAdapter.onAttachedToRecyclerView(mRecyclerView)// 如果使用网格布局请设置此方法
-        mRecyclerView.setHasFixedSize(true)
-        mRecyclerView.adapter = mAdapter
+        mPdrRecyclerView.layoutManager = layoutManager
+        mPdrAdapter.onAttachedToRecyclerView(mPdrRecyclerView)// 如果使用网格布局请设置此方法
+        mPdrRecyclerView.setHasFixedSize(true)
+        mPdrRecyclerView.adapter = mPdrAdapter
     }
 
     /** 设置监听器 */
     private fun setListeners() {
         // 输入监听
-        mInputEdit.addTextChangedListener(object : TextWatcher {
+        mPdrInputEdit.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                mTextWatcher?.afterTextChanged(s)
+                mPdrTextWatcher?.afterTextChanged(s)
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                mTextWatcher?.beforeTextChanged(s, start, count, after)
+                mPdrTextWatcher?.beforeTextChanged(s, start, count, after)
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                mTextWatcher?.onTextChanged(s, start, before, count)
-                if (!isNeedCleanBtn) {
+                mPdrTextWatcher?.onTextChanged(s, start, before, count)
+                if (!isPdrNeedCleanBtn) {
                     return
                 }
-                mClearBtn.visibility = if (s.isNullOrEmpty()) View.GONE else View.VISIBLE
+                mPdrClearBtn.visibility = if (s.isNullOrEmpty()) View.GONE else View.VISIBLE
             }
         })
 
         // 清空按钮
-        mClearBtn.setOnClickListener {
-            mInputEdit.setText("")
-            mCleanClickListener?.invoke(it)
+        mPdrClearBtn.setOnClickListener {
+            mPdrInputEdit.setText("")
+            mPdrCleanClickListener?.invoke(it)
         }
 
         // 联想文字点击
-        mAdapter.setOnItemClickListener { viewHolder, item, position ->
-            isSelectedRecomItem = true
+        mPdrAdapter.setOnItemClickListener { viewHolder, item, position ->
+            isPdrSelectedRecomItem = true
             setInputText(item.getTitleText())
             setRecomListData(null)
-            mOnSearchRecomdListener?.onItemClick(viewHolder, item, position)
+            mPdrOnSearchRecomdListener?.onItemClick(viewHolder, item, position)
         }
 
         // 联想搜索
-        RxUtils.textChanges(mInputEdit, mInputDuration, mInputDurationUnit)
+        RxUtils.textChanges(mPdrInputEdit, mPdrInputDuration, mPdrInputDurationUnit)
             .compose(RxUtils.ioToMainObservable())
             .subscribe(object : BaseObserver<CharSequence>(){
                 override fun onBaseNext(any: CharSequence) {
-                    if (!isSelectedRecomItem){
-                        mOnSearchRecomdListener?.onInputTextChange(any.toString())
+                    if (!isPdrSelectedRecomItem){
+                        mPdrOnSearchRecomdListener?.onInputTextChange(any.toString())
                     }
-                    isSelectedRecomItem = false
+                    isPdrSelectedRecomItem = false
                 }
 
                 override fun onBaseError(e: Throwable) {
@@ -345,288 +345,288 @@ class SearchTitleBarLayout : FrameLayout {
 
     /** 是否需要[isNeed]显示返回按钮 */
     fun needBackButton(isNeed: Boolean) {
-        mBackLayout.visibility = if (isNeed) View.VISIBLE else View.GONE
+        mPdrBackLayout.visibility = if (isNeed) View.VISIBLE else View.GONE
     }
 
     /** 设置返回按钮的透明度[alpha] */
     fun setBackButtonAlpha(@FloatRange(from = 0.0, to = 1.0) alpha: Float) {
-        mBackLayout.alpha = alpha
+        mPdrBackLayout.alpha = alpha
     }
 
     /** 设置返回按钮监听[listener] */
     fun setOnBackBtnClickListener(listener: (View) -> Unit) {
-        mBackLayout.setOnClickListener(listener)
+        mPdrBackLayout.setOnClickListener(listener)
     }
 
     /** 替换默认的返回按钮[view] */
     fun replaceBackBtn(view: View) {
-        mBackLayout.removeAllViews()
-        mBackLayout.addView(view)
+        mPdrBackLayout.removeAllViews()
+        mPdrBackLayout.addView(view)
     }
 
     /** 设置返回按钮文字[str] */
     fun setBackBtnName(str: String) {
-        mBackBtn.text = str
+        mPdrBackBtn.text = str
     }
 
     /** 设置返回按钮文字资源[strResId] */
     fun setBackBtnName(@StringRes strResId: Int) {
-        mBackBtn.text = context.getString(strResId)
+        mPdrBackBtn.text = context.getString(strResId)
     }
 
     /** 设置返回按钮文字颜色资源[colorRes] */
     fun setBackBtnTextColor(@ColorRes colorRes: Int) {
-        mBackBtn.setTextColor(getColorCompat(colorRes))
+        mPdrBackBtn.setTextColor(getColorCompat(colorRes))
     }
 
     /** 设置返回按钮文字颜色[color] */
     fun setBackBtnTextColorInt(@ColorInt color: Int) {
-        mBackBtn.setTextColor(color)
+        mPdrBackBtn.setTextColor(color)
     }
 
     /** 设置返回按钮文字颜色[colorStateList] */
     fun setBackBtnTextColor(colorStateList: ColorStateList) {
-        mBackBtn.setTextColor(colorStateList)
+        mPdrBackBtn.setTextColor(colorStateList)
     }
 
     /** 设置返回按钮文字大小[sp] */
     fun setBackBtnTextSize(sp: Float) {
-        mBackBtn.setTextSize(TypedValue.COMPLEX_UNIT_SP, sp)
+        mPdrBackBtn.setTextSize(TypedValue.COMPLEX_UNIT_SP, sp)
     }
 
     /** 是否需[isNeed]要分割线 */
     fun needDivideLine(isNeed: Boolean) {
-        mDivideLineView.visibility = if (isNeed) View.VISIBLE else View.GONE
+        mPdrDivideLineView.visibility = if (isNeed) View.VISIBLE else View.GONE
     }
 
     /** 隐藏分割线 */
     fun goneDivideLine() {
-        mDivideLineView.visibility = View.GONE
+        mPdrDivideLineView.visibility = View.GONE
     }
 
     /** 设置分割线颜色资源[colorRes] */
     fun setDivideLineColor(@ColorRes colorRes: Int) {
-        mDivideLineView.setBackgroundColor(getColorCompat(colorRes))
+        mPdrDivideLineView.setBackgroundColor(getColorCompat(colorRes))
     }
 
     /** 设置分割线颜色[color] */
     fun setDivideLineColorInt(@ColorInt color: Int) {
-        mDivideLineView.setBackgroundColor(color)
+        mPdrDivideLineView.setBackgroundColor(color)
     }
 
     /** 设置分割线背景[drawable] */
     fun setDivideLineDrawable(drawable: Drawable) {
-        mDivideLineView.background = drawable
+        mPdrDivideLineView.background = drawable
     }
 
     /** 设置分割线高度[dp] */
     fun setDivideLineHeight(dp: Int) {
-        val layoutParams = mDivideLineView.layoutParams
+        val layoutParams = mPdrDivideLineView.layoutParams
         layoutParams.height = dp2px(dp)
-        mDivideLineView.layoutParams = layoutParams
+        mPdrDivideLineView.layoutParams = layoutParams
     }
 
     /** 设置搜索按钮监听[listener] */
     fun setOnSearchClickListener(listener: (View) -> Unit) {
-        mSearchBtn.setOnClickListener(listener)
-        mSearchTxBtn.setOnClickListener(listener)
+        mPdrSearchBtn.setOnClickListener(listener)
+        mPdrSearchTxBtn.setOnClickListener(listener)
     }
 
     /** 设置搜索图标[drawable] */
     fun setSearchIcon(drawable: Drawable) {
-        mSearchBtn.setImageDrawable(drawable)
+        mPdrSearchBtn.setImageDrawable(drawable)
     }
 
     /** 设置搜索图标资源[resId] */
     fun setSearchIcon(@DrawableRes resId: Int) {
-        mSearchBtn.setImageResource(resId)
+        mPdrSearchBtn.setImageResource(resId)
     }
 
     /** 设置搜索按钮显隐[visibility] */
     fun setSearchBtnVisibility(visibility: Int) {
-        mSearchBtn.visibility = visibility
+        mPdrSearchBtn.visibility = visibility
     }
 
     /** 设置是否需要[isNeed]清空按钮 */
     fun setNeedCleanBtn(isNeed: Boolean) {
-        isNeedCleanBtn = isNeed
+        isPdrNeedCleanBtn = isNeed
     }
 
     /** 设置清空图标[drawable] */
     fun setCleanIcon(drawable: Drawable) {
         setNeedCleanBtn(true)
-        mClearBtn.setImageDrawable(drawable)
+        mPdrClearBtn.setImageDrawable(drawable)
     }
 
     /** 设置清空图标资源[resId] */
     fun setCleanIcon(@DrawableRes resId: Int) {
         setNeedCleanBtn(true)
-        mClearBtn.setImageResource(resId)
+        mPdrClearBtn.setImageResource(resId)
     }
 
     /** 设置清空按钮点击监听[listener] */
     fun setOnCleanClickListener(listener: (view: View) -> Unit) {
-        mCleanClickListener = listener
+        mPdrCleanClickListener = listener
     }
 
     /** 设置文本输入监听器[watcher] */
     fun setTextWatcher(watcher: TextWatcher) {
-        mTextWatcher = watcher
+        mPdrTextWatcher = watcher
     }
 
     /** 获取输入框内容 */
-    fun getInputText(): String = mInputEdit.text.toString()
+    fun getInputText(): String = mPdrInputEdit.text.toString()
 
     /** 设置输入框背景[drawable] */
     fun setInputBackground(drawable: Drawable) {
-        mInputLayout.background = drawable
+        mPdrInputLayout.background = drawable
     }
 
     /** 设置输入框背景资源[resId] */
     fun setInputBackgroundResource(@DrawableRes resId: Int) {
-        mInputLayout.setBackgroundResource(resId)
+        mPdrInputLayout.setBackgroundResource(resId)
     }
 
     /** 设置输入框背景颜色[color] */
     fun setInputBackgroundColor(@ColorInt color: Int) {
-        mInputLayout.setBackgroundColor(color)
+        mPdrInputLayout.setBackgroundColor(color)
     }
 
     /** 设置输入框提示语[hint] */
     fun setInputHint(hint: String) {
-        mInputEdit.hint = hint
+        mPdrInputEdit.hint = hint
     }
 
     /** 设置输入框提示语资源[resId] */
     fun setInputHint(@StringRes resId: Int) {
-        mInputEdit.setHint(resId)
+        mPdrInputEdit.setHint(resId)
     }
 
     /** 设置输入框提示语颜色资源[colorRes] */
     fun setInputHintTextColor(@ColorRes colorRes: Int) {
-        mInputEdit.setHintTextColor(getColorCompat(colorRes))
+        mPdrInputEdit.setHintTextColor(getColorCompat(colorRes))
     }
 
     /** 设置输入框提示语颜色[color] */
     fun setInputHintTextColorInt(@ColorInt color: Int) {
-        mInputEdit.setHintTextColor(color)
+        mPdrInputEdit.setHintTextColor(color)
     }
 
     /** 设置输入框提示语颜色[colorStateList] */
     fun setInputHintTextColor(colorStateList: ColorStateList) {
-        mInputEdit.setHintTextColor(colorStateList)
+        mPdrInputEdit.setHintTextColor(colorStateList)
     }
 
     /** 设置输入框文字[text] */
     fun setInputText(text: String) {
-        mInputEdit.setText(text)
-        mInputEdit.setSelection(text.length)
+        mPdrInputEdit.setText(text)
+        mPdrInputEdit.setSelection(text.length)
     }
 
     /** 设置输入框文字资源[resId] */
     fun setInputText(@StringRes resId: Int) {
-        mInputEdit.setText(resId)
-        mInputEdit.setSelection(mInputEdit.text.length)
+        mPdrInputEdit.setText(resId)
+        mPdrInputEdit.setSelection(mPdrInputEdit.text.length)
     }
 
     /** 设置输入框文字颜色资源[colorRes] */
     fun setInputTextColor(@ColorRes colorRes: Int) {
-        mInputEdit.setTextColor(getColorCompat(colorRes))
+        mPdrInputEdit.setTextColor(getColorCompat(colorRes))
     }
 
     /** 设置输入框文字颜色[color] */
     fun setInputTextColorInt(@ColorInt color: Int) {
-        mInputEdit.setTextColor(color)
+        mPdrInputEdit.setTextColor(color)
     }
 
     /** 设置输入框文字颜色[colorStateList] */
     fun setInputTextColor(colorStateList: ColorStateList) {
-        mInputEdit.setTextColor(colorStateList)
+        mPdrInputEdit.setTextColor(colorStateList)
     }
 
     /** 设置输入框文字大小[sp] */
     fun setInputTextSize(sp: Float) {
-        mInputEdit.setTextSize(TypedValue.COMPLEX_UNIT_SP, sp)
+        mPdrInputEdit.setTextSize(TypedValue.COMPLEX_UNIT_SP, sp)
     }
 
     /** 获取输入框控件 */
-    fun getInputEdit(): EditText = mInputEdit
+    fun getInputEdit(): EditText = mPdrInputEdit
 
     /** 是否显示[isShow]竖线 */
     fun setShowVerticalLine(isShow: Boolean) {
-        mVerticalLineView.visibility = if (isShow) View.VISIBLE else View.GONE
+        mPdrVerticalLineView.visibility = if (isShow) View.VISIBLE else View.GONE
     }
 
     /** 设置竖线背景[drawable] */
     fun setVerticalLineBackground(drawable: Drawable) {
-        mVerticalLineView.background = drawable
+        mPdrVerticalLineView.background = drawable
     }
 
     /** 设置竖线背景资源[resId] */
     fun setVerticalLineBackgroundResource(@DrawableRes resId: Int) {
-        mVerticalLineView.setBackgroundResource(resId)
+        mPdrVerticalLineView.setBackgroundResource(resId)
     }
 
     /** 设置竖线背景[color] */
     fun setVerticalLineBackgroundColor(@ColorInt color: Int) {
-        mVerticalLineView.setBackgroundColor(color)
+        mPdrVerticalLineView.setBackgroundColor(color)
     }
 
     /** 设置搜索按钮文字[text] */
     fun setSearchText(text: String) {
-        mSearchTxBtn.text = text
+        mPdrSearchTxBtn.text = text
     }
 
     /** 设置搜索按钮文字资源[resId] */
     fun setSearchText(@StringRes resId: Int) {
-        mSearchTxBtn.setText(resId)
+        mPdrSearchTxBtn.setText(resId)
     }
 
     /** 设置搜索按钮文字大小[sp] */
     fun setSearchTextSize(sp: Float) {
-        mSearchTxBtn.setTextSize(TypedValue.COMPLEX_UNIT_SP, sp)
+        mPdrSearchTxBtn.setTextSize(TypedValue.COMPLEX_UNIT_SP, sp)
     }
 
     /** 设置搜索按钮文字颜色资源[colorRes] */
     fun setSearchTextColor(@ColorRes colorRes: Int) {
-        mSearchTxBtn.setTextColor(getColorCompat(colorRes))
+        mPdrSearchTxBtn.setTextColor(getColorCompat(colorRes))
     }
 
     /** 设置搜索按钮文字颜色[color] */
     fun setSearchTextColorInt(@ColorInt color: Int) {
-        mSearchTxBtn.setTextColor(color)
+        mPdrSearchTxBtn.setTextColor(color)
     }
 
     /** 设置搜索按钮文字颜色[colorStateList] */
     fun setSearchTextColor(colorStateList: ColorStateList) {
-        mSearchTxBtn.setTextColor(colorStateList)
+        mPdrSearchTxBtn.setTextColor(colorStateList)
     }
 
     /** 设置搜索按钮文字显隐[visibility] */
     fun setSearchTextVisibility(visibility: Int) {
-        mSearchTxBtn.visibility = visibility
+        mPdrSearchTxBtn.visibility = visibility
     }
 
     /** 设置是否开启推搜索联想列表[isOpen] */
     fun setOpenRecomdList(isOpen: Boolean) {
-        mRecyclerView.visibility = if (isOpen) View.VISIBLE else View.GONE
+        mPdrRecyclerView.visibility = if (isOpen) View.VISIBLE else View.GONE
     }
 
     /** 设置联想列表数据[datas] */
     fun setRecomListData(datas: List<RecomdData>?) {
-        mAdapter.setData(datas?.toMutableList() ?: ArrayList())
-        mAdapter.notifyDataSetChanged()
+        mPdrAdapter.setData(datas?.toMutableList() ?: ArrayList())
+        mPdrAdapter.notifyDataSetChanged()
     }
 
     /** 设置输入回调间隔，间隔时长[duration]，间隔单位[unit] */
     fun setInputDuration(duration: Long, unit: TimeUnit) {
-        mInputDuration = duration
-        mInputDurationUnit = unit
+        mPdrInputDuration = duration
+        mPdrInputDurationUnit = unit
     }
 
     /** 设置搜索联想监听器[listener] */
     fun setOnSearchRecomdListener(listener: OnSearchRecomdListener) {
-        mOnSearchRecomdListener = listener
+        mPdrOnSearchRecomdListener = listener
     }
 
 }

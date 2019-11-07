@@ -13,16 +13,16 @@ import androidx.appcompat.widget.AppCompatEditText
 open class ScrollEditText : AppCompatEditText {
 
     /** 是否允许滚动 */
-    private var isCanScroll = false
+    private var isPdrCanScroll = false
     /** 是否滚动到顶部 */
-    private var isScrollTop = true
+    private var isPdrScrollTop = true
     /** 是否滚动到底部 */
-    private var isScrollBottom = false
+    private var isPdrScrollBottom = false
     /** 是否滚动过 */
-    private var isScrolled = false
+    private var isPdrScrolled = false
 
     /** 前一次Y坐标的值 */
-    private var mLastY = -1f
+    private var mPdrLastY = -1f
 
     constructor(context: Context?) : super(context)
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
@@ -33,30 +33,30 @@ open class ScrollEditText : AppCompatEditText {
         val action = event?.action ?: return super.onTouchEvent(event)
         if ((action and MotionEvent.ACTION_MASK) == MotionEvent.ACTION_DOWN) {
             // 手指按下时判断控件文字是否允许滚动，-1检查向上滚动，1检查向下滚动。
-            isCanScroll = canScrollVertically(1) || canScrollVertically(-1)
-            isScrolled = false// 按下时默认赋值未滚动过
+            isPdrCanScroll = canScrollVertically(1) || canScrollVertically(-1)
+            isPdrScrolled = false// 按下时默认赋值未滚动过
         }
         if ((action and MotionEvent.ACTION_MASK) == MotionEvent.ACTION_MOVE) {
-            if (!isCanScroll){
+            if (!isPdrCanScroll){
                 return super.onTouchEvent(event)
             }
-            if (mLastY == -1f){
-                mLastY = event.y
+            if (mPdrLastY == -1f){
+                mPdrLastY = event.y
                 return super.onTouchEvent(event)
             }
             parent.requestDisallowInterceptTouchEvent(true)
-            val difference = event.y - mLastY
+            val difference = event.y - mPdrLastY
             if (difference > 0){// 向下滑动
-                if (isScrollTop && !isScrolled){// 已经在顶部且未滚动过
+                if (isPdrScrollTop && !isPdrScrolled){// 已经在顶部且未滚动过
                     parent.requestDisallowInterceptTouchEvent(false)
                 }
             }
             if (difference < 0){// 向上滑动
-                if (isScrollBottom && !isScrolled){// 已经在底部且未滚动过
+                if (isPdrScrollBottom && !isPdrScrolled){// 已经在底部且未滚动过
                     parent.requestDisallowInterceptTouchEvent(false)
                 }
             }
-            mLastY = event.y
+            mPdrLastY = event.y
         }
         if ((action and MotionEvent.ACTION_MASK) == MotionEvent.ACTION_UP
                 || (action and MotionEvent.ACTION_MASK) == MotionEvent.ACTION_CANCEL) {
@@ -68,8 +68,8 @@ open class ScrollEditText : AppCompatEditText {
 
     override fun onScrollChanged(horiz: Int, vert: Int, oldHoriz: Int, oldVert: Int) {
         super.onScrollChanged(horiz, vert, oldHoriz, oldVert)
-        isScrollTop = vert == 0
-        isScrollBottom = !canScrollVertically(vert)
-        isScrolled = true
+        isPdrScrollTop = vert == 0
+        isPdrScrollBottom = !canScrollVertically(vert)
+        isPdrScrolled = true
     }
 }

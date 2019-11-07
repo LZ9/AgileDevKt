@@ -22,27 +22,27 @@ abstract class BaseHeaderFooterRVAdapter<H, T, F>(context: Context) : BaseRecycl
     }
 
     /** 头信息数据 */
-    private var mHeaderData: H? = null
+    private var mPdrHeaderData: H? = null
 
     /** 头信息数据 */
-    private var mFooterData: F? = null
+    private var mPdrFooterData: F? = null
 
     /** 头部点击 */
-    private var mOnHeaderClickListener: ((holder: RecyclerView.ViewHolder, data: H, position: Int) -> Unit)? = null
+    private var mPdrOnHeaderClickListener: ((holder: RecyclerView.ViewHolder, data: H, position: Int) -> Unit)? = null
     /** 头部长按 */
-    private var mOnHeaderLongClickListener: ((holder: RecyclerView.ViewHolder, data: H, position: Int) -> Unit)? = null
+    private var mPdrOnHeaderLongClickListener: ((holder: RecyclerView.ViewHolder, data: H, position: Int) -> Unit)? = null
     /** 底部点击 */
-    private var mOnFooterClickListener: ((holder: RecyclerView.ViewHolder, data: F, position: Int) -> Unit)? = null
+    private var mPdrOnFooterClickListener: ((holder: RecyclerView.ViewHolder, data: F, position: Int) -> Unit)? = null
     /** 底部长按 */
-    private var mOnFooterLongClickListener: ((holder: RecyclerView.ViewHolder, data: F, position: Int) -> Unit)? = null
+    private var mPdrOnFooterLongClickListener: ((holder: RecyclerView.ViewHolder, data: F, position: Int) -> Unit)? = null
 
     override fun getItemViewType(position: Int): Int {
-        if (mHeaderData != null) {
+        if (mPdrHeaderData != null) {
             if (position == 0) {
                 return VIEW_TYPE_HEADER
             }
         }
-        if (mFooterData != null) {
+        if (mPdrFooterData != null) {
             if (position == itemCount - 1) {
                 return VIEW_TYPE_FOOTER
             }
@@ -71,33 +71,33 @@ abstract class BaseHeaderFooterRVAdapter<H, T, F>(context: Context) : BaseRecycl
 
     /** 设置头部数据[headerData] */
     fun setHeaderData(headerData: H?) {
-        mHeaderData = headerData
+        mPdrHeaderData = headerData
     }
 
     /** 设置底部数据[footerData] */
     fun setFooterData(footerData: F?) {
-        mFooterData = footerData
+        mPdrFooterData = footerData
     }
 
     override fun getItemCount(): Int {
         var count = super.getItemCount()//列表数据的数量
-        if (mHeaderData != null) {
+        if (mPdrHeaderData != null) {
             count += 1
         }
-        if (mFooterData != null) {
+        if (mPdrFooterData != null) {
             count += 1
         }
         return count
     }
 
     /** 获取头部数据 */
-    fun getHeaderData(): H? = mHeaderData
+    fun getHeaderData(): H? = mPdrHeaderData
 
     /** 获取底部数据 */
-    fun getFooterData(): F? = mFooterData
+    fun getFooterData(): F? = mPdrFooterData
 
     override fun getItem(position: Int): T? {
-        if (mHeaderData != null) {
+        if (mPdrHeaderData != null) {
             return super.getItem(position - 1)
         }
         return super.getItem(position)
@@ -105,98 +105,98 @@ abstract class BaseHeaderFooterRVAdapter<H, T, F>(context: Context) : BaseRecycl
 
     override fun setItemClick(holder: RecyclerView.ViewHolder, position: Int) {
         holder.itemView.setOnClickListener { view ->
-            if (mHeaderData == null && mFooterData == null) {//没有头部 没有底部
+            if (mPdrHeaderData == null && mPdrFooterData == null) {//没有头部 没有底部
                 val item = getItem(position)
                 if (item != null) {
-                    mOnItemClickListener?.invoke(holder, item, position)
+                    mPdrOnItemClickListener?.invoke(holder, item, position)
                 }
                 return@setOnClickListener
             }
-            if (mHeaderData != null && mFooterData == null) {// 有头部 没有底部
+            if (mPdrHeaderData != null && mPdrFooterData == null) {// 有头部 没有底部
                 if (position == 0) {
-                    mOnHeaderClickListener?.invoke(holder, mHeaderData!!, position)
+                    mPdrOnHeaderClickListener?.invoke(holder, mPdrHeaderData!!, position)
                     return@setOnClickListener
                 }
                 val item = getItem(position)
                 if (item != null) {
-                    mOnItemClickListener?.invoke(holder, item, position - 1)
+                    mPdrOnItemClickListener?.invoke(holder, item, position - 1)
                 }
                 return@setOnClickListener
             }
 
-            if (mHeaderData == null) {// 没有头部 有底部
+            if (mPdrHeaderData == null) {// 没有头部 有底部
                 if (position == itemCount - 1) {
-                    mOnFooterClickListener?.invoke(holder, mFooterData!!, position)
+                    mPdrOnFooterClickListener?.invoke(holder, mPdrFooterData!!, position)
                     return@setOnClickListener
                 }
                 val item = getItem(position)
                 if (item != null) {
-                    mOnItemClickListener?.invoke(holder, item, position)
+                    mPdrOnItemClickListener?.invoke(holder, item, position)
                 }
                 return@setOnClickListener
             }
 
             // 有头部 有底部
             if (position == 0) {
-                mOnHeaderClickListener?.invoke(holder, mHeaderData!!, position)
+                mPdrOnHeaderClickListener?.invoke(holder, mPdrHeaderData!!, position)
                 return@setOnClickListener
             }
             if (position == itemCount - 1) {
-                mOnFooterClickListener?.invoke(holder, mFooterData!!, position)
+                mPdrOnFooterClickListener?.invoke(holder, mPdrFooterData!!, position)
                 return@setOnClickListener
             }
             val item = getItem(position)
             if (item != null) {
-                mOnItemClickListener?.invoke(holder, item, position - 1)
+                mPdrOnItemClickListener?.invoke(holder, item, position - 1)
             }
         }
     }
 
     override fun setItemLongClick(holder: RecyclerView.ViewHolder, position: Int) {
         holder.itemView.setOnLongClickListener { view ->
-            if (mHeaderData == null && mFooterData == null) {//没有头部 没有底部
+            if (mPdrHeaderData == null && mPdrFooterData == null) {//没有头部 没有底部
                 val item = getItem(position)
                 if (item != null) {
-                    mOnItemLongClickListener?.invoke(holder, item, position)
+                    mPdrOnItemLongClickListener?.invoke(holder, item, position)
                 }
                 return@setOnLongClickListener true
             }
 
-            if (mHeaderData != null && mFooterData == null) {// 有头部 没有底部
+            if (mPdrHeaderData != null && mPdrFooterData == null) {// 有头部 没有底部
                 if (position == 0) {
-                    mOnHeaderLongClickListener?.invoke(holder, mHeaderData!!, position)
+                    mPdrOnHeaderLongClickListener?.invoke(holder, mPdrHeaderData!!, position)
                     return@setOnLongClickListener true
                 }
                 val item = getItem(position)
                 if (item != null) {
-                    mOnItemLongClickListener?.invoke(holder, item, position - 1)
+                    mPdrOnItemLongClickListener?.invoke(holder, item, position - 1)
                 }
                 return@setOnLongClickListener true
             }
 
-            if (mHeaderData == null) {// 没有头部 有底部
+            if (mPdrHeaderData == null) {// 没有头部 有底部
                 if (position == itemCount - 1) {
-                    mOnFooterLongClickListener?.invoke(holder, mFooterData!!, position)
+                    mPdrOnFooterLongClickListener?.invoke(holder, mPdrFooterData!!, position)
                     return@setOnLongClickListener true
                 }
                 val item = getItem(position)
                 if (item != null) {
-                    mOnItemLongClickListener?.invoke(holder, item, position)
+                    mPdrOnItemLongClickListener?.invoke(holder, item, position)
                 }
                 return@setOnLongClickListener true
             }
 
             // 有头部 有底部
             if (position == 0) {
-                mOnHeaderLongClickListener?.invoke(holder, mHeaderData!!, position)
+                mPdrOnHeaderLongClickListener?.invoke(holder, mPdrHeaderData!!, position)
             }
             if (position == itemCount - 1) {
-                mOnFooterLongClickListener?.invoke(holder, mFooterData!!, position)
+                mPdrOnFooterLongClickListener?.invoke(holder, mPdrFooterData!!, position)
             }
-            if (mOnItemLongClickListener != null) {
+            if (mPdrOnItemLongClickListener != null) {
                 val item = getItem(position)
                 if (item != null) {
-                    mOnItemLongClickListener?.invoke(holder, item, position - 1)
+                    mPdrOnItemLongClickListener?.invoke(holder, item, position - 1)
                 }
             }
             return@setOnLongClickListener true
@@ -205,22 +205,22 @@ abstract class BaseHeaderFooterRVAdapter<H, T, F>(context: Context) : BaseRecycl
 
     /** 设置头部点击事件监听器 */
     fun setOnHeaderClickListener(listener: (holder: RecyclerView.ViewHolder, data: H, position: Int) -> Unit) {
-        mOnHeaderClickListener = listener
+        mPdrOnHeaderClickListener = listener
     }
 
     /** 设置头部长按事件监听器 */
     fun setOnHeaderLongClickListener(listener: (holder: RecyclerView.ViewHolder, data: H, position: Int) -> Unit) {
-        mOnHeaderLongClickListener = listener
+        mPdrOnHeaderLongClickListener = listener
     }
 
     /** 设置底部点击事件监听器 */
     fun setOnFooterClickListener(listener: (holder: RecyclerView.ViewHolder, data: F, position: Int) -> Unit) {
-        mOnFooterClickListener = listener
+        mPdrOnFooterClickListener = listener
     }
 
     /** 设置底部长按事件监听器 */
     fun setOnFooterLongClickListener(listener: (holder: RecyclerView.ViewHolder, data: F, position: Int) -> Unit) {
-        mOnFooterLongClickListener = listener
+        mPdrOnFooterLongClickListener = listener
     }
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
@@ -235,13 +235,13 @@ abstract class BaseHeaderFooterRVAdapter<H, T, F>(context: Context) : BaseRecycl
     private fun adapterGridLayoutManager(layoutManager: GridLayoutManager) {
         layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
-                if (mHeaderData == null && mFooterData == null) {//没有头部 没有底部
+                if (mPdrHeaderData == null && mPdrFooterData == null) {//没有头部 没有底部
                     return 1
                 }
-                if (mHeaderData != null && mFooterData == null) {// 有头部 没有底部
+                if (mPdrHeaderData != null && mPdrFooterData == null) {// 有头部 没有底部
                     return if (position == 0) layoutManager.spanCount else 1
                 }
-                if (mHeaderData == null) {// 没有头部 有底部
+                if (mPdrHeaderData == null) {// 没有头部 有底部
                     return if (position == itemCount - 1) layoutManager.spanCount else 1
                 }
                 // 有头部 有底部

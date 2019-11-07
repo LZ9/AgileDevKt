@@ -40,41 +40,41 @@ class CltRadioGroup : FrameLayout {
     }
 
     /** 必填图标 */
-    private val mRequiredImg by bindView<ImageView>(R.id.required_img)
+    private val mPdrRequiredImg by bindView<ImageView>(R.id.pdr_required_img)
     /** 标题控件 */
-    private val mTitleTv by bindView<TextView>(R.id.title_tv)
+    private val mPdrTitleTv by bindView<TextView>(R.id.pdr_title_tv)
     /** 单选列表 */
-    private val mRadioRv by bindView<RecyclerView>(R.id.radio_rv)
+    private val mPdrRadioRv by bindView<RecyclerView>(R.id.pdr_radio_rv)
     /** 适配器 */
-    private lateinit var mAdapter: RadioGroupAdapter
+    private lateinit var mPdrAdapter: RadioGroupAdapter
     /** 布局管理器 */
-    private lateinit var mLayoutManager: GridLayoutManager
+    private lateinit var mPdrLayoutManager: GridLayoutManager
 
     /** 单选按钮图片 */
-    private var mBtnSrc: Drawable? = null
+    private var mPdrBtnSrc: Drawable? = null
     /** 单选按钮图片资源id */
-    private var mBtnSrcResId: Int = 0
+    private var mPdrBtnSrcResId: Int = 0
     /** 单选文字颜色 */
-    private var mRadioTextColor: ColorStateList? = null
+    private var mPdrRadioTextColor: ColorStateList? = null
     /** 单选文字大小 */
-    private var mRadioTextSizeSp: Float = 0f
+    private var mPdrRadioTextSizeSp: Float = 0f
     /** 选择类型 */
-    private var mRadioType: Int = TYPE_SINGLE
+    private var mPdrRadioType: Int = TYPE_SINGLE
     /** 行数 */
-    private var mSpanCount: Int = 1
+    private var mPdrSpanCount: Int = 1
     /** 文字距离图标的左侧间距 */
-    private var mMarginStartDp = 0
+    private var mPdrMarginStartDp = 0
     /** 布局方向 */
-    private var mRadioGravity = 0
+    private var mPdrRadioGravity = 0
     /** 单选项图片宽高 */
-    private var mRadioBtnSquareDp = 0
+    private var mPdrRadioBtnSquareDp = 0
     /** 是否只读模式 */
-    private var isReadOnly = false
+    private var isPdrReadOnly = false
 
     /** 数据 */
-    private var mList: MutableList<RadioableWrapper> = ArrayList()
+    private var mPdrList: MutableList<RadioableWrapper> = ArrayList()
     /** item长按 */
-    private var mOnCheckedChangeListener: ((radioable: Radioable, isSelected: Boolean) -> Unit)? = null
+    private var mPdrOnCheckedChangeListener: ((radioable: Radioable, isSelected: Boolean) -> Unit)? = null
 
     constructor(context: Context) : super(context) {
         init(null)
@@ -201,26 +201,26 @@ class CltRadioGroup : FrameLayout {
     }
 
     private fun initRecyclerView() {
-        mLayoutManager = GridLayoutManager(context, mSpanCount)
-        mLayoutManager.orientation = RecyclerView.VERTICAL
-        mAdapter = RadioGroupAdapter(context)
-        mRadioRv.layoutManager = mLayoutManager
-        mRadioRv.setHasFixedSize(true)
-        mRadioRv.isNestedScrollingEnabled = false
-        mRadioRv.adapter = mAdapter
+        mPdrLayoutManager = GridLayoutManager(context, mPdrSpanCount)
+        mPdrLayoutManager.orientation = RecyclerView.VERTICAL
+        mPdrAdapter = RadioGroupAdapter(context)
+        mPdrRadioRv.layoutManager = mPdrLayoutManager
+        mPdrRadioRv.setHasFixedSize(true)
+        mPdrRadioRv.isNestedScrollingEnabled = false
+        mPdrRadioRv.adapter = mPdrAdapter
     }
 
     private fun setListeners() {
-        mAdapter.setOnItemClickListener { viewHolder, item, position ->
-            if (isReadOnly) {
+        mPdrAdapter.setOnItemClickListener { viewHolder, item, position ->
+            if (isPdrReadOnly) {
                 return@setOnItemClickListener
             }
 
-            if (mRadioType == TYPE_SINGLE) {// 单选
-                for (i in mList.indices) {
-                    mList[i].isSelected = if (item.radioable.getIdTag() == mList[i].getIdTag()) {
-                        if (!mList[i].isSelected) {// 原来未选中 现在选中了则回调监听器
-                            mOnCheckedChangeListener?.invoke(item, true)
+            if (mPdrRadioType == TYPE_SINGLE) {// 单选
+                for (i in mPdrList.indices) {
+                    mPdrList[i].isSelected = if (item.radioable.getIdTag() == mPdrList[i].getIdTag()) {
+                        if (!mPdrList[i].isSelected) {// 原来未选中 现在选中了则回调监听器
+                            mPdrOnCheckedChangeListener?.invoke(item, true)
                         }
                         true
                     } else {
@@ -228,201 +228,201 @@ class CltRadioGroup : FrameLayout {
                     }
                 }
             }
-            if (mRadioType == TYPE_MULTIPLE) {// 多选
-                for (i in mList.indices) {
-                    if (item.radioable.getIdTag() == mList[i].getIdTag()) {
-                        mList[i].isSelected = !mList[i].isSelected
-                        mOnCheckedChangeListener?.invoke(item, mList[i].isSelected)
+            if (mPdrRadioType == TYPE_MULTIPLE) {// 多选
+                for (i in mPdrList.indices) {
+                    if (item.radioable.getIdTag() == mPdrList[i].getIdTag()) {
+                        mPdrList[i].isSelected = !mPdrList[i].isSelected
+                        mPdrOnCheckedChangeListener?.invoke(item, mPdrList[i].isSelected)
                     }
 
                 }
             }
-            mAdapter.setData(mList)
-            mAdapter.notifyDataSetChanged()
+            mPdrAdapter.setData(mPdrList)
+            mPdrAdapter.notifyDataSetChanged()
         }
     }
 
     /** 设置必填图片资源[resId] */
     fun setRequiredImg(@DrawableRes resId: Int) {
-        mRequiredImg.setImageResource(resId)
+        mPdrRequiredImg.setImageResource(resId)
     }
 
     /** 设置必填图片[bitmap] */
     fun setRequiredImg(bitmap: Bitmap) {
-        mRequiredImg.setImageBitmap(bitmap)
+        mPdrRequiredImg.setImageBitmap(bitmap)
     }
 
     /** 设置必填图片[drawable] */
     fun setRequiredImg(drawable: Drawable) {
-        mRequiredImg.setImageDrawable(drawable)
+        mPdrRequiredImg.setImageDrawable(drawable)
     }
 
     /** 设置必填图片显隐[visibility] */
     fun setRequiredVisibility(visibility: Int) {
-        mRequiredImg.visibility = visibility
+        mPdrRequiredImg.visibility = visibility
     }
 
     /** 获取必填图片是否显示 */
-    fun isRequired(): Boolean = mRequiredImg.visibility == View.VISIBLE
+    fun isRequired(): Boolean = mPdrRequiredImg.visibility == View.VISIBLE
 
     /** 设置标题文字[title] */
     fun setTitleText(title: String) {
-        mTitleTv.text = title
+        mPdrTitleTv.text = title
     }
 
     /** 设置标题文字资源[resId] */
     fun setTitleText(@StringRes resId: Int) {
-        mTitleTv.setText(resId)
+        mPdrTitleTv.setText(resId)
     }
 
     /** 获取标题文字 */
-    fun getTitleText(): String = mTitleTv.text.toString()
+    fun getTitleText(): String = mPdrTitleTv.text.toString()
 
     /** 设置标题文字颜色[color] */
     fun setTitleTextColor(@ColorInt color: Int) {
-        mTitleTv.setTextColor(color)
+        mPdrTitleTv.setTextColor(color)
     }
 
     /** 设置标题文字颜色[color] */
     fun setTitleTextColorRes(@ColorRes color: Int) {
-        mTitleTv.setTextColor(getColorCompat(color))
+        mPdrTitleTv.setTextColor(getColorCompat(color))
     }
 
     /** 设置标题文字颜色[color] */
     fun setTitleTextColor(color: ColorStateList) {
-        mTitleTv.setTextColor(color)
+        mPdrTitleTv.setTextColor(color)
     }
 
     /** 设置标题文字大小[sp] */
     fun setTitleTextSize(sp: Float) {
-        mTitleTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, sp)
+        mPdrTitleTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, sp)
     }
 
     /** 设置标题控件宽度 */
     fun setTitleWidth(px: Int) {
-        mTitleTv.layoutParams.width = px
+        mPdrTitleTv.layoutParams.width = px
     }
 
     /** 设置标题背景[resId] */
     fun setTitleBackgroundRes(@DrawableRes resId: Int) {
-        mTitleTv.setBackgroundResource(resId)
+        mPdrTitleTv.setBackgroundResource(resId)
     }
 
     /** 设置标题背景[color] */
     fun setTitleBackgroundColor(@ColorInt color: Int) {
-        mTitleTv.setBackgroundColor(color)
+        mPdrTitleTv.setBackgroundColor(color)
     }
 
     /** 设置标题背景[color] */
     fun setTitleBackgroundColorRes(@ColorRes color: Int) {
-        mTitleTv.setBackgroundColor(getColorCompat(color))
+        mPdrTitleTv.setBackgroundColor(getColorCompat(color))
     }
 
     /** 设置标题背景[drawable] */
     fun setTitleBackground(drawable: Drawable) {
-        mTitleTv.background = drawable
+        mPdrTitleTv.background = drawable
     }
 
     /** 设置是否只读[isReadOnly] */
     fun setReadOnly(isReadOnly: Boolean) {
-        this.isReadOnly = isReadOnly
+        this.isPdrReadOnly = isReadOnly
     }
 
     /** 是否只读 */
-    fun isReadOnly(): Boolean = isReadOnly
+    fun isReadOnly(): Boolean = isPdrReadOnly
 
     /** 设置单选按钮图片[src] */
     fun setRadioBtnSrc(src: Drawable) {
-        mBtnSrc = src
-        mAdapter.setBtnSrc(mBtnSrc)
-        mAdapter.notifyDataSetChanged()
+        mPdrBtnSrc = src
+        mPdrAdapter.setBtnSrc(mPdrBtnSrc)
+        mPdrAdapter.notifyDataSetChanged()
     }
 
     /** 设置单选按钮图片[resId] */
     fun setRadioBtnSrc(@DrawableRes resId: Int) {
-        mBtnSrcResId = resId
-        mAdapter.setBtnSrcResId(mBtnSrcResId)
-        mAdapter.notifyDataSetChanged()
+        mPdrBtnSrcResId = resId
+        mPdrAdapter.setBtnSrcResId(mPdrBtnSrcResId)
+        mPdrAdapter.notifyDataSetChanged()
     }
 
     /** 设置单选按钮图片[bitmap] */
     fun setRadioBtnSrc(bitmap: Bitmap) {
-        mBtnSrc = createBitmapDrawable(bitmap)
-        mAdapter.setBtnSrc(mBtnSrc)
-        mAdapter.notifyDataSetChanged()
+        mPdrBtnSrc = createBitmapDrawable(bitmap)
+        mPdrAdapter.setBtnSrc(mPdrBtnSrc)
+        mPdrAdapter.notifyDataSetChanged()
     }
 
     /** 设置单选文字颜色[textColor] */
     fun setRadioTextColor(textColor: ColorStateList) {
-        mRadioTextColor = textColor
-        mAdapter.setRadioTextColor(mRadioTextColor)
-        mAdapter.notifyDataSetChanged()
+        mPdrRadioTextColor = textColor
+        mPdrAdapter.setRadioTextColor(mPdrRadioTextColor)
+        mPdrAdapter.notifyDataSetChanged()
     }
 
     /** 设置单选文字颜色[color] */
     fun setRadioTextColor(@ColorInt color: Int) {
-        mRadioTextColor = ColorStateList.valueOf(color)
-        mAdapter.setRadioTextColor(mRadioTextColor)
-        mAdapter.notifyDataSetChanged()
+        mPdrRadioTextColor = ColorStateList.valueOf(color)
+        mPdrAdapter.setRadioTextColor(mPdrRadioTextColor)
+        mPdrAdapter.notifyDataSetChanged()
     }
 
     /** 设置单选文字颜色[color] */
     fun setRadioTextColorRes(@ColorRes color: Int) {
-        mRadioTextColor = ColorStateList.valueOf(getColorCompat(color))
-        mAdapter.setRadioTextColor(mRadioTextColor)
-        mAdapter.notifyDataSetChanged()
+        mPdrRadioTextColor = ColorStateList.valueOf(getColorCompat(color))
+        mPdrAdapter.setRadioTextColor(mPdrRadioTextColor)
+        mPdrAdapter.notifyDataSetChanged()
     }
 
     /** 设置单选文字大小[sp] */
     fun setRadioTextSize(sp: Float) {
-        mRadioTextSizeSp = sp
-        mAdapter.setRadioTextSize(mRadioTextSizeSp)
-        mAdapter.notifyDataSetChanged()
+        mPdrRadioTextSizeSp = sp
+        mPdrAdapter.setRadioTextSize(mPdrRadioTextSizeSp)
+        mPdrAdapter.notifyDataSetChanged()
     }
 
     /** 设置选择类型[type] */
     fun setRadioType(@RadioType type: Int) {
-        mRadioType = type
+        mPdrRadioType = type
     }
 
     /** 获取选择类型 */
-    fun getRadioType(): Int = mRadioType
+    fun getRadioType(): Int = mPdrRadioType
 
     /** 设置行数[count] */
     fun setSpanCount(count: Int) {
-        mSpanCount = if (count > 0) count else 1
-        mLayoutManager.spanCount = mSpanCount
-        mAdapter.notifyDataSetChanged()
+        mPdrSpanCount = if (count > 0) count else 1
+        mPdrLayoutManager.spanCount = mPdrSpanCount
+        mPdrAdapter.notifyDataSetChanged()
     }
 
     /** 获取行数 */
-    fun getSpanCount(): Int = mSpanCount
+    fun getSpanCount(): Int = mPdrSpanCount
 
     /** 设置文字距离图标的左侧间距[dp] */
     fun setRadioMarginStart(dp: Int) {
-        mMarginStartDp = dp
-        mAdapter.setRadioMarginStart(mMarginStartDp)
-        mAdapter.notifyDataSetChanged()
+        mPdrMarginStartDp = dp
+        mPdrAdapter.setRadioMarginStart(mPdrMarginStartDp)
+        mPdrAdapter.notifyDataSetChanged()
     }
 
     /** 设置单选项布局方向[gravity] */
     fun setRadioGravity(gravity: Int) {
-        mRadioGravity = gravity
-        mAdapter.setRadioGravity(mRadioGravity)
-        mAdapter.notifyDataSetChanged()
+        mPdrRadioGravity = gravity
+        mPdrAdapter.setRadioGravity(mPdrRadioGravity)
+        mPdrAdapter.notifyDataSetChanged()
     }
 
     /** 设置单选项图片宽高[dp] */
     fun setRadioBtnSquare(dp: Int) {
-        mRadioBtnSquareDp = dp
-        mAdapter.setRadioBtnSquare(mRadioBtnSquareDp)
-        mAdapter.notifyDataSetChanged()
+        mPdrRadioBtnSquareDp = dp
+        mPdrAdapter.setRadioBtnSquare(mPdrRadioBtnSquareDp)
+        mPdrAdapter.notifyDataSetChanged()
     }
 
     /** 设置数据列表[data] */
     fun setDataList(data: MutableList<Radioable>) {
-        mList = setWrapper(data)
-        mAdapter.setData(mList)
+        mPdrList = setWrapper(data)
+        mPdrAdapter.setData(mPdrList)
     }
 
     /** 设置包装[data] */
@@ -438,31 +438,31 @@ class CltRadioGroup : FrameLayout {
 
     /** 设置单选选中的[id] */
     fun setSelectedId(id: String) {
-        for (i in mList.indices) {
-            mList[i].isSelected = id == mList[i].getIdTag()
+        for (i in mPdrList.indices) {
+            mPdrList[i].isSelected = id == mPdrList[i].getIdTag()
         }
-        mAdapter.setData(mList)
-        mAdapter.notifyDataSetChanged()
+        mPdrAdapter.setData(mPdrList)
+        mPdrAdapter.notifyDataSetChanged()
     }
 
     /** 设置多选选中的[ids] */
     fun setSelectedId(ids: List<String>) {
-        for (i in mList.indices) {
-            mList[i].isSelected = false
+        for (i in mPdrList.indices) {
+            mPdrList[i].isSelected = false
             ids.forEachIndexed { index, id ->
-                if (id == mList[i].getIdTag()) {
-                    mList[i].isSelected = true
+                if (id == mPdrList[i].getIdTag()) {
+                    mPdrList[i].isSelected = true
                 }
             }
         }
-        mAdapter.setData(mList)
-        mAdapter.notifyDataSetChanged()
+        mPdrAdapter.setData(mPdrList)
+        mPdrAdapter.notifyDataSetChanged()
     }
 
     /** 获取选中的Id*/
     fun getSelectedId(): List<String> {
         val list = ArrayList<String>()
-        for (wrapper in mList) {
+        for (wrapper in mPdrList) {
             if (wrapper.isSelected) {
                 list.add(wrapper.getIdTag())
             }
@@ -472,7 +472,7 @@ class CltRadioGroup : FrameLayout {
 
     /** 是否已选中 */
     fun isSelectedId(): Boolean {
-        mList.forEach {
+        mPdrList.forEach {
             if (it.isSelected) {
                 return true
             }
@@ -482,7 +482,7 @@ class CltRadioGroup : FrameLayout {
 
     /** 设置选中变化监听器[listener]*/
     fun setOnCheckedChangeListener(listener: ((radioable: Radioable, isSelected: Boolean) -> Unit)?) {
-        mOnCheckedChangeListener = listener
+        mPdrOnCheckedChangeListener = listener
     }
 
 }

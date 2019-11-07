@@ -30,86 +30,86 @@ open class BaseSectionItemDecoration(context: Context) : BaseItemDecoration(cont
     }
 
     /** 文字画笔  */
-    private val mTextPaint: TextPaint
+    private val mPdrTextPaint: TextPaint
     /** 背景画笔  */
-    private val mBgPaint: Paint = Paint()
+    private val mPdrBgPaint: Paint = Paint()
     /** 分组高度  */
-    protected var mSectionHeightPx = 0
+    protected var mPdrSectionHeightPx = 0
     /** 文字左侧间距  */
-    private var mTextPaddingLeftDp = 0
+    private var mPdrTextPaddingLeftDp = 0
 
     init {
-        mBgPaint.color = Color.GRAY
+        mPdrBgPaint.color = Color.GRAY
 
-        mTextPaint = TextPaint()
-        mTextPaint.color = Color.BLACK
-        mTextPaint.typeface = Typeface.DEFAULT_BOLD
-        mTextPaint.isAntiAlias = true
-        mTextPaint.isDither = true
-        mTextPaint.textSize = getContext().sp2px(DEFAULT_TEXT_SIZE_SP)
-        mTextPaint.textAlign = Paint.Align.LEFT
+        mPdrTextPaint = TextPaint()
+        mPdrTextPaint.color = Color.BLACK
+        mPdrTextPaint.typeface = Typeface.DEFAULT_BOLD
+        mPdrTextPaint.isAntiAlias = true
+        mPdrTextPaint.isDither = true
+        mPdrTextPaint.textSize = getContext().sp2px(DEFAULT_TEXT_SIZE_SP)
+        mPdrTextPaint.textAlign = Paint.Align.LEFT
 
-        mSectionHeightPx = getContext().dp2px(DEFAULT_SECTION_HEIGHT_DP)
+        mPdrSectionHeightPx = getContext().dp2px(DEFAULT_SECTION_HEIGHT_DP)
     }
 
     /** 设置分组的高度[height]（单位dp） */
     fun setSectionHeight(height: Int): BaseSectionItemDecoration {
-        mSectionHeightPx = getContext().dp2px(height)
+        mPdrSectionHeightPx = getContext().dp2px(height)
         return this
     }
 
     /** 设置文字左侧间距[paddingLeft]（单位dp） */
     fun setSectionTextPaddingLeftDp(paddingLeft: Int): BaseSectionItemDecoration {
-        mTextPaddingLeftDp = getContext().dp2px(paddingLeft)
+        mPdrTextPaddingLeftDp = getContext().dp2px(paddingLeft)
         return this
     }
 
     /** 设置文字的大小[textSize]（单位sp） */
     fun setSectionTextSize(@FloatRange(from = 1.0) textSize: Float): BaseSectionItemDecoration {
-        mTextPaint.textSize = getContext().sp2px(if (textSize <= 0) DEFAULT_TEXT_SIZE_SP else textSize)
+        mPdrTextPaint.textSize = getContext().sp2px(if (textSize <= 0) DEFAULT_TEXT_SIZE_SP else textSize)
         return this
     }
 
     /** 设置文字的字体样式[typeface]（例如：Typeface.DEFAULT、Typeface.DEFAULT_BOLD等等） */
     fun setSectionTextTypeface(typeface: Typeface): BaseSectionItemDecoration {
-        mTextPaint.typeface = typeface
+        mPdrTextPaint.typeface = typeface
         return this
     }
 
     /** 设置分组文字颜色[color] */
     fun setSectionTextColorRes(@ColorRes color: Int): BaseSectionItemDecoration {
-        mTextPaint.color = getContext().getColorCompat(color)
+        mPdrTextPaint.color = getContext().getColorCompat(color)
         return this
     }
 
     /** 设置分组文字颜色[color] */
     fun setSectionTextColorInt(@ColorInt color: Int): BaseSectionItemDecoration {
-        mTextPaint.color = color
+        mPdrTextPaint.color = color
         return this
     }
 
     /** 设置分组背景颜色[color] */
     fun setSectionBgColorRes(@ColorRes color: Int): BaseSectionItemDecoration {
-        mBgPaint.color = getContext().getColorCompat(color)
+        mPdrBgPaint.color = getContext().getColorCompat(color)
         return this
     }
 
     /** 设置分组背景颜色[color] */
     fun setSectionBgColorInt(@ColorInt color: Int): BaseSectionItemDecoration {
-        mBgPaint.color = color
+        mPdrBgPaint.color = color
         return this
     }
 
     /** 画背景，画布[canvas]，左侧坐标[left]，顶部坐标[top]，右侧坐标[right]，底部坐标[bottom] */
     protected fun drawBgPaint(canvas: Canvas, left: Int, top: Int, right: Int, bottom: Int) {
-        canvas.drawRect(checkValue(left).toFloat(), checkValue(top).toFloat(), checkValue(right).toFloat(), checkValue(bottom).toFloat(), mBgPaint)//绘制背景色
+        canvas.drawRect(checkValue(left).toFloat(), checkValue(top).toFloat(), checkValue(right).toFloat(), checkValue(bottom).toFloat(), mPdrBgPaint)//绘制背景色
     }
 
     /** 画文字，画布[canvas]，文字[text]，左侧坐标[left]，顶部坐标[top]，右侧坐标[right]，底部坐标[bottom] */
     protected open fun drawTextPaint(canvas: Canvas, text: String, left: Int, top: Int, right: Int, bottom: Int) {
-        val fontMetrics = mTextPaint.fontMetrics
+        val fontMetrics = mPdrTextPaint.fontMetrics
         val baseline = (bottom + top - fontMetrics.bottom - fontMetrics.top) / 2//文字居中基线
-        canvas.drawText(text, checkValue((left + mTextPaddingLeftDp).toFloat()), checkValue(baseline), mTextPaint)//绘制文本
+        canvas.drawText(text, checkValue((left + mPdrTextPaddingLeftDp).toFloat()), checkValue(baseline), mPdrTextPaint)//绘制文本
     }
 
     /** 是否是垂直列表 */

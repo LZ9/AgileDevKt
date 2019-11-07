@@ -24,9 +24,9 @@ import com.lodz.android.pandora.R
 class BottomMenuBar : LinearLayout {
 
     /** 数据 */
-    private var mList: ArrayList<Pair<MenuConfig, ViewGroup>> = ArrayList()
+    private var mPdrList: ArrayList<Pair<MenuConfig, ViewGroup>> = ArrayList()
     /** 菜单选择监听器 */
-    private var mOnSelectedListener: ((type: Int) -> Unit)? = null
+    private var mPdrOnSelectedListener: ((type: Int) -> Unit)? = null
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
@@ -48,16 +48,16 @@ class BottomMenuBar : LinearLayout {
         if (configs.isEmpty()) {
             return
         }
-        if (mList.size > 0) {//已经赋值过了
+        if (mPdrList.size > 0) {//已经赋值过了
             return
         }
         for (config in configs) {
             val viewGroup = LayoutInflater.from(context).inflate(R.layout.pandora_view_menu_bar_item, null) as ViewGroup
             val layoutParams = LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1f)
             addView(viewGroup, layoutParams)
-            val iconImg = viewGroup.findViewById<ImageView>(R.id.ic_img)
-            val textTv = viewGroup.findViewById<TextView>(R.id.text_tv)
-            val numTv = viewGroup.findViewById<TextView>(R.id.num_tv)
+            val iconImg = viewGroup.findViewById<ImageView>(R.id.pdr_ic_img)
+            val textTv = viewGroup.findViewById<TextView>(R.id.pdr_text_tv)
+            val numTv = viewGroup.findViewById<TextView>(R.id.pdr_num_tv)
 
             if (config.getIconDrawableState() == null || config.getTextColorState() == null) {// 未设置图标和文字颜色
                 break
@@ -107,23 +107,23 @@ class BottomMenuBar : LinearLayout {
             viewGroup.setOnClickListener {
                 setSelectedMenu(config.getType())
             }
-            mList.add(Pair(config, viewGroup))
+            mPdrList.add(Pair(config, viewGroup))
         }
     }
 
     /** 更新菜单类型[type]对应的数字[num]提示 */
     fun updateNum(type: Int, num: Int) {
-        if (mList.size == 0) {
+        if (mPdrList.size == 0) {
             return
         }
-        for (pair in mList) {
+        for (pair in mPdrList) {
             val config = pair.first
             val viewGroup = pair.second
             if (config == null || viewGroup == null) {
                 continue
             }
             if (config.getType() == type) {
-                val numTv = viewGroup.findViewById<TextView>(R.id.num_tv)
+                val numTv = viewGroup.findViewById<TextView>(R.id.pdr_num_tv)
                 numTv.text = num.toString()
                 numTv.visibility = if (num == 0) View.GONE else View.VISIBLE
             }
@@ -132,7 +132,7 @@ class BottomMenuBar : LinearLayout {
 
     /** 设置选中的菜单 */
     fun setSelectedMenu(type: Int){
-        for (pair in mList) {
+        for (pair in mPdrList) {
             val cfg = pair.first
             val vg = pair.second
             if (cfg == null || vg == null) {
@@ -141,7 +141,7 @@ class BottomMenuBar : LinearLayout {
             if (cfg.getType() == type){
                 if (!vg.isSelected){
                     vg.isSelected = true
-                    mOnSelectedListener?.invoke(type)
+                    mPdrOnSelectedListener?.invoke(type)
                 }
             }else{
                 vg.isSelected = false
@@ -151,6 +151,6 @@ class BottomMenuBar : LinearLayout {
 
     /** 设置点击事件监听器 */
     fun setOnSelectedListener(listener: (type: Int) -> Unit) {
-        mOnSelectedListener = listener
+        mPdrOnSelectedListener = listener
     }
 }

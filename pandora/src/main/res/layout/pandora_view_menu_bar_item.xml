@@ -12,14 +12,14 @@
         tools:ignore="UseCompoundDrawables">
 
         <ImageView
-            android:id="@+id/ic_img"
+            android:id="@+id/pdr_ic_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/pandora_app_img_name"
             tools:src="@drawable/pandora_ic_launcher" />
 
         <TextView
-            android:id="@+id/text_tv"
+            android:id="@+id/pdr_text_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15sp"
@@ -27,7 +27,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/num_tv"
+        android:id="@+id/pdr_num_tv"
         android:layout_width="18dp"
         android:layout_height="18dp"
         android:layout_gravity="end|top"

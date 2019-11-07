@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/root_view"
+    android:id="@+id/pdr_root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical">
 
     <ImageView
-        android:id="@+id/no_data_img"
+        android:id="@+id/pdr_no_data_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/pandora_app_img_name"
@@ -16,7 +16,7 @@
         android:src="@drawable/pandora_ic_no_data" />
 
     <TextView
-        android:id="@+id/no_data_tv"
+        android:id="@+id/pdr_no_data_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/pandora_no_data"

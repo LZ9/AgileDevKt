@@ -13,21 +13,21 @@ import androidx.viewpager.widget.ViewPager
 open class NoScrollViewPager : ViewPager {
 
     /** 是否可以滑动，默认不行 */
-    var isScroll = false
+    var isPdrScroll = false
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(ev: MotionEvent?): Boolean {
-        if (isScroll) {
+        if (isPdrScroll) {
             return super.onTouchEvent(ev)
         }
         return false
     }
 
     override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
-        if (isScroll) {
+        if (isPdrScroll) {
             return super.onInterceptTouchEvent(ev)
         }
         return false

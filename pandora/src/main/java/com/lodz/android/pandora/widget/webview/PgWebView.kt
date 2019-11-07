@@ -32,14 +32,14 @@ open class PgWebView : FrameLayout {
     }
 
     /** 浏览器  */
-    private var mWebView: WebView? = null
+    private var mPdrWebView: WebView? = null
     /** 进度条  */
-    private lateinit var mProgressBar: ProgressBar
+    private lateinit var mPdrProgressBar: ProgressBar
 
     /** 监听器 */
-    private var mListener: OnPgStatusChangeListener? = null
+    private var mPdrListener: OnPgStatusChangeListener? = null
     /** 是否加载成功 */
-    private var isLoadSuccess = true
+    private var isPdrLoadSuccess = true
 
     constructor(context: Context) : super(context) {
         init()
@@ -65,10 +65,10 @@ open class PgWebView : FrameLayout {
     }
 
     private fun initViews() {
-        mWebView = createWebView(LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
-        addView(mWebView, mWebView?.layoutParams)
-        mProgressBar = createProgressBar(LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp2px(3)))
-        addView(mProgressBar, mProgressBar.layoutParams)
+        mPdrWebView = createWebView(LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
+        addView(mPdrWebView, mPdrWebView?.layoutParams)
+        mPdrProgressBar = createProgressBar(LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp2px(3)))
+        addView(mPdrProgressBar, mPdrProgressBar.layoutParams)
     }
 
     protected open fun createWebView(lp: LayoutParams): WebView {
@@ -88,32 +88,32 @@ open class PgWebView : FrameLayout {
     }
 
     private fun initWebView() {
-        val wv = mWebView
+        val wv = mPdrWebView
         if (wv != null) {
             val wvc = createWebViewClient()
             wvc.setListener(object : OnPgStatusChangeListener {
                 override fun onProgressChanged(webView: WebView?, progress: Int) {}
                 override fun onPageStarted(webView: WebView?, url: String?, favicon: Bitmap?) {
-                    mProgressBar.visibility = View.VISIBLE
+                    mPdrProgressBar.visibility = View.VISIBLE
                     PrintLog.wS(TAG, "onPageStarted")
-                    mListener?.onPageStarted(webView, url, favicon)
+                    mPdrListener?.onPageStarted(webView, url, favicon)
                 }
 
                 override fun onReceivedError(webView: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
-                    mProgressBar.visibility = View.GONE
-                    isLoadSuccess = false
+                    mPdrProgressBar.visibility = View.GONE
+                    isPdrLoadSuccess = false
                     PrintLog.eS(TAG, error.toString())
-                    mListener?.onReceivedError(webView, request, error)
+                    mPdrListener?.onReceivedError(webView, request, error)
                 }
 
                 override fun onPageFinished(webView: WebView?, url: String?) {
                     PrintLog.iS(TAG, "onPageFinished")
-                    if (!isLoadSuccess) {
-                        isLoadSuccess = true
+                    if (!isPdrLoadSuccess) {
+                        isPdrLoadSuccess = true
                         return
                     }
-                    mProgressBar.visibility = View.GONE
-                    mListener?.onPageFinished(webView, url)
+                    mPdrProgressBar.visibility = View.GONE
+                    mPdrListener?.onPageFinished(webView, url)
                 }
             })
             wv.webViewClient = wvc
@@ -122,9 +122,9 @@ open class PgWebView : FrameLayout {
             wcc.setListener(object : OnPgStatusChangeListener {
                 override fun onProgressChanged(webView: WebView?, progress: Int) {
                     PrintLog.dS(TAG, "Progress : $progress")
-                    mProgressBar.progress = progress
-                    mProgressBar.visibility = if (progress == 100) View.GONE else View.VISIBLE
-                    mListener?.onProgressChanged(webView, progress)
+                    mPdrProgressBar.progress = progress
+                    mPdrProgressBar.visibility = if (progress == 100) View.GONE else View.VISIBLE
+                    mPdrListener?.onProgressChanged(webView, progress)
                 }
 
                 override fun onPageStarted(webView: WebView?, url: String?, favicon: Bitmap?) {}
@@ -169,45 +169,45 @@ open class PgWebView : FrameLayout {
 
     /** 加载地址[url] */
     fun loadUrl(url: String) {
-        mWebView?.loadUrl(url)
+        mPdrWebView?.loadUrl(url)
     }
 
     /** 是否可以回退 */
     fun isCanGoBack(): Boolean {
-        return mWebView?.canGoBack() ?: false
+        return mPdrWebView?.canGoBack() ?: false
     }
 
     /** 回退 */
     fun goBack() {
-        mWebView?.goBack()
+        mPdrWebView?.goBack()
     }
 
     /** 是否可以前进 */
     fun isCanForward(): Boolean {
-        return mWebView?.canGoForward() ?: false
+        return mPdrWebView?.canGoForward() ?: false
     }
 
     /** 前进 */
     fun goForward() {
-        mWebView?.goForward()
+        mPdrWebView?.goForward()
     }
 
     /** 重载 */
     fun reload() {
-        mWebView?.reload()
+        mPdrWebView?.reload()
     }
 
     /** 释放资源 */
     fun release() {
-        mWebView?.loadDataWithBaseURL(null, "", "text/html", "utf-8", null)
-        mWebView?.clearHistory()
-        mWebView?.clearCache(true)
-        mWebView?.destroy()
-        mWebView = null
+        mPdrWebView?.loadDataWithBaseURL(null, "", "text/html", "utf-8", null)
+        mPdrWebView?.clearHistory()
+        mPdrWebView?.clearCache(true)
+        mPdrWebView?.destroy()
+        mPdrWebView = null
     }
 
     fun setOnPgStatusChangeListener(listener: OnPgStatusChangeListener?) {
-        mListener = listener
+        mPdrListener = listener
     }
 
 }

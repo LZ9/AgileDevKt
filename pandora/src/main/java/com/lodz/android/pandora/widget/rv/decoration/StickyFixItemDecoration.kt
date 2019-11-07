@@ -36,9 +36,9 @@ class StickyFixItemDecoration<T> private constructor(context: Context, sections:
             val position = parent.getChildAdapterPosition(view)
 
             val top = 0
-            val bottom = mSectionHeightPx
+            val bottom = mPdrSectionHeightPx
 
-            val sectionTop = Math.max(top, view.top - mSectionHeightPx)// 顶部section上坐标，取top和viewtop最大值
+            val sectionTop = Math.max(top, view.top - mPdrSectionHeightPx)// 顶部section上坐标，取top和viewtop最大值
             val sectionBottom = Math.max(bottom, view.top)// 顶部section下坐标，取bottom和viewbottom的最大值
 
             if (isFirstGroupItem(position)) {// 分组的第一个数据，绘制分组样式
@@ -47,7 +47,7 @@ class StickyFixItemDecoration<T> private constructor(context: Context, sections:
                 continue
             }
 
-            if (isLastGroupItem(position) && view.bottom <= mSectionHeightPx) {// 分组的最后一个数据并且已经到达顶部，绘制过度动画样式
+            if (isLastGroupItem(position) && view.bottom <= mPdrSectionHeightPx) {// 分组的最后一个数据并且已经到达顶部，绘制过度动画样式
                 drawBgPaint(canvas, left, top, right, view.bottom)
                 drawTextPaint(canvas, getSectionText(position), left, top, right, view.bottom)
                 continue
@@ -63,7 +63,7 @@ class StickyFixItemDecoration<T> private constructor(context: Context, sections:
     /** 该位置[position]数据是否是分组的最后一个数据 */
     private fun isLastGroupItem(position: Int): Boolean {
         var size = 0
-        for (list in mSources) {
+        for (list in mPdrSources) {
             size += list.size
             if (position + 1 == size) {
                 return true

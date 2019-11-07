@@ -56,31 +56,31 @@ class CltEditView : FrameLayout {
     annotation class EditInputType
 
     /** 必填图标  */
-    private val mRequiredImg by bindView<ImageView>(R.id.required_img)
+    private val mPdrRequiredImg by bindView<ImageView>(R.id.pdr_required_img)
     /** 标题控件  */
-    private val mTitleTv by bindView<TextView>(R.id.title_tv)
+    private val mPdrTitleTv by bindView<TextView>(R.id.pdr_title_tv)
     /** 内容布局  */
-    private val mContentLayout by bindView<ViewGroup>(R.id.content_layout)
+    private val mPdrContentLayout by bindView<ViewGroup>(R.id.pdr_content_layout)
     /** 内容输入框  */
-    private val mContentEdit by bindView<ScrollEditText>(R.id.content_edit)
+    private val mPdrContentEdit by bindView<ScrollEditText>(R.id.pdr_content_edit)
     /** 限制文字控件  */
-    private val mLimitTv by bindView<TextView>(R.id.limit_tv)
+    private val mPdrLimitTv by bindView<TextView>(R.id.pdr_limit_tv)
     /** 单位控件  */
-    private val mUnitTv by bindView<TextView>(R.id.unit_tv)
+    private val mPdrUnitTv by bindView<TextView>(R.id.pdr_unit_tv)
     /** 跳转按钮  */
-    private val mJumpBtn by bindView<TextView>(R.id.jump_btn)
+    private val mPdrJumpBtn by bindView<TextView>(R.id.pdr_jump_btn)
 
     /** 当前输入类型 */
     @EditInputType
-    private var mInputType = TYPE_TEXT
+    private var mPdrInputType = TYPE_TEXT
     /** 文字监听器 */
-    private var mTextWatcher: TextWatcher? = null
+    private var mPdrTextWatcher: TextWatcher? = null
     /** 内容标记  */
-    private var mContentTag = ""
+    private var mPdrContentTag = ""
     /** 最大输入字数  */
-    private var mMaxCount = 0
+    private var mPdrMaxCount = 0
     /** 文字限制监听器  */
-    private var mLimitListener: ((s: CharSequence?, start: Int, before: Int, count: Int, max: Int) -> Unit)? = null
+    private var mPdrLimitListener: ((s: CharSequence?, start: Int, before: Int, count: Int, max: Int) -> Unit)? = null
 
     constructor(context: Context) : super(context) {
         init(null)
@@ -285,12 +285,12 @@ class CltEditView : FrameLayout {
             1 -> setLimitVisibility(View.INVISIBLE)
             2 -> setLimitVisibility(View.GONE)
             else -> {
-                if (mMaxCount <= 0) {
-                    mMaxCount = 100
-                    setMaxLength(mMaxCount)
+                if (mPdrMaxCount <= 0) {
+                    mPdrMaxCount = 100
+                    setMaxLength(mPdrMaxCount)
                 }
                 setLimitVisibility(View.VISIBLE)
-                updateLimitText(mContentEdit.text?.length ?: 0)
+                updateLimitText(mPdrContentEdit.text?.length ?: 0)
             }
         }
 
@@ -298,39 +298,39 @@ class CltEditView : FrameLayout {
     }
 
     private fun setListeners() {
-        mContentEdit.addTextChangedListener(object : TextWatcher {
+        mPdrContentEdit.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                mTextWatcher?.beforeTextChanged(s, start, count, after)
+                mPdrTextWatcher?.beforeTextChanged(s, start, count, after)
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (mInputType == TYPE_NUMBER_DECIMAL) {
+                if (mPdrInputType == TYPE_NUMBER_DECIMAL) {
                     val index = getContentText().indexOf(".")
                     val lastIndex = getContentText().lastIndexOf(".")
                     if (index == 0) {
                         // 第一位输入点则默认头部加0
                         setContentText("0.")
-                        mContentEdit.setSelection(getContentText().length)
+                        mPdrContentEdit.setSelection(getContentText().length)
                     } else if (index != lastIndex) {
                         // 输入了多个小数点只保留第一个
                         val str = getContentText().substring(0, lastIndex)
                         setContentText(str)
-                        mContentEdit.setSelection(str.length)
+                        mPdrContentEdit.setSelection(str.length)
                     }
                 }
-                if (mMaxCount > 0) {
+                if (mPdrMaxCount > 0) {
                     // 限制输入字数
-                    val length = mContentEdit.text?.length ?: 0
-                    if (length == mMaxCount && start != 0) {
-                        mLimitListener?.invoke(s, start, before, count, mMaxCount)
+                    val length = mPdrContentEdit.text?.length ?: 0
+                    if (length == mPdrMaxCount && start != 0) {
+                        mPdrLimitListener?.invoke(s, start, before, count, mPdrMaxCount)
                     }
                     updateLimitText(length)
                 }
-                mTextWatcher?.onTextChanged(s, start, before, count)
+                mPdrTextWatcher?.onTextChanged(s, start, before, count)
             }
 
             override fun afterTextChanged(s: Editable?) {
-                mTextWatcher?.afterTextChanged(s)
+                mPdrTextWatcher?.afterTextChanged(s)
             }
         })
 
@@ -338,380 +338,380 @@ class CltEditView : FrameLayout {
 
     /** 更新限制文字 */
     private fun updateLimitText(count: Int) {
-        mLimitTv.text = StringBuilder().append(count).append("/").append(mMaxCount)
+        mPdrLimitTv.text = StringBuilder().append(count).append("/").append(mPdrMaxCount)
     }
 
     /** 设置必填图片资源[resId] */
     fun setRequiredImg(@DrawableRes resId: Int) {
-        mRequiredImg.setImageResource(resId)
+        mPdrRequiredImg.setImageResource(resId)
     }
 
     /** 设置必填图片[bitmap] */
     fun setRequiredImg(bitmap: Bitmap) {
-        mRequiredImg.setImageBitmap(bitmap)
+        mPdrRequiredImg.setImageBitmap(bitmap)
     }
 
     /** 设置必填图片[drawable] */
     fun setRequiredImg(drawable: Drawable) {
-        mRequiredImg.setImageDrawable(drawable)
+        mPdrRequiredImg.setImageDrawable(drawable)
     }
 
     /** 设置必填图片显隐[visibility] */
     fun setRequiredVisibility(visibility: Int) {
-        mRequiredImg.visibility = visibility
+        mPdrRequiredImg.visibility = visibility
     }
 
     /** 获取必填图片是否显示 */
-    fun isRequired(): Boolean = mRequiredImg.visibility == View.VISIBLE
+    fun isRequired(): Boolean = mPdrRequiredImg.visibility == View.VISIBLE
 
     /** 设置标题文字[title] */
     fun setTitleText(title: String) {
-        mTitleTv.text = title
+        mPdrTitleTv.text = title
     }
 
     /** 设置标题文字资源[resId] */
     fun setTitleText(@StringRes resId: Int) {
-        mTitleTv.setText(resId)
+        mPdrTitleTv.setText(resId)
     }
 
     /** 获取标题文字 */
-    fun getTitleText(): String = mTitleTv.text.toString()
+    fun getTitleText(): String = mPdrTitleTv.text.toString()
 
     /** 设置标题文字颜色[color] */
     fun setTitleTextColor(@ColorInt color: Int) {
-        mTitleTv.setTextColor(color)
+        mPdrTitleTv.setTextColor(color)
     }
 
     /** 设置标题文字颜色[color] */
     fun setTitleTextColorRes(@ColorRes color: Int) {
-        mTitleTv.setTextColor(getColorCompat(color))
+        mPdrTitleTv.setTextColor(getColorCompat(color))
     }
 
     /** 设置标题文字颜色[color] */
     fun setTitleTextColor(color: ColorStateList) {
-        mTitleTv.setTextColor(color)
+        mPdrTitleTv.setTextColor(color)
     }
 
     /** 设置标题文字大小[sp] */
     fun setTitleTextSize(sp: Float) {
-        mTitleTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, sp)
+        mPdrTitleTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, sp)
     }
 
     /** 设置标题控件宽度 */
     fun setTitleWidth(px: Int) {
-        mTitleTv.layoutParams.width = px
+        mPdrTitleTv.layoutParams.width = px
     }
 
     /** 设置标题背景[resId] */
     fun setTitleBackgroundRes(@DrawableRes resId: Int) {
-        mTitleTv.setBackgroundResource(resId)
+        mPdrTitleTv.setBackgroundResource(resId)
     }
 
     /** 设置标题背景[color] */
     fun setTitleBackgroundColor(@ColorInt color: Int) {
-        mTitleTv.setBackgroundColor(color)
+        mPdrTitleTv.setBackgroundColor(color)
     }
 
     /** 设置标题背景[color] */
     fun setTitleBackgroundColorRes(@ColorRes color: Int) {
-        mTitleTv.setBackgroundColor(getColorCompat(color))
+        mPdrTitleTv.setBackgroundColor(getColorCompat(color))
     }
 
     /** 设置标题背景[drawable] */
     fun setTitleBackground(drawable: Drawable) {
-        mTitleTv.background = drawable
+        mPdrTitleTv.background = drawable
     }
 
     /** 设置内容文字[content] */
     fun setContentText(content: String) {
-        mContentEdit.setText(content)
+        mPdrContentEdit.setText(content)
     }
 
     /** 设置内容文字资源[resId] */
     fun setContentText(@StringRes resId: Int) {
-        mContentEdit.setText(resId)
+        mPdrContentEdit.setText(resId)
     }
 
     /** 获取内容文字 */
-    fun getContentText(): String = mContentEdit.text.toString()
+    fun getContentText(): String = mPdrContentEdit.text.toString()
 
     /** 设置内容标记[tag] */
     fun setContentTag(tag: String) {
-        mContentTag = tag
+        mPdrContentTag = tag
     }
 
     /** 获取内容标记 */
-    fun getContentTag(): String = mContentTag
+    fun getContentTag(): String = mPdrContentTag
 
     /** 设置内容文字颜色[color] */
     fun setContentTextColor(@ColorInt color: Int) {
-        mContentEdit.setTextColor(color)
+        mPdrContentEdit.setTextColor(color)
     }
 
     /** 设置内容文字颜色[color] */
     fun setContentTextColorRes(@ColorRes color: Int) {
-        mContentEdit.setTextColor(getColorCompat(color))
+        mPdrContentEdit.setTextColor(getColorCompat(color))
     }
 
     /** 设置内容文字颜色[color] */
     fun setContentTextColor(color: ColorStateList) {
-        mContentEdit.setTextColor(color)
+        mPdrContentEdit.setTextColor(color)
     }
 
     /** 设置内容文字大小[sp] */
     fun setContentTextSize(sp: Float) {
-        mContentEdit.setTextSize(TypedValue.COMPLEX_UNIT_SP, sp)
+        mPdrContentEdit.setTextSize(TypedValue.COMPLEX_UNIT_SP, sp)
     }
 
     /** 设置内容提示语资源[resId] */
     fun setContentHint(@StringRes resId: Int) {
-        mContentEdit.setHint(resId)
+        mPdrContentEdit.setHint(resId)
     }
 
     /** 设置内容提示语[hint] */
     fun setContentHint(hint: String) {
-        mContentEdit.hint = hint
+        mPdrContentEdit.hint = hint
     }
 
     /** 获取内容提示语 */
-    fun getContentHint(): String = mContentEdit.hint.toString()
+    fun getContentHint(): String = mPdrContentEdit.hint.toString()
 
     /** 设置内容提示语颜色[color] */
     fun setContentHintColor(@ColorInt color: Int) {
-        mContentEdit.setHintTextColor(color)
+        mPdrContentEdit.setHintTextColor(color)
     }
 
     /** 设置内容提示语颜色[color] */
     fun setContentHintColorRes(@ColorRes color: Int) {
-        mContentEdit.setHintTextColor(getColorCompat(color))
+        mPdrContentEdit.setHintTextColor(getColorCompat(color))
     }
 
     /** 设置内容提示语颜色[color] */
     fun setContentHintColor(color: ColorStateList) {
-        mContentEdit.setHintTextColor(color)
+        mPdrContentEdit.setHintTextColor(color)
     }
 
     /** 设置内容右侧图标资源[resId] */
     fun setContentDrawableEnd(@DrawableRes resId: Int) {
-        mContentEdit.setCompoundDrawablesWithIntrinsicBounds(0, 0, resId, 0)
+        mPdrContentEdit.setCompoundDrawablesWithIntrinsicBounds(0, 0, resId, 0)
     }
 
     /** 设置内容右侧图标[drawable] */
     fun setContentDrawableEnd(drawable: Drawable) {
-        mContentEdit.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null)
+        mPdrContentEdit.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null)
     }
 
     /** 设置内容左侧图标资源[resId] */
     fun setContentDrawableStart(@DrawableRes resId: Int) {
-        mContentEdit.setCompoundDrawablesWithIntrinsicBounds(resId, 0, 0, 0)
+        mPdrContentEdit.setCompoundDrawablesWithIntrinsicBounds(resId, 0, 0, 0)
     }
 
     /** 设置内容左侧图标[drawable] */
     fun setContentDrawableStart(drawable: Drawable) {
-        mContentEdit.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null)
+        mPdrContentEdit.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null)
     }
 
     /** 设置内容图标间距[pad] */
     fun setContentDrawablePadding(pad: Int) {
-        mContentEdit.compoundDrawablePadding = pad
+        mPdrContentEdit.compoundDrawablePadding = pad
     }
 
     /** 设置内容编辑文字监听[watcher] */
     fun setContentTextChangedListener(watcher: TextWatcher?) {
-        mTextWatcher = watcher
+        mPdrTextWatcher = watcher
     }
 
     /** 设置内容背景[drawable] */
     fun setContentBackground(drawable: Drawable) {
-        mContentLayout.background = drawable
+        mPdrContentLayout.background = drawable
     }
 
     /** 设置内容背景[color] */
     fun setContentBackground(@ColorInt color: Int) {
-        mContentLayout.setBackgroundColor(color)
+        mPdrContentLayout.setBackgroundColor(color)
     }
 
     /** 设置内容背景[resId] */
     fun setContentBackgroundRes(@DrawableRes resId: Int) {
-        mContentLayout.setBackgroundResource(resId)
+        mPdrContentLayout.setBackgroundResource(resId)
     }
 
     /** 设置内容文字位置 */
     fun setContentGravity(gravity: Int) {
-        mContentEdit.gravity = gravity
+        mPdrContentEdit.gravity = gravity
     }
 
     /** 设置是否需要单位[isNeed] */
     fun setNeedUnit(isNeed: Boolean) {
-        mUnitTv.visibility = if (isNeed) View.VISIBLE else View.GONE
+        mPdrUnitTv.visibility = if (isNeed) View.VISIBLE else View.GONE
     }
 
     /** 是否显示单位 */
-    fun isShowUnit(): Boolean = mUnitTv.visibility == View.VISIBLE
+    fun isShowUnit(): Boolean = mPdrUnitTv.visibility == View.VISIBLE
 
     /** 设置单位文字[unit] */
     fun setUnitText(unit: String) {
-        mUnitTv.text = unit
+        mPdrUnitTv.text = unit
     }
 
     /** 设置单位文字资源[resId] */
     fun setUnitText(@StringRes resId: Int) {
-        mUnitTv.setText(resId)
+        mPdrUnitTv.setText(resId)
     }
 
     /** 获取单位文字 */
-    fun getUnitText(): String = mUnitTv.text.toString()
+    fun getUnitText(): String = mPdrUnitTv.text.toString()
 
     /** 设置单位文字颜色[color] */
     fun setUnitTextColor(@ColorInt color: Int) {
-        mUnitTv.setTextColor(color)
+        mPdrUnitTv.setTextColor(color)
     }
 
     /** 设置单位文字颜色[color] */
     fun setUnitTextColorRes(@ColorRes color: Int) {
-        mUnitTv.setTextColor(getColorCompat(color))
+        mPdrUnitTv.setTextColor(getColorCompat(color))
     }
 
     /** 设置单位文字颜色[color] */
     fun setUnitTextColor(color: ColorStateList) {
-        mUnitTv.setTextColor(color)
+        mPdrUnitTv.setTextColor(color)
     }
 
     /** 设置单位文字大小[sp] */
     fun setUnitTextSize(sp: Float) {
-        mUnitTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, sp)
+        mPdrUnitTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, sp)
     }
 
     /** 设置是否需要跳转按钮[isNeed] */
     fun setNeedJumpBtn(isNeed: Boolean) {
-        mJumpBtn.visibility = if (isNeed) View.VISIBLE else View.GONE
+        mPdrJumpBtn.visibility = if (isNeed) View.VISIBLE else View.GONE
     }
 
     /** 是否显示跳转按钮 */
-    fun isShowJumpBtn(): Boolean = mJumpBtn.visibility == View.VISIBLE
+    fun isShowJumpBtn(): Boolean = mPdrJumpBtn.visibility == View.VISIBLE
 
     /** 设置跳转按钮文字[unit] */
     fun setJumpBtnText(unit: String) {
-        mJumpBtn.text = unit
+        mPdrJumpBtn.text = unit
     }
 
     /** 设置跳转按钮文字资源[resId] */
     fun setJumpBtnText(@StringRes resId: Int) {
-        mJumpBtn.setText(resId)
+        mPdrJumpBtn.setText(resId)
     }
 
     /** 获取跳转按钮文字 */
-    fun getJumpBtnText(): String = mJumpBtn.text.toString()
+    fun getJumpBtnText(): String = mPdrJumpBtn.text.toString()
 
     /** 设置跳转按钮文字颜色[color] */
     fun setJumpBtnTextColor(@ColorInt color: Int) {
-        mJumpBtn.setTextColor(color)
+        mPdrJumpBtn.setTextColor(color)
     }
 
     /** 设置跳转按钮文字颜色[color] */
     fun setJumpBtnTextColorRes(@ColorRes color: Int) {
-        mJumpBtn.setTextColor(getColorCompat(color))
+        mPdrJumpBtn.setTextColor(getColorCompat(color))
     }
 
     /** 设置跳转按钮文字颜色[color] */
     fun setJumpBtnTextColor(color: ColorStateList) {
-        mJumpBtn.setTextColor(color)
+        mPdrJumpBtn.setTextColor(color)
     }
 
     /** 设置跳转按钮文字大小[sp] */
     fun setJumpBtnTextSize(sp: Float) {
-        mJumpBtn.setTextSize(TypedValue.COMPLEX_UNIT_SP, sp)
+        mPdrJumpBtn.setTextSize(TypedValue.COMPLEX_UNIT_SP, sp)
     }
 
     /** 设置跳转按钮背景[resId] */
     fun setJumpBackgroundRes(@DrawableRes resId: Int) {
-        mJumpBtn.setBackgroundResource(resId)
+        mPdrJumpBtn.setBackgroundResource(resId)
     }
 
     /** 设置跳转按钮背景[color] */
     fun setJumpBackgroundColor(@ColorInt color: Int) {
-        mJumpBtn.setBackgroundColor(color)
+        mPdrJumpBtn.setBackgroundColor(color)
     }
 
     /** 设置跳转按钮背景[color] */
     fun setJumpBackgroundColorRes(@ColorRes color: Int) {
-        mJumpBtn.setBackgroundColor(getColorCompat(color))
+        mPdrJumpBtn.setBackgroundColor(getColorCompat(color))
     }
 
     /** 设置跳转按钮背景[drawable] */
     fun setJumpBackground(drawable: Drawable) {
-        mJumpBtn.background = drawable
+        mPdrJumpBtn.background = drawable
     }
 
     /** 设置跳转按钮监听器[listener] */
     fun setOnJumpClickListener(listener: ((view: View) -> Unit)?) {
-        mJumpBtn.setOnClickListener(listener)
+        mPdrJumpBtn.setOnClickListener(listener)
     }
 
     /** 设置跳转按钮监听器[listener] */
     fun setOnJumpClickListener(listener: View.OnClickListener?) {
-        mJumpBtn.setOnClickListener(listener)
+        mPdrJumpBtn.setOnClickListener(listener)
     }
 
     /** 设置是否只读[isReadOnly] */
     fun setReadOnly(isReadOnly: Boolean) {
-        mContentEdit.isEnabled = !isReadOnly
-        mJumpBtn.isEnabled = !isReadOnly
+        mPdrContentEdit.isEnabled = !isReadOnly
+        mPdrJumpBtn.isEnabled = !isReadOnly
     }
 
     /** 是否只读 */
-    fun isReadOnly(): Boolean = !mContentEdit.isEnabled && !mJumpBtn.isEnabled
+    fun isReadOnly(): Boolean = !mPdrContentEdit.isEnabled && !mPdrJumpBtn.isEnabled
 
     /** 设置输入类型[type] */
     fun setEditInputType(@EditInputType type: Int) {
-        mInputType = type
+        mPdrInputType = type
         when (type) {
             TYPE_ID_CARD -> {
                 // 输入身份证号
-                mContentEdit.inputType = InputType.TYPE_CLASS_NUMBER
-                mContentEdit.keyListener = DigitsKeyListener.getInstance("1234567890xX")
-                mContentEdit.transformationMethod = UpperCaseTransformation()
+                mPdrContentEdit.inputType = InputType.TYPE_CLASS_NUMBER
+                mPdrContentEdit.keyListener = DigitsKeyListener.getInstance("1234567890xX")
+                mPdrContentEdit.transformationMethod = UpperCaseTransformation()
             }
-            TYPE_PHONE -> mContentEdit.inputType = InputType.TYPE_CLASS_PHONE// 输入手机号
-            TYPE_NUMBER -> mContentEdit.inputType = InputType.TYPE_CLASS_NUMBER// 输入数字
+            TYPE_PHONE -> mPdrContentEdit.inputType = InputType.TYPE_CLASS_PHONE// 输入手机号
+            TYPE_NUMBER -> mPdrContentEdit.inputType = InputType.TYPE_CLASS_NUMBER// 输入数字
             TYPE_NUMBER_DECIMAL -> {
                 // 输入小数
-                mContentEdit.inputType = InputType.TYPE_CLASS_NUMBER
-                mContentEdit.keyListener = DigitsKeyListener.getInstance("1234567890.")
+                mPdrContentEdit.inputType = InputType.TYPE_CLASS_NUMBER
+                mPdrContentEdit.keyListener = DigitsKeyListener.getInstance("1234567890.")
             }
             TYPE_FOREIGN_CERT -> {
                 // 输入国外证件号
-                mContentEdit.inputType = InputType.TYPE_CLASS_NUMBER
-                mContentEdit.keyListener = DigitsKeyListener.getInstance("1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
-                mContentEdit.transformationMethod = UpperCaseTransformation()
+                mPdrContentEdit.inputType = InputType.TYPE_CLASS_NUMBER
+                mPdrContentEdit.keyListener = DigitsKeyListener.getInstance("1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+                mPdrContentEdit.transformationMethod = UpperCaseTransformation()
             }
         }
     }
 
     /** 设置文本最大长度[max] */
     fun setMaxLength(max: Int) {
-        mMaxCount = max
-        mContentEdit.filters = arrayOf(InputFilter.LengthFilter(max))
+        mPdrMaxCount = max
+        mPdrContentEdit.filters = arrayOf(InputFilter.LengthFilter(max))
     }
 
     /** 最小行数[lines] */
     fun setMinLines(lines: Int) {
-        mContentEdit.minLines = lines
+        mPdrContentEdit.minLines = lines
     }
 
     /** 最大行数[lines] */
     fun setMaxLines(lines: Int) {
-        mContentEdit.maxLines = lines
+        mPdrContentEdit.maxLines = lines
     }
 
     /** 设置限制文字显隐[visibility] */
     fun setLimitVisibility(visibility: Int) {
-        mLimitTv.visibility = visibility
+        mPdrLimitTv.visibility = visibility
     }
 
     /** 设置文字限制监听器[listener] */
     fun setOnInputTextLimit(listener: (s: CharSequence?, start: Int, before: Int, count: Int, max: Int) -> Unit) {
-        mLimitListener = listener
+        mPdrLimitListener = listener
     }
 
     /** 所有字符转大写 */

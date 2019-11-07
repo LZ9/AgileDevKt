@@ -10,14 +10,14 @@ import android.webkit.WebView
  */
 open class PgWebChromeClient : WebChromeClient() {
 
-    private var mListener: OnPgStatusChangeListener? = null
+    private var mPdrListener: OnPgStatusChangeListener? = null
 
     override fun onProgressChanged(view: WebView?, newProgress: Int) {
         super.onProgressChanged(view, newProgress)
-        mListener?.onProgressChanged(view, newProgress)
+        mPdrListener?.onProgressChanged(view, newProgress)
     }
 
     internal fun setListener(listener: OnPgStatusChangeListener) {
-        mListener = listener
+        mPdrListener = listener
     }
 }

@@ -37,29 +37,29 @@ abstract class BaseRecyclerViewAdapter<T>(protected val context: Context) : Recy
     annotation class AnimationType
 
     /** 数据列表 */
-    private var mData: MutableList<T>? = null
+    private var mPdrData: MutableList<T>? = null
     /** item点击 */
-    protected var mOnItemClickListener: ((viewHolder: RecyclerView.ViewHolder, item: T, position: Int) -> Unit)? = null
+    protected var mPdrOnItemClickListener: ((viewHolder: RecyclerView.ViewHolder, item: T, position: Int) -> Unit)? = null
     /** item长按 */
-    protected var mOnItemLongClickListener: ((viewHolder: RecyclerView.ViewHolder, item: T, position: Int) -> Unit)? = null
+    protected var mPdrOnItemLongClickListener: ((viewHolder: RecyclerView.ViewHolder, item: T, position: Int) -> Unit)? = null
 
     /** 动画加速器 */
-    private val mInterpolator = LinearInterpolator()
+    private val mPdrInterpolator = LinearInterpolator()
     /** item加载动画的最后位置 */
-    private var mLastPosition = 0
+    private var mPdrLastPosition = 0
     /** 用户定义的item加载动画的开始位置 */
-    private var mCustomStarPosition = 0
+    private var mPdrCustomStarPosition = 0
     /** 是否需要item加载动画 */
-    private var isOpenItemAnim = false
+    private var isPdrOpenItemAnim = false
     /** 当前动画类型 */
     @AnimationType
-    private var mCurrentAnimationType = ALPHA_IN
+    private var mPdrCurrentAnimationType = ALPHA_IN
     /** 自定义动画 */
-    private var mCustomAnimation: BaseAnimation? = null
+    private var mPdrCustomAnimation: BaseAnimation? = null
 
     /** 根据[position]获取数据 */
     open fun getItem(position: Int): T? {
-        val data = mData
+        val data = mPdrData
         if (data.isNullOrEmpty()) {
             return null
         }
@@ -85,7 +85,7 @@ abstract class BaseRecyclerViewAdapter<T>(protected val context: Context) : Recy
         holder.itemView.setOnClickListener {
             val item = getItem(position)
             if (position >= 0 && item != null) {
-                mOnItemClickListener?.invoke(holder, item, position)
+                mPdrOnItemClickListener?.invoke(holder, item, position)
             }
         }
     }
@@ -95,7 +95,7 @@ abstract class BaseRecyclerViewAdapter<T>(protected val context: Context) : Recy
         holder.itemView.setOnLongClickListener {
             val item = getItem(position)
             if (position >= 0 && item != null) {
-                mOnItemLongClickListener?.invoke(holder, item, position)
+                mPdrOnItemLongClickListener?.invoke(holder, item, position)
             }
             return@setOnLongClickListener true
         }
@@ -108,22 +108,22 @@ abstract class BaseRecyclerViewAdapter<T>(protected val context: Context) : Recy
 
     /** 添加item加载动画 */
     private fun addAnimation(holder: RecyclerView.ViewHolder) {
-        val data = mData
-        if (data != null && data.size > 0 && data.size < mLastPosition) {//重新设置了数据
-            mLastPosition = mCustomStarPosition
+        val data = mPdrData
+        if (data != null && data.size > 0 && data.size < mPdrLastPosition) {//重新设置了数据
+            mPdrLastPosition = mPdrCustomStarPosition
         }
-        if (!isOpenItemAnim || holder.layoutPosition <= mLastPosition) {//不打开item动画 || 已经加载过了
+        if (!isPdrOpenItemAnim || holder.layoutPosition <= mPdrLastPosition) {//不打开item动画 || 已经加载过了
             return
         }
-        var animation = getAnimationByType(mCurrentAnimationType)
-        if (mCustomAnimation != null) {
-            animation = mCustomAnimation!!
+        var animation = getAnimationByType(mPdrCurrentAnimationType)
+        if (mPdrCustomAnimation != null) {
+            animation = mPdrCustomAnimation!!
         }
 
         for (anim in animation.getAnimators(holder.itemView)) {
             beginAnim(anim, animation)
         }
-        mLastPosition = holder.layoutPosition
+        mPdrLastPosition = holder.layoutPosition
     }
 
     /** 根据动画类型[animationType]获取动画 */
@@ -138,50 +138,50 @@ abstract class BaseRecyclerViewAdapter<T>(protected val context: Context) : Recy
     /** 开始item加载动画 */
     private fun beginAnim(animator: Animator, baseAnimation: BaseAnimation) {
         animator.setDuration(baseAnimation.getDuration().toLong()).start()
-        animator.interpolator = mInterpolator
+        animator.interpolator = mPdrInterpolator
     }
 
     /** 是否打开item加载动画 */
-    fun isOpenItemAnim(): Boolean = isOpenItemAnim
+    fun isOpenItemAnim(): Boolean = isPdrOpenItemAnim
 
     /** 设置是否打开item加载动画 */
     fun setOpenItemAnim(isOpen: Boolean) {
-        isOpenItemAnim = isOpen
+        isPdrOpenItemAnim = isOpen
     }
 
     /** 设置item动画开始的位置[position] */
     fun setItemAnimStartPosition(@IntRange(from = 0) position: Int) {
-        mCustomStarPosition = position
-        mLastPosition = position
+        mPdrCustomStarPosition = position
+        mPdrLastPosition = position
     }
 
     /** 重置item动画 */
     fun resetItemAnimPosition() {
-        setItemAnimStartPosition(mCustomStarPosition)
+        setItemAnimStartPosition(mPdrCustomStarPosition)
     }
 
     /** 设置自定义动画 */
     fun setBaseAnimation(animation: BaseAnimation?) {
-        mCustomAnimation = animation
+        mPdrCustomAnimation = animation
     }
 
     /** 设置默认的动画类型[animationType] */
     fun setAnimationType(@AnimationType animationType: Int) {
-        mCurrentAnimationType = animationType
+        mPdrCurrentAnimationType = animationType
     }
 
     override fun getItemCount(): Int = getDataSize()
 
     /** 获取数据长度 */
-    protected fun getDataSize(): Int = mData.getSize()
+    protected fun getDataSize(): Int = mPdrData.getSize()
 
     /** 设置数据列表[data] */
     fun setData(data: MutableList<T>) {
-        this.mData = data
+        this.mPdrData = data
     }
 
     /** 获取数据列表 */
-    fun getData(): List<T>? = mData
+    fun getData(): List<T>? = mPdrData
 
     /** 在onCreateViewHolder方法中根据[layoutId]获取View */
     @JvmOverloads
@@ -207,9 +207,9 @@ abstract class BaseRecyclerViewAdapter<T>(protected val context: Context) : Recy
         if (getDataSize() == 0) {
             return
         }
-        mData?.removeAt(position)
+        mPdrData?.removeAt(position)
         notifyItemRemoved(position)
-        val size = mData?.size ?: 0
+        val size = mPdrData?.size ?: 0
         if (position != size) {// 如果移除的是最后一个，忽略
             notifyItemRangeChanged(position, size - position)
         }
@@ -217,12 +217,12 @@ abstract class BaseRecyclerViewAdapter<T>(protected val context: Context) : Recy
 
     /** 设置点击事件监听器 */
     fun setOnItemClickListener(listener: (viewHolder: RecyclerView.ViewHolder, item: T, position: Int) -> Unit) {
-        mOnItemClickListener = listener
+        mPdrOnItemClickListener = listener
     }
 
     /** 设置长按事件监听器 */
     fun setOnItemLongClickListener(listener: (viewHolder: RecyclerView.ViewHolder, item: T, position: Int) -> Unit) {
-        mOnItemLongClickListener = listener
+        mPdrOnItemLongClickListener = listener
     }
 
 }

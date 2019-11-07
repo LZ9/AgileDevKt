@@ -4,13 +4,13 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/img"
+        android:id="@+id/pdr_img"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="@string/pandora_app_img_name" />
 
     <ImageView
-        android:id="@+id/delete_btn"
+        android:id="@+id/pdr_delete_btn"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_gravity="end|top"

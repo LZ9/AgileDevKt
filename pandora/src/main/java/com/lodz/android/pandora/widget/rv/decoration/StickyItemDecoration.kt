@@ -25,7 +25,7 @@ class StickyItemDecoration<T> private constructor(context: Context) : SectionIte
         if (!isVerLinearLayout(parent)) {
             return
         }
-        if (mOnSectionCallback == null) {
+        if (mPdrOnSectionCallback == null) {
             return
         }
         val childCount = parent.childCount
@@ -40,31 +40,31 @@ class StickyItemDecoration<T> private constructor(context: Context) : SectionIte
         for (i in 0 until childCount) {
             val view = parent.getChildAt(i)
             val position = parent.getChildAdapterPosition(view)
-            if (getItem(position, mOnSectionCallback!!).isEmpty()) {
+            if (getItem(position, mPdrOnSectionCallback!!).isEmpty()) {
                 continue
             }
 
             val top = 0
-            val bottom = mSectionHeightPx
+            val bottom = mPdrSectionHeightPx
 
-            val sectionTop = Math.max(top, view.top - mSectionHeightPx)// 顶部section上坐标，取top和viewtop最大值
+            val sectionTop = Math.max(top, view.top - mPdrSectionHeightPx)// 顶部section上坐标，取top和viewtop最大值
             val sectionBottom = Math.max(bottom, view.top)// 顶部section下坐标，取bottom和viewbottom的最大值
 
-            if (isFirstGroupItem(position, mOnSectionCallback!!)) {// 分组的第一个数据，绘制分组样式
+            if (isFirstGroupItem(position, mPdrOnSectionCallback!!)) {// 分组的第一个数据，绘制分组样式
                 drawBgPaint(canvas, left, sectionTop, right, sectionBottom)
-                drawTextPaint(canvas, getItem(position, mOnSectionCallback!!), left, sectionTop, right, sectionBottom)
+                drawTextPaint(canvas, getItem(position, mPdrOnSectionCallback!!), left, sectionTop, right, sectionBottom)
                 continue
             }
 
-            if (isLastGroupItem(position, itemCount, mOnSectionCallback!!) && view.bottom <= mSectionHeightPx) {// 分组的最后一个数据并且已经到达顶部，绘制过度动画样式
+            if (isLastGroupItem(position, itemCount, mPdrOnSectionCallback!!) && view.bottom <= mPdrSectionHeightPx) {// 分组的最后一个数据并且已经到达顶部，绘制过度动画样式
                 drawBgPaint(canvas, left, top, right, view.bottom)
-                drawTextPaint(canvas, getItem(position, mOnSectionCallback!!), left, top, right, view.bottom)
+                drawTextPaint(canvas, getItem(position, mPdrOnSectionCallback!!), left, top, right, view.bottom)
                 continue
             }
 
             if (i == 0) {// 第一个view属于某个分组内的中间数据，则在顶部绘制固定section
                 drawBgPaint(canvas, left, sectionTop, right, sectionBottom)
-                drawTextPaint(canvas, getItem(position, mOnSectionCallback!!), left, sectionTop, right, sectionBottom)
+                drawTextPaint(canvas, getItem(position, mPdrOnSectionCallback!!), left, sectionTop, right, sectionBottom)
             }
         }
     }

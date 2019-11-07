@@ -27,14 +27,14 @@ import com.lodz.android.pandora.base.application.config.LoadingLayoutConfig
 class LoadingLayout : LinearLayout {
 
     /** 加载页配置 */
-    private var mConfig = LoadingLayoutConfig()
+    private var mPdrConfig = LoadingLayoutConfig()
 
     /** 根布局  */
-    private val mRootView by bindView<LinearLayout>(R.id.root_view)
+    private val mPdrRootView by bindView<LinearLayout>(R.id.pdr_root_view)
     /** 提示语  */
-    private val mLoadingTipsTv by bindView<TextView>(R.id.loading_tips_tv)
+    private val mPdrLoadingTipsTv by bindView<TextView>(R.id.pdr_loading_tips_tv)
     /** 进度条 */
-    private lateinit var mLoadingProgressBar: ProgressBar
+    private lateinit var mPdrLoadingProgressBar: ProgressBar
 
     constructor(context: Context?) : super(context) {
         init(null)
@@ -51,7 +51,7 @@ class LoadingLayout : LinearLayout {
     private fun init(attrs: AttributeSet?) {
         val app = BaseApplication.get()
         if (app != null) {
-            mConfig = app.getBaseLayoutConfig().getLoadingLayoutConfig()
+            mPdrConfig = app.getBaseLayoutConfig().getLoadingLayoutConfig()
         }
         findViews()
         configLayout(attrs)
@@ -59,7 +59,7 @@ class LoadingLayout : LinearLayout {
 
     private fun findViews() {
         LayoutInflater.from(context).inflate(R.layout.pandora_view_loading, this)
-        mLoadingProgressBar = findViewById(R.id.loading_progressbar)
+        mPdrLoadingProgressBar = findViewById(R.id.pdr_loading_progressbar)
     }
 
     private fun configLayout(attrs: AttributeSet?) {
@@ -69,17 +69,17 @@ class LoadingLayout : LinearLayout {
         }
 
         // 布局方向
-        val orientation: Int = typedArray?.getInt(R.styleable.LoadingLayout_contentOrientation, mConfig.orientation)
-                ?: mConfig.orientation
+        val orientation: Int = typedArray?.getInt(R.styleable.LoadingLayout_contentOrientation, mPdrConfig.orientation)
+                ?: mPdrConfig.orientation
         setLayoutOrientation(orientation)
 
         // 是否需要提示语
-        val isNeedTips: Boolean = typedArray?.getBoolean(R.styleable.LoadingLayout_isNeedTips, mConfig.isNeedTips)
-                ?: mConfig.isNeedTips
+        val isNeedTips: Boolean = typedArray?.getBoolean(R.styleable.LoadingLayout_isNeedTips, mPdrConfig.isNeedTips)
+                ?: mPdrConfig.isNeedTips
         needTips(isNeedTips)
 
         // 默认提示语
-        val defaultTips = if (mConfig.tips.isEmpty()) context.getString(R.string.pandora_loading) else mConfig.tips
+        val defaultTips = if (mPdrConfig.tips.isEmpty()) context.getString(R.string.pandora_loading) else mPdrConfig.tips
         val attrsTips: String = typedArray?.getString(R.styleable.LoadingLayout_tips) ?: defaultTips
         setTips(if (attrsTips.isEmpty()) defaultTips else attrsTips)
 
@@ -87,8 +87,8 @@ class LoadingLayout : LinearLayout {
         val tipsColor: ColorStateList? = typedArray?.getColorStateList(R.styleable.LoadingLayout_tipsColor)
         if (tipsColor != null) {
             setTipsTextColor(tipsColor)
-        } else if (mConfig.textColor != 0) {
-            setTipsTextColor(mConfig.textColor)
+        } else if (mPdrConfig.textColor != 0) {
+            setTipsTextColor(mPdrConfig.textColor)
         }
 
         // 提示语大小
@@ -96,35 +96,35 @@ class LoadingLayout : LinearLayout {
                 ?: 0
         if (tipsSize != 0) {
             setTipsTextSize(px2spRF(tipsSize))
-        } else if (mConfig.textSize != 0) {
-            setTipsTextSize(mConfig.textSize.toFloat())
+        } else if (mPdrConfig.textSize != 0) {
+            setTipsTextSize(mPdrConfig.textSize.toFloat())
         }
 
         // 设置ProgressBar模式
-        val isIndeterminate: Boolean = typedArray?.getBoolean(R.styleable.LoadingLayout_isIndeterminate, mConfig.isIndeterminate)
-                ?: mConfig.isIndeterminate
-        mLoadingProgressBar.isIndeterminate = isIndeterminate
+        val isIndeterminate: Boolean = typedArray?.getBoolean(R.styleable.LoadingLayout_isIndeterminate, mPdrConfig.isIndeterminate)
+                ?: mPdrConfig.isIndeterminate
+        mPdrLoadingProgressBar.isIndeterminate = isIndeterminate
 
         // 是否使用默认加载资源
-        val useSysDefDrawable: Boolean = typedArray?.getBoolean(R.styleable.LoadingLayout_useSysDefDrawable, mConfig.useSysDefDrawable)
-            ?: mConfig.useSysDefDrawable
+        val useSysDefDrawable: Boolean = typedArray?.getBoolean(R.styleable.LoadingLayout_useSysDefDrawable, mPdrConfig.useSysDefDrawable)
+            ?: mPdrConfig.useSysDefDrawable
 
         // 设置ProgressBar的Drawable
         val drawable: Drawable? = typedArray?.getDrawable(R.styleable.LoadingLayout_indeterminateDrawable)
         if (drawable != null) {
-            mLoadingProgressBar.indeterminateDrawable = drawable
-        } else if (mConfig.indeterminateDrawable != 0) {
-            mLoadingProgressBar.indeterminateDrawable = getDrawableCompat(mConfig.indeterminateDrawable)
+            mPdrLoadingProgressBar.indeterminateDrawable = drawable
+        } else if (mPdrConfig.indeterminateDrawable != 0) {
+            mPdrLoadingProgressBar.indeterminateDrawable = getDrawableCompat(mPdrConfig.indeterminateDrawable)
         } else if(!useSysDefDrawable){
-            mLoadingProgressBar.indeterminateDrawable = getDrawableCompat(R.drawable.pandora_anims_loading)
+            mPdrLoadingProgressBar.indeterminateDrawable = getDrawableCompat(R.drawable.pandora_anims_loading)
         }
 
         // 设置ProgressBar宽高
-        val layoutParams = mLoadingProgressBar.layoutParams
-        var pbWidth: Int = typedArray?.getDimensionPixelSize(R.styleable.LoadingLayout_pbWidth, mConfig.pbWidthPx)
-                ?: mConfig.pbWidthPx
-        var pbHeight: Int = typedArray?.getDimensionPixelSize(R.styleable.LoadingLayout_pbHeight, mConfig.pbHeightPx)
-                ?: mConfig.pbHeightPx
+        val layoutParams = mPdrLoadingProgressBar.layoutParams
+        var pbWidth: Int = typedArray?.getDimensionPixelSize(R.styleable.LoadingLayout_pbWidth, mPdrConfig.pbWidthPx)
+                ?: mPdrConfig.pbWidthPx
+        var pbHeight: Int = typedArray?.getDimensionPixelSize(R.styleable.LoadingLayout_pbHeight, mPdrConfig.pbHeightPx)
+                ?: mPdrConfig.pbHeightPx
         if (pbWidth == 0 && !useSysDefDrawable){
             pbWidth = dp2px(90)
         }
@@ -142,7 +142,7 @@ class LoadingLayout : LinearLayout {
         val drawableBackground: Drawable? = typedArray?.getDrawable(R.styleable.LoadingLayout_contentBackground)
         when {
             drawableBackground != null -> background = drawableBackground
-            mConfig.backgroundColor != 0 -> setBackgroundColor(getColorCompat(mConfig.backgroundColor))
+            mPdrConfig.backgroundColor != 0 -> setBackgroundColor(getColorCompat(mPdrConfig.backgroundColor))
             else -> setBackgroundColor(getColorCompat(android.R.color.white))
         }
 
@@ -151,51 +151,51 @@ class LoadingLayout : LinearLayout {
 
     /** 是否需要[isNeed]提示文字 */
     fun needTips(isNeed: Boolean) {
-        mLoadingTipsTv.visibility = if (isNeed) View.VISIBLE else View.GONE
+        mPdrLoadingTipsTv.visibility = if (isNeed) View.VISIBLE else View.GONE
     }
 
     /** 设置提示文字[str] */
     fun setTips(str: String) {
-        mLoadingTipsTv.text = str
+        mPdrLoadingTipsTv.text = str
     }
 
     /** 设置提示文字资源[strResId] */
     fun setTips(@StringRes strResId: Int) {
-        mLoadingTipsTv.text = context.getString(strResId)
+        mPdrLoadingTipsTv.text = context.getString(strResId)
     }
 
     /** 设置文字颜色资源[colorRes] */
     fun setTipsTextColor(@ColorRes colorRes: Int) {
-        mLoadingTipsTv.setTextColor(getColorCompat(colorRes))
+        mPdrLoadingTipsTv.setTextColor(getColorCompat(colorRes))
     }
 
     /** 设置文字颜色[color] */
     fun setTipsTextColorInt(@ColorInt color: Int) {
-        mLoadingTipsTv.setTextColor(color)
+        mPdrLoadingTipsTv.setTextColor(color)
     }
 
     /** 设置文字颜色[colorStateList] */
     fun setTipsTextColor(colorStateList: ColorStateList) {
-        mLoadingTipsTv.setTextColor(colorStateList)
+        mPdrLoadingTipsTv.setTextColor(colorStateList)
     }
 
     /** 设置文字大小[sp] */
     fun setTipsTextSize(sp: Float) {
-        mLoadingTipsTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, sp)
+        mPdrLoadingTipsTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, sp)
     }
 
     /** 设置进度条控件[progressBar] */
     fun setProgressBar(progressBar: ProgressBar) {
-        mLoadingProgressBar = progressBar
+        mPdrLoadingProgressBar = progressBar
     }
 
     /** 获取进度条控件  */
-    fun getProgressBar(): ProgressBar = mLoadingProgressBar
+    fun getProgressBar(): ProgressBar = mPdrLoadingProgressBar
 
     /** 设置加载页面的布局方向[orientation] */
     fun setLayoutOrientation(@BaseLayoutConfig.OrientationType orientation: Int) {
         if (orientation == LinearLayout.HORIZONTAL || orientation == LinearLayout.VERTICAL) {
-            mRootView.orientation = orientation
+            mPdrRootView.orientation = orientation
         }
     }
 }

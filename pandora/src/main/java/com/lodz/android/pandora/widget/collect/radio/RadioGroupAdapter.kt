@@ -23,46 +23,46 @@ import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
 internal class RadioGroupAdapter(context: Context) : BaseRecyclerViewAdapter<RadioableWrapper>(context) {
 
     /** 单选按钮图片 */
-    private var mBtnSrc: Drawable? = null
+    private var mPdrBtnSrc: Drawable? = null
     /** 单选按钮图片资源id */
-    private var mBtnSrcResId: Int = 0
+    private var mPdrBtnSrcResId: Int = 0
     /** 单选文字颜色 */
-    private var mRadioTextColor: ColorStateList? = null
+    private var mPdrRadioTextColor: ColorStateList? = null
     /** 单选文字大小 */
-    private var mRadioTextSizeSp: Float = 0f
+    private var mPdrRadioTextSizeSp: Float = 0f
     /** 文字距离图标的左侧间距 */
-    private var mMarginStartDp = 0
+    private var mPdrMarginStartDp = 0
     /** 布局方向 */
-    private var mRadioGravity = 0
+    private var mPdrRadioGravity = 0
     /** 单选项图片宽高 */
-    private var mRadioBtnSquareDp = 0
+    private var mPdrRadioBtnSquareDp = 0
 
     fun setBtnSrc(src: Drawable?) {
-        mBtnSrc = src
+        mPdrBtnSrc = src
     }
 
     fun setBtnSrcResId(resId: Int) {
-        mBtnSrcResId = resId
+        mPdrBtnSrcResId = resId
     }
 
     fun setRadioTextColor(color: ColorStateList?) {
-        mRadioTextColor = color
+        mPdrRadioTextColor = color
     }
 
     fun setRadioTextSize(sp: Float) {
-        mRadioTextSizeSp = sp
+        mPdrRadioTextSizeSp = sp
     }
 
     fun setRadioMarginStart(dp: Int) {
-        mMarginStartDp = dp
+        mPdrMarginStartDp = dp
     }
 
     fun setRadioGravity(gravity: Int) {
-        mRadioGravity = gravity
+        mPdrRadioGravity = gravity
     }
 
     fun setRadioBtnSquare(dp: Int) {
-        mRadioBtnSquareDp = dp
+        mPdrRadioBtnSquareDp = dp
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
@@ -83,37 +83,37 @@ internal class RadioGroupAdapter(context: Context) : BaseRecyclerViewAdapter<Rad
 
     private inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         /** 布局 */
-        val radioLayout by bindView<LinearLayout>(R.id.radio_layout)
+        val radioLayout by bindView<LinearLayout>(R.id.pdr_radio_layout)
         /** 图片 */
-        val radioImg by bindView<ImageView>(R.id.radio_img)
+        val radioImg by bindView<ImageView>(R.id.pdr_radio_img)
         /** 文字 */
-        val radioTv by bindView<TextView>(R.id.radio_tv)
+        val radioTv by bindView<TextView>(R.id.pdr_radio_tv)
 
         init {
-            if (mBtnSrc != null) {
-                radioImg.setImageDrawable(mBtnSrc)
+            if (mPdrBtnSrc != null) {
+                radioImg.setImageDrawable(mPdrBtnSrc)
             }
-            if (mBtnSrcResId != 0) {
-                radioImg.setImageResource(mBtnSrcResId)
+            if (mPdrBtnSrcResId != 0) {
+                radioImg.setImageResource(mPdrBtnSrcResId)
             }
-            if (mRadioTextColor != null) {
-                radioTv.setTextColor(mRadioTextColor)
+            if (mPdrRadioTextColor != null) {
+                radioTv.setTextColor(mPdrRadioTextColor)
             }
-            if (mRadioTextSizeSp > 0f) {
-                radioTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, mRadioTextSizeSp)
+            if (mPdrRadioTextSizeSp > 0f) {
+                radioTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, mPdrRadioTextSizeSp)
             }
-            if (mMarginStartDp > 0) {
+            if (mPdrMarginStartDp > 0) {
                 val lp = radioTv.layoutParams as LinearLayout.LayoutParams
-                lp.marginStart = context.dp2px(mMarginStartDp)
+                lp.marginStart = context.dp2px(mPdrMarginStartDp)
                 radioTv.layoutParams = lp
             }
-            if (mRadioBtnSquareDp > 0) {
+            if (mPdrRadioBtnSquareDp > 0) {
                 val lp = radioImg.layoutParams
-                lp.width = context.dp2px(mRadioBtnSquareDp)
-                lp.height = context.dp2px(mRadioBtnSquareDp)
+                lp.width = context.dp2px(mPdrRadioBtnSquareDp)
+                lp.height = context.dp2px(mPdrRadioBtnSquareDp)
             }
-            if (mRadioGravity != 0) {
-                radioLayout.gravity = mRadioGravity
+            if (mPdrRadioGravity != 0) {
+                radioLayout.gravity = mPdrRadioGravity
             }
         }
     }

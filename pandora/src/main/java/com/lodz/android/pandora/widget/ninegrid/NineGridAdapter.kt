@@ -23,64 +23,64 @@ internal class NineGridAdapter(context: Context) : BaseRecyclerViewAdapter<Strin
     private val VIEW_TYPE_ITEM = 1
 
     /** 是否需要添加图标 */
-    private var isNeedAddBtn = true
+    private var isPdrNeedAddBtn = true
     /** 添加图标 */
-    private var mAddBtnDrawable: Drawable? = null
+    private var mPdrAddBtnDrawable: Drawable? = null
     /** 是否需要删除按钮 */
-    private var isShowDelete = true
+    private var isPdrShowDelete = true
     /** 删除图标 */
-    private var mDeleteBtnDrawable: Drawable? = null
+    private var mPdrDeleteBtnDrawable: Drawable? = null
     /** 最大图片数 */
-    private var maxPic = NineGridView.DEFAULT_MAX_PIC
+    private var mPdrMaxPic = NineGridView.DEFAULT_MAX_PIC
     /** itme高度 */
-    private var mItemHighPx = 0
+    private var mPdrItemHighPx = 0
 
     /** 监听器 */
-    private var mListener: OnNineGridViewListener? = null
+    private var mPdrListener: OnNineGridViewListener? = null
 
     /** 设置是否需要添加图标[isNeed] */
     fun setNeedAddBtn(isNeed: Boolean) {
-        isNeedAddBtn = isNeed
+        isPdrNeedAddBtn = isNeed
     }
 
     /** 设置添加图标[drawable] */
     fun setAddBtnDrawable(drawable: Drawable?) {
-        mAddBtnDrawable = drawable
+        mPdrAddBtnDrawable = drawable
     }
 
     /** 设置是否显示删除按钮[isShow] */
     fun setShowDelete(isShow: Boolean) {
-        isShowDelete = isShow
+        isPdrShowDelete = isShow
     }
 
     /** 设置删除图标[drawable] */
     fun setDeleteBtnDrawable(drawable: Drawable?) {
-        mDeleteBtnDrawable = drawable
+        mPdrDeleteBtnDrawable = drawable
     }
 
     /** 设置最大图片数[count] */
     fun setMaxPic(@IntRange(from = 1) count: Int) {
-        maxPic = count
+        mPdrMaxPic = count
     }
 
     /** 获取最大图片数 */
-    fun getMaxPic(): Int = maxPic
+    fun getMaxPic(): Int = mPdrMaxPic
 
     /** 设置itme的高度[px] */
     fun setItemHigh(px: Int) {
-        mItemHighPx = px
+        mPdrItemHighPx = px
     }
 
     /** 设置监听器[listener] */
     fun setOnNineGridViewListener(listener: OnNineGridViewListener?) {
-        mListener = listener
+        mPdrListener = listener
     }
 
     override fun getItemViewType(position: Int): Int {
-        if (!isNeedAddBtn) {//不需要添加按钮
+        if (!isPdrNeedAddBtn) {//不需要添加按钮
             return VIEW_TYPE_ITEM
         }
-        if (getDataSize() == maxPic) {//已经添加满数据了
+        if (getDataSize() == mPdrMaxPic) {//已经添加满数据了
             return VIEW_TYPE_ITEM
         }
         if (getDataSize() == 0) {//没有数据
@@ -93,10 +93,10 @@ internal class NineGridAdapter(context: Context) : BaseRecyclerViewAdapter<Strin
     }
 
     override fun getItemCount(): Int {
-        if (!isNeedAddBtn) {
+        if (!isPdrNeedAddBtn) {
             return super.getItemCount()
         }
-        if (super.getItemCount() == maxPic) {//照片数量和总数相等
+        if (super.getItemCount() == mPdrMaxPic) {//照片数量和总数相等
             return super.getItemCount()
         }
         return super.getItemCount() + 1
@@ -110,8 +110,8 @@ internal class NineGridAdapter(context: Context) : BaseRecyclerViewAdapter<Strin
             }
 
     override fun onBind(holder: RecyclerView.ViewHolder, position: Int) {
-        if (mItemHighPx > 0) {
-            setItemViewHeight(holder.itemView, mItemHighPx)
+        if (mPdrItemHighPx > 0) {
+            setItemViewHeight(holder.itemView, mPdrItemHighPx)
         }
         if (holder is NineGridAddViewHolder) {
             showAddItem(holder)
@@ -126,50 +126,50 @@ internal class NineGridAdapter(context: Context) : BaseRecyclerViewAdapter<Strin
 
     /** 显示添加按钮Item */
     private fun showAddItem(holder: NineGridAddViewHolder) {
-        if (mAddBtnDrawable != null) {
-            holder.addBtn.setImageDrawable(mAddBtnDrawable)
+        if (mPdrAddBtnDrawable != null) {
+            holder.addBtn.setImageDrawable(mPdrAddBtnDrawable)
         } else {
             holder.addBtn.setImageResource(R.drawable.pandora_ic_nine_grid_add)
         }
         holder.addBtn.setOnClickListener {
-            mListener?.onAddPic(maxPic - getDataSize())
+            mPdrListener?.onAddPic(mPdrMaxPic - getDataSize())
         }
     }
 
     /** 显示图片Item */
     private fun showItem(holder: NineGridViewHolder, data: String) {
-        mListener?.onDisplayImg(context, data, holder.img)
+        mPdrListener?.onDisplayImg(context, data, holder.img)
         holder.img.setOnClickListener {
             val str = getItem(holder.adapterPosition)
             if (!str.isNullOrEmpty()) {
-                mListener?.onClickPic(str, holder.adapterPosition)
+                mPdrListener?.onClickPic(str, holder.adapterPosition)
             }
         }
 
-        if (mDeleteBtnDrawable != null) {
-            holder.deleteBtn.setImageDrawable(mDeleteBtnDrawable)
+        if (mPdrDeleteBtnDrawable != null) {
+            holder.deleteBtn.setImageDrawable(mPdrDeleteBtnDrawable)
         } else {
             holder.deleteBtn.setImageResource(R.drawable.pandora_ic_nine_grid_delete)
         }
-        holder.deleteBtn.visibility = if (isShowDelete) View.VISIBLE else View.GONE
+        holder.deleteBtn.visibility = if (isPdrShowDelete) View.VISIBLE else View.GONE
         holder.deleteBtn.setOnClickListener {
             val str = getItem(holder.adapterPosition)
             if (!str.isNullOrEmpty()) {
-                mListener?.onDeletePic(str, holder.adapterPosition)
+                mPdrListener?.onDeletePic(str, holder.adapterPosition)
             }
         }
     }
 
     internal inner class NineGridAddViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         /** 添加按钮 */
-        val addBtn by bindView<ImageView>(R.id.add_btn)
+        val addBtn by bindView<ImageView>(R.id.pdr_add_btn)
     }
 
     internal inner class NineGridViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         /** 图片 */
-        val img by bindView<ImageView>(R.id.img)
+        val img by bindView<ImageView>(R.id.pdr_img)
         /** 删除按钮 */
-        val deleteBtn by bindView<ImageView>(R.id.delete_btn)
+        val deleteBtn by bindView<ImageView>(R.id.pdr_delete_btn)
     }
 
 }

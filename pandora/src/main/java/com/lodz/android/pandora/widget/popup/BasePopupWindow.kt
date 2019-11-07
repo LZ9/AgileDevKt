@@ -16,12 +16,12 @@ import androidx.annotation.LayoutRes
  */
 abstract class BasePopupWindow(context: Context) {
     /** 上下文 */
-    private val mContext: Context = context
+    private val mPdrContext: Context = context
     /** PopupWindow */
-    private val mPopupWindow: PopupWindow
+    private val mPdrPopupWindow: PopupWindow
 
     init {
-        mPopupWindow = createPopupWindow(mContext)
+        mPdrPopupWindow = createPopupWindow(mPdrContext)
     }
 
     private fun createPopupWindow(context: Context): PopupWindow {
@@ -38,7 +38,7 @@ abstract class BasePopupWindow(context: Context) {
 
     fun create() {
         startCreate()
-        findViews(mPopupWindow.contentView)
+        findViews(mPdrPopupWindow.contentView)
         setListeners()
         initData()
         endCreate()
@@ -66,8 +66,8 @@ abstract class BasePopupWindow(context: Context) {
 
     protected open fun endCreate() {}
 
-    protected fun getContext(): Context = mContext
+    protected fun getContext(): Context = mPdrContext
 
-    fun getPopup(): PopupWindow = mPopupWindow
+    fun getPopup(): PopupWindow = mPdrPopupWindow
 
 }
