@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.widget.RadioGroup
@@ -114,6 +115,13 @@ class LocationTestActivity : BaseActivity() {
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+            permissions.forEachIndexed { index, permission ->
+                if (permission == Manifest.permission.ACCESS_BACKGROUND_LOCATION){
+                    grantResults[index] = PackageManager.PERMISSION_GRANTED
+                }
+            }
+        }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         onRequestPermissionsResult(requestCode, grantResults)
     }
@@ -131,7 +139,7 @@ class LocationTestActivity : BaseActivity() {
         if (!isPermissionGranted(Manifest.permission.ACCESS_COARSE_LOCATION)) {
             return
         }
-        if (!isPermissionGranted(Manifest.permission.ACCESS_BACKGROUND_LOCATION)) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && !isPermissionGranted(Manifest.permission.ACCESS_BACKGROUND_LOCATION)) {
             return
         }
         initLogic()
