@@ -83,9 +83,9 @@ dependencies {
     // 大图加载缩放
     implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
     // PhotoView
-    implementation 'com.github.chrisbanes:PhotoView:2.0.0'
+    implementation 'com.github.chrisbanes:PhotoView:2.3.0'
     // 滚动选择
-    implementation 'com.contrarywind:Android-PickerView:4.1.8'
+    implementation 'com.contrarywind:Android-PickerView:4.1.9'
 
     // 单元测试
     testImplementation 'junit:junit:4.12'
