@@ -3,6 +3,7 @@ package com.lodz.android.agiledevkt.modules.dimensions
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.TextView
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.corekt.anko.*
@@ -24,6 +25,8 @@ class DimensionsActivity :BaseActivity(){
         }
     }
 
+    /** 屏幕宽高 */
+    private val mScreenInfoTv by bindView<TextView>(R.id.screen_info_tv)
     /** px输入 */
     private val mPxCedit by bindView<CltEditView>(R.id.px_cedit)
     /** px转dp */
@@ -81,6 +84,7 @@ class DimensionsActivity :BaseActivity(){
 
     override fun initData() {
         super.initData()
+        mScreenInfoTv.text = StringBuilder().append("width : ").append(getScreenWidth()).append(" ; ").append("height : ").append(getRealScreenWidth())
         showStatusCompleted()
     }
 

@@ -23,6 +23,20 @@ fun Context.getScreenWidth(): Int {
     return dm.widthPixels
 }
 
+/** 获得屏幕真实宽度（屏幕+导航栏） */
+fun Context.getRealScreenWidth(window: Window): Int {
+    val point = Point()
+    window.windowManager.defaultDisplay.getRealSize(point)
+    return point.y//获取真实屏幕高度
+}
+
+/** 获得屏幕真实宽度（屏幕+导航栏） */
+fun Activity.getRealScreenWidth(): Int {
+    val point = Point()
+    window?.windowManager?.defaultDisplay?.getRealSize(point)
+    return point.y//获取真实屏幕高度
+}
+
 /** 获得屏幕高度 */
 fun Context.getScreenHeight(): Int {
     val wm = getSystemService(Context.WINDOW_SERVICE) as WindowManager

@@ -5,6 +5,19 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/screen_info_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:textColor="@color/color_00a0e9" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_00a0e9" />
+
+
     <com.lodz.android.pandora.widget.collect.CltEditView
         android:id="@+id/px_cedit"
         android:layout_width="match_parent"
