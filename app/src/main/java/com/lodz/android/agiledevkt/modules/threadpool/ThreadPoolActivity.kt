@@ -9,8 +9,9 @@ import android.widget.TextView
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.corekt.anko.bindView
+import com.lodz.android.corekt.anko.runOnMain
+import com.lodz.android.corekt.anko.runOnMainDelay
 import com.lodz.android.corekt.threadpool.ThreadPoolManager
-import com.lodz.android.corekt.utils.UiHandler
 import com.lodz.android.pandora.base.activity.BaseActivity
 import java.util.concurrent.ThreadPoolExecutor
 import java.util.concurrent.TimeUnit
@@ -122,10 +123,10 @@ class ThreadPoolActivity : BaseActivity() {
 
     /** 打印信息[result] */
     private fun printResult(result: String) {
-        UiHandler.post {
+        runOnMain {
             mResultTv.text = (mResultTv.text.toString() + "\n" + result)
         }
-        UiHandler.postDelayed(100){
+        runOnMainDelay(100) {
             mScrollView.fullScroll(ScrollView.FOCUS_DOWN)
         }
     }

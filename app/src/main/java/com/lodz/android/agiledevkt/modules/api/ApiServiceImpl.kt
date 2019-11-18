@@ -5,8 +5,8 @@ import com.alibaba.fastjson.TypeReference
 import com.lodz.android.agiledevkt.apiservice.ApiService
 import com.lodz.android.agiledevkt.bean.SpotBean
 import com.lodz.android.agiledevkt.bean.base.response.ResponseBean
+import com.lodz.android.corekt.anko.runOnMainDelay
 import com.lodz.android.corekt.utils.ReflectUtils
-import com.lodz.android.corekt.utils.UiHandler
 import com.lodz.android.pandora.rx.utils.RxObservableOnSubscribe
 import io.reactivex.Observable
 import io.reactivex.ObservableEmitter
@@ -30,7 +30,7 @@ object ApiServiceImpl : ApiService {
     override fun login(account: String, password: String): Observable<ResponseBean<String>> =
             Observable.create(object : RxObservableOnSubscribe<ResponseBean<String>>() {
                 override fun subscribe(emitter: ObservableEmitter<ResponseBean<String>>) {
-                    UiHandler.postDelayed(2000){
+                    runOnMainDelay(2000){
                         val responseBean = ResponseBean.createSuccess<String>()
                         responseBean.msg = "success"
                         responseBean.data = "{\"id\":\"1\",\"loginName\":\"admin\"}"
@@ -43,7 +43,7 @@ object ApiServiceImpl : ApiService {
     override fun postSpot(id: Int): Observable<ResponseBean<SpotBean>> =
             Observable.create(object : RxObservableOnSubscribe<ResponseBean<SpotBean>>(id) {
                 override fun subscribe(emitter: ObservableEmitter<ResponseBean<SpotBean>>) {
-                    UiHandler.postDelayed(2000){
+                    runOnMainDelay(2000){
                         try {
                             if (id == NETWORK_FAIL) {
                                 throw SocketTimeoutException()
@@ -53,7 +53,7 @@ object ApiServiceImpl : ApiService {
                                 responseBean.msg = "fail"
                                 doNext(emitter, responseBean)
                                 doComplete(emitter)
-                                return@postDelayed
+                                return@runOnMainDelay
                             }
                             val responseBean = ResponseBean.createSuccess<SpotBean>()
                             responseBean.msg = "success"
@@ -74,7 +74,7 @@ object ApiServiceImpl : ApiService {
     override fun getSpot(id: Int): Observable<ResponseBean<SpotBean>> =
             Observable.create(object : RxObservableOnSubscribe<ResponseBean<SpotBean>>(id) {
                 override fun subscribe(emitter: ObservableEmitter<ResponseBean<SpotBean>>) {
-                    UiHandler.postDelayed(2000){
+                    runOnMainDelay(2000){
                         try {
                             if (id == NETWORK_FAIL) {
                                 throw SocketTimeoutException()
@@ -84,7 +84,7 @@ object ApiServiceImpl : ApiService {
                                 responseBean.msg = "fail"
                                 doNext(emitter, responseBean)
                                 doComplete(emitter)
-                                return@postDelayed
+                                return@runOnMainDelay
                             }
                             val responseBean = ResponseBean.createSuccess<SpotBean>()
                             responseBean.msg = "success"
@@ -105,7 +105,7 @@ object ApiServiceImpl : ApiService {
     override fun querySpot(requestBody: RequestBody): Observable<ResponseBean<List<SpotBean>>> =
             Observable.create(object : RxObservableOnSubscribe<ResponseBean<List<SpotBean>>>(requestBody) {
                 override fun subscribe(emitter: ObservableEmitter<ResponseBean<List<SpotBean>>>) {
-                    UiHandler.postDelayed(2000){
+                    runOnMainDelay(2000){
                         try {
                             val json = "{\"code\":200,\"msg\":\"success\",\"data\":[]}"
                             val responseBean = JSON.parseObject(json, object : TypeReference<ResponseBean<List<SpotBean>>>() {})

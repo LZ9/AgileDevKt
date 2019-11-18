@@ -1,6 +1,6 @@
 package com.lodz.android.agiledevkt.modules.mvc
 
-import com.lodz.android.corekt.utils.UiHandler
+import com.lodz.android.corekt.anko.runOnMainDelay
 import com.lodz.android.pandora.rx.exception.DataException
 import com.lodz.android.pandora.rx.utils.RxObservableOnSubscribe
 import io.reactivex.Observable
@@ -20,13 +20,13 @@ object ApiModule {
                     return
                 }
                 try {
-                    UiHandler.postDelayed(1000){
+                    runOnMainDelay(1000){
                         if (emitter.isDisposed) {
-                            return@postDelayed
+                            return@runOnMainDelay
                         }
                         if (!success) {
                             emitter.onError(DataException("request fail"))
-                            return@postDelayed
+                            return@runOnMainDelay
                         }
                         emitter.onNext("result is ${System.currentTimeMillis()}")
                         emitter.onComplete()

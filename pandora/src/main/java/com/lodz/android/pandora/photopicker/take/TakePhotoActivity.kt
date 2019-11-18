@@ -8,14 +8,10 @@ import android.provider.MediaStore
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.lodz.android.corekt.album.AlbumUtils
-import com.lodz.android.corekt.anko.bindView
-import com.lodz.android.corekt.anko.getColorCompat
-import com.lodz.android.corekt.anko.takePhoto
-import com.lodz.android.corekt.anko.toastShort
+import com.lodz.android.corekt.anko.*
 import com.lodz.android.corekt.utils.DateUtils
 import com.lodz.android.corekt.utils.FileUtils
 import com.lodz.android.corekt.utils.StatusBarUtil
-import com.lodz.android.corekt.utils.UiHandler
 import com.lodz.android.pandora.R
 import com.lodz.android.pandora.base.activity.AbsActivity
 
@@ -135,7 +131,7 @@ internal class TakePhotoActivity : AbsActivity() {
             handleConfirm()
             return
         }
-        UiHandler.postDelayed(300){
+        runOnMainDelay(300) {
             handleCameraSuccess()
         }
     }

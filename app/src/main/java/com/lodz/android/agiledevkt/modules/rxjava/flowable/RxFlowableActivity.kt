@@ -10,10 +10,10 @@ import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.base.response.ResponseBean
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.corekt.anko.bindView
+import com.lodz.android.corekt.anko.runOnMainDelay
 import com.lodz.android.corekt.anko.then
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.corekt.log.PrintLog
-import com.lodz.android.corekt.utils.UiHandler
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.rx.subscribe.subscriber.BaseSubscriber
 import com.lodz.android.pandora.rx.subscribe.subscriber.ProgressSubscriber
@@ -136,7 +136,7 @@ class RxFlowableActivity : BaseActivity() {
 
                         override fun onNext(str: String?) {
                             printLog(str ?: "")
-                            UiHandler.postDelayed(100) {
+                            runOnMainDelay(100) {
                                 mBpSubscription?.request(1)
                             }
                         }
@@ -319,7 +319,7 @@ class RxFlowableActivity : BaseActivity() {
             "${mResultTv.text}\n$text"
         }
         mResultTv.text = log
-        UiHandler.postDelayed(100) {
+        runOnMainDelay(100) {
             mScrollView.fullScroll(ScrollView.FOCUS_DOWN)
         }
     }

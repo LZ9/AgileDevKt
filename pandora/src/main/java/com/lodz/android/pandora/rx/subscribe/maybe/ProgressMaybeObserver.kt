@@ -8,7 +8,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
-import com.lodz.android.corekt.utils.UiHandler
+import com.lodz.android.corekt.anko.runOnMain
 import com.lodz.android.pandora.R
 import io.reactivex.disposables.Disposable
 
@@ -101,7 +101,7 @@ abstract class ProgressMaybeObserver<T> : RxMaybeObserver<T>() {
 
     /** 显示加载框 */
     private fun showProgress() {
-        UiHandler.post {
+        runOnMain {
             try {
                 mProgressDialog?.show()
             } catch (e: Exception) {
@@ -112,7 +112,7 @@ abstract class ProgressMaybeObserver<T> : RxMaybeObserver<T>() {
 
     /** 关闭加载框 */
     private fun dismissProgress() {
-        UiHandler.post {
+        runOnMain {
             try {
                 mProgressDialog?.dismiss()
                 mProgressDialog = null

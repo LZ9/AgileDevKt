@@ -8,6 +8,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import com.lodz.android.corekt.anko.runOnMain
 
 /**
  * Toast帮助类
@@ -120,7 +121,7 @@ class ToastUtils private constructor(private val mContext: Context) {
         if (AppUtils.isMainThread()) {//主线程直接显示
             assembleShowToast()
         }
-        UiHandler.post {
+        runOnMain {
             assembleShowToast()//非主线程post到主线程显示
         }
     }

@@ -13,7 +13,7 @@ import com.lodz.android.corekt.album.AlbumUtils
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.getScreenHeight
 import com.lodz.android.corekt.anko.getScreenWidth
-import com.lodz.android.corekt.utils.UiHandler
+import com.lodz.android.corekt.anko.runOnMainDelay
 import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
@@ -193,7 +193,7 @@ class RxUtilsTestActivity : BaseActivity() {
 
     private fun printResult(result: String) {
         mResultTv.text = (mResultTv.text.toString() + "\n" + result)
-        UiHandler.postDelayed(100){
+        runOnMainDelay(100) {
             mScrollView.fullScroll(ScrollView.FOCUS_DOWN)
         }
     }

@@ -15,7 +15,6 @@ import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.corekt.network.NetworkManager
 import com.lodz.android.corekt.threadpool.ThreadPoolManager
 import com.lodz.android.corekt.utils.NotificationUtils
-import com.lodz.android.corekt.utils.UiHandler
 import com.lodz.android.imageloaderkt.ImageloaderManager
 import com.lodz.android.pandora.base.application.BaseApplication
 import com.lodz.android.pandora.utils.acache.ACacheUtils
@@ -210,7 +209,6 @@ class App : BaseApplication() {
 
     override fun onExit() {
         // todo 待完善
-        UiHandler.destroy()
         ThreadPoolManager.get().releaseAll()
         NetworkManager.get().release(this)
         NetworkManager.get().clearNetworkListener()

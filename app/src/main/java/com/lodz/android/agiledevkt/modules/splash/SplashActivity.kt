@@ -7,12 +7,8 @@ import android.os.Bundle
 import com.lodz.android.agiledevkt.App
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
-import com.lodz.android.corekt.anko.goAppDetailSetting
-import com.lodz.android.corekt.anko.isPermissionGranted
-import com.lodz.android.corekt.anko.isTopAndBottomActivityTheSame
-import com.lodz.android.corekt.anko.toastShort
+import com.lodz.android.corekt.anko.*
 import com.lodz.android.corekt.utils.StatusBarUtil
-import com.lodz.android.corekt.utils.UiHandler
 import com.lodz.android.pandora.base.activity.AbsActivity
 import permissions.dispatcher.*
 
@@ -36,7 +32,7 @@ class SplashActivity : AbsActivity() {
             finish()
             return
         }
-        UiHandler.postDelayed(1000){
+        runOnMainDelay(1000) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {// 6.0以上的手机对权限进行动态申请
                 onRequestPermissionWithPermissionCheck()//申请权限
             } else {

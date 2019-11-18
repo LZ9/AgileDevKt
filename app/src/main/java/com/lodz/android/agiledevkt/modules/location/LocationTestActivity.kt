@@ -17,7 +17,6 @@ import com.lodz.android.agiledevkt.modules.service.BusService
 import com.lodz.android.agiledevkt.modules.splash.CheckDialog
 import com.lodz.android.corekt.anko.*
 import com.lodz.android.corekt.utils.DateUtils
-import com.lodz.android.corekt.utils.UiHandler
 import com.lodz.android.pandora.base.activity.BaseActivity
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -250,7 +249,7 @@ class LocationTestActivity : BaseActivity() {
     /** 打印信息[result] */
     private fun printResult(result: String) {
         mLogTv.text = (mLogTv.text.toString() + result + "\n")
-        UiHandler.postDelayed(100){
+        runOnMainDelay(100){
             mScrollView.fullScroll(ScrollView.FOCUS_DOWN)
         }
     }

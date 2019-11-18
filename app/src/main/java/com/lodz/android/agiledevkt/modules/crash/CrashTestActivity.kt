@@ -10,7 +10,7 @@ import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.agiledevkt.modules.splash.SplashActivity
 import com.lodz.android.agiledevkt.utils.crash.CrashManager
 import com.lodz.android.corekt.anko.bindView
-import com.lodz.android.corekt.utils.UiHandler
+import com.lodz.android.corekt.anko.runOnMainDelay
 import com.lodz.android.pandora.base.activity.BaseActivity
 
 /**
@@ -47,7 +47,7 @@ class CrashTestActivity : BaseActivity() {
         mCrashBtn.setOnClickListener {
             mCrashTips.visibility = View.VISIBLE
             mCrashBtn.visibility = View.GONE
-            UiHandler.postDelayed(100){
+            runOnMainDelay(100){
                 val case: String? = null
                 case!!.toInt()
             }
