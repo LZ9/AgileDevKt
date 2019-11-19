@@ -15,6 +15,11 @@ object UiHandler {
 
     /** 在UI线程执行[runnable] */
     @JvmStatic
+    @Deprecated(
+        "推荐使用协程封装方法runOnMain",
+        ReplaceWith("runOnMain{}", "com.lodz.android.corekt.anko.runOnMain"),
+        DeprecationLevel.WARNING
+    )
     fun post(runnable: Runnable) {
         if (Looper.myLooper() == Looper.getMainLooper()) {
             runnable.run()
@@ -25,6 +30,11 @@ object UiHandler {
 
     /** 在UI线程执行[block] */
     @JvmStatic
+    @Deprecated(
+        "推荐使用协程封装方法runOnMain",
+        ReplaceWith("runOnMain{}", "com.lodz.android.corekt.anko.runOnMain"),
+        DeprecationLevel.WARNING
+    )
     fun post(block: () -> Unit) {
         val runnable = Runnable {
             block()
@@ -38,6 +48,11 @@ object UiHandler {
 
     /** 在UI线程执行[runnable]，并指定[token] */
     @JvmStatic
+    @Deprecated(
+        "推荐使用协程封装方法runOnMain",
+        ReplaceWith("runOnMain{}", "com.lodz.android.corekt.anko.runOnMain"),
+        DeprecationLevel.WARNING
+    )
     fun post(runnable: Runnable, token: Any) {
         if (Looper.myLooper() == Looper.getMainLooper()) {
             runnable.run()
@@ -50,6 +65,11 @@ object UiHandler {
 
     /** 在UI线程执行[block]，并指定[token] */
     @JvmStatic
+    @Deprecated(
+        "推荐使用协程封装方法runOnMain",
+        ReplaceWith("runOnMain{}", "com.lodz.android.corekt.anko.runOnMain"),
+        DeprecationLevel.WARNING
+    )
     fun post(token: Any, block: () -> Unit) {
         val runnable = Runnable {
             block()
@@ -65,18 +85,33 @@ object UiHandler {
 
     /** 延迟[delay]毫秒执行[runnable] */
     @JvmStatic
+    @Deprecated(
+        "推荐使用协程封装方法runOnMainDelay",
+        ReplaceWith("runOnMainDelay(timeMillis){}", "com.lodz.android.corekt.anko.runOnMainDelay"),
+        DeprecationLevel.WARNING
+    )
     fun postDelayed(runnable: Runnable, delay: Long) {
         sHandler.postDelayed(runnable, delay)
     }
 
     /** 延迟[delay]毫秒执行[block] */
     @JvmStatic
+    @Deprecated(
+        "推荐使用协程封装方法runOnMainDelay",
+        ReplaceWith("runOnMainDelay(timeMillis){}", "com.lodz.android.corekt.anko.runOnMainDelay"),
+        DeprecationLevel.WARNING
+    )
     fun postDelayed(delay: Long, block: () -> Unit) {
         sHandler.postDelayed({ block() }, delay)
     }
 
     /** 延迟[delay]毫秒执行[runnable]，并指定[token] */
     @JvmStatic
+    @Deprecated(
+        "推荐使用协程封装方法runOnMainDelay",
+        ReplaceWith("runOnMainDelay(timeMillis){}", "com.lodz.android.corekt.anko.runOnMainDelay"),
+        DeprecationLevel.WARNING
+    )
     fun postDelayed(runnable: Runnable, delay: Long, token: Any) {
         val message = Message.obtain(sHandler, runnable)
         message.obj = token
@@ -85,6 +120,11 @@ object UiHandler {
 
     /** 延迟[delay]毫秒执行[block]，并指定[token] */
     @JvmStatic
+    @Deprecated(
+        "推荐使用协程封装方法runOnMainDelay",
+        ReplaceWith("runOnMainDelay(timeMillis){}", "com.lodz.android.corekt.anko.runOnMainDelay"),
+        DeprecationLevel.WARNING
+    )
     fun postDelayed(delay: Long, token: Any, block: () -> Unit) {
         val message = Message.obtain(sHandler) { block() }
         message.obj = token
