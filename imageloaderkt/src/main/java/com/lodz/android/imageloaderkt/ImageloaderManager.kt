@@ -74,7 +74,7 @@ class ImageloaderManager private constructor() {
         private var errorResId = 0
         /** 图片缓存目录 */
         private var directoryFile: File? = null
-        /** 缓存图片文件夹名称  */
+        /** 缓存图片文件夹名称 */
         private var directoryName = ""
 
         init {
@@ -107,7 +107,7 @@ class ImageloaderManager private constructor() {
             return this
         }
 
-        /** 完成构建并初始化  */
+        /** 完成构建并初始化 */
         fun build() {}
 
         /** 获取默认占位符图片 */

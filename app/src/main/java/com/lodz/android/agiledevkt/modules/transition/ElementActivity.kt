@@ -38,9 +38,9 @@ class ElementActivity : BaseActivity() {
     /** 图标 */
     private val mIconImg by bindView<ImageView>(R.id.icon_img)
 
-    /** 标题  */
+    /** 标题 */
     private var mTitle = ""
-    /** 图标资源id  */
+    /** 图标资源id */
     @DrawableRes
     private var mImgResId = 0
 

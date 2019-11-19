@@ -95,7 +95,7 @@ open class NineGridView : FrameLayout {
         typedArray?.recycle()
     }
 
-    /** 拖拽回调  */
+    /** 拖拽回调 */
     private val mPdrItemTouchHelperCallback = object : ItemTouchHelper.Callback() {
         // 配置拖拽类型
         override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {

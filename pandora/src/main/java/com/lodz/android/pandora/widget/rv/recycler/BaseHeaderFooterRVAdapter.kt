@@ -13,11 +13,11 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 abstract class BaseHeaderFooterRVAdapter<H, T, F>(context: Context) : BaseRecyclerViewAdapter<T>(context) {
 
     companion object {
-        /** 头部  */
+        /** 头部 */
         protected const val VIEW_TYPE_HEADER = 0
-        /** 数据列表  */
+        /** 数据列表 */
         protected const val VIEW_TYPE_ITEM = 1
-        /** 底部  */
+        /** 底部 */
         protected const val VIEW_TYPE_FOOTER = 2
     }
 

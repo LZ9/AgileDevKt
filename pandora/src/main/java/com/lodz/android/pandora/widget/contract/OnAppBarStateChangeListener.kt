@@ -36,6 +36,6 @@ abstract class OnAppBarStateChangeListener : AppBarLayout.OnOffsetChangedListene
         }
     }
 
-    /** 控件[appBarLayout]偏移状态[state]回调，偏移参数[delta]范围：0展开 1折叠 0.0-1.0滚动  */
+    /** 控件[appBarLayout]偏移状态[state]回调，偏移参数[delta]范围：0展开 1折叠 0.0-1.0滚动 */
     abstract fun onStateChanged(appBarLayout: AppBarLayout, @OffsetStatus state: Int, delta: Double)
 }

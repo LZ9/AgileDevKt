@@ -25,7 +25,7 @@ class GlideBuilderBean {
     var errorResId = R.drawable.imageloaderkt_ic_launcher
     /** 控件宽度 */
     var widthPx = 0
-    /** 控件高度  */
+    /** 控件高度 */
     var heightPx = 0
     /** 使用高斯模糊 */
     var useBlur = false

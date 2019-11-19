@@ -20,15 +20,15 @@ import com.lodz.android.pandora.widget.rv.animation.*
 abstract class BaseRecyclerViewAdapter<T>(protected val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
-        /** 淡入  */
+        /** 淡入 */
         const val ALPHA_IN = 1
-        /** 缩放  */
+        /** 缩放 */
         const val SCALE_IN = 2
-        /** 底部进入  */
+        /** 底部进入 */
         const val SLIDE_IN_BOTTOM = 3
-        /** 左侧进入  */
+        /** 左侧进入 */
         const val SLIDE_IN_LEFT = 4
-        /** 右侧进入  */
+        /** 右侧进入 */
         const val SLIDE_IN_RIGHT = 5
     }
 

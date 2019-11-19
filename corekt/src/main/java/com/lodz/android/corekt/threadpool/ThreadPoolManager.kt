@@ -15,16 +15,16 @@ class ThreadPoolManager private constructor() {
         fun get(): ThreadPoolManager = sInstance
     }
 
-    /** 最高优先级线程池（界面数据加载）  */
+    /** 最高优先级线程池（界面数据加载） */
     private var mHighestExecutor: ExecutorService? = null
 
-    /** 正常优先级线程池（下载等）  */
+    /** 正常优先级线程池（下载等） */
     private var mNormalExecutor: ExecutorService? = null
 
-    /** 最低优先级线程池（数据同步等）  */
+    /** 最低优先级线程池（数据同步等） */
     private var mLowestExecutor: ExecutorService? = null
 
-    /** 配置内容  */
+    /** 配置内容 */
     private val mBuilder: Builder
 
     init {
@@ -135,19 +135,19 @@ class ThreadPoolManager private constructor() {
     }
 
     inner class Builder {
-        /** 线程数  */
+        /** 线程数 */
         private var corePoolSize = 0
-        /** 最大线程数  */
+        /** 最大线程数 */
         private var maximumPoolSize = 0
-        /** 线程数空闲时间  */
+        /** 线程数空闲时间 */
         private var keepAliveTime: Long = 0
-        /** 线程数空闲时间单位  */
+        /** 线程数空闲时间单位 */
         private var keepAliveTimeUnit: TimeUnit? = null
-        /** 拒绝策略  */
+        /** 拒绝策略 */
         private var handler: RejectedExecutionHandler? = null
-        /** 线程结束等待时间  */
+        /** 线程结束等待时间 */
         private var awaitTime: Long = 0
-        /** 线程结束等待时间单位  */
+        /** 线程结束等待时间单位 */
         private var awaitTimeUnit: TimeUnit? = null
 
         internal fun getCorePoolSize(): Int {
@@ -211,43 +211,43 @@ class ThreadPoolManager private constructor() {
             return this
         }
 
-        /** 设置最大线程数[maximumPoolSize]  */
+        /** 设置最大线程数[maximumPoolSize] */
         fun setMaximumPoolSize(@IntRange(from = 1) maximumPoolSize: Int): Builder {
             this.maximumPoolSize = maximumPoolSize
             return this
         }
 
-        /** 设置线程数空闲时间[keepAliveTime]  */
+        /** 设置线程数空闲时间[keepAliveTime] */
         fun setKeepAliveTime(@IntRange(from = 0) keepAliveTime: Long): Builder {
             this.keepAliveTime = keepAliveTime
             return this
         }
 
-        /** 设置线程数空闲时间单位[unit]  */
+        /** 设置线程数空闲时间单位[unit] */
         fun setKeepAliveTimeUnit(unit: TimeUnit): Builder {
             this.keepAliveTimeUnit = unit
             return this
         }
 
-        /** 设置拒绝策略[handler]  */
+        /** 设置拒绝策略[handler] */
         fun setRejectedExecutionHandler(handler: RejectedExecutionHandler): Builder {
             this.handler = handler
             return this
         }
 
-        /** 设置线程结束等待时间[awaitTime]  */
+        /** 设置线程结束等待时间[awaitTime] */
         fun setAwaitTime(awaitTime: Long): Builder {
             this.awaitTime = awaitTime
             return this
         }
 
-        /** 设置线程结束等待时间单位[unit]  */
+        /** 设置线程结束等待时间单位[unit] */
         fun setAwaitTimeUnit(unit: TimeUnit): Builder {
             this.awaitTimeUnit = unit
             return this
         }
 
-        /** 设置完成配置  */
+        /** 设置完成配置 */
         fun build(): ThreadPoolManager = this@ThreadPoolManager
     }
 

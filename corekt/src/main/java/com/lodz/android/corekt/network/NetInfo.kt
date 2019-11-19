@@ -9,17 +9,17 @@ import androidx.annotation.IntDef
 class NetInfo {
 
     companion object {
-        /** 未连接网络  */
+        /** 未连接网络 */
         const val NETWORK_TYPE_NONE = -1
-        /** 未知网络（可能是有线）  */
+        /** 未知网络（可能是有线） */
         const val NETWORK_TYPE_UNKNOWN = 0
-        /** WIFI  */
+        /** WIFI */
         const val NETWORK_TYPE_WIFI = 1
-        /** 2G  */
+        /** 2G */
         const val NETWORK_TYPE_2G = 2
-        /** 3G  */
+        /** 3G */
         const val NETWORK_TYPE_3G = 3
-        /** 4G  */
+        /** 4G */
         const val NETWORK_TYPE_4G = 4
     }
 

@@ -13,27 +13,27 @@ import java.util.*
  */
 open class DragHelperCallback<T> : ItemTouchHelper.Callback() {
 
-    /** 允许拖拽  */
+    /** 允许拖拽 */
     private var mPdrContext: Context? = null
 
-    /** 允许拖拽  */
+    /** 允许拖拽 */
     private var mPdrUseDrag = true
-    /** 允许从右往左滑动  */
+    /** 允许从右往左滑动 */
     private var mPdrUseRightToLeftSwipe = true
-    /** 允许从左往右滑动  */
+    /** 允许从左往右滑动 */
     private var mPdrUseLeftToRightSwipe = true
-    /** 启用长按拖拽效果  */
+    /** 启用长按拖拽效果 */
     private var isPdrLongPressDrag = true
-    /** 启用滑动效果  */
+    /** 启用滑动效果 */
     private var isPdrSwipe = true
-    /** 启用震动效果  */
+    /** 启用震动效果 */
     private var isPdrVibrate = false
 
-    /** 监听器  */
+    /** 监听器 */
     private var mPdrListener: ((list: List<T>) -> Unit)? = null// 列表数据
-    /** 数据列表  */
+    /** 数据列表 */
     private var mPdrList: MutableList<T>? = null
-    /** 适配器  */
+    /** 适配器 */
     private var mPdrAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>? = null
 
     /** 设置上下文[context] */

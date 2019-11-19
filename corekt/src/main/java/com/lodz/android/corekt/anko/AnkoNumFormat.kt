@@ -8,15 +8,15 @@ import java.text.DecimalFormat
  */
 
 object AnkoNumFormat {
-    /** 保留1位小数  */
+    /** 保留1位小数 */
     const val TYPE_ONE_DECIMAL = "0.0"
-    /** 保留2位小数  */
+    /** 保留2位小数 */
     const val TYPE_TWO_DECIMAL = "0.00"
-    /** 保留3位小数  */
+    /** 保留3位小数 */
     const val TYPE_THREE_DECIMAL = "0.000"
-    /** 保留4位小数  */
+    /** 保留4位小数 */
     const val TYPE_FOUR_DECIMAL = "0.0000"
-    /** 保留5位小数  */
+    /** 保留5位小数 */
     const val TYPE_FIVE_DECIMAL = "0.00000"
 }
 

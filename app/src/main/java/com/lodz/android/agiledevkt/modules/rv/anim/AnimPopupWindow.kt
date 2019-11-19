@@ -18,7 +18,7 @@ import org.jetbrains.anko.textColor
 class AnimPopupWindow(context: Context) : BasePopupWindow(context) {
 
     companion object {
-        /** 自定义  */
+        /** 自定义 */
         const val TYPE_CUSTOM = 0
     }
 

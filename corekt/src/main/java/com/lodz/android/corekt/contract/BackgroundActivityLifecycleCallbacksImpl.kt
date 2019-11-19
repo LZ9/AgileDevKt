@@ -10,7 +10,7 @@ import android.os.Bundle
  */
 class BackgroundActivityLifecycleCallbacksImpl : Application.ActivityLifecycleCallbacks {
 
-    /** 显示的activity数量  */
+    /** 显示的activity数量 */
     private var mCount = 0
 
     override fun onActivityPaused(activity: Activity?) {}

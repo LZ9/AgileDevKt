@@ -10,29 +10,29 @@ import androidx.annotation.DrawableRes
  */
 class ErrorLayoutConfig {
 
-    /** 需要提示图片  */
+    /** 需要提示图片 */
     var isNeedImg = true
-    /** 需要提示文字  */
+    /** 需要提示文字 */
     var isNeedTips = true
-    /** 错误图片  */
+    /** 错误图片 */
     @DrawableRes
     var drawableResId = 0
-    /** 网络异常图片  */
+    /** 网络异常图片 */
     @DrawableRes
     var drawableNetResId = 0
-    /** 提示文字  */
+    /** 提示文字 */
     var tips = ""
-    /** 网络异常提示文字  */
+    /** 网络异常提示文字 */
     var netTips = ""
-    /** 文字颜色  */
+    /** 文字颜色 */
     @ColorRes
     var textColor = 0
-    /** 文字大小  */
+    /** 文字大小 */
     var textSize = 0
-    /** 背景色  */
+    /** 背景色 */
     @ColorRes
     var backgroundColor = 0
-    /** 页面方向布局  */
+    /** 页面方向布局 */
     var orientation = LinearLayout.VERTICAL
         set(value) {
             if (value == LinearLayout.HORIZONTAL || value == LinearLayout.VERTICAL) {

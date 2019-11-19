@@ -6,7 +6,7 @@ package com.lodz.android.corekt.threadpool
  */
 class PriorityThread(runnable: Runnable?) : Thread(runnable) {
 
-    /** android下线程优先级  */
+    /** android下线程优先级 */
     private var mOSPriority: Int = android.os.Process.THREAD_PRIORITY_DEFAULT
 
     /** 设置android下线程优先级[priority]，-20到19，高优先级到低优先级 */

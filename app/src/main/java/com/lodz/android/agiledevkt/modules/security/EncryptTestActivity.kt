@@ -37,38 +37,38 @@ class EncryptTestActivity : BaseActivity() {
     /** 结果 */
     private val mResultTv by bindView<TextView>(R.id.result)
 
-    /** 输入框  */
+    /** 输入框 */
     private val mInputEdit by bindView<EditText>(R.id.input_edit)
 
-    /** AES秘钥初始化  */
+    /** AES秘钥初始化 */
     private val mAESInitBtn by bindView<Button>(R.id.aes_init_btn)
-    /** AES加密  */
+    /** AES加密 */
     private val mAESEncryptBtn by bindView<Button>(R.id.aes_encrypt_btn)
-    /** AES解密  */
+    /** AES解密 */
     private val mAESDecryptBtn by bindView<Button>(R.id.aes_decrypt_btn)
-    /** RSA秘钥初始化  */
+    /** RSA秘钥初始化 */
     private val mRsaInitBtn by bindView<Button>(R.id.rsa_init_btn)
-    /** RSA公钥加密  */
+    /** RSA公钥加密 */
     private val mRsaEncryptBtn by bindView<Button>(R.id.rsa_encrypt_btn)
-    /** RSA私钥解密  */
+    /** RSA私钥解密 */
     private val mRsaDecryptBtn by bindView<Button>(R.id.rsa_decrypt_btn)
 
-    /** MD5信息摘要  */
+    /** MD5信息摘要 */
     private val mMD5Btn by bindView<Button>(R.id.md5_btn)
-    /** SHA1信息摘要  */
+    /** SHA1信息摘要 */
     private val mSHA1Btn by bindView<Button>(R.id.sha1_btn)
 
-    /** 清空  */
+    /** 清空 */
     private val mCleanBtn by bindView<Button>(R.id.clean_btn)
 
-    /** AES秘钥  */
+    /** AES秘钥 */
     private var mAESKey = ""
-    /** RSA私钥  */
+    /** RSA私钥 */
     private var mRSAPrivateKey = ""
-    /** RSA公钥  */
+    /** RSA公钥 */
     private var mRSAPublicKey = ""
 
-    /** 内容  */
+    /** 内容 */
     private var mContent: String? = ""
 
     override fun getLayoutId() = R.layout.activity_encrypt

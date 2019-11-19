@@ -59,7 +59,7 @@ abstract class RxSubscriber<T> : BaseSubscriber<T>() {
 
     open fun onRxComplete() {}
 
-    /** onError执行完后会调用该方法  */
+    /** onError执行完后会调用该方法 */
     open fun onErrorEnd() {}
 
     companion object {

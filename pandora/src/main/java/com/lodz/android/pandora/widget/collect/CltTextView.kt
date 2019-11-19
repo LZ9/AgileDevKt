@@ -31,18 +31,18 @@ import com.lodz.android.pandora.R
  */
 class CltTextView : FrameLayout {
 
-    /** 必填图标  */
+    /** 必填图标 */
     private val mPdrRequiredImg by bindView<ImageView>(R.id.pdr_required_img)
-    /** 标题控件  */
+    /** 标题控件 */
     private val mPdrTitleTv by bindView<TextView>(R.id.pdr_title_tv)
-    /** 内容控件  */
+    /** 内容控件 */
     private val mPdrContentTv by bindView<TextView>(R.id.pdr_content_tv)
-    /** 单位控件  */
+    /** 单位控件 */
     private val mPdrUnitTv by bindView<TextView>(R.id.pdr_unit_tv)
-    /** 跳转按钮  */
+    /** 跳转按钮 */
     private val mPdrJumpBtn by bindView<TextView>(R.id.pdr_jump_btn)
 
-    /** 内容标记  */
+    /** 内容标记 */
     private var mPdrContentTag = ""
 
     constructor(context: Context) : super(context) {

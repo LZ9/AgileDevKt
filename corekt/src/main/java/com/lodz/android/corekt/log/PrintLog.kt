@@ -10,7 +10,7 @@ import androidx.annotation.IntDef
  */
 object PrintLog {
 
-    /** 日志分段长度  */
+    /** 日志分段长度 */
     private const val LOG_SEGMENTED_LENGTH = 2500
 
     private const val LOG_I = 0
@@ -23,7 +23,7 @@ object PrintLog {
     @Retention(AnnotationRetention.SOURCE)
     annotation class LogType
 
-    /** 是否打印日志  */
+    /** 是否打印日志 */
     private var isPrint = true
 
     /** 通过[isPrint]来控制是否打开日志 */

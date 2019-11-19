@@ -18,9 +18,9 @@ import com.lodz.android.agiledevkt.modules.service.impl.TencentLocationServiceIm
  */
 class BusService :Service(){
 
-    /** 定位服务通知id  */
+    /** 定位服务通知id */
     private val SERVICE_NOTIFY_ID = 777777
-    /** 服务队列  */
+    /** 服务队列 */
     private val mServiceList = ArrayList<ServiceContract>()
 
     override fun onCreate() {

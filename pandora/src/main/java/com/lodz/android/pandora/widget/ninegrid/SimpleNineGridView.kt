@@ -16,17 +16,17 @@ import com.lodz.android.pandora.photopicker.preview.PreviewManager
  */
 class SimpleNineGridView<V : View> : NineGridView {
 
-    /** 接口  */
+    /** 接口 */
     private var mPdrListener: OnSimpleNineGridViewListener<V>? = null
-    /** 照片保存地址  */
+    /** 照片保存地址 */
     private var mPdrCameraSavePath = ""
-    /** 7.0的FileProvider名字  */
+    /** 7.0的FileProvider名字 */
     private var mPdrAuthority = ""
-    /** 是否需要拍照  */
+    /** 是否需要拍照 */
     private var isPdrNeedCamera = true
-    /** 是否需要预览Item  */
+    /** 是否需要预览Item */
     private var isPdrNeedItemPreview = true
-    /** 选择器UI配置  */
+    /** 选择器UI配置 */
     private var mPdrConfig = PickerUIConfig.createDefault()
 
     constructor(context: Context) : super(context)

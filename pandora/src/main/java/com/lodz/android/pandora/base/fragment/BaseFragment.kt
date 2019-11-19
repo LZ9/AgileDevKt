@@ -28,16 +28,16 @@ abstract class BaseFragment : LazyFragment() {
     /** 失败页 */
     private val mPdrErrorViewStub by bindView<ViewStub>(R.id.pdr_view_stub_error_layout)
 
-    /** 顶部标题布局  */
+    /** 顶部标题布局 */
     private var mPdrTitleBarLayout: TitleBarLayout? = null
-    /** 加载布局  */
+    /** 加载布局 */
     private var mPdrLoadingLayout: LoadingLayout? = null
-    /** 无数据布局  */
+    /** 无数据布局 */
     private var mPdrNoDataLayout: NoDataLayout? = null
-    /** 错误布局  */
+    /** 错误布局 */
     private var mPdrErrorLayout: ErrorLayout? = null
 
-    /** 内容布局  */
+    /** 内容布局 */
     private val mPdrContentLayout by bindView<LinearLayout>(R.id.pdr_content_layout)
 
     final override fun getAnkoLayoutView(): View? = super.getAnkoLayoutView()

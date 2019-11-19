@@ -22,19 +22,19 @@ abstract class LazyFragment : RxFragment(), IFragmentBackPressed {
     /** 是否使用Anko Layout */
     private var isPdrUseAnko = false
 
-    /** 父控件布局  */
+    /** 父控件布局 */
     private var mPdrParentView: View? = null
-    /** 是否使用懒加载  */
+    /** 是否使用懒加载 */
     private var isPdrLazyLoad = true
-    /** 是否完成加载  */
+    /** 是否完成加载 */
     private var isPdrLoadComplete = false
-    /** 是否首次启动  */
+    /** 是否首次启动 */
     private var isPdrFirstCreate = true
-    /** 是否首次启动Resume  */
+    /** 是否首次启动Resume */
     private var isPdrFirstResume = true
-    /** 当前的fragment是否已经暂停  */
+    /** 当前的fragment是否已经暂停 */
     private var isPdrAlreadyPause = false
-    /** 是否从OnPause离开  */
+    /** 是否从OnPause离开 */
     private var isPdrOnPauseOut = false
 
     /** 是否使用AnkoLayout */

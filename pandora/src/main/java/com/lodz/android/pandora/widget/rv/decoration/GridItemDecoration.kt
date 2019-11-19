@@ -28,9 +28,9 @@ class GridItemDecoration private constructor(context: Context) : BaseItemDecorat
         fun create(context: Context): GridItemDecoration = GridItemDecoration(context)
     }
 
-    /** 外部间距  */
+    /** 外部间距 */
     private var mPdrPx = 0
-    /** 顶部画笔  */
+    /** 顶部画笔 */
     private val mPdrPaint: Paint = Paint()
 
     init {

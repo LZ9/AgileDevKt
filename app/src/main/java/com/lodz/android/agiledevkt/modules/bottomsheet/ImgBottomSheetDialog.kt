@@ -15,7 +15,7 @@ import com.lodz.android.pandora.widget.bottomsheets.dialog.BaseBottomSheetDialog
  */
 class ImgBottomSheetDialog(context: Context) : BaseBottomSheetDialog(context) {
 
-    /** 是否用户关闭  */
+    /** 是否用户关闭 */
     private var isUserDismiss = false
 
     private var mBehavior: BottomSheetBehavior<*>? = null

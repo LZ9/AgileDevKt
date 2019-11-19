@@ -6,7 +6,7 @@ package com.lodz.android.corekt.album
  */
 class ImageFolder {
 
-    /** 图片的文件夹路径  */
+    /** 图片的文件夹路径 */
     var dir = ""
         set(value) {
             field = value
@@ -15,12 +15,12 @@ class ImageFolder {
                 name = dir.substring(if (lastIndexOf + 1 < dir.length) lastIndexOf + 1 else lastIndexOf)
             }
         }
-    /** 文件夹封面图片的路径  */
+    /** 文件夹封面图片的路径 */
     var coverImgPath = ""
-    /** 文件夹的名称  */
+    /** 文件夹的名称 */
     var name = ""
-    /** 文件夹图片的数量  */
+    /** 文件夹图片的数量 */
     var count = 0
-    /** 是否所有图片  */
+    /** 是否所有图片 */
     fun isAllPicture(): Boolean = dir.isEmpty()
 }

@@ -26,9 +26,9 @@ open class SectionFixItemDecoration<T> protected constructor(context: Context, s
         }
     }
 
-    /** 分组标题列表  */
+    /** 分组标题列表 */
     private val mPdrSections: List<String> = sections
-    /** 各组数据列表集  */
+    /** 各组数据列表集 */
     protected val mPdrSources: List<List<T>> = sources
 
     override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {

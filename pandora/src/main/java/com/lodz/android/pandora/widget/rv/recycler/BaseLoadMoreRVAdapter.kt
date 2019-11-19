@@ -17,33 +17,33 @@ import com.lodz.android.corekt.anko.getSize
 abstract class BaseLoadMoreRVAdapter<T>(context: Context) : BaseRecyclerViewAdapter<T>(context) {
 
     companion object {
-        /** 列表内容  */
+        /** 列表内容 */
         protected const val VIEW_TYPE_ITEM = 0
-        /** 正在加载更多  */
+        /** 正在加载更多 */
         protected const val VIEW_TYPE_LOADING_MORE = 1
-        /** 已加载完全部数据  */
+        /** 已加载完全部数据 */
         protected const val VIEW_TYPE_LOAD_FINISH = 2
-        /** 加载失败  */
+        /** 加载失败 */
         protected const val VIEW_TYPE_LOAD_FAIL = 3
-        /** 隐藏数据  */
+        /** 隐藏数据 */
         protected const val VIEW_TYPE_HIDE_ITEM = 4
     }
 
-    /** 总条数  */
+    /** 总条数 */
     private var mPdrSumSize = 0
-    /** 每页条数  */
+    /** 每页条数 */
     private var mPdrSize = 0
-    /** 当前为第一页  */
+    /** 当前为第一页 */
     private var mPdrPage = 1
-    /** 预加载偏移量，默认滑动到倒数第3个item时就回调加载接口  */
+    /** 预加载偏移量，默认滑动到倒数第3个item时就回调加载接口 */
     private var mPdrLoadIndex = 3
-    /** 是否启动加载更多  */
+    /** 是否启动加载更多 */
     private var isPdrLoadMore = false
-    /** 是否显示底部提示界面  */
+    /** 是否显示底部提示界面 */
     private var isPdrShowBottomLayout = false
-    /** 是否显示加载失败页面  */
+    /** 是否显示加载失败页面 */
     private var isPdrShowLoadFail = false
-    /** 存放需要隐藏位置的position  */
+    /** 存放需要隐藏位置的position */
     private var mPdrHidePositionList: MutableList<Int>? = null
 
     /** 加载更多回调 */
@@ -53,7 +53,7 @@ abstract class BaseLoadMoreRVAdapter<T>(context: Context) : BaseRecyclerViewAdap
     /** 所有item都隐藏回调 */
     private var mPdrOnAllItemHideListener: (() -> Unit)? = null
 
-    /** 是否是GridLayoutManager  */
+    /** 是否是GridLayoutManager */
     protected var isPdrGridLayoutManager = false
 
     override fun getItemViewType(position: Int): Int {

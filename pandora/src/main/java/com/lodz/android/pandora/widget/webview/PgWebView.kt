@@ -31,9 +31,9 @@ open class PgWebView : FrameLayout {
         internal var TAG = "PgWebViewTag"
     }
 
-    /** 浏览器  */
+    /** 浏览器 */
     private var mPdrWebView: WebView? = null
-    /** 进度条  */
+    /** 进度条 */
     private lateinit var mPdrProgressBar: ProgressBar
 
     /** 监听器 */

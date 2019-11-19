@@ -12,9 +12,9 @@ class TabPagerSnapHelper(mStartPosition: Int) : ViewPagerSnapHelper(mStartPositi
     private var mPdrRecyclerView: RecyclerView? = null
     private var mPdrTabLayout: TabLayout? = null
 
-    /** 是否滚动了RecyclerView  */
+    /** 是否滚动了RecyclerView */
     private var isPdrScrollRv = false
-    /** 是否选择了TabLayout  */
+    /** 是否选择了TabLayout */
     private var isPdrSelectedTab = false
 
 

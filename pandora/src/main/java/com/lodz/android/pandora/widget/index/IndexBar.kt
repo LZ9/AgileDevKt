@@ -29,21 +29,21 @@ import com.lodz.android.pandora.R
  */
 class IndexBar : LinearLayout {
 
-    /** 索引文字颜色  */
+    /** 索引文字颜色 */
     @ColorInt
     private var mPdrTextColor = Color.BLACK
-    /** 索引文字颜色  */
+    /** 索引文字颜色 */
     private var mPdrTextColorStateList: ColorStateList? = null
-    /** 索引文字大小  */
+    /** 索引文字大小 */
     private var mPdrTextSizeSp = 13
-    /** 文字是否粗体  */
+    /** 文字是否粗体 */
     private var isPdrTextBold = true
-    /** 按下索引栏的背景色  */
+    /** 按下索引栏的背景色 */
     private var mPdrPressBgDrawable: Drawable? = null
-    /** 索引监听器  */
+    /** 索引监听器 */
     private var mPdrOnIndexListener: OnIndexListener? = null
 
-    /** 提示控件  */
+    /** 提示控件 */
     private var mPdrHintTextView: TextView? = null
 
     constructor(context: Context?) : super(context) {

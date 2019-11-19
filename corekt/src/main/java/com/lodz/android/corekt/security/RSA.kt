@@ -26,11 +26,11 @@ object RSA {
     /** 获取私钥的KEY */
     private const val PRIVATE_KEY = "RSAPrivateKey"
 
-    /** RSA密钥长度 默认1024位， 密钥长度必须是64的倍数， 范围在512至65536位之间。  */
+    /** RSA密钥长度 默认1024位， 密钥长度必须是64的倍数， 范围在512至65536位之间。 */
     private const val KEY_SIZE = 512
-    /** RSA最大加密明文大小  */
+    /** RSA最大加密明文大小 */
     private const val MAX_ENCRYPT_BLOCK = KEY_SIZE / 8 - 11
-    /** RSA最大解密密文大小  */
+    /** RSA最大解密密文大小 */
     private const val MAX_DECRYPT_BLOCK = KEY_SIZE / 8
 
     /** 初始化密钥 */

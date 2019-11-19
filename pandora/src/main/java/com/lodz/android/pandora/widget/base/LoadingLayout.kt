@@ -29,9 +29,9 @@ class LoadingLayout : LinearLayout {
     /** 加载页配置 */
     private var mPdrConfig = LoadingLayoutConfig()
 
-    /** 根布局  */
+    /** 根布局 */
     private val mPdrRootView by bindView<LinearLayout>(R.id.pdr_root_view)
-    /** 提示语  */
+    /** 提示语 */
     private val mPdrLoadingTipsTv by bindView<TextView>(R.id.pdr_loading_tips_tv)
     /** 进度条 */
     private lateinit var mPdrLoadingProgressBar: ProgressBar
@@ -189,7 +189,7 @@ class LoadingLayout : LinearLayout {
         mPdrLoadingProgressBar = progressBar
     }
 
-    /** 获取进度条控件  */
+    /** 获取进度条控件 */
     fun getProgressBar(): ProgressBar = mPdrLoadingProgressBar
 
     /** 设置加载页面的布局方向[orientation] */

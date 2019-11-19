@@ -41,7 +41,7 @@ abstract class BaseApplication : Application() {
         EventBus.getDefault().post(ActivityFinishEvent())// 发送关闭事件
     }
 
-    /** 退出app  */
+    /** 退出app */
     fun exit() {
         finishActivities()
         onExit()

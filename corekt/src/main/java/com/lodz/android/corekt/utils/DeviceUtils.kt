@@ -12,21 +12,21 @@ import kotlin.collections.HashMap
  */
 object DeviceUtils {
 
-    /** 品牌  */
+    /** 品牌 */
     const val BRAND = "BRAND"
-    /** 型号  */
+    /** 型号 */
     const val MODEL = "MODEL"
-    /** 版本  */
+    /** 版本 */
     const val BOARD = "BOARD"
-    /** CPU1  */
+    /** CPU1 */
     const val CPU_ABI = "CPU_ABI"
-    /** CPU2  */
+    /** CPU2 */
     const val CPU_ABI2 = "CPU_ABI2"
-    /** 制造商  */
+    /** 制造商 */
     const val MANUFACTURER = "MANUFACTURER"
-    /** 产品  */
+    /** 产品 */
     const val PRODUCT = "PRODUCT"
-    /** 设备  */
+    /** 设备 */
     const val DEVICE = "DEVICE"
 
     @StringDef(BRAND, MODEL, BOARD, CPU_ABI, CPU_ABI2, MANUFACTURER, PRODUCT, DEVICE)

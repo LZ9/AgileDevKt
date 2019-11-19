@@ -58,7 +58,7 @@ abstract class BaseSubscriber<T> : Subscriber<T> {
         mSubscription = null
     }
 
-    /** 停止订阅  */
+    /** 停止订阅 */
     fun cancel() {
         if (mSubscription != null) {
             mSubscription?.cancel()
@@ -66,7 +66,7 @@ abstract class BaseSubscriber<T> : Subscriber<T> {
         }
     }
 
-    /** 请求订阅  */
+    /** 请求订阅 */
     fun request(n: Long) {
         mSubscription?.request(n)
     }
@@ -78,7 +78,7 @@ abstract class BaseSubscriber<T> : Subscriber<T> {
     abstract fun onBaseError(e: Throwable)
 
     open fun onBaseComplete() {}
-    /** 取消订阅时回调  */
+    /** 取消订阅时回调 */
     open fun onCancel() {}
 
     /** 是否自动订阅，默认是，否的时候需要自己调用request()方法订阅 */

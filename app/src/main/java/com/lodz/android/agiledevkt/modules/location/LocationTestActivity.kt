@@ -31,7 +31,7 @@ class LocationTestActivity : BaseActivity() {
 
     companion object {
 
-        /** 间隔时间  */
+        /** 间隔时间 */
         const val LOCATION_INTERVAL_TIME = 2 * 1000L
 
         /** 原生GPS */

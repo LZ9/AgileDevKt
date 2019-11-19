@@ -32,11 +32,11 @@ class NoDataLayout : LinearLayout {
     /** 加载页配置 */
     private var mPdrConfig = NoDataLayoutConfig()
 
-    /** 根布局  */
+    /** 根布局 */
     private val mPdrRootView by bindView<LinearLayout>(R.id.pdr_root_view)
-    /** 无数据图片  */
+    /** 无数据图片 */
     private val mPdrNoDataImg by bindView<ImageView>(R.id.pdr_no_data_img)
-    /** 无数据提示语  */
+    /** 无数据提示语 */
     private val mPdrNoDataTv by bindView<TextView>(R.id.pdr_no_data_tv)
 
     constructor(context: Context?) : super(context) {

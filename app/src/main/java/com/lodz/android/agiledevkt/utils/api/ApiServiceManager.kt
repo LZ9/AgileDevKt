@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit
 class ApiServiceManager private constructor() {
 
     companion object {
-        /** 接口日志标签  */
+        /** 接口日志标签 */
         private const val TAG = "resultValue"
 
         private val sInstance = ApiServiceManager()

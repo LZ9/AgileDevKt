@@ -19,14 +19,14 @@ import org.greenrobot.eventbus.EventBus
  */
 class AMapLocationServiceImpl : ServiceContract {
 
-    /** 超时时间  */
+    /** 超时时间 */
     private val TIME_OUT = 30 * 1000L
-    /** 高德定位成功  */
+    /** 高德定位成功 */
     private val REQUEST_LOCATION_OK = 0
 
-    /** 上下文  */
+    /** 上下文 */
     private lateinit var mContext: Context
-    /** 高德定位客户端  */
+    /** 高德定位客户端 */
     private var mAMapLocationClient: AMapLocationClient? = null
 
     override fun onCreate(context: Context) {

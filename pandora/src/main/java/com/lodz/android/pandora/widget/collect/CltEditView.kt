@@ -55,19 +55,19 @@ class CltEditView : FrameLayout {
     @Retention(AnnotationRetention.SOURCE)
     annotation class EditInputType
 
-    /** 必填图标  */
+    /** 必填图标 */
     private val mPdrRequiredImg by bindView<ImageView>(R.id.pdr_required_img)
-    /** 标题控件  */
+    /** 标题控件 */
     private val mPdrTitleTv by bindView<TextView>(R.id.pdr_title_tv)
-    /** 内容布局  */
+    /** 内容布局 */
     private val mPdrContentLayout by bindView<ViewGroup>(R.id.pdr_content_layout)
-    /** 内容输入框  */
+    /** 内容输入框 */
     private val mPdrContentEdit by bindView<ScrollEditText>(R.id.pdr_content_edit)
-    /** 限制文字控件  */
+    /** 限制文字控件 */
     private val mPdrLimitTv by bindView<TextView>(R.id.pdr_limit_tv)
-    /** 单位控件  */
+    /** 单位控件 */
     private val mPdrUnitTv by bindView<TextView>(R.id.pdr_unit_tv)
-    /** 跳转按钮  */
+    /** 跳转按钮 */
     private val mPdrJumpBtn by bindView<TextView>(R.id.pdr_jump_btn)
 
     /** 当前输入类型 */
@@ -75,11 +75,11 @@ class CltEditView : FrameLayout {
     private var mPdrInputType = TYPE_TEXT
     /** 文字监听器 */
     private var mPdrTextWatcher: TextWatcher? = null
-    /** 内容标记  */
+    /** 内容标记 */
     private var mPdrContentTag = ""
-    /** 最大输入字数  */
+    /** 最大输入字数 */
     private var mPdrMaxCount = 0
-    /** 文字限制监听器  */
+    /** 文字限制监听器 */
     private var mPdrLimitListener: ((s: CharSequence?, start: Int, before: Int, count: Int, max: Int) -> Unit)? = null
 
     constructor(context: Context) : super(context) {

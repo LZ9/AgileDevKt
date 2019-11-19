@@ -118,22 +118,22 @@ object BitmapUtils {
         }
     }
 
-    /** 左上  */
+    /** 左上 */
     const val LEFT_TOP = 1
-    /** 左下  */
+    /** 左下 */
     const val LEFT_BOTTOM = 2
-    /** 右上  */
+    /** 右上 */
     const val RIGHT_TOP = 3
-    /** 右下  */
+    /** 右下 */
     const val RIGHT_BOTTOM = 4
-    /** 中间  */
+    /** 中间 */
     const val CENTER = 5
 
     @IntDef(LEFT_TOP, LEFT_BOTTOM, RIGHT_TOP, RIGHT_BOTTOM, CENTER)
     @Retention(AnnotationRetention.SOURCE)
     annotation class CombinekLocationType
 
-    /** 合并前景图[fg]和背景图[bg]，水印位置[location]，间距[marginPx]  */
+    /** 合并前景图[fg]和背景图[bg]，水印位置[location]，间距[marginPx] */
     @SuppressLint("SwitchIntDef")
     @JvmStatic
     @JvmOverloads

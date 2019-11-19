@@ -31,47 +31,47 @@ class RoundItemDecoration private constructor(context: Context) : BaseItemDecora
                 RoundItemDecoration(context).setBottomDividerRes(space, lrPaddingDp, color, bgColor)
     }
 
-    /** 默认分割线颜色  */
+    /** 默认分割线颜色 */
     @ColorInt
     private val DEFAULT_DIVIDER_COLOR = Color.GRAY
-    /** 默认分割线背景色  */
+    /** 默认分割线背景色 */
     @ColorInt
     private val DEFAULT_DIVIDER_BG_COLOR = Color.WHITE
 
-    /** 顶部间距  */
+    /** 顶部间距 */
     private var mPdrTopPx = 0
-    /** 顶部左右间隔  */
+    /** 顶部左右间隔 */
     private var mPdrTopLrPadding = 0
-    /** 顶部画笔  */
+    /** 顶部画笔 */
     private var mPdrTopPaint: Paint? = null
-    /** 顶部背景画笔  */
+    /** 顶部背景画笔 */
     private var mPdrTopBgPaint: Paint? = null
 
-    /** 底部间距  */
+    /** 底部间距 */
     private var mPdrBottomPx = 0
-    /** 底部左右间隔  */
+    /** 底部左右间隔 */
     private var mPdrBottomLrPadding = 0
-    /** 底部画笔  */
+    /** 底部画笔 */
     private var mPdrBottomPaint: Paint? = null
-    /** 底部背景画笔  */
+    /** 底部背景画笔 */
     private var mPdrBottomBgPaint: Paint? = null
 
-    /** 左侧间距  */
+    /** 左侧间距 */
     private var mPdrLeftPx = 0
-    /** 左侧上下间隔  */
+    /** 左侧上下间隔 */
     private var mPdrLeftTbPadding = 0
-    /** 左侧画笔  */
+    /** 左侧画笔 */
     private var mPdrLeftPaint: Paint? = null
-    /** 左侧背景画笔  */
+    /** 左侧背景画笔 */
     private var mPdrLeftBgPaint: Paint? = null
 
-    /** 右侧间距  */
+    /** 右侧间距 */
     private var mPdrRightPx = 0
-    /** 右侧上下间隔  */
+    /** 右侧上下间隔 */
     private var mPdrRightTbPadding = 0
-    /** 右侧画笔  */
+    /** 右侧画笔 */
     private var mPdrRightPaint: Paint? = null
-    /** 右侧背景画笔  */
+    /** 右侧背景画笔 */
     private var mPdrRightBgPaint: Paint? = null
 
     /** 设置顶部分割线，间距[spaceDp]（单位dp），左右间隔[lrPaddingDp]，分割线颜色[color]（不传使用默认值），背景颜色[bgColor]（不传使用默认值） */

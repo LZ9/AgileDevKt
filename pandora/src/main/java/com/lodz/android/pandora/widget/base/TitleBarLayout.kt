@@ -29,15 +29,15 @@ open class TitleBarLayout : LinearLayout {
     /** 标题栏配置 */
     private var mPdrConfig = TitleBarLayoutConfig()
 
-    /** 返回按钮布局  */
+    /** 返回按钮布局 */
     private val mPdrBackLayout by bindView<LinearLayout>(R.id.pdr_back_layout)
-    /** 返回按钮  */
+    /** 返回按钮 */
     private val mPdrBackBtn by bindView<TextView>(R.id.pdr_back_btn)
-    /** 标题  */
+    /** 标题 */
     private val mPdrTitleTv by bindView<TextView>(R.id.pdr_title_tv)
-    /** 扩展区布局  */
+    /** 扩展区布局 */
     private val mPdrExpandLayout by bindView<LinearLayout>(R.id.pdr_expand_layout)
-    /** 分割线  */
+    /** 分割线 */
     private val mPdrDivideLineView by bindView<View>(R.id.pdr_divide_line_view)
 
     constructor(context: Context?) : super(context) {

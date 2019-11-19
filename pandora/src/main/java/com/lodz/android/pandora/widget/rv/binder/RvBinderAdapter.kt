@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
  */
 open class RvBinderAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    /** 默认的Binder类型  */
+    /** 默认的Binder类型 */
     private val DEFAULT_BINDER_TYPE = -1
     /** RecyclerBinder列表 */
     private val mPdrBinderList = ArrayList<RecyclerBinder<*>>()

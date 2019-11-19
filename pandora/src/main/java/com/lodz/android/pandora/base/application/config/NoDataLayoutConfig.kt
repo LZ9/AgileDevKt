@@ -9,24 +9,24 @@ import androidx.annotation.DrawableRes
  * Created by zhouL on 2018/6/27.
  */
 class NoDataLayoutConfig {
-    /** 需要提示图片  */
+    /** 需要提示图片 */
     var isNeedImg = true
-    /** 需要提示文字  */
+    /** 需要提示文字 */
     var isNeedTips = true
-    /** 无数据图片  */
+    /** 无数据图片 */
     @DrawableRes
     var drawableResId = 0
-    /** 提示文字  */
+    /** 提示文字 */
     var tips = ""
-    /** 文字颜色  */
+    /** 文字颜色 */
     @ColorRes
     var textColor = 0
-    /** 文字大小  */
+    /** 文字大小 */
     var textSize = 0
-    /** 背景色  */
+    /** 背景色 */
     @ColorRes
     var backgroundColor = 0
-    /** 页面方向布局  */
+    /** 页面方向布局 */
     var orientation = LinearLayout.VERTICAL
         set(value) {
             if (value == LinearLayout.HORIZONTAL || value == LinearLayout.VERTICAL) {
