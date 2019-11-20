@@ -23,5 +23,5 @@ fun runOnMainDelay(timeMillis: Long, block: () -> Unit): Job =
 /** 异步线程执行 */
 fun runOnIO(block: () -> Unit): Job = GlobalScope.launch(Dispatchers.IO) { block() }
 
-/** 异步线程执行 */
+/** 异步线程执行挂起函数 */
 fun runOnSuspendIO(block: suspend () -> Unit): Job = GlobalScope.launch(Dispatchers.IO) { block() }

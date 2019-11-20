@@ -15,6 +15,7 @@ import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.corekt.network.NetworkManager
 import com.lodz.android.corekt.threadpool.ThreadPoolManager
 import com.lodz.android.corekt.utils.NotificationUtils
+import com.lodz.android.corekt.utils.SharedPreferencesUtils
 import com.lodz.android.imageloaderkt.ImageloaderManager
 import com.lodz.android.pandora.base.application.BaseApplication
 import com.lodz.android.pandora.utils.acache.ACacheUtils
@@ -44,6 +45,7 @@ class App : BaseApplication() {
         configBaseLayout()
         initACache(this)
         initImageLoader()
+        SharedPreferencesUtils.get().init(this)
     }
 
     /** 配置基类 */

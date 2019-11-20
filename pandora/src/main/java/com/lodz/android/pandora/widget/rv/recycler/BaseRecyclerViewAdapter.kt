@@ -176,7 +176,7 @@ abstract class BaseRecyclerViewAdapter<T>(protected val context: Context) : Recy
     protected fun getDataSize(): Int = mPdrData.getSize()
 
     /** 设置数据列表[data] */
-    fun setData(data: MutableList<T>) {
+    fun setData(data: MutableList<T>?) {
         this.mPdrData = data
     }
 
