@@ -25,7 +25,7 @@
         api 'androidx.core:core-ktx:1.1.0'
         api 'com.google.android:flexbox:1.1.1'
         api 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.60'
-        api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.2.2'
+        api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.2'
     }
 ```
 

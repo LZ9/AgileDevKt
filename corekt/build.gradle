@@ -10,7 +10,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 29
         versionCode 15
-        versionName "1.1.3"// 未上传
+        versionName "1.1.3"// 已上传
     }
 
     buildTypes {
@@ -43,7 +43,7 @@ dependencies {
 //    userOrg = 'lz9'
 //    groupId = 'com.lodz'
 //    artifactId = 'core-kt'
-//    publishVersion = '1.1.2'
+//    publishVersion = '1.1.3'
 //    desc = 'Hi, this is a simple tools lib for android project, i want to upload and use it~'
 //    website = 'https://github.com/LZ9/AgileDevKt'
 //}

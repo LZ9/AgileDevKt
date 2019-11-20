@@ -1,5 +1,16 @@
 # core-kt库更新记录
 
+##### 2019/11/20
+1. 更新协程依赖库版本
+2. AnkoScreen增加获取手机屏幕真实高度方法
+3. AnkoCoroutines去掉主线程挂起函数
+4. AnkoNumFormat修复数字转中文的BUG
+5. UiHandler添加Deprecated注解
+6. StringUtils增加数组拼接分隔符方法
+7. 更新Kotlin插件版本
+8. 增加SharedPreferences的工具类
+9. 发布1.1.3版本
+
 ##### 2019/10/31
 1. 适配Android10
 2. 优化代码
