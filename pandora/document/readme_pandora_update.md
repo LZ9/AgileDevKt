@@ -1,5 +1,14 @@
 # Pandora更新记录
 
+##### 2019/11/20
+1. 修复SearchTitleBarLayout配置默认文字清空按钮不显示的BUG
+2. 更新rxjava版本
+3. 修改组件库变量名，避免外部调用时异常
+4. 更新retrofit版本
+5. 使用协程替换UiHandler
+6. BaseRecyclerViewAdapter的setData方法入参允许为null
+7. 发布1.2.1版本
+
 ##### 2019/10/31
 1. 带基础状态控件的Activity和Fragment的showStatusError()增加重载方法，支持判断数据异常或网络异常
 2. 加载失败控件ErrorLayout增加网络异常图标和设置方法

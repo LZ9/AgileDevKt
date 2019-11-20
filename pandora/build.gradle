@@ -10,7 +10,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 29
         versionCode 13
-        versionName "1.2.1"// 未上传
+        versionName "1.2.1"// 已上传
     }
 
     buildTypes {
@@ -26,7 +26,7 @@ android {
 }
 
 dependencies {
-//    api 'com.lodz:core-kt:1.1.2'
+//    api 'com.lodz:core-kt:1.1.3'
     api project(':corekt')
 
     // RxJava
@@ -46,7 +46,7 @@ dependencies {
 //    userOrg = 'lz9'
 //    groupId = 'com.lodz'
 //    artifactId = 'pandora'
-//    publishVersion = '1.2.0'
+//    publishVersion = '1.2.1'
 //    desc = 'Hi, this is a android base library'
 //    website = 'https://github.com/LZ9/AgileDevKt'
 //}
