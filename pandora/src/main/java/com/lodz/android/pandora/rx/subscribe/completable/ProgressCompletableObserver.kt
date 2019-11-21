@@ -8,7 +8,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
-import com.lodz.android.corekt.anko.runOnMain
+import com.lodz.android.corekt.anko.runOnMainCatch
 import com.lodz.android.pandora.R
 import io.reactivex.disposables.Disposable
 
@@ -96,25 +96,15 @@ abstract class ProgressCompletableObserver : RxCompletableObserver() {
 
     /** 显示加载框 */
     private fun showProgress() {
-        runOnMain {
-            try {
-                mProgressDialog?.show()
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
+        runOnMainCatch({ mProgressDialog?.show() })
     }
 
     /** 关闭加载框 */
     private fun dismissProgress() {
-        runOnMain {
-            try {
-                mProgressDialog?.dismiss()
-                mProgressDialog = null
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
+        runOnMainCatch({
+            mProgressDialog?.dismiss()
+            mProgressDialog = null
+        })
     }
 
     override fun onErrorEnd() {// 抛异常关闭
