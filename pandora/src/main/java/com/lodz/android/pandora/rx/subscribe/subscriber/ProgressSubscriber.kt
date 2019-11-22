@@ -136,8 +136,14 @@ abstract class ProgressSubscriber<T> : RxSubscriber<T>() {
         /** 创建lambda调用 */
         @JvmStatic
         @JvmOverloads
-        fun <T> action(next: (any: T) -> Unit, error: (e: Throwable, isNetwork: Boolean) -> Unit, context: Context, msg: String = "",
-                       cancelable: Boolean = true, canceledOnTouchOutside: Boolean = false): ProgressSubscriber<T> = object : ProgressSubscriber<T>() {
+        fun <T> action(
+            context: Context,
+            msg: String = "",
+            cancelable: Boolean = true,
+            canceledOnTouchOutside: Boolean = false,
+            next: (any: T) -> Unit,
+            error: (e: Throwable, isNetwork: Boolean) -> Unit = { _, _ -> }
+        ): ProgressSubscriber<T> = object : ProgressSubscriber<T>() {
             override fun onPgNext(any: T) {
                 next(any)
             }

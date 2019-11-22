@@ -215,13 +215,11 @@ class RxFlowableActivity : BaseActivity() {
         mProgressBtn.setOnClickListener {
             cleanLog()
             createFlowable(true)
-                    .compose(RxUtils.ioToMainFlowable())
-                    .compose(bindDestroyEvent())
-                    .subscribe(ProgressSubscriber.action({ any ->
-                        printLog("onPgNext num : ${any.data}")
-                    }, { e, isNetwork ->
-                        printLog("onPgError message : ${RxUtils.getExceptionTips(e, isNetwork, "create fail")}")
-                    }, getContext(), "loading", mCancelableSwitch.isChecked, mCanceledOutsideSwitch.isChecked))
+                .compose(RxUtils.ioToMainFlowable())
+                .compose(bindDestroyEvent())
+                .subscribe(ProgressSubscriber.action(getContext(), "loading", mCancelableSwitch.isChecked, mCanceledOutsideSwitch.isChecked,
+                    { any -> printLog("onPgNext num : ${any.data}") },
+                    { e, isNetwork -> printLog("onPgError message : ${RxUtils.getExceptionTips(e, isNetwork, "create fail")}")}))
         }
     }
 

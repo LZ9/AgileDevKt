@@ -164,13 +164,11 @@ class RxCompletableActivity : BaseActivity() {
         mProgressBtn.setOnClickListener {
             cleanLog()
             createCompletable(true)
-                    .compose(RxUtils.ioToMainCompletable())
-                    .compose(bindAnyDestroyEvent())
-                    .subscribe(ProgressCompletableObserver.action({
-                        printLog("onPgComplete")
-                    }, { e, isNetwork ->
-                        printLog("onPgError message : ${RxUtils.getExceptionTips(e, isNetwork, "create fail")}")
-                    }, getContext(), "loading", mCancelableSwitch.isChecked, mCanceledOutsideSwitch.isChecked))
+                .compose(RxUtils.ioToMainCompletable())
+                .compose(bindAnyDestroyEvent())
+                .subscribe(ProgressCompletableObserver.action(getContext(),"loading", mCancelableSwitch.isChecked, mCanceledOutsideSwitch.isChecked,
+                    { printLog("onPgComplete") },
+                    { e, isNetwork -> printLog("onPgError message : ${RxUtils.getExceptionTips(e, isNetwork, "create fail")}")}))
         }
     }
 

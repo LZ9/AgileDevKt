@@ -129,14 +129,11 @@ class RxMaybeActivity : BaseActivity() {
                     }
                 }
             }).compose(RxUtils.ioToMainMaybe())
-                    .compose(bindDestroyEvent())
-                    .subscribe(BaseMaybeObserver.action({ any ->
-                        printLog("onBaseSuccess : $any")
-                    }, {
-                        printLog("onBaseComplete")
-                    }, { e ->
-                        printLog("onBaseError : ${e.message}")
-                    }))
+                .compose(bindDestroyEvent())
+                .subscribe(BaseMaybeObserver.action(
+                    { any -> printLog("onBaseSuccess : $any")},
+                    { printLog("onBaseComplete")},
+                    { e -> printLog("onBaseError : ${e.message}")}))
         }
 
         // 完成订阅按钮
@@ -204,15 +201,12 @@ class RxMaybeActivity : BaseActivity() {
         mProgressBtn.setOnClickListener {
             cleanLog()
             createMaybe(true)
-                    .compose(RxUtils.ioToMainMaybe())
-                    .compose(bindDestroyEvent())
-                    .subscribe(ProgressMaybeObserver.action({ any ->
-                        printLog("onPgSuccess num : ${any.data}")
-                    }, {
-                        printLog("onPgComplete")
-                    }, { e, isNetwork ->
-                        printLog("onPgError message : ${RxUtils.getExceptionTips(e, isNetwork, "create fail")}")
-                    }, getContext(), "loading", mCancelableSwitch.isChecked, mCanceledOutsideSwitch.isChecked))
+                .compose(RxUtils.ioToMainMaybe())
+                .compose(bindDestroyEvent())
+                .subscribe(ProgressMaybeObserver.action(getContext(), "loading", mCancelableSwitch.isChecked, mCanceledOutsideSwitch.isChecked,
+                    { any -> printLog("onPgSuccess num : ${any.data}")},
+                    { printLog("onPgComplete")},
+                    { e, isNetwork -> printLog("onPgError message : ${RxUtils.getExceptionTips(e, isNetwork,"create fail")}")}))
         }
     }
 

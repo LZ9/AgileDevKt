@@ -58,7 +58,11 @@ abstract class RxSingleObserver<T> : BaseSingleObserver<T>() {
     companion object {
         /** 创建lambda调用 */
         @JvmStatic
-        fun <T> action(success: (any: T) -> Unit, error: (e: Throwable, isNetwork: Boolean) -> Unit): RxSingleObserver<T> = object : RxSingleObserver<T>() {
+        @JvmOverloads
+        fun <T> action(
+            success: (any: T) -> Unit,
+            error: (e: Throwable, isNetwork: Boolean) -> Unit = { _, _ -> }
+        ): RxSingleObserver<T> = object : RxSingleObserver<T>() {
             override fun onRxSuccess(any: T) {
                 success(any)
             }

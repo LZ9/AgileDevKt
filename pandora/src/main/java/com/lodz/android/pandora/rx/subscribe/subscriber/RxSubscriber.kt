@@ -65,7 +65,11 @@ abstract class RxSubscriber<T> : BaseSubscriber<T>() {
     companion object {
         /** 创建lambda调用 */
         @JvmStatic
-        fun <T> action(next: (any: T) -> Unit, error: (e: Throwable, isNetwork: Boolean) -> Unit): RxSubscriber<T> = object : RxSubscriber<T>() {
+        @JvmOverloads
+        fun <T> action(
+            next: (any: T) -> Unit,
+            error: (e: Throwable, isNetwork: Boolean) -> Unit = { _, _ -> }
+        ): RxSubscriber<T> = object : RxSubscriber<T>() {
             override fun onRxNext(any: T) {
                 next(any)
             }

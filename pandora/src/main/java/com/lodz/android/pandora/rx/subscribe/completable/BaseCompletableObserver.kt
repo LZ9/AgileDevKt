@@ -7,7 +7,8 @@ import io.reactivex.CompletableObserver
 import io.reactivex.disposables.Disposable
 
 /**
- * 基类订阅者
+ * Completable基类订阅者
+ * 不发送事件，以完成或失败结束
  * Created by zhouL on 2019/1/22.
  */
 abstract class BaseCompletableObserver : CompletableObserver {
@@ -78,7 +79,11 @@ abstract class BaseCompletableObserver : CompletableObserver {
 
         /** 创建lambda调用 */
         @JvmStatic
-        fun action(complete: () -> Unit, error: (e: Throwable) -> Unit): BaseCompletableObserver = object : BaseCompletableObserver() {
+        @JvmOverloads
+        fun action(
+            complete: () -> Unit,
+            error: (e: Throwable) -> Unit = {}
+        ): BaseCompletableObserver = object : BaseCompletableObserver() {
             override fun onBaseComplete() {
                 complete()
             }

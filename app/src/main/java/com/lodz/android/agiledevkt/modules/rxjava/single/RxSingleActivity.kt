@@ -149,11 +149,9 @@ class RxSingleActivity : BaseActivity() {
             createSingle(true)
                     .compose(RxUtils.ioToMainSingle())
                     .compose(bindDestroyEvent())
-                    .subscribe(ProgressSingleObserver.action({ any ->
-                        printLog("onPgSuccess num : ${any.data}")
-                    }, { e, isNetwork ->
-                        printLog("onPgError message : ${RxUtils.getExceptionTips(e, isNetwork, "create fail")}")
-                    }, getContext(), "loading", mCancelableSwitch.isChecked, mCanceledOutsideSwitch.isChecked))
+                    .subscribe(ProgressSingleObserver.action(getContext(),"loading", mCancelableSwitch.isChecked, mCanceledOutsideSwitch.isChecked,
+                        { any -> printLog("onPgSuccess num : ${any.data}")},
+                        { e, isNetwork -> printLog("onPgError message : ${RxUtils.getExceptionTips(e, isNetwork, "create fail")}")}))
         }
     }
 

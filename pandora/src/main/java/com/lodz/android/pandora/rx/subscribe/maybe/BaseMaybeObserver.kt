@@ -7,7 +7,8 @@ import io.reactivex.MaybeObserver
 import io.reactivex.disposables.Disposable
 
 /**
- * 基类订阅者
+ * Maybe基类订阅者
+ * 发送单个事件，以成功或失败或完成结束（三选一）
  * Created by zhouL on 2019/1/22.
  */
 abstract class BaseMaybeObserver<T> : MaybeObserver<T> {
@@ -85,8 +86,12 @@ abstract class BaseMaybeObserver<T> : MaybeObserver<T> {
 
         /** 创建lambda调用 */
         @JvmStatic
-        fun <T> action(success: (any: T) -> Unit, complete: () -> Unit, error: (e: Throwable) -> Unit)
-                : BaseMaybeObserver<T> = object : BaseMaybeObserver<T>() {
+        @JvmOverloads
+        fun <T> action(
+            success: (any: T) -> Unit,
+            complete: () -> Unit = {},
+            error: (e: Throwable) -> Unit = {}
+        ): BaseMaybeObserver<T> = object : BaseMaybeObserver<T>() {
             override fun onBaseSuccess(any: T) {
                 success(any)
             }

@@ -136,13 +136,11 @@ class RxObservableActivity : BaseActivity() {
         mProgressBtn.setOnClickListener {
             cleanLog()
             createObservable(true)
-                    .compose(RxUtils.ioToMainObservable())
-                    .compose(bindDestroyEvent())
-                    .subscribe(ProgressObserver.action({ any ->
-                        printLog("onPgNext num : ${any.data}")
-                    }, { e, isNetwork ->
-                        printLog("onPgError message : ${RxUtils.getExceptionTips(e, isNetwork, "create fail")}")
-                    }, getContext(), "loading", mCancelableSwitch.isChecked, mCanceledOutsideSwitch.isChecked))
+                .compose(RxUtils.ioToMainObservable())
+                .compose(bindDestroyEvent())
+                .subscribe(ProgressObserver.action(getContext(),"loading", mCancelableSwitch.isChecked, mCanceledOutsideSwitch.isChecked,
+                    { any -> printLog("onPgNext num : ${any.data}") },
+                    { e, isNetwork -> printLog("onPgError message : ${RxUtils.getExceptionTips(e, isNetwork,"create fail")}")}))
         }
     }
 

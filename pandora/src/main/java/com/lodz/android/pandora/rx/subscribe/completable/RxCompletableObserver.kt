@@ -37,7 +37,11 @@ abstract class RxCompletableObserver : BaseCompletableObserver() {
     companion object {
         /** 创建lambda调用 */
         @JvmStatic
-        fun action(complete: () -> Unit, error: (e: Throwable, isNetwork: Boolean) -> Unit): RxCompletableObserver = object : RxCompletableObserver() {
+        @JvmOverloads
+        fun action(
+            complete: () -> Unit,
+            error: (e: Throwable, isNetwork: Boolean) -> Unit = { _, _ -> }
+        ): RxCompletableObserver = object : RxCompletableObserver() {
             override fun onRxComplete() {
                 complete()
 

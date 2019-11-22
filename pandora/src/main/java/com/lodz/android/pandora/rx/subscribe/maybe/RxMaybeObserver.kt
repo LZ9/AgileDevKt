@@ -64,8 +64,12 @@ abstract class RxMaybeObserver<T> : BaseMaybeObserver<T>() {
     companion object {
         /** 创建lambda调用 */
         @JvmStatic
-        fun <T> action(success: (any: T) -> Unit, complete: () -> Unit, error: (e: Throwable, isNetwork: Boolean) -> Unit)
-                : RxMaybeObserver<T> = object : RxMaybeObserver<T>() {
+        @JvmOverloads
+        fun <T> action(
+            success: (any: T) -> Unit,
+            complete: () -> Unit = {},
+            error: (e: Throwable, isNetwork: Boolean) -> Unit = { _, _ -> }
+        ): RxMaybeObserver<T> = object : RxMaybeObserver<T>() {
             override fun onRxSuccess(any: T) {
                 success(any)
             }

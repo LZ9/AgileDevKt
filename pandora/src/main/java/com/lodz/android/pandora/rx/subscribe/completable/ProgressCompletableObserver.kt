@@ -130,8 +130,14 @@ abstract class ProgressCompletableObserver : RxCompletableObserver() {
         /** 创建lambda调用 */
         @JvmStatic
         @JvmOverloads
-        fun action(complete: () -> Unit, error: (e: Throwable, isNetwork: Boolean) -> Unit, context: Context, msg: String = "",
-                   cancelable: Boolean = true, canceledOnTouchOutside: Boolean = false): ProgressCompletableObserver = object : ProgressCompletableObserver() {
+        fun action(
+            context: Context,
+            msg: String = "",
+            cancelable: Boolean = true,
+            canceledOnTouchOutside: Boolean = false,
+            complete: () -> Unit,
+            error: (e: Throwable, isNetwork: Boolean) -> Unit = { _, _ -> }
+        ): ProgressCompletableObserver = object : ProgressCompletableObserver() {
             override fun onPgComplete() {
                 complete()
             }

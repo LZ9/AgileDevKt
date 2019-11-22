@@ -130,8 +130,14 @@ abstract class ProgressSingleObserver<T> : RxSingleObserver<T>() {
         /** 创建lambda调用 */
         @JvmStatic
         @JvmOverloads
-        fun <T> action(success: (any: T) -> Unit, error: (e: Throwable, isNetwork: Boolean) -> Unit, context: Context, msg: String = "",
-                       cancelable: Boolean = true, canceledOnTouchOutside: Boolean = false): ProgressSingleObserver<T> = object : ProgressSingleObserver<T>() {
+        fun <T> action(
+            context: Context,
+            msg: String = "",
+            cancelable: Boolean = true,
+            canceledOnTouchOutside: Boolean = false,
+            success: (any: T) -> Unit,
+            error: (e: Throwable, isNetwork: Boolean) -> Unit = { _, _ -> }
+        ): ProgressSingleObserver<T> = object : ProgressSingleObserver<T>() {
             override fun onPgSuccess(any: T) {
                 success(any)
             }

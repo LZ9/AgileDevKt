@@ -137,9 +137,15 @@ abstract class ProgressMaybeObserver<T> : RxMaybeObserver<T>() {
         /** 创建lambda调用 */
         @JvmStatic
         @JvmOverloads
-        fun <T> action(success: (any: T) -> Unit, complete: () -> Unit, error: (e: Throwable, isNetwork: Boolean) -> Unit,
-                       context: Context, msg: String = "", cancelable: Boolean = true, canceledOnTouchOutside: Boolean = false)
-                : ProgressMaybeObserver<T> = object : ProgressMaybeObserver<T>() {
+        fun <T> action(
+            context: Context,
+            msg: String = "",
+            cancelable: Boolean = true,
+            canceledOnTouchOutside: Boolean = false,
+            success: (any: T) -> Unit,
+            complete: () -> Unit = {},
+            error: (e: Throwable, isNetwork: Boolean) -> Unit = { _, _ -> }
+        ): ProgressMaybeObserver<T> = object : ProgressMaybeObserver<T>() {
             override fun onPgSuccess(any: T) {
                 success(any)
             }
