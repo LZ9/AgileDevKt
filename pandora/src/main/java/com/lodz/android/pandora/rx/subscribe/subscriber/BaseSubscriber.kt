@@ -8,6 +8,7 @@ import org.reactivestreams.Subscription
 
 /**
  * 基类订阅者（带背压）
+ * 能够发射0或n个数据，并以完成或错误事件终止。 支持Backpressure，可以控制数据源发射的速度。
  * Created by zhouL on 2018/7/6.
  */
 abstract class BaseSubscriber<T> : Subscriber<T> {
@@ -16,7 +17,7 @@ abstract class BaseSubscriber<T> : Subscriber<T> {
 
     private var mSubscription: Subscription? = null
 
-    override fun onSubscribe(s: Subscription?) {
+    final override fun onSubscribe(s: Subscription?) {
         mSubscription = s
         if (isAutoSubscribe()) {
             request(Long.MAX_VALUE)

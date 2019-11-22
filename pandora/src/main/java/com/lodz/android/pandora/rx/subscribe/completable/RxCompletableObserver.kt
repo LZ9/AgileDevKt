@@ -40,8 +40,17 @@ abstract class RxCompletableObserver : BaseCompletableObserver() {
         @JvmOverloads
         fun action(
             complete: () -> Unit,
-            error: (e: Throwable, isNetwork: Boolean) -> Unit = { _, _ -> }
+            error: (e: Throwable, isNetwork: Boolean) -> Unit = { _, _ -> },
+            subscribe: (d: Disposable) -> Unit = {},
+            errorEnd: () -> Unit = {},
+            dispose: () -> Unit = {}
         ): RxCompletableObserver = object : RxCompletableObserver() {
+
+            override fun onRxSubscribe(d: Disposable) {
+                super.onRxSubscribe(d)
+                subscribe(d)
+            }
+
             override fun onRxComplete() {
                 complete()
 
@@ -49,6 +58,16 @@ abstract class RxCompletableObserver : BaseCompletableObserver() {
 
             override fun onRxError(e: Throwable, isNetwork: Boolean) {
                 error(e, isNetwork)
+            }
+
+            override fun onErrorEnd() {
+                super.onErrorEnd()
+                errorEnd()
+            }
+
+            override fun onDispose() {
+                super.onDispose()
+                dispose()
             }
         }
     }

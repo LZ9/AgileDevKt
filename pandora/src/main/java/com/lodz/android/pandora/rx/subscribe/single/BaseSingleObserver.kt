@@ -8,6 +8,7 @@ import io.reactivex.disposables.Disposable
 
 /**
  * 基类订阅者
+ * 发送单个事件，以发送成功或错误事件终止
  * Created by zhouL on 2019/1/18.
  */
 abstract class BaseSingleObserver<T> : SingleObserver<T> {
@@ -81,14 +82,27 @@ abstract class BaseSingleObserver<T> : SingleObserver<T> {
         @JvmOverloads
         fun <T> action(
             success: (any: T) -> Unit,
-            error: (e: Throwable) -> Unit = {}
+            error: (e: Throwable) -> Unit = {},
+            subscribe: (d: Disposable) -> Unit = {},
+            dispose: () -> Unit = {}
         ): BaseSingleObserver<T> = object : BaseSingleObserver<T>() {
+
+            override fun onBaseSubscribe(d: Disposable) {
+                super.onBaseSubscribe(d)
+                subscribe(d)
+            }
+
             override fun onBaseSuccess(any: T) {
                 success(any)
             }
 
             override fun onBaseError(e: Throwable) {
                 error(e)
+            }
+
+            override fun onDispose() {
+                super.onDispose()
+                dispose()
             }
         }
     }

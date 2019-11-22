@@ -128,8 +128,19 @@ abstract class ProgressObserver<T> : RxObserver<T>() {
             cancelable: Boolean = true,
             canceledOnTouchOutside: Boolean = false,
             next: (any: T) -> Unit,
-            error: (e: Throwable, isNetwork: Boolean) -> Unit = { _, _ -> }
+            error: (e: Throwable, isNetwork: Boolean) -> Unit = { _, _ -> },
+            subscribe: (d: Disposable) -> Unit = {},
+            errorEnd: () -> Unit = {},
+            complete: () -> Unit = {},
+            pgCancel: () -> Unit = {},
+            dispose: () -> Unit = {}
         ): ProgressObserver<T> = object : ProgressObserver<T>() {
+
+            override fun onPgSubscribe(d: Disposable) {
+                super.onPgSubscribe(d)
+                subscribe(d)
+            }
+
             override fun onPgNext(any: T) {
                 next(any)
             }
@@ -137,6 +148,27 @@ abstract class ProgressObserver<T> : RxObserver<T>() {
             override fun onPgError(e: Throwable, isNetwork: Boolean) {
                 error(e, isNetwork)
             }
+
+            override fun onErrorEnd() {
+                super.onErrorEnd()
+                errorEnd()
+            }
+
+            override fun onPgComplete() {
+                super.onPgComplete()
+                complete()
+            }
+
+            override fun onPgCancel() {
+                super.onPgCancel()
+                pgCancel()
+            }
+
+            override fun onDispose() {
+                super.onDispose()
+                dispose()
+            }
+
         }.create(context, msg, cancelable, canceledOnTouchOutside)
     }
 }

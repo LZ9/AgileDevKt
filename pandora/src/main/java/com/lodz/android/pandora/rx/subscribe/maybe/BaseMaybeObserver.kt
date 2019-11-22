@@ -90,8 +90,16 @@ abstract class BaseMaybeObserver<T> : MaybeObserver<T> {
         fun <T> action(
             success: (any: T) -> Unit,
             complete: () -> Unit = {},
-            error: (e: Throwable) -> Unit = {}
+            error: (e: Throwable) -> Unit = {},
+            subscribe: (d: Disposable) -> Unit = {},
+            dispose: () -> Unit = {}
         ): BaseMaybeObserver<T> = object : BaseMaybeObserver<T>() {
+
+            override fun onBaseSubscribe(d: Disposable) {
+                super.onBaseSubscribe(d)
+                subscribe(d)
+            }
+
             override fun onBaseSuccess(any: T) {
                 success(any)
             }
@@ -102,6 +110,11 @@ abstract class BaseMaybeObserver<T> : MaybeObserver<T> {
 
             override fun onBaseError(e: Throwable) {
                 error(e)
+            }
+
+            override fun onDispose() {
+                super.onDispose()
+                dispose()
             }
         }
     }

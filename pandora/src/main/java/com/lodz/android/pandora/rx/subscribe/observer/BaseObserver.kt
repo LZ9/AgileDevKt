@@ -8,6 +8,7 @@ import io.reactivex.disposables.Disposable
 
 /**
  * 基类订阅者（无背压）
+ * 能够发射0或n个数据，并以完成或错误事件终止。
  * Created by zhouL on 2018/7/5.
  */
 abstract class BaseObserver<T> : Observer<T> {
@@ -87,8 +88,17 @@ abstract class BaseObserver<T> : Observer<T> {
         @JvmOverloads
         fun <T> action(
             next: (any: T) -> Unit,
-            error: (e: Throwable) -> Unit = {}
+            error: (e: Throwable) -> Unit = {},
+            subscribe: (d: Disposable) -> Unit = {},
+            complete: () -> Unit = {},
+            dispose: () -> Unit = {}
         ): BaseObserver<T> = object : BaseObserver<T>() {
+
+            override fun onBaseSubscribe(d: Disposable) {
+                super.onBaseSubscribe(d)
+                subscribe(d)
+            }
+
             override fun onBaseNext(any: T) {
                 next(any)
             }
@@ -97,6 +107,15 @@ abstract class BaseObserver<T> : Observer<T> {
                 error(e)
             }
 
+            override fun onBaseComplete() {
+                super.onBaseComplete()
+                complete()
+            }
+
+            override fun onDispose() {
+                super.onDispose()
+                dispose()
+            }
         }
     }
 }

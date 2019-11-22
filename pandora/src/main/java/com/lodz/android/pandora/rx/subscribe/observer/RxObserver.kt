@@ -68,8 +68,18 @@ abstract class RxObserver<T> : BaseObserver<T>() {
         @JvmOverloads
         fun <T> action(
             next: (any: T) -> Unit,
-            error: (e: Throwable, isNetwork: Boolean) -> Unit = { _, _ -> }
+            error: (e: Throwable, isNetwork: Boolean) -> Unit = { _, _ -> },
+            subscribe: (d: Disposable) -> Unit = {},
+            errorEnd: () -> Unit = {},
+            complete: () -> Unit = {},
+            dispose: () -> Unit = {}
         ): RxObserver<T> = object : RxObserver<T>() {
+
+            override fun onRxSubscribe(d: Disposable) {
+                super.onRxSubscribe(d)
+                subscribe(d)
+            }
+
             override fun onRxNext(any: T) {
                 next(any)
             }
@@ -78,6 +88,20 @@ abstract class RxObserver<T> : BaseObserver<T>() {
                 error(e, isNetwork)
             }
 
+            override fun onErrorEnd() {
+                super.onErrorEnd()
+                errorEnd()
+            }
+
+            override fun onRxComplete() {
+                super.onRxComplete()
+                complete()
+            }
+
+            override fun onDispose() {
+                super.onDispose()
+                dispose()
+            }
         }
     }
 }

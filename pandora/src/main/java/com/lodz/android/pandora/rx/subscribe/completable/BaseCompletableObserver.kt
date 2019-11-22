@@ -82,14 +82,27 @@ abstract class BaseCompletableObserver : CompletableObserver {
         @JvmOverloads
         fun action(
             complete: () -> Unit,
-            error: (e: Throwable) -> Unit = {}
+            error: (e: Throwable) -> Unit = {},
+            subscribe: (d: Disposable) -> Unit = {},
+            dispose: () -> Unit = {}
         ): BaseCompletableObserver = object : BaseCompletableObserver() {
+
+            override fun onBaseSubscribe(d: Disposable) {
+                super.onBaseSubscribe(d)
+                subscribe(d)
+            }
+
             override fun onBaseComplete() {
                 complete()
             }
 
             override fun onBaseError(e: Throwable) {
                 error(e)
+            }
+
+            override fun onDispose() {
+                super.onDispose()
+                dispose()
             }
         }
     }
