@@ -35,7 +35,7 @@ class FragmentChangeActivity : BaseActivity() {
 
     override fun startCreate() {
         super.startCreate()
-        mAccount = intent.getStringExtra(EXTRA_ACCOUNT)
+        mAccount = intent.getStringExtra(EXTRA_ACCOUNT) ?: ""
     }
 
     override fun getLayoutId(): Int = R.layout.activity_fragment_change

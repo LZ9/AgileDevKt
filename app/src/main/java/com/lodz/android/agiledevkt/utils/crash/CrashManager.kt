@@ -88,7 +88,7 @@ class CrashManager private constructor() : Thread.UncaughtExceptionHandler {
         Thread.setDefaultUncaughtExceptionHandler(this)
     }
 
-    override fun uncaughtException(thread: Thread?, t: Throwable?) {
+    override fun uncaughtException(thread: Thread, t: Throwable) {
         if (isInterceptor) {// 用户处理
             PrintLog.d(mTag, "user handle")
             handleException(t)// 具体处理类
@@ -96,9 +96,7 @@ class CrashManager private constructor() : Thread.UncaughtExceptionHandler {
                 Thread.sleep(2500)
             } catch (e: Exception) {
             }
-            if (t != null) {
-                PrintLog.e(mTag, "error: ", t)
-            }
+            PrintLog.e(mTag, "error: ", t)
             exceptionExit()
             return
         }

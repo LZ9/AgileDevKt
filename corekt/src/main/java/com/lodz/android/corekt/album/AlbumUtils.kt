@@ -114,8 +114,8 @@ object AlbumUtils {
 
     /** 获取指定文件目录[file]下的图片文件夹信息，[coverImgPath]为封面图片路径 */
     @JvmStatic
-    fun getImageFolder(file: File, coverImgPath: String): ImageFolder? {
-        val fileList = file.list { dir, name ->
+    fun getImageFolder(file: File?, coverImgPath: String): ImageFolder? {
+        val fileList = file?.list { dir, name ->
             name != null && (name.endsWith(".jpg")
                     || name.endsWith(".gif")
                     || name.endsWith(".png")

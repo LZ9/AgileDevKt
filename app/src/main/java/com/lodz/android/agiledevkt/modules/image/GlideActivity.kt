@@ -20,8 +20,8 @@ import androidx.core.content.ContextCompat
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.target.NotificationTarget
-import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
 import com.bumptech.glide.request.transition.ViewPropertyTransition
@@ -145,7 +145,9 @@ class GlideActivity : BaseActivity() {
             ImageLoader.create(getContext())
                     .loadUrl(IMG_URL)
                     .setCenterCrop()
-                    .asBitmapInto(object : SimpleTarget<Bitmap>() {
+                    .asBitmapInto(object : CustomTarget<Bitmap>() {
+                        override fun onLoadCleared(placeholder: Drawable?) {}
+
                         override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
                             val builder = NotificationCompat.Builder(getContext(), NOTIFI_CHANNEL_MAIN_ID)
                             builder.setTicker("震惊！谁是超能力霸主")// 通知栏显示的文字
