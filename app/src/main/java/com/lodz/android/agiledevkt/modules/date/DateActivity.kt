@@ -115,7 +115,10 @@ class DateActivity : BaseActivity() {
             var calendar = Calendar.getInstance()
             val dateStr = mDatePickerTv.text.toString()
             if (dateStr.isNotEmpty()) {
-                calendar = DateUtils.parseFormatToCalendar(DateUtils.TYPE_6, dateStr)
+                val result = DateUtils.parseFormatToCalendar(DateUtils.TYPE_6, dateStr)
+                if (result != null) {
+                    calendar = result
+                }
             }
 
             DateUtils.showDatePicker(getContext(),
@@ -132,7 +135,10 @@ class DateActivity : BaseActivity() {
             var calendar = Calendar.getInstance()
             val dateStr = mTimePickerTv.text.toString()
             if (dateStr.isNotEmpty()) {
-                calendar = DateUtils.parseFormatToCalendar(DateUtils.TYPE_8, dateStr)
+                val result = DateUtils.parseFormatToCalendar(DateUtils.TYPE_8, dateStr)
+                if (result != null) {
+                    calendar = result
+                }
             }
 
             DateUtils.showTimePicker(getContext(),

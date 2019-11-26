@@ -46,7 +46,7 @@ class ElementActivity : BaseActivity() {
 
     override fun startCreate() {
         super.startCreate()
-        mTitle = intent.getStringExtra(EXTRA_TITLE)
+        mTitle = intent.getStringExtra(EXTRA_TITLE) ?: ""
         mImgResId = intent.getIntExtra(EXTRA_IMG_RES_ID, R.drawable.ic_launcher)
     }
 
