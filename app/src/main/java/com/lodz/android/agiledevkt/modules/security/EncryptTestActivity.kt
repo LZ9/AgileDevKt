@@ -17,6 +17,7 @@ import com.lodz.android.corekt.security.MD5
 import com.lodz.android.corekt.security.RSA
 import com.lodz.android.corekt.security.SHA1
 import com.lodz.android.pandora.base.activity.BaseActivity
+import kotlinx.coroutines.GlobalScope
 import java.util.*
 
 /**
@@ -202,7 +203,7 @@ class EncryptTestActivity : BaseActivity() {
 
     private fun printResult(result: String) {
         mResultTv.text = (mResultTv.text.toString() + "\n" + result)
-        runOnMainDelay(100){
+        GlobalScope.runOnMainDelay(100){
             mScrollView.fullScroll(ScrollView.FOCUS_DOWN)
         }
     }

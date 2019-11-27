@@ -5,6 +5,7 @@ import com.lodz.android.pandora.rx.exception.DataException
 import com.lodz.android.pandora.rx.utils.RxObservableOnSubscribe
 import io.reactivex.Observable
 import io.reactivex.ObservableEmitter
+import kotlinx.coroutines.GlobalScope
 
 /**
  * 数据
@@ -20,7 +21,7 @@ object ApiModule {
                     return
                 }
                 try {
-                    runOnMainDelay(1000){
+                    GlobalScope.runOnMainDelay(1000){
                         if (emitter.isDisposed) {
                             return@runOnMainDelay
                         }

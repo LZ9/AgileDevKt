@@ -20,6 +20,7 @@ import com.lodz.android.pandora.widget.collect.CltEditView
 import com.lodz.android.pandora.widget.collect.CltTextView
 import com.lodz.android.pandora.widget.collect.radio.CltRadioGroup
 import com.lodz.android.pandora.widget.collect.radio.Radioable
+import kotlinx.coroutines.GlobalScope
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -160,7 +161,7 @@ class CollectActivity : BaseActivity() {
                 return@setOnClickListener
             }
             toastShort(R.string.clt_success)
-            runOnMainDelay(500) {
+            GlobalScope.runOnMainDelay(500) {
                 finish()
             }
         }

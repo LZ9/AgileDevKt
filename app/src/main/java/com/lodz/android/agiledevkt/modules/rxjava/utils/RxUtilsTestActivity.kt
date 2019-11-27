@@ -19,6 +19,7 @@ import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
 import com.lodz.android.pandora.rx.subscribe.observer.ProgressObserver
 import com.lodz.android.pandora.rx.utils.RxUtils
+import kotlinx.coroutines.GlobalScope
 
 /**
  * Rx帮助类测试
@@ -193,7 +194,7 @@ class RxUtilsTestActivity : BaseActivity() {
 
     private fun printResult(result: String) {
         mResultTv.text = (mResultTv.text.toString() + "\n" + result)
-        runOnMainDelay(100) {
+        GlobalScope.runOnMainDelay(100) {
             mScrollView.fullScroll(ScrollView.FOCUS_DOWN)
         }
     }

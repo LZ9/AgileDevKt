@@ -237,7 +237,7 @@ class CoroutinesActivity : BaseActivity() {
 
     /** 协程异步 */
     private fun async(): Job? {
-        runOnIO {
+        GlobalScope.runOnIO {
             logResult("顺序执行开始")
             val time1 = measureTimeMillis {
                 runBlocking {
@@ -288,7 +288,7 @@ class CoroutinesActivity : BaseActivity() {
     }
 
     private fun logResult(log: String) {
-        runOnMain {
+        GlobalScope.runOnMain {
             mResultTv.text = StringBuilder(mResultTv.text).append("\n").append(log).toString()
         }
     }

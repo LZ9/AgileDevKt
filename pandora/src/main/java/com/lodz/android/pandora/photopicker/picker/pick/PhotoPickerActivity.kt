@@ -31,6 +31,7 @@ import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
 import com.lodz.android.pandora.rx.subscribe.observer.ProgressObserver
 import com.lodz.android.pandora.rx.utils.RxUtils
 import io.reactivex.Observable
+import kotlinx.coroutines.GlobalScope
 
 /**
  * 图片选择页面
@@ -468,7 +469,7 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
         }
         // 拍照成功
         AlbumUtils.notifyScanImage(getContext(), mPdrTempFilePath)
-        runOnMainDelay(300){
+        GlobalScope.runOnMainDelay(300){
             handleCameraSuccess()
         }
     }

@@ -10,6 +10,7 @@ import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.corekt.anko.*
 import com.lodz.android.corekt.utils.StatusBarUtil
 import com.lodz.android.pandora.base.activity.AbsActivity
+import kotlinx.coroutines.GlobalScope
 import permissions.dispatcher.*
 
 /**
@@ -32,7 +33,7 @@ class SplashActivity : AbsActivity() {
             finish()
             return
         }
-        runOnMainDelay(1000) {
+        GlobalScope.runOnMainDelay(1000) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {// 6.0以上的手机对权限进行动态申请
                 onRequestPermissionWithPermissionCheck()//申请权限
             } else {

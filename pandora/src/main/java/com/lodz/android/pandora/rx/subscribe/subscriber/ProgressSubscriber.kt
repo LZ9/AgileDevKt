@@ -6,6 +6,7 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import com.lodz.android.corekt.anko.runOnMainCatch
 import com.lodz.android.pandora.utils.progress.ProgressDialogHelper
+import kotlinx.coroutines.GlobalScope
 import org.reactivestreams.Subscription
 
 /**
@@ -86,12 +87,12 @@ abstract class ProgressSubscriber<T> : RxSubscriber<T>() {
 
     /** 显示加载框 */
     private fun showProgress() {
-        runOnMainCatch({ mProgressDialog?.show() })
+        GlobalScope.runOnMainCatch({ mProgressDialog?.show() })
     }
 
     /** 关闭加载框 */
     private fun dismissProgress() {
-        runOnMainCatch({
+        GlobalScope.runOnMainCatch({
             mProgressDialog?.dismiss()
             mProgressDialog = null
         })

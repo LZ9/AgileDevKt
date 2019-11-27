@@ -14,6 +14,7 @@ import com.lodz.android.corekt.utils.FileUtils
 import com.lodz.android.corekt.utils.StatusBarUtil
 import com.lodz.android.pandora.R
 import com.lodz.android.pandora.base.activity.AbsActivity
+import kotlinx.coroutines.GlobalScope
 
 /**
  * 拍照页面
@@ -131,7 +132,7 @@ internal class TakePhotoActivity : AbsActivity() {
             handleConfirm()
             return
         }
-        runOnMainDelay(300) {
+        GlobalScope.runOnMainDelay(300) {
             handleCameraSuccess()
         }
     }

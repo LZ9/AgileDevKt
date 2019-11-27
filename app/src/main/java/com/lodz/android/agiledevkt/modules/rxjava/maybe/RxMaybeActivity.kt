@@ -25,6 +25,7 @@ import io.reactivex.Maybe
 import io.reactivex.MaybeEmitter
 import io.reactivex.MaybeObserver
 import io.reactivex.disposables.Disposable
+import kotlinx.coroutines.GlobalScope
 
 /**
  * RxMaybe订阅测试
@@ -255,7 +256,7 @@ class RxMaybeActivity : BaseActivity() {
             "${mResultTv.text}\n$text"
         }
         mResultTv.text = log
-        runOnMainDelay(100) {
+        GlobalScope.runOnMainDelay(100) {
             mScrollView.fullScroll(ScrollView.FOCUS_DOWN)
         }
     }

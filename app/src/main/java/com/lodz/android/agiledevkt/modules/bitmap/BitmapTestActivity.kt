@@ -25,6 +25,7 @@ import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
 import com.lodz.android.pandora.rx.utils.RxUtils
 import com.lodz.android.pandora.widget.custom.LongImageView
 import io.reactivex.Observable
+import kotlinx.coroutines.GlobalScope
 import java.io.File
 import java.util.concurrent.TimeUnit
 
@@ -682,7 +683,7 @@ class BitmapTestActivity : BaseActivity() {
         ImageLoader.create(this).loadUrl(url)
             .download(object :RequestListener<File>{
                 override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<File>?, isFirstResource: Boolean): Boolean {
-                    runOnMain {
+                    GlobalScope.runOnMain {
                         // 监听器回调可能不在主线程
                         mLargeImg.setImageResource(R.drawable.ic_launcher)
                     }
@@ -690,7 +691,7 @@ class BitmapTestActivity : BaseActivity() {
                 }
 
                 override fun onResourceReady(resource: File?, model: Any?, target: Target<File>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                    runOnMain {
+                    GlobalScope.runOnMain {
                         if (resource == null) {
                             mLargeImg.setImageResource(R.drawable.ic_launcher)
                         } else {

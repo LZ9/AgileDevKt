@@ -25,6 +25,7 @@ import io.reactivex.Single
 import io.reactivex.SingleEmitter
 import io.reactivex.SingleObserver
 import io.reactivex.disposables.Disposable
+import kotlinx.coroutines.GlobalScope
 
 /**
  * RxSingle订阅测试
@@ -219,7 +220,7 @@ class RxSingleActivity : BaseActivity() {
             "${mResultTv.text}\n$text"
         }
         mResultTv.text = log
-        runOnMainDelay(100) {
+        GlobalScope.runOnMainDelay(100) {
             mScrollView.fullScroll(ScrollView.FOCUS_DOWN)
         }
     }

@@ -10,6 +10,7 @@ import com.lodz.android.corekt.utils.ReflectUtils
 import com.lodz.android.pandora.rx.utils.RxObservableOnSubscribe
 import io.reactivex.Observable
 import io.reactivex.ObservableEmitter
+import kotlinx.coroutines.GlobalScope
 import okhttp3.RequestBody
 import java.net.SocketTimeoutException
 
@@ -30,7 +31,7 @@ object ApiServiceImpl : ApiService {
     override fun login(account: String, password: String): Observable<ResponseBean<String>> =
             Observable.create(object : RxObservableOnSubscribe<ResponseBean<String>>() {
                 override fun subscribe(emitter: ObservableEmitter<ResponseBean<String>>) {
-                    runOnMainDelay(2000){
+                    GlobalScope.runOnMainDelay(2000){
                         val responseBean = ResponseBean.createSuccess<String>()
                         responseBean.msg = "success"
                         responseBean.data = "{\"id\":\"1\",\"loginName\":\"admin\"}"
@@ -43,7 +44,7 @@ object ApiServiceImpl : ApiService {
     override fun postSpot(id: Int): Observable<ResponseBean<SpotBean>> =
             Observable.create(object : RxObservableOnSubscribe<ResponseBean<SpotBean>>(id) {
                 override fun subscribe(emitter: ObservableEmitter<ResponseBean<SpotBean>>) {
-                    runOnMainDelay(2000){
+                    GlobalScope.runOnMainDelay(2000){
                         try {
                             if (id == NETWORK_FAIL) {
                                 throw SocketTimeoutException()
@@ -74,7 +75,7 @@ object ApiServiceImpl : ApiService {
     override fun getSpot(id: Int): Observable<ResponseBean<SpotBean>> =
             Observable.create(object : RxObservableOnSubscribe<ResponseBean<SpotBean>>(id) {
                 override fun subscribe(emitter: ObservableEmitter<ResponseBean<SpotBean>>) {
-                    runOnMainDelay(2000){
+                    GlobalScope.runOnMainDelay(2000){
                         try {
                             if (id == NETWORK_FAIL) {
                                 throw SocketTimeoutException()
@@ -105,7 +106,7 @@ object ApiServiceImpl : ApiService {
     override fun querySpot(requestBody: RequestBody): Observable<ResponseBean<List<SpotBean>>> =
             Observable.create(object : RxObservableOnSubscribe<ResponseBean<List<SpotBean>>>(requestBody) {
                 override fun subscribe(emitter: ObservableEmitter<ResponseBean<List<SpotBean>>>) {
-                    runOnMainDelay(2000){
+                    GlobalScope.runOnMainDelay(2000){
                         try {
                             val json = "{\"code\":200,\"msg\":\"success\",\"data\":[]}"
                             val responseBean = JSON.parseObject(json, object : TypeReference<ResponseBean<List<SpotBean>>>() {})

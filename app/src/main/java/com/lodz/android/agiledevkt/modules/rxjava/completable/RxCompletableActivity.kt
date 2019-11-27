@@ -24,6 +24,7 @@ import io.reactivex.Completable
 import io.reactivex.CompletableEmitter
 import io.reactivex.CompletableObserver
 import io.reactivex.disposables.Disposable
+import kotlinx.coroutines.GlobalScope
 
 /**
  * RxCompletable订阅测试
@@ -210,7 +211,7 @@ class RxCompletableActivity : BaseActivity() {
             "${mResultTv.text}\n$text"
         }
         mResultTv.text = log
-        runOnMainDelay(100) {
+        GlobalScope.runOnMainDelay(100) {
             mScrollView.fullScroll(ScrollView.FOCUS_DOWN)
         }
     }

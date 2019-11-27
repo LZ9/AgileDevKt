@@ -23,6 +23,7 @@ import com.lodz.android.pandora.rx.utils.RxUtils
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.FlowableEmitter
+import kotlinx.coroutines.GlobalScope
 import org.reactivestreams.Subscriber
 import org.reactivestreams.Subscription
 import java.io.BufferedReader
@@ -136,7 +137,7 @@ class RxFlowableActivity : BaseActivity() {
 
                         override fun onNext(str: String?) {
                             printLog(str ?: "")
-                            runOnMainDelay(100) {
+                            GlobalScope.runOnMainDelay(100) {
                                 mBpSubscription?.request(1)
                             }
                         }
@@ -317,7 +318,7 @@ class RxFlowableActivity : BaseActivity() {
             "${mResultTv.text}\n$text"
         }
         mResultTv.text = log
-        runOnMainDelay(100) {
+        GlobalScope.runOnMainDelay(100) {
             mScrollView.fullScroll(ScrollView.FOCUS_DOWN)
         }
     }

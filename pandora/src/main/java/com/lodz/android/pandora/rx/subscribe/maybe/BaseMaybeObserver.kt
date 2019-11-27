@@ -13,8 +13,6 @@ import io.reactivex.disposables.Disposable
  */
 abstract class BaseMaybeObserver<T> : MaybeObserver<T> {
 
-    private val ERROR_TAG = "error_tag"
-
     private var mDisposable: Disposable? = null
 
     final override fun onSubscribe(d: Disposable) {
@@ -39,7 +37,7 @@ abstract class BaseMaybeObserver<T> : MaybeObserver<T> {
     /** 打印标签日志 */
     private fun printTagLog(t: Throwable) {
         val app = BaseApplication.get() ?: return
-        val tag = app.getMetaData(ERROR_TAG)
+        val tag = app.getMetaData(BaseApplication.ERROR_TAG)
         if (tag != null && tag is String) {
             if (tag.isNotEmpty()) {
                 PrintLog.e(tag, t.toString(), t)

@@ -26,6 +26,7 @@ import com.lodz.android.pandora.photopicker.contract.preview.PreviewController
 import com.lodz.android.pandora.photopicker.preview.AbsImageView
 import com.lodz.android.pandora.photopicker.preview.PreviewManager
 import com.lodz.android.pandora.widget.custom.LongImageView
+import kotlinx.coroutines.GlobalScope
 import java.io.File
 
 /**
@@ -230,14 +231,14 @@ class PicPreviewTestActivity : BaseActivity() {
                             ImageLoader.create(context).loadUrl(source)
                                 .download(object :RequestListener<File>{
                                     override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<File>?, isFirstResource: Boolean): Boolean {
-                                        runOnMain {
+                                        GlobalScope.runOnMain {
                                             view.setImage(ImageSource.resource(R.drawable.ic_launcher))
                                         }
                                         return false
                                     }
 
                                     override fun onResourceReady(resource: File?, model: Any?, target: Target<File>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                                        runOnMain {
+                                        GlobalScope.runOnMain {
                                             if (resource != null){
                                                 view.setImage(ImageSource.uri(Uri.fromFile(resource)))
                                             }
@@ -306,7 +307,7 @@ class PicPreviewTestActivity : BaseActivity() {
                                     }
 
                                     override fun onResourceReady(resource: File?, model: Any?, target: Target<File>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                                        runOnMain {
+                                        GlobalScope.runOnMain {
                                             if (resource != null){
                                                 view.setImageFile(resource)
                                             }

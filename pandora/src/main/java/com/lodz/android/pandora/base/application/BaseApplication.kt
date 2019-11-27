@@ -13,6 +13,7 @@ import org.greenrobot.eventbus.EventBus
 abstract class BaseApplication : Application() {
 
     companion object {
+        const val ERROR_TAG = "error_tag"
         private var sInstance: BaseApplication? = null
         @JvmStatic
         fun get(): BaseApplication? = sInstance
