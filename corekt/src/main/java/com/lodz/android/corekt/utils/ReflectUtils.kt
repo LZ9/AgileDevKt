@@ -21,7 +21,7 @@ object ReflectUtils {
 
     /** 根据类型[T]获取对应的Class */
     @JvmStatic
-    inline fun <reified T> getClassForType(): Class<*> = T::class.java
+    inline fun <reified T> getClassForType(): Class<T> = T::class.java
 
     /** 获取类[c]的无参构造函数对象（如果目标对象没有无参构造函数返回null） */
     @JvmStatic
