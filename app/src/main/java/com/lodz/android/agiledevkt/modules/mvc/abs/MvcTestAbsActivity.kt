@@ -5,7 +5,7 @@ import android.content.Intent
 import android.widget.Button
 import android.widget.TextView
 import com.lodz.android.agiledevkt.R
-import com.lodz.android.agiledevkt.modules.mvc.ApiModule
+import com.lodz.android.agiledevkt.modules.mvc.ApiModuleRx
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.pandora.base.activity.AbsActivity
 import com.lodz.android.pandora.rx.exception.DataException
@@ -47,7 +47,7 @@ class MvcTestAbsActivity : AbsActivity() {
     }
 
     private fun getResult(isSuccess: Boolean) {
-        ApiModule.requestResult(isSuccess)
+        ApiModuleRx.requestResult(isSuccess)
                 .compose(RxUtils.ioToMainObservable())
                 .compose(bindUntilEvent(ActivityEvent.DESTROY))
                 .subscribe(object : ProgressObserver<String>() {

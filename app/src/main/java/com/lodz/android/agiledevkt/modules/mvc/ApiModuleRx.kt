@@ -11,7 +11,7 @@ import kotlinx.coroutines.GlobalScope
  * 数据
  * Created by zhouL on 2018/11/19.
  */
-object ApiModule {
+object ApiModuleRx {
 
     fun requestResult(isSuccess: Boolean): Observable<String> {
         return Observable.create(object : RxObservableOnSubscribe<String>(isSuccess) {
