@@ -684,6 +684,22 @@
 
         </activity>
 
+        <activity
+            android:name=".modules.mvvm.MvvmDemoActivity"
+            android:label="MVVM模式测试类"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity
+            android:name=".modules.mvvm.abs.MvvmTestAbsActivity"
+            android:label="MVVM基础Activity"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+
+
     </application>
 
 </manifest>

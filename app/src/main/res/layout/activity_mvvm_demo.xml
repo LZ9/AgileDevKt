@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/abs_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/mvc_demo_abs"
+        android:textSize="13sp" />
+
+    <Button
+        android:id="@+id/base_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/mvc_demo_base"
+        android:textSize="13sp" />
+
+    <Button
+        android:id="@+id/refresh_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/mvc_demo_refresh"
+        android:textSize="13sp" />
+
+    <Button
+        android:id="@+id/sandwich_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/mvc_demo_sandwich"
+        android:textSize="13sp" />
+
+    <Button
+        android:id="@+id/fragment_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/mvc_demo_fragment"
+        android:textSize="13sp" />
+</LinearLayout>

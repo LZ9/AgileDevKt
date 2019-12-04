@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 
 fun GlobalScope.runOnSuspendIOCatchPg(
     progressDialog: AlertDialog,
-    action: suspend () -> Unit,
+    actionIO: suspend () -> Unit,
     error: (e: Exception) -> Unit = {},
     pgCancel: () -> Unit = {}
 ) {
@@ -29,7 +29,7 @@ fun GlobalScope.runOnSuspendIOCatchPg(
 
     val job = launch(Dispatchers.IO) {
         try {
-            action()
+            actionIO()
         } catch (e: Exception) {
             e.printStackTrace()
             printTagLog(e)
@@ -55,7 +55,7 @@ fun GlobalScope.runOnSuspendIOCatchPg(
     msg: String = "",
     cancelable: Boolean = true,
     canceledOnTouchOutside: Boolean = false,
-    action: suspend () -> Unit,
+    actionIO: suspend () -> Unit,
     error: (e: Exception) -> Unit = {},
     pgCancel: () -> Unit = {}
 ) {
@@ -69,7 +69,7 @@ fun GlobalScope.runOnSuspendIOCatchPg(
 
     val job = launch(Dispatchers.IO) {
         try {
-            action()
+            actionIO()
         } catch (e: Exception) {
             e.printStackTrace()
             printTagLog(e)

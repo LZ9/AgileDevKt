@@ -33,14 +33,14 @@ fun GlobalScope.runOnMainDelay(timeMillis: Long, action: () -> Unit): Job =
     }
 
 /** 异步线程执行 */
-fun GlobalScope.runOnIO(action: () -> Unit): Job = launch(Dispatchers.IO) { action() }
+fun GlobalScope.runOnIO(actionIO: () -> Unit): Job = launch(Dispatchers.IO) { actionIO() }
 
 /** 异步线程执行捕获异常 */
 @JvmOverloads
-fun GlobalScope.runOnIOCatch(action: () -> Unit, error: (e: Exception) -> Unit = {}): Job =
+fun GlobalScope.runOnIOCatch(actionIO: () -> Unit, error: (e: Exception) -> Unit = {}): Job =
     launch(Dispatchers.IO) {
         try {
-            action()
+            actionIO()
         } catch (e: Exception) {
             e.printStackTrace()
             GlobalScope.runOnMain { error(e) }
@@ -48,17 +48,17 @@ fun GlobalScope.runOnIOCatch(action: () -> Unit, error: (e: Exception) -> Unit =
     }
 
 /** 异步线程执行挂起函数 */
-fun GlobalScope.runOnSuspendIO(action: suspend () -> Unit): Job = launch(Dispatchers.IO) { action() }
+fun GlobalScope.runOnSuspendIO(actionIO: suspend () -> Unit): Job = launch(Dispatchers.IO) { actionIO() }
 
 /** 异步线程执行挂起函数捕获异常 */
 @JvmOverloads
 fun GlobalScope.runOnSuspendIOCatch(
-    action: suspend () -> Unit,
+    actionIO: suspend () -> Unit,
     error: (e: Exception) -> Unit = {}
 ): Job =
     launch(Dispatchers.IO) {
         try {
-            action()
+            actionIO()
         } catch (e: Exception) {
             e.printStackTrace()
             GlobalScope.runOnMain { error(e) }
