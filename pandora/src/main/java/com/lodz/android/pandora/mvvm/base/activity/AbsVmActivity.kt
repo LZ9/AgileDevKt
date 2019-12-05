@@ -2,12 +2,13 @@ package com.lodz.android.pandora.mvvm.base.activity
 
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.lodz.android.corekt.anko.toastLong
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.pandora.base.activity.AbsActivity
-import com.lodz.android.pandora.mvvm.vm.abs.AbsViewModel
+import com.lodz.android.pandora.mvvm.vm.AbsViewModel
 
 /**
- * 基础Activity
+ * ViewModel基础Activity
  * @author zhouL
  * @date 2019/11/29
  */
@@ -21,13 +22,26 @@ abstract class AbsVmActivity<VM : AbsViewModel> : AbsActivity() {
 
     override fun setListeners() {
         super.setListeners()
-        getViewModel().mAbsToastMsg.observe(this, Observer { value ->
+
+        getViewModel().isAbsFinish.observe(this, Observer { value ->
+            if (value) {
+                finish()
+            }
+        })
+
+        getViewModel().mAbsShortToastMsg.observe(this, Observer { value ->
             if (value.isNullOrEmpty()) {
                 return@Observer
             }
             toastShort(value)
         })
-    }
 
+        getViewModel().mAbsLongToastMsg.observe(this, Observer { value ->
+            if (value.isNullOrEmpty()) {
+                return@Observer
+            }
+            toastLong(value)
+        })
+    }
 }
 

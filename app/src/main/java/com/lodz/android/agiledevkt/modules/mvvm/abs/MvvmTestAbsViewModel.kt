@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.mvvm.ApiModuleSuspend
 import com.lodz.android.corekt.anko.runOnMain
-import com.lodz.android.pandora.mvvm.vm.abs.AbsViewModel
+import com.lodz.android.pandora.mvvm.vm.AbsViewModel
 import com.lodz.android.pandora.rx.exception.DataException
 import com.lodz.android.pandora.utils.coroutines.runOnSuspendIOCatchPg
 import kotlinx.coroutines.GlobalScope
@@ -22,13 +22,13 @@ class MvvmTestAbsViewModel : AbsViewModel() {
     fun getResult(context: Context, isSuccess: Boolean) {
         GlobalScope.runOnSuspendIOCatchPg(
             context,
-            context.getString(R.string.mvc_demo_loading),
+            context.getString(R.string.mvvm_demo_loading),
             true,
             actionIO = {
                 val result = ApiModuleSuspend.requestResult(isSuccess)
                 GlobalScope.runOnMain {
                     mResultText.value = result
-                    showToast(result)
+                    toastShort(result)
                 }
             }, error = { e ->
                 val msg = if (e is DataException) {
@@ -37,7 +37,7 @@ class MvvmTestAbsViewModel : AbsViewModel() {
                     e.message ?: ""
                 }
                 mResultText.value = msg
-                showToast(msg)
+                toastShort(msg)
             })
     }
 }

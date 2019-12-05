@@ -7,6 +7,7 @@ import android.widget.Button
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.agiledevkt.modules.mvvm.abs.MvvmTestAbsActivity
+import com.lodz.android.agiledevkt.modules.mvvm.base.MvvmTestBaseActivity
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.pandora.base.activity.BaseActivity
 
@@ -56,7 +57,7 @@ class MvvmDemoActivity : BaseActivity() {
 
         // 带基础状态控件Activity
         mBaseBtn.setOnClickListener {
-
+            MvvmTestBaseActivity.start(getContext())
         }
 
         // 带基础状态控件和下来刷新控件Activity
