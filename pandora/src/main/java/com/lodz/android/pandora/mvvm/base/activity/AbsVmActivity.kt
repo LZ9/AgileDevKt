@@ -23,20 +23,20 @@ abstract class AbsVmActivity<VM : AbsViewModel> : AbsActivity() {
     override fun setListeners() {
         super.setListeners()
 
-        getViewModel().isAbsFinish.observe(this, Observer { value ->
+        getViewModel().absIsFinish.observe(this, Observer { value ->
             if (value) {
                 finish()
             }
         })
 
-        getViewModel().mAbsShortToastMsg.observe(this, Observer { value ->
+        getViewModel().absShortToastMsg.observe(this, Observer { value ->
             if (value.isNullOrEmpty()) {
                 return@Observer
             }
             toastShort(value)
         })
 
-        getViewModel().mAbsLongToastMsg.observe(this, Observer { value ->
+        getViewModel().absLongToastMsg.observe(this, Observer { value ->
             if (value.isNullOrEmpty()) {
                 return@Observer
             }

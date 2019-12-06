@@ -8,6 +8,7 @@ import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.agiledevkt.modules.mvvm.abs.MvvmTestAbsActivity
 import com.lodz.android.agiledevkt.modules.mvvm.base.MvvmTestBaseActivity
+import com.lodz.android.agiledevkt.modules.mvvm.refresh.MvvmTestBaseRefreshActivity
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.pandora.base.activity.BaseActivity
 
@@ -62,7 +63,7 @@ class MvvmDemoActivity : BaseActivity() {
 
         // 带基础状态控件和下来刷新控件Activity
         mRefreshBtn.setOnClickListener {
-
+            MvvmTestBaseRefreshActivity.start(getContext())
         }
 
         // 带基础状态控件、中部刷新控件和顶部/底部扩展Activity

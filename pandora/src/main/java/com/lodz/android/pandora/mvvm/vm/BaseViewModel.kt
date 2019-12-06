@@ -9,36 +9,36 @@ import androidx.lifecycle.MutableLiveData
  */
 open class BaseViewModel : AbsViewModel() {
 
-    var isBaseShowNoData = MutableLiveData<Boolean>()
-    var isBaseShowError = MutableLiveData<Pair<Boolean, Throwable?>>()
-    var isBaseShowLoading = MutableLiveData<Boolean>()
-    var isBaseShowCompleted = MutableLiveData<Boolean>()
-    var isBaseShowTitleBar = MutableLiveData<Boolean>()
+    var baseIsShowNoData = MutableLiveData<Boolean>()
+    var baseIsShowError = MutableLiveData<Pair<Boolean, Throwable?>>()
+    var baseIsShowLoading = MutableLiveData<Boolean>()
+    var baseIsShowCompleted = MutableLiveData<Boolean>()
+    var baseIsShowTitleBar = MutableLiveData<Boolean>()
 
     /** 显示无数据页面 */
     protected fun showStatusNoData() {
-        isBaseShowNoData.value = true
+        baseIsShowNoData.value = true
     }
 
     /** 显示错误页面 */
     @JvmOverloads
     protected fun showStatusError(t: Throwable? = null) {
-        isBaseShowError.value = Pair(true, t)
+        baseIsShowError.value = Pair(true, t)
     }
 
     /** 显示加载页面 */
     protected fun showStatusLoading() {
-        isBaseShowLoading.value = true
+        baseIsShowLoading.value = true
     }
 
     /** 显示内容页面 */
     protected fun showStatusCompleted() {
-        isBaseShowCompleted.value = true
+        baseIsShowCompleted.value = true
     }
 
     /** 显隐标题栏，[isShow]是否显示 */
     @JvmOverloads
     protected fun showTitleBar(isShow: Boolean = true) {
-        isBaseShowTitleBar.value = isShow
+        baseIsShowTitleBar.value = isShow
     }
 }

@@ -4,15 +4,15 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.lodz.android.corekt.anko.toastLong
 import com.lodz.android.corekt.anko.toastShort
-import com.lodz.android.pandora.base.activity.BaseActivity
-import com.lodz.android.pandora.mvvm.vm.BaseViewModel
+import com.lodz.android.pandora.base.activity.BaseRefreshActivity
+import com.lodz.android.pandora.mvvm.vm.BaseRefreshViewModel
 
 /**
- * ViewModel基类Activity（带基础状态控件）
+ * ViewModel基类Activity（带基础状态控件和下拉刷新控件）
  * @author zhouL
- * @date 2019/12/4
+ * @date 2019/12/5
  */
-abstract class BaseVmActivity<VM : BaseViewModel> : BaseActivity() {
+abstract class BaseRefreshVmActivity<VM : BaseRefreshViewModel> : BaseRefreshActivity() {
 
     private val mViewModel by lazy { ViewModelProviders.of(this).get(createViewModel()) }
 
@@ -72,6 +72,16 @@ abstract class BaseVmActivity<VM : BaseViewModel> : BaseActivity() {
                 showTitleBar()
             } else {
                 goneTitleBar()
+            }
+        })
+
+        getViewModel().baseIsRefreshEnabled.observe(this, Observer { value ->
+            setSwipeRefreshEnabled(value)
+        })
+
+        getViewModel().baseIsRefreshFinish.observe(this, Observer { value ->
+            if (value){
+                setSwipeRefreshFinish()
             }
         })
     }

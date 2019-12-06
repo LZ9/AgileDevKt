@@ -705,6 +705,14 @@
 
         </activity>
 
+        <activity
+            android:name=".modules.mvvm.refresh.MvvmTestBaseRefreshActivity"
+            android:label="MVVM带基础状态控件和下拉刷新控件Activity"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+
 
     </application>
 
