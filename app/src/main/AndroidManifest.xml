@@ -719,6 +719,12 @@
 
         </activity>
 
+        <activity
+            android:name=".modules.mvvm.MvvmFragmentActivity"
+            android:label="Fragment生命周期测试类"
+            android:screenOrientation="portrait">
+
+        </activity>
 
 
     </application>

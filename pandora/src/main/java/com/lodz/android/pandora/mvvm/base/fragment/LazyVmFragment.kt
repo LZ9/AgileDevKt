@@ -1,18 +1,19 @@
-package com.lodz.android.pandora.mvvm.base.activity
+package com.lodz.android.pandora.mvvm.base.fragment
 
+import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.lodz.android.corekt.anko.toastLong
 import com.lodz.android.corekt.anko.toastShort
-import com.lodz.android.pandora.base.activity.AbsActivity
+import com.lodz.android.pandora.base.fragment.LazyFragment
 import com.lodz.android.pandora.mvvm.vm.AbsViewModel
 
 /**
- * ViewModel基础Activity
+ * ViewModel基础Fragment
  * @author zhouL
- * @date 2019/11/29
+ * @date 2019/12/6
  */
-abstract class AbsVmActivity<VM : AbsViewModel> : AbsActivity() {
+abstract class LazyVmFragment<VM : AbsViewModel> : LazyFragment() {
 
     private val mPdrViewModel by lazy { ViewModelProviders.of(this).get(createViewModel()) }
 
@@ -20,12 +21,8 @@ abstract class AbsVmActivity<VM : AbsViewModel> : AbsActivity() {
 
     abstract fun createViewModel(): Class<VM>
 
-    override fun setListeners() {
-        super.setListeners()
-
-        getViewModel().isPdrFinish.observe(this, Observer { value ->
-            if (value) { finish() }
-        })
+    override fun setListeners(view: View) {
+        super.setListeners(view)
 
         getViewModel().mPdrShortToastMsg.observe(this, Observer { value ->
             if (value.isNullOrEmpty()) {
@@ -41,5 +38,5 @@ abstract class AbsVmActivity<VM : AbsViewModel> : AbsActivity() {
             toastLong(value)
         })
     }
-}
 
+}

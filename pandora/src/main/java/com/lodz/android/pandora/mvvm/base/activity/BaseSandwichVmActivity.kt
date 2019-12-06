@@ -14,54 +14,54 @@ import com.lodz.android.pandora.mvvm.vm.BaseSandwichViewModel
  */
 abstract class BaseSandwichVmActivity<VM : BaseSandwichViewModel> : BaseSandwichActivity() {
 
-    private val mViewModel by lazy { ViewModelProviders.of(this).get(createViewModel()) }
+    private val mPdrViewModel by lazy { ViewModelProviders.of(this).get(createViewModel()) }
 
-    fun getViewModel(): VM = mViewModel
+    fun getViewModel(): VM = mPdrViewModel
 
     abstract fun createViewModel(): Class<VM>
 
     override fun setListeners() {
         super.setListeners()
 
-        getViewModel().absIsFinish.observe(this, Observer { value ->
+        getViewModel().isPdrFinish.observe(this, Observer { value ->
             if (value) { finish() }
         })
 
-        getViewModel().absShortToastMsg.observe(this, Observer { value ->
+        getViewModel().mPdrShortToastMsg.observe(this, Observer { value ->
             if (value.isNullOrEmpty()) {
                 return@Observer
             }
             toastShort(value)
         })
 
-        getViewModel().absLongToastMsg.observe(this, Observer { value ->
+        getViewModel().mPdrLongToastMsg.observe(this, Observer { value ->
             if (value.isNullOrEmpty()) {
                 return@Observer
             }
             toastLong(value)
         })
 
-        getViewModel().baseIsShowNoData.observe(this, Observer { value ->
+        getViewModel().isPdrShowNoData.observe(this, Observer { value ->
             if (value) { showStatusNoData() }
         })
 
-        getViewModel().baseIsShowError.observe(this, Observer { value ->
+        getViewModel().isPdrShowError.observe(this, Observer { value ->
             if (value.first) { showStatusError(value.second) }
         })
 
-        getViewModel().baseIsShowLoading.observe(this, Observer { value ->
+        getViewModel().isPdrShowLoading.observe(this, Observer { value ->
             if (value) { showStatusLoading() }
         })
 
-        getViewModel().baseIsShowCompleted.observe(this, Observer { value ->
+        getViewModel().isPdrShowCompleted.observe(this, Observer { value ->
             if (value) { showStatusCompleted() }
         })
 
-        getViewModel().baseIsRefreshEnabled.observe(this, Observer { value ->
+        getViewModel().isPdrRefreshEnabled.observe(this, Observer { value ->
             setSwipeRefreshEnabled(value)
         })
 
-        getViewModel().baseIsRefreshFinish.observe(this, Observer { value ->
+        getViewModel().isPdrRefreshFinish.observe(this, Observer { value ->
             if (value){ setSwipeRefreshFinish() }
         })
     }

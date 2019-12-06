@@ -9,30 +9,30 @@ import androidx.lifecycle.MutableLiveData
  */
 open class BaseSandwichViewModel : AbsViewModel() {
 
-    var baseIsShowNoData = MutableLiveData<Boolean>()
-    var baseIsShowError = MutableLiveData<Pair<Boolean, Throwable?>>()
-    var baseIsShowLoading = MutableLiveData<Boolean>()
-    var baseIsShowCompleted = MutableLiveData<Boolean>()
-    var baseIsRefreshFinish = MutableLiveData<Boolean>()
-    var baseIsRefreshEnabled = MutableLiveData<Boolean>()
+    var isPdrShowNoData = MutableLiveData<Boolean>()
+    var isPdrShowError = MutableLiveData<Pair<Boolean, Throwable?>>()
+    var isPdrShowLoading = MutableLiveData<Boolean>()
+    var isPdrShowCompleted = MutableLiveData<Boolean>()
+    var isPdrRefreshFinish = MutableLiveData<Boolean>()
+    var isPdrRefreshEnabled = MutableLiveData<Boolean>()
 
     /** 显示无数据页面 */
-    protected fun showStatusNoData() { baseIsShowNoData.value = true }
+    protected fun showStatusNoData() { isPdrShowNoData.value = true }
 
     /** 显示错误页面 */
     @JvmOverloads
-    protected fun showStatusError(t: Throwable? = null) { baseIsShowError.value = Pair(true, t) }
+    protected fun showStatusError(t: Throwable? = null) { isPdrShowError.value = Pair(true, t) }
 
     /** 显示加载页面 */
-    protected fun showStatusLoading() { baseIsShowLoading.value = true }
+    protected fun showStatusLoading() { isPdrShowLoading.value = true }
 
     /** 显示内容页面 */
-    protected fun showStatusCompleted() { baseIsShowCompleted.value = true }
+    protected fun showStatusCompleted() { isPdrShowCompleted.value = true }
 
     /** 设置刷新结束（隐藏刷新进度条） */
-    protected fun setSwipeRefreshFinish() { baseIsRefreshFinish.value = true }
+    protected fun setSwipeRefreshFinish() { isPdrRefreshFinish.value = true }
 
     /** 设置刷新控件是否启用 */
-    protected fun setSwipeRefreshEnabled(enabled: Boolean) { baseIsRefreshEnabled.value = enabled }
+    protected fun setSwipeRefreshEnabled(enabled: Boolean) { isPdrRefreshEnabled.value = enabled }
 
 }

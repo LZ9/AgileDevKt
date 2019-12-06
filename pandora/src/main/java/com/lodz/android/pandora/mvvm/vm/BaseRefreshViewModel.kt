@@ -9,12 +9,12 @@ import androidx.lifecycle.MutableLiveData
  */
 open class BaseRefreshViewModel : BaseViewModel() {
 
-    var baseIsRefreshFinish = MutableLiveData<Boolean>()
-    var baseIsRefreshEnabled = MutableLiveData<Boolean>()
+    var isPdrRefreshFinish = MutableLiveData<Boolean>()
+    var isPdrRefreshEnabled = MutableLiveData<Boolean>()
 
     /** 设置刷新结束（隐藏刷新进度条） */
-    protected fun setSwipeRefreshFinish() { baseIsRefreshFinish.value = true }
+    protected fun setSwipeRefreshFinish() { isPdrRefreshFinish.value = true }
 
     /** 设置刷新控件是否启用 */
-    protected fun setSwipeRefreshEnabled(enabled: Boolean) { baseIsRefreshEnabled.value = enabled }
+    protected fun setSwipeRefreshEnabled(enabled: Boolean) { isPdrRefreshEnabled.value = enabled }
 }

@@ -1,18 +1,20 @@
-package com.lodz.android.pandora.mvvm.base.activity
+package com.lodz.android.pandora.mvvm.base.fragment
 
+import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.lodz.android.corekt.anko.toastLong
 import com.lodz.android.corekt.anko.toastShort
-import com.lodz.android.pandora.base.activity.BaseActivity
+import com.lodz.android.pandora.base.fragment.BaseFragment
 import com.lodz.android.pandora.mvvm.vm.BaseViewModel
 
 /**
- * ViewModel基类Activity（带基础状态控件）
+ * ViewModel基类Fragment（带基础状态控件）
  * @author zhouL
- * @date 2019/12/4
+ * @date 2019/12/6
  */
-abstract class BaseVmActivity<VM : BaseViewModel> : BaseActivity() {
+abstract class BaseVmFragment<VM : BaseViewModel> : BaseFragment() {
+
 
     private val mPdrViewModel by lazy { ViewModelProviders.of(this).get(createViewModel()) }
 
@@ -20,12 +22,8 @@ abstract class BaseVmActivity<VM : BaseViewModel> : BaseActivity() {
 
     abstract fun createViewModel(): Class<VM>
 
-    override fun setListeners() {
-        super.setListeners()
-
-        getViewModel().isPdrFinish.observe(this, Observer { value ->
-            if (value) { finish() }
-        })
+    override fun setListeners(view: View) {
+        super.setListeners(view)
 
         getViewModel().mPdrShortToastMsg.observe(this, Observer { value ->
             if (value.isNullOrEmpty()) {
@@ -61,4 +59,5 @@ abstract class BaseVmActivity<VM : BaseViewModel> : BaseActivity() {
             if (value) { showTitleBar() } else { goneTitleBar() }
         })
     }
+
 }

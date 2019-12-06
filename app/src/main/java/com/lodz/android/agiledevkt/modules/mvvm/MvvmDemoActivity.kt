@@ -74,7 +74,7 @@ class MvvmDemoActivity : BaseActivity() {
 
         // Fragment用例
         mFragmentBtn.setOnClickListener {
-
+            MvvmFragmentActivity.start(getContext())
         }
     }
 
