@@ -3,17 +3,18 @@ package com.lodz.android.pandora.mvvm.vm
 import androidx.lifecycle.MutableLiveData
 
 /**
- * 带基础状态控件的ViewModel
+ * 带基础状态控件、中部刷新控件和顶部/底部扩展的ViewModel
  * @author zhouL
- * @date 2019/12/4
+ * @date 2019/12/6
  */
-open class BaseViewModel : AbsViewModel() {
+open class BaseSandwichViewModel : AbsViewModel() {
 
     var baseIsShowNoData = MutableLiveData<Boolean>()
     var baseIsShowError = MutableLiveData<Pair<Boolean, Throwable?>>()
     var baseIsShowLoading = MutableLiveData<Boolean>()
     var baseIsShowCompleted = MutableLiveData<Boolean>()
-    var baseIsShowTitleBar = MutableLiveData<Boolean>()
+    var baseIsRefreshFinish = MutableLiveData<Boolean>()
+    var baseIsRefreshEnabled = MutableLiveData<Boolean>()
 
     /** 显示无数据页面 */
     protected fun showStatusNoData() { baseIsShowNoData.value = true }
@@ -28,7 +29,10 @@ open class BaseViewModel : AbsViewModel() {
     /** 显示内容页面 */
     protected fun showStatusCompleted() { baseIsShowCompleted.value = true }
 
-    /** 显隐标题栏，[isShow]是否显示 */
-    @JvmOverloads
-    protected fun showTitleBar(isShow: Boolean = true) { baseIsShowTitleBar.value = isShow }
+    /** 设置刷新结束（隐藏刷新进度条） */
+    protected fun setSwipeRefreshFinish() { baseIsRefreshFinish.value = true }
+
+    /** 设置刷新控件是否启用 */
+    protected fun setSwipeRefreshEnabled(enabled: Boolean) { baseIsRefreshEnabled.value = enabled }
+
 }

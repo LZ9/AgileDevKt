@@ -13,7 +13,7 @@ import kotlinx.coroutines.GlobalScope
  * @author zhouL
  * @date 2019/12/5
  */
-class MvvmTestBaseRefreshViewModel :BaseRefreshViewModel(){
+class MvvmTestRefreshViewModel :BaseRefreshViewModel(){
 
     var mResultText = MutableLiveData<String>()
 

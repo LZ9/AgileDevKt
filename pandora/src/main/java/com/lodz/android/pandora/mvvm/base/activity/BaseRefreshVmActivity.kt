@@ -24,9 +24,7 @@ abstract class BaseRefreshVmActivity<VM : BaseRefreshViewModel> : BaseRefreshAct
         super.setListeners()
 
         getViewModel().absIsFinish.observe(this, Observer { value ->
-            if (value) {
-                finish()
-            }
+            if (value) { finish() }
         })
 
         getViewModel().absShortToastMsg.observe(this, Observer { value ->
@@ -44,35 +42,23 @@ abstract class BaseRefreshVmActivity<VM : BaseRefreshViewModel> : BaseRefreshAct
         })
 
         getViewModel().baseIsShowNoData.observe(this, Observer { value ->
-            if (value) {
-                showStatusNoData()
-            }
+            if (value) { showStatusNoData() }
         })
 
         getViewModel().baseIsShowError.observe(this, Observer { value ->
-            if (value.first) {
-                showStatusError(value.second)
-            }
+            if (value.first) { showStatusError(value.second) }
         })
 
         getViewModel().baseIsShowLoading.observe(this, Observer { value ->
-            if (value) {
-                showStatusLoading()
-            }
+            if (value) { showStatusLoading() }
         })
 
         getViewModel().baseIsShowCompleted.observe(this, Observer { value ->
-            if (value) {
-                showStatusCompleted()
-            }
+            if (value) { showStatusCompleted() }
         })
 
         getViewModel().baseIsShowTitleBar.observe(this, Observer { value ->
-            if (value) {
-                showTitleBar()
-            } else {
-                goneTitleBar()
-            }
+            if (value) { showTitleBar() } else { goneTitleBar() }
         })
 
         getViewModel().baseIsRefreshEnabled.observe(this, Observer { value ->
@@ -80,9 +66,7 @@ abstract class BaseRefreshVmActivity<VM : BaseRefreshViewModel> : BaseRefreshAct
         })
 
         getViewModel().baseIsRefreshFinish.observe(this, Observer { value ->
-            if (value){
-                setSwipeRefreshFinish()
-            }
+            if (value){ setSwipeRefreshFinish() }
         })
     }
 }

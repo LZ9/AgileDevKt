@@ -24,9 +24,7 @@ abstract class AbsVmActivity<VM : AbsViewModel> : AbsActivity() {
         super.setListeners()
 
         getViewModel().absIsFinish.observe(this, Observer { value ->
-            if (value) {
-                finish()
-            }
+            if (value) { finish() }
         })
 
         getViewModel().absShortToastMsg.observe(this, Observer { value ->

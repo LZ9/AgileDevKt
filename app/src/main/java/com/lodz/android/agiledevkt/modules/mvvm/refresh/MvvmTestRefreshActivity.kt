@@ -16,11 +16,11 @@ import kotlin.random.Random
  * @author zhouL
  * @date 2019/12/5
  */
-class MvvmTestBaseRefreshActivity : BaseRefreshVmActivity<MvvmTestBaseRefreshViewModel>() {
+class MvvmTestRefreshActivity : BaseRefreshVmActivity<MvvmTestRefreshViewModel>() {
 
     companion object {
         fun start(context: Context){
-            val intent = Intent(context, MvvmTestBaseRefreshActivity::class.java)
+            val intent = Intent(context, MvvmTestRefreshActivity::class.java)
             context.startActivity(intent)
         }
     }
@@ -32,7 +32,7 @@ class MvvmTestBaseRefreshActivity : BaseRefreshVmActivity<MvvmTestBaseRefreshVie
     /** 获取失败数据按钮 */
     private val mGetFailResultBtn by bindView<Button>(R.id.get_fail_reuslt_btn)
 
-    override fun createViewModel(): Class<MvvmTestBaseRefreshViewModel> = MvvmTestBaseRefreshViewModel::class.java
+    override fun createViewModel(): Class<MvvmTestRefreshViewModel> = MvvmTestRefreshViewModel::class.java
 
     override fun getLayoutId(): Int = R.layout.activity_mvvm_test
 

@@ -706,8 +706,15 @@
         </activity>
 
         <activity
-            android:name=".modules.mvvm.refresh.MvvmTestBaseRefreshActivity"
+            android:name=".modules.mvvm.refresh.MvvmTestRefreshActivity"
             android:label="MVVM带基础状态控件和下拉刷新控件Activity"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity
+            android:name=".modules.mvvm.sandwich.MvvmTestSandwichActivity"
+            android:label="MVVM带基础状态控件、中部刷新控件和顶部/底部扩展的Activity"
             android:screenOrientation="portrait">
 
         </activity>
