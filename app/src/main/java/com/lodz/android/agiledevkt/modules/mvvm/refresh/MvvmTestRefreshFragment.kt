@@ -1,4 +1,4 @@
-package com.lodz.android.agiledevkt.modules.mvvm.base
+package com.lodz.android.agiledevkt.modules.mvvm.refresh
 
 import android.view.View
 import android.widget.Button
@@ -6,17 +6,18 @@ import android.widget.TextView
 import androidx.lifecycle.Observer
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.corekt.anko.bindView
-import com.lodz.android.pandora.mvvm.base.fragment.BaseVmFragment
+import com.lodz.android.pandora.mvvm.base.fragment.BaseRefreshVmFragment
+import kotlin.random.Random
 
 /**
- * MVVM带基础状态控件Fragment
+ * MVVM带基础状态控件和下拉刷新控件Fragment
  * @author zhouL
- * @date 2019/12/6
+ * @date 2019/12/9
  */
-class MvvmTestBaseFragment : BaseVmFragment<MvvmTestBaseViewModel>() {
+class MvvmTestRefreshFragment : BaseRefreshVmFragment<MvvmTestRefreshViewModel>() {
 
     companion object {
-        fun newInstance(): MvvmTestBaseFragment = MvvmTestBaseFragment()
+        fun newInstance(): MvvmTestRefreshFragment = MvvmTestRefreshFragment()
     }
 
     /** 结果 */
@@ -26,9 +27,13 @@ class MvvmTestBaseFragment : BaseVmFragment<MvvmTestBaseViewModel>() {
     /** 获取失败数据按钮 */
     private val mGetFailResultBtn by bindView<Button>(R.id.get_fail_reuslt_btn)
 
-    override fun createViewModel(): Class<MvvmTestBaseViewModel> = MvvmTestBaseViewModel::class.java
+    override fun createViewModel(): Class<MvvmTestRefreshViewModel> = MvvmTestRefreshViewModel::class.java
 
     override fun getLayoutId(): Int = R.layout.activity_mvvm_test
+
+    override fun onDataRefresh() {
+        getViewModel().getRefreshData(Random.nextInt(9) % 2 == 0)
+    }
 
     override fun onClickReload() {
         super.onClickReload()

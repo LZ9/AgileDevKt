@@ -11,6 +11,7 @@ import com.google.android.material.tabs.TabLayout
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.mvvm.abs.MvvmTestLazyFragment
 import com.lodz.android.agiledevkt.modules.mvvm.base.MvvmTestBaseFragment
+import com.lodz.android.agiledevkt.modules.mvvm.refresh.MvvmTestRefreshFragment
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.pandora.base.activity.BaseActivity
 
@@ -65,7 +66,7 @@ class MvvmFragmentActivity : BaseActivity() {
         override fun getItem(position: Int): Fragment = when (position) {
             0 -> MvvmTestLazyFragment.newInstance()
             1 -> MvvmTestBaseFragment.newInstance()
-            2 -> MvvmTestLazyFragment.newInstance()
+            2 -> MvvmTestRefreshFragment.newInstance()
             3 -> MvvmTestLazyFragment.newInstance()
             else -> MvvmTestLazyFragment.newInstance()
         }
