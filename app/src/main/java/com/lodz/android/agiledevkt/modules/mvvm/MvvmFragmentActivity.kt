@@ -12,6 +12,7 @@ import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.mvvm.abs.MvvmTestLazyFragment
 import com.lodz.android.agiledevkt.modules.mvvm.base.MvvmTestBaseFragment
 import com.lodz.android.agiledevkt.modules.mvvm.refresh.MvvmTestRefreshFragment
+import com.lodz.android.agiledevkt.modules.mvvm.sandwich.MvvmTestSandwichFragment
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.pandora.base.activity.BaseActivity
 
@@ -67,7 +68,7 @@ class MvvmFragmentActivity : BaseActivity() {
             0 -> MvvmTestLazyFragment.newInstance()
             1 -> MvvmTestBaseFragment.newInstance()
             2 -> MvvmTestRefreshFragment.newInstance()
-            3 -> MvvmTestLazyFragment.newInstance()
+            3 -> MvvmTestSandwichFragment.newInstance()
             else -> MvvmTestLazyFragment.newInstance()
         }
 
