@@ -37,7 +37,10 @@ object DateUtils {
 
     /** 格式化[formatType]当前时间 */
     @JvmStatic
-    fun getFormatString(formatType: String, date: Date): String {
+    fun getFormatString(formatType: String, date: Date?): String {
+        if (date == null) {
+            return ""
+        }
         try {
             val format = SimpleDateFormat(formatType, Locale.CHINA)
             return format.format(date)
