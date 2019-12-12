@@ -18,11 +18,12 @@ import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.rx.subscribe.subscriber.BaseSubscriber
 import com.lodz.android.pandora.rx.subscribe.subscriber.ProgressSubscriber
 import com.lodz.android.pandora.rx.subscribe.subscriber.RxSubscriber
-import com.lodz.android.pandora.rx.utils.RxFlowableOnSubscribe
 import com.lodz.android.pandora.rx.utils.RxUtils
+import com.lodz.android.pandora.rx.utils.doComplete
+import com.lodz.android.pandora.rx.utils.doError
+import com.lodz.android.pandora.rx.utils.doNext
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
-import io.reactivex.FlowableEmitter
 import kotlinx.coroutines.GlobalScope
 import org.reactivestreams.Subscriber
 import org.reactivestreams.Subscription
@@ -225,79 +226,69 @@ class RxFlowableActivity : BaseActivity() {
     }
 
     /** 创建自定义背压Flowable */
-    private fun createBpFlowable(): Flowable<String> {
-        return Flowable.create(object : RxFlowableOnSubscribe<String>("test.txt") {
-            override fun subscribe(emitter: FlowableEmitter<String>) {
-                val fileName = getArgs()[0] as String
+    private fun createBpFlowable(): Flowable<String> =
+        Flowable.create({ emitter ->
+            val fileName = "test.txt"
+            var isr: InputStreamReader? = null
+            var br: BufferedReader? = null
+            try {
+                isr = InputStreamReader(assets.open(fileName), StandardCharsets.UTF_8)
+                br = BufferedReader(isr)
 
-                var isr: InputStreamReader? = null
-                var br: BufferedReader? = null
-                try {
-                    isr = InputStreamReader(assets.open(fileName), StandardCharsets.UTF_8)
-                    br = BufferedReader(isr)
+                var line: String?
 
-                    var line: String?
-
-                    while (true) {
-                        line = br.readLine() ?: break
-                        emitter.requested()
-                        while (!mBackpressureSwitch.isChecked && emitter.requested() == 0L) {
-                            //下游无法处理数据时循环等待
-                            PrintLog.d("testtag", "等待下游")
-                            if (emitter.isCancelled) {
-                                break
-                            }
-                        }
+                while (true) {
+                    line = br.readLine() ?: break
+                    emitter.requested()
+                    while (!mBackpressureSwitch.isChecked && emitter.requested() == 0L) {
+                        //下游无法处理数据时循环等待
+                        PrintLog.d("testtag", "等待下游")
                         if (emitter.isCancelled) {
                             break
                         }
-                        PrintLog.i("testtag", "发送数据：$line")
-                        doNext(emitter, line)
                     }
-
-                    isr.close()
-                    br.close()
-                    PrintLog.v("testtag", "发送完成")
-                    doComplete(emitter)
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                    isr?.close()
-                    br?.close()
-                    doError(emitter, e)
+                    if (emitter.isCancelled) {
+                        break
+                    }
+                    PrintLog.i("testtag", "发送数据：$line")
+                    emitter.doNext(line)
                 }
+
+                isr.close()
+                br.close()
+                PrintLog.v("testtag", "发送完成")
+                emitter.doComplete()
+            } catch (e: Exception) {
+                e.printStackTrace()
+                isr?.close()
+                br?.close()
+                emitter.doError(e)
             }
+
         }, mBackpressureType)
-    }
 
     /** 创建自定义Flowable，[isDelay]是否延时 */
-    private fun createFlowable(isDelay: Boolean): Flowable<ResponseBean<String>> {
-        return Flowable.create(object : RxFlowableOnSubscribe<ResponseBean<String>>(isDelay.then { 3 }
-                ?: 0) {
-            override fun subscribe(emitter: FlowableEmitter<ResponseBean<String>>) {
-                val delayTime = getArgs()[0] as Int
-                if (emitter.isCancelled) {
-                    return
-                }
-                val responseBean: ResponseBean<String> = if (mFailSwitch.isChecked) {
-                    val bean: ResponseBean<String> = ResponseBean.createFail()
-                    bean.msg = "数据获取失败"
-                    bean
-                } else {
-                    val bean: ResponseBean<String> = ResponseBean.createSuccess()
-                    bean.data = "数据获取成功"
-                    bean
-                }
-                try {
-                    Thread.sleep(delayTime * 1000L)
-                    doNext(emitter, responseBean)
-                    doComplete(emitter)
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                    doError(emitter, e)
-                }
+    private fun createFlowable(isDelay: Boolean): Flowable<ResponseBean<String>> =
+        Flowable.create({ emitter ->
+            val delayTime = isDelay.then { 3 } ?: 0
+            val responseBean: ResponseBean<String> = if (mFailSwitch.isChecked) {
+                val bean: ResponseBean<String> = ResponseBean.createFail()
+                bean.msg = "数据获取失败"
+                bean
+            } else {
+                val bean: ResponseBean<String> = ResponseBean.createSuccess()
+                bean.data = "数据获取成功"
+                bean
+            }
+            try {
+                Thread.sleep(delayTime * 1000L)
+                emitter.doNext(responseBean)
+                emitter.doComplete()
+            } catch (e: Exception) {
+                e.printStackTrace()
+                emitter.doError(e)
             }
         }, BackpressureStrategy.BUFFER)
-    }
 
     override fun initData() {
         super.initData()

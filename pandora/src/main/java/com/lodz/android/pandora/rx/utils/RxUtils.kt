@@ -1,10 +1,8 @@
 package com.lodz.android.pandora.rx.utils
 
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
-import android.widget.EditText
 import android.widget.TextView
+import androidx.core.widget.addTextChangedListener
 import com.lodz.android.corekt.utils.BitmapUtils
 import com.lodz.android.pandora.rx.exception.DataException
 import com.lodz.android.pandora.rx.exception.RxException
@@ -80,128 +78,93 @@ object RxUtils {
 
     /** 把图片路径[path]转为指定宽[widthPx]高[heightPx]的base64 */
     @JvmStatic
-    fun decodePathToBase64(path: String, widthPx: Int, heightPx: Int): Observable<String> {
-        return Observable.create(object : RxObservableOnSubscribe<String>(path, widthPx, heightPx) {
-            override fun subscribe(emitter: ObservableEmitter<String>) {
-                val pathArg = getArgs()[0] as String
-                val widthPxArg = getArgs()[1] as Int
-                val heightPxArg = getArgs()[2] as Int
-                if (pathArg.isEmpty()) {
-                    emitter.onError(IllegalArgumentException("path is empty"))
-                    return
-                }
-                try {
-                    val bitmap = BitmapUtils.compressBitmap(pathArg, widthPxArg, heightPxArg)
-                    if (emitter.isDisposed) {
-                        return
-                    }
-                    if (bitmap == null) {
-                        emitter.onError(IllegalArgumentException("decode bitmap fail"))
-                        return
-                    }
-                    val base64 = BitmapUtils.bitmapToBase64(bitmap)
-                    if (emitter.isDisposed) {
-                        return
-                    }
-                    if (base64.isEmpty()) {
-                        emitter.onError(IllegalArgumentException("decode base64 fail"))
-                        return
-                    }
-                    emitter.onNext(base64)
-                    emitter.onComplete()
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                    emitter.onError(e)
-                }
-
+    fun decodePathToBase64(path: String, widthPx: Int, heightPx: Int): Observable<String> =
+        Observable.create { emitter ->
+            if (path.isEmpty()) {
+                emitter.doError(IllegalArgumentException("path is empty"))
+                return@create
             }
-        })
-    }
+            try {
+                val bitmap = BitmapUtils.compressBitmap(path, widthPx, heightPx)
+                if (emitter.isDisposed) {
+                    return@create
+                }
+                if (bitmap == null) {
+                    emitter.doError(IllegalArgumentException("decode bitmap fail"))
+                    return@create
+                }
+                val base64 = BitmapUtils.bitmapToBase64(bitmap)
+                if (emitter.isDisposed) {
+                    return@create
+                }
+                if (base64.isEmpty()) {
+                    emitter.doError(IllegalArgumentException("decode base64 fail"))
+                    return@create
+                }
+                emitter.doNext(base64)
+                emitter.doComplete()
+            } catch (e: Exception) {
+                e.printStackTrace()
+                emitter.doError(e)
+            }
+        }
 
     /** 把批量图片路径[paths]转为指定宽[widthPx]高[heightPx]的base64 */
     @JvmStatic
-    fun decodePathToBase64(paths: ArrayList<String>, widthPx: Int, heightPx: Int): Observable<ArrayList<String>> {
-        return Observable.create(object : RxObservableOnSubscribe<ArrayList<String>>(paths, widthPx, heightPx) {
-            override fun subscribe(emitter: ObservableEmitter<ArrayList<String>>) {
-                val pathsArg = getArgs()[0] as ArrayList<*>
-                val widthPxArg = getArgs()[1] as Int
-                val heightPxArg = getArgs()[2] as Int
-
-                if (pathsArg.size == 0) {
-                    emitter.onError(IllegalArgumentException("paths size is 0"))
-                    return
-                }
-
-                try {
-                    val base64s = ArrayList<String>()
-                    for (p in pathsArg) {
-                        if (emitter.isDisposed) {
-                            return
-                        }
-                        if (p !is String) {
-                            continue
-                        }
-                        val bitmap = BitmapUtils.compressBitmap(p, widthPxArg, heightPxArg)
-                        if (bitmap == null) {
-                            base64s.add("")
-                            continue
-                        }
-                        val base64 = BitmapUtils.bitmapToBase64(bitmap)
-                        if (base64.isEmpty()) {
-                            base64s.add("")
-                            continue
-                        }
-                        base64s.add(base64)
-                    }
-                    if (emitter.isDisposed) {
-                        return
-                    }
-                    emitter.onNext(base64s)
-                    emitter.onComplete()
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                    emitter.onError(e)
-                }
-
+    fun decodePathToBase64(paths: ArrayList<String>, widthPx: Int, heightPx: Int): Observable<ArrayList<String>> =
+        Observable.create { emitter ->
+            if (paths.size == 0) {
+                emitter.doError(IllegalArgumentException("paths size is 0"))
+                return@create
             }
-        })
-    }
+
+            try {
+                val base64s = ArrayList<String>()
+                for (p in paths) {
+                    if (emitter.isDisposed) {
+                        return@create
+                    }
+                    val bitmap = BitmapUtils.compressBitmap(p, widthPx, heightPx)
+                    if (bitmap == null) {
+                        base64s.add("")
+                        continue
+                    }
+                    val base64 = BitmapUtils.bitmapToBase64(bitmap)
+                    if (base64.isEmpty()) {
+                        base64s.add("")
+                        continue
+                    }
+                    base64s.add(base64)
+                }
+                if (emitter.isDisposed) {
+                    return@create
+                }
+                emitter.doNext(base64s)
+                emitter.doComplete()
+            } catch (e: Exception) {
+                e.printStackTrace()
+                emitter.doError(e)
+            }
+        }
 
     /** [view]防抖点击，在时长[duration]默认1，单位[unit]默认秒内，只回调一次 */
     @JvmStatic
     @JvmOverloads
-    fun viewClick(view: View, duration: Long = 1, unit: TimeUnit = TimeUnit.SECONDS): Observable<View> {
-        return Observable.create(object : RxObservableOnSubscribe<View>(view) {
-            override fun subscribe(emitter: ObservableEmitter<View>) {
-                val viewArg = getArgs()[0] as View
-                viewArg.setOnClickListener { v ->
-                    emitter.onNext(v)
-                }
+    fun viewClick(view: View, duration: Long = 1, unit: TimeUnit = TimeUnit.SECONDS): Observable<View> =
+        Observable.create<View> { emitter ->
+            view.setOnClickListener { v ->
+                emitter.doNext(v)
             }
-
-        }).throttleFirst(duration, unit)
-    }
+        }.throttleFirst(duration, unit)
 
     /** 文本[textView]每次变动都延迟[duration]默认500，单位[unit]默认毫秒后回调 */
     @JvmStatic
     @JvmOverloads
-    fun textChanges(textView: TextView, duration: Long = 500, unit: TimeUnit = TimeUnit.MILLISECONDS): Observable<CharSequence> {
-        return Observable.create(object : RxObservableOnSubscribe<CharSequence>(textView) {
-            override fun subscribe(emitter: ObservableEmitter<CharSequence>) {
-                val editTextArg = getArgs()[0] as EditText
-                editTextArg.addTextChangedListener(object : TextWatcher {
-                    override fun afterTextChanged(s: Editable?) {
-                    }
-
-                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                    }
-
-                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                        val text = s?.toString() ?: ""
-                        emitter.onNext(text)
-                    }
-                })
-            }
-        }).debounce(duration, unit)
-    }
+    fun textChanges(textView: TextView, duration: Long = 500, unit: TimeUnit = TimeUnit.MILLISECONDS): Observable<CharSequence> =
+        Observable.create<CharSequence> { emitter ->
+            textView.addTextChangedListener(onTextChanged = { s: CharSequence?, start: Int, before: Int, count: Int ->
+                val text = s?.toString() ?: ""
+                emitter.doNext(text)
+            })
+        }.debounce(duration, unit)
 }

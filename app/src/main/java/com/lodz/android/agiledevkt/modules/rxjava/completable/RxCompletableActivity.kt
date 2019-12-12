@@ -18,10 +18,10 @@ import com.lodz.android.pandora.rx.subscribe.completable.BaseCompletableObserver
 import com.lodz.android.pandora.rx.subscribe.completable.ProgressCompletableObserver
 import com.lodz.android.pandora.rx.subscribe.completable.RxCompletableObserver
 import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
-import com.lodz.android.pandora.rx.utils.RxCompletableOnSubscribe
 import com.lodz.android.pandora.rx.utils.RxUtils
+import com.lodz.android.pandora.rx.utils.doComplete
+import com.lodz.android.pandora.rx.utils.doError
 import io.reactivex.Completable
-import io.reactivex.CompletableEmitter
 import io.reactivex.CompletableObserver
 import io.reactivex.disposables.Disposable
 import kotlinx.coroutines.GlobalScope
@@ -173,25 +173,21 @@ class RxCompletableActivity : BaseActivity() {
         }
     }
 
-    private fun createCompletable(isDelay: Boolean = false): Completable {
-        return Completable.create(object : RxCompletableOnSubscribe(isDelay.then { 3 } ?: 0) {
-            override fun subscribe(emitter: CompletableEmitter) {
-                val delayTime = getArgs()[0] as Int
-                try {
-                    Thread.sleep(delayTime * 1000L)
-                    if (mFailSwitch.isChecked) {
-                        doError(emitter, NullPointerException("data empty"))
-                    } else {
-                        doComplete(emitter)
-                    }
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                    doError(emitter, e)
+    private fun createCompletable(isDelay: Boolean = false): Completable =
+        Completable.create { emitter ->
+            val delayTime = isDelay.then { 3 } ?: 0
+            try {
+                Thread.sleep(delayTime * 1000L)
+                if (mFailSwitch.isChecked) {
+                    emitter.doError(NullPointerException("data empty"))
+                } else {
+                    emitter.doComplete()
                 }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                emitter.doError(e)
             }
-        })
-    }
-
+        }
 
     override fun initData() {
         super.initData()

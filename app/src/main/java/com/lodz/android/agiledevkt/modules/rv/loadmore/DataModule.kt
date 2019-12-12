@@ -1,8 +1,9 @@
 package com.lodz.android.agiledevkt.modules.rv.loadmore
 
-import com.lodz.android.pandora.rx.utils.RxObservableOnSubscribe
+import com.lodz.android.pandora.rx.utils.doComplete
+import com.lodz.android.pandora.rx.utils.doError
+import com.lodz.android.pandora.rx.utils.doNext
 import io.reactivex.Observable
-import io.reactivex.ObservableEmitter
 import java.util.*
 
 /**
@@ -16,23 +17,16 @@ class DataModule private constructor() {
     }
 
     fun requestData(page: Int): Observable<List<String>> =
-            Observable.create(object : RxObservableOnSubscribe<List<String>>(page) {
-                override fun subscribe(emitter: ObservableEmitter<List<String>>) {
-                    val pages = getArgs()[0] as Int
-                    try {
-
-                        Thread.sleep(1000)
-                        if (emitter.isDisposed) {
-                            return
-                        }
-                        emitter.onNext(getList(pages))
-                        emitter.onComplete()
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                        emitter.onError(e)
-                    }
-                }
-            })
+        Observable.create { emitter ->
+            try {
+                Thread.sleep(1000)
+                emitter.doNext(getList(page))
+                emitter.doComplete()
+            } catch (e: Exception) {
+                e.printStackTrace()
+                emitter.doError(e)
+            }
+        }
 
     private fun getList(page: Int): List<String> {
         val list = ArrayList<String>()

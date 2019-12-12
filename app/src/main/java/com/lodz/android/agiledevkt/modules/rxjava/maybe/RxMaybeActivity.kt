@@ -19,10 +19,11 @@ import com.lodz.android.pandora.rx.subscribe.maybe.BaseMaybeObserver
 import com.lodz.android.pandora.rx.subscribe.maybe.ProgressMaybeObserver
 import com.lodz.android.pandora.rx.subscribe.maybe.RxMaybeObserver
 import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
-import com.lodz.android.pandora.rx.utils.RxMaybeOnSubscribe
 import com.lodz.android.pandora.rx.utils.RxUtils
+import com.lodz.android.pandora.rx.utils.doComplete
+import com.lodz.android.pandora.rx.utils.doError
+import com.lodz.android.pandora.rx.utils.doSuccess
 import io.reactivex.Maybe
-import io.reactivex.MaybeEmitter
 import io.reactivex.MaybeObserver
 import io.reactivex.disposables.Disposable
 import kotlinx.coroutines.GlobalScope
@@ -80,56 +81,53 @@ class RxMaybeActivity : BaseActivity() {
         // Maybe转Observable订阅按钮
         mMaybeToObservableBtn.setOnClickListener {
             cleanLog()
-            Maybe.create(object : RxMaybeOnSubscribe<String>() {
-                override fun subscribe(emitter: MaybeEmitter<String>) {
-                    if (mFailSwitch.isChecked) {
-                        doError(emitter, NullPointerException("data empty"))
-                    } else {
-                        doSuccess(emitter, "data")
-                    }
+
+            Maybe.create<String> { emitter ->
+                if (mFailSwitch.isChecked) {
+                    emitter.doError(NullPointerException("data empty"))
+                } else {
+                    emitter.doSuccess("data")
                 }
-            }).toObservable()
-                    .compose(RxUtils.ioToMainObservable())
-                    .compose(bindDestroyEvent())
-                    .subscribe(object : BaseObserver<String>() {
-                        override fun onBaseSubscribe(d: Disposable) {
-                            super.onBaseSubscribe(d)
-                            printLog("onBaseSubscribe")
-                        }
+            }.toObservable()
+                .compose(RxUtils.ioToMainObservable())
+                .compose(bindDestroyEvent())
+                .subscribe(object : BaseObserver<String>() {
+                    override fun onBaseSubscribe(d: Disposable) {
+                        super.onBaseSubscribe(d)
+                        printLog("onBaseSubscribe")
+                    }
 
-                        override fun onBaseNext(any: String) {
-                            printLog("onBaseNext : $any")
-                        }
+                    override fun onBaseNext(any: String) {
+                        printLog("onBaseNext : $any")
+                    }
 
-                        override fun onBaseError(e: Throwable) {
-                            printLog("onBaseError : ${e.message}")
-                        }
+                    override fun onBaseError(e: Throwable) {
+                        printLog("onBaseError : ${e.message}")
+                    }
 
-                        override fun onBaseComplete() {
-                            super.onBaseComplete()
-                            printLog("onBaseComplete")
-                        }
-                    })
+                    override fun onBaseComplete() {
+                        super.onBaseComplete()
+                        printLog("onBaseComplete")
+                    }
+                })
         }
 
         // 成功订阅按钮
         mSuccessBtn.setOnClickListener {
             cleanLog()
-            Maybe.create(object : RxMaybeOnSubscribe<String>("data") {
-                override fun subscribe(emitter: MaybeEmitter<String>) {
-                    val data = mFailSwitch.isChecked.then { "" } ?: getArgs()[0] as String
-                    try {
-                        if (data.isNotEmpty()) {
-                            doSuccess(emitter, data)
-                        } else {
-                            doError(emitter, NullPointerException("data empty"))
-                        }
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                        doError(emitter, e)
+            Maybe.create<String> { emitter ->
+                val data = mFailSwitch.isChecked.then { "" } ?: "data"
+                try {
+                    if (data.isNotEmpty()) {
+                        emitter.doSuccess(data)
+                    } else {
+                        emitter.doError(NullPointerException("data empty"))
                     }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    emitter.doError(e)
                 }
-            }).compose(RxUtils.ioToMainMaybe())
+            }.compose(RxUtils.ioToMainMaybe())
                 .compose(bindDestroyEvent())
                 .subscribe(BaseMaybeObserver.action(
                     { any -> printLog("onBaseSuccess : $any")},
@@ -140,39 +138,37 @@ class RxMaybeActivity : BaseActivity() {
         // 完成订阅按钮
         mCompleteBtn.setOnClickListener {
             cleanLog()
-            Maybe.create(object : RxMaybeOnSubscribe<String>("data") {
-                override fun subscribe(emitter: MaybeEmitter<String>) {
-                    val data = mFailSwitch.isChecked.then { "" } ?: getArgs()[0] as String
-                    try {
-                        if (data.isNotEmpty()) {
-                            doComplete(emitter)
-                        } else {
-                            doError(emitter, NullPointerException("data empty"))
-                        }
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                        doError(emitter, e)
+            Maybe.create<String> { emitter ->
+                val data = mFailSwitch.isChecked.then { "" } ?: "data"
+                try {
+                    if (data.isNotEmpty()) {
+                        emitter.doComplete()
+                    } else {
+                        emitter.doError(NullPointerException("data empty"))
                     }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    emitter.doError(e)
                 }
-            }).compose(RxUtils.ioToMainMaybe())
-                    .compose(bindDestroyEvent())
-                    .subscribe(object : MaybeObserver<String> {
-                        override fun onSubscribe(d: Disposable) {
-                            printLog("onSubscribe")
-                        }
+            }.compose(RxUtils.ioToMainMaybe())
+                .compose(bindDestroyEvent())
+                .subscribe(object : MaybeObserver<String> {
+                    override fun onSubscribe(d: Disposable) {
+                        printLog("onSubscribe")
+                    }
 
-                        override fun onSuccess(t: String) {
-                            printLog("onSuccess : $t")
-                        }
+                    override fun onSuccess(t: String) {
+                        printLog("onSuccess : $t")
+                    }
 
-                        override fun onComplete() {
-                            printLog("onComplete")
-                        }
+                    override fun onComplete() {
+                        printLog("onComplete")
+                    }
 
-                        override fun onError(e: Throwable) {
-                            printLog("onError : ${e.message}")
-                        }
-                    })
+                    override fun onError(e: Throwable) {
+                        printLog("onError : ${e.message}")
+                    }
+                })
         }
 
         // 响应数据封装按钮
@@ -212,31 +208,25 @@ class RxMaybeActivity : BaseActivity() {
     }
 
     private fun createMaybe(isDelay: Boolean): Maybe<ResponseBean<String>> =
-            Maybe.create(object : RxMaybeOnSubscribe<ResponseBean<String>>(isDelay.then { 3 }
-                    ?: 0) {
-                override fun subscribe(emitter: MaybeEmitter<ResponseBean<String>>) {
-                    val delayTime = getArgs()[0] as Int
-                    if (emitter.isDisposed) {
-                        return
-                    }
-                    val responseBean: ResponseBean<String> = if (mFailSwitch.isChecked) {
-                        val bean: ResponseBean<String> = ResponseBean.createFail()
-                        bean.msg = "数据获取失败"
-                        bean
-                    } else {
-                        val bean: ResponseBean<String> = ResponseBean.createSuccess()
-                        bean.data = "数据获取成功"
-                        bean
-                    }
-                    try {
-                        Thread.sleep(delayTime * 1000L)
-                        doSuccess(emitter, responseBean)
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                        doError(emitter, e)
-                    }
-                }
-            })
+        Maybe.create { emitter ->
+            val delayTime = isDelay.then { 3 } ?: 0
+            val responseBean: ResponseBean<String> = if (mFailSwitch.isChecked) {
+                val bean: ResponseBean<String> = ResponseBean.createFail()
+                bean.msg = "数据获取失败"
+                bean
+            } else {
+                val bean: ResponseBean<String> = ResponseBean.createSuccess()
+                bean.data = "数据获取成功"
+                bean
+            }
+            try {
+                Thread.sleep(delayTime * 1000L)
+                emitter.doSuccess(responseBean)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                emitter.doError(e)
+            }
+        }
 
     override fun initData() {
         super.initData()

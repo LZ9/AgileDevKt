@@ -19,10 +19,10 @@ import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
 import com.lodz.android.pandora.rx.subscribe.single.BaseSingleObserver
 import com.lodz.android.pandora.rx.subscribe.single.ProgressSingleObserver
 import com.lodz.android.pandora.rx.subscribe.single.RxSingleObserver
-import com.lodz.android.pandora.rx.utils.RxSingleOnSubscribe
 import com.lodz.android.pandora.rx.utils.RxUtils
+import com.lodz.android.pandora.rx.utils.doError
+import com.lodz.android.pandora.rx.utils.doSuccess
 import io.reactivex.Single
-import io.reactivex.SingleEmitter
 import io.reactivex.SingleObserver
 import io.reactivex.disposables.Disposable
 import kotlinx.coroutines.GlobalScope
@@ -156,51 +156,46 @@ class RxSingleActivity : BaseActivity() {
         }
     }
 
-    private fun createSingle(): Single<String> = Single.create(object : RxSingleOnSubscribe<String>("data") {
-        override fun subscribe(emitter: SingleEmitter<String>) {
-            val data = mFailSwitch.isChecked.then { "" } ?: getArgs()[0] as String
-            if (emitter.isDisposed) {
-                return
-            }
-            try {
-                if (data.isNotEmpty()) {
-                    doSuccess(emitter, data)
-                } else {
-                    doError(emitter, NullPointerException("data empty"))
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-                doError(emitter, e)
-            }
+    private fun createSingle(): Single<String> = Single.create { emitter ->
+        val data = mFailSwitch.isChecked.then { "" } ?: "data"
+        if (emitter.isDisposed) {
+            return@create
         }
-    })
+        try {
+            if (data.isNotEmpty()) {
+                emitter.doSuccess(data)
+            } else {
+                emitter.doError(NullPointerException("data empty"))
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            emitter.doError(e)
+        }
+    }
 
     private fun createSingle(isDelay: Boolean): Single<ResponseBean<String>> =
-            Single.create(object : RxSingleOnSubscribe<ResponseBean<String>>(isDelay.then { 3 }
-                    ?: 0) {
-                override fun subscribe(emitter: SingleEmitter<ResponseBean<String>>) {
-                    val delayTime = getArgs()[0] as Int
-                    if (emitter.isDisposed) {
-                        return
-                    }
-                    val responseBean: ResponseBean<String> = if (mFailSwitch.isChecked) {
-                        val bean: ResponseBean<String> = ResponseBean.createFail()
-                        bean.msg = "数据获取失败"
-                        bean
-                    } else {
-                        val bean: ResponseBean<String> = ResponseBean.createSuccess()
-                        bean.data = "数据获取成功"
-                        bean
-                    }
-                    try {
-                        Thread.sleep(delayTime * 1000L)
-                        doSuccess(emitter, responseBean)
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                        doError(emitter, e)
-                    }
-                }
-            })
+        Single.create { emitter ->
+            val delayTime = isDelay.then { 3 } ?: 0
+            if (emitter.isDisposed) {
+                return@create
+            }
+            val responseBean: ResponseBean<String> = if (mFailSwitch.isChecked) {
+                val bean: ResponseBean<String> = ResponseBean.createFail()
+                bean.msg = "数据获取失败"
+                bean
+            } else {
+                val bean: ResponseBean<String> = ResponseBean.createSuccess()
+                bean.data = "数据获取成功"
+                bean
+            }
+            try {
+                Thread.sleep(delayTime * 1000L)
+                emitter.doSuccess(responseBean)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                emitter.doError(e)
+            }
+        }
 
     override fun initData() {
         super.initData()

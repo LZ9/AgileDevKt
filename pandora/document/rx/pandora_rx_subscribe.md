@@ -110,9 +110,6 @@ create()|创建加载框|开发者可以根据需要选择不同入参的重载�
         }.create(getContext(), "loading", false, false))// 一定要调用create()方法才会显示加载框
 ```
 
-#### 4）支持不定入参的RxObservableOnSubscribe
-RxObservableOnSubscribe实现ObservableOnSubscribe接口，支持不定入参，并且对ObservableEmitter的调用方法做了封装
-
 方法名称|描述|备注
 :---|:---|:---
 getArgs()|获取构造函数内的不定入参|入参数组
@@ -233,9 +230,6 @@ create()|创建加载框|开发者可以根据需要选择不同入参的重载�
         
 ```
  
-#### 4）支持不定入参的RxFlowableOnSubscribe
-RxFlowableOnSubscribe实现FlowableOnSubscribe接口，支持不定入参，并且对FlowableEmitter的调用方法做了封装
-
 方法名称|描述|备注
 :---|:---|:---
 getArgs()|获取构造函数内的不定入参|入参数组

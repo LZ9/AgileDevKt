@@ -18,10 +18,11 @@ import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
 import com.lodz.android.pandora.rx.subscribe.observer.ProgressObserver
 import com.lodz.android.pandora.rx.subscribe.observer.RxObserver
-import com.lodz.android.pandora.rx.utils.RxObservableOnSubscribe
 import com.lodz.android.pandora.rx.utils.RxUtils
+import com.lodz.android.pandora.rx.utils.doComplete
+import com.lodz.android.pandora.rx.utils.doError
+import com.lodz.android.pandora.rx.utils.doNext
 import io.reactivex.Observable
-import io.reactivex.ObservableEmitter
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 import kotlinx.coroutines.GlobalScope
@@ -151,62 +152,52 @@ class RxObservableActivity : BaseActivity() {
     }
 
     /** 创建自定义Observable */
-    private fun createObservable(): Observable<String> {
-        return Observable.create(object : RxObservableOnSubscribe<String>(3, 10) {
-            override fun subscribe(emitter: ObservableEmitter<String>) {
-                val start = getArgs()[0] as Int// 起始大小
-                val length = getArgs()[1] as Int// 长度
-                val end = start + length
-                if (emitter.isDisposed) {
-                    return
-                }
-                if (mFailSwitch.isChecked) {
-                    doError(emitter, RuntimeException("create fail"))
-                    return
-                }
-                try {
-                    for (i in start..end) {
-                        Thread.sleep(200)
-                        doNext(emitter, i.toString())
-                    }
-                    doComplete(emitter)
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                    doError(emitter, e)
-                }
+    private fun createObservable(): Observable<String> =
+        Observable.create { emitter ->
+            val start = 3// 起始大小
+            val length = 10// 长度
+            val end = start + length
+            if (emitter.isDisposed) {
+                return@create
             }
-        })
-    }
+            if (mFailSwitch.isChecked) {
+                emitter.doError(RuntimeException("create fail"))
+                return@create
+            }
+            try {
+                for (i in start..end) {
+                    Thread.sleep(200)
+                    emitter.doNext(i.toString())
+                }
+                emitter.doComplete()
+            } catch (e: Exception) {
+                e.printStackTrace()
+                emitter.doError(e)
+            }
+        }
 
     /** 创建自定义Observable，[isDelay]是否延时 */
-    private fun createObservable(isDelay: Boolean): Observable<ResponseBean<String>> {
-        return Observable.create(object : RxObservableOnSubscribe<ResponseBean<String>>(isDelay.then { 3 }
-                ?: 0) {
-            override fun subscribe(emitter: ObservableEmitter<ResponseBean<String>>) {
-                val delayTime = getArgs()[0] as Int
-                if (emitter.isDisposed) {
-                    return
-                }
-                val responseBean: ResponseBean<String> = if (mFailSwitch.isChecked) {
-                    val bean: ResponseBean<String> = ResponseBean.createFail()
-                    bean.msg = "数据获取失败"
-                    bean
-                } else {
-                    val bean: ResponseBean<String> = ResponseBean.createSuccess()
-                    bean.data = "数据获取成功"
-                    bean
-                }
-                try {
-                    Thread.sleep(delayTime * 1000L)
-                    doNext(emitter, responseBean)
-                    doComplete(emitter)
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                    doError(emitter, e)
-                }
+    private fun createObservable(isDelay: Boolean): Observable<ResponseBean<String>> =
+        Observable.create { emitter ->
+            val delayTime = isDelay.then { 3 } ?: 0
+            val responseBean: ResponseBean<String> = if (mFailSwitch.isChecked) {
+                val bean: ResponseBean<String> = ResponseBean.createFail()
+                bean.msg = "数据获取失败"
+                bean
+            } else {
+                val bean: ResponseBean<String> = ResponseBean.createSuccess()
+                bean.data = "数据获取成功"
+                bean
             }
-        })
-    }
+            try {
+                Thread.sleep(delayTime * 1000L)
+                emitter.doNext(responseBean)
+                emitter.doComplete()
+            } catch (e: Exception) {
+                e.printStackTrace()
+                emitter.doError(e)
+            }
+        }
 
     /** 清空日志 */
     private fun cleanLog() {
