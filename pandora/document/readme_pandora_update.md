@@ -1,5 +1,15 @@
 # Pandora更新记录
 
+##### 2019/12/13
+1. Rx订阅者封装增加lambda调用
+2. 增加协程加载框扩展类，支持带progress的调用
+3. 增加Activity和Fragment的MVVM基类封装
+4. 增加Rx扩展类，去掉Rx的create相关的继承类
+5. 增加Rx转换代理，支持rx和同步切换
+6. 更新依赖库版本
+7. 代码优化
+8. 发布1.3.0版本
+
 ##### 2019/11/20
 1. 修复SearchTitleBarLayout配置默认文字清空按钮不显示的BUG
 2. 更新rxjava版本

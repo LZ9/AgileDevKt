@@ -18,14 +18,16 @@
     dependencies {
         api 'androidx.appcompat:appcompat:1.1.0'
         api 'com.google.android.material:material:1.0.0'
-        api 'androidx.recyclerview:recyclerview:1.0.0'
+        api 'androidx.recyclerview:recyclerview:1.1.0'
         api 'androidx.cardview:cardview:1.0.0'
         api 'androidx.annotation:annotation:1.1.0'
         api 'androidx.constraintlayout:constraintlayout:1.1.3'
         api 'androidx.core:core-ktx:1.1.0'
-        api 'com.google.android:flexbox:1.1.1'
-        api 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.61'
+        api 'androidx.lifecycle:lifecycle-extensions:2.1.0'
+        api "androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0"
+        api 'com.google.android:flexbox:2.0.0'
         api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.2'
+        api 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.61'
     }
 ```
 
