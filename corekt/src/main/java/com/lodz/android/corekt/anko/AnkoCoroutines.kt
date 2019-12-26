@@ -64,3 +64,13 @@ fun GlobalScope.runOnSuspendIOCatch(
             GlobalScope.runOnMain { error(e) }
         }
     }
+
+suspend fun <T> GlobalScope.awaitOrNull(action: () -> T?): T? =
+    withContext(Dispatchers.IO) {
+        action()
+    }
+
+suspend fun <T> GlobalScope.await(action: () -> T): T =
+    withContext(Dispatchers.IO) {
+        action()
+    }
