@@ -1,6 +1,5 @@
 package com.lodz.android.corekt.utils
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.*
 import android.graphics.drawable.Drawable
@@ -134,7 +133,6 @@ object BitmapUtils {
     annotation class CombinekLocationType
 
     /** 合并前景图[fg]和背景图[bg]，水印位置[location]，间距[marginPx] */
-    @SuppressLint("SwitchIntDef")
     @JvmStatic
     @JvmOverloads
     fun combineBitmap(fg: Bitmap, bg: Bitmap, @CombinekLocationType location: Int, marginPx: Int = 0): Bitmap {
@@ -194,7 +192,6 @@ object BitmapUtils {
 
 
     /** 将水印图片[watermark]放置在原图片[src]上，水印位置[location]，间距[marginPx] */
-    @SuppressLint("SwitchIntDef")
     @JvmStatic
     @JvmOverloads
     fun createWatermarkBitmap(

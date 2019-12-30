@@ -1,6 +1,5 @@
 package com.lodz.android.corekt.log
 
-import android.annotation.SuppressLint
 import android.util.Log
 import androidx.annotation.IntDef
 
@@ -171,7 +170,6 @@ object PrintLog {
     }
 
     /** 根据日志类型打印，[type]为日志类型，[tag]为日志标签，[log]为日志内容 */
-    @SuppressLint("SwitchIntDef")
     private fun logByType(@LogType type: Int, tag: String, log: String?) {
         when (type) {
             LOG_I -> Log.i(tag, log ?: "NULL")
