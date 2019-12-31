@@ -708,4 +708,14 @@
     <string name="menu_bar_msg">消息</string>
     <string name="menu_bar_mine">我的</string>
 
+    <!-- ViewPager2测试类 -->
+    <string name="vp_scroll_type">滑动类型</string>
+    <string name="vp_vertical">垂直</string>
+    <string name="vp_horizontal">水平</string>
+    <string name="vp_scroll_enable">允许滑动</string>
+    <string name="vp_yes">是</string>
+    <string name="vp_no">否</string>
+    <string name="vp_pre_page">上一页</string>
+    <string name="vp_next_page">下一页</string>
+
 </resources>

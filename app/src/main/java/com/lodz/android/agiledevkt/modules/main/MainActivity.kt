@@ -66,6 +66,7 @@ import com.lodz.android.agiledevkt.modules.str.StrTestActivity
 import com.lodz.android.agiledevkt.modules.threadpool.ThreadPoolActivity
 import com.lodz.android.agiledevkt.modules.toast.ToastTestActivity
 import com.lodz.android.agiledevkt.modules.transition.TransitionActivity
+import com.lodz.android.agiledevkt.modules.viewpager.ViewPagerActivity
 import com.lodz.android.agiledevkt.modules.webview.WebViewActivity
 import com.lodz.android.corekt.anko.*
 import com.lodz.android.pandora.base.activity.BaseActivity
@@ -148,7 +149,8 @@ class MainActivity : BaseActivity() {
         MainBean("注解测试类", "Z", AnnotationTestActivity::class.java),
         MainBean("WebView测试类", "W", WebViewActivity::class.java),
         MainBean("CardView测试类", "C", CardViewActivity::class.java),
-        MainBean("MVVM模式测试类", "M", MvvmDemoActivity::class.java)
+        MainBean("MVVM模式测试类", "M", MvvmDemoActivity::class.java),
+        MainBean("ViewPager2测试类", "V", ViewPagerActivity::class.java)
     )
 
     /** 列表 */
