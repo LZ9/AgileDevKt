@@ -3,17 +3,17 @@ package com.lodz.android.agiledevkt.modules.viewpager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.button.MaterialButton
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.ScrollTypeBean
 import com.lodz.android.agiledevkt.modules.main.MainActivity
-import com.lodz.android.corekt.anko.append
 import com.lodz.android.corekt.anko.bindView
-import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.widget.collect.radio.CltRadioGroup
 import com.lodz.android.pandora.widget.collect.radio.Radioable
+import com.lodz.android.pandora.widget.vp2.ScaleInTransformer
 
 /**
  * ViewPager2测试类
@@ -70,6 +70,9 @@ class ViewPagerActivity : BaseActivity() {
         mViewPager.adapter = mAdapter
         mViewPager.orientation = mScrollRadioGroup.getSelectedId()[0].toInt()
         mViewPager.isUserInputEnabled = mEnableRadioGroup.getSelectedId()[0] == R.string.vp_yes.toString()
+        val compositePageTransformer = CompositePageTransformer()
+        compositePageTransformer.addTransformer(ScaleInTransformer())
+        mViewPager.setPageTransformer(compositePageTransformer)
     }
 
     override fun onClickBackBtn() {
@@ -94,7 +97,7 @@ class ViewPagerActivity : BaseActivity() {
         mViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                PrintLog.d("testtag", "show pager ".append(mList?.get(position)?.first))
+//                PrintLog.d("testtag", "show pager ".append(mList?.get(position)?.first))
             }
         })
 
