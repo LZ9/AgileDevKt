@@ -41,13 +41,13 @@ class BaseNavigationView : BottomNavigationView {
     /** 角标模式 */
     private var mPdrBadgeMode = BADGE_NONE_MODE
 
-    constructor(context: Context?) : super(context){
+    constructor(context: Context) : super(context){
         init(null)
     }
-    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs){
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs){
         init(attrs)
     }
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr){
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr){
         init(attrs)
     }
 

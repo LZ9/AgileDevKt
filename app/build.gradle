@@ -24,6 +24,10 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
     //日志开关
     def LOG_DEBUG = "LOG_DEBUG"
     defaultConfig {

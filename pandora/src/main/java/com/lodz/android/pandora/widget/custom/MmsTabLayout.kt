@@ -20,15 +20,15 @@ open class MmsTabLayout : TabLayout {
     /** 两侧间距 */
     private var mPdrTabMarginPx = 0
 
-    constructor(context: Context?) : super(context) {
+    constructor(context: Context) : super(context) {
         init(null)
     }
 
-    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         init(attrs)
     }
 
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
         init(attrs)
     }
 
