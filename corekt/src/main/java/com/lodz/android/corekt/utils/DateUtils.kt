@@ -50,6 +50,10 @@ object DateUtils {
         return ""
     }
 
+    /** 格式化[formatType]时间戳[milliseconds] */
+    @JvmStatic
+    fun getFormatMilliseconds(formatType: String, milliseconds: Long): String = getFormatString(formatType, Date(milliseconds))
+
     /** 将格式化[formatType]后的时间字符串[source]转成Date */
     @JvmStatic
     fun parseFormatDate(formatType: String, source: String): Date? {
