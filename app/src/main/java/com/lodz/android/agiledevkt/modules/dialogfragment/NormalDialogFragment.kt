@@ -1,16 +1,15 @@
 package com.lodz.android.agiledevkt.modules.dialogfragment
 
-import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
-import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.pandora.widget.dialogfragment.BaseDialogFragment
+import com.lodz.android.pandora.widget.vp2.SimpleTabAdapter
 
 /**
  * 普通DialogFragment测试类
@@ -27,7 +26,7 @@ class NormalDialogFragment : BaseDialogFragment() {
     /** TabLayout */
     private val mTabLayout by bindView<TabLayout>(R.id.tab_layout)
     /** ViewPager */
-    private val mViewPager by bindView<ViewPager>(R.id.view_pager)
+    private val mViewPager by bindView<ViewPager2>(R.id.view_pager)
 
     override fun getLayoutId(): Int = R.layout.dialog_fragment_normal
 
@@ -37,20 +36,15 @@ class NormalDialogFragment : BaseDialogFragment() {
     }
 
     private fun initViewPager() {
-        mViewPager.adapter = TabAdapter(requireContext(), childFragmentManager, TABS)
+        val list = ArrayList<Fragment>()
+        for (i in 0 until TABS.size) {
+            list.add(TestFragment.newInstance(context.getString(TABS[i])))
+        }
+        mViewPager.adapter = SimpleTabAdapter(this, list)
         mViewPager.offscreenPageLimit = TABS.size
         mViewPager.setCurrentItem(0, true)
-        mTabLayout.setupWithViewPager(mViewPager)
+        TabLayoutMediator(mTabLayout, mViewPager) { tab, position ->
+            tab.text = context.getText(TABS[position])
+        }.attach()
     }
-
-    private class TabAdapter(val context: Context, fm: FragmentManager, val tabs: ArrayList<Int>) : FragmentPagerAdapter(fm) {
-
-        override fun getItem(position: Int): Fragment = TestFragment.newInstance(context.getString(tabs[position]))
-
-        override fun getCount(): Int = tabs.size
-
-        override fun getPageTitle(position: Int): CharSequence? = context.getString(tabs[position])
-
-    }
-
 }
