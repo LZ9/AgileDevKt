@@ -36,7 +36,7 @@ class ImgBottomSheetDialog(context: Context) : BaseBottomSheetDialog(context) {
         mBehavior = behavior
 
         behavior.peekHeight = context.dp2px(200)
-        behavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+        behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 if (!isUserDismiss) {
                     setDim(if (newState == BottomSheetBehavior.STATE_EXPANDED) 0f else 0.6f)

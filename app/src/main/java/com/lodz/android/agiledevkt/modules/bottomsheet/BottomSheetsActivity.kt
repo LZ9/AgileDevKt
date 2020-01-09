@@ -66,7 +66,7 @@ class BottomSheetsActivity : AbsActivity() {
             TabBottomSheetDialogFragment().show(supportFragmentManager, "TabBottomSheetDialogFragment")
         }
 
-        mBottomSheetBehavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+        mBottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 //这里是bottomSheet 状态的改变
                 PrintLog.d("testtag", "newState : $newState")

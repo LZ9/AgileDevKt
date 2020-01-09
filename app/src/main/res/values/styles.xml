@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- 基础主题 -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/color_00a0e9</item>
         <item name="colorPrimaryDark">@color/color_00a0e9</item>
         <item name="colorAccent">@color/color_00a0e9</item>
