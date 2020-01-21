@@ -3,11 +3,9 @@ package com.lodz.android.agiledevkt.modules.mvvm
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
-import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.mvvm.abs.MvvmTestLazyFragment
 import com.lodz.android.agiledevkt.modules.mvvm.base.MvvmTestBaseFragment
@@ -15,6 +13,7 @@ import com.lodz.android.agiledevkt.modules.mvvm.refresh.MvvmTestRefreshFragment
 import com.lodz.android.agiledevkt.modules.mvvm.sandwich.MvvmTestSandwichFragment
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.pandora.base.activity.BaseActivity
+import com.lodz.android.pandora.widget.vp2.SimpleTabAdapter
 
 /**
  * Fragment生命周期测试类
@@ -37,7 +36,7 @@ class MvvmFragmentActivity : BaseActivity() {
     /** TabLayout */
     private val mTabLayout by bindView<TabLayout>(R.id.tab_layout)
     /** ViewPager */
-    private val mViewPager by bindView<ViewPager>(R.id.view_pager)
+    private val mViewPager by bindView<ViewPager2>(R.id.view_pager)
 
     override fun getLayoutId(): Int = R.layout.activity_fragment_tab_viewpager
 
@@ -47,9 +46,18 @@ class MvvmFragmentActivity : BaseActivity() {
     }
 
     private fun initViewPager() {
+
+        val list = arrayListOf(
+            MvvmTestLazyFragment.newInstance(),
+            MvvmTestBaseFragment.newInstance(),
+            MvvmTestRefreshFragment.newInstance(),
+            MvvmTestSandwichFragment.newInstance()
+        )
         mViewPager.offscreenPageLimit = TAB_NAMES.size
-        mViewPager.adapter = TabAdapter(supportFragmentManager)
-        mTabLayout.setupWithViewPager(mViewPager)
+        mViewPager.adapter = SimpleTabAdapter(this, list)
+        TabLayoutMediator(mTabLayout, mViewPager) { tab, position ->
+            tab.text = TAB_NAMES[position]
+        }.attach()
     }
 
     override fun onClickBackBtn() {
@@ -60,20 +68,5 @@ class MvvmFragmentActivity : BaseActivity() {
     override fun initData() {
         super.initData()
         showStatusCompleted()
-    }
-
-    private inner class TabAdapter(fragmentManager: FragmentManager) :
-        FragmentPagerAdapter(fragmentManager) {
-        override fun getItem(position: Int): Fragment = when (position) {
-            0 -> MvvmTestLazyFragment.newInstance()
-            1 -> MvvmTestBaseFragment.newInstance()
-            2 -> MvvmTestRefreshFragment.newInstance()
-            3 -> MvvmTestSandwichFragment.newInstance()
-            else -> MvvmTestLazyFragment.newInstance()
-        }
-
-        override fun getCount(): Int = TAB_NAMES.size
-
-        override fun getPageTitle(position: Int): CharSequence? = TAB_NAMES[position]
     }
 }

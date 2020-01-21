@@ -28,11 +28,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:hint="@string/security_hint"
+        android:importantForAutofill="no"
         android:inputType="text"
         android:maxLines="1"
         android:textSize="13sp"
-        android:importantForAutofill="no"
-        tools:targetApi="o"/>
+        tools:targetApi="o" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -52,6 +52,7 @@
             style="?android:attr/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
             android:text="@string/security_AES_encrypt"
             android:textSize="13sp" />
 
@@ -60,6 +61,7 @@
             style="?android:attr/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
             android:text="@string/security_AES_decrypt"
             android:textSize="13sp" />
 
@@ -83,6 +85,7 @@
             style="?android:attr/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
             android:text="@string/security_RSA_encrypt"
             android:textSize="13sp" />
 
@@ -91,6 +94,7 @@
             style="?android:attr/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
             android:text="@string/security_RSA_decrypt"
             android:textSize="13sp" />
 
@@ -114,6 +118,7 @@
             style="?android:attr/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
             android:text="@string/security_SHA1_btn"
             android:textSize="13sp" />
 
@@ -122,6 +127,7 @@
             style="?android:attr/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
             android:text="@string/security_clean"
             android:textSize="13sp" />
 

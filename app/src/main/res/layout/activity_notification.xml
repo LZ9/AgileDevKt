@@ -8,47 +8,55 @@
         android:id="@+id/base_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
         android:text="@string/notify_base" />
 
     <Button
         android:id="@+id/intent_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
         android:text="@string/notify_intent" />
 
     <Button
         android:id="@+id/progress_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
         android:text="@string/notify_progress" />
 
     <Button
         android:id="@+id/single_txt_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
         android:text="@string/notify_single_txt" />
 
     <Button
         android:id="@+id/multi_txt_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
         android:text="@string/notify_multi_txt" />
 
     <Button
         android:id="@+id/large_img_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
         android:text="@string/notify_large_img" />
 
     <Button
         android:id="@+id/custom_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
         android:text="@string/notify_custom" />
 
     <Button
         android:id="@+id/msg_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
         android:text="@string/notify_msg" />
 </LinearLayout>

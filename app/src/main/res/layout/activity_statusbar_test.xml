@@ -38,6 +38,7 @@
         android:id="@+id/test_img_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
         android:text="@string/status_bar_test_img"
         android:textAllCaps="false" />
 
@@ -45,6 +46,7 @@
         android:id="@+id/test_drawer_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
         android:text="@string/status_bar_test_drawer"
         android:textAllCaps="false" />
 
@@ -52,6 +54,7 @@
         android:id="@+id/test_coordinator_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
         android:text="@string/status_bar_test_coordinator"
         android:textAllCaps="false" />
 </LinearLayout>

@@ -14,6 +14,7 @@
             style="@style/Base.Widget.AppCompat.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
             android:text="@string/mvc_demo_request_success_data" />
 
         <Button
@@ -21,6 +22,7 @@
             style="@style/Base.Widget.AppCompat.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
             android:text="@string/mvc_demo_request_fail_data" />
 
     </LinearLayout>

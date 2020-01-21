@@ -45,6 +45,7 @@
             android:id="@+id/get_constructor_name_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
             android:text="@string/reflect_get_constructor_name"
             android:textSize="12sp" />
 
@@ -52,6 +53,7 @@
             android:id="@+id/get_method_name_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
             android:text="@string/reflect_get_method_name"
             android:textSize="12sp" />
 
@@ -66,6 +68,7 @@
             android:id="@+id/get_field_value_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
             android:text="@string/reflect_get_field_value"
             android:textSize="12sp" />
 
@@ -80,6 +83,7 @@
             android:id="@+id/execute_param_function_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
             android:text="@string/reflect_execute_param_function"
             android:textSize="12sp" />
 
@@ -87,6 +91,7 @@
             android:id="@+id/set_value_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
             android:text="@string/reflect_set_value"
             android:textSize="12sp" />
     </com.google.android.flexbox.FlexboxLayout>

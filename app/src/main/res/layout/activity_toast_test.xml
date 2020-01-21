@@ -8,6 +8,7 @@
         android:id="@+id/short_duration_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
         android:text="@string/toast_short_time"
         android:textAllCaps="false" />
 
@@ -15,6 +16,7 @@
         android:id="@+id/long_duration_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
         android:text="@string/toast_long_time"
         android:textAllCaps="false" />
 
@@ -22,6 +24,7 @@
         android:id="@+id/custom_position_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
         android:text="@string/toast_gravity_center"
         android:textAllCaps="false" />
 
@@ -29,6 +32,7 @@
         android:id="@+id/top_img_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
         android:text="@string/toast_top_drawable"
         android:textAllCaps="false" />
 
@@ -36,6 +40,7 @@
         android:id="@+id/custom_view_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
         android:text="@string/toast_custom"
         android:textAllCaps="false" />
 
@@ -43,6 +48,7 @@
         android:id="@+id/io_thread_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
         android:text="@string/toast_io_thread"
         android:textAllCaps="false" />
 </LinearLayout>

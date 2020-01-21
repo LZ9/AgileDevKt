@@ -22,6 +22,7 @@
             style="@style/Widget.AppCompat.Button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
             android:layout_weight="1"
             android:text="@string/thread_pool_close" />
 
@@ -30,6 +31,7 @@
             style="@style/Widget.AppCompat.Button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
             android:layout_weight="1"
             android:text="@string/thread_pool_clear" />
 

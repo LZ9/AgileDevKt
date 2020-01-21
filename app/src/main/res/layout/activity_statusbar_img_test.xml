@@ -31,10 +31,10 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:contentDescription="@string/app_img_name"
-                    android:paddingBottom="8dp"
-                    android:paddingEnd="14dp"
                     android:paddingStart="14dp"
                     android:paddingTop="8dp"
+                    android:paddingEnd="14dp"
+                    android:paddingBottom="8dp"
                     android:src="@drawable/pandora_ic_back" />
 
                 <ImageView
@@ -43,10 +43,10 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:contentDescription="@string/app_img_name"
-                    android:paddingBottom="8dp"
-                    android:paddingEnd="14dp"
                     android:paddingStart="14dp"
                     android:paddingTop="8dp"
+                    android:paddingEnd="14dp"
+                    android:paddingBottom="8dp"
                     android:src="@drawable/ic_launcher" />
 
             </RelativeLayout>

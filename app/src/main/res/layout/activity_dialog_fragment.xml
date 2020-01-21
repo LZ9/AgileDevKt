@@ -19,18 +19,21 @@
         android:id="@+id/center_df_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
         android:text="@string/dialog_center" />
 
     <Button
         android:id="@+id/left_df_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
         android:text="@string/dialog_left" />
 
     <Button
         android:id="@+id/right_df_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
         android:text="@string/dialog_right" />
 
     <Button
@@ -43,5 +46,6 @@
         android:id="@+id/top_df_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
         android:text="@string/dialog_top" />
 </com.google.android.flexbox.FlexboxLayout>

@@ -12,7 +12,7 @@
 
     <Button
         android:id="@+id/detail_btn"
-        android:layout_width="50dp"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:layout_gravity="end|center_vertical"
         android:background="@android:color/transparent"

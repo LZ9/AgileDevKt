@@ -21,18 +21,21 @@
             android:id="@+id/attention_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
             android:text="@string/snackbar_attention" />
 
         <Button
             android:id="@+id/custom_img_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
             android:text="@string/snackbar_custom_img" />
 
         <Button
             android:id="@+id/custom_layout_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
             android:text="@string/snackbar_custom_layout" />
 
     </LinearLayout>

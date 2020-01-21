@@ -8,6 +8,7 @@
         android:id="@+id/abs_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
         android:text="@string/mvc_demo_abs"
         android:textSize="13sp" />
 
@@ -15,6 +16,7 @@
         android:id="@+id/base_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
         android:text="@string/mvc_demo_base"
         android:textSize="13sp" />
 
@@ -22,6 +24,7 @@
         android:id="@+id/refresh_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
         android:text="@string/mvc_demo_refresh"
         android:textSize="13sp" />
 
@@ -29,6 +32,7 @@
         android:id="@+id/sandwich_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
         android:text="@string/mvc_demo_sandwich"
         android:textSize="13sp" />
 
@@ -36,6 +40,7 @@
         android:id="@+id/fragment_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
         android:text="@string/mvc_demo_fragment"
         android:textSize="13sp" />
 </LinearLayout>

@@ -12,7 +12,6 @@
         android:orientation="vertical"
         android:padding="8dp">
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -86,8 +85,8 @@
                 android:id="@+id/system_brightness_sb"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
                 android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
                 android:max="255"
                 tools:progress="50" />
         </LinearLayout>
@@ -131,8 +130,8 @@
                 android:id="@+id/window_brightness_sb"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
                 android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
                 android:max="255"
                 tools:progress="50" />
         </LinearLayout>
@@ -140,8 +139,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             android:background="@color/orange" />
 
         <LinearLayout
@@ -186,10 +185,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="@string/setting_screen_dormant_time_hint"
+                android:importantForAutofill="no"
                 android:inputType="number"
                 android:textSize="15sp"
-                android:importantForAutofill="no"
-                tools:targetApi="o"/>
+                tools:targetApi="o" />
 
             <Button
                 android:id="@+id/screen_dormant_time_setting_btn"
@@ -201,8 +200,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             android:background="@color/orange" />
 
         <LinearLayout
@@ -243,8 +242,8 @@
                 android:id="@+id/ring_volume_sb"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
                 android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
                 android:max="7"
                 tools:progress="2" />
         </LinearLayout>

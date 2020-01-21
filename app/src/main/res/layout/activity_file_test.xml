@@ -22,6 +22,7 @@
             style="?android:attr/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
             android:text="@string/file_create_new_file" />
 
         <Button
@@ -29,6 +30,7 @@
             style="?android:attr/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
             android:text="@string/file_create_directory" />
     </LinearLayout>
 
@@ -42,6 +44,7 @@
             style="?android:attr/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
             android:text="@string/file_exists" />
 
         <Button
@@ -49,10 +52,10 @@
             style="?android:attr/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
             android:text="@string/file_rename" />
 
     </LinearLayout>
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -64,6 +67,7 @@
             style="?android:attr/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
             android:text="@string/file_delete_suffix_jpg" />
 
         <Button
@@ -71,6 +75,7 @@
             style="?android:attr/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
             android:text="@string/file_move" />
 
         <Button
@@ -78,6 +83,7 @@
             style="?android:attr/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
             android:text="@string/file_copy" />
     </LinearLayout>
 
@@ -91,6 +97,7 @@
             style="?android:attr/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
             android:text="@string/file_get_length" />
 
         <Button
@@ -98,16 +105,17 @@
             style="?android:attr/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
             android:text="@string/file_delete_path" />
 
     </LinearLayout>
-
 
     <Button
         android:id="@+id/save_by_bytes_btn"
         style="?android:attr/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
         android:text="@string/file_save_by_bytes" />
 
     <Button
@@ -115,7 +123,7 @@
         style="?android:attr/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
         android:text="@string/file_save_bitmap" />
-
 
 </LinearLayout>
