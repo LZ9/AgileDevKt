@@ -31,6 +31,7 @@ import com.lodz.android.agiledevkt.modules.dialog.DialogActivity
 import com.lodz.android.agiledevkt.modules.dialogfragment.DialogFragmentActivity
 import com.lodz.android.agiledevkt.modules.dimensions.DimensionsActivity
 import com.lodz.android.agiledevkt.modules.drawer.DrawerTestActivity
+import com.lodz.android.agiledevkt.modules.fglifecycle.FragmentLifecycleActivity
 import com.lodz.android.agiledevkt.modules.file.FileTestActivity
 import com.lodz.android.agiledevkt.modules.format.NumFormatTestActivity
 import com.lodz.android.agiledevkt.modules.idcard.IdcardTestActivity
@@ -150,7 +151,8 @@ class MainActivity : BaseActivity() {
         MainBean("WebView测试类", "W", WebViewActivity::class.java),
         MainBean("CardView测试类", "C", CardViewActivity::class.java),
         MainBean("MVVM模式测试类", "M", MvvmDemoActivity::class.java),
-        MainBean("ViewPager2测试类", "V", ViewPagerActivity::class.java)
+        MainBean("ViewPager2测试类", "V", ViewPagerActivity::class.java),
+        MainBean("Fragment生命周期测试", "F", FragmentLifecycleActivity::class.java)
     )
 
     /** 列表 */

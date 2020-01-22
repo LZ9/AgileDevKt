@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 import com.lodz.android.corekt.anko.getSize
+import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.pandora.base.activity.UseAnkoLayout
 import com.trello.rxlifecycle3.LifecycleTransformer
 import com.trello.rxlifecycle3.android.FragmentEvent
@@ -36,6 +37,8 @@ abstract class LazyFragment : RxFragment(), IFragmentBackPressed {
     private var isPdrAlreadyPause = false
     /** 是否从OnPause离开 */
     private var isPdrOnPauseOut = false
+    /** 是否使用lifecycle判断懒加载 */
+    private var isUseLifecycle = true
 
     /** 是否使用AnkoLayout */
     protected fun isUseAnkoLayout(): Boolean = isPdrUseAnko
@@ -59,6 +62,8 @@ abstract class LazyFragment : RxFragment(), IFragmentBackPressed {
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
+        isUseLifecycle = false
+        PrintLog.i("testtag", "${javaClass.simpleName} setUserVisibleHint lifecycle.currentState : ${lifecycle.currentState}")
         isPdrLazyLoad = configIsLazyLoad()
         var isInit = false
         if (isVisibleToUser && isPdrLazyLoad && !isPdrFirstCreate && !isPdrLoadComplete) {// fragment可见 && 启用懒加载 && 不是第一次启动 && 未加载完成
@@ -86,13 +91,23 @@ abstract class LazyFragment : RxFragment(), IFragmentBackPressed {
 
     final override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        PrintLog.e("testtag", "${javaClass.simpleName} onViewCreated lifecycle.currentState : ${lifecycle.currentState}")
         mPdrParentView = view
-        if (!isPdrLazyLoad || userVisibleHint) {// 不使用懒加载 || fragment可见
+        if (!isUseLifecycle) {// 不使用lifecycle判断懒加载
+            if (!isPdrLazyLoad || userVisibleHint) {// 不使用懒加载 || fragment可见
+                init(view, savedInstanceState)
+                isPdrLoadComplete = true
+                onFragmentResume()
+            }
+            isPdrFirstCreate = false
+            return
+        }
+
+        if (!isPdrLazyLoad) {// 使用lifecycle && 不使用懒加载
             init(view, savedInstanceState)
             isPdrLoadComplete = true
             onFragmentResume()
         }
-        isPdrFirstCreate = false
     }
 
 
@@ -122,6 +137,16 @@ abstract class LazyFragment : RxFragment(), IFragmentBackPressed {
 
     override fun onResume() {
         super.onResume()
+        PrintLog.d("testtag", "${javaClass.simpleName} onResume lifecycle.currentState : ${lifecycle.currentState}")
+        if (isUseLifecycle && !isPdrLoadComplete && isPdrFirstCreate){// 使用Lifecycle && 未加载完成 && 首次加载
+            init(mPdrParentView!!, null)
+            isPdrLoadComplete = true
+            isPdrFirstCreate = false
+        }
+        if (isUseLifecycle){
+            onFragmentResume()
+            return
+        }
         if (isPdrFirstResume) {
             isPdrFirstResume = false
             return
@@ -163,6 +188,11 @@ abstract class LazyFragment : RxFragment(), IFragmentBackPressed {
 
     override fun onPause() {
         super.onPause()
+        PrintLog.v("testtag", "${javaClass.simpleName} onPause lifecycle.currentState : ${lifecycle.currentState}")
+        if (isUseLifecycle){
+            onFragmentPause()
+            return
+        }
         if (userVisibleHint && isPdrLoadComplete && !isPdrAlreadyPause) {// 自己显示 && 已加载完成 && 未调用过pause方法
             val parent = parentFragment
             if (parent != null && !parent.userVisibleHint) {//父类没有显示

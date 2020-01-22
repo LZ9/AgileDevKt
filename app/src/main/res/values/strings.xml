@@ -718,4 +718,8 @@
     <string name="vp_pre_page">上一页</string>
     <string name="vp_next_page">下一页</string>
 
+    <!-- Fragment生命周期测试 -->
+    <string name="fg_lifecycle_vp">ViewPager嵌套测试</string>
+    <string name="fg_lifecycle_vp2">ViewPager2嵌套测试</string>
+
 </resources>

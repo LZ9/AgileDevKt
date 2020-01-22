@@ -727,11 +727,26 @@
         </activity>
 
         <activity
-                android:name=".modules.viewpager.ViewPagerActivity"
-                android:label="ViewPager2测试类"
-                android:screenOrientation="portrait">
+            android:name=".modules.viewpager.ViewPagerActivity"
+            android:label="ViewPager2测试类"
+            android:screenOrientation="portrait">
 
         </activity>
+
+        <activity
+            android:name=".modules.fglifecycle.FragmentLifecycleActivity"
+            android:label="Fragment生命周期测试"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity
+            android:name=".modules.fglifecycle.vp.FgVpTestActivity"
+            android:label="ViewPager嵌套Fragment测试"
+            android:screenOrientation="portrait">
+
+        </activity>
+
 
     </application>
 
