@@ -11,7 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
-        android:text="@string/rx_observable_base"
+        android:text="@string/fg_lifecycle_vp"
+        android:textAllCaps="false"
         android:textColor="@color/white" />
 
     <com.google.android.material.button.MaterialButton
@@ -21,7 +22,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
-        android:text="@string/rx_observable_base"
+        android:text="@string/fg_lifecycle_vp2"
+        android:textAllCaps="false"
         android:textColor="@color/white" />
 
 </LinearLayout>
