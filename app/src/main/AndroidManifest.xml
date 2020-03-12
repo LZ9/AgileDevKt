@@ -22,6 +22,8 @@
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <!-- 前台通知 -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <!-- 获取堆栈列表适配4.4 -->
+    <uses-permission android:name="android.permission.GET_TASKS" />
 
     <!-- ********************* 需要申请（只要同组有一个授权整组的权限都可以使用） ********************* -->
     <!-- 相机 -->
@@ -42,7 +44,7 @@
     <!-- 通过WiFi或移动基站的方式定位 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <!-- 后台定位 -->
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
     <!-- ********************* 腾讯定位 ********************* -->
     <!-- 访问WiFi状态，需要WiFi信息用于网络定位 -->
@@ -140,7 +142,8 @@
             android:name=".modules.splash.SplashActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Splash">
+            android:theme="@style/AppTheme.Splash"
+            tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -152,49 +155,56 @@
             android:name=".modules.main.MainActivity"
             android:label="主页面"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.anko.AnkoLayoutActivity"
             android:label="AnkoLayout测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.file.FileTestActivity"
             android:label="文件测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.security.EncryptTestActivity"
             android:label="加密测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.bitmap.BitmapTestActivity"
             android:label="Bitmap图片测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.image.GlideActivity"
             android:label="Glide测试"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.notification.NotificationActivity"
             android:label="通知测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
@@ -202,14 +212,16 @@
             android:name=".modules.notification.MsgDetailActivity"
             android:label="消息详情"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.toast.ToastTestActivity"
             android:label="Toast测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
@@ -217,119 +229,136 @@
         <activity
             android:name=".modules.reflect.ReflectActivity"
             android:label="反射测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.color.ColorAlphaTestActivity"
             android:label="颜色透明度测试"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.threadpool.ThreadPoolActivity"
             android:label="线程池测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.idcard.IdcardTestActivity"
             android:label="身份证号码测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.format.NumFormatTestActivity"
             android:label="数字格式化测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.selector.SelectorTestActivity"
             android:label="背景选择器测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.setting.SettingTestActivity"
             android:label="设置测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.str.StrTestActivity"
             android:label="字符测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.info.InfoTestActivity"
             android:label="信息展示测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.bluetooth.BluetoothTestActivity"
             android:label="蓝牙测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.statusbar.StatusBarTestActivity"
             android:label="状态栏透明颜色测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.statusbar.StatusBarImgTestActivity"
             android:label="带ImageView的状态栏颜色测试"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.drawer.DrawerTestActivity"
             android:label="侧滑栏测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.coordinator.CoordinatorTestActivity"
             android:label="CoordinatorLayout测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.coordinator.CoorStatusBarTestActivity"
             android:label="带CoordinatorLayout的状态栏测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.coordinator.CoorTranslationActivity"
             android:label="带CoordinatorLayout的位移测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.snackbar.SnackbarTestActivity"
             android:label="Snackbar测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
@@ -337,413 +366,472 @@
         <activity
             android:name=".modules.crash.CrashTestActivity"
             android:label="崩溃测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.location.LocationTestActivity"
             android:label="定位测试"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.dialog.DialogActivity"
             android:label="Dialog测试"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.array.ArrayTestActivity"
             android:label="数组列表测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.acache.ACacheTestActivity"
             android:label="ACache缓存测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.mvc.MvcDemoActivity"
             android:label="MVC模式测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.mvc.abs.MvcTestAbsActivity"
             android:label="MVC基础Activity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.mvc.base.MvcTestBaseActivity"
             android:label="MVC带基础状态控件Activity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.mvc.refresh.MvcTestRefreshActivity"
             android:label="带基础状态控件和下来刷新控件Activity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.mvc.sandwich.MvcTestSandwichActivity"
             android:label="MVC带基础状态控件、中部刷新控件和顶部/底部扩展Activity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.mvc.MvcFragmentActivity"
             android:label="fragment生命周期测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.anko.FragmentChangeActivity"
             android:label="Fragment变更类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.transition.TransitionActivity"
             android:label="共享元素动画"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.transition.ElementActivity"
             android:label="共享元素详情"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.rv.anim.AnimRvActivity"
             android:label="RV动画测试"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.rv.loadmore.RefreshLoadMoreActivity"
             android:label="RV刷新/加载更多测试"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.rv.head.HeadFooterRvActivity"
             android:label="RV带头/底部测试"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.rv.drag.DragRvActivity"
             android:label="RV拖拽测试"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.rv.snap.SnapRvActivity"
             android:label="RvSnap测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.rv.decoration.DecorationRvActivity"
             android:label="RV装饰器测试"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.rv.decoration.DecorationTestActivity"
             android:label="装饰器测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.rv.binder.BinderRvActivity"
             android:label="RecyclerBinder测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.bottomsheet.BottomSheetsActivity"
             android:label="BottomSheets测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.dialogfragment.DialogFragmentActivity"
             android:label="DialogFragment测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.pic.PicActivity"
             android:label="图片测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.pic.preview.PicPreviewTestActivity"
             android:label="图片预览测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.album.AlbumActivity"
             android:label="系统相册测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.pic.picker.PicPickerTestActivity"
             android:label="图片选择测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.pic.take.TakePhotoTestActivity"
             android:label="拍照测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.pic.ninegrid.NineGridActivity"
             android:label="九宫格测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.progressdialog.ProgressDialogActivity"
             android:label="加载框测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.rxjava.utils.RxUtilsTestActivity"
             android:label="Rx帮助类测试"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.rxjava.observable.RxObservableActivity"
             android:label="RxObservable订阅测试"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.rxjava.flowable.RxFlowableActivity"
             android:label="RxFlowable订阅测试"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.rxjava.single.RxSingleActivity"
             android:label="RxSingle订阅测试"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.rxjava.maybe.RxMaybeActivity"
             android:label="RxMaybe订阅测试"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.rxjava.completable.RxCompletableActivity"
             android:label="RxCompletable订阅测试"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.menubar.MenuBarTestActivity"
             android:label="底部菜单栏测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.collect.CollectActivity"
             android:label="采集测试页"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.api.ApiTestActivity"
             android:label="接口测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.date.DateActivity"
             android:label="日期测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.coroutines.CoroutinesActivity"
             android:label="协程测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.dimensions.DimensionsActivity"
             android:label="单位转换测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.config.ConfigLayoutActivity"
             android:label="基础控件配置"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.annotation.AnnotationTestActivity"
             android:label="注解测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.webview.WebViewActivity"
             android:label="WebView测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.webview.PgWebViewActivity"
             android:label="带加载控件的WebView测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.webview.JsWebViewActivity"
             android:label="JS交互的WebView测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.webview.simple.SimpleWebViewActivity"
             android:label="简单配置的WebView测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.cardview.CardViewActivity"
             android:label="CardView测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.mvvm.MvvmDemoActivity"
             android:label="MVVM模式测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.mvvm.abs.MvvmTestAbsActivity"
             android:label="MVVM基础Activity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.mvvm.base.MvvmTestBaseActivity"
             android:label="MVVM带基础状态控件Activity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.mvvm.refresh.MvvmTestRefreshActivity"
             android:label="MVVM带基础状态控件和下拉刷新控件Activity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.mvvm.sandwich.MvvmTestSandwichActivity"
             android:label="MVVM带基础状态控件、中部刷新控件和顶部/底部扩展的Activity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.mvvm.MvvmFragmentActivity"
             android:label="Fragment生命周期测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.viewpager.ViewPagerActivity"
             android:label="ViewPager2测试类"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.fglifecycle.FragmentLifecycleActivity"
             android:label="Fragment生命周期测试"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
         <activity
             android:name=".modules.fglifecycle.vp.FgVpTestActivity"
             android:label="ViewPager嵌套Fragment测试"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
 
