@@ -57,6 +57,8 @@ class InfoTestActivity : BaseActivity() {
     /** 设备 */
     private val mDeviceTv by bindView<TextView>(R.id.device_tv)
 
+    /** AndroidId */
+    private val mAndroidIdTv by bindView<TextView>(R.id.android_id_tv)
     /** IMEI1 */
     private val mImei1Tv by bindView<TextView>(R.id.imei1_tv)
     /** IMEI2 */
@@ -160,6 +162,7 @@ class InfoTestActivity : BaseActivity() {
         mProductTv.text = getString(R.string.info_phone_product).format(DeviceUtils.getDeviceValue(DeviceUtils.PRODUCT))
         mDeviceTv.text = getString(R.string.info_phone_device).format(DeviceUtils.getDeviceValue(DeviceUtils.DEVICE))
 
+        mAndroidIdTv.text = getString(R.string.info_phone_id).format(getAndroidId())
         mImei1Tv.text = getString(R.string.info_phone_imei1).format(getIMEI1())
         mImei2Tv.text = getString(R.string.info_phone_imei2).format(getIMEI2())
         mDualSimTv.text = getString(R.string.info_is_dual_sim).format(isDualSim().toString())

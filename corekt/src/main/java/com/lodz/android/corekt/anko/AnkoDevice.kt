@@ -1,8 +1,10 @@
 package com.lodz.android.corekt.anko
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
+import android.provider.Settings
 import android.telephony.TelephonyManager
 import androidx.annotation.RequiresPermission
 import com.lodz.android.corekt.utils.ReflectUtils
@@ -94,4 +96,20 @@ private fun Context.getOperatorBySlot(predictedMethodName: String, slotId: Int):
         e.printStackTrace()
     }
     return ""
+}
+
+/** 获取手机Android ID */
+@SuppressLint("HardwareIds")
+fun Context.getAndroidId(): String {
+    val id: String? = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID)
+    return id ?: ""
+}
+
+/** 获取手机硬件id兼容方法 */
+fun Context.getDeviceIdCompat(): String {
+    val imei :String? = getIMEI1()
+    if (imei != null && imei.isNotEmpty()){
+        return imei
+    }
+    return getAndroidId()
 }
