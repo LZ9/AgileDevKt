@@ -34,13 +34,13 @@ dependencies {
     api project(':corekt')
 
     // RxJava
-    api 'io.reactivex.rxjava3:rxjava:3.0.0'
+    api 'io.reactivex.rxjava3:rxjava:3.0.1'
     api 'io.reactivex.rxjava3:rxandroid:3.0.0'
     // Retrofit
     api 'com.squareup.retrofit2:retrofit:2.7.2'
     api 'com.squareup.retrofit2:adapter-rxjava2:2.7.2'
     api 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2'
-    api 'com.alibaba:fastjson:1.2.62'
+    api 'com.alibaba:fastjson:1.2.66'
     // RxJava生命周期
     api 'com.trello.rxlifecycle3:rxlifecycle-components:3.1.0'
     // EventBus
