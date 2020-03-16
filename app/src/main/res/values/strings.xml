@@ -198,6 +198,7 @@
     <string name="info_phone_manufacturer">制造商：%s</string>
     <string name="info_phone_product">产品：%s</string>
     <string name="info_phone_device">设备：%s</string>
+    <string name="info_phone_id">AndroidId：%s</string>
     <string name="info_phone_imei1">IMEI1：%s</string>
     <string name="info_phone_imei2">IMEI2：%s</string>
     <string name="info_is_dual_sim">是否双卡双待：%s</string>

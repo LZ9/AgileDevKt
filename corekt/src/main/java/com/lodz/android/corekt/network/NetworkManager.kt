@@ -73,7 +73,7 @@ class NetworkManager private constructor() {
             return OperatorInfo.OPERATOR_CMCC
         } else if (opeator == "46001") {// 中国联通
             return OperatorInfo.OPERATOR_CUCC
-        } else if (opeator == "46003") {// 中国电信
+        } else if (opeator == "46003" || opeator == "46011") {// 中国电信
             return OperatorInfo.OPERATOR_CTCC
         }
         // 未知
