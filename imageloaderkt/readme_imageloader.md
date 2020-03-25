@@ -14,7 +14,7 @@
 ```
     dependencies {
         implementation 'androidx.annotation:annotation:1.1.0'
-        implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.70'
+        implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.71'
 
         api 'com.github.bumptech.glide:glide:4.10.0'
         kapt 'com.github.bumptech.glide:compiler:4.10.0'
