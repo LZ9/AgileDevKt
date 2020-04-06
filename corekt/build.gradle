@@ -31,10 +31,10 @@ android {
 
 dependencies {
     // 支持库
-    api 'androidx.appcompat:appcompat:1.2.0-alpha03'
+    api 'androidx.appcompat:appcompat:1.2.0-beta01'
     api 'com.google.android.material:material:1.2.0-alpha05'
     api 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-beta01'
-    api 'androidx.recyclerview:recyclerview:1.2.0-alpha01'
+    api 'androidx.recyclerview:recyclerview:1.2.0-alpha02'
     api 'androidx.cardview:cardview:1.0.0'
     api "androidx.viewpager2:viewpager2:1.0.0"
     api 'androidx.annotation:annotation:1.1.0'
