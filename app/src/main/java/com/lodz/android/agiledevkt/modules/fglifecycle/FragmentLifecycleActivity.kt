@@ -6,6 +6,7 @@ import android.os.Bundle
 import com.google.android.material.button.MaterialButton
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.fglifecycle.vp.FgVpTestActivity
+import com.lodz.android.agiledevkt.modules.fglifecycle.vp2.FgVp2TestActivity
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.pandora.base.activity.BaseActivity
@@ -46,7 +47,7 @@ class FragmentLifecycleActivity :BaseActivity(){
         }
 
         mVp2Btn.setOnClickListener {
-
+            FgVp2TestActivity.start(getContext())
         }
     }
 

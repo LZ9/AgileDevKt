@@ -188,6 +188,7 @@
         <attr name="deleteDrawable" format="reference" />
         <attr name="maxPic" format="integer" />
         <attr name="spanCount" />
+        <attr name="dividerSpace" format="dimension" />
         <attr name="itemHigh" format="dimension" />
     </declare-styleable>
 
