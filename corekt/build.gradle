@@ -32,7 +32,7 @@ android {
 dependencies {
     // 支持库
     api 'androidx.appcompat:appcompat:1.2.0-beta01'
-    api 'com.google.android.material:material:1.2.0-alpha05'
+    api 'com.google.android.material:material:1.2.0-alpha06'
     api 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-beta01'
     api 'androidx.recyclerview:recyclerview:1.2.0-alpha02'
     api 'androidx.cardview:cardview:1.0.0'
