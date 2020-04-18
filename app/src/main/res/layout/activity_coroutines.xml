@@ -87,7 +87,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/start_btn"
-            style="?android:attr/borderlessButtonStyle"
+            style="?android:attr/buttonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/coroutines_start"
@@ -96,7 +96,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/cancel_btn"
-            style="?android:attr/borderlessButtonStyle"
+            style="?android:attr/buttonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -106,7 +106,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/clean_btn"
-            style="?android:attr/borderlessButtonStyle"
+            style="?android:attr/buttonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"

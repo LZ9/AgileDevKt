@@ -38,7 +38,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/stop_btn"
-            style="?android:attr/borderlessButtonStyle"
+            style="?android:attr/buttonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
@@ -113,7 +113,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/bp_test_btn"
-        style="?android:attr/borderlessButtonStyle"
+        style="?android:attr/buttonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/rx_flowable_bp_test"
@@ -135,7 +135,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/request_btn"
-            style="?android:attr/borderlessButtonStyle"
+            style="?android:attr/buttonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
@@ -148,7 +148,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/request_test_btn"
-        style="?android:attr/borderlessButtonStyle"
+        style="?android:attr/buttonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/rx_flowable_request_test"
@@ -193,7 +193,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/rx_btn"
-            style="?android:attr/borderlessButtonStyle"
+            style="?android:attr/buttonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
@@ -203,7 +203,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/progress_btn"
-            style="?android:attr/borderlessButtonStyle"
+            style="?android:attr/buttonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"

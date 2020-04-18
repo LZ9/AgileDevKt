@@ -13,10 +13,7 @@ import androidx.annotation.IntRange
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.lodz.android.corekt.anko.bindView
-import com.lodz.android.corekt.anko.createVibrator
-import com.lodz.android.corekt.anko.getDrawableCompat
-import com.lodz.android.corekt.anko.startScaleSelf
+import com.lodz.android.corekt.anko.*
 import com.lodz.android.pandora.R
 import com.lodz.android.pandora.widget.rv.decoration.GridItemDecoration
 import java.util.*
@@ -92,6 +89,10 @@ open class NineGridView : FrameLayout {
                 ?: DEFAULT_MAX_PIC)
         mPdrAdapter.setItemHigh(typedArray?.getDimensionPixelSize(R.styleable.NineGridView_itemHigh, 0)
                 ?: 0)
+        val dividerSpacePx = typedArray?.getDimensionPixelSize(R.styleable.NineGridView_dividerSpace, 0) ?: 0
+        if (dividerSpacePx > 0){
+            mPdrRecyclerView.addItemDecoration(GridItemDecoration.create(context).setDividerSpace(context.px2dp(dividerSpacePx)).setDividerInt(Color.TRANSPARENT))
+        }
         typedArray?.recycle()
     }
 
@@ -166,7 +167,6 @@ open class NineGridView : FrameLayout {
         mPdrAdapter = NineGridAdapter(context)
         mPdrRecyclerView.layoutManager = mPdrGridLayoutManager
         mPdrRecyclerView.setHasFixedSize(true)
-        mPdrRecyclerView.addItemDecoration(GridItemDecoration.create(context).setDividerSpace(1).setDividerInt(Color.TRANSPARENT))
         mPdrRecyclerView.adapter = mPdrAdapter
         val itemTouchHelper = ItemTouchHelper(mPdrItemTouchHelperCallback)
         itemTouchHelper.attachToRecyclerView(mPdrRecyclerView)
@@ -251,6 +251,16 @@ open class NineGridView : FrameLayout {
     /** 是否允许拖拽震动提醒 */
     fun setNeedDragVibrate(isNeed: Boolean) {
         isPdrNeedDragVibrate = isNeed
+    }
+
+    /** 添加装饰器[decor] */
+    fun addItemDecoration(decor: RecyclerView.ItemDecoration) {
+        mPdrRecyclerView.addItemDecoration(decor)
+    }
+
+    /** 删除装饰器[decor] */
+    fun removeItemDecoration(decor: RecyclerView.ItemDecoration) {
+        mPdrRecyclerView.removeItemDecoration(decor)
     }
 
     /** 设置监听器 */

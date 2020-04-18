@@ -37,7 +37,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/maybe_to_observable_btn"
-            style="?android:attr/borderlessButtonStyle"
+            style="?android:attr/buttonStyle"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginEnd="5dp"
@@ -48,7 +48,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/success_btn"
-            style="?android:attr/borderlessButtonStyle"
+            style="?android:attr/buttonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
@@ -59,7 +59,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/complete_btn"
-            style="?android:attr/borderlessButtonStyle"
+            style="?android:attr/buttonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -70,7 +70,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/rx_btn"
-        style="?android:attr/borderlessButtonStyle"
+        style="?android:attr/buttonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/rx_observable_rx"
@@ -102,7 +102,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/progress_btn"
-        style="?android:attr/borderlessButtonStyle"
+        style="?android:attr/buttonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/rx_observable_progress"

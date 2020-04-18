@@ -218,7 +218,8 @@
             app:isShowDeleteBtn="false"
             app:itemHigh="100dp"
             app:maxPic="8"
-            app:spanCount="4">
+            app:spanCount="4"
+            app:dividerSpace="1dp">
 
         </com.lodz.android.pandora.widget.ninegrid.NineGridView>
 
