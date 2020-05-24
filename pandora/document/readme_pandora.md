@@ -16,14 +16,13 @@ Pandora支持Androidx和Kotlin开发插件，内部集成了包括
 ```
     dependencies {
         api 'com.lodz:core-kt:1.2.1'
-        api 'io.reactivex.rxjava2:rxjava:2.2.15'
-        api 'io.reactivex.rxjava2:rxandroid:2.1.1'
-        api 'com.squareup.retrofit2:retrofit:2.6.2'
-        api 'com.squareup.retrofit2:adapter-rxjava2:2.6.2'
+        api 'io.reactivex.rxjava3:rxjava:3.0.4'
+        api 'com.squareup.retrofit2:retrofit:2.9.0'
+        api 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'
         api 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2'
-        api 'com.alibaba:fastjson:1.2.62'
-        api 'com.trello.rxlifecycle3:rxlifecycle-components:3.1.0'
-        api 'org.greenrobot:eventbus:3.1.1'
+        api 'com.alibaba:fastjson:1.2.68'
+        api 'com.trello.rxlifecycle4:rxlifecycle-components:4.0.0'
+        api 'org.greenrobot:eventbus:3.2.0'
     }
 ```
 
