@@ -3,8 +3,8 @@ package com.lodz.android.pandora.rx.subscribe.completable
 import com.lodz.android.corekt.anko.getMetaData
 import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.pandora.base.application.BaseApplication
-import io.reactivex.CompletableObserver
-import io.reactivex.disposables.Disposable
+import io.reactivex.rxjava3.core.CompletableObserver
+import io.reactivex.rxjava3.disposables.Disposable
 
 /**
  * Completable基类订阅者

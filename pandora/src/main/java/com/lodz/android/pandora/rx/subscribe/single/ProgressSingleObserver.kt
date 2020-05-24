@@ -6,7 +6,7 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import com.lodz.android.corekt.anko.runOnMainCatch
 import com.lodz.android.pandora.utils.progress.ProgressDialogHelper
-import io.reactivex.disposables.Disposable
+import io.reactivex.rxjava3.disposables.Disposable
 import kotlinx.coroutines.GlobalScope
 
 /**

@@ -10,9 +10,9 @@ import android.view.Window
 import androidx.annotation.LayoutRes
 import androidx.annotation.StyleRes
 import com.lodz.android.pandora.R
-import com.trello.rxlifecycle3.LifecycleTransformer
-import com.trello.rxlifecycle3.android.FragmentEvent
-import com.trello.rxlifecycle3.components.support.RxDialogFragment
+import com.trello.rxlifecycle4.LifecycleTransformer
+import com.trello.rxlifecycle4.android.FragmentEvent
+import com.trello.rxlifecycle4.components.support.RxDialogFragment
 
 /**
  * DialogFragment基类

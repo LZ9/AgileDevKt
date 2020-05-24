@@ -19,7 +19,7 @@ import com.lodz.android.corekt.utils.BitmapUtils
 import com.lodz.android.pandora.R
 import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
 import com.lodz.android.pandora.rx.utils.RxUtils
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 import java.io.File
 
 /**

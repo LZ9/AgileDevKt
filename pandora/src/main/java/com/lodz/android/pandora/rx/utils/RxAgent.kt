@@ -1,6 +1,6 @@
 package com.lodz.android.pandora.rx.utils
 
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 
 /**
  * Rx转换代理

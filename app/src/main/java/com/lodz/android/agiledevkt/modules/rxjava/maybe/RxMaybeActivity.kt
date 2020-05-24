@@ -23,9 +23,9 @@ import com.lodz.android.pandora.rx.utils.RxUtils
 import com.lodz.android.pandora.rx.utils.doComplete
 import com.lodz.android.pandora.rx.utils.doError
 import com.lodz.android.pandora.rx.utils.doSuccess
-import io.reactivex.Maybe
-import io.reactivex.MaybeObserver
-import io.reactivex.disposables.Disposable
+import io.reactivex.rxjava3.core.Maybe
+import io.reactivex.rxjava3.core.MaybeObserver
+import io.reactivex.rxjava3.disposables.Disposable
 import kotlinx.coroutines.GlobalScope
 
 /**

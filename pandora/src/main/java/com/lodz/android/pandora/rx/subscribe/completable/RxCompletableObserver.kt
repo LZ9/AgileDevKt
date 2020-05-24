@@ -2,7 +2,7 @@ package com.lodz.android.pandora.rx.subscribe.completable
 
 import com.lodz.android.pandora.rx.exception.NetworkException
 import com.lodz.android.pandora.rx.exception.RxExceptionFactory
-import io.reactivex.disposables.Disposable
+import io.reactivex.rxjava3.disposables.Disposable
 
 /**
  * 网络接口使用的订阅者，主要对接口进行判断处理

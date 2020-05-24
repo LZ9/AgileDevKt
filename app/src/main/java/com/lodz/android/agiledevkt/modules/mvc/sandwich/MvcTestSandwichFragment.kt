@@ -12,7 +12,7 @@ import com.lodz.android.pandora.base.fragment.BaseSandwichFragment
 import com.lodz.android.pandora.rx.subscribe.observer.RxObserver
 import com.lodz.android.pandora.rx.utils.RxUtils
 import com.lodz.android.pandora.widget.base.TitleBarLayout
-import com.trello.rxlifecycle3.android.FragmentEvent
+import com.trello.rxlifecycle4.android.FragmentEvent
 import kotlin.random.Random
 
 /**

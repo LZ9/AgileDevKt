@@ -22,9 +22,9 @@ import com.lodz.android.pandora.rx.subscribe.single.RxSingleObserver
 import com.lodz.android.pandora.rx.utils.RxUtils
 import com.lodz.android.pandora.rx.utils.doError
 import com.lodz.android.pandora.rx.utils.doSuccess
-import io.reactivex.Single
-import io.reactivex.SingleObserver
-import io.reactivex.disposables.Disposable
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.core.SingleObserver
+import io.reactivex.rxjava3.disposables.Disposable
 import kotlinx.coroutines.GlobalScope
 
 /**

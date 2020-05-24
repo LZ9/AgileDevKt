@@ -4,13 +4,13 @@ import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
-import com.trello.rxlifecycle3.LifecycleProvider
-import com.trello.rxlifecycle3.LifecycleTransformer
-import com.trello.rxlifecycle3.RxLifecycle
-import com.trello.rxlifecycle3.android.FragmentEvent
-import com.trello.rxlifecycle3.android.RxLifecycleAndroid
-import io.reactivex.Observable
-import io.reactivex.subjects.BehaviorSubject
+import com.trello.rxlifecycle4.LifecycleProvider
+import com.trello.rxlifecycle4.LifecycleTransformer
+import com.trello.rxlifecycle4.RxLifecycle
+import com.trello.rxlifecycle4.android.FragmentEvent
+import com.trello.rxlifecycle4.android.RxLifecycleAndroid
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.subjects.BehaviorSubject
 
 /**
  * @author zhouL

@@ -10,9 +10,9 @@ import androidx.fragment.app.Fragment
 import com.lodz.android.corekt.anko.getSize
 import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.pandora.base.activity.UseAnkoLayout
-import com.trello.rxlifecycle3.LifecycleTransformer
-import com.trello.rxlifecycle3.android.FragmentEvent
-import com.trello.rxlifecycle3.components.support.RxFragment
+import com.trello.rxlifecycle4.LifecycleTransformer
+import com.trello.rxlifecycle4.android.FragmentEvent
+import com.trello.rxlifecycle4.components.support.RxFragment
 
 /**
  * 懒加载的fragment

@@ -2,7 +2,7 @@ package com.lodz.android.agiledevkt.apiservice
 
 import com.lodz.android.agiledevkt.bean.SpotBean
 import com.lodz.android.agiledevkt.bean.base.response.ResponseBean
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 import okhttp3.RequestBody
 import retrofit2.http.*
 

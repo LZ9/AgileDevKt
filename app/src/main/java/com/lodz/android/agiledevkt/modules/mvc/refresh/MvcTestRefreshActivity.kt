@@ -13,7 +13,7 @@ import com.lodz.android.pandora.base.activity.BaseRefreshActivity
 import com.lodz.android.pandora.rx.subscribe.observer.RxObserver
 import com.lodz.android.pandora.rx.utils.RxUtils
 import com.lodz.android.pandora.widget.base.TitleBarLayout
-import com.trello.rxlifecycle3.android.ActivityEvent
+import com.trello.rxlifecycle4.android.ActivityEvent
 import kotlin.random.Random
 
 /**

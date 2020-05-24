@@ -4,7 +4,7 @@ import com.lodz.android.pandora.rx.exception.DataException
 import com.lodz.android.pandora.rx.exception.NetworkException
 import com.lodz.android.pandora.rx.exception.RxExceptionFactory
 import com.lodz.android.pandora.rx.status.ResponseStatus
-import io.reactivex.disposables.Disposable
+import io.reactivex.rxjava3.disposables.Disposable
 
 /**
  * 网络接口使用的订阅者（无背压），主要对接口进行判断处理

@@ -10,9 +10,9 @@ import com.lodz.android.pandora.base.application.BaseApplication
 import com.lodz.android.pandora.base.fragment.IFragmentBackPressed
 import com.lodz.android.pandora.base.fragment.LazyFragment
 import com.lodz.android.pandora.event.ActivityFinishEvent
-import com.trello.rxlifecycle3.LifecycleTransformer
-import com.trello.rxlifecycle3.android.ActivityEvent
-import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
+import com.trello.rxlifecycle4.LifecycleTransformer
+import com.trello.rxlifecycle4.android.ActivityEvent
+import com.trello.rxlifecycle4.components.support.RxAppCompatActivity
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode

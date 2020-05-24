@@ -9,7 +9,7 @@ import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.pandora.base.fragment.BaseFragment
 import com.lodz.android.pandora.rx.subscribe.observer.RxObserver
 import com.lodz.android.pandora.rx.utils.RxUtils
-import com.trello.rxlifecycle3.android.FragmentEvent
+import com.trello.rxlifecycle4.android.FragmentEvent
 
 /**
  * 带基础控件的MVC测试类

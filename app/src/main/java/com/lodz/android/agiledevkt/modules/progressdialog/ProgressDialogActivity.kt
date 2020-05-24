@@ -14,8 +14,8 @@ import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.rx.exception.RxException
 import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
 import com.lodz.android.pandora.utils.progress.ProgressDialogHelper
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
 import java.util.concurrent.TimeUnit
 
 /**

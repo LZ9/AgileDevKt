@@ -10,7 +10,7 @@ import com.lodz.android.pandora.base.fragment.LazyFragment
 import com.lodz.android.pandora.rx.exception.DataException
 import com.lodz.android.pandora.rx.subscribe.observer.ProgressObserver
 import com.lodz.android.pandora.rx.utils.RxUtils
-import com.trello.rxlifecycle3.android.FragmentEvent
+import com.trello.rxlifecycle4.android.FragmentEvent
 
 /**
  * MVC测试Fragment

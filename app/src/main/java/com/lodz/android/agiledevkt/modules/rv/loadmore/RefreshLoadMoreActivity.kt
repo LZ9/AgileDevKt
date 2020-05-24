@@ -19,7 +19,7 @@ import com.lodz.android.pandora.base.activity.BaseRefreshActivity
 import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
 import com.lodz.android.pandora.rx.utils.RxUtils
 import com.lodz.android.pandora.widget.rv.recycler.RecyclerLoadMoreHelper
-import com.trello.rxlifecycle3.android.ActivityEvent
+import com.trello.rxlifecycle4.android.ActivityEvent
 
 /**
  * RV刷新/加载更多测试

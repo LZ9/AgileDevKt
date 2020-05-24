@@ -16,7 +16,7 @@ import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.utils.NotificationUtils
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 import java.util.*
 import java.util.concurrent.TimeUnit
 

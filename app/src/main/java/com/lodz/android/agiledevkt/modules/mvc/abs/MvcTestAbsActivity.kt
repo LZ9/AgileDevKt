@@ -11,7 +11,7 @@ import com.lodz.android.pandora.base.activity.AbsActivity
 import com.lodz.android.pandora.rx.exception.DataException
 import com.lodz.android.pandora.rx.subscribe.observer.ProgressObserver
 import com.lodz.android.pandora.rx.utils.RxUtils
-import com.trello.rxlifecycle3.android.ActivityEvent
+import com.trello.rxlifecycle4.android.ActivityEvent
 
 /**
  * MVC基础Activity

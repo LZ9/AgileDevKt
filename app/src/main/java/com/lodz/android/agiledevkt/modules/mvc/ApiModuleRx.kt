@@ -4,7 +4,7 @@ import com.lodz.android.pandora.rx.exception.DataException
 import com.lodz.android.pandora.rx.utils.doComplete
 import com.lodz.android.pandora.rx.utils.doError
 import com.lodz.android.pandora.rx.utils.doNext
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 
 /**
  * 数据

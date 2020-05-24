@@ -3,8 +3,8 @@ package com.lodz.android.pandora.rx.subscribe.maybe
 import com.lodz.android.corekt.anko.getMetaData
 import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.pandora.base.application.BaseApplication
-import io.reactivex.MaybeObserver
-import io.reactivex.disposables.Disposable
+import io.reactivex.rxjava3.core.MaybeObserver
+import io.reactivex.rxjava3.disposables.Disposable
 
 /**
  * Maybe基类订阅者

@@ -3,8 +3,8 @@ package com.lodz.android.pandora.rx.subscribe.observer
 import com.lodz.android.corekt.anko.getMetaData
 import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.pandora.base.application.BaseApplication
-import io.reactivex.Observer
-import io.reactivex.disposables.Disposable
+import io.reactivex.rxjava3.core.Observer
+import io.reactivex.rxjava3.disposables.Disposable
 
 /**
  * 基类订阅者（无背压）

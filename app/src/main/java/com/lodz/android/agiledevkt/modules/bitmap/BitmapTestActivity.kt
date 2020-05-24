@@ -24,7 +24,7 @@ import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
 import com.lodz.android.pandora.rx.utils.RxUtils
 import com.lodz.android.pandora.widget.custom.LongImageView
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 import kotlinx.coroutines.GlobalScope
 import java.io.File
 import java.util.concurrent.TimeUnit
@@ -335,6 +335,7 @@ class BitmapTestActivity : BaseActivity() {
                 }
                 .map { drawable ->
                     mDrawableImg.setImageDrawable(drawable)
+                    drawable ?: throw KotlinNullPointerException("drawable is null")
                     BitmapUtils.drawableToBitmap(drawable, 331, 162) ?: throw KotlinNullPointerException("bitmap is null")
                 }
                 .compose(RxUtils.ioToMainObservable())
