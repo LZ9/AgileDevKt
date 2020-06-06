@@ -121,6 +121,7 @@ class ToastUtils private constructor(private val mContext: Context) {
     fun show() {
         if (AppUtils.isMainThread()) {//主线程直接显示
             assembleShowToast()
+            return
         }
         GlobalScope.runOnMain {
             assembleShowToast()//非主线程post到主线程显示

@@ -237,7 +237,7 @@ class CoroutinesActivity : BaseActivity() {
 
     /** 协程异步 */
     private fun async(): Job? {
-        GlobalScope.runOnIO {
+        return GlobalScope.runOnIO {
             logResult("顺序执行开始")
             val time1 = measureTimeMillis {
                 runBlocking {
@@ -278,7 +278,6 @@ class CoroutinesActivity : BaseActivity() {
             logResult("懒加载异步执行耗时：$time3")
             logResult("懒加载异步执行结束")
         }
-        return null
     }
 
     /** 获取数字[num]，延时[delay]毫秒 */

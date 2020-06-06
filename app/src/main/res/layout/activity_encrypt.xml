@@ -31,7 +31,8 @@
         android:importantForAutofill="no"
         android:inputType="text"
         android:maxLines="1"
-        android:textSize="13sp"
+        android:textSize="11sp"
+        tools:ignore="SmallSp"
         tools:targetApi="o" />
 
     <LinearLayout
@@ -45,7 +46,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/security_AES_init"
-            android:textSize="13sp" />
+            android:textSize="11sp"
+            tools:ignore="SmallSp" />
 
         <Button
             android:id="@+id/aes_encrypt_btn"
@@ -54,7 +56,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
             android:text="@string/security_AES_encrypt"
-            android:textSize="13sp" />
+            android:textSize="11sp"
+            tools:ignore="SmallSp" />
 
         <Button
             android:id="@+id/aes_decrypt_btn"
@@ -63,7 +66,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
             android:text="@string/security_AES_decrypt"
-            android:textSize="13sp" />
+            android:textSize="11sp"
+            tools:ignore="SmallSp" />
 
     </LinearLayout>
 
@@ -78,7 +82,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/security_RSA_init"
-            android:textSize="13sp" />
+            android:textSize="11sp"
+            tools:ignore="SmallSp" />
 
         <Button
             android:id="@+id/rsa_encrypt_btn"
@@ -87,7 +92,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
             android:text="@string/security_RSA_encrypt"
-            android:textSize="13sp" />
+            android:textSize="11sp"
+            tools:ignore="SmallSp" />
 
         <Button
             android:id="@+id/rsa_decrypt_btn"
@@ -96,7 +102,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
             android:text="@string/security_RSA_decrypt"
-            android:textSize="13sp" />
+            android:textSize="11sp"
+            tools:ignore="SmallSp" />
 
     </LinearLayout>
 
@@ -111,7 +118,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/security_MD5_btn"
-            android:textSize="13sp" />
+            android:textSize="11sp"
+            tools:ignore="SmallSp" />
 
         <Button
             android:id="@+id/sha1_btn"
@@ -120,7 +128,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
             android:text="@string/security_SHA1_btn"
-            android:textSize="13sp" />
+            android:textSize="11sp"
+            tools:ignore="SmallSp" />
 
         <Button
             android:id="@+id/clean_btn"
@@ -129,7 +138,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
             android:text="@string/security_clean"
-            android:textSize="13sp" />
+            android:textSize="11sp"
+            tools:ignore="SmallSp" />
 
     </LinearLayout>
 

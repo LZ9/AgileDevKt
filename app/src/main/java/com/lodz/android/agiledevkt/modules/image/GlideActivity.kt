@@ -34,6 +34,7 @@ import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.corekt.utils.FileUtils
 import com.lodz.android.corekt.utils.NotificationUtils
 import com.lodz.android.imageloaderkt.ImageLoader
+import com.lodz.android.imageloaderkt.glide.impl.NotificationTargetFix
 import com.lodz.android.pandora.base.activity.BaseActivity
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 
@@ -137,7 +138,7 @@ class GlideActivity : BaseActivity() {
             ImageLoader.create(getContext())
                     .loadUrl(IMG_URL)
                     .setCenterCrop()
-                    .asBitmapInto(NotificationTarget(getContext(), R.id.remoteview_icon, remoteViews, builder.build(), 1235))
+                    .asBitmapInto(NotificationTargetFix(getContext(), R.id.remoteview_icon, remoteViews, builder.build(), 1235))
         }
 
         // 原生通知栏

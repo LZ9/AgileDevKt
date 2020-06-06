@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.widget.TextView
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder
@@ -100,14 +101,18 @@ class DateActivity : BaseActivity() {
             endDate.set(endDate.get(Calendar.YEAR) + 100, Calendar.DECEMBER, 31)
 
             val dialog = TimePickerBuilder(getContext(),
-                OnTimeSelectListener { date, v -> mTimeWheelTv.text = if (date != null) DateUtils.getFormatString(DateUtils.TYPE_2, date) else "" })
-                    .setTitleText(getString(R.string.date_pick_title))
-                    .setDate(calendar)
-                    .setRangDate(startDate, endDate)
-                    .setType(booleanArrayOf(true, true, true, true, true, true))
-                    .setLabel("年", "月", "日", "时", "分", "秒")
-                    .isCyclic(true)
-                    .build()
+                OnTimeSelectListener { date, v ->
+                    mTimeWheelTv.text = if (date != null) DateUtils.getFormatString(DateUtils.TYPE_2, date) else ""
+                })
+                .setTitleText(getString(R.string.date_pick_title))
+                .setDate(calendar)
+                .setRangDate(startDate, endDate)
+                .setType(booleanArrayOf(true, true, true, true, true, true))
+                .setLabel("年", "月", "日", "时", "分", "秒")
+                .isCyclic(true)
+                .setSubmitColor(Color.WHITE)
+                .setCancelColor(Color.WHITE)
+                .build()
             dialog.show()
         }
 
