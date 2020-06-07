@@ -2,6 +2,7 @@ package com.lodz.android.pandora.mvvm.base.fragment
 
 import android.view.View
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.lodz.android.corekt.anko.toastLong
 import com.lodz.android.corekt.anko.toastShort
@@ -15,7 +16,7 @@ import com.lodz.android.pandora.mvvm.vm.BaseRefreshViewModel
  */
 abstract class BaseRefreshVmFragment<VM : BaseRefreshViewModel> : BaseRefreshFragment() {
 
-    private val mPdrViewModel by lazy { ViewModelProviders.of(this).get(createViewModel()) }
+    private val mPdrViewModel by lazy { ViewModelProvider(this).get(createViewModel()) }
 
     fun getViewModel(): VM = mPdrViewModel
 
