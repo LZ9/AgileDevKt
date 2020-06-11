@@ -5,11 +5,15 @@
         <!--name="provider_path"-->
         <!--path="" />-->
 
-
     <!--自定义地址-->
     <external-path
         name="app_provider_path"
         path="AgileDevKt" />
+
+    <!--自定义地址-->
+    <external-path
+        name="app_provider_path_A10"
+        path="Android/data/com.lodz.android.agiledevkt/files/AgileDevKt" />
 
     <!--默认地址-->
     <external-path
