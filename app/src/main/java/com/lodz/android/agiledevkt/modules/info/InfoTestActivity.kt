@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.location.LocationManager
 import android.os.Bundle
+import android.view.View
 import android.widget.TextView
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
@@ -31,6 +32,11 @@ class InfoTestActivity : BaseActivity() {
             context.startActivity(intent)
         }
     }
+
+    /** QQ包名 */
+    private val QQ_PACKAGE_NAME = "com.tencent.mobileqq"
+    /** 微信包名 */
+    private val WECHAT_PACKAGE_NAME = "com.tencent.mm"
 
     /** 手机UA */
     private val mUaTv by bindView<TextView>(R.id.ua_tv)
@@ -107,8 +113,12 @@ class InfoTestActivity : BaseActivity() {
     private val mProcessNameTv by bindView<TextView>(R.id.process_name_tv)
     /** 是否安装QQ */
     private val mQQInstalledTv by bindView<TextView>(R.id.qq_installed_tv)
+    /** QQ图标 */
+    private val mQQIconTv by bindView<TextView>(R.id.qq_icon_tv)
     /** 是否安装微信 */
     private val mWechatInstalledTv by bindView<TextView>(R.id.wechat_installed_tv)
+    /** 微信图标 */
+    private val mWechatIconTv by bindView<TextView>(R.id.wechat_icon_tv)
     /** 安装的应用数量 */
     private val mInstalledAppNumTv by bindView<TextView>(R.id.installed_app_num_tv)
     /** GPS是否打开 */
@@ -194,8 +204,23 @@ class InfoTestActivity : BaseActivity() {
         mVersionCodeTv.text = getString(R.string.info_version_code).format(getVersionCode())
         mMainProcessTv.text = getString(R.string.info_is_main_process).format(isMainProcess())
         mProcessNameTv.text = getString(R.string.info_process_name).format(getProcessName())
-        mQQInstalledTv.text = getString(R.string.info_is_qq_installed).format(isPkgInstalled("com.tencent.mobileqq"))
-        mWechatInstalledTv.text = getString(R.string.info_is_wechat_installed).format(isPkgInstalled("com.tencent.mm"))
+
+        val isQQInstalled = isPkgInstalled(QQ_PACKAGE_NAME)
+        mQQInstalledTv.text = getString(R.string.info_is_qq_installed).format(isQQInstalled)
+        if (isQQInstalled) {
+            mQQIconTv.visibility = View.VISIBLE
+            mQQIconTv.setCompoundDrawablesWithIntrinsicBounds(null, getAppIcon(QQ_PACKAGE_NAME), null,null)
+        } else {
+            mQQIconTv.visibility = View.GONE
+        }
+        val isWechatInstalled = isPkgInstalled(WECHAT_PACKAGE_NAME)
+        mWechatInstalledTv.text = getString(R.string.info_is_wechat_installed).format(isWechatInstalled)
+        if (isWechatInstalled) {
+            mWechatIconTv.visibility = View.VISIBLE
+            mWechatIconTv.setCompoundDrawablesWithIntrinsicBounds(null, getAppIcon(WECHAT_PACKAGE_NAME), null,null)
+        } else {
+            mWechatIconTv.visibility = View.GONE
+        }
         mInstalledAppNumTv.text = getString(R.string.info_installed_app_num).format(getInstalledPackages().size.toString())
 
         registerGpsReceiver()

@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
+import android.graphics.drawable.Drawable
 import android.location.LocationManager
 import android.net.wifi.WifiManager
 import android.nfc.NfcAdapter
@@ -23,7 +24,8 @@ import java.util.*
  */
 
 /** 获取应用程序名称 */
-fun Context.getAppName(): String {
+@JvmOverloads
+fun Context.getAppName(packageName: String = getPackageName()): String {
     try {
         return resources.getString(packageManager.getPackageInfo(packageName, 0).applicationInfo.labelRes)
     } catch (e: Exception) {
@@ -33,7 +35,8 @@ fun Context.getAppName(): String {
 }
 
 /** 获取客户端版本名称 */
-fun Context.getVersionName(): String {
+@JvmOverloads
+fun Context.getVersionName(packageName: String = getPackageName()): String {
     try {
         return packageManager.getPackageInfo(packageName, 0).versionName
     } catch (e: Exception) {
@@ -43,7 +46,8 @@ fun Context.getVersionName(): String {
 }
 
 /** 获取客户端版本号 */
-fun Context.getVersionCode(): Long {
+@JvmOverloads
+fun Context.getVersionCode(packageName: String = getPackageName()): Long {
     try {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             packageManager.getPackageInfo(packageName, 0).longVersionCode
@@ -54,6 +58,17 @@ fun Context.getVersionCode(): Long {
         e.printStackTrace()
     }
     return -1
+}
+
+/** 获取APP的图标 */
+fun Context.getAppIcon(packageName: String): Drawable? {
+    try {
+        val packageInfo: PackageInfo? = packageManager.getPackageInfo(packageName, 0)
+        return packageInfo?.applicationInfo?.loadIcon(packageManager)
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
+    return null
 }
 
 /** 是否在主进程 */
