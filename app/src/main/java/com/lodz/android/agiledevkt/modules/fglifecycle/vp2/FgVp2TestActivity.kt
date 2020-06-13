@@ -36,7 +36,7 @@ class FgVp2TestActivity :BaseActivity(){
 
     override fun findViews(savedInstanceState: Bundle?) {
         super.findViews(savedInstanceState)
-        getTitleBarLayout().setTitleName(R.string.fg_lifecycle_vp)
+        getTitleBarLayout().setTitleName(R.string.fg_lifecycle_vp2)
         initViewPager()
     }
 
