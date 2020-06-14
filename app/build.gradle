@@ -96,6 +96,9 @@ dependencies {
     // 滚动选择
     implementation 'com.contrarywind:Android-PickerView:4.1.9'
 
+    //添加RxDownload4的所有依赖
+    implementation "com.github.ssseasonnn:RxDownload:1.1.2"
+
     // 单元测试
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'

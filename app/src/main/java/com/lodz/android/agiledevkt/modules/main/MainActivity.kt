@@ -30,6 +30,7 @@ import com.lodz.android.agiledevkt.modules.date.DateActivity
 import com.lodz.android.agiledevkt.modules.dialog.DialogActivity
 import com.lodz.android.agiledevkt.modules.dialogfragment.DialogFragmentActivity
 import com.lodz.android.agiledevkt.modules.dimensions.DimensionsActivity
+import com.lodz.android.agiledevkt.modules.download.DownloadMarketActivity
 import com.lodz.android.agiledevkt.modules.drawer.DrawerTestActivity
 import com.lodz.android.agiledevkt.modules.fglifecycle.FragmentLifecycleActivity
 import com.lodz.android.agiledevkt.modules.file.FileTestActivity
@@ -152,7 +153,8 @@ class MainActivity : BaseActivity() {
         MainBean("CardView测试类", "C", CardViewActivity::class.java),
         MainBean("MVVM模式测试类", "M", MvvmDemoActivity::class.java),
         MainBean("ViewPager2测试类", "V", ViewPagerActivity::class.java),
-        MainBean("Fragment生命周期测试", "F", FragmentLifecycleActivity::class.java)
+        MainBean("Fragment生命周期测试", "F", FragmentLifecycleActivity::class.java),
+        MainBean("下载测试", "X", DownloadMarketActivity::class.java)
     )
 
     /** 列表 */

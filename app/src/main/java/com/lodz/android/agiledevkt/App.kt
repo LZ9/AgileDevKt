@@ -19,6 +19,7 @@ import com.lodz.android.corekt.utils.SharedPreferencesUtils
 import com.lodz.android.imageloaderkt.ImageloaderManager
 import com.lodz.android.pandora.base.application.BaseApplication
 import com.lodz.android.pandora.utils.acache.ACacheUtils
+import io.reactivex.plugins.RxJavaPlugins
 import java.util.*
 
 /**
@@ -46,6 +47,12 @@ class App : BaseApplication() {
         initACache(this)
         initImageLoader()
         SharedPreferencesUtils.get().init(this)
+
+
+        //捕获RxDownloader的异常报错问题
+        RxJavaPlugins.setErrorHandler {
+            PrintLog.e("testtag", "App", it)
+        }
     }
 
     /** 配置基类 */

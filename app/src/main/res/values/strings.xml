@@ -725,4 +725,11 @@
     <string name="fg_lifecycle_vp">ViewPager嵌套测试</string>
     <string name="fg_lifecycle_vp2">ViewPager2嵌套测试</string>
 
+    <!-- 下载测试 -->
+    <string name="market_download">下载</string>
+    <string name="market_pause">暂停</string>
+    <string name="market_delete">删除</string>
+    <string name="market_failed">下载失败</string>
+
+
 </resources>
