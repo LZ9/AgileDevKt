@@ -38,6 +38,9 @@
     <!-- 录制音频 -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
+    <!-- 允许安装未知来源应用 -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+
     <!-- ********************* 原生GPS定位 ********************* -->
     <!-- 通过GPS芯片接收卫星的定位信息 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
