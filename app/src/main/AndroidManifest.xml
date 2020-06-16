@@ -40,6 +40,8 @@
 
     <!-- 允许安装未知来源应用 -->
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <!-- 允许删除应用 -->
+    <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES"/>
 
     <!-- ********************* 原生GPS定位 ********************* -->
     <!-- 通过GPS芯片接收卫星的定位信息 -->
