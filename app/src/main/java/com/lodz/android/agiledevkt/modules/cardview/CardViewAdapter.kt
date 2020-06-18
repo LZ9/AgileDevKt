@@ -1,17 +1,16 @@
 package com.lodz.android.agiledevkt.modules.cardview
 
 import android.content.Context
-import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.agiledevkt.R
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.utils.DateUtils
 import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
+import com.lodz.android.pandora.widget.rv.recycler.DataViewHolder
 
 /**
- *
+ * 卡片适配器
  * @author zhouL
  * @date 2019/6/5
  */
@@ -33,21 +32,14 @@ class CardViewAdapter(context:Context) :BaseRecyclerViewAdapter<String>(context)
     }
 
     private fun showItem(holder: DataViewHolder, str: String) {
-        holder.titleTv.text = str
-        val content = StringBuilder(str)
-        for(i in str.indices){
-            content.append(str)
+        holder.withView<TextView>(R.id.title_tv).text = str
+        holder.withView<TextView>(R.id.content_tv).apply {
+            val content = StringBuilder(str)
+            for (i in str.indices) {
+                content.append(str)
+            }
+            text = content
         }
-        holder.contentTv.text = content
-        holder.dateTv.text = DateUtils.getCurrentFormatString(DateUtils.TYPE_2)
-    }
-
-    private inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        /** 标题 */
-        val titleTv by bindView<TextView>(R.id.title_tv)
-        /** 内容 */
-        val contentTv by bindView<TextView>(R.id.content_tv)
-        /** 日期 */
-        val dateTv by bindView<TextView>(R.id.date_tv)
+        holder.withView<TextView>(R.id.date_tv).text = DateUtils.getCurrentFormatString(DateUtils.TYPE_2)
     }
 }
