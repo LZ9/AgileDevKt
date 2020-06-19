@@ -1,17 +1,16 @@
 package com.lodz.android.agiledevkt.modules.rv.binder.third
 
 import android.content.Context
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.NationBean
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.getSize
 import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.widget.rv.binder.RecyclerBinder
+import com.lodz.android.pandora.widget.rv.recycler.DataViewHolder
 
 /**
  * Created by zhouL on 2018/12/11.
@@ -37,11 +36,12 @@ class ThirdBinder(context: Context, binderType: Int) : RecyclerBinder<NationBean
                 .loadUrl(bean.imgUrl)
                 .useCircle()
                 .setCenterCrop()
-                .into(holder.nationImg)
-        holder.nationTv.text = StringBuilder("${bean.code}-${bean.name}")
-
-        holder.nationTv.setOnClickListener {
-            mListener?.onClick(bean)
+                .into(holder.withView<ImageView>(R.id.nation_img))
+        holder.withView<TextView>(R.id.nation_tv).apply {
+            text = StringBuilder("${bean.code}-${bean.name}")
+            setOnClickListener {
+                mListener?.onClick(bean)
+            }
         }
     }
 
@@ -63,13 +63,6 @@ class ThirdBinder(context: Context, binderType: Int) : RecyclerBinder<NationBean
     }
 
     override fun getCount(): Int = mData.getSize()
-
-    private inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        /** 图片 */
-        val nationImg by bindView<ImageView>(R.id.nation_img)
-        /** 文字 */
-        val nationTv by bindView<TextView>(R.id.nation_tv)
-    }
 
     interface Listener {
         fun onClick(item: NationBean)

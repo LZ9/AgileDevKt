@@ -1,15 +1,14 @@
 package com.lodz.android.agiledevkt.modules.rv.loadmore
 
 import android.content.Context
-import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.rv.popup.LayoutManagerPopupWindow
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.dp2px
 import com.lodz.android.corekt.anko.getScreenWidth
+import com.lodz.android.pandora.widget.rv.recycler.DataViewHolder
 import com.lodz.android.pandora.widget.rv.recycler.SimpleLoadMoreRVAdapter
 
 /**
@@ -66,16 +65,9 @@ class LoadMoreRvAdapter(context: Context) : SimpleLoadMoreRVAdapter<String>(cont
                 else -> setItemViewHeight(holder.itemView, context.dp2px(200))
             }
         }
-        holder.dataTv.text = data
-        holder.deleteBtn.setOnClickListener {
+        holder.withView<TextView>(R.id.data_tv).text = data
+        holder.withView<TextView>(R.id.delete_btn).setOnClickListener {
             mOnClickDeleteListener?.invoke(position)
         }
-    }
-
-    private inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        /** 数据 */
-        val dataTv by bindView<TextView>(R.id.data_tv)
-        /** 删除按钮 */
-        val deleteBtn by bindView<TextView>(R.id.delete_btn)
     }
 }

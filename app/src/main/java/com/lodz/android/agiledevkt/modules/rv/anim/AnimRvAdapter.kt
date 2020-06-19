@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.agiledevkt.R
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
+import com.lodz.android.pandora.widget.rv.recycler.DataViewHolder
 import kotlin.random.Random
 
 /**
@@ -23,25 +23,19 @@ class AnimRvAdapter(context: Context) : BaseRecyclerViewAdapter<String>(context)
             0x1F639, 0x1F63A, 0x1F63B, 0x1F63C, 0x1F63D, 0x1F63E, 0x1F63F)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
-            AnimViewHolder(getLayoutView(parent, R.layout.rv_item_anim))
+            DataViewHolder(getLayoutView(parent, R.layout.rv_item_anim))
 
     override fun onBind(holder: RecyclerView.ViewHolder, position: Int) {
         val name = getItem(position)
-        if (name.isNullOrEmpty() || holder !is AnimViewHolder) {
+        if (name.isNullOrEmpty() || holder !is DataViewHolder) {
             return
         }
         showItem(holder, name, position)
     }
 
-    private fun showItem(holder: AnimViewHolder, time: String, position: Int) {
-        holder.emojiTv.text = String(Character.toChars(EMOJI_UNICODE[(Random.nextInt(100) + 1) % EMOJI_UNICODE.size]))
-        holder.positionTv.text = (position + 1).toString()
-        holder.timeTv.text = time
-    }
-
-    private inner class AnimViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val emojiTv by bindView<TextView>(R.id.emoji_tv)
-        val positionTv by bindView<TextView>(R.id.position_tv)
-        val timeTv by bindView<TextView>(R.id.time_tv)
+    private fun showItem(holder: DataViewHolder, time: String, position: Int) {
+        holder.withView<TextView>(R.id.emoji_tv).text = String(Character.toChars(EMOJI_UNICODE[(Random.nextInt(100) + 1) % EMOJI_UNICODE.size]))
+        holder.withView<TextView>(R.id.position_tv).text = (position + 1).toString()
+        holder.withView<TextView>(R.id.time_tv).text = time
     }
 }

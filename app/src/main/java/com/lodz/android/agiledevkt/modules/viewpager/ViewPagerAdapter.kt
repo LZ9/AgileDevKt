@@ -1,14 +1,13 @@
 package com.lodz.android.agiledevkt.modules.viewpager
 
 import android.content.Context
-import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.agiledevkt.R
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.getColorCompat
 import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
+import com.lodz.android.pandora.widget.rv.recycler.DataViewHolder
 
 /**
  * ViewPager2适配器
@@ -29,11 +28,9 @@ class ViewPagerAdapter(context: Context) : BaseRecyclerViewAdapter<Pair<String, 
     }
 
     private fun showItem(holder: DataViewHolder, pair: Pair<String, Int>) {
-        holder.strTv.text = pair.first
-        holder.strTv.setBackgroundColor(context.getColorCompat(pair.second))
-    }
-
-    private inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val strTv by bindView<TextView>(R.id.str_tv)
+        holder.withView<TextView>(R.id.str_tv).apply {
+            text = pair.first
+            setBackgroundColor(context.getColorCompat(pair.second))
+        }
     }
 }

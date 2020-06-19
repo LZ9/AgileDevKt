@@ -1,16 +1,15 @@
 package com.lodz.android.agiledevkt.modules.rv.snap
 
 import android.content.Context
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.NationBean
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
+import com.lodz.android.pandora.widget.rv.recycler.DataViewHolder
 
 /**
  * Snap数据适配器
@@ -30,8 +29,8 @@ class SnapAdapter(context: Context) : BaseRecyclerViewAdapter<NationBean>(contex
     }
 
     private fun showItem(holder: DataViewHolder, bean: NationBean) {
-        showImg(bean.imgUrl, holder.nationImg)
-        holder.titleTv.text = bean.getTitle()
+        showImg(bean.imgUrl, holder.withView(R.id.nation_img))
+        holder.withView<TextView>(R.id.title_tv).text = bean.getTitle()
     }
 
     private fun showImg(url: String, imageView: ImageView) {
@@ -42,12 +41,5 @@ class SnapAdapter(context: Context) : BaseRecyclerViewAdapter<NationBean>(contex
                 .loadUrl(url)
                 .useRoundCorner()
                 .into(imageView)
-    }
-
-    private inner class DataViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        /** 国旗图片 */
-        val nationImg by bindView<ImageView>(R.id.nation_img)
-        /** 国家名称 */
-        val titleTv by bindView<TextView>(R.id.title_tv)
     }
 }

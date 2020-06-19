@@ -7,9 +7,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.rv.popup.LayoutManagerPopupWindow
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.dp2px
 import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
+import com.lodz.android.pandora.widget.rv.recycler.DataViewHolder
 
 /**
  * 装饰器测试适配器
@@ -34,17 +34,17 @@ class DecorationRvAdapter(context: Context) : BaseRecyclerViewAdapter<String>(co
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
-            DecorationViewHolder(getLayoutView(parent, R.layout.rv_item_decoration))
+            DataViewHolder(getLayoutView(parent, R.layout.rv_item_decoration))
 
     override fun onBind(holder: RecyclerView.ViewHolder, position: Int) {
         val data = getItem(position)
-        if (data.isNullOrEmpty() || holder !is DecorationViewHolder) {
+        if (data.isNullOrEmpty() || holder !is DataViewHolder) {
             return
         }
         showItem(holder, data)
     }
 
-    private fun showItem(holder: DecorationViewHolder, data: String) {
+    private fun showItem(holder: DataViewHolder, data: String) {
         if (mLayoutManagerType == LayoutManagerPopupWindow.TYPE_LINEAR) {
             setItemViewWidth(holder.itemView, if (mOrientation == RecyclerView.VERTICAL) ViewGroup.LayoutParams.MATCH_PARENT else ViewGroup.LayoutParams.WRAP_CONTENT)
             setItemViewHeight(holder.itemView, if (mOrientation == RecyclerView.VERTICAL) ViewGroup.LayoutParams.WRAP_CONTENT else context.dp2px(200))
@@ -71,11 +71,6 @@ class DecorationRvAdapter(context: Context) : BaseRecyclerViewAdapter<String>(co
                 }
             }
         }
-        holder.dataTv.text = data
-    }
-
-    private inner class DecorationViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        /** 数据 */
-        val dataTv by bindView<TextView>(R.id.data_tv)
+        holder.withView<TextView>(R.id.data_tv).text = data
     }
 }
