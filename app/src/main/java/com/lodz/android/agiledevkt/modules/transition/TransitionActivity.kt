@@ -13,6 +13,7 @@ import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.pandora.base.activity.BaseActivity
+import com.lodz.android.pandora.widget.rv.recycler.DataViewHolder
 
 /**
  * 共享元素动画
@@ -88,14 +89,10 @@ class TransitionActivity : BaseActivity() {
 
     override fun setListeners() {
         super.setListeners()
-        mAdapter.setOnItemClickListener { viewHolder, item, position ->
-            if (viewHolder !is TransitionAdapter.DataViewHolder){
-                toastShort(R.string.share_element_unable)
-                return@setOnItemClickListener
-            }
+        mAdapter.setOnClickListener { img, tv, item, position ->
             val sharedElements = ArrayList<Pair<View, String>>()//创建共享元素列表
-            sharedElements.add(Pair.create(viewHolder.img, TransitionActivity.IMG))
-            sharedElements.add(Pair.create(viewHolder.titleTv, TransitionActivity.TITLE))
+            sharedElements.add(Pair.create(img, TransitionActivity.IMG))
+            sharedElements.add(Pair.create(tv, TransitionActivity.TITLE))
             ElementActivity.start(this, item.imgRes, item.title, sharedElements)
         }
     }

@@ -19,6 +19,7 @@ import com.lodz.android.pandora.photopicker.contract.OnImgLoader
 import com.lodz.android.pandora.photopicker.picker.PickerItemBean
 import com.lodz.android.pandora.photopicker.picker.PickerUIConfig
 import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
+import com.lodz.android.pandora.widget.rv.recycler.DataViewHolder
 
 /**
  * 照片选择适配器
@@ -82,10 +83,12 @@ internal class PhotoPickerAdapter(context: Context, imgLoader: OnImgLoader<Strin
     private fun showCameraItem(holder: PickerCameraViewHolder) {
         setItemViewHeight(holder.itemView, context.getScreenWidth() / 3)
         holder.itemView.setBackgroundColor(context.getColorCompat(mPdrConfig.getCameraBgColor()))
+        // 拍照按钮
+        val cameraBtn = holder.withView<ImageView>(R.id.pdr_camera_btn)
         if (mPdrConfig.getCameraImg() != 0) {
-            holder.cameraBtn.setImageResource(mPdrConfig.getCameraImg())
+            cameraBtn.setImageResource(mPdrConfig.getCameraImg())
         }
-        holder.cameraBtn.setOnClickListener {
+        cameraBtn.setOnClickListener {
             mPdrListener?.onClickCamera()
         }
     }
@@ -94,15 +97,21 @@ internal class PhotoPickerAdapter(context: Context, imgLoader: OnImgLoader<Strin
     private fun showItem(holder: PickerViewHolder, bean: PickerItemBean, position: Int) {
         setItemViewHeight(holder.itemView, context.getScreenWidth() / 3)
         holder.itemView.setBackgroundColor(context.getColorCompat(mPdrConfig.getItemBgColor()))
-        mPdrImgLoader?.displayImg(context, bean.path, holder.photoImg)
-        holder.selectIconBtn.setImageBitmap(if (bean.isSelected) mPdrSelectedBitmap else mPdrUnselectBitmap)
-        holder.selectIconBtn.setOnClickListener {
-            mPdrListener?.onSelected(bean, position)
+        // 照片
+        mPdrImgLoader?.displayImg(context, bean.path, holder.withView(R.id.pdr_photo_img))
+        // 选中图标
+        holder.withView<ImageView>(R.id.pdr_select_icon_btn).apply {
+            setImageBitmap(if (bean.isSelected) mPdrSelectedBitmap else mPdrUnselectBitmap)
+            setOnClickListener {
+                mPdrListener?.onSelected(bean, position)
+            }
         }
+        // 遮罩层
+        val maskView = holder.withView<View>(R.id.pdr_mask_view)
         if (mPdrConfig.getMaskColor() != 0) {
-            holder.maskView.setBackgroundColor(context.getColorCompat(mPdrConfig.getMaskColor()))
+            maskView.setBackgroundColor(context.getColorCompat(mPdrConfig.getMaskColor()))
         }
-        holder.maskView.visibility = if (bean.isSelected) View.VISIBLE else View.GONE
+        maskView.visibility = if (bean.isSelected) View.VISIBLE else View.GONE
     }
 
     /** 获取未选中的背景图，颜色[color] */
@@ -164,17 +173,7 @@ internal class PhotoPickerAdapter(context: Context, imgLoader: OnImgLoader<Strin
         fun onClickCamera()
     }
 
-    private inner class PickerCameraViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        /** 拍照按钮 */
-        val cameraBtn by bindView<ImageView>(R.id.pdr_camera_btn)
-    }
+    private inner class PickerCameraViewHolder(itemView: View) : DataViewHolder(itemView)
 
-    private inner class PickerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        /** 照片 */
-        val photoImg by bindView<ImageView>(R.id.pdr_photo_img)
-        /** 选中图标 */
-        val selectIconBtn by bindView<ImageView>(R.id.pdr_select_icon_btn)
-        /** 遮罩层 */
-        val maskView by bindView<View>(R.id.pdr_mask_view)
-    }
+    private inner class PickerViewHolder(itemView: View) : DataViewHolder(itemView)
 }

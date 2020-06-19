@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.pandora.R
 import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
+import com.lodz.android.pandora.widget.rv.recycler.DataViewHolder
 
 /**
  * 搜索联想列表适配器
@@ -37,17 +37,26 @@ class RecomdListAdapter(context: Context) : BaseRecyclerViewAdapter<RecomdData>(
             holder.itemView.setBackgroundColor(bean.getItemBackgroundColor())
         }
         if (bean.getItemHigthPx() != 0){
-            setItemViewHeight(holder.contentLayout, bean.getItemHigthPx())
+            // 内容布局
+            setItemViewHeight(holder.withView<ViewGroup>(R.id.content_layout), bean.getItemHigthPx())
         }
 
-        configIconImg(holder.iconImg, bean)
-        configTitle(holder.titleTv, bean)
-        configTitleTag(holder.titleTagTv, bean)
-        configDesc(holder.descTv, bean)
-        configFirstTag(holder.firstTagTv, bean)
-        configSecondTag(holder.secondTagTv, bean)
-        configTips(holder.tipsTv, bean)
-        configDivideLine(holder.divideLineView, bean)
+        // 图标
+        configIconImg(holder.withView(R.id.icon_img), bean)
+        // 标题文字
+        configTitle(holder.withView(R.id.title_tv), bean)
+        // 标题标签
+        configTitleTag(holder.withView(R.id.title_tag_tv), bean)
+        // 描述文字
+        configDesc(holder.withView(R.id.desc_tv), bean)
+        // 文字一标签
+        configFirstTag(holder.withView(R.id.first_tag_tv), bean)
+        // 文字二标签
+        configSecondTag(holder.withView(R.id.second_tag_tv), bean)
+        // 提示文字
+        configTips(holder.withView(R.id.tips_tv), bean)
+        // 分割线
+        configDivideLine(holder.withView(R.id.divide_line_view), bean)
     }
 
     /** 配置图标 */
@@ -145,27 +154,5 @@ class RecomdListAdapter(context: Context) : BaseRecyclerViewAdapter<RecomdData>(
         if (bean.getDivideLineColor() != 0) {
             divideLineView.setBackgroundColor(bean.getDivideLineColor())
         }
-    }
-
-    private inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-        /** 内容布局 */
-        val contentLayout by bindView<ViewGroup>(R.id.content_layout)
-        /** 图标 */
-        val iconImg by bindView<ImageView>(R.id.icon_img)
-        /** 标题文字 */
-        val titleTv by bindView<TextView>(R.id.title_tv)
-        /** 标题标签 */
-        val titleTagTv by bindView<TextView>(R.id.title_tag_tv)
-        /** 描述文字 */
-        val descTv by bindView<TextView>(R.id.desc_tv)
-        /** 文字一标签 */
-        val firstTagTv by bindView<TextView>(R.id.first_tag_tv)
-        /** 文字二标签 */
-        val secondTagTv by bindView<TextView>(R.id.second_tag_tv)
-        /** 提示文字 */
-        val tipsTv by bindView<TextView>(R.id.tips_tv)
-        /** 分割线 */
-        val divideLineView by bindView<View>(R.id.divide_line_view)
     }
 }

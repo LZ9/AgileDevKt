@@ -1,15 +1,15 @@
 package com.lodz.android.agiledevkt.modules.main
 
 import android.content.Context
-import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.MainBean
-import com.lodz.android.corekt.anko.bindView
+import com.lodz.android.corekt.anko.append
 import com.lodz.android.corekt.anko.getColorCompat
 import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
+import com.lodz.android.pandora.widget.rv.recycler.DataViewHolder
 import java.util.*
 
 /**
@@ -27,22 +27,18 @@ class MainAdapter(context: Context) : BaseRecyclerViewAdapter<MainBean>(context)
             0x1F62A, 0x1F62B, 0x1F62D, 0x1F630, 0x1F631, 0x1F632, 0x1F633, 0x1F634, 0x1F635, 0x1F637, 0x1F638,
             0x1F639, 0x1F63A, 0x1F63B, 0x1F63C, 0x1F63D, 0x1F63E, 0x1F63F)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder = MainViewHolder(getLayoutView(parent, R.layout.rv_item_main))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder = DataViewHolder(getLayoutView(parent, R.layout.rv_item_main))
 
     override fun onBind(holder: RecyclerView.ViewHolder, position: Int) {
         val bean: MainBean = getItem(position) ?: return
-        showItem(holder as MainViewHolder, bean)
+        showItem(holder as DataViewHolder, bean)
     }
 
-    private fun showItem(holder: MainViewHolder, bean: MainBean) {
+    private fun showItem(holder: DataViewHolder, bean: MainBean) {
         val random = Random()
-        holder.nameTv.setTextColor(context.getColorCompat(COLORS[(random.nextInt(100) + 1) % COLORS.size]))
-        val str = String(Character.toChars(EMOJI_UNICODE[(random.nextInt(100) + 1) % EMOJI_UNICODE.size])) + "   " + bean.getTitleName()
-        holder.nameTv.text = str
-    }
-
-    inner class MainViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        /** 名称 */
-        internal val nameTv by bindView<TextView>(R.id.name)
+        holder.withView<TextView>(R.id.name).apply {
+            text = String(Character.toChars(EMOJI_UNICODE[(random.nextInt(100) + 1) % EMOJI_UNICODE.size])).append("   ").append(bean.getTitleName())
+            setTextColor(context.getColorCompat(COLORS[(random.nextInt(100) + 1) % COLORS.size]))
+        }
     }
 }

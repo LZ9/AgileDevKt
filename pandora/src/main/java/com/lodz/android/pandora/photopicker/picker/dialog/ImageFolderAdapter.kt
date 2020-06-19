@@ -5,19 +5,18 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.recyclerview.widget.RecyclerView
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.dp2pxRF
 import com.lodz.android.corekt.anko.getColorCompat
 import com.lodz.android.pandora.R
 import com.lodz.android.pandora.photopicker.contract.OnImgLoader
 import com.lodz.android.pandora.photopicker.picker.PickerUIConfig
 import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
+import com.lodz.android.pandora.widget.rv.recycler.DataViewHolder
 
 /**
  * 图片文件夹列表适配器
@@ -44,24 +43,29 @@ internal class ImageFolderAdapter(context: Context) : BaseRecyclerViewAdapter<Im
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
-            ImageFolderViewHolder(getLayoutView(parent, R.layout.pandora_item_img_folder))
+            DataViewHolder(getLayoutView(parent, R.layout.pandora_item_img_folder))
 
     override fun onBind(holder: RecyclerView.ViewHolder, position: Int) {
         val bean = getItem(position)
-        if (bean == null || holder !is ImageFolderViewHolder) {
+        if (bean == null || holder !is DataViewHolder) {
             return
         }
         showItem(holder, bean)
     }
 
-    private fun showItem(holder: ImageFolderViewHolder, bean: ImageFolderItemBean) {
+    private fun showItem(holder: DataViewHolder, bean: ImageFolderItemBean) {
         val imageFolder = bean.imageFolder ?: return
 
-        mPdrImgLoader?.displayImg(context, imageFolder.coverImgPath, holder.coverImg)
-        holder.floderNameTv.text = imageFolder.name
-        holder.countTv.text = context.getString(R.string.pandora_picker_folder_num, imageFolder.count.toString())
-        holder.selectImg.setImageBitmap(if (bean.isSelected) mPdrSelectedBitmap else mPdrUnselectBitmap)
-        holder.dirTv.text = if (imageFolder.isAllPicture()) imageFolder.name else imageFolder.dir
+        // 封面图
+        mPdrImgLoader?.displayImg(context, imageFolder.coverImgPath, holder.withView(R.id.pdr_cover_img))
+        // 文件夹名称
+        holder.withView<TextView>(R.id.pdr_floder_name_tv).text = imageFolder.name
+        // 文件夹张数
+        holder.withView<TextView>(R.id.pdr_count_tv).text = context.getString(R.string.pandora_picker_folder_num, imageFolder.count.toString())
+        // 选中图标
+        holder.withView<ImageView>(R.id.pdr_select_img).setImageBitmap(if (bean.isSelected) mPdrSelectedBitmap else mPdrUnselectBitmap)
+        // 文件夹路径
+        holder.withView<TextView>(R.id.pdr_dir_tv).text = if (imageFolder.isAllPicture()) imageFolder.name else imageFolder.dir
     }
 
     private fun getUnselectBitmap(@ColorRes color: Int): Bitmap {
@@ -94,19 +98,5 @@ internal class ImageFolderAdapter(context: Context) : BaseRecyclerViewAdapter<Im
         paint.style = Paint.Style.FILL
         canvas.drawCircle(side / 2, side / 2, side / 2 - 25, paint)
         return bitmap
-    }
-
-    private inner class ImageFolderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        /** 封面图 */
-        val coverImg by bindView<ImageView>(R.id.pdr_cover_img)
-        /** 文件夹名称 */
-        val floderNameTv by bindView<TextView>(R.id.pdr_floder_name_tv)
-        /** 文件夹路径 */
-        val dirTv by bindView<TextView>(R.id.pdr_dir_tv)
-        /** 文件夹张数 */
-        val countTv by bindView<TextView>(R.id.pdr_count_tv)
-        /** 选中图标 */
-        val selectImg by bindView<ImageView>(R.id.pdr_select_img)
-
     }
 }

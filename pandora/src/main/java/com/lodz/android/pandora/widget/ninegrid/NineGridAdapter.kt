@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.pandora.R
 import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
+import com.lodz.android.pandora.widget.rv.recycler.DataViewHolder
 
 /**
  * 图片九宫格适配器
@@ -126,33 +127,39 @@ internal class NineGridAdapter(context: Context) : BaseRecyclerViewAdapter<Strin
 
     /** 显示添加按钮Item */
     private fun showAddItem(holder: NineGridAddViewHolder) {
+        // 添加按钮
+        val addBtn = holder.withView<ImageView>(R.id.pdr_add_btn)
         if (mPdrAddBtnDrawable != null) {
-            holder.addBtn.setImageDrawable(mPdrAddBtnDrawable)
+            addBtn.setImageDrawable(mPdrAddBtnDrawable)
         } else {
-            holder.addBtn.setImageResource(R.drawable.pandora_ic_nine_grid_add)
+            addBtn.setImageResource(R.drawable.pandora_ic_nine_grid_add)
         }
-        holder.addBtn.setOnClickListener {
+        addBtn.setOnClickListener {
             mPdrListener?.onAddPic(mPdrMaxPic - getDataSize())
         }
     }
 
     /** 显示图片Item */
     private fun showItem(holder: NineGridViewHolder, data: String) {
-        mPdrListener?.onDisplayImg(context, data, holder.img)
-        holder.img.setOnClickListener {
+        // 图片
+        val img = holder.withView<ImageView>(R.id.pdr_img)
+        mPdrListener?.onDisplayImg(context, data, img)
+        img.setOnClickListener {
             val str = getItem(holder.adapterPosition)
             if (!str.isNullOrEmpty()) {
                 mPdrListener?.onClickPic(str, holder.adapterPosition)
             }
         }
 
+        // 删除按钮
+        val deleteBtn = holder.withView<ImageView>(R.id.pdr_delete_btn)
         if (mPdrDeleteBtnDrawable != null) {
-            holder.deleteBtn.setImageDrawable(mPdrDeleteBtnDrawable)
+            deleteBtn.setImageDrawable(mPdrDeleteBtnDrawable)
         } else {
-            holder.deleteBtn.setImageResource(R.drawable.pandora_ic_nine_grid_delete)
+            deleteBtn.setImageResource(R.drawable.pandora_ic_nine_grid_delete)
         }
-        holder.deleteBtn.visibility = if (isPdrShowDelete) View.VISIBLE else View.GONE
-        holder.deleteBtn.setOnClickListener {
+        deleteBtn.visibility = if (isPdrShowDelete) View.VISIBLE else View.GONE
+        deleteBtn.setOnClickListener {
             val str = getItem(holder.adapterPosition)
             if (!str.isNullOrEmpty()) {
                 mPdrListener?.onDeletePic(str, holder.adapterPosition)
@@ -160,16 +167,7 @@ internal class NineGridAdapter(context: Context) : BaseRecyclerViewAdapter<Strin
         }
     }
 
-    internal inner class NineGridAddViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        /** 添加按钮 */
-        val addBtn by bindView<ImageView>(R.id.pdr_add_btn)
-    }
+    internal inner class NineGridAddViewHolder(itemView: View) : DataViewHolder(itemView)
 
-    internal inner class NineGridViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        /** 图片 */
-        val img by bindView<ImageView>(R.id.pdr_img)
-        /** 删除按钮 */
-        val deleteBtn by bindView<ImageView>(R.id.pdr_delete_btn)
-    }
-
+    internal inner class NineGridViewHolder(itemView: View) : DataViewHolder(itemView)
 }

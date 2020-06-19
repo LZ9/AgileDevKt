@@ -19,6 +19,7 @@ import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.corekt.utils.FileUtils
 import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
+import com.lodz.android.pandora.widget.rv.recycler.DataViewHolder
 import org.jetbrains.anko.textColor
 import zlc.season.rxdownload4.manager.*
 
@@ -32,23 +33,25 @@ class DownloadMarketAdapter(context : Context) :BaseRecyclerViewAdapter<AppInfoB
     private var mListener: OnDownloadListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder  =
-        DataViewHolder(getLayoutView(parent, R.layout.rv_item_download_market))
+        DownloadViewHolder(getLayoutView(parent, R.layout.rv_item_download_market))
 
     override fun onBind(holder: RecyclerView.ViewHolder, position: Int) {
         val bean = getItem(position)
-        if (bean == null || holder !is DataViewHolder) {
+        if (bean == null || holder !is DownloadViewHolder) {
             return
         }
         showItem(holder, bean)
     }
 
-    private fun showItem(holder: DataViewHolder, bean: AppInfoBean) {
+    private fun showItem(holder: DownloadViewHolder, bean: AppInfoBean) {
         val tag = holder.tag
         if (tag != null){
             holder.taskManager?.dispose(tag)
         }
-        showImg(holder.appImg, bean.imgUrl)
-        holder.appNameTv.text = bean.appName
+        // 图标
+        showImg(holder.withView(R.id.app_img), bean.imgUrl)
+        // 名称
+        holder.withView<TextView>(R.id.app_name_tv).text = bean.appName
         if (FileUtils.isFileExists(FileManager.getDownloadFolderPath().append(bean.getSaveName()))){
             showCompleted(holder, bean)
         } else {
@@ -64,7 +67,7 @@ class DownloadMarketAdapter(context : Context) :BaseRecyclerViewAdapter<AppInfoB
             .into(imageView)
     }
 
-    private fun createTaskManager(holder: DataViewHolder, bean: AppInfoBean) {
+    private fun createTaskManager(holder: DownloadViewHolder, bean: AppInfoBean) {
         holder.taskManager = bean.downloadUrl.pathTaskManager(bean.getSaveName())
         holder.tag = holder.taskManager?.subscribe { status ->
             when (status) {
@@ -93,7 +96,7 @@ class DownloadMarketAdapter(context : Context) :BaseRecyclerViewAdapter<AppInfoB
         }
     }
 
-    private fun showReady(holder: DataViewHolder, bean: AppInfoBean) {
+    private fun showReady(holder: DownloadViewHolder, bean: AppInfoBean) {
         holder.tipsTv.text = bean.appDesc
         holder.tipsTv.textColor = context.getColorCompat(R.color.color_1a1a1a)
         holder.tipsTv.visibility = View.VISIBLE
@@ -107,7 +110,7 @@ class DownloadMarketAdapter(context : Context) :BaseRecyclerViewAdapter<AppInfoB
         }
     }
 
-    private fun showDownloading(holder: DataViewHolder, bean: AppInfoBean, status: Status) {
+    private fun showDownloading(holder: DownloadViewHolder, bean: AppInfoBean, status: Status) {
         holder.tipsTv.visibility = View.GONE
         holder.downloadingLayout.visibility = View.VISIBLE
         var progress = status.progress.percent().toInt()
@@ -128,7 +131,7 @@ class DownloadMarketAdapter(context : Context) :BaseRecyclerViewAdapter<AppInfoB
         }
     }
 
-    private fun showPause(holder: DataViewHolder, bean: AppInfoBean, status: Status) {
+    private fun showPause(holder: DownloadViewHolder, bean: AppInfoBean, status: Status) {
         holder.tipsTv.visibility = View.GONE
         holder.downloadingLayout.visibility = View.VISIBLE
         var progress = status.progress.percent().toInt()
@@ -149,7 +152,7 @@ class DownloadMarketAdapter(context : Context) :BaseRecyclerViewAdapter<AppInfoB
         }
     }
 
-    private fun showCompleted(holder: DataViewHolder, bean: AppInfoBean) {
+    private fun showCompleted(holder: DownloadViewHolder, bean: AppInfoBean) {
         holder.tipsTv.text = bean.appDesc
         holder.tipsTv.textColor = context.getColorCompat(R.color.color_1a1a1a)
         holder.tipsTv.visibility = View.VISIBLE
@@ -163,7 +166,7 @@ class DownloadMarketAdapter(context : Context) :BaseRecyclerViewAdapter<AppInfoB
         }
     }
 
-    private fun showFailed(holder: DataViewHolder, bean: AppInfoBean, status: Failed) {
+    private fun showFailed(holder: DownloadViewHolder, bean: AppInfoBean, status: Failed) {
         PrintLog.e("testtag", "  下载失败  ", status.throwable)
         holder.tipsTv.text = context.getString(R.string.market_failed).append(" : ").append(status.throwable.message)
         holder.tipsTv.textColor = context.getColorCompat(R.color.red)
@@ -193,11 +196,7 @@ class DownloadMarketAdapter(context : Context) :BaseRecyclerViewAdapter<AppInfoB
         fun onClickDelete(taskManager: TaskManager, bean: AppInfoBean)
     }
 
-    private inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        /** 图标 */
-        val appImg by bindView<ImageView>(R.id.app_img)
-        /** 名称 */
-        val appNameTv by bindView<TextView>(R.id.app_name_tv)
+    private inner class DownloadViewHolder(itemView: View) : DataViewHolder(itemView) {
         /** 提示语 */
         val tipsTv by bindView<TextView>(R.id.tips_tv)
         /** 下载布局 */
