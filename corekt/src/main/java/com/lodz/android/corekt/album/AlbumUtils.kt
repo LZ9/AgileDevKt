@@ -22,14 +22,23 @@ object AlbumUtils {
         val imageList = LinkedList<String>()
 
         val uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-        val selection = MediaStore.Images.Media.MIME_TYPE + "=? or " +
+        val projection = arrayOf(
+            MediaStore.Images.Media.DATA,
+            MediaStore.Images.Media.DISPLAY_NAME,
+            MediaStore.Images.Media.DATE_ADDED,
+            MediaStore.Images.Media._ID,
+            MediaStore.Images.Media.MIME_TYPE,
+            MediaStore.Images.Media.SIZE
+        )
+        val selection = MediaStore.MediaColumns.SIZE + "> 0 and" +
+                "(" + MediaStore.Images.Media.MIME_TYPE + "=? or " +
                 MediaStore.Images.Media.MIME_TYPE + "=? or " +
                 MediaStore.Images.Media.MIME_TYPE + "=? or " +
-                MediaStore.Images.Media.MIME_TYPE + "=?"
+                MediaStore.Images.Media.MIME_TYPE + "=?" + ")"
         val selectionArgs = arrayOf("image/jpeg", "image/png", "image/gif", "image/jpg")
-        val sortOrder = MediaStore.Images.Media.DATE_MODIFIED
+        val sortOrder = MediaStore.Images.Media.DATE_MODIFIED + " ASC"
 
-        val cursor: Cursor? = context.contentResolver.query(uri, null, selection, selectionArgs, sortOrder)
+        val cursor: Cursor? = context.contentResolver.query(uri, projection, selection, selectionArgs, sortOrder)
 
         if (cursor == null) {
             cursor?.close()
