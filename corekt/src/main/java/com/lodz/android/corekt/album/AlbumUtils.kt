@@ -36,7 +36,7 @@ object AlbumUtils {
                 MediaStore.Images.Media.MIME_TYPE + "=? or " +
                 MediaStore.Images.Media.MIME_TYPE + "=?" + ")"
         val selectionArgs = arrayOf("image/jpeg", "image/png", "image/gif", "image/jpg")
-        val sortOrder = MediaStore.Images.Media.DATE_MODIFIED + " ASC"
+        val sortOrder = MediaStore.Images.Media.DATE_MODIFIED + " DESC"
 
         val cursor: Cursor? = context.contentResolver.query(uri, projection, selection, selectionArgs, sortOrder)
 
@@ -62,7 +62,6 @@ object AlbumUtils {
             }
         } while (cursor.moveToNext())
         cursor.close()
-        imageList.reverse()// 按时间降序
         return imageList
     }
 
