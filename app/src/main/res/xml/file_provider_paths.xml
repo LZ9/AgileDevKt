@@ -13,7 +13,7 @@
     <!--自定义地址-->
     <external-path
         name="app_provider_path_A10"
-        path="Android/data/com.lodz.android.agiledevkt/files/AgileDevKt" />
+        path="Android/data/com.lodz.android.agiledevkt" />
 
     <!--默认地址-->
     <external-path
