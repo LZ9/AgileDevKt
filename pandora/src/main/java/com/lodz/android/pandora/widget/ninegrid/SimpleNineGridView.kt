@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.ImageView
+import com.lodz.android.corekt.album.PicInfo
 import com.lodz.android.corekt.anko.toArrayList
 import com.lodz.android.pandora.photopicker.picker.PickerManager
 import com.lodz.android.pandora.photopicker.picker.PickerUIConfig
@@ -56,17 +57,17 @@ class SimpleNineGridView<V : View> : NineGridView {
                         .open(context)
             }
 
-            override fun onDisplayImg(context: Context, data: String, imageView: ImageView) {
+            override fun onDisplayImg(context: Context, data: PicInfo, imageView: ImageView) {
                 mPdrListener?.onDisplayNineGridImg(context, data, imageView)
             }
 
-            override fun onDeletePic(data: String, position: Int) {
+            override fun onDeletePic(data: PicInfo, position: Int) {
                 removeDatas(position)
             }
 
-            override fun onClickPic(data: String, position: Int) {
+            override fun onClickPic(data: PicInfo, position: Int) {
                 val listener = mPdrListener ?: return
-                PreviewManager.create<V, String>()
+                PreviewManager.create<V, PicInfo>()
                         .setPosition(position)
                         .setBackgroundColor(android.R.color.black)
                         .setStatusBarColor(android.R.color.black)
@@ -107,13 +108,13 @@ class SimpleNineGridView<V : View> : NineGridView {
         this.mPdrConfig = config
     }
 
-    override fun addData(data: ArrayList<String>) {}
+    override fun addData(data: ArrayList<PicInfo>) {}
 
     override fun removeData(position: Int) {}
 
     override fun setOnNineGridViewListener(listener: OnNineGridViewListener) {}
 
-    private fun addDatas(data: ArrayList<String>) {
+    private fun addDatas(data: ArrayList<PicInfo>) {
         super.addData(data)
     }
 

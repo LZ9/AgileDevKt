@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.github.chrisbanes.photoview.PhotoView
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.utils.file.FileManager
+import com.lodz.android.corekt.album.PicInfo
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.goAppDetailSetting
 import com.lodz.android.corekt.anko.isPermissionGranted
@@ -109,13 +110,13 @@ class NineGridActivity : BaseActivity() {
         mShowOnlyNineGridView.setOnNineGridViewListener(object : OnNineGridViewListener {
             override fun onAddPic(addCount: Int) {}
 
-            override fun onDisplayImg(context: Context, data: String, imageView: ImageView) {
-                ImageLoader.create(context).loadUrl(data).setCenterCrop().into(imageView)
+            override fun onDisplayImg(context: Context, data: PicInfo, imageView: ImageView) {
+                ImageLoader.create(context).loadUrl(data.path).setCenterCrop().into(imageView)
             }
 
-            override fun onDeletePic(data: String, position: Int) {}
+            override fun onDeletePic(data: PicInfo, position: Int) {}
 
-            override fun onClickPic(data: String, position: Int) {
+            override fun onClickPic(data: PicInfo, position: Int) {
                 toastShort("click position $position")
             }
         })
@@ -124,7 +125,7 @@ class NineGridActivity : BaseActivity() {
             val list = mShowOnlyNineGridView.getPicData()
             var result = ""
             for (path in list) {
-                result += path + "\n\n"
+                result += path.toString() + "\n\n"
             }
             mResultTv.text = result
         }
@@ -162,18 +163,22 @@ class NineGridActivity : BaseActivity() {
         }
 
         mPickerNineGridView.setOnSimpleNineGridViewListener(object : OnSimpleNineGridViewListener<ImageView> {
-            override fun createImageView(): AbsImageView<ImageView, String> = object : AbsImageView<ImageView, String>(mScaleSwitch.isChecked) {
+            override fun createImageView(): AbsImageView<ImageView, PicInfo> = object : AbsImageView<ImageView, PicInfo>(mScaleSwitch.isChecked) {
                 override fun onCreateView(context: Context, isScale: Boolean): ImageView {
                     val img = if (isScale) PhotoView(context) else ImageView(context)
                     img.scaleType = ImageView.ScaleType.CENTER_INSIDE
                     return img
                 }
 
-                override fun onDisplayImg(context: Context, source: String, view: ImageView) {
-                    ImageLoader.create(context).loadFilePath(source).setFitCenter().into(view)
+                override fun onDisplayImg(context: Context, source: PicInfo, view: ImageView) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                        ImageLoader.create(context).loadUri(source.uri).setFitCenter().into(view)
+                    } else {
+                        ImageLoader.create(context).loadFilePath(source.path).setFitCenter().into(view)
+                    }
                 }
 
-                override fun onClickImpl(viewHolder: RecyclerView.ViewHolder, view: ImageView, item: String, position: Int, controller: PreviewController) {
+                override fun onClickImpl(viewHolder: RecyclerView.ViewHolder, view: ImageView, item: PicInfo, position: Int, controller: PreviewController) {
                     super.onClickImpl(viewHolder, view, item, position, controller)
                     view.setOnClickListener {
                         if (mClickClosePreviewSwitch.isChecked) {
@@ -190,12 +195,12 @@ class NineGridActivity : BaseActivity() {
                 }
             }
 
-            override fun onDisplayNineGridImg(context: Context, data: String, imageView: ImageView) {
-                ImageLoader.create(context).loadUrl(data).setCenterCrop().into(imageView)
+            override fun onDisplayNineGridImg(context: Context, data: PicInfo, imageView: ImageView) {
+                ImageLoader.create(context).loadUrl(data.path).setCenterCrop().into(imageView)
             }
 
-            override fun onDisplayPickerImg(context: Context, data: String, imageView: ImageView) {
-                ImageLoader.create(context).loadUrl(data).setCenterCrop().into(imageView)
+            override fun onDisplayPickerImg(context: Context, data: PicInfo, imageView: ImageView) {
+                ImageLoader.create(context).loadUrl(data.path).setCenterCrop().into(imageView)
             }
         })
 
@@ -203,7 +208,7 @@ class NineGridActivity : BaseActivity() {
             val list = mPickerNineGridView.getPicData()
             var result = ""
             for (path in list) {
-                result += path + "\n\n"
+                result += path.toString() + "\n\n"
             }
             mResultTv.text = result
         }
@@ -254,7 +259,7 @@ class NineGridActivity : BaseActivity() {
 
     private fun init() {
         mPickerNineGridView.config(FileManager.getCacheFolderPath(), "com.lodz.android.agiledevkt.fileprovider")
-        mShowOnlyNineGridView.setData(IMG_URLS)
+        mShowOnlyNineGridView.setStrData(IMG_URLS)
         showStatusCompleted()
     }
 }

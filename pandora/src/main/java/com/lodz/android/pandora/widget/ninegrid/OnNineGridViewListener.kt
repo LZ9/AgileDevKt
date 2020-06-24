@@ -2,6 +2,7 @@ package com.lodz.android.pandora.widget.ninegrid
 
 import android.content.Context
 import android.widget.ImageView
+import com.lodz.android.corekt.album.PicInfo
 
 /**
  * 九宫格接口
@@ -13,11 +14,11 @@ interface OnNineGridViewListener {
     fun onAddPic(addCount: Int)
 
     /** 展示图片，上下文[context]，数据[data]，控件[imageView] */
-    fun onDisplayImg(context: Context, data: String, imageView: ImageView)
+    fun onDisplayImg(context: Context, data: PicInfo, imageView: ImageView)
 
     /** 删除图片，数据[data]，位置[position] */
-    fun onDeletePic(data: String, position: Int)
+    fun onDeletePic(data: PicInfo, position: Int)
 
     /** 点击图片，数据[data]，位置[position] */
-    fun onClickPic(data: String, position: Int)
+    fun onClickPic(data: PicInfo, position: Int)
 }

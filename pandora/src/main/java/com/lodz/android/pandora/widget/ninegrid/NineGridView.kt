@@ -4,6 +4,7 @@ import android.annotation.TargetApi
 import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.Color
+import android.net.Uri
 import android.os.Build
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import androidx.annotation.IntRange
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.lodz.android.corekt.album.PicInfo
 import com.lodz.android.corekt.anko.*
 import com.lodz.android.pandora.R
 import com.lodz.android.pandora.widget.rv.decoration.GridItemDecoration
@@ -41,7 +43,7 @@ open class NineGridView : FrameLayout {
     private lateinit var mPdrGridLayoutManager: GridLayoutManager
 
     /** 数据列表 */
-    private var mPdrDataList = ArrayList<String>()
+    private var mPdrDataList = ArrayList<PicInfo>()
     /** 是否需要拖拽 */
     private var isPdrNeedDrag = false
     /** 是否需要拖拽震动提醒 */
@@ -204,7 +206,16 @@ open class NineGridView : FrameLayout {
     }
 
     /** 设置数据 */
-    fun setData(data: ArrayList<String>) {
+    fun setStrData(data: ArrayList<String>) {
+        val infos = ArrayList<PicInfo>()
+        for (url in data) {
+            infos.add(PicInfo(url, Uri.EMPTY))
+        }
+        setData(infos)
+    }
+
+    /** 设置数据 */
+    fun setData(data: ArrayList<PicInfo>) {
         mPdrDataList = ArrayList()
         //如果数据大于最大图片数，则取前n位数据
         val length = if (data.size > mPdrAdapter.getMaxPic()) mPdrAdapter.getMaxPic() else data.size
@@ -216,7 +227,7 @@ open class NineGridView : FrameLayout {
     }
 
     /** 添加数据 */
-    open fun addData(data: ArrayList<String>) {
+    open fun addData(data: ArrayList<PicInfo>) {
         // 判断添加的数据长度和已有数据长度之和是否超过总长度
         val length = if ((data.size + mPdrDataList.size) > mPdrAdapter.getMaxPic()) mPdrAdapter.getMaxPic() - mPdrDataList.size else data.size
         for (i in 0 until length) {
@@ -236,7 +247,7 @@ open class NineGridView : FrameLayout {
     }
 
     /** 获取图片数据 */
-    fun getPicData(): List<String> = mPdrDataList
+    fun getPicData(): List<PicInfo> = mPdrDataList
 
     /** 清空数据 */
     fun clearData() {

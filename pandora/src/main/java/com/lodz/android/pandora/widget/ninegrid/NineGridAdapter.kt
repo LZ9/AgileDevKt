@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.annotation.IntRange
 import androidx.recyclerview.widget.RecyclerView
+import com.lodz.android.corekt.album.PicInfo
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.pandora.R
 import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
@@ -16,7 +17,7 @@ import com.lodz.android.pandora.widget.rv.recycler.DataViewHolder
  * 图片九宫格适配器
  * Created by zhouL on 2018/12/25.
  */
-internal class NineGridAdapter(context: Context) : BaseRecyclerViewAdapter<String>(context) {
+internal class NineGridAdapter(context: Context) : BaseRecyclerViewAdapter<PicInfo>(context) {
 
     /** 添加按钮 */
     private val VIEW_TYPE_ADD = 0
@@ -119,7 +120,7 @@ internal class NineGridAdapter(context: Context) : BaseRecyclerViewAdapter<Strin
             return
         }
         val data = getItem(position)
-        if (data.isNullOrEmpty() || holder !is NineGridViewHolder) {
+        if (data == null || holder !is NineGridViewHolder) {
             return
         }
         showItem(holder, data)
@@ -140,14 +141,14 @@ internal class NineGridAdapter(context: Context) : BaseRecyclerViewAdapter<Strin
     }
 
     /** 显示图片Item */
-    private fun showItem(holder: NineGridViewHolder, data: String) {
+    private fun showItem(holder: NineGridViewHolder, data: PicInfo) {
         // 图片
         val img = holder.withView<ImageView>(R.id.pdr_img)
         mPdrListener?.onDisplayImg(context, data, img)
         img.setOnClickListener {
-            val str = getItem(holder.adapterPosition)
-            if (!str.isNullOrEmpty()) {
-                mPdrListener?.onClickPic(str, holder.adapterPosition)
+            val info = getItem(holder.adapterPosition)
+            if (info != null) {
+                mPdrListener?.onClickPic(info, holder.adapterPosition)
             }
         }
 
@@ -160,9 +161,9 @@ internal class NineGridAdapter(context: Context) : BaseRecyclerViewAdapter<Strin
         }
         deleteBtn.visibility = if (isPdrShowDelete) View.VISIBLE else View.GONE
         deleteBtn.setOnClickListener {
-            val str = getItem(holder.adapterPosition)
-            if (!str.isNullOrEmpty()) {
-                mPdrListener?.onDeletePic(str, holder.adapterPosition)
+            val info = getItem(holder.adapterPosition)
+            if (info != null) {
+                mPdrListener?.onDeletePic(info, holder.adapterPosition)
             }
         }
     }

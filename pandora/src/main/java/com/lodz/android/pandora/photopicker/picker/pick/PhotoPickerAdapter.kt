@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.annotation.ColorRes
 import androidx.recyclerview.widget.RecyclerView
+import com.lodz.android.corekt.album.PicInfo
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.dp2pxRF
 import com.lodz.android.corekt.anko.getColorCompat
@@ -25,7 +26,7 @@ import com.lodz.android.pandora.widget.rv.recycler.DataViewHolder
  * 照片选择适配器
  * Created by zhouL on 2018/12/20.
  */
-internal class PhotoPickerAdapter(context: Context, imgLoader: OnImgLoader<String>?, isNeedCamera: Boolean, config: PickerUIConfig) : BaseRecyclerViewAdapter<PickerItemBean>(context) {
+internal class PhotoPickerAdapter(context: Context, imgLoader: OnImgLoader<PicInfo>?, isNeedCamera: Boolean, config: PickerUIConfig) : BaseRecyclerViewAdapter<PickerItemBean>(context) {
 
     /** 相机 */
     private val VIEW_TYPE_CAMERA = 0
@@ -33,7 +34,7 @@ internal class PhotoPickerAdapter(context: Context, imgLoader: OnImgLoader<Strin
     private val VIEW_TYPE_ITEM = 1
 
     /** 图片加载接口 */
-    private var mPdrImgLoader: OnImgLoader<String>?
+    private var mPdrImgLoader: OnImgLoader<PicInfo>?
     /** 监听器 */
     private var mPdrListener: Listener? = null
 
@@ -98,7 +99,7 @@ internal class PhotoPickerAdapter(context: Context, imgLoader: OnImgLoader<Strin
         setItemViewHeight(holder.itemView, context.getScreenWidth() / 3)
         holder.itemView.setBackgroundColor(context.getColorCompat(mPdrConfig.getItemBgColor()))
         // 照片
-        mPdrImgLoader?.displayImg(context, bean.path, holder.withView(R.id.pdr_photo_img))
+        mPdrImgLoader?.displayImg(context, bean.info, holder.withView(R.id.pdr_photo_img))
         // 选中图标
         holder.withView<ImageView>(R.id.pdr_select_icon_btn).apply {
             setImageBitmap(if (bean.isSelected) mPdrSelectedBitmap else mPdrUnselectBitmap)

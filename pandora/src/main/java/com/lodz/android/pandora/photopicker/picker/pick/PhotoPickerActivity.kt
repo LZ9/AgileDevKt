@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.corekt.album.AlbumUtils
 import com.lodz.android.corekt.album.ImageFolder
+import com.lodz.android.corekt.album.PicInfo
 import com.lodz.android.corekt.anko.*
 import com.lodz.android.corekt.utils.*
 import com.lodz.android.pandora.R
@@ -192,7 +193,7 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
                             }
                             mPdrCurrentImageFolder = imageFolder
                             mPdrFolderNameTv.text = imageFolder.name
-                            configAdapterData(AlbumUtils.getImageListOfFolder(getContext(), imageFolder))
+                            configAdapterData(imageFolder.picList)
                             mPdrMoreImg.startRotateSelf(-180, 0, 500, true)
                         }
                         dialog.show()
@@ -205,9 +206,9 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
 
         // 确定按钮
         mPdrConfirmBtn.setOnClickListener {
-            val list = ArrayList<String>()
+            val list = ArrayList<PicInfo>()
             for (itemBean in mPdrSelectedList) {
-                list.add(itemBean.path)
+                list.add(itemBean.info)
             }
             mPdrPickerBean?.photoPickerListener?.onPickerSelected(list)
             finish()
@@ -218,13 +219,13 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
             val bean = mPdrPickerBean ?: return@setOnClickListener
             val view = bean.imgView ?: return@setOnClickListener
 
-            val list = ArrayList<String>()
+            val list = ArrayList<PicInfo>()
             for (itemBean in mPdrSelectedList) {
-                list.add(itemBean.path)// 组装数据
+                list.add(itemBean.info)// 组装数据
             }
 
             // 图片预览器
-            PreviewManager.create<V, String>()
+            PreviewManager.create<V, PicInfo>()
                     .setPosition(0)
                     .setPagerTextSize(14)
                     .setShowPagerText(true)
@@ -248,7 +249,7 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
 
                 synchronized(this) {
                     for (i in mPdrCurrentPhotoList.indices) {
-                        if (bean.path == mPdrCurrentPhotoList[i].path) {
+                        if (bean.info.path == mPdrCurrentPhotoList[i].info.path) {
                             mPdrCurrentPhotoList[i].isSelected = !bean.isSelected//更改选中状态
                             mPdrAdapter.setData(mPdrCurrentPhotoList)
                             mPdrAdapter.notifyItemChanged(position)//刷新数据
@@ -257,7 +258,7 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
                             } else {// 点击后是非选中状态
                                 val iterator = mPdrSelectedList.iterator()
                                 while (iterator.hasNext()) {
-                                    if (iterator.next().path == bean.path) {
+                                    if (iterator.next().info.path == bean.info.path) {
                                         iterator.remove()// 从选中列表里去除
                                         break
                                     }
@@ -296,14 +297,14 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
             }
             val view = bean.imgView ?: return@setOnItemClickListener
             // 图片预览器
-            PreviewManager.create<V, String>()
+            PreviewManager.create<V, PicInfo>()
                     .setShowPagerText(false)
                     .setBackgroundColor(bean.pickerUIConfig.getPreviewBgColor())
                     .setStatusBarColor(bean.pickerUIConfig.getStatusBarColor())
                     .setNavigationBarColor(bean.pickerUIConfig.getNavigationBarColor())
                     .setPagerTextColor(bean.pickerUIConfig.getMainTextColor())
                     .setImageView(view)
-                    .build(item.path)
+                    .build(item.info)
                     .open(getContext())
         }
     }
@@ -328,13 +329,13 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
     }
 
     /** 配置适配器数据 */
-    private fun configAdapterData(source: List<String>) {
+    private fun configAdapterData(source: List<PicInfo>) {
         mPdrCurrentPhotoList.clear()
-        for (path in source) {
+        for (info in source) {
             val itemBean = PickerItemBean()
-            itemBean.path = path
+            itemBean.info = info
             for (selectedBean in mPdrSelectedList) {
-                if (selectedBean.path == path) {
+                if (selectedBean.info.path == info.path) {
                     itemBean.isSelected = true
                     break
                 }
@@ -481,7 +482,7 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
         val list = AlbumUtils.getAllImageFolders(getContext())
         for (folder in list) {
             if (folder.dir == currentFolder.dir) {
-                configAdapterData(AlbumUtils.getImageListOfFolder(getContext(), folder))
+                configAdapterData(folder.picList)
                 break
             }
         }

@@ -362,4 +362,155 @@ object FileUtils {
             bitmap.recycle()
         }
     }
+
+    ///**往FileDescriptor中写入数据
+    // * @param fileDescriptor
+    // * @param content
+    // */
+    //private void writeData(FileDescriptor fileDescriptor, String content) {
+    //    FileOutputStream fos = new FileOutputStream(fileDescriptor);
+    //    try {
+    //        fos.write(content.getBytes());
+    //    } catch (IOException e) {
+    //        e.printStackTrace();
+    //    } finally {
+    //        try {
+    //            fos.close();
+    //        } catch (IOException e) {
+    //            e.printStackTrace();
+    //        }
+    //    }
+    //}
+    //
+    ///**从FileDescriptor中读取数据
+    // * @param fileDescriptor
+    // * @return
+    // */
+    //private String readData(FileDescriptor fileDescriptor) {
+    //    FileInputStream fis = new FileInputStream(fileDescriptor);
+    //    byte[] b = new byte[1024];
+    //    int read;
+    //    String content=null;
+    //    try {
+    //        while ((read = fis.read(b)) != -1) {
+    //            content = new String(b, 0, read);
+    //        }
+    //    } catch (IOException e) {
+    //        e.printStackTrace();
+    //    } finally {
+    //        try {
+    //            fis.close();
+    //        } catch (IOException e) {
+    //            e.printStackTrace();
+    //        }
+    //    }
+    //    return content;
+    //}
+
+    //private void openFile(String type, Uri uri) {
+    //    if (type.contains("image/")) {
+    //        try {
+    //            ParcelFileDescriptor descriptor = getContentResolver().openFileDescriptor(uri, "r");
+    //            FileDescriptor fileDescriptor = descriptor.getFileDescriptor();
+    //            Bitmap bitmap = BitmapFactory.decodeFileDescriptor(fileDescriptor);
+    //            mShowPic_iv.setVisibility(View.VISIBLE);
+    //            mShowPic_iv.setImageBitmap(bitmap);
+    //        } catch (FileNotFoundException e) {
+    //            e.printStackTrace();
+    //        }
+    //    }
+    //}
+
+
+    //3、copy或者下载文件到公有目录，保存Bitmap同理，如Download，MIME_TYPE类型可以自行参考对应的文件类型，这里只对APK作出说明,从私有目录copy到公有目录demo如下（远程下载同理，只要拿到OutputStream即可，亦可下载到私有目录再copy到公有目录）：
+    //public static void copyToDownloadAndroidQ(Context context, String sourcePath, String fileName, String saveDirName){
+    //  ContentValues values = new ContentValues();
+    //  values.put(MediaStore.Downloads.DISPLAY_NAME, fileName);
+    //  values.put(MediaStore.Downloads.MIME_TYPE, "application/vnd.android.package-archive");
+    //  values.put(MediaStore.Downloads.RELATIVE_PATH, "Download/" + saveDirName.replaceAll("/","") + "/");
+    //
+    //  Uri external = MediaStore.Downloads.EXTERNAL_CONTENT_URI;
+    //  ContentResolver resolver = context.getContentResolver();
+    //
+    //  Uri insertUri = resolver.insert(external, values);
+    //  if(insertUri == null) {
+    //   return;
+    //  }
+    //
+    //  String mFilePath = insertUri.toString();
+    //
+    //  InputStream is = null;
+    //  OutputStream os = null;
+    //  try {
+    //   os = resolver.openOutputStream(insertUri);
+    //   if(os == null){
+    //    return;
+    //   }
+    //   int read;
+    //   File sourceFile = new File(sourcePath);
+    //   if (sourceFile.exists()) { // 文件存在时
+    //    is = new FileInputStream(sourceFile); // 读入原文件
+    //    byte[] buffer = new byte[1444];
+    //    while ((read = is.read(buffer)) != -1) {
+    //     os.write(buffer, 0, read);
+    //    }
+    //   }
+    //  } catch (Exception e) {
+    //   e.printStackTrace();
+    //  }finally {
+    //   close(is,os);
+    //  }
+    //
+    //}
+    //4、保存图片相关
+    ///**
+    //  * 通过MediaStore保存，兼容AndroidQ，保存成功自动添加到相册数据库，无需再发送广播告诉系统插入相册
+    //  *
+    //  * @param context  context
+    //  * @param sourceFile 源文件
+    //  * @param saveFileName 保存的文件名
+    //  * @param saveDirName picture子目录
+    //  * @return 成功或者失败
+    //  */
+    // public static boolean saveImageWithAndroidQ(Context context,
+    //             File sourceFile,
+    //             String saveFileName,
+    //             String saveDirName) {
+    //  String extension = BitmapUtil.getExtension(sourceFile.getAbsolutePath());
+    //
+    //  ContentValues values = new ContentValues();
+    //  values.put(MediaStore.Images.Media.DESCRIPTION, "This is an image");
+    //  values.put(MediaStore.Images.Media.DISPLAY_NAME, saveFileName);
+    //  values.put(MediaStore.Images.Media.MIME_TYPE, "image/png");
+    //  values.put(MediaStore.Images.Media.TITLE, "Image.png");
+    //  values.put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/" + saveDirName);
+    //
+    //  Uri external = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+    //  ContentResolver resolver = context.getContentResolver();
+    //
+    //  Uri insertUri = resolver.insert(external, values);
+    //  BufferedInputStream inputStream = null;
+    //  OutputStream os = null;
+    //  boolean result = false;
+    //  try {
+    //   inputStream = new BufferedInputStream(new FileInputStream(sourceFile));
+    //   if (insertUri != null) {
+    //    os = resolver.openOutputStream(insertUri);
+    //   }
+    //   if (os != null) {
+    //    byte[] buffer = new byte[1024 * 4];
+    //    int len;
+    //    while ((len = inputStream.read(buffer)) != -1) {
+    //     os.write(buffer, 0, len);
+    //    }
+    //    os.flush();
+    //   }
+    //   result = true;
+    //  } catch (IOException e) {
+    //   result = false;
+    //  } finally {
+    //   close(os, inputStream);
+    //  }
+    //  return result;
+    //}
 }

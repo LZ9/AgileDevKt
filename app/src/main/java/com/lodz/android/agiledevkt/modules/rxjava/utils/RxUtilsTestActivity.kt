@@ -2,6 +2,7 @@ package com.lodz.android.agiledevkt.modules.rxjava.utils
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.*
@@ -132,13 +133,21 @@ class RxUtilsTestActivity : BaseActivity() {
                 printResult(getString(R.string.rx_utils_pic_empty))
                 return@setOnClickListener
             }
-            val path = list[0]
-            printResult("图片路径：$path")
-            ImageLoader.create(getContext())
-                    .loadFilePath(path)
+            val info = list[0]
+            printResult("图片路径：$info")
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                ImageLoader.create(getContext())
+                    .loadUri(info.uri)
                     .setCenterInside()
                     .into(mPathImg)
-            RxUtils.decodePathToBase64(path, getScreenWidth() / 8, getScreenHeight() / 8)
+            } else {
+                ImageLoader.create(getContext())
+                    .loadFilePath(info.path)
+                    .setCenterInside()
+                    .into(mPathImg)
+            }
+
+            RxUtils.decodePathToBase64(info.path, getScreenWidth() / 8, getScreenHeight() / 8)
                     .compose(RxUtils.ioToMainObservable())
                     .compose(bindDestroyEvent())
                     .subscribe(object : ProgressObserver<String>(){
@@ -163,16 +172,29 @@ class RxUtilsTestActivity : BaseActivity() {
                 printResult(getString(R.string.rx_utils_pic_empty))
                 return@setOnClickListener
             }
-            val paths = when {
+            val infos = when {
                 list.size > 3 -> arrayListOf(list[2])
                 list.size > 2 -> arrayListOf(list[1])
                 else -> arrayListOf(list[0])
             }
-            printResult("图片路径：$paths")
-            ImageLoader.create(getContext())
-                    .loadFilePath(paths[0])
+            printResult("图片路径：$infos")
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                ImageLoader.create(getContext())
+                    .loadUri(infos[0].uri)
                     .setCenterInside()
                     .into(mPathImg)
+            } else {
+                ImageLoader.create(getContext())
+                    .loadFilePath(infos[0].path)
+                    .setCenterInside()
+                    .into(mPathImg)
+            }
+
+            val paths = ArrayList<String>()
+            for (info in infos) {
+                paths.add(info.path)
+            }
+
             RxUtils.decodePathToBase64(paths, getScreenWidth() / 8, getScreenHeight() / 8)
                     .compose(RxUtils.ioToMainObservable())
                     .compose(bindDestroyEvent())
