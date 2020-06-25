@@ -1,20 +1,21 @@
 package com.lodz.android.corekt.album
 
-import android.Manifest
 import android.content.ContentUris
+import android.content.ContentValues
 import android.content.Context
-import android.content.pm.PackageManager
 import android.database.Cursor
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Build
+import android.os.Environment
 import android.provider.MediaStore
-import androidx.annotation.RequiresPermission
-import com.lodz.android.corekt.anko.getSize
+import androidx.annotation.RequiresApi
+import androidx.core.net.toUri
 import com.lodz.android.corekt.utils.FileUtils
-import java.io.File
+import java.io.*
 import java.util.*
-import kotlin.collections.ArrayList
 
 /**
  * 系统相册工具类
@@ -171,6 +172,38 @@ object AlbumUtils {
         return null
     }
 
+    fun notifyScanImageCompat(context: Context, imagePath: String) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            notifyScanImageQ(context, imagePath)
+        } else {
+            notifyScanImage(context, imagePath)
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.Q)
+    fun notifyScanImageQ(context: Context, imagePath: String){
+        val file = File(imagePath)
+        if (!file.exists()){
+            return
+        }
+        val values = ContentValues()
+        values.put(MediaStore.Images.Media.DISPLAY_NAME, file.name)
+        values.put(MediaStore.Images.Media.DESCRIPTION, "This is an image")
+        values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpg")
+        values.put(MediaStore.Images.Media.TITLE, file.name)
+        values.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
+        val uri = context.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+        if (uri != null) {
+            val fd = context.contentResolver.openFileDescriptor(file.toUri(), "r")
+            fd?.use {
+                val bitmap = BitmapFactory.decodeFileDescriptor(fd.fileDescriptor)
+                context.contentResolver.openOutputStream(uri)?.use {
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it)
+                }
+            }
+        }
+    }
+
     /** 通知刷新相册，[imagePath]图片路径，[mimeTypes]图片格式默认jpeg/jpg/png/gif，[callback]回调默认为null */
     @JvmStatic
     @JvmOverloads
@@ -181,13 +214,9 @@ object AlbumUtils {
 
     /** 删除图片，图片信息[info] */
     @JvmStatic
-    fun deleteImage(context: Context, info: PicInfo): Boolean =
+    fun deleteImageCompat(context: Context, info: PicInfo): Boolean =
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            if (context.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                deleteImage(context, info.uri)
-            } else {
-                false
-            }
+            deleteImage(context, info.uri)
         } else {
             deleteImage(context, info.path)
         }

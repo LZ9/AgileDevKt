@@ -196,11 +196,19 @@ class NineGridActivity : BaseActivity() {
             }
 
             override fun onDisplayNineGridImg(context: Context, data: PicInfo, imageView: ImageView) {
-                ImageLoader.create(context).loadUrl(data.path).setCenterCrop().into(imageView)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    ImageLoader.create(context).loadUri(data.uri).setCenterCrop().into(imageView)
+                } else {
+                    ImageLoader.create(context).loadFilePath(data.path).setCenterCrop().into(imageView)
+                }
             }
 
             override fun onDisplayPickerImg(context: Context, data: PicInfo, imageView: ImageView) {
-                ImageLoader.create(context).loadUrl(data.path).setCenterCrop().into(imageView)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    ImageLoader.create(context).loadUri(data.uri).setCenterCrop().into(imageView)
+                } else {
+                    ImageLoader.create(context).loadFilePath(data.path).setCenterCrop().into(imageView)
+                }
             }
         })
 

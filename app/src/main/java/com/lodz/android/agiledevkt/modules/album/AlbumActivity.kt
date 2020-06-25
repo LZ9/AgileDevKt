@@ -1,5 +1,9 @@
 package com.lodz.android.agiledevkt.modules.album
 
+import android.app.Activity
+import android.app.RecoverableSecurityException
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.widget.TextView
 import com.google.android.material.button.MaterialButton
@@ -34,6 +38,9 @@ class AlbumActivity : BaseActivity() {
     private val mListForImgFolderBtn by bindView<MaterialButton>(R.id.list_for_img_folder_btn)
     /** 随机删除图片 */
     private val mDeleteImgBtn by bindView<MaterialButton>(R.id.delete_img_btn)
+
+    /** 待删除图片 */
+    private var mDeleteInfo: PicInfo? = null
 
     override fun getLayoutId(): Int = R.layout.activity_album
 
@@ -131,10 +138,29 @@ class AlbumActivity : BaseActivity() {
 
         // 随机删除图片
         mDeleteImgBtn.setOnClickListener {
-            val info = getRandomPath()
-            val result = info.toString() + "\n" + "is delete : " + AlbumUtils.deleteImage(getContext(), info)
-            mResultTv.text = result
+            deleteImg(null)
         }
+    }
+
+    private fun deleteImg(picInfo: PicInfo?) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            try {
+                val info = picInfo ?: getRandomPath()
+                mDeleteInfo = info
+                val result = info.toString() + "\n" + "is delete : " + AlbumUtils.deleteImageCompat(getContext(), info)
+                mResultTv.text = result
+            } catch (e: RecoverableSecurityException) {
+                e.printStackTrace()
+                startIntentSenderForResult(
+                    e.getUserAction().getActionIntent().getIntentSender(), Build.VERSION.SDK_INT, null, 0, 0, 0
+                )
+            }
+            return
+        }
+
+        val info = getRandomPath()
+        val result = info.toString() + "\n" + "is delete : " + AlbumUtils.deleteImage(getContext(), info.path)
+        mResultTv.text = result
     }
 
     /** 获取随机图片路径列表 */
@@ -166,4 +192,11 @@ class AlbumActivity : BaseActivity() {
     /** 获取图片文件夹[folder]信息内容 */
     private fun imageFolderStr(folder: ImageFolder): String =
             "name : ${folder.name}\n" + "coverImgPath : ${folder.getCoverPicInfo()}\n" + "dir : ${folder.dir}\n" + "count : ${folder.getCount()}\n" + "isAllPicture : ${folder.isAllPicture()}\n"
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == Build.VERSION.SDK_INT && resultCode == Activity.RESULT_OK){
+            deleteImg(mDeleteInfo)
+        }
+    }
 }

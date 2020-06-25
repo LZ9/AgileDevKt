@@ -19,4 +19,9 @@
     <external-path
         name="dcim_provider_path"
         path="DCIM" />
+
+    <!--默认地址-->
+    <external-path
+        name="pictures_provider_path"
+        path="Pictures" />
 </paths>

@@ -469,7 +469,7 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
             return
         }
         // 拍照成功
-        AlbumUtils.notifyScanImage(getContext(), mPdrTempFilePath)
+        AlbumUtils.notifyScanImageCompat(getContext(), mPdrTempFilePath)
         GlobalScope.runOnMainDelay(300){
             handleCameraSuccess()
         }

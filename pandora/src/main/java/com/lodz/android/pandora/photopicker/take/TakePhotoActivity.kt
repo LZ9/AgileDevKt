@@ -127,7 +127,7 @@ internal class TakePhotoActivity : AbsActivity() {
             return
         }
         // 拍照成功
-        AlbumUtils.notifyScanImage(getContext(), mPdrTempFilePath)// 更新相册
+        AlbumUtils.notifyScanImageCompat(getContext(), mPdrTempFilePath)// 更新相册
         if (bean.isImmediately) {
             handleConfirm()
             return
