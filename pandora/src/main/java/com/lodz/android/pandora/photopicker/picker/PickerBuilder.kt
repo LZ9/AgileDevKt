@@ -1,9 +1,11 @@
 package com.lodz.android.pandora.photopicker.picker
 
 import android.content.Context
+import android.net.Uri
 import android.view.View
 import android.widget.ImageView
 import androidx.annotation.IntRange
+import com.lodz.android.corekt.album.PicInfo
 import com.lodz.android.pandora.photopicker.contract.OnImgLoader
 import com.lodz.android.pandora.photopicker.contract.picker.OnPhotoPickerListener
 import com.lodz.android.pandora.photopicker.preview.AbsImageView
@@ -18,15 +20,15 @@ class PickerBuilder<V : View> {
     private val pickerBean = PickerBean<V>()
 
     /** 设置图片加载器[imgLoader] */
-    fun setImgLoader(imgLoader: OnImgLoader<String>): PickerBuilder<V> {
+    fun setImgLoader(imgLoader: OnImgLoader<PicInfo>): PickerBuilder<V> {
         pickerBean.imgLoader = imgLoader
         return this
     }
 
     /** 设置图片加载器[imgLoader] */
-    fun setImgLoader(imgLoader: (context: Context, source: String, imageView: ImageView) -> Unit): PickerBuilder<V> =
-            setImgLoader(object : OnImgLoader<String> {
-                override fun displayImg(context: Context, source: String, imageView: ImageView) {
+    fun setImgLoader(imgLoader: (context: Context, source: PicInfo, imageView: ImageView) -> Unit): PickerBuilder<V> =
+            setImgLoader(object : OnImgLoader<PicInfo> {
+                override fun displayImg(context: Context, source: PicInfo, imageView: ImageView) {
                     imgLoader.invoke(context, source, imageView)
                 }
             })
@@ -38,9 +40,9 @@ class PickerBuilder<V : View> {
     }
 
     /** 设置图片选中回调[listener] */
-    fun setOnPhotoPickerListener(listener: (photos: List<String>) -> Unit): PickerBuilder<V> =
+    fun setOnPhotoPickerListener(listener: (photos: List<PicInfo>) -> Unit): PickerBuilder<V> =
             setOnPhotoPickerListener(object : OnPhotoPickerListener {
-                override fun onPickerSelected(photos: List<String>) {
+                override fun onPickerSelected(photos: List<PicInfo>) {
                     listener.invoke(photos)
                 }
             })
@@ -84,7 +86,7 @@ class PickerBuilder<V : View> {
     }
 
     /** 设置图片控件[view] */
-    fun setImageView(view: AbsImageView<V, String>): PickerBuilder<V> {
+    fun setImageView(view: AbsImageView<V, PicInfo>): PickerBuilder<V> {
         pickerBean.imgView = view
         return this
     }
@@ -97,15 +99,23 @@ class PickerBuilder<V : View> {
 
     /** 完成构建（选择指定的图片） */
     fun build(sourceList: List<String>): PickerManager<V> {
+        val infos = ArrayList<PicInfo>()
+        for (url in sourceList) {
+            infos.add(PicInfo(url, Uri.EMPTY))
+        }
         pickerBean.isPickAllPhoto = false
-        pickerBean.sourceList = sourceList
+        pickerBean.sourceList = infos
         return PickerManager(pickerBean)
     }
 
     /** 完成构建（选择指定的图片） */
     fun build(sourceArray: Array<String>): PickerManager<V> {
+        val infos = ArrayList<PicInfo>()
+        for (url in sourceArray) {
+            infos.add(PicInfo(url, Uri.EMPTY))
+        }
         pickerBean.isPickAllPhoto = false
-        pickerBean.sourceList = sourceArray.toList()
+        pickerBean.sourceList = infos
         return PickerManager(pickerBean)
     }
 

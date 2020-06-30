@@ -14,6 +14,7 @@ import com.github.chrisbanes.photoview.PhotoView
 import com.google.android.material.button.MaterialButton
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.utils.file.FileManager
+import com.lodz.android.corekt.album.PicInfo
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.goAppDetailSetting
 import com.lodz.android.corekt.anko.isPermissionGranted
@@ -109,20 +110,28 @@ class PicPickerTestActivity : BaseActivity() {
                     .setCameraSavePath(FileManager.getCacheFolderPath())
                     .setAuthority("com.lodz.android.agiledevkt.fileprovider")
                     .setImgLoader { context, source, imageView ->
-                        ImageLoader.create(context).loadFilePath(source).setCenterCrop().into(imageView)
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                            ImageLoader.create(context).loadUri(source.uri).setCenterCrop().into(imageView)
+                        } else {
+                            ImageLoader.create(context).loadFilePath(source.path).setCenterCrop().into(imageView)
+                        }
                     }
-                    .setImageView(object : AbsImageView<ImageView, String>(mScaleSwitch.isChecked) {
+                    .setImageView(object : AbsImageView<ImageView, PicInfo>(mScaleSwitch.isChecked) {
                         override fun onCreateView(context: Context, isScale: Boolean): ImageView {
                             val img = if (isScale) PhotoView(context) else ImageView(context)
                             img.scaleType = ImageView.ScaleType.CENTER_INSIDE
                             return img
                         }
 
-                        override fun onDisplayImg(context: Context, source: String, view: ImageView) {
-                            ImageLoader.create(context).loadFilePath(source).setFitCenter().into(view)
+                        override fun onDisplayImg(context: Context, source: PicInfo, view: ImageView) {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                                ImageLoader.create(context).loadUri(source.uri).setFitCenter().into(view)
+                            } else {
+                                ImageLoader.create(context).loadFilePath(source.path).setFitCenter().into(view)
+                            }
                         }
 
-                        override fun onClickImpl(viewHolder: RecyclerView.ViewHolder, view: ImageView, item: String, position: Int, controller: PreviewController) {
+                        override fun onClickImpl(viewHolder: RecyclerView.ViewHolder, view: ImageView, item: PicInfo, position: Int, controller: PreviewController) {
                             super.onClickImpl(viewHolder, view, item, position, controller)
                             view.setOnClickListener {
                                 if (mClickClosePreviewSwitch.isChecked) {
@@ -156,20 +165,20 @@ class PicPickerTestActivity : BaseActivity() {
                     .setNeedItemPreview(mItemPreviewSwitch.isChecked)
                     .setPickerUIConfig(mConfig)
                     .setImgLoader { context, source, imageView ->
-                        ImageLoader.create(context).loadUrl(source).setCenterCrop().into(imageView)
+                        ImageLoader.create(context).loadUrl(source.path).setCenterCrop().into(imageView)
                     }
-                    .setImageView(object : AbsImageView<ImageView, String>(mScaleSwitch.isChecked) {
+                    .setImageView(object : AbsImageView<ImageView, PicInfo>(mScaleSwitch.isChecked) {
                         override fun onCreateView(context: Context, isScale: Boolean): ImageView {
                             val img = if (isScale) PhotoView(context) else ImageView(context)
                             img.scaleType = ImageView.ScaleType.CENTER_INSIDE
                             return img
                         }
 
-                        override fun onDisplayImg(context: Context, source: String, view: ImageView) {
-                            ImageLoader.create(context).loadUrl(source).setFitCenter().into(view)
+                        override fun onDisplayImg(context: Context, source: PicInfo, view: ImageView) {
+                            ImageLoader.create(context).loadUrl(source.path).setFitCenter().into(view)
                         }
 
-                        override fun onClickImpl(viewHolder: RecyclerView.ViewHolder, view: ImageView, item: String, position: Int, controller: PreviewController) {
+                        override fun onClickImpl(viewHolder: RecyclerView.ViewHolder, view: ImageView, item: PicInfo, position: Int, controller: PreviewController) {
                             super.onClickImpl(viewHolder, view, item, position, controller)
                             view.setOnClickListener {
                                 if (mClickClosePreviewSwitch.isChecked) {

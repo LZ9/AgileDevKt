@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.recyclerview.widget.RecyclerView
+import com.lodz.android.corekt.album.PicInfo
 import com.lodz.android.corekt.anko.dp2pxRF
 import com.lodz.android.corekt.anko.getColorCompat
 import com.lodz.android.pandora.R
@@ -25,14 +26,14 @@ import com.lodz.android.pandora.widget.rv.recycler.DataViewHolder
 internal class ImageFolderAdapter(context: Context) : BaseRecyclerViewAdapter<ImageFolderItemBean>(context) {
 
     /** 图片加载器 */
-    private var mPdrImgLoader: OnImgLoader<String>? = null
+    private var mPdrImgLoader: OnImgLoader<PicInfo>? = null
     /** 未选中图标 */
     private var mPdrUnselectBitmap: Bitmap? = null
     /** 已选中图标 */
     private var mPdrSelectedBitmap: Bitmap? = null
 
     /** 设置图片加载器[imgLoader] */
-    fun setOnImgLoader(imgLoader: OnImgLoader<String>?) {
+    fun setOnImgLoader(imgLoader: OnImgLoader<PicInfo>?) {
         mPdrImgLoader = imgLoader
     }
 
@@ -57,11 +58,11 @@ internal class ImageFolderAdapter(context: Context) : BaseRecyclerViewAdapter<Im
         val imageFolder = bean.imageFolder ?: return
 
         // 封面图
-        mPdrImgLoader?.displayImg(context, imageFolder.coverImgPath, holder.withView(R.id.pdr_cover_img))
+        mPdrImgLoader?.displayImg(context, imageFolder.getCoverPicInfo(), holder.withView(R.id.pdr_cover_img))
         // 文件夹名称
         holder.withView<TextView>(R.id.pdr_floder_name_tv).text = imageFolder.name
         // 文件夹张数
-        holder.withView<TextView>(R.id.pdr_count_tv).text = context.getString(R.string.pandora_picker_folder_num, imageFolder.count.toString())
+        holder.withView<TextView>(R.id.pdr_count_tv).text = context.getString(R.string.pandora_picker_folder_num, imageFolder.getCount().toString())
         // 选中图标
         holder.withView<ImageView>(R.id.pdr_select_img).setImageBitmap(if (bean.isSelected) mPdrSelectedBitmap else mPdrUnselectBitmap)
         // 文件夹路径

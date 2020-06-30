@@ -1,6 +1,7 @@
 package com.lodz.android.pandora.photopicker.picker
 
 import android.view.View
+import com.lodz.android.corekt.album.PicInfo
 import com.lodz.android.pandora.photopicker.contract.OnImgLoader
 import com.lodz.android.pandora.photopicker.contract.picker.OnPhotoPickerListener
 import com.lodz.android.pandora.photopicker.preview.AbsImageView
@@ -12,9 +13,9 @@ import com.lodz.android.pandora.photopicker.preview.AbsImageView
 internal class PickerBean<V : View> {
 
     /** 资源列表 */
-    var sourceList: List<String>? = null
+    var sourceList: List<PicInfo>? = null
     /** 图片加载接口 */
-    var imgLoader: OnImgLoader<String>? = null
+    var imgLoader: OnImgLoader<PicInfo>? = null
     /** 照片回调接口 */
     var photoPickerListener: OnPhotoPickerListener? = null
     /** 可选最大数量 */
@@ -32,7 +33,7 @@ internal class PickerBean<V : View> {
     /** 是否挑选手机的全部图片 */
     var isPickAllPhoto = true
     /** 图片控件 */
-    var imgView: AbsImageView<V, String>? = null
+    var imgView: AbsImageView<V, PicInfo>? = null
 
     fun clear() {
         sourceList = null

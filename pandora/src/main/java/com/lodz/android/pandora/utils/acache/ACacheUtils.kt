@@ -1,6 +1,7 @@
 package com.lodz.android.pandora.utils.acache
 
 import android.content.Context
+import android.os.Build
 import android.os.Environment
 import com.lodz.android.corekt.cache.ACache
 import com.lodz.android.pandora.base.application.BaseApplication
@@ -82,11 +83,24 @@ class ACacheUtils private constructor() {
 
         /** 获取缓存目录 */
         internal fun getCacheDir(): File {
-            if (mCacheDir == null) {
-                val context = BaseApplication.get()
-                mCacheDir = if (context != null) File(context.cacheDir, "ACache") else Environment.getDownloadCacheDirectory()
+            synchronized(this){
+                if (mCacheDir == null) {
+                    val context = BaseApplication.get()
+                    mCacheDir =
+                        if (context != null) {
+                            //context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                                context.getExternalFilesDir("ACache")
+                            } else {
+                                File(context.cacheDir, "ACache")
+                            }
+                        } else {
+                            Environment.getDownloadCacheDirectory()
+                        }
+                }
+                return mCacheDir!!
             }
-            return mCacheDir!!
+
         }
 
         internal fun getMaxSize(): Long = if (mMaxSize == 0L) ACache.MAX_SIZE.toLong() else mMaxSize

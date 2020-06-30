@@ -1,14 +1,21 @@
 package com.lodz.android.corekt.album
 
 import android.content.ContentUris
+import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.media.MediaScannerConnection
+import android.net.Uri
+import android.os.Build
+import android.os.Environment
 import android.provider.MediaStore
-import com.lodz.android.corekt.anko.getSize
-import java.io.File
+import androidx.annotation.RequiresApi
+import androidx.core.net.toUri
+import com.lodz.android.corekt.utils.FileUtils
+import java.io.*
 import java.util.*
-import kotlin.collections.ArrayList
 
 /**
  * 系统相册工具类
@@ -18,8 +25,8 @@ object AlbumUtils {
 
     /** 获取相册中所有图片路径列表 */
     @JvmStatic
-    fun getAllImages(context: Context): List<String> {
-        val imageList = LinkedList<String>()
+    fun getAllImages(context: Context): List<PicInfo> {
+        val imageList = LinkedList<PicInfo>()
 
         val uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
         val projection = arrayOf(
@@ -51,14 +58,21 @@ object AlbumUtils {
 
         cursor.moveToFirst()
         do {
+            val id = cursor.getLong(cursor.getColumnIndex(MediaStore.Images.Media._ID))
             val path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA))
-            if (path.isNullOrEmpty()) {
-                continue
+            val fileUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI.buildUpon().appendPath(id.toString()).build()
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                if (fileUri.toString().isEmpty()) {
+                    continue
+                }
+            }else{
+                if (path.isNullOrEmpty()) {
+                    continue
+                }
             }
-
             val file = File(path)
             if (file.exists() && file.length() > 0) {//文件存在且大小不为0
-                imageList.add(path)
+                imageList.add(PicInfo(path, fileUri))
             }
         } while (cursor.moveToNext())
         cursor.close()
@@ -80,103 +94,114 @@ object AlbumUtils {
 
     /** 获取图片列表[pictures]的文件夹信息 */
     @JvmStatic
-    fun getImageFolders(pictures: List<String>): List<ImageFolder> {
+    fun getImageFolders(pictures: List<PicInfo>): List<ImageFolder> {
         val list = LinkedList<ImageFolder>()
         if (pictures.isEmpty()) {
             return list
         }
 
-        val directoryList = LinkedList<String>()
-        for (path in pictures) {
-            val file = File(path)
+        for (info in pictures) {
+            val file = File(info.path)
             if (!file.exists()) {
                 continue
             }
 
-            val parentFile = file.parentFile ?: continue
-            val parentPath = parentFile.absolutePath
-            if (directoryList.contains(parentPath)) {// 已经添加
+            val folderDir = getDir(info.path)
+            if (folderDir.isEmpty()){
                 continue
             }
-
-            directoryList.add(parentPath)
-            val imageFolder = getImageFolder(parentFile, path)//创建图片文件夹信息
-            if (imageFolder != null) {
+            var hasFolder = false
+            for (folder in list) {
+                if (folder.dir.equals(folderDir)) {
+                    // 已经创建了目录
+                    folder.addPicInfo(info)
+                    hasFolder = true
+                    break
+                }
+            }
+            if (!hasFolder){
+                val imageFolder = ImageFolder()
+                imageFolder.dir = folderDir
+                imageFolder.addPicInfo(info)
                 list.add(imageFolder)
             }
         }
         return list
     }
 
+    /** 获取图片父级路径 */
+    private fun getDir(path: String): String {
+        if (path.isNotEmpty()) {
+            val index = path.lastIndexOf(File.separator)
+            return path.substring(0, index)
+        }
+        return ""
+    }
+
     /** 获取总图片的文件夹信息 */
     @JvmStatic
     fun getTotalImageFolder(context: Context): ImageFolder {
-        val list = getAllImages(context)
-
         val imageFolder = ImageFolder()
         imageFolder.name = "所有图片"
-        imageFolder.count = list.getSize()
-        imageFolder.coverImgPath = if (list.isEmpty()) "" else list[0]
+        imageFolder.addPicInfo(getAllImages(context))
         return imageFolder
     }
 
-    /** 获取指定文件目录[file]下的图片文件夹信息，[coverImgPath]为封面图片路径 */
+    /** 获取指定文件路径[path]所在的图片文件夹 */
     @JvmStatic
-    fun getImageFolder(file: File?, coverImgPath: String): ImageFolder? {
-        val fileList = file?.list { dir, name ->
-            name != null && (name.endsWith(".jpg")
-                    || name.endsWith(".gif")
-                    || name.endsWith(".png")
-                    || name.endsWith(".jpeg"))
-        }
+    fun getImageFolder(context: Context, path: String): ImageFolder? = getImageFolder(context, FileUtils.create(path))
 
-        if (fileList == null || fileList.isEmpty()) {
+    /** 获取指定图片信息[info]下的图片文件夹 */
+    @JvmStatic
+    fun getImageFolder(context: Context, info: PicInfo?): ImageFolder? = getImageFolder(context, info?.path ?: "")
+
+    /** 获取指定文件[file]所在的图片文件夹 */
+    @JvmStatic
+    fun getImageFolder(context: Context, file: File?): ImageFolder? {
+        val path = file?.absolutePath
+        if (path.isNullOrEmpty()){
             return null
         }
-        var rootPath = file.absolutePath// 获取目录路径
-        if (!rootPath.endsWith(File.separator)) {
-            rootPath += File.separator
-        }
-        val imageList = ArrayList<String>()
-        for (path in fileList) {
-            val tempFile = File(rootPath + path)
-            if (tempFile.exists() && tempFile.length() > 0) {//文件存在且大小不为0
-                imageList.add(path)
+        val dir = getDir(path)
+        val allFoldersList = getAllImageFolders(context)
+        for (folder in allFoldersList) {
+            if (folder.dir.equals(dir)){
+                return folder
             }
         }
-        val imageFolder = ImageFolder()
-        imageFolder.count = imageList.size
-        imageFolder.coverImgPath = coverImgPath
-        imageFolder.dir = file.absolutePath
-        return imageFolder
+        return null
     }
 
-    /** 获取指定图片目录[imageFolder]下的图片数据列表 */
-    @JvmStatic
-    fun getImageListOfFolder(context: Context, imageFolder: ImageFolder): List<String> {
-        val imageList = LinkedList<String>()
-
-        if (imageFolder.isAllPicture()) {
-            return getAllImages(context)
+    fun notifyScanImageCompat(context: Context, imagePath: String) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            notifyScanImageQ(context, imagePath)
+        } else {
+            notifyScanImage(context, imagePath)
         }
+    }
 
-        val directoryFile = File(imageFolder.dir)
-        val files = directoryFile.listFiles { dir, name ->
-            name != null && (name.endsWith(".jpg")
-                    || name.endsWith(".gif")
-                    || name.endsWith(".png")
-                    || name.endsWith(".jpeg"))
+    @RequiresApi(Build.VERSION_CODES.Q)
+    fun notifyScanImageQ(context: Context, imagePath: String){
+        val file = File(imagePath)
+        if (!file.exists()){
+            return
         }
-        if (files == null || files.isEmpty()) {
-            return imageList
-        }
-
-        for (file in files) {
-            if (file.exists() && file.length() > 0) {
-                imageList.add(file.absolutePath)
+        val values = ContentValues()
+        values.put(MediaStore.Images.Media.DISPLAY_NAME, file.name)
+        values.put(MediaStore.Images.Media.DESCRIPTION, "This is an image")
+        values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpg")
+        values.put(MediaStore.Images.Media.TITLE, file.name)
+        values.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
+        val uri = context.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+        if (uri != null) {
+            val fd = context.contentResolver.openFileDescriptor(file.toUri(), "r")
+            fd?.use {
+                val bitmap = BitmapFactory.decodeFileDescriptor(fd.fileDescriptor)
+                context.contentResolver.openOutputStream(uri)?.use {
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it)
+                }
             }
         }
-        return imageList
     }
 
     /** 通知刷新相册，[imagePath]图片路径，[mimeTypes]图片格式默认jpeg/jpg/png/gif，[callback]回调默认为null */
@@ -187,7 +212,20 @@ object AlbumUtils {
         MediaScannerConnection.scanFile(context.applicationContext, arrayOf(imagePath), mimeTypes, callback)
     }
 
-    /** 删除图片，[path]图片路径 */
+    /** 删除图片，图片信息[info] */
+    @JvmStatic
+    fun deleteImageCompat(context: Context, info: PicInfo): Boolean =
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            deleteImage(context, info.uri)
+        } else {
+            deleteImage(context, info.path)
+        }
+
+    /** 删除图片，图片路径[uri] */
+    @JvmStatic
+    fun deleteImage(context: Context, uri: Uri): Boolean = context.contentResolver.delete(uri, null, null) > 0
+    
+    /** 删除图片，图片路径[path] */
     @JvmStatic
     fun deleteImage(context: Context, path: String): Boolean {
         val cursor: Cursor? = MediaStore.Images.Media.query(context.contentResolver, MediaStore.Images.Media.EXTERNAL_CONTENT_URI,

@@ -33,7 +33,7 @@ class TakePhotoManager internal constructor(private val takeBean: TakeBean) {
                 takeBean.cameraSavePath = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)?.absolutePath ?: ""
             }
             if (takeBean.cameraSavePath.isEmpty()){
-                takeBean.cameraSavePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).absolutePath
+                takeBean.cameraSavePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).absolutePath
             }
         }
         if (!takeBean.cameraSavePath.endsWith(File.separator)) {//补全地址
