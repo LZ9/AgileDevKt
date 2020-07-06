@@ -3,10 +3,9 @@ package com.lodz.android.corekt.anko
 import android.app.Activity
 import android.content.Context
 import android.graphics.Point
+import android.os.Build
 import android.util.DisplayMetrics
-import android.view.View
-import android.view.Window
-import android.view.WindowManager
+import android.view.*
 import androidx.fragment.app.Fragment
 
 /**
@@ -23,19 +22,15 @@ fun Context.getScreenWidth(): Int {
     return dm.widthPixels
 }
 
-/** 获得屏幕真实宽度（屏幕+导航栏） */
-fun Context.getRealScreenWidth(window: Window): Int {
+/** 获得屏幕真实高度（屏幕+导航栏） */
+fun Context.getRealScreenHeight(window: Window): Int {
     val point = Point()
     window.windowManager.defaultDisplay.getRealSize(point)
     return point.y//获取真实屏幕高度
 }
 
-/** 获得屏幕真实宽度（屏幕+导航栏） */
-fun Activity.getRealScreenWidth(): Int {
-    val point = Point()
-    window?.windowManager?.defaultDisplay?.getRealSize(point)
-    return point.y//获取真实屏幕高度
-}
+/** 获得屏幕真实高度（屏幕+导航栏） */
+fun Activity.getRealScreenHeight(): Int = getRealScreenHeight(window)
 
 /** 获得屏幕高度 */
 fun Context.getScreenHeight(): Int {
@@ -83,6 +78,19 @@ fun Activity.hasNavigationBar(): Boolean = hasNavigationBar(window)
 
 /** 判断是否存在NavigationBar */
 fun Fragment.hasNavigationBar(): Boolean = requireActivity().hasNavigationBar()
+
+/** 判断是否显示NavigationBar */
+fun Activity.isNavigationBarShow(): Boolean {
+    // TODO: 2020/7/6 测试代码
+    val rh = getRealScreenHeight()
+    val h = getScreenHeight()
+    val statusBarH = getStatusBarHeight()
+    val navBarH = getNavigationBarHeight()
+    return false
+}
+
+/** 判断是否显示NavigationBar */
+fun Fragment.isNavigationBarShow(): Boolean = requireActivity().isNavigationBarShow()
 
 /** 获取虚拟按键高度 */
 fun Fragment.getNavigationBarHeight(): Int = requireActivity().getNavigationBarHeight()

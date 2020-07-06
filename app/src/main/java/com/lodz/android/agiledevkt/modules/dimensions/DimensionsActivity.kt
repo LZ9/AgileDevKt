@@ -84,7 +84,7 @@ class DimensionsActivity :BaseActivity(){
 
     override fun initData() {
         super.initData()
-        mScreenInfoTv.text = StringBuilder().append("width : ").append(getScreenWidth()).append(" ; ").append("height : ").append(getRealScreenWidth())
+        mScreenInfoTv.text = StringBuilder().append("width : ").append(getScreenWidth()).append(" ; ").append("height : ").append(getRealScreenHeight())
         showStatusCompleted()
     }
 

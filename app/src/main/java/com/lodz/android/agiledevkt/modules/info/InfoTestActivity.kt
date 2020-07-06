@@ -94,6 +94,8 @@ class InfoTestActivity : BaseActivity() {
     private val StatusBarHeightTv by bindView<TextView>(R.id.status_bar_height_tv)
     /** 是否存在虚拟按键 */
     private val mHasNavigationBarTv by bindView<TextView>(R.id.has_navigation_bar_tv)
+    /** 是否显示虚拟按键 */
+    private val mIsShowNavigationBarTv by bindView<TextView>(R.id.is_show_navigation_bar_tv)
     /** 虚拟按键高度 */
     private val mNavigationBarHeightTv by bindView<TextView>(R.id.navigation_bar_height_tv)
 
@@ -192,6 +194,7 @@ class InfoTestActivity : BaseActivity() {
 
         StatusBarHeightTv.text = getString(R.string.info_status_bar_height).format(getStatusBarHeight())
         mHasNavigationBarTv.text = getString(R.string.info_has_navigation_bar).format(hasNavigationBar())
+        mIsShowNavigationBarTv.text = getString(R.string.info_is_show_navigation_bar).format(isNavigationBarShow())
         mNavigationBarHeightTv.text = getString(R.string.info_navigation_bar_height).format(getNavigationBarHeight())
     }
 
