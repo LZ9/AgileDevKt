@@ -53,7 +53,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
             android:padding="5dp"
-            android:text="@string/selector_pressed" />
+            android:text="@string/selector_pressed"
+            android:textSize="12sp" />
 
         <Button
             android:id="@+id/selected_btn"
@@ -62,7 +63,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
             android:padding="5dp"
-            android:text="@string/selector_selected" />
+            android:text="@string/selector_selected"
+            android:textSize="12sp" />
 
     </LinearLayout>
 
@@ -78,7 +80,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
             android:padding="5dp"
-            android:text="@string/selector_unable" />
+            android:text="@string/selector_unable"
+            android:textSize="12sp" />
 
         <Button
             android:id="@+id/focused_btn"
@@ -87,7 +90,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
             android:padding="5dp"
-            android:text="@string/selector_focused" />
+            android:text="@string/selector_focused"
+            android:textSize="12sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -102,7 +106,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
             android:padding="5dp"
-            android:text="@string/selector_pressed_unable" />
+            android:text="@string/selector_pressed_unable"
+            android:textSize="12sp" />
 
         <Button
             android:id="@+id/pressed_selected_btn"
@@ -111,7 +116,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
             android:padding="5dp"
-            android:text="@string/selector_pressed_selected" />
+            android:text="@string/selector_pressed_selected"
+            android:textSize="12sp" />
 
     </LinearLayout>
 
@@ -127,7 +133,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
             android:padding="5dp"
-            android:text="@string/selector_pressed_focused" />
+            android:text="@string/selector_pressed_focused"
+            android:textSize="12sp" />
 
         <Button
             android:id="@+id/unable_selected_btn"
@@ -136,7 +143,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
             android:padding="5dp"
-            android:text="@string/selector_unable_selected" />
+            android:text="@string/selector_unable_selected"
+            android:textSize="12sp" />
 
     </LinearLayout>
 
@@ -152,7 +160,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
             android:padding="5dp"
-            android:text="@string/selector_unable_focused" />
+            android:text="@string/selector_unable_focused"
+            android:textSize="12sp" />
 
         <Button
             android:id="@+id/selected_focused_btn"
@@ -161,7 +170,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
             android:padding="5dp"
-            android:text="@string/selector_selected_focused" />
+            android:text="@string/selector_selected_focused"
+            android:textSize="12sp" />
 
     </LinearLayout>
 
@@ -177,7 +187,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
             android:padding="5dp"
-            android:text="@string/selector_pressed_unable_selected" />
+            android:text="@string/selector_pressed_unable_selected"
+            android:textSize="12sp" />
 
         <Button
             android:id="@+id/pressed_unable_focused_btn"
@@ -186,7 +197,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
             android:padding="5dp"
-            android:text="@string/selector_pressed_unable_focused" />
+            android:text="@string/selector_pressed_unable_focused"
+            android:textSize="12sp" />
 
     </LinearLayout>
 
@@ -203,7 +215,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
             android:padding="5dp"
-            android:text="@string/selector_unable_selected_focused" />
+            android:text="@string/selector_unable_selected_focused"
+            android:textSize="12sp" />
 
         <Button
             android:id="@+id/pressed_selected_focused_btn"
@@ -212,7 +225,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
             android:padding="5dp"
-            android:text="@string/selector_pressed_selected_focused" />
+            android:text="@string/selector_pressed_selected_focused"
+            android:textSize="12sp" />
 
     </LinearLayout>
 
@@ -223,6 +237,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="2dp"
         android:padding="5dp"
-        android:text="@string/selector_pressed_unable_selected_focused" />
+        android:text="@string/selector_pressed_unable_selected_focused"
+        android:textSize="12sp" />
 
 </LinearLayout>
