@@ -12,6 +12,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.lodz.android.corekt.anko.getNavigationBarHeight
+import com.lodz.android.corekt.anko.getRealScreenHeight
 import com.lodz.android.corekt.anko.getScreenHeight
 import com.lodz.android.corekt.anko.getStatusBarHeight
 import com.lodz.android.corekt.utils.ReflectUtils
@@ -78,21 +79,21 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
     /** 配置状态栏 */
     private fun setStatusBar() {
-        val window = dialog?.window ?: return
-        if (!configTransparentStatusBar()) {
-            window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-            return
+        val wd = dialog?.window ?: return
+        wd.setGravity(Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL)// 设置底部展示
+        val realScreenHeight = requireContext().getRealScreenHeight(wd)// 屏幕真实高度
+        val screenHeight = requireContext().getScreenHeight()//可用高度
+        val statusBarHeight = requireContext().getStatusBarHeight()//状态栏高度
+        val navigationBarHeight = requireContext().getNavigationBarHeight(wd)// 导航栏高度
+        val dialogHeight: Int
+        if (navigationBarHeight == 0 || realScreenHeight - screenHeight == statusBarHeight) {
+            // 全面屏，没有导航栏
+            dialogHeight = screenHeight - configTopOffsetPx()
+        } else {
+            dialogHeight = screenHeight + navigationBarHeight - configTopOffsetPx()
         }
-        window.setGravity(Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL)// 设置底部展示
-        val screenHeight = requireContext().getScreenHeight()
-        val statusBarHeight = requireContext().getStatusBarHeight()
-        val navigationBarHeight = requireContext().getNavigationBarHeight(window)
-        val dialogHeight = screenHeight - statusBarHeight + navigationBarHeight - configTopOffsetPx()//屏幕高度 - 状态栏高度 + 导航栏 - 偏移量高度
-        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, if (dialogHeight == 0) ViewGroup.LayoutParams.MATCH_PARENT else dialogHeight)
+        wd.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, if (dialogHeight == 0) ViewGroup.LayoutParams.MATCH_PARENT else dialogHeight)
     }
-
-    /** 配置是否透明状态栏（可重写，默认是） */
-    protected open fun configTransparentStatusBar(): Boolean = true
 
     /** 配置布局高度偏移量（可重写，默认0） */
     protected open fun configTopOffsetPx(): Int = 0

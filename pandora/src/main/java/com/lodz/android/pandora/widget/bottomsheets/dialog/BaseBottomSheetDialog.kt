@@ -10,6 +10,7 @@ import androidx.annotation.LayoutRes
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.lodz.android.corekt.anko.getNavigationBarHeight
+import com.lodz.android.corekt.anko.getRealScreenHeight
 import com.lodz.android.corekt.anko.getScreenHeight
 import com.lodz.android.corekt.anko.getStatusBarHeight
 import com.lodz.android.corekt.utils.ReflectUtils
@@ -39,8 +40,7 @@ abstract class BaseBottomSheetDialog : BottomSheetDialog {
     protected open fun startCreate() {}
 
     private fun createContentView(@LayoutRes layoutId: Int) {
-        val view = layoutInflater.inflate(layoutId, null)
-        setContentView(view)
+        setContentView(layoutId)
     }
 
     @LayoutRes
@@ -66,15 +66,18 @@ abstract class BaseBottomSheetDialog : BottomSheetDialog {
     /** 配置状态栏 */
     private fun configStatusBar() {
         val wd = window ?: return
-        if (!configTransparentStatusBar()) {
-            wd.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-            return
-        }
         wd.setGravity(Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL)// 设置底部展示
-        val screenHeight = context.getScreenHeight()
-        val statusBarHeight = context.getStatusBarHeight()
-        val navigationBarHeight = context.getNavigationBarHeight(wd)
-        val dialogHeight = screenHeight - statusBarHeight + navigationBarHeight - configTopOffsetPx()//屏幕高度 - 状态栏高度 + 导航栏 - 偏移量高度
+        val realScreenHeight = context.getRealScreenHeight(wd)// 屏幕真实高度
+        val screenHeight = context.getScreenHeight()//可用高度
+        val statusBarHeight = context.getStatusBarHeight()//状态栏高度
+        val navigationBarHeight = context.getNavigationBarHeight(wd)// 导航栏高度
+        val dialogHeight: Int
+        if (navigationBarHeight == 0 || realScreenHeight - screenHeight == statusBarHeight) {
+            // 全面屏，没有导航栏
+            dialogHeight = screenHeight - configTopOffsetPx()
+        } else {
+            dialogHeight = screenHeight + navigationBarHeight - configTopOffsetPx()
+        }
         wd.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, if (dialogHeight == 0) ViewGroup.LayoutParams.MATCH_PARENT else dialogHeight)
     }
 
@@ -86,9 +89,6 @@ abstract class BaseBottomSheetDialog : BottomSheetDialog {
             onBehaviorInit(behavior)
         }
     }
-
-    /** 配置是否透明状态栏（可重写，默认是） */
-    protected open fun configTransparentStatusBar(): Boolean = true
 
     /** 配置布局高度偏移量（可重写，默认0） */
     protected open fun configTopOffsetPx(): Int = 0
