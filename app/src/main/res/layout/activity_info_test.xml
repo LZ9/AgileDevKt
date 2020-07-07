@@ -439,14 +439,6 @@
                 android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/is_show_navigation_bar_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/info_is_show_navigation_bar"
-                android:textColor="@color/white"
-                android:textSize="14sp" />
-
-            <TextView
                 android:id="@+id/navigation_bar_height_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

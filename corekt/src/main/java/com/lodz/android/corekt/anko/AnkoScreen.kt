@@ -55,10 +55,10 @@ fun View.getScreenHeight(): Int = context.getScreenHeight()
 
 /** 判断是否存在NavigationBar */
 fun Context.hasNavigationBar(window: Window): Boolean {
-    val point = Point()
-    window.windowManager.defaultDisplay.getRealSize(point)
-    val realHeight = point.y//获取真实屏幕高度
-    if (getScreenHeight() < realHeight) {//可用屏幕高度小于真实屏幕高度
+    val realHeight = getRealScreenHeight(window)//获取真实屏幕高度
+    val screenHeight = getScreenHeight()
+    val statusBarHeight = getStatusBarHeight()
+    if (screenHeight < realHeight && realHeight - screenHeight != statusBarHeight) {//可用屏幕高度小于真实屏幕高度 && 真实屏幕高度 - 可用屏幕高度 ！= 状态栏高度（兼容全面屏）
         return true
     }
     return false
@@ -78,19 +78,6 @@ fun Activity.hasNavigationBar(): Boolean = hasNavigationBar(window)
 
 /** 判断是否存在NavigationBar */
 fun Fragment.hasNavigationBar(): Boolean = requireActivity().hasNavigationBar()
-
-/** 判断是否显示NavigationBar */
-fun Activity.isNavigationBarShow(): Boolean {
-    // TODO: 2020/7/6 测试代码
-    val rh = getRealScreenHeight()
-    val h = getScreenHeight()
-    val statusBarH = getStatusBarHeight()
-    val navBarH = getNavigationBarHeight()
-    return false
-}
-
-/** 判断是否显示NavigationBar */
-fun Fragment.isNavigationBarShow(): Boolean = requireActivity().isNavigationBarShow()
 
 /** 获取虚拟按键高度 */
 fun Fragment.getNavigationBarHeight(): Int = requireActivity().getNavigationBarHeight()
