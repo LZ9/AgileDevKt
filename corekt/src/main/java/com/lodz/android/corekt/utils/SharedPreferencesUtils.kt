@@ -24,7 +24,7 @@ class SharedPreferencesUtils private constructor() {
 
     private var mMode: Int = Context.MODE_PRIVATE
 
-    /** 设置是否对异常进行拦截[interceptor] */
+    /** 初始化[context]上下文，[name]文件名，[mode]模式 */
     @JvmOverloads
     fun init(context: Context, name: String = SP_NAME, mode: Int = Context.MODE_PRIVATE) {
         mContext = context
