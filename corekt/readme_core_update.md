@@ -1,5 +1,16 @@
 # core-kt库更新记录
 
+##### 2020/07/20
+1. 更新依赖库版本
+2. AnkoCoroutines.kt增加await方法
+3. DateUtils.kt增加格式化时间戳
+4. NetworkManager.kt增加电信运行商判断逻辑
+5. AnkoDevice.kt增加获取AndroidId方法
+6. 修复ToastUtils.kt会弹出两次的bug
+7. AnkoApp.kt增加获取APP图标的方法
+8. AlbumUtils.kt修改图片查询语句，适配android10
+9. 发布1.2.2版本
+
 ##### 2019/12/13
 1. 优化协程扩展类
 2. 更新依赖库版本

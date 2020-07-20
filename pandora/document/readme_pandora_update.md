@@ -1,5 +1,21 @@
 # Pandora更新记录
 
+##### 2020/07/20
+1. 更新依赖库版本
+2. 添加ViewPager2相关封装
+3. LazyFragment增加lifecycle判断懒加载逻辑
+4. 增加可订阅滚动事件的ObservableScrollView.kt
+5. NineGridView.kt九宫格空间增加间距属性
+6. 调整基类整体适配RxJava3
+7. 修改ViewModelProvider的调用方式
+8. 添加通用数据ViewHolder，消除模板代码
+9. 适配android10文件存储和展示
+10. 删除图片文件增加权限提醒；
+11. 图片选择器更新新增拍照图片兼容android10
+12. Acache存储兼容android10
+13. BottomSheetDialog兼容全面屏展示
+14. 发布1.4.0版本
+
 ##### 2019/12/13
 1. Rx订阅者封装增加lambda调用
 2. 增加协程加载框扩展类，支持带progress的调用
