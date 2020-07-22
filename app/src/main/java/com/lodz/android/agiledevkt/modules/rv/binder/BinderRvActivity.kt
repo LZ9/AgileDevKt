@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.NationBean
+import com.lodz.android.agiledevkt.config.Constant
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.agiledevkt.modules.rv.binder.first.FirstBinder
 import com.lodz.android.agiledevkt.modules.rv.binder.second.SecondBinder
@@ -39,15 +40,15 @@ class BinderRvActivity : BaseActivity() {
 
     /** 国旗 */
     private val NATION_IMGS = arrayOf(
-            "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1528284956583&di=673c40bfcb1603c4547f0e684619b636&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F5bafa40f4bfbfbed0528385b72f0f736afc31fa4.jpg",
-            "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1528879767&di=ade0e932e2a79fc67f6eaf0a10a85f0a&imgtype=jpg&er=1&src=http%3A%2F%2Fc.hiphotos.baidu.com%2Fzhidao%2Fpic%2Fitem%2Fe1fe9925bc315c601e092f9f8db1cb1349547725.jpg",
-            "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1528879811&di=3705bdd84e8ec5e5e874bb42369a9170&imgtype=jpg&er=1&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2Fd4628535e5dde711fd3a64f6adefce1b9c1661c1.jpg",
-            "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1528285142563&di=5c338bb523a9aa41dcae9d003c03bb67&imgtype=0&src=http%3A%2F%2Ff.hiphotos.baidu.com%2Fzhidao%2Fpic%2Fitem%2Fb7003af33a87e950909a752316385343faf2b4f4.jpg",
-            "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1513270247,2810085725&fm=27&gp=0.jpg",
-            "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1479658781,2612823267&fm=200&gp=0.jpg",
-            "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=373478989,3635638859&fm=27&gp=0.jpg",
-            "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1528285365045&di=92f5f3a4dbf36274e381b14a2b8c6ed5&imgtype=0&src=http%3A%2F%2Fpic.qiantucdn.com%2F01%2F29%2F39%2F45bOOOPIC74.jpg",
-            "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1528285464640&di=bec9062ec87cfb18b4bed7fc66e9e068&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimage%2Fc0%253Dshijue1%252C0%252C0%252C294%252C40%2Fsign%3D5f6687252c9759ee5e5d6888da922963%2F3c6d55fbb2fb43163abe99522aa4462309f7d371.jpg"
+        Constant.CHN_FLAG_URL,
+        Constant.USA_FLAG_URL,
+        Constant.RUS_FLAG_URL,
+        Constant.JPN_FLAG_URL,
+        Constant.KOR_FLAG_URL,
+        Constant.AUS_FLAG_URL,
+        Constant.UKR_FLAG_URL,
+        Constant.PRK_FLAG_URL,
+        Constant.BRA_FLAG_URL
     )
 
     /** 名称 */
