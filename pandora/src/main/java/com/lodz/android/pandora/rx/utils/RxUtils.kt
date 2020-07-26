@@ -1,8 +1,11 @@
 package com.lodz.android.pandora.rx.utils
 
+import android.content.Context
+import android.net.Uri
 import android.view.View
 import android.widget.TextView
 import androidx.core.widget.addTextChangedListener
+import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.corekt.utils.BitmapUtils
 import com.lodz.android.pandora.rx.exception.DataException
 import com.lodz.android.pandora.rx.exception.RxException
@@ -109,6 +112,38 @@ object RxUtils {
             }
         }
 
+    /** 把图片路径[uri]转为指定宽[widthPx]高[heightPx]的base64 */
+    @JvmStatic
+    fun decodeUriToBase64(context: Context, uri: Uri, widthPx: Int, heightPx: Int): Observable<String> =
+        Observable.create { emitter ->
+            try {
+                PrintLog.e("testtag", Thread.currentThread().name + "   decodePathToBase64")
+                val bitmap = BitmapUtils.compressBitmap(context, uri, widthPx, heightPx)
+                PrintLog.e("testtag", Thread.currentThread().name + "   compressBitmap")
+                if (emitter.isDisposed) {
+                    return@create
+                }
+                if (bitmap == null) {
+                    emitter.doError(IllegalArgumentException("decode bitmap fail"))
+                    return@create
+                }
+                val base64 = BitmapUtils.bitmapToBase64(bitmap)
+                PrintLog.e("testtag", Thread.currentThread().name + "   bitmapToBase64")
+                if (emitter.isDisposed) {
+                    return@create
+                }
+                if (base64.isEmpty()) {
+                    emitter.doError(IllegalArgumentException("decode base64 fail"))
+                    return@create
+                }
+                emitter.doNext(base64)
+                emitter.doComplete()
+            } catch (e: Exception) {
+                e.printStackTrace()
+                emitter.doError(e)
+            }
+        }
+
     /** 把批量图片路径[paths]转为指定宽[widthPx]高[heightPx]的base64 */
     @JvmStatic
     fun decodePathToBase64(paths: ArrayList<String>, widthPx: Int, heightPx: Int): Observable<ArrayList<String>> =
@@ -125,6 +160,44 @@ object RxUtils {
                         return@create
                     }
                     val bitmap = BitmapUtils.compressBitmap(p, widthPx, heightPx)
+                    if (bitmap == null) {
+                        base64s.add("")
+                        continue
+                    }
+                    val base64 = BitmapUtils.bitmapToBase64(bitmap)
+                    if (base64.isEmpty()) {
+                        base64s.add("")
+                        continue
+                    }
+                    base64s.add(base64)
+                }
+                if (emitter.isDisposed) {
+                    return@create
+                }
+                emitter.doNext(base64s)
+                emitter.doComplete()
+            } catch (e: Exception) {
+                e.printStackTrace()
+                emitter.doError(e)
+            }
+        }
+
+    /** 把批量图片路径[uris]转为指定宽[widthPx]高[heightPx]的base64 */
+    @JvmStatic
+    fun decodeUriToBase64(context: Context, uris: ArrayList<Uri>, widthPx: Int, heightPx: Int): Observable<ArrayList<String>> =
+        Observable.create { emitter ->
+            if (uris.size == 0) {
+                emitter.doError(IllegalArgumentException("paths size is 0"))
+                return@create
+            }
+
+            try {
+                val base64s = ArrayList<String>()
+                for (uri in uris) {
+                    if (emitter.isDisposed) {
+                        return@create
+                    }
+                    val bitmap = BitmapUtils.compressBitmap(context, uri, widthPx, heightPx)
                     if (bitmap == null) {
                         base64s.add("")
                         continue

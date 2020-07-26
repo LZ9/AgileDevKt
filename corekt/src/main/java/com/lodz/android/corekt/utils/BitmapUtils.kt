@@ -3,6 +3,7 @@ package com.lodz.android.corekt.utils
 import android.content.Context
 import android.graphics.*
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Build
 import android.util.Base64
 import android.view.View
@@ -99,6 +100,26 @@ object BitmapUtils {
             }
         } catch (e: Exception) {
             e.printStackTrace()
+        }
+        return null
+    }
+
+    /** 把图片路径[uri]转为Bitmap并对宽[widthPx]高[heightPx]进行质量压缩 */
+    @JvmStatic
+    fun compressBitmap(context: Context, uri: Uri, widthPx: Int, heightPx: Int): Bitmap? {
+        context.contentResolver.openFileDescriptor(uri, "r")?.use { fd ->
+            val opts = BitmapFactory.Options()
+            BitmapFactory.decodeFileDescriptor(fd.fileDescriptor, null, opts)
+            opts.inJustDecodeBounds = true
+            opts.inSampleSize = setInSampleSize(opts, widthPx, heightPx)
+            opts.inPreferredConfig = Bitmap.Config.ARGB_8888
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
+                opts.inInputShareable = true
+            }
+            opts.inJustDecodeBounds = false
+            FileInputStream(fd.fileDescriptor).use { fs ->
+                return BitmapFactory.decodeStream(fs, null, opts)
+            }
         }
         return null
     }

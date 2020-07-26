@@ -2,6 +2,7 @@ package com.lodz.android.agiledevkt.modules.rxjava.utils
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -15,6 +16,7 @@ import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.getScreenHeight
 import com.lodz.android.corekt.anko.getScreenWidth
 import com.lodz.android.corekt.anko.runOnMainDelay
+import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
@@ -147,22 +149,42 @@ class RxUtilsTestActivity : BaseActivity() {
                     .into(mPathImg)
             }
 
-            RxUtils.decodePathToBase64(info.path, getScreenWidth() / 8, getScreenHeight() / 8)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                RxUtils.decodeUriToBase64(getContext(), info.uri, getScreenWidth() / 8, getScreenHeight() / 8)
                     .compose(RxUtils.ioToMainObservable())
                     .compose(bindDestroyEvent())
                     .subscribe(object : ProgressObserver<String>(){
                         override fun onPgNext(any: String) {
+                            PrintLog.e("testtag", Thread.currentThread().name + "   onPgNext")
                             printResult("\nBase64路径：$any")
                             ImageLoader.create(getContext())
-                                    .loadBase64(any)
-                                    .setCenterInside()
-                                    .into(mBase64Img)
+                                .loadBase64(any)
+                                .setCenterInside()
+                                .into(mBase64Img)
                         }
 
                         override fun onPgError(e: Throwable, isNetwork: Boolean) {
 
                         }
                     }.create(getContext(), R.string.rx_utils_pic_coding, true))
+            } else {
+                RxUtils.decodePathToBase64(info.path, getScreenWidth() / 8, getScreenHeight() / 8)
+                    .compose(RxUtils.ioToMainObservable())
+                    .compose(bindDestroyEvent())
+                    .subscribe(object : ProgressObserver<String>(){
+                        override fun onPgNext(any: String) {
+                            printResult("\nBase64路径：$any")
+                            ImageLoader.create(getContext())
+                                .loadBase64(any)
+                                .setCenterInside()
+                                .into(mBase64Img)
+                        }
+
+                        override fun onPgError(e: Throwable, isNetwork: Boolean) {
+
+                        }
+                    }.create(getContext(), R.string.rx_utils_pic_coding, true))
+            }
 
         }
 
@@ -190,27 +212,49 @@ class RxUtilsTestActivity : BaseActivity() {
                     .into(mPathImg)
             }
 
-            val paths = ArrayList<String>()
-            for (info in infos) {
-                paths.add(info.path)
-            }
-
-            RxUtils.decodePathToBase64(paths, getScreenWidth() / 8, getScreenHeight() / 8)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                val uris = ArrayList<Uri>()
+                for (info in infos) {
+                    uris.add(info.uri)
+                }
+                RxUtils.decodeUriToBase64(getContext(), uris, getScreenWidth() / 8, getScreenHeight() / 8)
                     .compose(RxUtils.ioToMainObservable())
                     .compose(bindDestroyEvent())
                     .subscribe(object :ProgressObserver<ArrayList<String>>(){
                         override fun onPgNext(any: ArrayList<String>) {
                             printResult("\nBase64路径：$any")
                             ImageLoader.create(getContext())
-                                    .loadBase64(any[0])
-                                    .setCenterInside()
-                                    .into(mBase64Img)
+                                .loadBase64(any[0])
+                                .setCenterInside()
+                                .into(mBase64Img)
                         }
 
                         override fun onPgError(e: Throwable, isNetwork: Boolean) {
 
                         }
                     }.create(getContext(), R.string.rx_utils_pic_coding, true))
+            } else {
+                val paths = ArrayList<String>()
+                for (info in infos) {
+                    paths.add(info.path)
+                }
+                RxUtils.decodePathToBase64(paths, getScreenWidth() / 8, getScreenHeight() / 8)
+                    .compose(RxUtils.ioToMainObservable())
+                    .compose(bindDestroyEvent())
+                    .subscribe(object :ProgressObserver<ArrayList<String>>(){
+                        override fun onPgNext(any: ArrayList<String>) {
+                            printResult("\nBase64路径：$any")
+                            ImageLoader.create(getContext())
+                                .loadBase64(any[0])
+                                .setCenterInside()
+                                .into(mBase64Img)
+                        }
+
+                        override fun onPgError(e: Throwable, isNetwork: Boolean) {
+
+                        }
+                    }.create(getContext(), R.string.rx_utils_pic_coding, true))
+            }
         }
     }
 

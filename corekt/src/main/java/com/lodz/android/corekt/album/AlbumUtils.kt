@@ -196,7 +196,7 @@ object AlbumUtils {
         if (uri != null) {
             val fd = context.contentResolver.openFileDescriptor(file.toUri(), "r")
             fd?.use {
-                val bitmap = BitmapFactory.decodeFileDescriptor(fd.fileDescriptor)
+                val bitmap = BitmapFactory.decodeFileDescriptor(it.fileDescriptor)
                 context.contentResolver.openOutputStream(uri)?.use {
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it)
                 }
