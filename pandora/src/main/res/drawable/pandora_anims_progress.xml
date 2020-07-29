@@ -6,18 +6,23 @@
     <item
         android:drawable="@drawable/pandora_ic_progress_loading_64_1"
         android:duration="100" />
+
     <item
         android:drawable="@drawable/pandora_ic_progress_loading_64_2"
         android:duration="100" />
+
     <item
         android:drawable="@drawable/pandora_ic_progress_loading_64_3"
         android:duration="100" />
+
     <item
         android:drawable="@drawable/pandora_ic_progress_loading_64_4"
         android:duration="100" />
+
     <item
         android:drawable="@drawable/pandora_ic_progress_loading_64_5"
         android:duration="100" />
+
     <item
         android:drawable="@drawable/pandora_ic_progress_loading_64_6"
         android:duration="100" />
