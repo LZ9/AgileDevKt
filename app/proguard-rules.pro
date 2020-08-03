@@ -75,6 +75,7 @@
 -keep class com.google.android.** { *; }
 -keep class android.support.** { *; }
 -keep class android.arch.** { *; }
+-keep class android.app.** { *; }
 -keep class androidx.** { *; }
 
 #webview相关
@@ -139,3 +140,15 @@ public static java.lang.String TABLENAME;
 -keep class com.amap.api.location.**{*;}
 -keep class com.amap.api.fence.**{*;}
 -keep class com.autonavi.aps.amapapi.model.**{*;}
+
+#数据类的bean
+-keep class com.lodz.android.agiledevkt.bean.** { *;}
+
+#RxDownload
+-dontnote retrofit2.Platform
+-dontwarn retrofit2.Platform$Java8
+-keepattributes Signature
+-keepattributes Exceptions
+-dontwarn okhttp3.**
+-dontwarn okio.**
+-dontwarn javax.annotation.**
