@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.graphics.Point
 import android.os.Build
+import android.os.PowerManager
 import android.util.DisplayMetrics
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -94,3 +95,8 @@ fun Context.getStatusBarHeight(): Int {
 /** 获取状态栏高度 */
 fun Fragment.getStatusBarHeight(): Int = requireContext().getStatusBarHeight()
 
+/** 屏幕是否亮屏 */
+fun Context.isScreenOn(): Boolean {
+    val pm: PowerManager = getSystemService(Context.POWER_SERVICE) as PowerManager? ?: return false
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) pm.isInteractive else pm.isScreenOn
+}
