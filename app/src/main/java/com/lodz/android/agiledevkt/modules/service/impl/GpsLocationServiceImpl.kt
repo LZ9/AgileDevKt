@@ -58,12 +58,7 @@ class GpsLocationServiceImpl : ServiceContract {
     }
 
     private val mLocationListener = object : LocationListener {
-        override fun onLocationChanged(location: Location?) {
-            if (location == null) {
-                EventBus.getDefault().post(LocationUpdateEvent(false, "", "", "", "", "", "", "定位失败，定位结果为null"))
-                return
-            }
-
+        override fun onLocationChanged(location: Location) {
             val longitude = location.longitude.toString() // 经度
             val latitude = location.latitude.toString() // 纬度
             val info = NetworkManager.get().getOperatorInfo(App.get())
@@ -72,25 +67,26 @@ class GpsLocationServiceImpl : ServiceContract {
             val lac = info?.lac ?: ""
             val cid = info?.cid ?: ""
             val log = "更新成功"
-
             EventBus.getDefault().post(LocationUpdateEvent(true, longitude, latitude, mcc, mnc, lac, cid, log))
         }
 
         override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
+            super.onStatusChanged(provider, status, extras)
             val log = "onStatusChanged   --->   provider : $provider    status : $status"
             EventBus.getDefault().post(LocationUpdateEvent(false, "", "", "", "", "", "", log))
         }
 
-        override fun onProviderEnabled(provider: String?) {
+        override fun onProviderEnabled(provider: String) {
+            super.onProviderEnabled(provider)
             val log = "onProviderEnabled   --->   provider : $provider"
             EventBus.getDefault().post(LocationUpdateEvent(false, "", "", "", "", "", "", log))
         }
 
-        override fun onProviderDisabled(provider: String?) {
+        override fun onProviderDisabled(provider: String) {
+            super.onProviderDisabled(provider)
             val log = "onProviderDisabled   --->   provider : $provider"
             EventBus.getDefault().post(LocationUpdateEvent(false, "", "", "", "", "", "", log))
         }
-
     }
 
     override fun onDestroy() {
