@@ -82,7 +82,7 @@ fun Context.openAppByLaunch(packageName: String, newTask: Boolean = true) {
 
 /** 通过android.intent.action.MAIN来打开包名为[packageName]的应用 */
 @JvmOverloads
-fun Context.openAppByActionMain(packageName: String, newTask: Boolean = true) {
+fun Context.openAppByActionMain(packageName: String, activityName: String = "", newTask: Boolean = true) {
     if (packageName.isEmpty()) {
         throw IllegalArgumentException("packageName is null")
     }
@@ -91,6 +91,11 @@ fun Context.openAppByActionMain(packageName: String, newTask: Boolean = true) {
     val intent = Intent(Intent.ACTION_MAIN)
     for (resolve in packageManager.queryIntentActivities(intent, 0)) {
         val info: ActivityInfo = resolve.activityInfo ?: continue
+        if (activityName.isNotEmpty()){
+            if (activityName != info.name){
+                continue
+            }
+        }
         if (packageName == info.packageName) {
             mainActivityName = info.name
             break
