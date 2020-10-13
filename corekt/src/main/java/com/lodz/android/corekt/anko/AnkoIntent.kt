@@ -80,15 +80,15 @@ fun Context.openAppByLaunch(packageName: String, newTask: Boolean = true) {
     startActivity(intent)
 }
 
-/** 通过android.intent.action.MAIN来打开包名为[packageName]的应用 */
+/** 通过[actionName]默认是android.intent.action.MAIN，来打开包名为[packageName]的应用 */
 @JvmOverloads
-fun Context.openAppByActionMain(packageName: String, activityName: String = "", newTask: Boolean = true) {
+fun Context.openAppByAction(packageName: String, actionName: String = Intent.ACTION_MAIN, activityName: String = "", newTask: Boolean = true) {
     if (packageName.isEmpty()) {
         throw IllegalArgumentException("packageName is null")
     }
 
     var mainActivityName: String? = ""// 启动页的路径
-    val intent = Intent(Intent.ACTION_MAIN)
+    val intent = Intent(actionName)
     for (resolve in packageManager.queryIntentActivities(intent, 0)) {
         val info: ActivityInfo = resolve.activityInfo ?: continue
         if (activityName.isNotEmpty()){
