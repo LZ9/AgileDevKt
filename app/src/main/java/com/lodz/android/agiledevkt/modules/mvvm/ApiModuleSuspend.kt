@@ -14,7 +14,7 @@ object ApiModuleSuspend {
         getResultText(isSuccess).await()
     }
 
-    private fun getResultText(isSuccess: Boolean): Deferred<String> = GlobalScope.async {
+    fun getResultText(isSuccess: Boolean): Deferred<String> = GlobalScope.async {
         delay(2000)
         if (!isSuccess) {
             throw DataException("request fail")

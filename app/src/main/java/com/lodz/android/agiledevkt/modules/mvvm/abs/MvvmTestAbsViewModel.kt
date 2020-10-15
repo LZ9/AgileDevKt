@@ -7,6 +7,7 @@ import com.lodz.android.agiledevkt.modules.mvvm.ApiModuleSuspend
 import com.lodz.android.corekt.anko.runOnMain
 import com.lodz.android.pandora.mvvm.vm.AbsViewModel
 import com.lodz.android.pandora.rx.exception.DataException
+import com.lodz.android.pandora.rx.utils.RxUtils
 import com.lodz.android.pandora.utils.coroutines.runOnSuspendIOCatchPg
 import kotlinx.coroutines.GlobalScope
 
@@ -23,19 +24,13 @@ class MvvmTestAbsViewModel : AbsViewModel() {
         GlobalScope.runOnSuspendIOCatchPg(
             context,
             context.getString(R.string.mvvm_demo_loading),
-            true,
+            cancelable = true,
+            response = { ApiModuleSuspend.getResultText(isSuccess) },
             actionIO = {
-                val result = ApiModuleSuspend.requestResult(isSuccess)
-                GlobalScope.runOnMain {
-                    mResultText.value = result
-                    toastShort(result)
-                }
-            }, error = { e ->
-                val msg = if (e is DataException) {
-                    e.getErrorMsg()
-                } else {
-                    e.message ?: ""
-                }
+                mResultText.value = it
+                toastShort(it)
+            }, error = { e, isNetwork ->
+                val msg = RxUtils.getExceptionTips(e, isNetwork, "加载失败")
                 mResultText.value = msg
                 toastShort(msg)
             })
