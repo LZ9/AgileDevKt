@@ -25,6 +25,6 @@ object RxExceptionFactory {
             return NetworkTimeOutException(t.message, t.cause, "网络连接超时，请稍后再试")
         }
 
-        return RxException(t.message, t.cause, "数据接口异常，请稍后再试")
+        return RxException(t.message, t.cause, true, true, "数据接口异常，请稍后再试")
     }
 }
