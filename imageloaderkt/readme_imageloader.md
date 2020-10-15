@@ -19,7 +19,7 @@
         api 'com.github.bumptech.glide:glide:4.11.0'
         kapt 'com.github.bumptech.glide:compiler:4.11.0'
         implementation "com.github.bumptech.glide:okhttp3-integration:4.11.0"
-        api 'jp.wasabeef:glide-transformations:4.0.0'
+        api 'jp.wasabeef:glide-transformations:4.3.0'
     }
 ```
 

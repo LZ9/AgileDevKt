@@ -1,5 +1,10 @@
 # imageloader-kt库更新记录
 
+##### 2020/10/15
+1. 更新gradle和kotlin插件版本
+2. 最低版本支持到android5.0
+3. 发布1.1.5版本
+
 ##### 2020/07/20
 1. 增加NotificationTarget修复类，规避图片资源回收时，通知栏会重复发送通知的BUG
 2. 更新glide版本
