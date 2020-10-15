@@ -7,7 +7,7 @@
 如果你希望获取丰富的扩展方法来支持你的工程，你可以选择依赖[corek-kt](https://github.com/LZ9/AgileDevKt/blob/master/corekt/readme_core.md)，
 里面同时包含了Androidx相关的支持库。
 ```
-    implementation 'com.lodz:core-kt:1.2.2'
+    implementation 'com.lodz:core-kt:1.2.3'
 ```
 
 ## 2. 使用Pandora组件：

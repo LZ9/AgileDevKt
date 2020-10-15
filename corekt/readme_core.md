@@ -17,14 +17,14 @@
 ```
     dependencies {
         api 'androidx.appcompat:appcompat:1.2.0'
-        api 'com.google.android.material:material:1.2.0'
+        api 'com.google.android.material:material:1.2.1'
         api 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
         api 'androidx.recyclerview:recyclerview:1.1.0'
         api 'androidx.cardview:cardview:1.0.0'
         api "androidx.viewpager2:viewpager2:1.0.0"
         api 'androidx.annotation:annotation:1.1.0'
-        api 'androidx.constraintlayout:constraintlayout:2.0.1'
-        api 'androidx.core:core-ktx:1.3.1'
+        api 'androidx.constraintlayout:constraintlayout:2.0.2'
+        api 'androidx.core:core-ktx:1.3.2'
         api 'androidx.lifecycle:lifecycle-extensions:2.2.0'
         api 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
         api 'com.google.android:flexbox:2.0.1'
