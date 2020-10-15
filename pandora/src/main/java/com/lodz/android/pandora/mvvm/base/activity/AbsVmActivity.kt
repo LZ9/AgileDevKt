@@ -8,6 +8,7 @@ import com.lodz.android.corekt.anko.toastLong
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.pandora.base.activity.AbsActivity
 import com.lodz.android.pandora.mvvm.vm.AbsViewModel
+import com.trello.rxlifecycle4.android.ActivityEvent
 
 /**
  * ViewModel基础Activity
@@ -42,6 +43,36 @@ abstract class AbsVmActivity<VM : AbsViewModel> : AbsActivity() {
             }
             toastLong(value)
         })
+    }
+
+    override fun startCreate() {
+        super.startCreate()
+        getViewModel().mPdrLifecycleSubject.onNext(ActivityEvent.CREATE)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        getViewModel().mPdrLifecycleSubject.onNext(ActivityEvent.START)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getViewModel().mPdrLifecycleSubject.onNext(ActivityEvent.RESUME)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        getViewModel().mPdrLifecycleSubject.onNext(ActivityEvent.PAUSE)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        getViewModel().mPdrLifecycleSubject.onNext(ActivityEvent.STOP)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        getViewModel().mPdrLifecycleSubject.onNext(ActivityEvent.DESTROY)
     }
 }
 
