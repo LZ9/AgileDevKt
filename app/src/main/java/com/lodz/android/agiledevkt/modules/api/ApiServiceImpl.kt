@@ -1,7 +1,7 @@
 package com.lodz.android.agiledevkt.modules.api
 
-import com.alibaba.fastjson.JSON
-import com.alibaba.fastjson.TypeReference
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.lodz.android.agiledevkt.apiservice.ApiService
 import com.lodz.android.agiledevkt.bean.SpotBean
 import com.lodz.android.agiledevkt.bean.base.response.ResponseBean
@@ -103,7 +103,7 @@ object ApiServiceImpl : ApiService {
             try {
                 Thread.sleep(2000)
                 val json = "{\"code\":200,\"msg\":\"success\",\"data\":[]}"
-                val responseBean = JSON.parseObject(json, object : TypeReference<ResponseBean<List<SpotBean>>>() {})
+                val responseBean = Gson().fromJson<ResponseBean<List<SpotBean>>>(json, object : TypeToken<ResponseBean<List<SpotBean>>>(){}.type)
                 val list = ArrayList<SpotBean>()
                 val spotBean = SpotBean()
                 spotBean.spotName = getJsonByRequestBody(requestBody)

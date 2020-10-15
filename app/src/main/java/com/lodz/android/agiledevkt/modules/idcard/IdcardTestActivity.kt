@@ -5,7 +5,8 @@ import android.content.Intent
 import android.graphics.Color
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.alibaba.fastjson.JSON
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.SearchRecomBean
 import com.lodz.android.corekt.anko.bindView
@@ -104,7 +105,7 @@ class IdcardTestActivity : AbsActivity() {
     private fun getCacheList(text: String): MutableList<SearchRecomBean> {
         val list = ArrayList<SearchRecomBean>()
         val json = ACacheUtils.get().create().getAsString(CACHE_KEY)
-        val cacheList = if (json.isEmpty()) ArrayList<SearchRecomBean>() else JSON.parseArray(json, SearchRecomBean::class.java).toArrayList()
+        val cacheList = if (json.isEmpty()) ArrayList() else Gson().fromJson<List<SearchRecomBean>>(json, object : TypeToken<List<SearchRecomBean>>() {}.type).toArrayList()
         if (text.isEmpty()) {
             return list
         }
@@ -118,7 +119,7 @@ class IdcardTestActivity : AbsActivity() {
 
     private fun putCache(text: String) {
         val json = ACacheUtils.get().create().getAsString(CACHE_KEY)
-        val list = if (json.isEmpty()) ArrayList<SearchRecomBean>() else JSON.parseArray(json, SearchRecomBean::class.java).toArrayList()
+        val list = if (json.isEmpty()) ArrayList() else Gson().fromJson<List<SearchRecomBean>>(json, object : TypeToken<List<SearchRecomBean>>() {}.type).toArrayList()
         var hasCache = false
         for (bean in list) {
             if (bean.getTitleText() == text) {
@@ -147,6 +148,6 @@ class IdcardTestActivity : AbsActivity() {
             }
             list.add(bean)
         }
-        ACacheUtils.get().create().put(CACHE_KEY, JSON.toJSONString(list))
+        ACacheUtils.get().create().put(CACHE_KEY, Gson().toJson(list))
     }
 }

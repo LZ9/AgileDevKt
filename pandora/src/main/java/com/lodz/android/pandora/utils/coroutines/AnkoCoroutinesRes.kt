@@ -2,6 +2,8 @@ package com.lodz.android.pandora.utils.coroutines
 
 import android.content.Context
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.lodz.android.corekt.anko.getMetaData
 import com.lodz.android.corekt.anko.runOnMain
 import com.lodz.android.corekt.anko.runOnMainCatch
@@ -22,12 +24,40 @@ import kotlinx.coroutines.*
 
 /** 网络接口使用的协程挂起方法，主要对接口进行判断处理 */
 fun <T> GlobalScope.runOnSuspendIOCatchRes(
-    response: suspend () -> Deferred<T>,
+    response: suspend () -> T,
     actionIO: (t: T) -> Unit,
     error: (e: Exception, isNetwork: Boolean) -> Unit = { e, isNetwork -> }
 ): Job = launch(Dispatchers.IO) {
     try {
-        val res = response.invoke().await()
+        val res = response.invoke()
+        if (res is ResponseStatus) {
+            if (res.isSuccess()) {
+                runOnMain { actionIO(res) }
+                return@launch
+            }
+            val exception = DataException("response fail")
+            exception.setData(res)
+            throw exception
+        }
+        runOnMain { actionIO(res) }
+    } catch (e: Exception) {
+        e.printStackTrace()
+        printTagLog(e)
+        if (e !is CancellationException) {
+            val t = RxExceptionFactory.create(e)
+            runOnMain { error(t, t is NetworkException) }
+        }
+    }
+}
+
+/** 网络接口使用的协程挂起方法，主要对接口进行判断处理（ViewModel） */
+fun <T> ViewModel.runOnSuspendIOCatchRes(
+    response: suspend () -> T,
+    actionIO: (t: T) -> Unit,
+    error: (e: Exception, isNetwork: Boolean) -> Unit = { e, isNetwork -> }
+): Job = viewModelScope.launch(Dispatchers.IO) {
+    try {
+        val res = response.invoke()
         if (res is ResponseStatus) {
             if (res.isSuccess()) {
                 runOnMain { actionIO(res) }
@@ -76,10 +106,38 @@ fun <T> GlobalScope.runOnIOCatchRes(
     }
 }
 
+/** 网络接口使用的协程方法，主要对接口进行判断处理（ViewModel） */
+fun <T> ViewModel.runOnIOCatchRes(
+    response: Deferred<T>,
+    actionIO: (t: T) -> Unit,
+    error: (e: Exception, isNetwork: Boolean) -> Unit = { e, isNetwork -> }
+): Job = viewModelScope.launch(Dispatchers.IO) {
+    try {
+        val res = response.await()
+        if (res is ResponseStatus) {
+            if (res.isSuccess()) {
+                runOnMain { actionIO(res) }
+                return@launch
+            }
+            val exception = DataException("response fail")
+            exception.setData(res)
+            throw exception
+        }
+        runOnMain { actionIO(res) }
+    } catch (e: Exception) {
+        e.printStackTrace()
+        printTagLog(e)
+        if (e !is CancellationException) {
+            val t = RxExceptionFactory.create(e)
+            runOnMain { error(t, t is NetworkException) }
+        }
+    }
+}
+
 /** 带加载框的协程挂起方法 */
 fun <T> GlobalScope.runOnSuspendIOCatchPg(
     progressDialog: AlertDialog,
-    response: suspend () -> Deferred<T>,
+    response: suspend () -> T,
     actionIO: (t: T) -> Unit,
     error: (e: Exception, isNetwork: Boolean) -> Unit = { e, isNetwork -> },
     pgCancel: () -> Unit = {}
@@ -88,7 +146,51 @@ fun <T> GlobalScope.runOnSuspendIOCatchPg(
 
     val job = launch(Dispatchers.IO) {
         try {
-            val res = response.invoke().await()
+            val res = response.invoke()
+            if (res is ResponseStatus) {
+                if (res.isSuccess()) {
+                    runOnMain { actionIO(res) }
+                    return@launch
+                }
+                val exception = DataException("response fail")
+                exception.setData(res)
+                throw exception
+            }
+            runOnMain { actionIO(res) }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            printTagLog(e)
+            if (e !is CancellationException) {
+                val t = RxExceptionFactory.create(e)
+                runOnMain { error(t, t is NetworkException) }
+            }
+        } finally {
+            runOnMainCatch({ progressDialog.dismiss() })
+        }
+    }
+
+    progressDialog.setOnCancelListener {
+        job.cancel()
+        runOnMainCatch({
+            progressDialog.dismiss()
+            pgCancel()
+        })
+    }
+}
+
+/** 带加载框的协程挂起方法（ViewModel） */
+fun <T> ViewModel.runOnSuspendIOCatchPg(
+    progressDialog: AlertDialog,
+    response: suspend () -> T,
+    actionIO: (t: T) -> Unit,
+    error: (e: Exception, isNetwork: Boolean) -> Unit = { e, isNetwork -> },
+    pgCancel: () -> Unit = {}
+) {
+    runOnMainCatch({ progressDialog.show() })
+
+    val job = viewModelScope.launch(Dispatchers.IO) {
+        try {
+            val res = response.invoke()
             if (res is ResponseStatus) {
                 if (res.isSuccess()) {
                     runOnMain { actionIO(res) }
@@ -164,13 +266,57 @@ fun <T> GlobalScope.runOnIOCatchPg(
     }
 }
 
+/** 带加载框的协程方法（ViewModel） */
+fun <T> ViewModel.runOnIOCatchPg(
+    progressDialog: AlertDialog,
+    response: Deferred<T>,
+    actionIO: (t: T) -> Unit,
+    error: (e: Exception, isNetwork: Boolean) -> Unit = { e, isNetwork -> },
+    pgCancel: () -> Unit = {}
+) {
+    runOnMainCatch({ progressDialog.show() })
+
+    val job = viewModelScope.launch(Dispatchers.IO) {
+        try {
+            val res = response.await()
+            if (res is ResponseStatus) {
+                if (res.isSuccess()) {
+                    runOnMain { actionIO(res) }
+                    return@launch
+                }
+                val exception = DataException("response fail")
+                exception.setData(res)
+                throw exception
+            }
+            runOnMain { actionIO(res) }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            printTagLog(e)
+            if (e !is CancellationException) {
+                val t = RxExceptionFactory.create(e)
+                runOnMain { error(t, t is NetworkException) }
+            }
+        } finally {
+            runOnMainCatch({ progressDialog.dismiss() })
+        }
+    }
+
+    progressDialog.setOnCancelListener {
+        job.cancel()
+        runOnMainCatch({
+            progressDialog.dismiss()
+            pgCancel()
+        })
+    }
+}
+
 /** 带加载框的协程挂起方法 */
 fun <T> GlobalScope.runOnSuspendIOCatchPg(
     context: Context,
     msg: String = "正在加载，请稍候",
     cancelable: Boolean = true,
     canceledOnTouchOutside: Boolean = false,
-    response: suspend () -> Deferred<T>,
+    response: suspend () -> T,
     actionIO: (t: T) -> Unit,
     error: (e: Exception, isNetwork: Boolean) -> Unit = { e, isNetwork -> },
     pgCancel: () -> Unit = {}
@@ -185,7 +331,60 @@ fun <T> GlobalScope.runOnSuspendIOCatchPg(
 
     val job = launch(Dispatchers.IO) {
         try {
-            val res = response.invoke().await()
+            val res = response.invoke()
+            if (res is ResponseStatus) {
+                if (res.isSuccess()) {
+                    runOnMain { actionIO(res) }
+                    return@launch
+                }
+                val exception = DataException("response fail")
+                exception.setData(res)
+                throw exception
+            }
+            runOnMain { actionIO(res) }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            printTagLog(e)
+            if (e !is CancellationException) {
+                val t = RxExceptionFactory.create(e)
+                runOnMain { error(t, t is NetworkException) }
+            }
+        } finally {
+            runOnMainCatch({ progressDialog.dismiss() })
+        }
+    }
+
+    progressDialog.setOnCancelListener {
+        job.cancel()
+        runOnMainCatch({
+            progressDialog.dismiss()
+            pgCancel()
+        })
+    }
+}
+
+/** 带加载框的协程挂起方法（ViewModel） */
+fun <T> ViewModel.runOnSuspendIOCatchPg(
+    context: Context,
+    msg: String = "正在加载，请稍候",
+    cancelable: Boolean = true,
+    canceledOnTouchOutside: Boolean = false,
+    response: suspend () -> T,
+    actionIO: (t: T) -> Unit,
+    error: (e: Exception, isNetwork: Boolean) -> Unit = { e, isNetwork -> },
+    pgCancel: () -> Unit = {}
+) {
+    val progressDialog = ProgressDialogHelper.get()
+        .setCanceledOnTouchOutside(canceledOnTouchOutside)
+        .setCancelable(cancelable)
+        .setMsg(msg)
+        .create(context)
+
+    runOnMainCatch({ progressDialog.show() })
+
+    val job = viewModelScope.launch(Dispatchers.IO) {
+        try {
+            val res = response.invoke()
             if (res is ResponseStatus) {
                 if (res.isSuccess()) {
                     runOnMain { actionIO(res) }
@@ -237,6 +436,59 @@ fun <T> GlobalScope.runOnIOCatchPg(
     runOnMainCatch({ progressDialog.show() })
 
     val job = launch(Dispatchers.IO) {
+        try {
+            val res = response.await()
+            if (res is ResponseStatus) {
+                if (res.isSuccess()) {
+                    runOnMain { actionIO(res) }
+                    return@launch
+                }
+                val exception = DataException("response fail")
+                exception.setData(res)
+                throw exception
+            }
+            runOnMain { actionIO(res) }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            printTagLog(e)
+            if (e !is CancellationException) {
+                val t = RxExceptionFactory.create(e)
+                runOnMain { error(t, t is NetworkException) }
+            }
+        } finally {
+            runOnMainCatch({ progressDialog.dismiss() })
+        }
+    }
+
+    progressDialog.setOnCancelListener {
+        job.cancel()
+        runOnMainCatch({
+            progressDialog.dismiss()
+            pgCancel()
+        })
+    }
+}
+
+/** 带加载框的协程方法（ViewModel） */
+fun <T> ViewModel.runOnIOCatchPg(
+    context: Context,
+    msg: String = "正在加载，请稍候",
+    cancelable: Boolean = true,
+    canceledOnTouchOutside: Boolean = false,
+    response: Deferred<T>,
+    actionIO: (t: T) -> Unit,
+    error: (e: Exception, isNetwork: Boolean) -> Unit = { e, isNetwork -> },
+    pgCancel: () -> Unit = {}
+) {
+    val progressDialog = ProgressDialogHelper.get()
+        .setCanceledOnTouchOutside(canceledOnTouchOutside)
+        .setCancelable(cancelable)
+        .setMsg(msg)
+        .create(context)
+
+    runOnMainCatch({ progressDialog.show() })
+
+    val job = viewModelScope.launch(Dispatchers.IO) {
         try {
             val res = response.await()
             if (res is ResponseStatus) {
