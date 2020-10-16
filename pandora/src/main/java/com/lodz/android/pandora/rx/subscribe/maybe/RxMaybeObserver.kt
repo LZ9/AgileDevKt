@@ -20,6 +20,12 @@ abstract class RxMaybeObserver<T> : BaseMaybeObserver<T>() {
     final override fun onBaseSuccess(any: T) {
         try {
             checkError(any)
+            if (any is ResponseStatus){
+                if (any.isTokenUnauth()){
+                    onTokenUnauth(any)
+                    return
+                }
+            }
             onRxSuccess(any)
         } catch (e: Exception) {
             onError(e)
@@ -49,6 +55,8 @@ abstract class RxMaybeObserver<T> : BaseMaybeObserver<T>() {
             }
         }
     }
+
+    open fun onTokenUnauth(any: T) {}
 
     open fun onRxSubscribe(d: Disposable) {}
 

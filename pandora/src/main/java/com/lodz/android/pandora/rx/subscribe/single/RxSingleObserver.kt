@@ -20,6 +20,12 @@ abstract class RxSingleObserver<T> : BaseSingleObserver<T>() {
     final override fun onBaseSuccess(any: T) {
         try {
             checkError(any)
+            if (any is ResponseStatus){
+                if (any.isTokenUnauth()){
+                    onTokenUnauth(any)
+                    return
+                }
+            }
             onRxSuccess(any)
         } catch (e: Exception) {
             onError(e)
@@ -45,6 +51,8 @@ abstract class RxSingleObserver<T> : BaseSingleObserver<T>() {
             }
         }
     }
+
+    open fun onTokenUnauth(any: T) {}
 
     open fun onRxSubscribe(d: Disposable) {}
 

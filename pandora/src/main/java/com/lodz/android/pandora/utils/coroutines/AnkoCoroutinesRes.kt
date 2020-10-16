@@ -26,27 +26,14 @@ import kotlinx.coroutines.*
 fun <T> GlobalScope.runOnSuspendIOCatchRes(
     response: suspend () -> T,
     actionIO: (t: T) -> Unit,
+    actionTokenUnauth: (t: T) -> Unit = {},
     error: (e: Exception, isNetwork: Boolean) -> Unit = { e, isNetwork -> }
 ): Job = launch(Dispatchers.IO) {
     try {
         val res = response.invoke()
-        if (res is ResponseStatus) {
-            if (res.isSuccess()) {
-                runOnMain { actionIO(res) }
-                return@launch
-            }
-            val exception = DataException("response fail")
-            exception.setData(res)
-            throw exception
-        }
-        runOnMain { actionIO(res) }
+        resHandle(actionIO, actionTokenUnauth, res)
     } catch (e: Exception) {
-        e.printStackTrace()
-        printTagLog(e)
-        if (e !is CancellationException) {
-            val t = RxExceptionFactory.create(e)
-            runOnMain { error(t, t is NetworkException) }
-        }
+        errorHandle(e, error)
     }
 }
 
@@ -54,27 +41,14 @@ fun <T> GlobalScope.runOnSuspendIOCatchRes(
 fun <T> ViewModel.runOnSuspendIOCatchRes(
     response: suspend () -> T,
     actionIO: (t: T) -> Unit,
+    actionTokenUnauth: (t: T) -> Unit = {},
     error: (e: Exception, isNetwork: Boolean) -> Unit = { e, isNetwork -> }
 ): Job = viewModelScope.launch(Dispatchers.IO) {
     try {
         val res = response.invoke()
-        if (res is ResponseStatus) {
-            if (res.isSuccess()) {
-                runOnMain { actionIO(res) }
-                return@launch
-            }
-            val exception = DataException("response fail")
-            exception.setData(res)
-            throw exception
-        }
-        runOnMain { actionIO(res) }
+        resHandle(actionIO, actionTokenUnauth, res)
     } catch (e: Exception) {
-        e.printStackTrace()
-        printTagLog(e)
-        if (e !is CancellationException) {
-            val t = RxExceptionFactory.create(e)
-            runOnMain { error(t, t is NetworkException) }
-        }
+        errorHandle(e, error)
     }
 }
 
@@ -82,27 +56,14 @@ fun <T> ViewModel.runOnSuspendIOCatchRes(
 fun <T> GlobalScope.runOnIOCatchRes(
     response: Deferred<T>,
     actionIO: (t: T) -> Unit,
+    actionTokenUnauth: (t: T) -> Unit = {},
     error: (e: Exception, isNetwork: Boolean) -> Unit = { e, isNetwork -> }
 ): Job = launch(Dispatchers.IO) {
     try {
         val res = response.await()
-        if (res is ResponseStatus) {
-            if (res.isSuccess()) {
-                runOnMain { actionIO(res) }
-                return@launch
-            }
-            val exception = DataException("response fail")
-            exception.setData(res)
-            throw exception
-        }
-        runOnMain { actionIO(res) }
+        resHandle(actionIO, actionTokenUnauth, res)
     } catch (e: Exception) {
-        e.printStackTrace()
-        printTagLog(e)
-        if (e !is CancellationException) {
-            val t = RxExceptionFactory.create(e)
-            runOnMain { error(t, t is NetworkException) }
-        }
+        errorHandle(e, error)
     }
 }
 
@@ -110,27 +71,14 @@ fun <T> GlobalScope.runOnIOCatchRes(
 fun <T> ViewModel.runOnIOCatchRes(
     response: Deferred<T>,
     actionIO: (t: T) -> Unit,
+    actionTokenUnauth: (t: T) -> Unit = {},
     error: (e: Exception, isNetwork: Boolean) -> Unit = { e, isNetwork -> }
 ): Job = viewModelScope.launch(Dispatchers.IO) {
     try {
         val res = response.await()
-        if (res is ResponseStatus) {
-            if (res.isSuccess()) {
-                runOnMain { actionIO(res) }
-                return@launch
-            }
-            val exception = DataException("response fail")
-            exception.setData(res)
-            throw exception
-        }
-        runOnMain { actionIO(res) }
+        resHandle(actionIO, actionTokenUnauth, res)
     } catch (e: Exception) {
-        e.printStackTrace()
-        printTagLog(e)
-        if (e !is CancellationException) {
-            val t = RxExceptionFactory.create(e)
-            runOnMain { error(t, t is NetworkException) }
-        }
+        errorHandle(e, error)
     }
 }
 
@@ -139,6 +87,7 @@ fun <T> GlobalScope.runOnSuspendIOCatchPg(
     progressDialog: AlertDialog,
     response: suspend () -> T,
     actionIO: (t: T) -> Unit,
+    actionTokenUnauth: (t: T) -> Unit = {},
     error: (e: Exception, isNetwork: Boolean) -> Unit = { e, isNetwork -> },
     pgCancel: () -> Unit = {}
 ) {
@@ -147,23 +96,9 @@ fun <T> GlobalScope.runOnSuspendIOCatchPg(
     val job = launch(Dispatchers.IO) {
         try {
             val res = response.invoke()
-            if (res is ResponseStatus) {
-                if (res.isSuccess()) {
-                    runOnMain { actionIO(res) }
-                    return@launch
-                }
-                val exception = DataException("response fail")
-                exception.setData(res)
-                throw exception
-            }
-            runOnMain { actionIO(res) }
+            resHandle(actionIO, actionTokenUnauth, res)
         } catch (e: Exception) {
-            e.printStackTrace()
-            printTagLog(e)
-            if (e !is CancellationException) {
-                val t = RxExceptionFactory.create(e)
-                runOnMain { error(t, t is NetworkException) }
-            }
+            errorHandle(e, error)
         } finally {
             runOnMainCatch({ progressDialog.dismiss() })
         }
@@ -183,6 +118,7 @@ fun <T> ViewModel.runOnSuspendIOCatchPg(
     progressDialog: AlertDialog,
     response: suspend () -> T,
     actionIO: (t: T) -> Unit,
+    actionTokenUnauth: (t: T) -> Unit = {},
     error: (e: Exception, isNetwork: Boolean) -> Unit = { e, isNetwork -> },
     pgCancel: () -> Unit = {}
 ) {
@@ -191,23 +127,9 @@ fun <T> ViewModel.runOnSuspendIOCatchPg(
     val job = viewModelScope.launch(Dispatchers.IO) {
         try {
             val res = response.invoke()
-            if (res is ResponseStatus) {
-                if (res.isSuccess()) {
-                    runOnMain { actionIO(res) }
-                    return@launch
-                }
-                val exception = DataException("response fail")
-                exception.setData(res)
-                throw exception
-            }
-            runOnMain { actionIO(res) }
+            resHandle(actionIO, actionTokenUnauth, res)
         } catch (e: Exception) {
-            e.printStackTrace()
-            printTagLog(e)
-            if (e !is CancellationException) {
-                val t = RxExceptionFactory.create(e)
-                runOnMain { error(t, t is NetworkException) }
-            }
+            errorHandle(e, error)
         } finally {
             runOnMainCatch({ progressDialog.dismiss() })
         }
@@ -227,6 +149,7 @@ fun <T> GlobalScope.runOnIOCatchPg(
     progressDialog: AlertDialog,
     response: Deferred<T>,
     actionIO: (t: T) -> Unit,
+    actionTokenUnauth: (t: T) -> Unit = {},
     error: (e: Exception, isNetwork: Boolean) -> Unit = { e, isNetwork -> },
     pgCancel: () -> Unit = {}
 ) {
@@ -235,23 +158,9 @@ fun <T> GlobalScope.runOnIOCatchPg(
     val job = launch(Dispatchers.IO) {
         try {
             val res = response.await()
-            if (res is ResponseStatus) {
-                if (res.isSuccess()) {
-                    runOnMain { actionIO(res) }
-                    return@launch
-                }
-                val exception = DataException("response fail")
-                exception.setData(res)
-                throw exception
-            }
-            runOnMain { actionIO(res) }
+            resHandle(actionIO, actionTokenUnauth, res)
         } catch (e: Exception) {
-            e.printStackTrace()
-            printTagLog(e)
-            if (e !is CancellationException) {
-                val t = RxExceptionFactory.create(e)
-                runOnMain { error(t, t is NetworkException) }
-            }
+            errorHandle(e, error)
         } finally {
             runOnMainCatch({ progressDialog.dismiss() })
         }
@@ -271,6 +180,7 @@ fun <T> ViewModel.runOnIOCatchPg(
     progressDialog: AlertDialog,
     response: Deferred<T>,
     actionIO: (t: T) -> Unit,
+    actionTokenUnauth: (t: T) -> Unit = {},
     error: (e: Exception, isNetwork: Boolean) -> Unit = { e, isNetwork -> },
     pgCancel: () -> Unit = {}
 ) {
@@ -279,23 +189,9 @@ fun <T> ViewModel.runOnIOCatchPg(
     val job = viewModelScope.launch(Dispatchers.IO) {
         try {
             val res = response.await()
-            if (res is ResponseStatus) {
-                if (res.isSuccess()) {
-                    runOnMain { actionIO(res) }
-                    return@launch
-                }
-                val exception = DataException("response fail")
-                exception.setData(res)
-                throw exception
-            }
-            runOnMain { actionIO(res) }
+            resHandle(actionIO, actionTokenUnauth, res)
         } catch (e: Exception) {
-            e.printStackTrace()
-            printTagLog(e)
-            if (e !is CancellationException) {
-                val t = RxExceptionFactory.create(e)
-                runOnMain { error(t, t is NetworkException) }
-            }
+            errorHandle(e, error)
         } finally {
             runOnMainCatch({ progressDialog.dismiss() })
         }
@@ -318,6 +214,7 @@ fun <T> GlobalScope.runOnSuspendIOCatchPg(
     canceledOnTouchOutside: Boolean = false,
     response: suspend () -> T,
     actionIO: (t: T) -> Unit,
+    actionTokenUnauth: (t: T) -> Unit = {},
     error: (e: Exception, isNetwork: Boolean) -> Unit = { e, isNetwork -> },
     pgCancel: () -> Unit = {}
 ) {
@@ -332,23 +229,9 @@ fun <T> GlobalScope.runOnSuspendIOCatchPg(
     val job = launch(Dispatchers.IO) {
         try {
             val res = response.invoke()
-            if (res is ResponseStatus) {
-                if (res.isSuccess()) {
-                    runOnMain { actionIO(res) }
-                    return@launch
-                }
-                val exception = DataException("response fail")
-                exception.setData(res)
-                throw exception
-            }
-            runOnMain { actionIO(res) }
+            resHandle(actionIO, actionTokenUnauth, res)
         } catch (e: Exception) {
-            e.printStackTrace()
-            printTagLog(e)
-            if (e !is CancellationException) {
-                val t = RxExceptionFactory.create(e)
-                runOnMain { error(t, t is NetworkException) }
-            }
+            errorHandle(e, error)
         } finally {
             runOnMainCatch({ progressDialog.dismiss() })
         }
@@ -371,6 +254,7 @@ fun <T> ViewModel.runOnSuspendIOCatchPg(
     canceledOnTouchOutside: Boolean = false,
     response: suspend () -> T,
     actionIO: (t: T) -> Unit,
+    actionTokenUnauth: (t: T) -> Unit = {},
     error: (e: Exception, isNetwork: Boolean) -> Unit = { e, isNetwork -> },
     pgCancel: () -> Unit = {}
 ) {
@@ -385,23 +269,9 @@ fun <T> ViewModel.runOnSuspendIOCatchPg(
     val job = viewModelScope.launch(Dispatchers.IO) {
         try {
             val res = response.invoke()
-            if (res is ResponseStatus) {
-                if (res.isSuccess()) {
-                    runOnMain { actionIO(res) }
-                    return@launch
-                }
-                val exception = DataException("response fail")
-                exception.setData(res)
-                throw exception
-            }
-            runOnMain { actionIO(res) }
+            resHandle(actionIO, actionTokenUnauth, res)
         } catch (e: Exception) {
-            e.printStackTrace()
-            printTagLog(e)
-            if (e !is CancellationException) {
-                val t = RxExceptionFactory.create(e)
-                runOnMain { error(t, t is NetworkException) }
-            }
+            errorHandle(e, error)
         } finally {
             runOnMainCatch({ progressDialog.dismiss() })
         }
@@ -424,6 +294,7 @@ fun <T> GlobalScope.runOnIOCatchPg(
     canceledOnTouchOutside: Boolean = false,
     response: Deferred<T>,
     actionIO: (t: T) -> Unit,
+    actionTokenUnauth: (t: T) -> Unit = {},
     error: (e: Exception, isNetwork: Boolean) -> Unit = { e, isNetwork -> },
     pgCancel: () -> Unit = {}
 ) {
@@ -438,23 +309,9 @@ fun <T> GlobalScope.runOnIOCatchPg(
     val job = launch(Dispatchers.IO) {
         try {
             val res = response.await()
-            if (res is ResponseStatus) {
-                if (res.isSuccess()) {
-                    runOnMain { actionIO(res) }
-                    return@launch
-                }
-                val exception = DataException("response fail")
-                exception.setData(res)
-                throw exception
-            }
-            runOnMain { actionIO(res) }
+            resHandle(actionIO, actionTokenUnauth, res)
         } catch (e: Exception) {
-            e.printStackTrace()
-            printTagLog(e)
-            if (e !is CancellationException) {
-                val t = RxExceptionFactory.create(e)
-                runOnMain { error(t, t is NetworkException) }
-            }
+            errorHandle(e, error)
         } finally {
             runOnMainCatch({ progressDialog.dismiss() })
         }
@@ -477,6 +334,7 @@ fun <T> ViewModel.runOnIOCatchPg(
     canceledOnTouchOutside: Boolean = false,
     response: Deferred<T>,
     actionIO: (t: T) -> Unit,
+    actionTokenUnauth: (t: T) -> Unit = {},
     error: (e: Exception, isNetwork: Boolean) -> Unit = { e, isNetwork -> },
     pgCancel: () -> Unit = {}
 ) {
@@ -491,23 +349,9 @@ fun <T> ViewModel.runOnIOCatchPg(
     val job = viewModelScope.launch(Dispatchers.IO) {
         try {
             val res = response.await()
-            if (res is ResponseStatus) {
-                if (res.isSuccess()) {
-                    runOnMain { actionIO(res) }
-                    return@launch
-                }
-                val exception = DataException("response fail")
-                exception.setData(res)
-                throw exception
-            }
-            runOnMain { actionIO(res) }
+            resHandle(actionIO, actionTokenUnauth, res)
         } catch (e: Exception) {
-            e.printStackTrace()
-            printTagLog(e)
-            if (e !is CancellationException) {
-                val t = RxExceptionFactory.create(e)
-                runOnMain { error(t, t is NetworkException) }
-            }
+            errorHandle(e, error)
         } finally {
             runOnMainCatch({ progressDialog.dismiss() })
         }
@@ -519,6 +363,41 @@ fun <T> ViewModel.runOnIOCatchPg(
             progressDialog.dismiss()
             pgCancel()
         })
+    }
+}
+
+/** 处理异步结果 */
+private fun <T> CoroutineScope.resHandle(
+    actionIO: (t: T) -> Unit,
+    actionTokenUnauth: (t: T) -> Unit,
+    res: T
+) {
+    if (res is ResponseStatus) {
+        if (res.isTokenUnauth()) {
+            runOnMain { actionTokenUnauth(res) }
+            return
+        }
+        if (res.isSuccess()) {
+            runOnMain { actionIO(res) }
+            return
+        }
+        val exception = DataException("response fail")
+        exception.setData(res)
+        throw exception
+    }
+    runOnMain { actionIO(res) }
+}
+
+/** 处理异常逻辑 */
+private fun CoroutineScope.errorHandle(
+    e: Exception,
+    error: (e: Exception, isNetwork: Boolean) -> Unit
+) {
+    e.printStackTrace()
+    printTagLog(e)
+    if (e !is CancellationException) {
+        val t = RxExceptionFactory.create(e)
+        runOnMain { error(t, t is NetworkException) }
     }
 }
 

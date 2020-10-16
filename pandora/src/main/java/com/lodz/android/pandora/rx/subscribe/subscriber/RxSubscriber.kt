@@ -31,6 +31,12 @@ abstract class RxSubscriber<T> : BaseSubscriber<T>() {
     final override fun onBaseNext(any: T) {
         try {
             checkError(any)
+            if (any is ResponseStatus){
+                if (any.isTokenUnauth()){
+                    onTokenUnauth(any)
+                    return
+                }
+            }
             onRxNext(any)
         } catch (e: Exception) {
             onError(e)
@@ -50,6 +56,8 @@ abstract class RxSubscriber<T> : BaseSubscriber<T>() {
             }
         }
     }
+
+    open fun onTokenUnauth(any: T) {}
 
     open fun onRxSubscribe(s: Subscription?) {}
 

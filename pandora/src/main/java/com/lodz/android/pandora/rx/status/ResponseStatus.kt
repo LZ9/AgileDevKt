@@ -14,4 +14,7 @@ interface ResponseStatus {
 
     /** 获取状态标志 */
     fun valueStatus(): String
+
+    /** 是否token过期，默认不需要校验token */
+    fun isTokenUnauth(): Boolean = false
 }

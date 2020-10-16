@@ -11,14 +11,14 @@ import kotlinx.coroutines.*
  */
 
 /** 主线程执行 */
-fun GlobalScope.runOnMain(action: () -> Unit): Job = launch(Dispatchers.Main) { action() }
+fun CoroutineScope.runOnMain(action: () -> Unit): Job = launch(Dispatchers.Main) { action() }
 
 /** 主线程执行（ViewModel） */
 fun ViewModel.runOnMain(action: () -> Unit): Job = viewModelScope.launch(Dispatchers.Main) { action() }
 
 /** 主线程执行捕获异常 */
 @JvmOverloads
-fun GlobalScope.runOnMainCatch(action: () -> Unit, error: (e: Exception) -> Unit = {}): Job =
+fun CoroutineScope.runOnMainCatch(action: () -> Unit, error: (e: Exception) -> Unit = {}): Job =
     launch(Dispatchers.Main) {
         try {
             action()
@@ -41,10 +41,10 @@ fun ViewModel.runOnMainCatch(action: () -> Unit, error: (e: Exception) -> Unit =
     }
 
 /** 主线程延迟[timeMillis]毫秒执行 */
-fun GlobalScope.runOnMainDelay(timeMillis: Long, action: () -> Unit): Job =
+fun CoroutineScope.runOnMainDelay(timeMillis: Long, action: () -> Unit): Job =
     launch(Dispatchers.IO) {
         delay(timeMillis)
-        GlobalScope.launch(Dispatchers.Main) {
+        launch(Dispatchers.Main) {
             action()
         }
     }
@@ -53,26 +53,26 @@ fun GlobalScope.runOnMainDelay(timeMillis: Long, action: () -> Unit): Job =
 fun ViewModel.runOnMainDelay(timeMillis: Long, action: () -> Unit): Job =
     viewModelScope.launch(Dispatchers.IO) {
         delay(timeMillis)
-        GlobalScope.launch(Dispatchers.Main) {
+        launch(Dispatchers.Main) {
             action()
         }
     }
 
 /** 异步线程执行 */
-fun GlobalScope.runOnIO(actionIO: () -> Unit): Job = launch(Dispatchers.IO) { actionIO() }
+fun CoroutineScope.runOnIO(actionIO: () -> Unit): Job = launch(Dispatchers.IO) { actionIO() }
 
 /** 异步线程执行（ViewModel） */
 fun ViewModel.runOnIO(actionIO: () -> Unit): Job = viewModelScope.launch(Dispatchers.IO) { actionIO() }
 
 /** 异步线程执行捕获异常 */
 @JvmOverloads
-fun GlobalScope.runOnIOCatch(actionIO: () -> Unit, error: (e: Exception) -> Unit = {}): Job =
+fun CoroutineScope.runOnIOCatch(actionIO: () -> Unit, error: (e: Exception) -> Unit = {}): Job =
     launch(Dispatchers.IO) {
         try {
             actionIO()
         } catch (e: Exception) {
             e.printStackTrace()
-            GlobalScope.runOnMain { error(e) }
+            runOnMain { error(e) }
         }
     }
 
@@ -84,19 +84,19 @@ fun ViewModel.runOnIOCatch(actionIO: () -> Unit, error: (e: Exception) -> Unit =
             actionIO()
         } catch (e: Exception) {
             e.printStackTrace()
-            GlobalScope.runOnMain { error(e) }
+            runOnMain { error(e) }
         }
     }
 
 /** 异步线程执行挂起函数 */
-fun GlobalScope.runOnSuspendIO(actionIO: suspend () -> Unit): Job = launch(Dispatchers.IO) { actionIO() }
+fun CoroutineScope.runOnSuspendIO(actionIO: suspend () -> Unit): Job = launch(Dispatchers.IO) { actionIO() }
 
 /** 异步线程执行挂起函数（ViewModel） */
 fun ViewModel.runOnSuspendIO(actionIO: suspend () -> Unit): Job = viewModelScope.launch(Dispatchers.IO) { actionIO() }
 
 /** 异步线程执行挂起函数捕获异常 */
 @JvmOverloads
-fun GlobalScope.runOnSuspendIOCatch(
+fun CoroutineScope.runOnSuspendIOCatch(
     actionIO: suspend () -> Unit,
     error: (e: Exception) -> Unit = {}
 ): Job =
@@ -105,7 +105,7 @@ fun GlobalScope.runOnSuspendIOCatch(
             actionIO()
         } catch (e: Exception) {
             e.printStackTrace()
-            GlobalScope.runOnMain { error(e) }
+            runOnMain { error(e) }
         }
     }
 
@@ -120,7 +120,7 @@ fun ViewModel.runOnSuspendIOCatch(
             actionIO()
         } catch (e: Exception) {
             e.printStackTrace()
-            GlobalScope.runOnMain { error(e) }
+            runOnMain { error(e) }
         }
     }
 
