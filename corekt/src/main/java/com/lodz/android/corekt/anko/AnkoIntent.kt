@@ -1,5 +1,3 @@
-@file:Suppress("NOTHING_TO_INLINE", "unused")
-
 package com.lodz.android.corekt.anko
 
 import android.annotation.SuppressLint
