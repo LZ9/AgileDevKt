@@ -1,5 +1,7 @@
 package com.lodz.android.agiledevkt.config
 
+import androidx.annotation.IntDef
+
 /**
  * 常量
  * Created by zhouL on 2018/10/17.
@@ -32,5 +34,14 @@ object Constant {
     const val PRK_FLAG_URL = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1528285365045&di=92f5f3a4dbf36274e381b14a2b8c6ed5&imgtype=0&src=http%3A%2F%2Fpic.qiantucdn.com%2F01%2F29%2F39%2F45bOOOPIC74.jpg"
     /** 巴西国旗图片路径 */
     const val BRA_FLAG_URL = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1528285464640&di=bec9062ec87cfb18b4bed7fc66e9e068&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimage%2Fc0%253Dshijue1%252C0%252C0%252C294%252C40%2Fsign%3D5f6687252c9759ee5e5d6888da922963%2F3c6d55fbb2fb43163abe99522aa4462309f7d371.jpg"
+
+    @Target(AnnotationTarget.FIELD, AnnotationTarget.VALUE_PARAMETER)
+    @Retention(AnnotationRetention.SOURCE)
+    @IntDef(SHIP_TYPE_YZCB, SHIP_TYPE_WZCB)
+    annotation class ShipType
+    /** 有证船舶 */
+    const val SHIP_TYPE_YZCB = 0
+    /** 无证船舶 */
+    const val SHIP_TYPE_WZCB = 1
 
 }
