@@ -7,7 +7,7 @@ Pandora是基于Kotlin实现的敏捷开发解决方案，里面包括了APP基�
 Pandora支持Androidx和Kotlin开发插件，内部集成了包括
 [Rxjava2](https://github.com/ReactiveX/RxJava)、
 [Retrofit2](https://github.com/square/retrofit)、
-[Gson](https://github.com/google/gson)、
+[Fastjson](https://github.com/alibaba/fastjson)、
 [EventBus](https://github.com/greenrobot/EventBus)、
 [PhotoView](https://github.com/chrisbanes/PhotoView)、
 [core-kt](https://github.com/LZ9/AgileDevKt/blob/master/corekt/readme_core.md)
@@ -19,9 +19,8 @@ Pandora支持Androidx和Kotlin开发插件，内部集成了包括
         api 'io.reactivex.rxjava3:rxjava:3.0.7'
         api 'com.squareup.retrofit2:retrofit:2.9.0'
         api 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'
-		api 'com.squareup.retrofit2:converter-gson:2.9.0'
         api 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2'
-		api 'com.google.code.gson:gson:2.8.6'
+		api 'com.alibaba:fastjson:1.2.74'
         api 'com.trello.rxlifecycle4:rxlifecycle-components:4.0.0'
         api 'org.greenrobot:eventbus:3.2.0'.
     }

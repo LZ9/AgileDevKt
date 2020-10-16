@@ -2,6 +2,7 @@ package com.lodz.android.agiledevkt.utils.api
 
 import com.lodz.android.agiledevkt.config.UrlConfig
 import com.lodz.android.corekt.log.PrintLog
+import com.lodz.android.pandora.utils.converter.FastJsonConverterFactory
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -9,7 +10,6 @@ import okhttp3.ResponseBody
 import okio.Buffer
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 /**
@@ -34,7 +34,7 @@ class ApiServiceManager private constructor() {
     init {
         mRetrofit = Retrofit.Builder()
                 .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(FastJsonConverterFactory.create())
                 .baseUrl(UrlConfig.BASE_URL)
                 .client(getOkHttpClient())
                 .build()

@@ -89,7 +89,7 @@
 -keep class com.trello.** { *; }
 
 #Json
--keep class com.google.gson.** { *; }
+-keep class com.alibaba.fastjson.** { *; }
 
 #eventbus
 -keepattributes *Annotation*
