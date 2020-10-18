@@ -74,12 +74,12 @@ class ProgressDialogHelper private constructor() {
                 .setView(view)
                 .create()
         if (mMsg.isNotEmpty()) {
-            val tv = view.findViewById<TextView>(R.id.msg)
+            val tv = view.findViewById<TextView>(R.id.pdr_msg)
             tv.visibility = View.VISIBLE
             tv.text = mMsg
         }
         if (mIndeterminateDrawable != 0) {
-            val pb = view.findViewById<ProgressBar>(R.id.progress_bar)
+            val pb = view.findViewById<ProgressBar>(R.id.pdr_progress_bar)
             pb.indeterminateDrawable = context.getDrawableCompat(mIndeterminateDrawable)
         }
         progressDialog.setCanceledOnTouchOutside(mCanceledOnTouchOutside)

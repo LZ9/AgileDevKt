@@ -34,25 +34,25 @@ class SearchTitleBarLayout : FrameLayout {
     private var mPdrConfig = TitleBarLayoutConfig()
 
     /** 返回按钮布局 */
-    private val mPdrBackLayout by bindView<LinearLayout>(R.id.back_layout)
+    private val mPdrBackLayout by bindView<LinearLayout>(R.id.pdr_back_layout)
     /** 返回按钮 */
-    private val mPdrBackBtn by bindView<TextView>(R.id.back_btn)
+    private val mPdrBackBtn by bindView<TextView>(R.id.pdr_back_btn)
     /** 输入框布局 */
-    private val mPdrInputLayout by bindView<ViewGroup>(R.id.input_layout)
+    private val mPdrInputLayout by bindView<ViewGroup>(R.id.pdr_input_layout)
     /** 输入框 */
-    private val mPdrInputEdit by bindView<EditText>(R.id.input_edit)
+    private val mPdrInputEdit by bindView<EditText>(R.id.pdr_input_edit)
     /** 扩展区清空按钮布局 */
-    private val mPdrClearBtn by bindView<ImageView>(R.id.clear_btn)
+    private val mPdrClearBtn by bindView<ImageView>(R.id.pdr_clear_btn)
     /** 竖线 */
-    private val mPdrVerticalLineView by bindView<View>(R.id.vertical_line)
+    private val mPdrVerticalLineView by bindView<View>(R.id.pdr_vertical_line)
     /** 搜索按钮 */
-    private val mPdrSearchBtn by bindView<ImageView>(R.id.search_btn)
+    private val mPdrSearchBtn by bindView<ImageView>(R.id.pdr_search_btn)
     /** 分割线 */
-    private val mPdrDivideLineView by bindView<View>(R.id.divide_line)
+    private val mPdrDivideLineView by bindView<View>(R.id.pdr_divide_line)
     /** 搜索文字按钮 */
-    private val mPdrSearchTxBtn by bindView<TextView>(R.id.search_tx_btn)
+    private val mPdrSearchTxBtn by bindView<TextView>(R.id.pdr_search_tx_btn)
     /** 搜索联想列表 */
-    private val mPdrRecyclerView by bindView<RecyclerView>(R.id.recycler_view)
+    private val mPdrRecyclerView by bindView<RecyclerView>(R.id.pdr_search_recomd_rv)
     /** 搜索联想列表适配器 */
     private lateinit var mPdrAdapter: RecomdListAdapter
 

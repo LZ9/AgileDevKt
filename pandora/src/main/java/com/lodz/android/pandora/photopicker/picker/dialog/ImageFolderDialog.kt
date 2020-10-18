@@ -19,7 +19,7 @@ import com.lodz.android.pandora.widget.dialog.BaseTopDialog
 class ImageFolderDialog(context: Context) : BaseTopDialog(context) {
 
     /** 列表 */
-    private val mPdrRecyclerView by bindView<RecyclerView>(R.id.pdr_recycler_view)
+    private val mPdrRecyclerView by bindView<RecyclerView>(R.id.pdr_img_folder_rv)
     /** 适配器 */
     private lateinit var mPdrAdapter: ImageFolderAdapter
 

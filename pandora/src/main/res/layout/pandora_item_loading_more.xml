@@ -8,13 +8,13 @@
     android:orientation="horizontal">
 
     <ProgressBar
-        android:id="@+id/loading_pb"
+        android:id="@+id/pdr_loading_pb"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:padding="3dp" />
 
     <TextView
-        android:id="@+id/loading_more_tv"
+        android:id="@+id/pdr_loading_more_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"

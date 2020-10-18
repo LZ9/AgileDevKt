@@ -4,7 +4,7 @@
     android:layout_height="wrap_content">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/pdr_recycler_view"
+        android:id="@+id/pdr_nine_grid_rv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

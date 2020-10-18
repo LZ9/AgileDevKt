@@ -14,7 +14,7 @@
         android:src="@drawable/pandora_ic_load_more_fail" />
 
     <TextView
-        android:id="@+id/load_fail_tv"
+        android:id="@+id/pdr_load_fail_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp" />

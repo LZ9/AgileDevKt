@@ -38,25 +38,25 @@ class RecomdListAdapter(context: Context) : BaseRecyclerViewAdapter<RecomdData>(
         }
         if (bean.getItemHigthPx() != 0){
             // 内容布局
-            setItemViewHeight(holder.withView<ViewGroup>(R.id.content_layout), bean.getItemHigthPx())
+            setItemViewHeight(holder.withView<ViewGroup>(R.id.pdr_content_layout), bean.getItemHigthPx())
         }
 
         // 图标
-        configIconImg(holder.withView(R.id.icon_img), bean)
+        configIconImg(holder.withView(R.id.pdr_icon_img), bean)
         // 标题文字
-        configTitle(holder.withView(R.id.title_tv), bean)
+        configTitle(holder.withView(R.id.pdr_title_tv), bean)
         // 标题标签
-        configTitleTag(holder.withView(R.id.title_tag_tv), bean)
+        configTitleTag(holder.withView(R.id.pdr_title_tag_tv), bean)
         // 描述文字
-        configDesc(holder.withView(R.id.desc_tv), bean)
+        configDesc(holder.withView(R.id.pdr_desc_tv), bean)
         // 文字一标签
-        configFirstTag(holder.withView(R.id.first_tag_tv), bean)
+        configFirstTag(holder.withView(R.id.pdr_first_tag_tv), bean)
         // 文字二标签
-        configSecondTag(holder.withView(R.id.second_tag_tv), bean)
+        configSecondTag(holder.withView(R.id.pdr_second_tag_tv), bean)
         // 提示文字
-        configTips(holder.withView(R.id.tips_tv), bean)
+        configTips(holder.withView(R.id.pdr_tips_tv), bean)
         // 分割线
-        configDivideLine(holder.withView(R.id.divide_line_view), bean)
+        configDivideLine(holder.withView(R.id.pdr_divide_line_view), bean)
     }
 
     /** 配置图标 */

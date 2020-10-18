@@ -43,7 +43,7 @@ internal class PicturePreviewActivity<V : View, T : Any> : AbsActivity() {
     /** 背景控件 */
     private val mPdrRootView by bindView<ViewGroup>(R.id.pdr_root_view)
     /** 翻页控件 */
-    private val mPdrRecyclerView by bindView<RecyclerView>(R.id.pdr_recycler_view)
+    private val mPdrRecyclerView by bindView<RecyclerView>(R.id.pdr_preview_rv)
     /** 页码提示 */
     private val mPdrPagerTv by bindView<TextView>(R.id.pdr_pager_tv)
 

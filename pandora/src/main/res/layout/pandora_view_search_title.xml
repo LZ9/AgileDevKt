@@ -12,14 +12,14 @@
         android:orientation="horizontal">
 
         <LinearLayout
-            android:id="@+id/back_layout"
+            android:id="@+id/pdr_back_layout"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/back_btn"
+                android:id="@+id/pdr_back_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:drawableStart="@drawable/pandora_selector_btn_back"
@@ -34,7 +34,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/input_layout"
+            android:id="@+id/pdr_input_layout"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginStart="8dp"
@@ -46,7 +46,7 @@
             android:gravity="center_vertical">
 
             <EditText
-                android:id="@+id/input_edit"
+                android:id="@+id/pdr_input_edit"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginStart="8dp"
@@ -61,7 +61,7 @@
                 tools:targetApi="o" />
 
             <ImageView
-                android:id="@+id/clear_btn"
+                android:id="@+id/pdr_clear_btn"
                 android:layout_width="32dp"
                 android:layout_height="match_parent"
                 android:contentDescription="@string/pandora_app_img_name"
@@ -72,7 +72,7 @@
                 android:visibility="gone" />
 
             <View
-                android:id="@+id/vertical_line"
+                android:id="@+id/pdr_vertical_line"
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:layout_marginTop="8dp"
@@ -80,7 +80,7 @@
                 android:background="#d9d9d9" />
 
             <ImageView
-                android:id="@+id/search_btn"
+                android:id="@+id/pdr_search_btn"
                 android:layout_width="32dp"
                 android:layout_height="match_parent"
                 android:contentDescription="@string/pandora_app_img_name"
@@ -92,7 +92,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/search_tx_btn"
+            android:id="@+id/pdr_search_tx_btn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginEnd="8dp"
@@ -103,13 +103,13 @@
     </LinearLayout>
 
     <View
-        android:id="@+id/divide_line"
+        android:id="@+id/pdr_divide_line"
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="#d9d9d9" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
+        android:id="@+id/pdr_search_recomd_rv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone" />

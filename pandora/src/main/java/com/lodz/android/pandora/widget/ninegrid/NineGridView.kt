@@ -36,7 +36,7 @@ open class NineGridView : FrameLayout {
     private val DEFAULT_SPAN_COUNT = 3
 
     /** 列表 */
-    private val mPdrRecyclerView by bindView<RecyclerView>(R.id.pdr_recycler_view)
+    private val mPdrRecyclerView by bindView<RecyclerView>(R.id.pdr_nine_grid_rv)
     /** 适配器 */
     private lateinit var mPdrAdapter: NineGridAdapter
     /** 网格布局管理器 */

@@ -6,7 +6,7 @@
     android:padding="15dp">
 
     <ProgressBar
-        android:id="@+id/progress_bar"
+        android:id="@+id/pdr_progress_bar"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_centerHorizontal="true"
@@ -14,10 +14,10 @@
         android:indeterminateDrawable="@drawable/pandora_anims_progress" />
 
     <TextView
-        android:id="@+id/msg"
+        android:id="@+id/pdr_msg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/progress_bar"
+        android:layout_below="@+id/pdr_progress_bar"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
         android:ellipsize="end"

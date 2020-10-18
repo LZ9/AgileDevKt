@@ -68,7 +68,7 @@ abstract class SimpleLoadMoreRVAdapter<T>(context: Context) : BaseLoadMoreRVAdap
 
         holder.itemView.setBackgroundColor(context.getColorCompat(mPdrFinishBackgroundColor))
 
-        val textView = holder.itemView.findViewById<TextView>(R.id.load_finish_tv)
+        val textView = holder.itemView.findViewById<TextView>(R.id.pdr_load_finish_tv)
         textView.text = mPdrFinishText
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, mPdrFinishTextSizeSp.toFloat())
         textView.setTextColor(context.getColorCompat(mPdrFinishTextColor))
@@ -82,7 +82,7 @@ abstract class SimpleLoadMoreRVAdapter<T>(context: Context) : BaseLoadMoreRVAdap
 
         holder.itemView.setBackgroundColor(context.getColorCompat(mPdrLoadFailBackgroundColor))
 
-        val textView = holder.itemView.findViewById<TextView>(R.id.load_fail_tv)
+        val textView = holder.itemView.findViewById<TextView>(R.id.pdr_load_fail_tv)
         textView.text = mPdrLoadFailText
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, mPdrLoadFailTextSizeSp.toFloat())
         textView.setTextColor(context.getColorCompat(mPdrLoadFailTextColor))
@@ -96,12 +96,12 @@ abstract class SimpleLoadMoreRVAdapter<T>(context: Context) : BaseLoadMoreRVAdap
 
         holder.itemView.setBackgroundColor(context.getColorCompat(mPdrLoadingMoreBackgroundColor))
 
-        val textView = holder.itemView.findViewById<TextView>(R.id.loading_more_tv)
+        val textView = holder.itemView.findViewById<TextView>(R.id.pdr_loading_more_tv)
         textView.text = mPdrLoadingMoreText
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, mPdrLoadingMoreTextSizeSp.toFloat())
         textView.setTextColor(context.getColorCompat(mPdrLoadingMoreTextColor))
 
-        val progressBar = holder.itemView.findViewById<ProgressBar>(R.id.loading_pb)
+        val progressBar = holder.itemView.findViewById<ProgressBar>(R.id.pdr_loading_pb)
         progressBar.isIndeterminate = true
         if (mPdrIndeterminateDrawable != 0) {
             progressBar.indeterminateDrawable = context.getDrawableCompat(mPdrIndeterminateDrawable)

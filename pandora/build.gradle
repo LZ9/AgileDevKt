@@ -9,8 +9,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 19
-        versionName "1.4.4"// 成功上传
+        versionCode 20
+        versionName "1.4.5"// 未上传
     }
 
     kotlinOptions {

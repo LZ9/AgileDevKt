@@ -63,7 +63,7 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
     /** 确定按钮 */
     private val mPdrConfirmBtn by bindView<TextView>(R.id.pdr_confirm_btn)
     /** 列表 */
-    private val mPdrRecyclerView by bindView<RecyclerView>(R.id.pdr_recycler_view)
+    private val mPdrRecyclerView by bindView<RecyclerView>(R.id.pdr_picker_photot_rv)
     /** 文件夹按钮 */
     private val mPdrFolderBtn by bindView<ViewGroup>(R.id.pdr_folder_btn)
     /** 文件夹名称 */

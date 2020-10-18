@@ -8,7 +8,7 @@
     android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/content_layout"
+        android:id="@+id/pdr_content_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="10dp"
@@ -17,7 +17,7 @@
         android:paddingBottom="8dp">
 
         <ImageView
-            android:id="@+id/icon_img"
+            android:id="@+id/pdr_icon_img"
             android:layout_width="18dp"
             android:layout_height="18dp"
             android:layout_marginTop="2dp"
@@ -27,41 +27,41 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/title_tv"
+            android:id="@+id/pdr_title_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:textColor="#666666"
             android:textSize="16sp"
             app:layout_constrainedWidth="true"
-            app:layout_constraintEnd_toStartOf="@id/title_tag_tv"
+            app:layout_constraintEnd_toStartOf="@id/pdr_title_tag_tv"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toEndOf="@id/barrier"
+            app:layout_constraintStart_toEndOf="@id/pdr_barrier"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="多多" />
 
         <TextView
-            android:id="@+id/desc_tv"
+            android:id="@+id/pdr_desc_tv"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
             android:textColor="#999999"
             android:textSize="14sp"
-            app:layout_constraintStart_toEndOf="@id/barrier"
-            app:layout_constraintTop_toBottomOf="@id/title_tv"
+            app:layout_constraintStart_toEndOf="@id/pdr_barrier"
+            app:layout_constraintTop_toBottomOf="@id/pdr_title_tv"
             tools:text="大大大大萨大苏苏萨大大萨大苏苏萨大大萨大苏苏萨大大萨大苏苏萨大大萨大苏苏萨大大萨大苏苏萨大大萨大苏苏萨萨大苏苏萨" />
 
         <androidx.constraintlayout.widget.Barrier
-            android:id="@+id/barrier"
+            android:id="@+id/pdr_barrier"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:barrierDirection="end"
-            app:constraint_referenced_ids="icon_img" />
+            app:constraint_referenced_ids="pdr_icon_img" />
 
         <TextView
-            android:id="@+id/title_tag_tv"
+            android:id="@+id/pdr_title_tag_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
@@ -76,13 +76,13 @@
             android:textSize="13sp"
             android:visibility="visible"
             app:layout_constrainedWidth="true"
-            app:layout_constraintBaseline_toBaselineOf="@+id/title_tv"
-            app:layout_constraintEnd_toStartOf="@id/first_tag_tv"
-            app:layout_constraintStart_toEndOf="@id/title_tv"
+            app:layout_constraintBaseline_toBaselineOf="@+id/pdr_title_tv"
+            app:layout_constraintEnd_toStartOf="@id/pdr_first_tag_tv"
+            app:layout_constraintStart_toEndOf="@id/pdr_title_tv"
             tools:text="商品" />
 
         <TextView
-            android:id="@+id/first_tag_tv"
+            android:id="@+id/pdr_first_tag_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
@@ -95,12 +95,12 @@
             android:textColor="#666666"
             android:textSize="14sp"
             android:visibility="visible"
-            app:layout_constraintBaseline_toBaselineOf="@+id/title_tv"
-            app:layout_constraintEnd_toStartOf="@id/second_tag_tv"
+            app:layout_constraintBaseline_toBaselineOf="@+id/pdr_title_tv"
+            app:layout_constraintEnd_toStartOf="@id/pdr_second_tag_tv"
             tools:text="Java开发" />
 
         <TextView
-            android:id="@+id/second_tag_tv"
+            android:id="@+id/pdr_second_tag_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
@@ -113,12 +113,12 @@
             android:textColor="#666666"
             android:textSize="14sp"
             android:visibility="visible"
-            app:layout_constraintBaseline_toBaselineOf="@+id/title_tv"
-            app:layout_constraintEnd_toStartOf="@+id/tips_tv"
+            app:layout_constraintBaseline_toBaselineOf="@+id/pdr_title_tv"
+            app:layout_constraintEnd_toStartOf="@+id/pdr_tips_tv"
             tools:text="C++开发" />
 
         <TextView
-            android:id="@+id/tips_tv"
+            android:id="@+id/pdr_tips_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -129,14 +129,14 @@
             android:textColor="#999999"
             android:textSize="14sp"
             android:visibility="visible"
-            app:layout_constraintBaseline_toBaselineOf="@+id/title_tv"
+            app:layout_constraintBaseline_toBaselineOf="@+id/pdr_title_tv"
             app:layout_constraintEnd_toEndOf="parent"
             tools:text="122m" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <View
-        android:id="@+id/divide_line_view"
+        android:id="@+id/pdr_divide_line_view"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#F4F4F4" />

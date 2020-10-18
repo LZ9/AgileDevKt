@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/pdr_recycler_view"
+        android:id="@+id/pdr_preview_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
