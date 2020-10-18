@@ -24,13 +24,13 @@ import kotlinx.coroutines.*
 
 /** 网络接口使用的协程挂起方法，主要对接口进行判断处理 */
 fun <T> GlobalScope.runOnSuspendIOCatchRes(
-    response: suspend () -> T,
+    request: suspend () -> T,
     actionIO: (t: T) -> Unit,
     actionTokenUnauth: (t: T) -> Unit = {},
     error: (e: Exception, isNetwork: Boolean) -> Unit = { e, isNetwork -> }
 ): Job = launch(Dispatchers.IO) {
     try {
-        val res = response.invoke()
+        val res = request.invoke()
         resHandle(actionIO, actionTokenUnauth, res)
     } catch (e: Exception) {
         errorHandle(e, error)
@@ -39,13 +39,13 @@ fun <T> GlobalScope.runOnSuspendIOCatchRes(
 
 /** 网络接口使用的协程挂起方法，主要对接口进行判断处理（ViewModel） */
 fun <T> ViewModel.runOnSuspendIOCatchRes(
-    response: suspend () -> T,
+    request: suspend () -> T,
     actionIO: (t: T) -> Unit,
     actionTokenUnauth: (t: T) -> Unit = {},
     error: (e: Exception, isNetwork: Boolean) -> Unit = { e, isNetwork -> }
 ): Job = viewModelScope.launch(Dispatchers.IO) {
     try {
-        val res = response.invoke()
+        val res = request.invoke()
         resHandle(actionIO, actionTokenUnauth, res)
     } catch (e: Exception) {
         errorHandle(e, error)
@@ -54,13 +54,13 @@ fun <T> ViewModel.runOnSuspendIOCatchRes(
 
 /** 网络接口使用的协程方法，主要对接口进行判断处理 */
 fun <T> GlobalScope.runOnIOCatchRes(
-    response: Deferred<T>,
+    request: Deferred<T>,
     actionIO: (t: T) -> Unit,
     actionTokenUnauth: (t: T) -> Unit = {},
     error: (e: Exception, isNetwork: Boolean) -> Unit = { e, isNetwork -> }
 ): Job = launch(Dispatchers.IO) {
     try {
-        val res = response.await()
+        val res = request.await()
         resHandle(actionIO, actionTokenUnauth, res)
     } catch (e: Exception) {
         errorHandle(e, error)
@@ -69,13 +69,13 @@ fun <T> GlobalScope.runOnIOCatchRes(
 
 /** 网络接口使用的协程方法，主要对接口进行判断处理（ViewModel） */
 fun <T> ViewModel.runOnIOCatchRes(
-    response: Deferred<T>,
+    request: Deferred<T>,
     actionIO: (t: T) -> Unit,
     actionTokenUnauth: (t: T) -> Unit = {},
     error: (e: Exception, isNetwork: Boolean) -> Unit = { e, isNetwork -> }
 ): Job = viewModelScope.launch(Dispatchers.IO) {
     try {
-        val res = response.await()
+        val res = request.await()
         resHandle(actionIO, actionTokenUnauth, res)
     } catch (e: Exception) {
         errorHandle(e, error)
@@ -85,7 +85,7 @@ fun <T> ViewModel.runOnIOCatchRes(
 /** 带加载框的协程挂起方法 */
 fun <T> GlobalScope.runOnSuspendIOCatchPg(
     progressDialog: AlertDialog,
-    response: suspend () -> T,
+    request: suspend () -> T,
     actionIO: (t: T) -> Unit,
     actionTokenUnauth: (t: T) -> Unit = {},
     error: (e: Exception, isNetwork: Boolean) -> Unit = { e, isNetwork -> },
@@ -95,7 +95,7 @@ fun <T> GlobalScope.runOnSuspendIOCatchPg(
 
     val job = launch(Dispatchers.IO) {
         try {
-            val res = response.invoke()
+            val res = request.invoke()
             resHandle(actionIO, actionTokenUnauth, res)
         } catch (e: Exception) {
             errorHandle(e, error)
@@ -116,7 +116,7 @@ fun <T> GlobalScope.runOnSuspendIOCatchPg(
 /** 带加载框的协程挂起方法（ViewModel） */
 fun <T> ViewModel.runOnSuspendIOCatchPg(
     progressDialog: AlertDialog,
-    response: suspend () -> T,
+    request: suspend () -> T,
     actionIO: (t: T) -> Unit,
     actionTokenUnauth: (t: T) -> Unit = {},
     error: (e: Exception, isNetwork: Boolean) -> Unit = { e, isNetwork -> },
@@ -126,7 +126,7 @@ fun <T> ViewModel.runOnSuspendIOCatchPg(
 
     val job = viewModelScope.launch(Dispatchers.IO) {
         try {
-            val res = response.invoke()
+            val res = request.invoke()
             resHandle(actionIO, actionTokenUnauth, res)
         } catch (e: Exception) {
             errorHandle(e, error)
@@ -147,7 +147,7 @@ fun <T> ViewModel.runOnSuspendIOCatchPg(
 /** 带加载框的协程方法 */
 fun <T> GlobalScope.runOnIOCatchPg(
     progressDialog: AlertDialog,
-    response: Deferred<T>,
+    request: Deferred<T>,
     actionIO: (t: T) -> Unit,
     actionTokenUnauth: (t: T) -> Unit = {},
     error: (e: Exception, isNetwork: Boolean) -> Unit = { e, isNetwork -> },
@@ -157,7 +157,7 @@ fun <T> GlobalScope.runOnIOCatchPg(
 
     val job = launch(Dispatchers.IO) {
         try {
-            val res = response.await()
+            val res = request.await()
             resHandle(actionIO, actionTokenUnauth, res)
         } catch (e: Exception) {
             errorHandle(e, error)
@@ -178,7 +178,7 @@ fun <T> GlobalScope.runOnIOCatchPg(
 /** 带加载框的协程方法（ViewModel） */
 fun <T> ViewModel.runOnIOCatchPg(
     progressDialog: AlertDialog,
-    response: Deferred<T>,
+    request: Deferred<T>,
     actionIO: (t: T) -> Unit,
     actionTokenUnauth: (t: T) -> Unit = {},
     error: (e: Exception, isNetwork: Boolean) -> Unit = { e, isNetwork -> },
@@ -188,7 +188,7 @@ fun <T> ViewModel.runOnIOCatchPg(
 
     val job = viewModelScope.launch(Dispatchers.IO) {
         try {
-            val res = response.await()
+            val res = request.await()
             resHandle(actionIO, actionTokenUnauth, res)
         } catch (e: Exception) {
             errorHandle(e, error)
@@ -212,7 +212,7 @@ fun <T> GlobalScope.runOnSuspendIOCatchPg(
     msg: String = "正在加载，请稍候",
     cancelable: Boolean = true,
     canceledOnTouchOutside: Boolean = false,
-    response: suspend () -> T,
+    request: suspend () -> T,
     actionIO: (t: T) -> Unit,
     actionTokenUnauth: (t: T) -> Unit = {},
     error: (e: Exception, isNetwork: Boolean) -> Unit = { e, isNetwork -> },
@@ -228,7 +228,7 @@ fun <T> GlobalScope.runOnSuspendIOCatchPg(
 
     val job = launch(Dispatchers.IO) {
         try {
-            val res = response.invoke()
+            val res = request.invoke()
             resHandle(actionIO, actionTokenUnauth, res)
         } catch (e: Exception) {
             errorHandle(e, error)
@@ -252,7 +252,7 @@ fun <T> ViewModel.runOnSuspendIOCatchPg(
     msg: String = "正在加载，请稍候",
     cancelable: Boolean = true,
     canceledOnTouchOutside: Boolean = false,
-    response: suspend () -> T,
+    request: suspend () -> T,
     actionIO: (t: T) -> Unit,
     actionTokenUnauth: (t: T) -> Unit = {},
     error: (e: Exception, isNetwork: Boolean) -> Unit = { e, isNetwork -> },
@@ -268,7 +268,7 @@ fun <T> ViewModel.runOnSuspendIOCatchPg(
 
     val job = viewModelScope.launch(Dispatchers.IO) {
         try {
-            val res = response.invoke()
+            val res = request.invoke()
             resHandle(actionIO, actionTokenUnauth, res)
         } catch (e: Exception) {
             errorHandle(e, error)
@@ -292,7 +292,7 @@ fun <T> GlobalScope.runOnIOCatchPg(
     msg: String = "正在加载，请稍候",
     cancelable: Boolean = true,
     canceledOnTouchOutside: Boolean = false,
-    response: Deferred<T>,
+    request: Deferred<T>,
     actionIO: (t: T) -> Unit,
     actionTokenUnauth: (t: T) -> Unit = {},
     error: (e: Exception, isNetwork: Boolean) -> Unit = { e, isNetwork -> },
@@ -308,7 +308,7 @@ fun <T> GlobalScope.runOnIOCatchPg(
 
     val job = launch(Dispatchers.IO) {
         try {
-            val res = response.await()
+            val res = request.await()
             resHandle(actionIO, actionTokenUnauth, res)
         } catch (e: Exception) {
             errorHandle(e, error)
@@ -332,7 +332,7 @@ fun <T> ViewModel.runOnIOCatchPg(
     msg: String = "正在加载，请稍候",
     cancelable: Boolean = true,
     canceledOnTouchOutside: Boolean = false,
-    response: Deferred<T>,
+    request: Deferred<T>,
     actionIO: (t: T) -> Unit,
     actionTokenUnauth: (t: T) -> Unit = {},
     error: (e: Exception, isNetwork: Boolean) -> Unit = { e, isNetwork -> },
@@ -348,7 +348,7 @@ fun <T> ViewModel.runOnIOCatchPg(
 
     val job = viewModelScope.launch(Dispatchers.IO) {
         try {
-            val res = response.await()
+            val res = request.await()
             resHandle(actionIO, actionTokenUnauth, res)
         } catch (e: Exception) {
             errorHandle(e, error)

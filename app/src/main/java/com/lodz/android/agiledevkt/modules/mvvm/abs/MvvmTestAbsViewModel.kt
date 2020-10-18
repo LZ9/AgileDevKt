@@ -25,7 +25,7 @@ class MvvmTestAbsViewModel : AbsViewModel() {
             context,
             context.getString(R.string.mvvm_demo_loading),
             cancelable = true,
-            response = { ApiModuleSuspend.requestResult(isSuccess) },
+            request = { ApiModuleSuspend.requestResult(isSuccess) },
             actionIO = {
                 mResultText.value = it
                 toastShort(it)
