@@ -43,6 +43,8 @@ abstract class BaseSandwichActivity : AbsActivity() {
     private val mPdrSwipeRefreshLayout by bindView<SwipeRefreshLayout>(R.id.pdr_swipe_refresh_layout)
     /** 底部布局 */
     private val mPdrBottomLayout by bindView<FrameLayout>(R.id.pdr_bottom_layout)
+    /** 根目录布局 */
+    private val mPdrRootLayout by bindView<ViewGroup>(R.id.pdr_base_root_layout)
 
     final override fun getAbsLayoutId(): Int = R.layout.pandora_activity_base_sandwich
 
@@ -218,9 +220,11 @@ abstract class BaseSandwichActivity : AbsActivity() {
     }
 
     /** 获取顶部布局 */
-    protected fun getTopView(): View = mPdrTopLayout
+    protected fun getTopView(): ViewGroup = mPdrTopLayout
 
     /** 获取底部布局 */
-    protected fun getBottomView(): View = mPdrBottomLayout
+    protected fun getBottomView(): ViewGroup = mPdrBottomLayout
 
+    /** 获取根目录布局 */
+    protected fun getRootView(): ViewGroup = mPdrRootLayout
 }
