@@ -98,5 +98,5 @@ fun Fragment.getStatusBarHeight(): Int = requireContext().getStatusBarHeight()
 /** 屏幕是否亮屏 */
 fun Context.isScreenOn(): Boolean {
     val pm: PowerManager = getSystemService(Context.POWER_SERVICE) as PowerManager? ?: return false
-    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) pm.isInteractive else pm.isScreenOn
+    return pm.isInteractive
 }

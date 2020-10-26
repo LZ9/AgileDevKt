@@ -91,9 +91,6 @@ object BitmapUtils {
             BitmapFactory.decodeFile(path, opts)//计算出图片的宽高
             opts.inSampleSize = setInSampleSize(opts, widthPx, heightPx)
             opts.inPreferredConfig = Bitmap.Config.ARGB_8888
-            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
-                opts.inInputShareable = true
-            }
             opts.inJustDecodeBounds = false
             FileInputStream(path).use { fis: FileInputStream ->
                 return BitmapFactory.decodeStream(fis, null, opts)
@@ -113,9 +110,6 @@ object BitmapUtils {
             opts.inJustDecodeBounds = true
             opts.inSampleSize = setInSampleSize(opts, widthPx, heightPx)
             opts.inPreferredConfig = Bitmap.Config.ARGB_8888
-            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
-                opts.inInputShareable = true
-            }
             opts.inJustDecodeBounds = false
             FileInputStream(fd.fileDescriptor).use { fs ->
                 return BitmapFactory.decodeStream(fs, null, opts)
