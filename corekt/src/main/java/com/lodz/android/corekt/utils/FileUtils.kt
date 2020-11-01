@@ -1,7 +1,10 @@
 package com.lodz.android.corekt.utils
 
+import android.content.Context
 import android.graphics.Bitmap
+import android.net.Uri
 import androidx.annotation.IntRange
+import com.lodz.android.corekt.anko.append
 import java.io.*
 import java.nio.channels.FileChannel
 import java.text.DecimalFormat
@@ -361,6 +364,46 @@ object FileUtils {
         if (!bitmap.isRecycled) {
             bitmap.recycle()
         }
+    }
+
+    /** 用上下文[context]，通过[uri]将文件复制到指定的目录[toPath]（一般是自己的沙盒目录），并指定文件名[fileName]（需要后缀指定文件类型） */
+    @JvmStatic
+    fun copyFileFromUri(context: Context, uri: Uri, toPath: String, fileName: String): Boolean {
+        if (uri == Uri.EMPTY || toPath.isEmpty() || fileName.isEmpty()) {
+            return false
+        }
+        val newToPath = if (toPath.endsWith(File.separator)) toPath else toPath.append(File.separator)
+        val toDirectoryFile = FileUtils.create(newToPath) ?: return false
+        if (!toDirectoryFile.exists()) {
+            toDirectoryFile.mkdirs()
+        }
+        if (!toDirectoryFile.isDirectory) {
+            return false
+        }
+        val toFile = File(newToPath.append(fileName))
+        if (toFile.exists()) {
+            toFile.delete()
+        }
+        if (!toFile.createNewFile()) {
+            return false
+        }
+        // FileInputStream指要读取的数据
+        // FileOutputStream指要写入的数据
+        context.contentResolver.openFileDescriptor(uri, "r")?.use { fd ->
+            FileInputStream(fd.fileDescriptor).use { fis ->
+                FileOutputStream(toFile).use { fos ->
+                    fis.channel.use { inChannel ->
+                        fos.channel.use { outChannel ->
+                            if (inChannel != null && outChannel != null) {
+                                inChannel.transferTo(0, inChannel.size(), outChannel)
+                                return true
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return false
     }
 
     ///**往FileDescriptor中写入数据
