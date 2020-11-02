@@ -10,7 +10,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 21
-        versionName "1.2.6"// 未上传
+        versionName "1.2.6"// 成功上传
     }
 
     kotlinOptions {
@@ -52,7 +52,7 @@ dependencies {
 //    userOrg = 'lz9'
 //    groupId = 'com.lodz'
 //    artifactId = 'core-kt'
-//    publishVersion = '1.2.5'
+//    publishVersion = '1.2.6'
 //    desc = 'Hi, this is a simple tools lib for android project, i want to upload and use it~'
 //    website = 'https://github.com/LZ9/AgileDevKt'
 //}
