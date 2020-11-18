@@ -8,6 +8,7 @@
     <color name="orange">#ffa500</color>
     <color name="green">#008000</color>
 
+    <color name="color_01000000">#01000000</color>
     <color name="color_11000000">#11000000</color>
     <color name="color_55000000">#55000000</color>
     <color name="color_60000000">#60000000</color>
@@ -18,6 +19,7 @@
     <color name="color_60ea413c">#60ea413c</color>
     <color name="color_d0ea413c">#d0ea413c</color>
     <color name="color_8100a0e9">#8100a0e9</color>
+    <color name="color_aa00796b">#aa00796b</color>
 
 
     <color name="color_ff00ff">#ff00ff</color>

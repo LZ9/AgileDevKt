@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_splash"
+    android:orientation="vertical">
+
+    <com.lodz.android.pandora.widget.custom.HoleLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:circleRadius="50dp"
+        app:circleX="120dp"
+        app:circleY="100dp"
+        app:holeType="circle"
+        app:maskColor="@color/color_d0ff4081" />
+
+    <com.lodz.android.pandora.widget.custom.HoleLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:holeType="rectangle"
+        app:maskColor="@color/color_aa00796b"
+        app:rectangleLong="150dp"
+        app:rectangleWidth="100dp"
+        app:rectangleX="100dp"
+        app:rectangleY="80dp" />
+
+    <com.lodz.android.pandora.widget.custom.HoleLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:circleRadius="150dp"
+        app:circleX="200dp"
+        app:circleY="350dp"
+        app:holeType="firstChild"
+        app:maskColor="@color/color_a0191919"
+        app:rectangleLong="200dp"
+        app:rectangleWidth="200dp"
+        app:rectangleX="100dp"
+        app:rectangleY="200dp">
+
+        <com.lodz.android.pandora.widget.custom.SquareScanView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+            app:frameColor="@color/color_ea8380"
+            app:frameLong="40dp"
+            app:frameStrokeWidth="10dp"
+            app:scanDelayMilliseconds="15"
+            app:scanLineColor="@color/color_ffa630"
+            app:scanLineStrokeWidth="10dp" />
+
+    </com.lodz.android.pandora.widget.custom.HoleLayout>
+
+
+</LinearLayout>

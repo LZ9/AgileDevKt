@@ -35,6 +35,7 @@ import com.lodz.android.agiledevkt.modules.drawer.DrawerTestActivity
 import com.lodz.android.agiledevkt.modules.fglifecycle.FragmentLifecycleActivity
 import com.lodz.android.agiledevkt.modules.file.FileTestActivity
 import com.lodz.android.agiledevkt.modules.format.NumFormatTestActivity
+import com.lodz.android.agiledevkt.modules.hole.HoleTestActivity
 import com.lodz.android.agiledevkt.modules.idcard.IdcardTestActivity
 import com.lodz.android.agiledevkt.modules.image.GlideActivity
 import com.lodz.android.agiledevkt.modules.info.InfoTestActivity
@@ -154,7 +155,8 @@ class MainActivity : BaseActivity() {
         MainBean("MVVM模式测试类", "M", MvvmDemoActivity::class.java),
         MainBean("ViewPager2测试类", "V", ViewPagerActivity::class.java),
         MainBean("Fragment生命周期测试", "F", FragmentLifecycleActivity::class.java),
-        MainBean("下载测试", "X", DownloadMarketActivity::class.java)
+        MainBean("下载测试", "X", DownloadMarketActivity::class.java),
+        MainBean("子控件透明布局测试类", "Z", HoleTestActivity::class.java)
     )
 
     /** 列表 */

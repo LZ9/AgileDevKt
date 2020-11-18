@@ -332,4 +332,33 @@
         </attr>
     </declare-styleable>
 
+    <!--将布局里的子控件透明显示-->
+    <declare-styleable name="HoleLayout">
+        <attr name="maskColor" format="color" />
+        <attr name="holeType" format="integer">
+            <enum name="firstChild" value="0" />
+            <enum name="circle" value="1" />
+            <enum name="rectangle" value="2" />
+        </attr>
+        <attr name="circleX" format="dimension" />
+        <attr name="circleY" format="dimension" />
+        <attr name="circleRadius" format="dimension" />
+        <attr name="rectangleX" format="dimension" />
+        <attr name="rectangleY" format="dimension" />
+        <attr name="rectangleWidth" format="dimension" />
+        <attr name="rectangleLong" format="dimension" />
+    </declare-styleable>
+
+
+    <!--方形扫描控件-->
+    <declare-styleable name="SquareScanView">
+        <attr name="frameColor" format="color" />
+        <attr name="frameStrokeWidth" format="dimension" />
+        <attr name="frameLong" format="dimension" />
+        <attr name="scanLineColor" format="color" />
+        <attr name="scanLineStrokeWidth" format="dimension" />
+        <attr name="scanDelayMilliseconds" format="integer" />
+    </declare-styleable>
+
+
 </resources>
