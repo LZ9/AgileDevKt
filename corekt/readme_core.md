@@ -28,7 +28,7 @@
         api 'androidx.lifecycle:lifecycle-extensions:2.2.0'
         api 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
         api 'com.google.android:flexbox:2.0.1'
-        api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9'
+        api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1'
         api 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.10'
     }
 ```
