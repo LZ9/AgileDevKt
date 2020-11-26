@@ -148,6 +148,7 @@ internal class TakePhotoActivity : AbsActivity() {
         if (mPdrTempFilePath.isNotEmpty()) {
             FileUtils.delFile(mPdrTempFilePath)// 删除临时文件
         }
+        mPdrTakeBean?.photoTakeListener?.onTake("")
         finish()
     }
 

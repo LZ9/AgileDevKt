@@ -146,10 +146,16 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
         mPdrRecyclerView.adapter = mPdrAdapter
     }
 
+    override fun onPressBack(): Boolean {
+        mPdrPickerBean?.photoPickerListener?.onPickerSelected(ArrayList())
+        return super.onPressBack()
+    }
+
     override fun setListeners() {
         super.setListeners()
         // 返回按钮
         mPdrBackBtn.setOnClickListener {
+            mPdrPickerBean?.photoPickerListener?.onPickerSelected(ArrayList())
             finish()
         }
 

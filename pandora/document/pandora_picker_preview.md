@@ -17,7 +17,6 @@ PickerManager可以帮你快速构造一个图片选择器，包括挑选指定�
         .setMaxCount(max)// 设置可选图片的最大数量（n > 0）
         .setNeedCamera(isNeedCamera)// 设置是否需要相机功能
         .setNeedItemPreview(isNeedItemPreview)// 设置是否需要item的预览功能
-        .setClickClosePreview(isClickClosePreview)// 设置是否点击关闭预览
         .setPickerUIConfig(UIConfig)// 设置选择器的界面配置，不设置使用默认UI风格
         .setCameraSavePath(path)// 设置拍照保存地址
         .setAuthority(authority)// 设置7.0的FileProvider名字

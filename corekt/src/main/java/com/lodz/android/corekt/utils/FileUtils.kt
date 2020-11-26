@@ -1,8 +1,10 @@
 package com.lodz.android.corekt.utils
 
+import android.content.ContentUris
 import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
+import android.provider.MediaStore
 import androidx.annotation.IntRange
 import com.lodz.android.corekt.anko.append
 import java.io.*
@@ -404,6 +406,30 @@ object FileUtils {
             }
         }
         return false
+    }
+
+    /** 文件路径转uri */
+    fun filePath2Uri(context: Context, path: String): Uri {
+        val mediaUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+        val cursor = context.contentResolver.query(
+            mediaUri,
+            null,
+            MediaStore.Images.Media.DISPLAY_NAME + "= ?",
+            arrayOf(path.substring(path.lastIndexOf("/") + 1)),
+            null
+        )
+        if (cursor == null) {
+            return Uri.EMPTY
+        }
+        var uri: Uri? = null
+        if (cursor.moveToFirst()) {
+            uri = ContentUris.withAppendedId(
+                mediaUri,
+                cursor.getLong(cursor.getColumnIndex(MediaStore.Images.Media._ID))
+            )
+        }
+        cursor.close()
+        return uri ?: Uri.EMPTY
     }
 
     ///**往FileDescriptor中写入数据
