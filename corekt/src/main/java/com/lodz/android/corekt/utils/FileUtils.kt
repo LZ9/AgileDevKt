@@ -375,7 +375,7 @@ object FileUtils {
             return false
         }
         val newToPath = if (toPath.endsWith(File.separator)) toPath else toPath.append(File.separator)
-        val toDirectoryFile = FileUtils.create(newToPath) ?: return false
+        val toDirectoryFile = create(newToPath) ?: return false
         if (!toDirectoryFile.exists()) {
             toDirectoryFile.mkdirs()
         }
