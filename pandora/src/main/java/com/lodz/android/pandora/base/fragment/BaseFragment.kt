@@ -108,12 +108,12 @@ abstract class BaseFragment : LazyFragment() {
     }
 
     /** 隐藏TitleBar */
-    protected fun goneTitleBar() {
+    protected open fun goneTitleBar() {
         getTitleBarLayout().visibility = View.GONE
     }
 
     /** 显示TitleBar */
-    protected fun showTitleBar() {
+    protected open fun showTitleBar() {
         getTitleBarLayout().visibility = View.VISIBLE
     }
 

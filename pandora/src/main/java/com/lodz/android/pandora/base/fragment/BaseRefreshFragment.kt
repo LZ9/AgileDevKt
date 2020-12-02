@@ -112,12 +112,12 @@ abstract class BaseRefreshFragment : LazyFragment() {
     }
 
     /** 设置刷新结束（隐藏刷新进度条） */
-    protected fun setSwipeRefreshFinish() {
+    protected open fun setSwipeRefreshFinish() {
         mPdrSwipeRefreshLayout.isRefreshing = false
     }
 
     /** 设置刷新控件是否启用[enabled] */
-    protected fun setSwipeRefreshEnabled(enabled: Boolean) {
+    protected open fun setSwipeRefreshEnabled(enabled: Boolean) {
         mPdrSwipeRefreshLayout.isEnabled = enabled
     }
 
@@ -160,12 +160,12 @@ abstract class BaseRefreshFragment : LazyFragment() {
     }
 
     /** 隐藏TitleBar */
-    protected fun goneTitleBar() {
+    protected open fun goneTitleBar() {
         getTitleBarLayout().visibility = View.GONE
     }
 
     /** 显示TitleBar */
-    protected fun showTitleBar() {
+    protected open fun showTitleBar() {
         getTitleBarLayout().visibility = View.VISIBLE
     }
 
