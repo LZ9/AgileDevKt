@@ -42,6 +42,7 @@ import com.lodz.android.agiledevkt.modules.info.InfoTestActivity
 import com.lodz.android.agiledevkt.modules.location.LocationTestActivity
 import com.lodz.android.agiledevkt.modules.menubar.MenuBarTestActivity
 import com.lodz.android.agiledevkt.modules.mvc.MvcDemoActivity
+import com.lodz.android.agiledevkt.modules.mvp.MvpDemoActivity
 import com.lodz.android.agiledevkt.modules.mvvm.MvvmDemoActivity
 import com.lodz.android.agiledevkt.modules.notification.NotificationActivity
 import com.lodz.android.agiledevkt.modules.pic.PicActivity
@@ -156,7 +157,8 @@ class MainActivity : BaseActivity() {
         MainBean("ViewPager2测试类", "V", ViewPagerActivity::class.java),
         MainBean("Fragment生命周期测试", "F", FragmentLifecycleActivity::class.java),
         MainBean("下载测试", "X", DownloadMarketActivity::class.java),
-        MainBean("子控件透明布局测试类", "Z", HoleTestActivity::class.java)
+        MainBean("子控件透明布局测试类", "Z", HoleTestActivity::class.java),
+        MainBean("MVP模式测试类", "M", MvpDemoActivity::class.java)
     )
 
     /** 列表 */

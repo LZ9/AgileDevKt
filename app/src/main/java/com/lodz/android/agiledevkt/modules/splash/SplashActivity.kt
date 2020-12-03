@@ -23,7 +23,7 @@ class SplashActivity : AbsActivity() {
     override fun getAbsLayoutId() = R.layout.activity_splash
 
     override fun findViews(savedInstanceState: Bundle?) {
-        StatusBarUtil.setTransparentFully(window)
+//        StatusBarUtil.setTransparentFully(window)
     }
 
     override fun initData() {
