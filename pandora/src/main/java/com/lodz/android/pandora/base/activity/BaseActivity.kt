@@ -88,8 +88,12 @@ abstract class BaseActivity : AbsActivity() {
     }
 
     /** 显示错误页面 */
-    @JvmOverloads
-    protected open fun showStatusError(t: Throwable? = null) {
+    protected open fun showStatusError() {
+        showStatusError(null)
+    }
+
+    /** 显示错误页面 */
+    protected open fun showStatusError(t: Throwable?) {
         mPdrContentLayout.visibility = View.GONE
         mPdrLoadingLayout?.visibility = View.GONE
         getErrorLayout().visibility = View.VISIBLE

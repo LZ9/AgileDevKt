@@ -20,8 +20,11 @@ open class BaseSandwichViewModel : AbsViewModel() {
     protected fun showStatusNoData() { isPdrShowNoData.value = true }
 
     /** 显示错误页面 */
-    @JvmOverloads
-    protected fun showStatusError(t: Throwable? = null) { isPdrShowError.value = Pair(true, t) }
+    protected fun showStatusError() {
+        showStatusError(null)
+    }
+    /** 显示错误页面 */
+    protected fun showStatusError(t: Throwable?) { isPdrShowError.value = Pair(true, t) }
 
     /** 显示加载页面 */
     protected fun showStatusLoading() { isPdrShowLoading.value = true }
