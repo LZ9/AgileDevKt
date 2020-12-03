@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.lodz.android.pandora.widget.base.TitleBarLayout
+        android:id="@+id/title_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </com.lodz.android.pandora.widget.base.TitleBarLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_ea413c"
+        android:padding="10dp"
+        android:text="@string/mvc_demo_sandwich_top_tips"
+        android:textColor="@color/white" />
+
+</LinearLayout>

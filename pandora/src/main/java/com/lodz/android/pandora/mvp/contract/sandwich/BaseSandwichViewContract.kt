@@ -11,6 +11,8 @@ interface BaseSandwichViewContract : ViewContract {
 
     fun showStatusNoData()
 
+    fun showStatusError(t: Throwable?)
+
     fun showStatusError()
 
     fun showStatusLoading()
