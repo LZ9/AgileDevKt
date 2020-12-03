@@ -73,6 +73,7 @@ class MvpDemoActivity : BaseActivity() {
 
         // Fragment用例
         mFragmentBtn.setOnClickListener {
+            MvpFragmentActivity.start(getContext())
         }
     }
 
