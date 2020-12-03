@@ -20,6 +20,7 @@ abstract class MvpBaseRefreshActivity<PC : PresenterContract<VC>, VC : BaseRefre
     /** Presenter接口 */
     private var mPresenterContract: PC? = null
 
+    @Suppress("UNCHECKED_CAST")
     override fun startCreate() {
         super.startCreate()
         mPresenterContract = createMainPresenter()
