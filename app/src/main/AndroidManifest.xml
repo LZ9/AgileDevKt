@@ -41,7 +41,7 @@
     <!-- 允许安装未知来源应用 -->
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <!-- 允许删除应用 -->
-    <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES"/>
+    <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES" />
 
     <!-- ********************* 原生GPS定位 ********************* -->
     <!-- 通过GPS芯片接收卫星的定位信息 -->
@@ -107,12 +107,22 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.lodz.android.agiledevkt.fileprovider"
+            android:authorities="${applicationId}.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_provider_paths" />
+        </provider>
+
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+            <meta-data
+                android:name="com.lodz.android.agiledevkt.AppIniter"
+                android:value="androidx.startup" />
         </provider>
 
         <!--订阅日志标签-->
@@ -147,6 +157,7 @@
             android:name=".modules.splash.SplashActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Splash"
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

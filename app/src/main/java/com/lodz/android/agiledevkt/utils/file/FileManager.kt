@@ -1,5 +1,6 @@
 package com.lodz.android.agiledevkt.utils.file
 
+import android.content.Context
 import android.os.Build
 import android.text.TextUtils
 import com.lodz.android.agiledevkt.App
@@ -27,21 +28,22 @@ object FileManager {
     private var mCrashFolderPath = ""
 
     @JvmStatic
-    fun init() {
-        initPath()
+    fun init(context: Context? = null) {
+        val ctx = context ?: App.get()
+        initPath(ctx)
         if (isStorageCanUse) {
             initFolder()
         }
     }
 
     /** 初始化路径 */
-    private fun initPath() {
+    private fun initPath(context: Context) {
         var rootPath: String? = null
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            rootPath = App.get().getExternalFilesDir("")?.absolutePath
+            rootPath = context.getExternalFilesDir("")?.absolutePath
         }
         if (rootPath.isNullOrEmpty()) {
-            val storagePathPair = App.get().getStoragePath()
+            val storagePathPair = context.getStoragePath()
             rootPath = storagePathPair.first // 先获取内置存储路径
             if (rootPath.isNullOrEmpty()) {// 内置为空再获取外置
                 rootPath = storagePathPair.second

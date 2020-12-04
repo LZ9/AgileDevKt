@@ -9,7 +9,7 @@
 
     <!-- 启动页主题 -->
     <style name="AppTheme.Splash" parent="AppTheme">
-        <item name="android:windowBackground">@drawable/bg_splash</item>
+        <item name="android:windowBackground">@color/color_00a0e9</item>
         <item name="android:windowTranslucentStatus" tools:ignore="NewApi">true</item>
     </style>
 
