@@ -9,6 +9,7 @@ import android.graphics.Color
 import android.os.Build
 import androidx.startup.Initializer
 import com.lodz.android.agiledevkt.config.Constant
+import com.lodz.android.agiledevkt.modules.koin.KoinManager
 import com.lodz.android.agiledevkt.utils.file.FileManager
 import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.corekt.network.NetworkManager
@@ -34,6 +35,7 @@ class AppIniter : Initializer<Unit> {
         initACache(context)
         initImageLoader(context)
         SharedPreferencesUtils.get().init(context)
+        KoinManager.koinInit(context)
     }
 
     /** 初始化通知通道 */

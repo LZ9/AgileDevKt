@@ -8,6 +8,7 @@ import com.lodz.android.agiledevkt.App
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.corekt.anko.*
+import com.lodz.android.corekt.utils.StatusBarUtil
 import com.lodz.android.pandora.base.activity.AbsActivity
 import kotlinx.coroutines.GlobalScope
 import permissions.dispatcher.*
@@ -22,7 +23,7 @@ class SplashActivity : AbsActivity() {
     override fun getAbsLayoutId() = R.layout.activity_splash
 
     override fun findViews(savedInstanceState: Bundle?) {
-//        StatusBarUtil.setTransparentFully(window).
+        StatusBarUtil.setColor(window, getColorCompat(R.color.color_00a0e9))
     }
 
     override fun initData() {

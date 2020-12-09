@@ -5,9 +5,4 @@ package com.lodz.android.agiledevkt.bean
  * @author zhouL
  * @date 2019/4/12
  */
-class SpotBean {
-    /** 景点名称 */
-    var spotName = ""
-    /** 得分 */
-    var score = ""
-}
+class SpotBean @JvmOverloads constructor(var spotName: String = "", var score: String = "")

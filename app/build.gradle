@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'koin'
 
 android {
     compileSdkVersion 30
@@ -98,6 +99,15 @@ dependencies {
 
     //添加RxDownload4的所有依赖
     implementation "com.github.ssseasonnn:RxDownload:1.1.2"
+
+    // Koin
+    implementation "org.koin:koin-android:2.2.1"
+    implementation "org.koin:koin-androidx-scope:2.2.0"
+    implementation "org.koin:koin-androidx-viewmodel:2.2.0"
+    implementation "org.koin:koin-androidx-fragment:2.2.0"
+    implementation "org.koin:koin-androidx-workmanager:2.2.0"
+    implementation "org.koin:koin-androidx-compose:2.2.0"
+    implementation "org.koin:koin-androidx-ext:2.2.0"
 
     // 单元测试
     testImplementation 'junit:junit:4.13.1'

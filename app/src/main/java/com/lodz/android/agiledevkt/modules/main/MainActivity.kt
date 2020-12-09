@@ -39,6 +39,7 @@ import com.lodz.android.agiledevkt.modules.hole.HoleTestActivity
 import com.lodz.android.agiledevkt.modules.idcard.IdcardTestActivity
 import com.lodz.android.agiledevkt.modules.image.GlideActivity
 import com.lodz.android.agiledevkt.modules.info.InfoTestActivity
+import com.lodz.android.agiledevkt.modules.koin.KoinTestActivity
 import com.lodz.android.agiledevkt.modules.location.LocationTestActivity
 import com.lodz.android.agiledevkt.modules.menubar.MenuBarTestActivity
 import com.lodz.android.agiledevkt.modules.mvc.MvcDemoActivity
@@ -158,7 +159,8 @@ class MainActivity : BaseActivity() {
         MainBean("Fragment生命周期测试", "F", FragmentLifecycleActivity::class.java),
         MainBean("下载测试", "X", DownloadMarketActivity::class.java),
         MainBean("子控件透明布局测试类", "Z", HoleTestActivity::class.java),
-        MainBean("MVP模式测试类", "M", MvpDemoActivity::class.java)
+        MainBean("MVP模式测试类", "M", MvpDemoActivity::class.java),
+        MainBean("Koin注入测试类", "K", KoinTestActivity::class.java)
     )
 
     /** 列表 */

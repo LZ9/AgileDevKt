@@ -46,7 +46,7 @@ dependencies {
     api 'androidx.startup:startup-runtime:1.0.0'
     api 'com.google.android:flexbox:2.0.1'
     api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2'
-    api 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.20'
+    api 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.21'
 }
 
 //publish {

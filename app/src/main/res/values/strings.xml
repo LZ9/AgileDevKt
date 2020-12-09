@@ -748,5 +748,9 @@
     <string name="market_delete">删除</string>
     <string name="market_failed">下载失败</string>
 
+    <!-- Koin注入测试类 -->
+    <string name="koin_title">Koin注入测试类</string>
+
+
 
 </resources>
