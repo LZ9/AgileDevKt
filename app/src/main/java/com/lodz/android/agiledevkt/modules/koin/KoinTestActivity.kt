@@ -7,10 +7,12 @@ import android.os.Bundle
 import android.widget.TextView
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.SpotBean
+import com.lodz.android.agiledevkt.modules.koin.coffee.CoffeeMaker
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.pandora.base.activity.BaseActivity
 import org.koin.android.ext.android.inject
+import org.koin.core.component.KoinApiExtension
 import org.koin.core.parameter.parametersOf
 import org.koin.core.qualifier.named
 import kotlin.random.Random
@@ -20,6 +22,7 @@ import kotlin.random.Random
  * @author zhouL
  * @date 2020/12/4
  */
+@KoinApiExtension
 class KoinTestActivity :BaseActivity(){
 
     companion object {
@@ -35,6 +38,10 @@ class KoinTestActivity :BaseActivity(){
 
     private val mSingleBlz by inject<SpotBean>(named("blz"))
     private val mFactoryHdl by inject<SpotBean>(named("hdl")){ parametersOf("4.5")}
+
+    private val mCoffeeMaker by inject<CoffeeMaker>()
+    private val mCoffeeMakerHigh by inject<CoffeeMaker>(named("high"))
+    private val mCoffeeMakerLow by inject<CoffeeMaker>(named("low"))
 
     override fun getLayoutId(): Int = R.layout.activity_koin_test
 
@@ -56,7 +63,14 @@ class KoinTestActivity :BaseActivity(){
         mSingleChangeTv.text = "Single修改 $num 对象：${mSingleBlz.spotName}    ${mSingleBlz.score}"
 
         mFactoryTv.text = "Factory对象：${mFactoryHdl.spotName}    ${mFactoryHdl.score}"
+
+        makeCoffee()
         showStatusCompleted()
     }
 
+    private fun makeCoffee() {
+        mCoffeeMaker.brew()
+        mCoffeeMakerHigh.brew()
+        mCoffeeMakerLow.brew()
+    }
 }
