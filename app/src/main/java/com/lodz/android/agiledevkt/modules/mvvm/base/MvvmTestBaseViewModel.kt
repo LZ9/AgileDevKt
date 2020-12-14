@@ -1,11 +1,9 @@
 package com.lodz.android.agiledevkt.modules.mvvm.base
 
 import androidx.lifecycle.MutableLiveData
-import com.lodz.android.agiledevkt.modules.mvvm.ApiModuleSuspend
-import com.lodz.android.corekt.anko.runOnMain
-import com.lodz.android.corekt.anko.runOnSuspendIOCatch
+import com.lodz.android.agiledevkt.modules.api.ApiServiceImpl
 import com.lodz.android.pandora.mvvm.vm.BaseViewModel
-import kotlinx.coroutines.GlobalScope
+import com.lodz.android.pandora.utils.coroutines.runOnSuspendIOCatchRes
 
 /**
  * MVVM带基础状态控件ViewModel
@@ -17,14 +15,14 @@ class MvvmTestBaseViewModel : BaseViewModel() {
     var mResultText = MutableLiveData<String>()
 
     fun getResult(isSuccess: Boolean) {
-        GlobalScope.runOnSuspendIOCatch({
-            val result = ApiModuleSuspend.requestResult(isSuccess)
-            GlobalScope.runOnMain {
-                mResultText.value = result
+        runOnSuspendIOCatchRes(
+            request = { ApiServiceImpl.getResult(isSuccess) },
+            actionIO = {
+                mResultText.value = it.data ?: ""
                 showStatusCompleted()
-            }
-        }, { e ->
-            showStatusError(e)
-        })
+            },
+            error = { e, isNetwork ->
+                showStatusError(e)
+            })
     }
 }

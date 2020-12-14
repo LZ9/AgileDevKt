@@ -10,6 +10,9 @@ import com.lodz.android.pandora.rx.utils.doComplete
 import com.lodz.android.pandora.rx.utils.doError
 import com.lodz.android.pandora.rx.utils.doNext
 import io.reactivex.rxjava3.core.Observable
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
 import okhttp3.RequestBody
 import java.net.SocketTimeoutException
 
@@ -117,6 +120,17 @@ object ApiServiceImpl : ApiService {
                 emitter.doError(e)
             }
         }
+
+    override suspend fun getResult(isSuccess: Boolean): ResponseBean<String> =
+        withContext(Dispatchers.IO) {
+            delay(2000)
+            val responseBean = ResponseBean.createSuccess<String>()
+            responseBean.code = if (isSuccess) ResponseBean.SUCCESS else ResponseBean.FAIL
+            responseBean.msg = if (isSuccess) "success" else "faile"
+            responseBean.data = if (isSuccess) System.currentTimeMillis().toString() else ""
+            responseBean
+        }
+
 
     /** 从RequestBody中获取请求参数 */
     private fun getJsonByRequestBody(requestBody: RequestBody): String {

@@ -31,4 +31,8 @@ interface ApiService {
     @POST("spot")
     fun querySpot(@Body requestBody: RequestBody): Observable<ResponseBean<List<SpotBean>>>
 
+    /** 获取测试数据 */
+    @GET("spot")
+    suspend fun getResult(@Field("isSuccess") isSuccess: Boolean): ResponseBean<String>
+
 }
