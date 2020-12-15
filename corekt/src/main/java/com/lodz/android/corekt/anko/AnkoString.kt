@@ -9,7 +9,7 @@ import android.text.Editable
  */
 
 /** 把String转为Editable */
-fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)
+fun CharSequence.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)
 
 /** 在String尾部进行文字拼接 */
 fun <T> String.append(t: T?): String = StringBuilder(this).append((t != null).then { t } ?: "").toString()
