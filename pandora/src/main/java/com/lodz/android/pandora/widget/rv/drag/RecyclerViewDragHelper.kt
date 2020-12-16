@@ -33,35 +33,35 @@ class RecyclerViewDragHelper<T>(private val mContext: Context) {
     private var mPdrItemTouchHelper: ItemTouchHelper? = null
 
     /** 设置是否允许拖拽[useDrag] */
-    fun setUseDrag(useDrag: Boolean): RecyclerViewDragHelper<*> {
+    fun setUseDrag(useDrag: Boolean): RecyclerViewDragHelper<T> {
         this.mPdrUseDrag = useDrag
         mPdrCallback?.setUseDrag(useDrag)
         return this
     }
 
     /** 设置允许从右往左滑动[rightToLeftSwipe] */
-    fun setUseRightToLeftSwipe(rightToLeftSwipe: Boolean): RecyclerViewDragHelper<*> {
+    fun setUseRightToLeftSwipe(rightToLeftSwipe: Boolean): RecyclerViewDragHelper<T> {
         this.mPdrUseRightToLeftSwipe = rightToLeftSwipe
         mPdrCallback?.setUseRightToLeftSwipe(rightToLeftSwipe)
         return this
     }
 
     /** 设置允许从左往右滑动[leftToRightSwipe] */
-    fun setUseLeftToRightSwipe(leftToRightSwipe: Boolean): RecyclerViewDragHelper<*> {
+    fun setUseLeftToRightSwipe(leftToRightSwipe: Boolean): RecyclerViewDragHelper<T> {
         this.mPdrUseLeftToRightSwipe = leftToRightSwipe
         mPdrCallback?.setUseLeftToRightSwipe(leftToRightSwipe)
         return this
     }
 
     /** 设置是否启用[enabled]长按拖拽效果 */
-    fun setLongPressDragEnabled(enabled: Boolean): RecyclerViewDragHelper<*> {
+    fun setLongPressDragEnabled(enabled: Boolean): RecyclerViewDragHelper<T> {
         isPdrLongPressDragEnabled = enabled
         mPdrCallback?.setLongPressDrag(enabled)
         return this
     }
 
     /** 设置是否启用[enabled]滑动效果 */
-    fun setSwipeEnabled(enabled: Boolean): RecyclerViewDragHelper<*> {
+    fun setSwipeEnabled(enabled: Boolean): RecyclerViewDragHelper<T> {
         isPdrSwipeEnabled = enabled
         mPdrCallback?.setSwipe(enabled)
         return this
@@ -69,21 +69,21 @@ class RecyclerViewDragHelper<T>(private val mContext: Context) {
 
     /** 是否启用[enabled]震动效果 */
     @RequiresPermission(android.Manifest.permission.VIBRATE)
-    fun setVibrateEnabled(enabled: Boolean): RecyclerViewDragHelper<*> {
+    fun setVibrateEnabled(enabled: Boolean): RecyclerViewDragHelper<T> {
         isPdrVibrateEnabled = enabled
         mPdrCallback?.setVibrate(enabled)
         return this
     }
 
     /** 设置数据列表[list] */
-    fun setList(list: MutableList<T>): RecyclerViewDragHelper<*> {
+    fun setList(list: MutableList<T>): RecyclerViewDragHelper<T> {
         mPdrList = list
         mPdrCallback?.setList(list)
         return this
     }
 
     /** 设置监听器 */
-    fun setListener(listener: (list: List<T>) -> Unit): RecyclerViewDragHelper<*> {
+    fun setListener(listener: (list: List<T>) -> Unit): RecyclerViewDragHelper<T> {
         mPdrListener = listener
         mPdrCallback?.setListener(listener)
         return this
