@@ -95,6 +95,7 @@ class CrashManager private constructor() : Thread.UncaughtExceptionHandler {
             try {
                 Thread.sleep(2500)
             } catch (e: Exception) {
+                e.printStackTrace()
             }
             PrintLog.e(mTag, "error: ", t)
             exceptionExit()
