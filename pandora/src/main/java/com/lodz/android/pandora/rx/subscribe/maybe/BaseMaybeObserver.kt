@@ -8,7 +8,7 @@ import io.reactivex.rxjava3.disposables.Disposable
 
 /**
  * Maybe基类订阅者
- * 发送单个事件，以成功或失败或完成结束（三选一）
+ * 发送单个数据，以成功或失败或完成结束（三选一）
  * Created by zhouL on 2019/1/22.
  */
 abstract class BaseMaybeObserver<T> : MaybeObserver<T> {

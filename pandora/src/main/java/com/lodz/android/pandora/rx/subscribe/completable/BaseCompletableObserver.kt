@@ -8,7 +8,7 @@ import io.reactivex.rxjava3.disposables.Disposable
 
 /**
  * Completable基类订阅者
- * 不发送事件，以完成或失败结束
+ * 不发送数据，以完成或失败结束
  * Created by zhouL on 2019/1/22.
  */
 abstract class BaseCompletableObserver : CompletableObserver {

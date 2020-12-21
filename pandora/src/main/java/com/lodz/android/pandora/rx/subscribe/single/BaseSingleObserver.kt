@@ -8,7 +8,7 @@ import io.reactivex.rxjava3.disposables.Disposable
 
 /**
  * 基类订阅者
- * 发送单个事件，以发送成功或错误事件终止
+ * 只发射单个数据或错误事件
  * Created by zhouL on 2019/1/18.
  */
 abstract class BaseSingleObserver<T> : SingleObserver<T> {
