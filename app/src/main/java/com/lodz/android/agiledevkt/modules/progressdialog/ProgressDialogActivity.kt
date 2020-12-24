@@ -11,7 +11,6 @@ import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.pandora.base.activity.BaseActivity
-import com.lodz.android.pandora.rx.exception.RxException
 import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
 import com.lodz.android.pandora.utils.progress.ProgressDialogHelper
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -116,7 +115,7 @@ class ProgressDialogActivity : BaseActivity() {
                         }
                         if (i == 5L) {
                             dialog?.dismiss()
-                            throw RxException("dismiss")
+                            throw RuntimeException("dismiss")
                         }
                     }
                     .compose(bindDestroyEvent())

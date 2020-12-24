@@ -23,9 +23,7 @@ import com.lodz.android.pandora.R
 import com.lodz.android.pandora.base.application.BaseApplication
 import com.lodz.android.pandora.base.application.config.BaseLayoutConfig
 import com.lodz.android.pandora.base.application.config.ErrorLayoutConfig
-import com.lodz.android.pandora.rx.exception.NetworkException
-import java.net.SocketException
-import java.net.SocketTimeoutException
+import com.lodz.android.pandora.rx.exception.ExceptionFactory
 
 /**
  * 加载失败控件
@@ -265,7 +263,7 @@ class ErrorLayout : LinearLayout {
             showDataFail()
             return
         }
-        if (t is NetworkException || t is SocketTimeoutException || t is SocketException) {
+        if (ExceptionFactory.isNetworkError(t)) {
             showNetFail()
             return
         }

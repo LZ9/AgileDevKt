@@ -1,8 +1,6 @@
 package com.lodz.android.pandora.rx.subscribe.observer
 
-import com.lodz.android.pandora.rx.exception.DataException
-import com.lodz.android.pandora.rx.exception.NetworkException
-import com.lodz.android.pandora.rx.exception.RxExceptionFactory
+import com.lodz.android.pandora.rx.exception.ExceptionFactory
 import com.lodz.android.pandora.rx.status.ResponseStatus
 import io.reactivex.rxjava3.disposables.Disposable
 
@@ -23,8 +21,7 @@ abstract class RxObserver<T> : BaseObserver<T>() {
     }
 
     final override fun onBaseError(e: Throwable) {
-        val exception = RxExceptionFactory.create(e)
-        onRxError(exception, exception is NetworkException)
+        onRxError(e, ExceptionFactory.isNetworkError(e))
         onErrorEnd()
     }
 
@@ -50,9 +47,7 @@ abstract class RxObserver<T> : BaseObserver<T>() {
         }
         if (any is ResponseStatus) {
             if (!any.isSuccess()) {//服务端返回接口失败
-                val exception = DataException("response fail")
-                exception.setData(any)
-                throw exception
+                throw ExceptionFactory.createDataException(any)
             }
         }
     }

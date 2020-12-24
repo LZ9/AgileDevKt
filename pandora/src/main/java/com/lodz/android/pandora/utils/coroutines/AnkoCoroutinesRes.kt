@@ -9,9 +9,7 @@ import com.lodz.android.corekt.anko.runOnMain
 import com.lodz.android.corekt.anko.runOnMainCatch
 import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.pandora.base.application.BaseApplication
-import com.lodz.android.pandora.rx.exception.DataException
-import com.lodz.android.pandora.rx.exception.NetworkException
-import com.lodz.android.pandora.rx.exception.RxExceptionFactory
+import com.lodz.android.pandora.rx.exception.ExceptionFactory
 import com.lodz.android.pandora.rx.status.ResponseStatus
 import com.lodz.android.pandora.utils.progress.ProgressDialogHelper
 import kotlinx.coroutines.*
@@ -381,9 +379,7 @@ private fun <T> CoroutineScope.resHandle(
             runOnMain { actionIO(res) }
             return
         }
-        val exception = DataException("response fail")
-        exception.setData(res)
-        throw exception
+        throw ExceptionFactory.createDataException(res)
     }
     runOnMain { actionIO(res) }
 }
@@ -396,8 +392,7 @@ private fun CoroutineScope.errorHandle(
     e.printStackTrace()
     printTagLog(e)
     if (e !is CancellationException) {
-        val t = RxExceptionFactory.create(e)
-        runOnMain { error(t, t is NetworkException) }
+        runOnMain { error(e, ExceptionFactory.isNetworkError(e)) }
     }
 }
 

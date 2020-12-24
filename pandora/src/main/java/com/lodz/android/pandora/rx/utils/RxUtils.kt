@@ -8,7 +8,6 @@ import androidx.core.widget.addTextChangedListener
 import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.corekt.utils.BitmapUtils
 import com.lodz.android.pandora.rx.exception.DataException
-import com.lodz.android.pandora.rx.exception.RxException
 import com.lodz.android.pandora.rx.status.ResponseStatus
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.*
@@ -54,23 +53,14 @@ object RxUtils {
     /** 获取异常[e]的提示语（配合订阅者使用），是否网络异常[isNetwork]，默认提示语[defaultTips] */
     @JvmStatic
     fun getExceptionTips(e: Throwable, isNetwork: Boolean, defaultTips: String): String {
-        if (isNetwork && e is RxException) {
-            return e.getErrorMsg()
+        if (isNetwork) {
+            return e.message ?: "网络出现异常"
         }
         if (e is DataException) {
             val status = e.getData()
             if (status != null && status.valueMsg().isNotEmpty()) {
                 return status.valueMsg()
             }
-        }
-        return defaultTips
-    }
-
-    /** 获取[e]的网络异常提示语（配合订阅者使用），是否网络异常[isNetwork]，默认提示语[defaultTips] */
-    @JvmStatic
-    fun getNetworkExceptionTips(e: Throwable, isNetwork: Boolean, defaultTips: String): String {
-        if (isNetwork && e is RxException) {
-            return e.getErrorMsg()
         }
         return defaultTips
     }

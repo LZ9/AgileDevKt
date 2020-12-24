@@ -53,7 +53,7 @@ class MvcTestLazyFragment : LazyFragment() {
 
                     override fun onPgError(e: Throwable, isNetwork: Boolean) {
                         if (e is DataException) {
-                            mResult.text = e.getErrorMsg()
+                            mResult.text = e.message
                         }
                     }
                 }.create(context, R.string.mvc_demo_loading, true))

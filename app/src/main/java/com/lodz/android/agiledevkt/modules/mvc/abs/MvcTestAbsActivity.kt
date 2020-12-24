@@ -57,7 +57,7 @@ class MvcTestAbsActivity : AbsActivity() {
 
                     override fun onPgError(e: Throwable, isNetwork: Boolean) {
                         if (e is DataException) {
-                            mResult.text = e.getErrorMsg()
+                            mResult.text = e.message
                         }
                     }
                 }.create(getContext(), R.string.mvc_demo_loading, true))

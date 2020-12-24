@@ -1,7 +1,6 @@
 package com.lodz.android.pandora.rx.subscribe.completable
 
-import com.lodz.android.pandora.rx.exception.NetworkException
-import com.lodz.android.pandora.rx.exception.RxExceptionFactory
+import com.lodz.android.pandora.rx.exception.ExceptionFactory
 import io.reactivex.rxjava3.disposables.Disposable
 
 /**
@@ -20,8 +19,7 @@ abstract class RxCompletableObserver : BaseCompletableObserver() {
     }
 
     final override fun onBaseError(e: Throwable) {
-        val exception = RxExceptionFactory.create(e)
-        onRxError(exception, exception is NetworkException)
+        onRxError(e, ExceptionFactory.isNetworkError(e))
         onErrorEnd()
     }
 
