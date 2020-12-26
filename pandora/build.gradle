@@ -9,8 +9,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 27
-        versionName "1.5.4"// 成功上传
+        versionCode 28
+        versionName "1.5.5"// 成功上传
     }
 
     kotlinOptions {
@@ -30,7 +30,7 @@ android {
 }
 
 dependencies {
-//    api 'com.lodz:core-kt:1.2.9'
+//    api 'com.lodz:core-kt:1.3.0'
     api project(':corekt')
 
     // RxJava
@@ -50,7 +50,7 @@ dependencies {
 //    userOrg = 'lz9'
 //    groupId = 'com.lodz'
 //    artifactId = 'pandora'
-//    publishVersion = '1.5.4'
+//    publishVersion = '1.5.5'
 //    desc = 'Hi, this is a android base library'
 //    website = 'https://github.com/LZ9/AgileDevKt'
 //}
