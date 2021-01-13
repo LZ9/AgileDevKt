@@ -930,6 +930,14 @@
 
         </activity>
 
+        <activity
+            android:name=".modules.camera.CameraActivity"
+            android:label="相机测试类"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
+
+        </activity>
+
 
     </application>
 
