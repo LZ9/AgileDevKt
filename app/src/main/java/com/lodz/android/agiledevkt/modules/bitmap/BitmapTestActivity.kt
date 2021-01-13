@@ -465,7 +465,7 @@ class BitmapTestActivity : BaseActivity() {
     private fun showRotateBitmap() {
         Observable.just(R.drawable.ic_regret)
                 .map { id ->
-                    BitmapUtils.rotateBitmap(BitmapFactory.decodeResource(resources, id), 45)
+                    BitmapUtils.rotateBitmap(BitmapFactory.decodeResource(resources, id), 45f)
                 }
                 .compose(RxUtils.ioToMainObservable())
                 .subscribe(object : BaseObserver<Bitmap>() {

@@ -41,6 +41,14 @@ object BitmapUtils {
         }
     }
 
+    /** Bitmap转Byte数组 */
+    @JvmStatic
+    fun bitmapToByte(bitmap: Bitmap): ByteArray {
+        val os = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os)
+        return os.toByteArray()
+    }
+
     /** Base64转为Bitmap */
     @JvmStatic
     @JvmOverloads
@@ -393,22 +401,6 @@ object BitmapUtils {
         paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
         canvas.drawBitmap(bitmap, src, dst, paint)
         return output
-    }
-
-    /** 将图片[bitmap]旋转[angle]角度 */
-    @JvmStatic
-    fun rotateBitmap(bitmap: Bitmap, angle: Int): Bitmap {
-        val matrix = Matrix()
-        matrix.postRotate(angle.toFloat())
-        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
-    }
-
-    /** 把图片[bitmap]水平翻转 */
-    @JvmStatic
-    fun reverseBitmapHorizontal(bitmap: Bitmap): Bitmap {
-        val matrix = Matrix()
-        matrix.preScale(-1f, 1f)
-        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, false)
     }
 
     /** 把图片[bitmap]垂直翻转 */
@@ -854,4 +846,29 @@ object BitmapUtils {
         }
         return bitmapList
     }
+
+    /** 将图片[bitmap]旋转[angle]角度 */
+    @JvmStatic
+    fun rotateBitmap(bitmap: Bitmap, angle: Float): Bitmap {
+        val matrix = Matrix()
+        matrix.postRotate(angle)
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
+    }
+
+    /** 把图片[bitmap]水平翻转 */
+    @JvmStatic
+    fun reverseBitmapHorizontal(bitmap: Bitmap): Bitmap {
+        val matrix = Matrix()
+        matrix.preScale(-1f, 1f)
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, false)
+    }
+
+    /** Bitmap镜像翻转 */
+    @JvmStatic
+    fun mirrorBitmap(rawBitmap: Bitmap): Bitmap {
+        var matrix = Matrix()
+        matrix.postScale(-1f, 1f)
+        return Bitmap.createBitmap(rawBitmap, 0, 0, rawBitmap.width, rawBitmap.height, matrix, true)
+    }
+
 }

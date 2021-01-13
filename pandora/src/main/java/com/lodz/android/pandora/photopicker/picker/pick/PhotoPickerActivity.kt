@@ -357,7 +357,7 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
     private fun drawBackBtn(@ColorRes color: Int) {
         Observable.just(color)
                 .map { resId ->
-                    return@map BitmapUtils.rotateBitmap(getArrowBitmap(resId), 90)
+                    return@map BitmapUtils.rotateBitmap(getArrowBitmap(resId), 90f)
                 }
                 .compose(RxUtils.ioToMainObservable())
                 .subscribe(object : BaseObserver<Bitmap>() {

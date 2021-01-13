@@ -1,18 +1,28 @@
 package com.lodz.android.agiledevkt.modules.camera
 
 import android.Manifest
+import android.graphics.BitmapFactory
 import android.graphics.RectF
+import android.hardware.Camera
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.view.WindowManager
 import com.lodz.android.agiledevkt.R
+import com.lodz.android.agiledevkt.utils.file.FileManager
 import com.lodz.android.corekt.anko.goAppDetailSetting
 import com.lodz.android.corekt.anko.isPermissionGranted
 import com.lodz.android.corekt.anko.toastShort
+import com.lodz.android.corekt.utils.BitmapUtils
+import com.lodz.android.corekt.utils.FileUtils
 import kotlinx.android.synthetic.main.activity_camera.*
+import okio.buffer
+import okio.sink
 import permissions.dispatcher.*
+import java.io.File
+import kotlin.concurrent.thread
 
 /**
  * 相机测试类
@@ -45,30 +55,32 @@ class CameraActivity : AppCompatActivity() {
 
     private fun savePic(data: ByteArray?) {
         toastShort("图片已保存")
-//        thread {
-//            try {
-//                val temp = System.currentTimeMillis()
-//                val picFile = FileUtil.createCameraFile()
-//                if (picFile != null && data != null) {
-//                    val rawBitmap = BitmapFactory.decodeByteArray(data, 0, data.size)
-//                    val resultBitmap = if (mCameraHelper.mCameraFacing == Camera.CameraInfo.CAMERA_FACING_FRONT)
-//                        BitmapUtils.mirror(BitmapUtils.rotate(rawBitmap, 270f))
-//                    else
-//                        BitmapUtils.rotate(rawBitmap, 90f)
-//
-//                    picFile.sink().buffer().write(BitmapUtils.toByteArray(resultBitmap)).close()
-//                    runOnUiThread {
-//                        toast("图片已保存! ${picFile.absolutePath}")
-//                        log("图片已保存! 耗时：${System.currentTimeMillis() - temp}    路径：  ${picFile.absolutePath}")
-//                    }
-//                }
-//            } catch (e: Exception) {
-//                e.printStackTrace()
-//                runOnUiThread {
-//                    toast("保存图片失败！")
-//                }
-//            }
-//        }
+        thread {
+            try {
+                val path = FileManager.getContentFolderPath()+"bbb.jpg"
+                FileUtils.createNewFile(path)
+                val temp = System.currentTimeMillis()
+                val picFile:File = File(path)
+                if ( data != null) {
+                    val rawBitmap = BitmapFactory.decodeByteArray(data, 0, data.size)
+                    val resultBitmap = if (mCameraHelper.mCameraFacing == Camera.CameraInfo.CAMERA_FACING_FRONT)
+                        BitmapUtils.mirrorBitmap(BitmapUtils.rotateBitmap(rawBitmap, 270f))
+                    else
+                        BitmapUtils.rotateBitmap(rawBitmap, 90f)
+
+                    picFile.sink().buffer().write(BitmapUtils.bitmapToByte(resultBitmap)).close()
+                    runOnUiThread {
+                        toastShort("图片已保存! ${picFile.absolutePath}")
+                        Log.d("testtag","图片已保存! 耗时：${System.currentTimeMillis() - temp}    路径：  ${picFile.absolutePath}")
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                runOnUiThread {
+                    toastShort("保存图片失败！")
+                }
+            }
+        }
     }
 
     override fun onDestroy() {
@@ -104,7 +116,7 @@ class CameraActivity : AppCompatActivity() {
             }
         })
 
-        if (intent.getIntExtra(TYPE_TAG, TYPE_RECORD) == TYPE_RECORD) { //录视频
+        if (intent.getIntExtra(TYPE_TAG, TYPE_CAPTURE) == TYPE_RECORD) { //录视频
             btnTakePic.visibility = View.GONE
             btnStart.visibility = View.VISIBLE
         }
