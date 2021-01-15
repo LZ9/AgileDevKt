@@ -106,7 +106,13 @@ class SimpleWebViewActivity : BaseActivity() {
         mWebView.loadUrl(BAIDU_URL)
         mBackwardBtn.isEnabled = false
         mForwardBtn.isEnabled = false
+        doDebug()
         showStatusCompleted()
+    }
+
+    /** 支持PC浏览器调试 */
+    private fun doDebug() {
+        WebView.setWebContentsDebuggingEnabled(true)
     }
 
     override fun finish() {
