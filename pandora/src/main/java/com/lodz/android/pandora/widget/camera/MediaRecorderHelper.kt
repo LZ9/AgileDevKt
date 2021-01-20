@@ -1,4 +1,4 @@
-package com.lodz.android.agiledevkt.modules.camera
+package com.lodz.android.pandora.widget.camera
 
 import android.app.Activity
 import android.hardware.Camera
@@ -6,22 +6,37 @@ import android.media.MediaRecorder
 import android.util.Log
 import android.view.Surface
 import android.widget.Toast
-import com.lodz.android.agiledevkt.utils.file.FileManager
+import com.lodz.android.corekt.anko.append
 import com.lodz.android.corekt.utils.FileUtils
+import java.io.File
 
 /**
  *
  * @author zhouL
  * @date 2021/1/13
  */
-class  MediaRecorderHelper(var mContext: Activity, private var mCamera: Camera, private var rotation: Int, private var surface: Surface) {
+class MediaRecorderHelper(
+    var mContext: Activity,
+    private var mCamera: Camera,
+    private var rotation: Int,
+    private var surface: Surface,
+    private var savePath: String,
+    private var fileName: String
+) {
     var mMediaRecorder: MediaRecorder? = null
     var isRunning = false
-    private val filePath = FileManager.getContentFolderPath()+"aa.mp4"
+
+    private var filePath = ""
 
     fun startRecord() {
         try {
-            FileUtils.createNewFile(filePath)
+            val path = (if (savePath.isEmpty()) mContext.getExternalFilesDir("")?.absolutePath else savePath) ?: return
+            if (!path.endsWith(File.separator)){
+                path.append(File.separator)
+            }
+            path.append(fileName)
+            filePath = path
+            FileUtils.createNewFile(path)
             mMediaRecorder = MediaRecorder()
             mMediaRecorder?.let {
 //                val list = mCamera.getParameters().getSupportedVideoSizes()
@@ -42,12 +57,12 @@ class  MediaRecorderHelper(var mContext: Activity, private var mCamera: Camera, 
 //                it.setVideoFrameRate(60)  // 设置帧率
                 //it.setMaxDuration(10000) //设置最大录像时间为10s
                 it.setPreviewDisplay(surface) //设置
-                it.setOutputFile(filePath) //设置输出文件
+                it.setOutputFile(path) //设置输出文件
                 it.prepare()
                 it.start()
                 isRunning = true
                 Log.d("testtag", "开始录制视频")
-                Log.d("testtag", "视频保存路径：$filePath")
+                Log.d("testtag", "视频保存路径：$path")
             }
         } catch (e: Exception) {
             e.printStackTrace()

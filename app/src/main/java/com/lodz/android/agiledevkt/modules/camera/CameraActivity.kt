@@ -17,6 +17,7 @@ import com.lodz.android.corekt.anko.isPermissionGranted
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.corekt.utils.BitmapUtils
 import com.lodz.android.corekt.utils.FileUtils
+import com.lodz.android.pandora.widget.camera.CameraHelper
 import kotlinx.android.synthetic.main.activity_camera.*
 import okio.buffer
 import okio.sink
@@ -40,7 +41,7 @@ class CameraActivity : AppCompatActivity() {
     var lock = false //控制MediaRecorderHelper的初始化
 
     private lateinit var mCameraHelper: CameraHelper
-    private var mMediaRecorderHelper: MediaRecorderHelper? = null
+//    private var mMediaRecorderHelper: MediaRecorderHelper? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,7 +61,7 @@ class CameraActivity : AppCompatActivity() {
                 val path = FileManager.getContentFolderPath()+"bbb.jpg"
                 FileUtils.createNewFile(path)
                 val temp = System.currentTimeMillis()
-                val picFile:File = File(path)
+                val picFile = File(path)
                 if ( data != null) {
                     val rawBitmap = BitmapFactory.decodeByteArray(data, 0, data.size)
                     val resultBitmap = if (mCameraHelper.mCameraFacing == Camera.CameraInfo.CAMERA_FACING_FRONT)
@@ -85,11 +86,11 @@ class CameraActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         mCameraHelper.releaseCamera()
-        mMediaRecorderHelper?.let {
-            if (it.isRunning)
-                it.stopRecord()
-            it.release()
-        }
+//        mMediaRecorderHelper?.let {
+//            if (it.isRunning)
+//                it.stopRecord()
+//            it.release()
+//        }
         super.onDestroy()
     }
 
@@ -109,7 +110,14 @@ class CameraActivity : AppCompatActivity() {
             override fun onPreviewFrame(data: ByteArray?) {
                 if (!lock) {
                     mCameraHelper.getCamera()?.let {
-                        mMediaRecorderHelper = MediaRecorderHelper(this@CameraActivity, mCameraHelper.getCamera()!!, mCameraHelper.mDisplayOrientation, mCameraHelper.mSurfaceHolder.surface)
+//                        mMediaRecorderHelper = MediaRecorderHelper(
+//                            this@CameraActivity,
+//                            mCameraHelper.getCamera()!!,
+//                            mCameraHelper.mDisplayOrientation,
+//                            mCameraHelper.mSurfaceHolder.surface,
+//                            FileManager.getContentFolderPath(),
+//                            "aaa.mp4"
+//                        )
                     }
                     lock = true
                 }
@@ -127,13 +135,13 @@ class CameraActivity : AppCompatActivity() {
             ivExchange.isClickable = false
             btnStart.visibility = View.GONE
             btnStop.visibility = View.VISIBLE
-            mMediaRecorderHelper?.startRecord()
+//            mMediaRecorderHelper?.startRecord()
         }
         btnStop.setOnClickListener {
             btnStart.visibility = View.VISIBLE
             btnStop.visibility = View.GONE
             ivExchange.isClickable = true
-            mMediaRecorderHelper?.stopRecord()
+//            mMediaRecorderHelper?.stopRecord()
         }
     }
 

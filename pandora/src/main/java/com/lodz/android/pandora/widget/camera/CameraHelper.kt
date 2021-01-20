@@ -1,4 +1,4 @@
-package com.lodz.android.agiledevkt.modules.camera
+package com.lodz.android.pandora.widget.camera
 
 import android.app.Activity
 import android.graphics.ImageFormat
