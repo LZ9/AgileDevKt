@@ -16,7 +16,7 @@
 该库引用了下方这些support库，如果您的app有重复引用可以选择去掉顶层引用或者保证版本一致
 ```
     dependencies {
-        api 'androidx.appcompat:appcompat:1.3.0-alpha02'
+        api 'androidx.appcompat:appcompat:1.3.0-beta01'
         api 'com.google.android.material:material:1.2.1'
         api 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
         api 'androidx.recyclerview:recyclerview:1.1.0'
@@ -28,7 +28,7 @@
         api 'androidx.lifecycle:lifecycle-extensions:2.2.0'
         api 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
         api 'com.google.android:flexbox:2.0.1'
-        api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1'
+        api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2'
         api 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.21'
     }
 ```
