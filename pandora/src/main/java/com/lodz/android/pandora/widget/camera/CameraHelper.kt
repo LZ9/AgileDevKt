@@ -26,8 +26,8 @@ class CameraHelper(activity: Activity, surfaceView: SurfaceView) : Camera.Previe
     private var mActivity: Activity = activity
     private var mCallBack: CallBack? = null   //自定义的回调
 
-    var mCameraFacing = Camera.CameraInfo.CAMERA_FACING_BACK  //摄像头方向
-    var mDisplayOrientation: Int = 0    //预览旋转的角度
+    private var mCameraFacing = Camera.CameraInfo.CAMERA_FACING_BACK  //摄像头方向
+    private var mDisplayOrientation: Int = 0    //预览旋转的角度
 
     private var picWidth = 2160        //保存图片的宽
     private var picHeight = 3840       //保存图片的高
@@ -250,12 +250,41 @@ class CameraHelper(activity: Activity, surfaceView: SurfaceView) : Camera.Previe
         return rectList
     }
 
+    /** 控制相机闪光灯 */
+    fun controlFlash(): Boolean {
+        val flashMode = mParameters.flashMode
+        if (flashMode.isNullOrEmpty()){
+            return false
+        }
+        if (flashMode == Camera.Parameters.FLASH_MODE_TORCH) {
+            mParameters.flashMode = Camera.Parameters.FLASH_MODE_OFF
+        } else {
+            mParameters.flashMode = Camera.Parameters.FLASH_MODE_TORCH
+            mParameters.exposureCompensation = -1
+        }
+        try {
+            if (mCamera == null){
+                return false
+            }
+            mCamera?.parameters = mParameters
+            return true
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return false
+        }
+    }
 
     private fun toast(msg: String) {
         Toast.makeText(mActivity, msg, Toast.LENGTH_SHORT).show()
     }
 
     fun getCamera(): Camera? = mCamera
+
+    /** 获取摄像头方向 */
+    fun getCameraFacing(): Int = mCameraFacing
+
+    /** 获取预览旋转的角度 */
+    fun getDisplayOrientation(): Int = mDisplayOrientation
 
     fun addCallBack(callBack: CallBack) {
         this.mCallBack = callBack

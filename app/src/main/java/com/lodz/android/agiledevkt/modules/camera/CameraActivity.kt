@@ -64,7 +64,7 @@ class CameraActivity : AppCompatActivity() {
                 val picFile = File(path)
                 if ( data != null) {
                     val rawBitmap = BitmapFactory.decodeByteArray(data, 0, data.size)
-                    val resultBitmap = if (mCameraHelper.mCameraFacing == Camera.CameraInfo.CAMERA_FACING_FRONT)
+                    val resultBitmap = if (mCameraHelper.getCameraFacing() == Camera.CameraInfo.CAMERA_FACING_FRONT)
                         BitmapUtils.mirrorBitmap(BitmapUtils.rotateBitmap(rawBitmap, 270f))
                     else
                         BitmapUtils.rotateBitmap(rawBitmap, 90f)

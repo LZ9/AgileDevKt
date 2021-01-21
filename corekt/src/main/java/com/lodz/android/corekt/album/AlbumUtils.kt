@@ -172,6 +172,7 @@ object AlbumUtils {
         return null
     }
 
+    @JvmStatic
     fun notifyScanImageCompat(context: Context, imagePath: String) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             notifyScanImageQ(context, imagePath)
@@ -181,6 +182,7 @@ object AlbumUtils {
     }
 
     @RequiresApi(Build.VERSION_CODES.Q)
+    @JvmStatic
     fun notifyScanImageQ(context: Context, imagePath: String){
         val file = File(imagePath)
         if (!file.exists()){
