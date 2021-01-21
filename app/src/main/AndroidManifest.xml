@@ -931,12 +931,21 @@
         </activity>
 
         <activity
-            android:name=".modules.camera.CameraActivity"
+            android:name=".modules.camera.CameraMainActivity"
             android:label="相机测试类"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity">
 
         </activity>
+
+        <activity
+            android:name=".modules.camera.CameraTakeActivity"
+            android:label="拍照页面"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
+
+        </activity>
+
 
 
     </application>

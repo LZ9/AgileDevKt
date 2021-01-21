@@ -19,7 +19,7 @@ import com.lodz.android.agiledevkt.modules.array.ArrayTestActivity
 import com.lodz.android.agiledevkt.modules.bitmap.BitmapTestActivity
 import com.lodz.android.agiledevkt.modules.bluetooth.BluetoothTestActivity
 import com.lodz.android.agiledevkt.modules.bottomsheet.BottomSheetsActivity
-import com.lodz.android.agiledevkt.modules.camera.CameraActivity
+import com.lodz.android.agiledevkt.modules.camera.CameraMainActivity
 import com.lodz.android.agiledevkt.modules.cardview.CardViewActivity
 import com.lodz.android.agiledevkt.modules.collect.CollectActivity
 import com.lodz.android.agiledevkt.modules.color.ColorAlphaTestActivity
@@ -162,7 +162,7 @@ class MainActivity : BaseActivity() {
         MainBean("子控件透明布局测试类", "Z", HoleTestActivity::class.java),
         MainBean("MVP模式测试类", "M", MvpDemoActivity::class.java),
         MainBean("Koin注入测试类", "K", KoinTestActivity::class.java),
-        MainBean("相机测试类", "X", CameraActivity::class.java)
+        MainBean("相机测试类", "X", CameraMainActivity::class.java)
     )
 
     /** 列表 */

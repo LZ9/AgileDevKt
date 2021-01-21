@@ -24,7 +24,7 @@ class CameraHelper(activity: Activity, surfaceView: SurfaceView) : Camera.Previe
     var mSurfaceHolder: SurfaceHolder                     //SurfaceHolder对象
 
     private var mActivity: Activity = activity
-    private var mCallBack: CallBack? = null   //自定义的回调
+    private var mListener: OnCameraListener? = null   //自定义的回调
 
     private var mCameraFacing = Camera.CameraInfo.CAMERA_FACING_BACK  //摄像头方向
     private var mDisplayOrientation: Int = 0    //预览旋转的角度
@@ -32,20 +32,9 @@ class CameraHelper(activity: Activity, surfaceView: SurfaceView) : Camera.Previe
     private var picWidth = 2160        //保存图片的宽
     private var picHeight = 3840       //保存图片的高
 
-    override fun onPreviewFrame(data: ByteArray?, camera: Camera?) {
-        mCallBack?.onPreviewFrame(data)
-    }
 
-    fun takePic() {
-        mCamera?.let {
-            it.takePicture({}, null, { data, _ ->
-                it.startPreview()
-                mCallBack?.onTakePic(data)
-            })
-        }
-    }
-
-    private fun init() {
+    init {
+        mSurfaceHolder = mSurfaceView.holder
         mSurfaceHolder.addCallback(object :SurfaceHolder.Callback{
             override fun surfaceCreated(holder: SurfaceHolder) {
                 if (mCamera == null) {
@@ -61,6 +50,19 @@ class CameraHelper(activity: Activity, surfaceView: SurfaceView) : Camera.Previe
                 releaseCamera()
             }
         })
+    }
+
+    override fun onPreviewFrame(data: ByteArray?, camera: Camera?) {
+        mListener?.onPreviewFrame(data)
+    }
+
+    fun takePic() {
+        mCamera?.let {
+            it.takePicture({}, null, { data, _ ->
+                it.startPreview()
+                mListener?.onTakePic(data)
+            })
+        }
     }
 
     //打开相机
@@ -122,7 +124,7 @@ class CameraHelper(activity: Activity, surfaceView: SurfaceView) : Camera.Previe
         mCamera?.let {
             it.startFaceDetection()
             it.setFaceDetectionListener { faces, _ ->
-                mCallBack?.onFaceDetect(transForm(faces))
+                mListener?.onFaceDetect(transForm(faces))
                 Log.d("testtag","检测到 ${faces.size} 张人脸")
             }
         }
@@ -286,18 +288,14 @@ class CameraHelper(activity: Activity, surfaceView: SurfaceView) : Camera.Previe
     /** 获取预览旋转的角度 */
     fun getDisplayOrientation(): Int = mDisplayOrientation
 
-    fun addCallBack(callBack: CallBack) {
-        this.mCallBack = callBack
+    fun setOnCameraListener(listener: OnCameraListener) {
+        this.mListener = listener
     }
 
-    interface CallBack {
+    interface OnCameraListener {
         fun onPreviewFrame(data: ByteArray?)
         fun onTakePic(data: ByteArray?)
         fun onFaceDetect(faces: ArrayList<RectF>)
     }
 
-    init {
-        mSurfaceHolder = mSurfaceView.holder
-        init()
-    }
 }

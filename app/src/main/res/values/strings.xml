@@ -751,6 +751,13 @@
     <!-- Koin注入测试类 -->
     <string name="koin_title">Koin注入测试类</string>
 
+    <!-- 相机测试类 -->
+    <string name="camera_main_take">拍照</string>
+    <string name="camera_main_video">录像</string>
+    <string name="camera_take_unsupport_flash">不支持闪光灯</string>
+    <string name="camera_take_fail">拍照失败</string>
+    <string name="camera_take_processing">正在处理图片</string>
+
 
 
 </resources>
