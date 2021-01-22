@@ -18,8 +18,9 @@ class TakePhotoManager internal constructor(private val takeBean: TakeBean) {
         fun create(): TakeBuilder = TakeBuilder()
     }
 
-    /** 拍照，上下文[context] */
-    fun take(context: Context) {
+    /** 拍照，上下文[context]，Intent启动标记[flags] */
+    @JvmOverloads
+    fun take(context: Context, flags: List<Int>? = null) {
         if (takeBean.imgLoader == null && !takeBean.isImmediately) {//没有立即返回需要校验预览图片加载器
             context.toastShort(R.string.pandora_preview_loader_unset)
             return
@@ -43,7 +44,7 @@ class TakePhotoManager internal constructor(private val takeBean: TakeBean) {
             context.toastShort(R.string.pandora_photo_authority_empty)
             return
         }
-        TakePhotoActivity.start(context, takeBean)
+        TakePhotoActivity.start(context, takeBean, flags)
     }
 
 }

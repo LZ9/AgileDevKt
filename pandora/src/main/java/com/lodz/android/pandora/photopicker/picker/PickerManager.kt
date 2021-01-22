@@ -23,8 +23,9 @@ class PickerManager<V : View> internal constructor(private val pickerBean: Picke
         fun <V : View> create(): PickerBuilder<V> = PickerBuilder()
     }
 
-    /** 打开选择器，上下文[context] */
-    fun open(context: Context) {
+    /** 打开选择器，上下文[context]，Intent启动标记[flags] */
+    @JvmOverloads
+    fun open(context: Context, flags: List<Int>? = null) {
         if (pickerBean.imgLoader == null) {// 校验图片加载器
             context.toastShort(R.string.pandora_photo_loader_unset)
             return
@@ -68,6 +69,6 @@ class PickerManager<V : View> internal constructor(private val pickerBean: Picke
             context.toastShort(R.string.pandora_photo_authority_empty)
             return
         }
-        PhotoPickerActivity.start(context, pickerBean)
+        PhotoPickerActivity.start(context, pickerBean, flags)
     }
 }

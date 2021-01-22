@@ -25,6 +25,7 @@ import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
 import com.lodz.android.pandora.rx.subscribe.observer.ProgressObserver
 import com.lodz.android.pandora.rx.utils.RxUtils
 import com.lodz.android.pandora.widget.camera.CameraHelper
+import com.lodz.android.pandora.widget.camera.OnCameraListener
 import io.reactivex.rxjava3.core.Observable
 import okio.buffer
 import okio.sink
@@ -87,7 +88,11 @@ class CameraTakeActivity : AbsActivity() {
             mCameraHelper?.takePic()
         }
 
-        mCameraHelper?.setOnCameraListener(object : CameraHelper.OnCameraListener {
+        mCameraHelper?.setOnCameraListener(object : OnCameraListener {
+            override fun onStatusChange(status: Int, msg: String) {
+
+            }
+
             override fun onPreviewFrame(data: ByteArray?) {
             }
 

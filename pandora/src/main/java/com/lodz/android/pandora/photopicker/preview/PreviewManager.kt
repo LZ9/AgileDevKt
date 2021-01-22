@@ -16,8 +16,9 @@ class PreviewManager<V : View, T : Any> internal constructor(private val preview
         fun <V : View, T : Any> create(): PreviewBuilder<V, T> = PreviewBuilder()
     }
 
-    /** 打开预览器，上下文[context] */
-    fun open(context: Context) {
+    /** 打开预览器，上下文[context]，Intent启动标记[flags]  */
+    @JvmOverloads
+    fun open(context: Context, flags: List<Int>? = null) {
         if (previewBean.imgView == null) {// 校验图片加载器
             ToastUtils.showShort(context, R.string.pandora_preview_img_unset)
             return
@@ -33,7 +34,7 @@ class PreviewManager<V : View, T : Any> internal constructor(private val preview
             previewBean.showPosition = 0
         }
 
-        PicturePreviewActivity.start(context, previewBean)
+        PicturePreviewActivity.start(context, previewBean, flags)
     }
 
 }

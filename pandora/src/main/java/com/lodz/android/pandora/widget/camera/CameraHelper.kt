@@ -12,26 +12,35 @@ import android.view.SurfaceView
 import android.widget.Toast
 
 /**
- *
+ * 相机帮助类
  * @author zhouL
  * @date 2021/1/13
  */
-class CameraHelper(activity: Activity, surfaceView: SurfaceView) : Camera.PreviewCallback {
+class CameraHelper @JvmOverloads constructor(activity: Activity, surfaceView: SurfaceView, cameraFacing: Int = Camera.CameraInfo.CAMERA_FACING_BACK) {
 
-    private var mCamera: Camera? = null                   //Camera对象
-    private lateinit var mParameters: Camera.Parameters   //Camera对象的参数
-    private var mSurfaceView: SurfaceView = surfaceView   //用于预览的SurfaceView对象
-    var mSurfaceHolder: SurfaceHolder                     //SurfaceHolder对象
+    /** Camera对象 */
+    private var mCamera: Camera? = null
+    /** Camera对象的参数 */
+    private lateinit var mParameters: Camera.Parameters
+
+    /** 用于预览的SurfaceView对象 */
+    private var mSurfaceView: SurfaceView = surfaceView
+    /** SurfaceHolder对象 */
+    private var mSurfaceHolder: SurfaceHolder
 
     private var mActivity: Activity = activity
-    private var mListener: OnCameraListener? = null   //自定义的回调
+    /** 监听器 */
+    private var mListener: OnCameraListener? = null
 
-    private var mCameraFacing = Camera.CameraInfo.CAMERA_FACING_BACK  //摄像头方向
-    private var mDisplayOrientation: Int = 0    //预览旋转的角度
+    /** 摄像头方向（默认背面） */
+    private var mCameraFacing = cameraFacing
+    /** 预览旋转的角度 */
+    private var mDisplayOrientation: Int = 0
 
-    private var picWidth = 2160        //保存图片的宽
-    private var picHeight = 3840       //保存图片的高
-
+    /** 保存图片的宽 */
+    private var picWidth = 2160
+    /** 保存图片的高 */
+    private var picHeight = 3840
 
     init {
         mSurfaceHolder = mSurfaceView.holder
@@ -52,39 +61,42 @@ class CameraHelper(activity: Activity, surfaceView: SurfaceView) : Camera.Previe
         })
     }
 
-    override fun onPreviewFrame(data: ByteArray?, camera: Camera?) {
-        mListener?.onPreviewFrame(data)
-    }
-
+    /** 拍照 */
     fun takePic() {
-        mCamera?.let {
-            it.takePicture({}, null, { data, _ ->
-                it.startPreview()
-                mListener?.onTakePic(data)
-            })
-        }
+        mCamera?.takePicture({}, null, { data, camera ->
+            camera.startPreview()
+            mListener?.onTakePic(data)
+        })
     }
 
-    //打开相机
-    private fun openCamera(cameraFacing: Int = Camera.CameraInfo.CAMERA_FACING_BACK): Boolean {
-        val supportCameraFacing = supportCameraFacing(cameraFacing)
-        if (supportCameraFacing) {
+    /** 打开相机，[cameraFacing]摄像头位置 */
+    private fun openCamera(cameraFacing: Int): Boolean {
+        val isSupport = isSupportCameraFacing(cameraFacing)
+        if (isSupport) {
             try {
                 mCamera = Camera.open(cameraFacing)
-                initParameters(mCamera!!)
-                mCamera?.setPreviewCallback(this)
+                initParameters()
+                mCamera?.setPreviewCallback { data, camera ->
+                    mListener?.onPreviewFrame(data)
+                }
             } catch (e: Exception) {
                 e.printStackTrace()
-                toast("打开相机失败!")
+                mListener?.onStatusChange(OnCameraListener.CAMERA_UNSUPPORT_CAMERA_FACING, "不支持该摄像头")
                 return false
             }
         }
-        return supportCameraFacing
+        mListener?.onStatusChange(OnCameraListener.CAMERA_UNSUPPORT_CAMERA_FACING, "不支持该摄像头")
+        return false
     }
 
-    //配置相机参数
-    private fun initParameters(camera: Camera) {
+    /** 配置相机参数 */
+    private fun initParameters() {
         try {
+            val camera = mCamera
+            if (camera == null){
+                mListener?.onStatusChange(OnCameraListener.CAMERA_OPEN_FAIL, "相机打开失败")
+                return
+            }
             mParameters = camera.parameters
             mParameters.previewFormat = ImageFormat.NV21
 
@@ -110,27 +122,23 @@ class CameraHelper(activity: Activity, surfaceView: SurfaceView) : Camera.Previe
         }
     }
 
-    //开始预览
+    /** 开始预览 */
     fun startPreview() {
-        mCamera?.let {
-            it.setPreviewDisplay(mSurfaceHolder)
-            setCameraDisplayOrientation(mActivity)
-            it.startPreview()
-            startFaceDetect()
-        }
+        mCamera?.setPreviewDisplay(mSurfaceHolder)
+        setCameraDisplayOrientation(mActivity)
+        mCamera?.startPreview()
+        startFaceDetect()
     }
 
     private fun startFaceDetect() {
-        mCamera?.let {
-            it.startFaceDetection()
-            it.setFaceDetectionListener { faces, _ ->
-                mListener?.onFaceDetect(transForm(faces))
-                Log.d("testtag","检测到 ${faces.size} 张人脸")
-            }
+        mCamera?.startFaceDetection()
+        mCamera?.setFaceDetectionListener { faces, _ ->
+            mListener?.onFaceDetect(transForm(faces))
+            Log.d("testtag","检测到 ${faces.size} 张人脸")
         }
     }
 
-    //判断是否支持某一对焦模式
+    /** 判断是否支持某一对焦模式 */
     private fun isSupportFocus(focusMode: String): Boolean {
         var autoFocus = false
         val listFocusMode = mParameters.supportedFocusModes
@@ -142,7 +150,7 @@ class CameraHelper(activity: Activity, surfaceView: SurfaceView) : Camera.Previe
         return autoFocus
     }
 
-    //切换摄像头
+    /** 切换摄像头 */
     fun exchangeCamera() {
         releaseCamera()
         mCameraFacing = if (mCameraFacing == Camera.CameraInfo.CAMERA_FACING_BACK)
@@ -154,18 +162,15 @@ class CameraHelper(activity: Activity, surfaceView: SurfaceView) : Camera.Previe
         startPreview()
     }
 
-    //释放相机
+    /** 释放相机 */
     fun releaseCamera() {
-        if (mCamera != null) {
-            // mCamera?.stopFaceDetection()
-            mCamera?.stopPreview()
-            mCamera?.setPreviewCallback(null)
-            mCamera?.release()
-            mCamera = null
-        }
+        mCamera?.stopPreview()
+        mCamera?.setPreviewCallback(null)
+        mCamera?.release()
+        mCamera = null
     }
 
-    //获取与指定宽高相等或最接近的尺寸
+    /** 获取与指定宽高相等或最接近的尺寸 */
     private fun getBestSize(targetWidth: Int, targetHeight: Int, sizeList: List<Camera.Size>): Camera.Size? {
         var bestSize: Camera.Size? = null
         val targetRatio = (targetHeight.toDouble() / targetWidth)  //目标大小的宽高比
@@ -193,7 +198,7 @@ class CameraHelper(activity: Activity, surfaceView: SurfaceView) : Camera.Previe
         return bestSize
     }
 
-    //设置预览旋转的角度
+    /** 设置预览旋转的角度 */
     private fun setCameraDisplayOrientation(activity: Activity) {
         val info = Camera.CameraInfo()
         Camera.getCameraInfo(mCameraFacing, info)
@@ -219,17 +224,19 @@ class CameraHelper(activity: Activity, surfaceView: SurfaceView) : Camera.Previe
         Log.d("testtag","setDisplayOrientation(result) : $mDisplayOrientation")
     }
 
-    //判断是否支持某个相机
-    private fun supportCameraFacing(cameraFacing: Int): Boolean {
+    /** 判断是否支持[cameraFacing]摄像头位置 */
+    private fun isSupportCameraFacing(cameraFacing: Int): Boolean {
         val info = Camera.CameraInfo()
         for (i in 0 until Camera.getNumberOfCameras()) {
             Camera.getCameraInfo(i, info)
-            if (info.facing == cameraFacing) return true
+            if (info.facing == cameraFacing) {
+                return true
+            }
         }
         return false
     }
 
-    //将相机中用于表示人脸矩形的坐标转换成UI页面的坐标
+    /** 将相机中用于表示人脸矩形的坐标转换成UI页面的坐标 */
     private fun transForm(faces: Array<Camera.Face>): ArrayList<RectF> {
         val matrix = Matrix()
         // Need mirror for front camera.
@@ -290,12 +297,6 @@ class CameraHelper(activity: Activity, surfaceView: SurfaceView) : Camera.Previe
 
     fun setOnCameraListener(listener: OnCameraListener) {
         this.mListener = listener
-    }
-
-    interface OnCameraListener {
-        fun onPreviewFrame(data: ByteArray?)
-        fun onTakePic(data: ByteArray?)
-        fun onFaceDetect(faces: ArrayList<RectF>)
     }
 
 }

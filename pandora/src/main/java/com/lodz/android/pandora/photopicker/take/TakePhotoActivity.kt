@@ -25,13 +25,16 @@ internal class TakePhotoActivity : AbsActivity() {
     companion object {
         private var sTakeBean: TakeBean? = null
 
-        internal fun start(context: Context, takeBean: TakeBean) {
+        internal fun start(context: Context, takeBean: TakeBean, flags: List<Int>?) {
             synchronized(this) {
                 if (sTakeBean != null) {
                     return
                 }
                 sTakeBean = takeBean
                 val intent = Intent(context, TakePhotoActivity::class.java)
+                flags?.forEach {
+                    intent.addFlags(it)
+                }
                 context.startActivity(intent)
             }
         }

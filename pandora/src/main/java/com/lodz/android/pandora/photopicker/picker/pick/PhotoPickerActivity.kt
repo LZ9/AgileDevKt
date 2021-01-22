@@ -43,13 +43,16 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
     companion object {
         private var sPickerBean: PickerBean<*>? = null
 
-        internal fun <V : View> start(context: Context, pickerBean: PickerBean<V>) {
+        internal fun <V : View> start(context: Context, pickerBean: PickerBean<V>, flags: List<Int>?) {
             synchronized(this) {
                 if (sPickerBean != null) {
                     return
                 }
                 sPickerBean = pickerBean
                 val intent = Intent(context, PhotoPickerActivity::class.java)
+                flags?.forEach {
+                    intent.addFlags(it)
+                }
                 context.startActivity(intent)
             }
         }

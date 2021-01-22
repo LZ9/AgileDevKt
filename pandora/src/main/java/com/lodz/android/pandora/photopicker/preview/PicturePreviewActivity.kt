@@ -28,13 +28,16 @@ internal class PicturePreviewActivity<V : View, T : Any> : AbsActivity() {
 
     companion object {
         private var sPreviewBean: PreviewBean<*, *>? = null
-        internal fun <V : View, T : Any> start(context: Context, previewBean: PreviewBean<V, T>) {
+        internal fun <V : View, T : Any> start(context: Context, previewBean: PreviewBean<V, T>, flags: List<Int>?) {
             synchronized(this) {
                 if (sPreviewBean != null) {
                     return
                 }
                 sPreviewBean = previewBean
                 val intent = Intent(context, PicturePreviewActivity::class.java)
+                flags?.forEach {
+                    intent.addFlags(it)
+                }
                 context.startActivity(intent)
             }
         }
