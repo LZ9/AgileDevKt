@@ -9,8 +9,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 31
-        versionName "1.5.8"// 未上传
+        versionCode 32
+        versionName "1.6.0"// 成功上传
     }
 
     kotlinOptions {
@@ -50,7 +50,7 @@ dependencies {
 //    userOrg = 'lz9'
 //    groupId = 'com.lodz'
 //    artifactId = 'pandora'
-//    publishVersion = '1.5.7'
+//    publishVersion = '1.6.0'
 //    desc = 'Hi, this is a android base library'
 //    website = 'https://github.com/LZ9/AgileDevKt'
 //}
