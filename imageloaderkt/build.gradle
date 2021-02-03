@@ -10,8 +10,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 16
-        versionName "1.1.5"// 成功上传
+        versionCode 17
+        versionName "1.1.6"// 未上传
     }
 
     buildTypes {
@@ -28,12 +28,12 @@ android {
 
 dependencies {
     implementation 'androidx.annotation:annotation:1.1.0'
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.21'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.4.21"
 
     // glide
-    api 'com.github.bumptech.glide:glide:4.11.0'
-    kapt 'com.github.bumptech.glide:compiler:4.11.0'
-    implementation "com.github.bumptech.glide:okhttp3-integration:4.11.0"
+    api 'com.github.bumptech.glide:glide:4.12.0'
+    kapt 'com.github.bumptech.glide:compiler:4.12.0'
+    implementation "com.github.bumptech.glide:okhttp3-integration:4.12.0"
     api 'jp.wasabeef:glide-transformations:4.3.0'
 }
 
