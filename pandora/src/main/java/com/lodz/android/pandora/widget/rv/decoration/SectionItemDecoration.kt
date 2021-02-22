@@ -110,7 +110,7 @@ open class SectionItemDecoration<T> protected constructor(context: Context) : Ba
         super.drawTextPaint(canvas, title, left, top, right, bottom)
     }
 
-    interface OnSectionCallback<T> {
+    fun interface OnSectionCallback<T> {
         /** 根据位置[position]获取列表内容 */
         fun getSourceItem(position: Int): T
     }

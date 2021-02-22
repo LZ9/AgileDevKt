@@ -251,7 +251,7 @@ class NetworkManager private constructor() {
     }
 
     /** 网络监听器 */
-    interface NetworkListener {
+    fun interface NetworkListener {
         /** 网络状态变化，网络是否可用[isNetworkAvailable]，网络信息[netInfo] */
         fun onNetworkStatusChanged(isNetworkAvailable: Boolean, netInfo: NetInfo)
     }

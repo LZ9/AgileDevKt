@@ -27,25 +27,15 @@ class PickerBuilder<V : View> {
 
     /** 设置图片加载器[imgLoader] */
     fun setImgLoader(imgLoader: (context: Context, source: PicInfo, imageView: ImageView) -> Unit): PickerBuilder<V> =
-            setImgLoader(object : OnImgLoader<PicInfo> {
-                override fun displayImg(context: Context, source: PicInfo, imageView: ImageView) {
-                    imgLoader.invoke(context, source, imageView)
-                }
-            })
+        setImgLoader(OnImgLoader<PicInfo> { context, source, imageView ->
+            imgLoader.invoke(context, source, imageView)
+        })
 
     /** 设置图片选中回调[listener] */
     fun setOnPhotoPickerListener(listener: OnPhotoPickerListener): PickerBuilder<V> {
         pickerBean.photoPickerListener = listener
         return this
     }
-
-    /** 设置图片选中回调[listener] */
-    fun setOnPhotoPickerListener(listener: (photos: List<PicInfo>) -> Unit): PickerBuilder<V> =
-            setOnPhotoPickerListener(object : OnPhotoPickerListener {
-                override fun onPickerSelected(photos: List<PicInfo>) {
-                    listener.invoke(photos)
-                }
-            })
 
     /** 设置图片可选最大数量[maxCount] */
     fun setMaxCount(@IntRange(from = 1) maxCount: Int): PickerBuilder<V> {

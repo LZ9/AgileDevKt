@@ -26,7 +26,7 @@ class ObservableScrollView : NestedScrollView {
         mListener = listener
     }
 
-    interface OnScrollListener {
+    fun interface OnScrollListener {
         fun onScrollChanged(l: Int, t: Int, oldl: Int, oldt: Int)
     }
 }

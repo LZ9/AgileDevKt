@@ -23,25 +23,15 @@ class TakeBuilder {
 
     /** 设置预览图图加载器[imgLoader] */
     fun setOnImgLoader(imgLoader: (context: Context, source: String, imageView: ImageView) -> Unit): TakeBuilder =
-            setOnImgLoader(object : OnImgLoader<String> {
-                override fun displayImg(context: Context, source: String, imageView: ImageView) {
-                    imgLoader.invoke(context, source, imageView)
-                }
-            })
+        setOnImgLoader(OnImgLoader<String> { context, source, imageView ->
+            imgLoader.invoke(context, source, imageView)
+        })
 
     /** 拍照回调[listener] */
     fun setOnPhotoTakeListener(listener: OnPhotoTakeListener?): TakeBuilder {
         takeBean.photoTakeListener = listener
         return this
     }
-
-    /** 拍照回调[listener] */
-    fun setOnPhotoTakeListener(listener: ((photo: String) -> Unit)?): TakeBuilder =
-            setOnPhotoTakeListener(object : OnPhotoTakeListener {
-                override fun onTake(photo: String) {
-                    listener?.invoke(photo)
-                }
-            })
 
     /** 设置拍照保存地址[savePath] */
     fun setCameraSavePath(savePath: String): TakeBuilder {

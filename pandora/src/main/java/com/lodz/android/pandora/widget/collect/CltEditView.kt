@@ -19,6 +19,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
@@ -713,6 +714,9 @@ class CltEditView : FrameLayout {
     fun setOnInputTextLimit(listener: (s: CharSequence?, start: Int, before: Int, count: Int, max: Int) -> Unit) {
         mPdrLimitListener = listener
     }
+
+    /** 获取输入框控件 */
+    fun getEditText(): ScrollEditText = mPdrContentEdit
 
     /** 所有字符转大写 */
     private class UpperCaseTransformation : ReplacementTransformationMethod() {
