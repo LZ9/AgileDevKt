@@ -98,33 +98,25 @@ class BinderRvActivity : BaseActivity() {
     private fun getFirstBinder(): FirstBinder {
         val binder = FirstBinder(getContext(), FIRST_BINDER)
         binder.setData(getNationList())
-        binder.setListener(object :FirstBinder.Listener{
-            override fun onClick(item: NationBean) {
-                toastShort(item.name)
-            }
-        })
+        binder.setListener { item ->
+            toastShort(item.name)
+        }
         return binder
     }
 
     private fun getSecondBinder(): SecondBinder {
         val binder = SecondBinder(getContext(), SECOND_BINDER)
         binder.setData(getNationList())
-        binder.setListener(object :SecondBinder.Listener{
-            override fun onClick(item: NationBean) {
-                toastShort(item.name)
-            }
-        })
+        binder.setListener { item -> toastShort(item.name) }
         return binder
     }
 
     private fun getThirdBinder(): ThirdBinder {
         val binder = ThirdBinder(getContext(), THIRD_BINDER)
         binder.setData(getNationList())
-        binder.setListener(object :ThirdBinder.Listener{
-            override fun onClick(item: NationBean) {
-                SnackbarUtils.createShort(mRootLayout, item.name).setBackgroundColor(getColorCompat(R.color.color_a0191919)).show()
-            }
-        })
+        binder.setListener { item ->
+            SnackbarUtils.createShort(mRootLayout, item.name).setBackgroundColor(getColorCompat(R.color.color_a0191919)).show()
+        }
         return binder
     }
 

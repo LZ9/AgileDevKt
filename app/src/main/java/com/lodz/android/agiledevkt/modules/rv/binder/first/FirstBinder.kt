@@ -68,7 +68,7 @@ class FirstBinder(context: Context, binderType: Int) : RecyclerBinder<List<Natio
         }
     }
 
-    interface Listener {
+    fun interface Listener {
         fun onClick(item: NationBean)
     }
 }

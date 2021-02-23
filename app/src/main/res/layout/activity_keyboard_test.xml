@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.lodz.android.pandora.widget.collect.CltEditView
+            android:id="@+id/idcard_cltedt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            app:inputType="idcard"
+            app:maxLength="18"
+            app:requiredVisibility="gone"
+            app:titleText="@string/keyboard_idcard" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_cccccc" />
+
+        <com.lodz.android.pandora.widget.collect.CltEditView
+            android:id="@+id/carplate_cltedt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            app:inputType="text"
+            app:requiredVisibility="gone"
+            app:titleText="@string/keyboard_carplate" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_cccccc" />
+
+        <com.lodz.android.pandora.widget.collect.CltEditView
+            android:id="@+id/common_cert_cltedt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            app:inputType="text"
+            app:requiredVisibility="gone"
+            app:titleText="@string/keyboard_common_cert" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_cccccc" />
+
+        <com.lodz.android.pandora.widget.collect.CltEditView
+            android:id="@+id/default_cltedt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            app:inputType="text"
+            app:requiredVisibility="gone"
+            app:titleText="@string/keyboard_default" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_cccccc" />
+
+    </LinearLayout>
+
+    <android.inputmethodservice.KeyboardView
+        android:id="@+id/idcard_keyboard_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/color_d1d5db"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:keyBackground="@drawable/selector_bg_key"
+        android:keyTextColor="@color/color_1a1a1a"
+        android:keyTextSize="14sp"
+        android:labelTextSize="14sp"
+        android:shadowColor="@android:color/white"
+        android:shadowRadius="0.0" />
+
+    <android.inputmethodservice.KeyboardView
+        android:id="@+id/carplate_keyboard_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/color_d1d5db"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:keyBackground="@drawable/selector_bg_key"
+        android:keyTextColor="@color/color_1a1a1a"
+        android:keyTextSize="14sp"
+        android:labelTextSize="14sp"
+        android:shadowColor="@android:color/white"
+        android:shadowRadius="0.0" />
+
+    <android.inputmethodservice.KeyboardView
+        android:id="@+id/common_cert_keyboard_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/color_d1d5db"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:keyBackground="@drawable/selector_bg_key"
+        android:keyTextColor="@color/color_1a1a1a"
+        android:keyTextSize="14sp"
+        android:labelTextSize="14sp"
+        android:shadowColor="@android:color/white"
+        android:shadowRadius="0.0" />
+
+</FrameLayout>

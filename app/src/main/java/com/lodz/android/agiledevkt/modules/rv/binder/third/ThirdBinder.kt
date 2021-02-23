@@ -64,7 +64,7 @@ class ThirdBinder(context: Context, binderType: Int) : RecyclerBinder<NationBean
 
     override fun getCount(): Int = mData.getSize()
 
-    interface Listener {
+    fun interface Listener {
         fun onClick(item: NationBean)
     }
 

@@ -758,6 +758,11 @@
     <string name="camera_take_fail">拍照失败</string>
     <string name="camera_take_processing">正在处理图片</string>
 
+    <!-- 自定义键盘测试类 -->
+    <string name="keyboard_idcard">身份证：</string>
+    <string name="keyboard_carplate">车牌：</string>
+    <string name="keyboard_common_cert">通用证件：</string>
+    <string name="keyboard_default">默认：</string>
 
 
 </resources>

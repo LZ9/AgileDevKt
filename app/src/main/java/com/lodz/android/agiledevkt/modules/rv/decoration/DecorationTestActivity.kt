@@ -209,15 +209,15 @@ class DecorationTestActivity : BaseActivity() {
         }
         if (type == DECORATION_TYPE_SECTION) {// 根据数据自动生成分组标签
             return SectionItemDecoration.create<String>(getContext())
-                    .setOnSectionCallback(object : SectionItemDecoration.OnSectionCallback<String> {
-                        override fun getSourceItem(position: Int): String = mList[position]
-                    })
-                    .setSectionBgColorRes(R.color.color_ea6662)
-                    .setSectionTextColorRes(R.color.color_ffa630)
-                    .setSectionTextPaddingLeftDp(8)
-                    .setSectionTextTypeface(Typeface.DEFAULT_BOLD)
-                    .setSectionHeight(30)
-                    .setSectionTextSize(16f)
+                .setOnSectionCallback { position ->
+                    mList[position]
+                }
+                .setSectionBgColorRes(R.color.color_ea6662)
+                .setSectionTextColorRes(R.color.color_ffa630)
+                .setSectionTextPaddingLeftDp(8)
+                .setSectionTextTypeface(Typeface.DEFAULT_BOLD)
+                .setSectionHeight(30)
+                .setSectionTextSize(16f)
         }
         if (type == DECORATION_TYPE_SECTION_FIX) {//按传入的数据配置分组标签
             return SectionFixItemDecoration.create(getContext(), CLUB_INDEX_TITLE, PLAYER_FIX_SECTIONS)
@@ -231,15 +231,15 @@ class DecorationTestActivity : BaseActivity() {
         }
         if (type == DECORATION_TYPE_STICKY_SECTION) {// 根据数据自动生成分组标签
             return StickyItemDecoration.create<String>(getContext())
-                    .setOnSectionCallback(object : SectionItemDecoration.OnSectionCallback<String> {
-                        override fun getSourceItem(position: Int): String = mList[position]
-                    })
-                    .setSectionBgColorRes(R.color.color_ea6662)
-                    .setSectionTextColorRes(R.color.color_ffa630)
-                    .setSectionTextPaddingLeftDp(8)
-                    .setSectionTextTypeface(Typeface.DEFAULT_BOLD)
-                    .setSectionHeight(30)
-                    .setSectionTextSize(16f)
+                .setOnSectionCallback { position ->
+                    mList[position]
+                }
+                .setSectionBgColorRes(R.color.color_ea6662)
+                .setSectionTextColorRes(R.color.color_ffa630)
+                .setSectionTextPaddingLeftDp(8)
+                .setSectionTextTypeface(Typeface.DEFAULT_BOLD)
+                .setSectionHeight(30)
+                .setSectionTextSize(16f)
         }
         if (type == DECORATION_TYPE_STICKY_SECTION_FIX) {//按传入的数据配置分组标签
             return StickyFixItemDecoration.create(getContext(), CLUB_INDEX_TITLE, PLAYER_FIX_SECTIONS)

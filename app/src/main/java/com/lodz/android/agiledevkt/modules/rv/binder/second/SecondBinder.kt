@@ -64,7 +64,7 @@ class SecondBinder(context: Context, binderType: Int) : RecyclerBinder<List<Nati
         }
     }
 
-    interface Listener {
+    fun interface Listener {
         fun onClick(item: NationBean)
     }
 }

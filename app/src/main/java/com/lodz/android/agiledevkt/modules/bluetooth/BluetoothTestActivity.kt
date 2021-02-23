@@ -126,13 +126,9 @@ class BluetoothTestActivity : BaseActivity() {
     }
 
     /** 蓝牙状态监听器 */
-    private val mBleStateListener = object : BleStateListener {
-
-        override fun onStateChange(state: Int) {
-            mBleStatusTv.text = getString(R.string.ble_status).format(getBleTips(state))
-            setSwitchByState(state)
-        }
-
+    private val mBleStateListener = BleStateListener { state ->
+        mBleStatusTv.text = getString(R.string.ble_status).format(getBleTips(state))
+        setSwitchByState(state)
     }
 
     /** 蓝牙搜索监听器 */

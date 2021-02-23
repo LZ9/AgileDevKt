@@ -40,6 +40,7 @@ import com.lodz.android.agiledevkt.modules.hole.HoleTestActivity
 import com.lodz.android.agiledevkt.modules.idcard.IdcardTestActivity
 import com.lodz.android.agiledevkt.modules.image.GlideActivity
 import com.lodz.android.agiledevkt.modules.info.InfoTestActivity
+import com.lodz.android.agiledevkt.modules.keyboard.KeyboardTestActivity
 import com.lodz.android.agiledevkt.modules.koin.KoinTestActivity
 import com.lodz.android.agiledevkt.modules.location.LocationTestActivity
 import com.lodz.android.agiledevkt.modules.menubar.MenuBarTestActivity
@@ -162,7 +163,8 @@ class MainActivity : BaseActivity() {
         MainBean("子控件透明布局测试类", "Z", HoleTestActivity::class.java),
         MainBean("MVP模式测试类", "M", MvpDemoActivity::class.java),
         MainBean("Koin注入测试类", "K", KoinTestActivity::class.java),
-        MainBean("相机测试类", "X", CameraMainActivity::class.java)
+        MainBean("相机测试类", "X", CameraMainActivity::class.java),
+        MainBean("自定义键盘测试类", "Z", KeyboardTestActivity::class.java)
     )
 
     /** 列表 */
@@ -207,16 +209,16 @@ class MainActivity : BaseActivity() {
     }
 
     private fun getItemDecoration(): RecyclerView.ItemDecoration =
-            StickyItemDecoration.create<String>(getContext())
-                    .setOnSectionCallback(object : SectionItemDecoration.OnSectionCallback<String> {
-                        override fun getSourceItem(position: Int): String = mList[position].getSortStr()
-                    })
-                    .setSectionTextSize(16f)
-                    .setSectionHeight(30)
-                    .setSectionTextTypeface(Typeface.DEFAULT_BOLD)
-                    .setSectionTextColorRes(R.color.color_00a0e9)
-                    .setSectionTextPaddingLeftDp(8)
-                    .setSectionBgColorRes(R.color.color_f0f0f0)
+        StickyItemDecoration.create<String>(getContext())
+            .setOnSectionCallback { position ->
+                mList[position].getSortStr()
+            }
+            .setSectionTextSize(16f)
+            .setSectionHeight(30)
+            .setSectionTextTypeface(Typeface.DEFAULT_BOLD)
+            .setSectionTextColorRes(R.color.color_00a0e9)
+            .setSectionTextPaddingLeftDp(8)
+            .setSectionBgColorRes(R.color.color_f0f0f0)
 
 
     override fun onPressBack(): Boolean {

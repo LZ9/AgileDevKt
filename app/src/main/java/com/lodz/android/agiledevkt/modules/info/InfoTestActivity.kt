@@ -278,13 +278,12 @@ class InfoTestActivity : BaseActivity() {
     }
 
     /** 网络监听器 */
-    private val mNetworkListener = object : NetworkManager.NetworkListener {
-        override fun onNetworkStatusChanged(isNetworkAvailable: Boolean, netInfo: NetInfo) {
+    private val mNetworkListener =
+        NetworkManager.NetworkListener { isNetworkAvailable, netInfo ->
             mSimDataStateTv.text = getString(R.string.info_phone_sim_data_state).format(getSimDataState())
             mSimConnectedDataTv.text = getString(R.string.info_phone_is_connected_data).format(isSimDataConnected())
             mApnNameTv.text = getString(R.string.info_apn_name).format(getApnName())
         }
-    }
 
     /** GPS广播接收器 */
     inner class GpsBroadcastReceiver : BroadcastReceiver() {
