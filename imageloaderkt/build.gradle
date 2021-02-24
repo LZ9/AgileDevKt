@@ -10,8 +10,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 17
-        versionName "1.1.6"// 未上传
+        versionCode 19
+        versionName "1.1.8"// 成功上传
     }
 
     buildTypes {
@@ -41,7 +41,7 @@ dependencies {
 //    userOrg = 'lz9'
 //    groupId = 'com.lodz'
 //    artifactId = 'imageloader-kt'
-//    publishVersion = '1.1.5'
+//    publishVersion = '1.1.8'
 //    desc = 'Hi, this is a image loader'
 //    website = 'https://github.com/LZ9/AgileDevKt'
 //}

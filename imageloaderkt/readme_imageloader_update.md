@@ -1,5 +1,10 @@
 # imageloader-kt库更新记录
 
+##### 2021/02/24
+1. 更新gradle和kotlin插件版本
+2. 更新glide版本
+3. 发布1.1.8版本
+
 ##### 2020/10/15
 1. 更新gradle和kotlin插件版本
 2. 最低版本支持到android5.0

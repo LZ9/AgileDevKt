@@ -17,7 +17,7 @@
 ```
     dependencies {
         api 'androidx.appcompat:appcompat:1.3.0-beta01'
-        api 'com.google.android.material:material:1.2.1'
+        api 'com.google.android.material:material:1.3.0'
         api 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
         api 'androidx.recyclerview:recyclerview:1.1.0'
         api 'androidx.cardview:cardview:1.0.0'
