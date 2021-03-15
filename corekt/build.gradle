@@ -45,7 +45,7 @@ dependencies {
     api 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0'
     api 'androidx.startup:startup-runtime:1.0.0'
     api 'com.google.android:flexbox:2.0.1'
-    api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2'
+    api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.3'
     api "org.jetbrains.kotlin:kotlin-stdlib:1.4.31"
 }
 
