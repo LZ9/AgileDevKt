@@ -5,9 +5,11 @@ import android.content.Context
 import android.graphics.Point
 import android.os.Build
 import android.os.PowerManager
+import android.provider.Settings
 import android.util.DisplayMetrics
 import android.view.*
 import androidx.fragment.app.Fragment
+import java.util.*
 
 /**
  * 屏幕信息扩展类
@@ -55,10 +57,15 @@ fun View.getScreenWidth(): Int = context.getScreenWidth()
 fun View.getScreenHeight(): Int = context.getScreenHeight()
 
 /** 判断是否存在NavigationBar */
-fun Context.hasNavigationBar(window: Window): Boolean {
-    val realHeight = getRealScreenHeight(window)//获取真实屏幕高度
-    val screenHeight = getScreenHeight()
-    val statusBarHeight = getStatusBarHeight()
+fun Window.hasNavigationBar(): Boolean {
+    if (Build.BRAND.toUpperCase(Locale.CHINA).contains("XIAOMI")){
+        val isFullScreen = Settings.Global.getInt(context.getContentResolver(), "force_fsg_nav_bar", 0) != 0
+        return !isFullScreen
+    }
+
+    val realHeight = context.getRealScreenHeight(this)//获取真实屏幕高度
+    val screenHeight = context.getScreenHeight()
+    val statusBarHeight = context.getStatusBarHeight()
     if (screenHeight < realHeight && realHeight - screenHeight != statusBarHeight) {//可用屏幕高度小于真实屏幕高度 && 真实屏幕高度 - 可用屏幕高度 ！= 状态栏高度（兼容全面屏）
         return true
     }
@@ -66,16 +73,17 @@ fun Context.hasNavigationBar(window: Window): Boolean {
 }
 
 /** 获取虚拟按键高度 */
-fun Context.getNavigationBarHeight(window: Window): Int {
-    val id = resources.getIdentifier("navigation_bar_height", "dimen", "android")
-    if (id != 0 && hasNavigationBar(window)) {
-        return resources.getDimensionPixelSize(id)
+fun Context.getNavigationBarHeight(): Int {
+    try {
+        return resources.getDimensionPixelSize(resources.getIdentifier("navigation_bar_height", "dimen", "android"))
+    } catch (e: Exception) {
+        e.printStackTrace()
     }
     return 0
 }
 
 /** 判断是否存在NavigationBar */
-fun Activity.hasNavigationBar(): Boolean = hasNavigationBar(window)
+fun Activity.hasNavigationBar(): Boolean = window.hasNavigationBar()
 
 /** 判断是否存在NavigationBar */
 fun Fragment.hasNavigationBar(): Boolean = requireActivity().hasNavigationBar()
@@ -84,12 +92,16 @@ fun Fragment.hasNavigationBar(): Boolean = requireActivity().hasNavigationBar()
 fun Fragment.getNavigationBarHeight(): Int = requireActivity().getNavigationBarHeight()
 
 /** 获取虚拟按键高度 */
-fun Activity.getNavigationBarHeight(): Int = getNavigationBarHeight(window)
+fun Activity.getNavigationBarHeight(): Int = applicationContext.getNavigationBarHeight()
 
 /** 获取状态栏高度 */
 fun Context.getStatusBarHeight(): Int {
-    val id = resources.getIdentifier("status_bar_height", "dimen", "android")
-    return if (id != 0) resources.getDimensionPixelSize(id) else 0
+    try {
+        return resources.getDimensionPixelSize(resources.getIdentifier("status_bar_height", "dimen", "android"))
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
+    return 0
 }
 
 /** 获取状态栏高度 */

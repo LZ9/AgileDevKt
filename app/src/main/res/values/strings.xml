@@ -212,7 +212,7 @@
     <string name="info_screen_height">屏幕高度：%s</string>
     <string name="info_screen_width">屏幕宽度：%s</string>
     <string name="info_status_bar_height">状态栏高度：%s</string>
-    <string name="info_has_navigation_bar">是否存在虚拟按键：%s</string>
+    <string name="info_has_navigation_bar">是否显示虚拟按键：%s</string>
     <string name="info_navigation_bar_height">虚拟按键高度：%s</string>
     <string name="info_is_main_thread">是否主线程：%s</string>
     <string name="info_uuid">随机UUID：%s</string>

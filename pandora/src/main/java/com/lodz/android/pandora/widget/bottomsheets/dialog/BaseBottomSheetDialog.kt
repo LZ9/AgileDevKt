@@ -9,10 +9,7 @@ import androidx.annotation.FloatRange
 import androidx.annotation.LayoutRes
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.lodz.android.corekt.anko.getNavigationBarHeight
-import com.lodz.android.corekt.anko.getRealScreenHeight
-import com.lodz.android.corekt.anko.getScreenHeight
-import com.lodz.android.corekt.anko.getStatusBarHeight
+import com.lodz.android.corekt.anko.*
 import com.lodz.android.corekt.utils.ReflectUtils
 
 /**
@@ -68,16 +65,10 @@ abstract class BaseBottomSheetDialog : BottomSheetDialog {
         val wd = window ?: return
         wd.setGravity(Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL)// 设置底部展示
         val realScreenHeight = context.getRealScreenHeight(wd)// 屏幕真实高度
-        val screenHeight = context.getScreenHeight()//可用高度
+        val screenHeight = context.getScreenHeight()//界面显示高度
         val statusBarHeight = context.getStatusBarHeight()//状态栏高度
-        val navigationBarHeight = context.getNavigationBarHeight(wd)// 导航栏高度
-        val dialogHeight: Int
-        if (navigationBarHeight == 0 || realScreenHeight - screenHeight == statusBarHeight) {
-            // 全面屏，没有导航栏
-            dialogHeight = screenHeight - configTopOffsetPx()
-        } else {
-            dialogHeight = screenHeight + navigationBarHeight - configTopOffsetPx()
-        }
+        val navigationBarHeight = context.getNavigationBarHeight()// 导航栏高度
+        val dialogHeight = realScreenHeight - statusBarHeight - configTopOffsetPx()
         wd.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, if (dialogHeight == 0) ViewGroup.LayoutParams.MATCH_PARENT else dialogHeight)
     }
 

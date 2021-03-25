@@ -2,10 +2,7 @@ package com.lodz.android.pandora.widget.bottomsheets.dialogfragment
 
 import android.app.Dialog
 import android.os.Bundle
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.annotation.FloatRange
 import androidx.annotation.LayoutRes
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -84,14 +81,9 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment() {
         val realScreenHeight = requireContext().getRealScreenHeight(wd)// 屏幕真实高度
         val screenHeight = requireContext().getScreenHeight()//可用高度
         val statusBarHeight = requireContext().getStatusBarHeight()//状态栏高度
-        val navigationBarHeight = requireContext().getNavigationBarHeight(wd)// 导航栏高度
-        val dialogHeight: Int
-        if (navigationBarHeight == 0 || realScreenHeight - screenHeight == statusBarHeight) {
-            // 全面屏，没有导航栏
-            dialogHeight = screenHeight - configTopOffsetPx()
-        } else {
-            dialogHeight = screenHeight + navigationBarHeight - configTopOffsetPx()
-        }
+        val navigationBarHeight = requireContext().getNavigationBarHeight()// 导航栏高度
+        val dialogHeight = realScreenHeight - statusBarHeight - configTopOffsetPx()
+
         wd.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, if (dialogHeight == 0) ViewGroup.LayoutParams.MATCH_PARENT else dialogHeight)
     }
 
