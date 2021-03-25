@@ -1,43 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/white">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:background="@color/white">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@color/color_00a0e9"
-            android:gravity="center"
-            android:padding="5dp"
-            android:text="@string/bottom_sheets_tab_tips"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_layout"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            app:tabIndicatorColor="@color/color_00a0e9"
-            app:tabIndicatorHeight="2dp"
-            app:tabMode="scrollable"
-            app:tabSelectedTextColor="@color/color_00a0e9"
-            app:tabTextColor="@color/color_5a5a5a" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/color_00a0e9"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="@string/bottom_sheets_tab_tips"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/view_pager"
-            android:layout_width="match_parent"
-            android:layout_height="900dp">
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                app:tabIndicatorColor="@color/color_00a0e9"
+                app:tabIndicatorHeight="2dp"
+                app:tabMode="scrollable"
+                app:tabSelectedTextColor="@color/color_00a0e9"
+                app:tabTextColor="@color/color_5a5a5a" />
 
-        </androidx.viewpager.widget.ViewPager>
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="900dp">
 
-    </LinearLayout>
+            </androidx.viewpager.widget.ViewPager>
 
-</androidx.core.widget.NestedScrollView>
+        </LinearLayout>
 
+    </androidx.core.widget.NestedScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/white" />
+
+</LinearLayout>
