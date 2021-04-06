@@ -93,6 +93,10 @@
     <!--<uses-permission android:name="android.permission.BLUETOOTH"/>-->
     <!--<uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>-->
 
+    <!-- 适配android11允许获取手机里所有的应用信息 -->
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"
+        tools:ignore="QueryAllPackagesPermission" />
+
     <application
         android:name=".App"
         android:allowBackup="false"
