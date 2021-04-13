@@ -112,9 +112,9 @@ class CameraHelper @JvmOverloads constructor(activity: Activity, surfaceView: Su
                 mParameters.setPictureSize(it.width, it.height)
             }
             //对焦模式
-            if (isSupportFocus(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE))
+            if (isSupportFocus(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE)){
                 mParameters.focusMode = Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE
-
+            }
             camera.parameters = mParameters
         } catch (e: Exception) {
             e.printStackTrace()
