@@ -19,28 +19,28 @@ import android.widget.Toast
 open class CameraHelper @JvmOverloads constructor(activity: Activity, surfaceView: SurfaceView, cameraFacing: Int = Camera.CameraInfo.CAMERA_FACING_BACK) {
 
     /** Camera对象 */
-    private var mCamera: Camera? = null
+    protected var mCamera: Camera? = null
     /** Camera对象的参数 */
-    private lateinit var mParameters: Camera.Parameters
+    protected lateinit var mParameters: Camera.Parameters
 
     /** 用于预览的SurfaceView对象 */
-    private var mSurfaceView: SurfaceView = surfaceView
+    protected var mSurfaceView: SurfaceView = surfaceView
     /** SurfaceHolder对象 */
-    private var mSurfaceHolder: SurfaceHolder
+    protected var mSurfaceHolder: SurfaceHolder
 
-    private var mActivity: Activity = activity
+    protected var mActivity: Activity = activity
     /** 监听器 */
-    private var mListener: OnCameraListener? = null
+    protected var mListener: OnCameraListener? = null
 
     /** 摄像头方向（默认背面） */
-    private var mCameraFacing = cameraFacing
+    protected var mCameraFacing = cameraFacing
     /** 预览旋转的角度 */
-    private var mDisplayOrientation: Int = 0
+    protected var mDisplayOrientation: Int = 0
 
     /** 保存图片的宽 */
-    private var picWidth = 2160
+    protected var picWidth = 2160
     /** 保存图片的高 */
-    private var picHeight = 3840
+    protected var picHeight = 3840
 
     init {
         mSurfaceHolder = mSurfaceView.holder
@@ -115,11 +115,16 @@ open class CameraHelper @JvmOverloads constructor(activity: Activity, surfaceVie
             if (isSupportFocus(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE)){
                 mParameters.focusMode = Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE
             }
+            mParameters = configParameters(mParameters)
             camera.parameters = mParameters
         } catch (e: Exception) {
             e.printStackTrace()
             toast("相机初始化失败!")
         }
+    }
+
+    protected open fun configParameters(parameters: Camera.Parameters): Camera.Parameters {
+        return parameters
     }
 
     /** 开始预览 */
