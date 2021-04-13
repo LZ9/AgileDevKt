@@ -16,7 +16,7 @@ import android.widget.Toast
  * @author zhouL
  * @date 2021/1/13
  */
-class CameraHelper @JvmOverloads constructor(activity: Activity, surfaceView: SurfaceView, cameraFacing: Int = Camera.CameraInfo.CAMERA_FACING_BACK) {
+open class CameraHelper @JvmOverloads constructor(activity: Activity, surfaceView: SurfaceView, cameraFacing: Int = Camera.CameraInfo.CAMERA_FACING_BACK) {
 
     /** Camera对象 */
     private var mCamera: Camera? = null
