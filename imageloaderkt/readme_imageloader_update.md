@@ -1,5 +1,10 @@
 # imageloader-kt库更新记录
 
+##### 2021/34/16
+1. 修改域名
+2. 迁移发布到mavenCentral
+3. 发布1.1.9版本
+
 ##### 2021/02/24
 1. 更新gradle和kotlin插件版本
 2. 更新glide版本

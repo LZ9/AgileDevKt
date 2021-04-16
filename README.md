@@ -3,6 +3,14 @@
 解决方案主要包含了3块内容，能帮助你快速构建一个中小型的App，你只需要专注于UI开发和业务逻辑即可。
 三块组件都只支持Androidx，请确保你的工程已经升级支持Androidx。
 
+由于jcenter删库跑路，请大家添加mavenCentral依赖，并引用最新版本（为了配合迁移，引用的域名从**com.lodz**改为**ink.lodz**）
+```
+    repositories {
+        ...
+        mavenCentral()
+        ...
+    }
+```
 ## 1. 使用扩展方法：
 如果你希望获取丰富的扩展方法来支持你的工程，你可以选择依赖[corek-kt](https://github.com/LZ9/AgileDevKt/blob/master/corekt/readme_core.md)，
 里面同时包含了Androidx相关的支持库。
@@ -21,7 +29,7 @@
 如果你希望便捷的使用图片加载库来服务你的工程，你可以选择依赖[imageloader-kt](https://github.com/LZ9/AgileDevKt/blob/master/imageloaderkt/readme_imageloader.md)，
 它内部集成了Glide，通过简单的链式调用来降低你的学习梯度。
 ```
-    implementation 'com.lodz:imageloader-kt:1.1.8'
+    implementation 'ink.lodz:imageloader-kt:1.1.9'
 ```
 
 ## 4、详细了解
