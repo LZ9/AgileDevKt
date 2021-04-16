@@ -12,7 +12,6 @@ import com.lodz.android.agiledevkt.R
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.utils.transition.TransitionHelper
-import org.jetbrains.anko.imageResource
 
 /**
  * 共享元素详情
@@ -64,7 +63,7 @@ class ElementActivity : BaseActivity() {
     override fun initData() {
         super.initData()
         mTitleTv.text = mTitle
-        mIconImg.imageResource = mImgResId
+        mIconImg.setImageResource(mImgResId)
         TransitionHelper.setTransition(mTitleTv, TransitionActivity.TITLE)
         TransitionHelper.setTransition(mIconImg, TransitionActivity.IMG)
         TransitionHelper.setEnterTransitionDuration(this, 500)

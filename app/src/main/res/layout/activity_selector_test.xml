@@ -10,16 +10,16 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Switch
+        <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/unable_switch_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:switchPadding="5dp"
             android:text="@string/selector_unable_switch">
 
-        </Switch>
+        </com.google.android.material.switchmaterial.SwitchMaterial>
 
-        <Switch
+        <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/select_switch_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -27,9 +27,9 @@
             android:switchPadding="5dp"
             android:text="@string/selector_select_switch">
 
-        </Switch>
+        </com.google.android.material.switchmaterial.SwitchMaterial>
 
-        <Switch
+        <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/focused_switch_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
             android:switchPadding="5dp"
             android:text="@string/selector_focused_switch">
 
-        </Switch>
+        </com.google.android.material.switchmaterial.SwitchMaterial>
 
     </LinearLayout>
 

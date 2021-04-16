@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.*
 import androidx.core.widget.NestedScrollView
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.switchmaterial.SwitchMaterial
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.base.response.ResponseBean
 import com.lodz.android.agiledevkt.modules.main.MainActivity
@@ -56,21 +57,21 @@ class RxFlowableActivity : BaseActivity() {
     /** 停止订阅按钮 */
     private val mStopBtn by bindView<MaterialButton>(R.id.stop_btn)
     /** 背压测试开关 */
-    private val mBackpressureSwitch by bindView<Switch>(R.id.backpressure_switch)
+    private val mBackpressureSwitch by bindView<SwitchMaterial>(R.id.backpressure_switch)
     /** 背压测试 */
     private val mBpTestBtn by bindView<MaterialButton>(R.id.bp_test_btn)
     /** 数据自动拉取开关 */
-    private val mAutoRequestSwitch by bindView<Switch>(R.id.auto_request_switch)
+    private val mAutoRequestSwitch by bindView<SwitchMaterial>(R.id.auto_request_switch)
     /** 数据拉取按钮 */
     private val mRequestBtn by bindView<MaterialButton>(R.id.request_btn)
     /** 数据拉取测试 */
     private val mRequestTestBtn by bindView<MaterialButton>(R.id.request_test_btn)
     /** 订阅失败开关 */
-    private val mFailSwitch by bindView<Switch>(R.id.fail_switch)
+    private val mFailSwitch by bindView<SwitchMaterial>(R.id.fail_switch)
     /** 返回键关闭开关 */
-    private val mCancelableSwitch by bindView<Switch>(R.id.cancelable_switch)
+    private val mCancelableSwitch by bindView<SwitchMaterial>(R.id.cancelable_switch)
     /** 空白处关闭开关 */
-    private val mCanceledOutsideSwitch by bindView<Switch>(R.id.canceled_outside_switch)
+    private val mCanceledOutsideSwitch by bindView<SwitchMaterial>(R.id.canceled_outside_switch)
     /** 响应数据封装 */
     private val mRxBtn by bindView<MaterialButton>(R.id.rx_btn)
     /** 进度条封装 */

@@ -8,8 +8,6 @@ import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.getColorCompat
 import com.lodz.android.pandora.widget.popup.BasePopupWindow
 import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
-import org.jetbrains.anko.backgroundResource
-import org.jetbrains.anko.textColor
 
 /**
  * 动画PopupWindow
@@ -69,18 +67,18 @@ class AnimPopupWindow(context: Context) : BasePopupWindow(context) {
 
     /** 设置动画类型[animType] */
     fun setAnimType(animType: Int) {
-        mAlphaInBtn.backgroundResource = if (animType == BaseRecyclerViewAdapter.ALPHA_IN) R.drawable.bg_f0f0f0_stroke_00a0e9 else R.drawable.bg_f0f0f0_stroke_cccccc
-        mAlphaInBtn.textColor = getContext().getColorCompat(if (animType == BaseRecyclerViewAdapter.ALPHA_IN) R.color.color_00a0e9 else R.color.color_9a9a9a)
-        mScaleInBtn.backgroundResource = if (animType == BaseRecyclerViewAdapter.SCALE_IN) R.drawable.bg_f0f0f0_stroke_00a0e9 else R.drawable.bg_f0f0f0_stroke_cccccc
-        mScaleInBtn.textColor = getContext().getColorCompat(if (animType == BaseRecyclerViewAdapter.SCALE_IN) R.color.color_00a0e9 else R.color.color_9a9a9a)
-        mSlideInBottomBtn.backgroundResource = if (animType == BaseRecyclerViewAdapter.SLIDE_IN_BOTTOM) R.drawable.bg_f0f0f0_stroke_00a0e9 else R.drawable.bg_f0f0f0_stroke_cccccc
-        mSlideInBottomBtn.textColor = getContext().getColorCompat(if (animType == BaseRecyclerViewAdapter.SLIDE_IN_BOTTOM) R.color.color_00a0e9 else R.color.color_9a9a9a)
-        mSlideInLeftBtn.backgroundResource = if (animType == BaseRecyclerViewAdapter.SLIDE_IN_LEFT) R.drawable.bg_f0f0f0_stroke_00a0e9 else R.drawable.bg_f0f0f0_stroke_cccccc
-        mSlideInLeftBtn.textColor = getContext().getColorCompat(if (animType == BaseRecyclerViewAdapter.SLIDE_IN_LEFT) R.color.color_00a0e9 else R.color.color_9a9a9a)
-        mSlideInRightBtn.backgroundResource = if (animType == BaseRecyclerViewAdapter.SLIDE_IN_RIGHT) R.drawable.bg_f0f0f0_stroke_00a0e9 else R.drawable.bg_f0f0f0_stroke_cccccc
-        mSlideInRightBtn.textColor = getContext().getColorCompat(if (animType == BaseRecyclerViewAdapter.SLIDE_IN_RIGHT) R.color.color_00a0e9 else R.color.color_9a9a9a)
-        mCustomBtn.backgroundResource = if (animType == TYPE_CUSTOM) R.drawable.bg_f0f0f0_stroke_00a0e9 else R.drawable.bg_f0f0f0_stroke_cccccc
-        mCustomBtn.textColor = getContext().getColorCompat(if (animType == TYPE_CUSTOM) R.color.color_00a0e9 else R.color.color_9a9a9a)
+        mAlphaInBtn.setBackgroundResource(if (animType == BaseRecyclerViewAdapter.ALPHA_IN) R.drawable.bg_f0f0f0_stroke_00a0e9 else R.drawable.bg_f0f0f0_stroke_cccccc)
+        mAlphaInBtn.setTextColor(getContext().getColorCompat(if (animType == BaseRecyclerViewAdapter.ALPHA_IN) R.color.color_00a0e9 else R.color.color_9a9a9a))
+        mScaleInBtn.setBackgroundResource(if (animType == BaseRecyclerViewAdapter.SCALE_IN) R.drawable.bg_f0f0f0_stroke_00a0e9 else R.drawable.bg_f0f0f0_stroke_cccccc)
+        mScaleInBtn.setTextColor(getContext().getColorCompat(if (animType == BaseRecyclerViewAdapter.SCALE_IN) R.color.color_00a0e9 else R.color.color_9a9a9a))
+        mSlideInBottomBtn.setBackgroundResource(if (animType == BaseRecyclerViewAdapter.SLIDE_IN_BOTTOM) R.drawable.bg_f0f0f0_stroke_00a0e9 else R.drawable.bg_f0f0f0_stroke_cccccc)
+        mSlideInBottomBtn.setTextColor(getContext().getColorCompat(if (animType == BaseRecyclerViewAdapter.SLIDE_IN_BOTTOM) R.color.color_00a0e9 else R.color.color_9a9a9a))
+        mSlideInLeftBtn.setBackgroundResource(if (animType == BaseRecyclerViewAdapter.SLIDE_IN_LEFT) R.drawable.bg_f0f0f0_stroke_00a0e9 else R.drawable.bg_f0f0f0_stroke_cccccc)
+        mSlideInLeftBtn.setTextColor(getContext().getColorCompat(if (animType == BaseRecyclerViewAdapter.SLIDE_IN_LEFT) R.color.color_00a0e9 else R.color.color_9a9a9a))
+        mSlideInRightBtn.setBackgroundResource(if (animType == BaseRecyclerViewAdapter.SLIDE_IN_RIGHT) R.drawable.bg_f0f0f0_stroke_00a0e9 else R.drawable.bg_f0f0f0_stroke_cccccc)
+        mSlideInRightBtn.setTextColor(getContext().getColorCompat(if (animType == BaseRecyclerViewAdapter.SLIDE_IN_RIGHT) R.color.color_00a0e9 else R.color.color_9a9a9a))
+        mCustomBtn.setBackgroundResource(if (animType == TYPE_CUSTOM) R.drawable.bg_f0f0f0_stroke_00a0e9 else R.drawable.bg_f0f0f0_stroke_cccccc)
+        mCustomBtn.setTextColor(getContext().getColorCompat(if (animType == TYPE_CUSTOM) R.color.color_00a0e9 else R.color.color_9a9a9a))
     }
 
     /** 设置监听器[listener] */

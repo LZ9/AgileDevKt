@@ -4,8 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.lodz.android.agiledevkt.R
-import com.lodz.android.agiledevkt.modules.anko.fragment.AnkoAccountFragment
-import com.lodz.android.agiledevkt.modules.anko.fragment.AnkoDetailFragment
 import com.lodz.android.pandora.base.activity.BaseActivity
 
 /**
@@ -27,9 +25,9 @@ class FragmentChangeActivity : BaseActivity() {
     }
 
     /** 账号页 */
-    private lateinit var mAnkoAccountFragment : AnkoAccountFragment
+//    private lateinit var mAnkoAccountFragment : AnkoAccountFragment
     /** 详情页 */
-    private lateinit var mAnkoDetailFragment : AnkoDetailFragment
+//    private lateinit var mAnkoDetailFragment : AnkoDetailFragment
 
     private var mAccount = ""
 
@@ -46,11 +44,11 @@ class FragmentChangeActivity : BaseActivity() {
     }
 
     private fun initFragment() {
-        mAnkoAccountFragment = AnkoAccountFragment.newInstance(mAccount)
-        mAnkoDetailFragment = AnkoDetailFragment.newInstance()
+//        mAnkoAccountFragment = AnkoAccountFragment.newInstance(mAccount)
+//        mAnkoDetailFragment = AnkoDetailFragment.newInstance()
 
-        addFragment(R.id.root_up_layout, mAnkoAccountFragment, "AnkoAccountFragment")
-        addFragment(R.id.root_down_layout, mAnkoDetailFragment, "AnkoDetailFragment")
+//        addFragment(R.id.root_up_layout, mAnkoAccountFragment, "AnkoAccountFragment")
+//        addFragment(R.id.root_down_layout, mAnkoDetailFragment, "AnkoDetailFragment")
     }
 
     override fun onClickBackBtn() {
@@ -60,30 +58,30 @@ class FragmentChangeActivity : BaseActivity() {
 
     override fun setListeners() {
         super.setListeners()
-        mAnkoAccountFragment.setOnChangeListener {
-            showDetail()
-        }
-
-        mAnkoDetailFragment.setOnChangeListener {
-            showAccount()
-        }
+//        mAnkoAccountFragment.setOnChangeListener {
+//            showDetail()
+//        }
+//
+//        mAnkoDetailFragment.setOnChangeListener {
+//            showAccount()
+//        }
     }
 
     override fun initData() {
         super.initData()
         showAccount()
-        showStatusCompleted()
+        showStatusNoData()
     }
 
     /** 显示账号 */
     private fun showAccount(){
-        showFragment(mAnkoAccountFragment)
-        hideFragment(mAnkoDetailFragment)
+//        showFragment(mAnkoAccountFragment)
+//        hideFragment(mAnkoDetailFragment)
     }
 
     /** 显示详情 */
     private fun showDetail(){
-        showFragment(mAnkoDetailFragment)
-        hideFragment(mAnkoAccountFragment)
+//        showFragment(mAnkoDetailFragment)
+//        hideFragment(mAnkoAccountFragment)
     }
 }

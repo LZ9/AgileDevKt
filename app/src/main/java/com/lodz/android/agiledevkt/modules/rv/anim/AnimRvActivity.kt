@@ -19,7 +19,6 @@ import com.lodz.android.corekt.utils.DateUtils
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.widget.base.TitleBarLayout
 import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
-import org.jetbrains.anko.textColor
 
 /**
  * RV动画测试
@@ -114,7 +113,7 @@ class AnimRvActivity : BaseActivity() {
         val tv = TextView(getContext())
         tv.setText(resId)
         tv.setPadding(dp2px(6), 0, dp2px(6), 0)
-        tv.textColor = Color.WHITE
+        tv.setTextColor(Color.WHITE)
         return tv
     }
 

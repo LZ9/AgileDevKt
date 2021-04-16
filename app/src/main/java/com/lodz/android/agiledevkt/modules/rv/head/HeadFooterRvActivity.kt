@@ -4,12 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Switch
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.google.android.material.switchmaterial.SwitchMaterial
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.agiledevkt.modules.rv.popup.LayoutManagerPopupWindow
@@ -32,9 +32,9 @@ class HeadFooterRvActivity : BaseActivity() {
     }
 
     /** 头部选择按钮 */
-    private val mHeaderSwitch by bindView<Switch>(R.id.header_switch)
+    private val mHeaderSwitch by bindView<SwitchMaterial>(R.id.header_switch)
     /** 底部选择按钮 */
-    private val mFooterSwitch by bindView<Switch>(R.id.footer_switch)
+    private val mFooterSwitch by bindView<SwitchMaterial>(R.id.footer_switch)
     /** 方向按钮 */
     private val mOrientationBtn by bindView<TextView>(R.id.orientation_btn)
     /** 布局按钮 */

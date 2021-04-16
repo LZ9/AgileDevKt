@@ -4,8 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
-import android.widget.Switch
 import android.widget.TextView
+import com.google.android.material.switchmaterial.SwitchMaterial
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.corekt.anko.bindView
@@ -30,7 +30,7 @@ class ReflectActivity : BaseActivity() {
     /** 消息展示 */
     private val mMsgTv by bindView<TextView>(R.id.text_msg_tv)
     /** 类型开关 */
-    private val mTypeSwitch by bindView<Switch>(R.id.type_switch)
+    private val mTypeSwitch by bindView<SwitchMaterial>(R.id.type_switch)
 
     /** 获取Class */
     private val mGetClassBtn by bindView<Button>(R.id.get_class_btn)

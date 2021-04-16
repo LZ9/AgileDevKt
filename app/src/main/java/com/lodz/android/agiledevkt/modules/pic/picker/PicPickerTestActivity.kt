@@ -7,11 +7,11 @@ import android.os.Build
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.RadioGroup
-import android.widget.Switch
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.github.chrisbanes.photoview.PhotoView
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.switchmaterial.SwitchMaterial
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.utils.file.FileManager
 import com.lodz.android.corekt.album.PicInfo
@@ -62,13 +62,13 @@ class PicPickerTestActivity : BaseActivity() {
     /** 数量 */
     private val mMaxTv by bindView<TextView>(R.id.max_tv)
     /** 预览缩放图片 */
-    private val mScaleSwitch by bindView<Switch>(R.id.scale_switch)
+    private val mScaleSwitch by bindView<SwitchMaterial>(R.id.scale_switch)
     /** 显示拍照 */
-    private val mShowCameraSwitch by bindView<Switch>(R.id.show_camera_switch)
+    private val mShowCameraSwitch by bindView<SwitchMaterial>(R.id.show_camera_switch)
     /** 单张预览 */
-    private val mItemPreviewSwitch by bindView<Switch>(R.id.item_preview_switch)
+    private val mItemPreviewSwitch by bindView<SwitchMaterial>(R.id.item_preview_switch)
     /** 点击关闭预览 */
-    private val mClickClosePreviewSwitch by bindView<Switch>(R.id.click_close_preview_switch)
+    private val mClickClosePreviewSwitch by bindView<SwitchMaterial>(R.id.click_close_preview_switch)
     /** 单选布局 */
     private val mRadioGroup by bindView<RadioGroup>(R.id.radio_group)
     /** 结果 */

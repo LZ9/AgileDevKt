@@ -20,7 +20,6 @@ import com.lodz.android.corekt.utils.FileUtils
 import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
 import com.lodz.android.pandora.widget.rv.recycler.DataViewHolder
-import org.jetbrains.anko.textColor
 import zlc.season.rxdownload4.manager.*
 
 /**
@@ -98,7 +97,7 @@ class DownloadMarketAdapter(context : Context) :BaseRecyclerViewAdapter<AppInfoB
 
     private fun showReady(holder: DownloadViewHolder, bean: AppInfoBean) {
         holder.tipsTv.text = bean.appDesc
-        holder.tipsTv.textColor = context.getColorCompat(R.color.color_1a1a1a)
+        holder.tipsTv.setTextColor(context.getColorCompat(R.color.color_1a1a1a))
         holder.tipsTv.visibility = View.VISIBLE
         holder.downloadingLayout.visibility = View.GONE
         holder.statusBtn.setText(R.string.market_download)
@@ -154,7 +153,7 @@ class DownloadMarketAdapter(context : Context) :BaseRecyclerViewAdapter<AppInfoB
 
     private fun showCompleted(holder: DownloadViewHolder, bean: AppInfoBean) {
         holder.tipsTv.text = bean.appDesc
-        holder.tipsTv.textColor = context.getColorCompat(R.color.color_1a1a1a)
+        holder.tipsTv.setTextColor(context.getColorCompat(R.color.color_1a1a1a))
         holder.tipsTv.visibility = View.VISIBLE
         holder.downloadingLayout.visibility = View.GONE
         holder.statusBtn.setText(R.string.market_delete)
@@ -169,7 +168,7 @@ class DownloadMarketAdapter(context : Context) :BaseRecyclerViewAdapter<AppInfoB
     private fun showFailed(holder: DownloadViewHolder, bean: AppInfoBean, status: Failed) {
         PrintLog.e("testtag", "  下载失败  ", status.throwable)
         holder.tipsTv.text = context.getString(R.string.market_failed).append(" : ").append(status.throwable.message)
-        holder.tipsTv.textColor = context.getColorCompat(R.color.red)
+        holder.tipsTv.setTextColor(context.getColorCompat(R.color.red))
         holder.tipsTv.visibility = View.VISIBLE
         holder.downloadingLayout.visibility = View.GONE
         holder.statusBtn.setText(R.string.market_download)

@@ -28,13 +28,13 @@
         android:layout_marginEnd="10dp"
         android:orientation="horizontal">
 
-        <Switch
+        <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/net_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/api_net_fail" />
 
-        <Switch
+        <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/data_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

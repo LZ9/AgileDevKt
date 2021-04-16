@@ -6,10 +6,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
-import android.widget.Switch
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.switchmaterial.SwitchMaterial
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.corekt.anko.bindView
@@ -36,7 +36,7 @@ class BluetoothTestActivity : BaseActivity() {
     /** 蓝牙状态 */
     private val mBleStatusTv by bindView<TextView>(R.id.ble_status_tv)
     /** 蓝牙开关 */
-    private val mBleSwitchBtn by bindView<Switch>(R.id.ble_switch_btn)
+    private val mBleSwitchBtn by bindView<SwitchMaterial>(R.id.ble_switch_btn)
 
     /** 跳转蓝牙设置页 */
     private val mGoSettingBtn by bindView<Button>(R.id.go_setting_btn)

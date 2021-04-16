@@ -22,7 +22,7 @@
             tools:text="结果" />
     </androidx.core.widget.NestedScrollView>
 
-    <Switch
+    <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/fail_switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -89,7 +89,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Switch
+        <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/cancelable_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -97,7 +97,7 @@
             android:switchPadding="5dp"
             android:text="@string/rx_cancelable" />
 
-        <Switch
+        <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/canceled_outside_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

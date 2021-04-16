@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.StringRes
+import androidx.core.view.setPadding
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,7 +24,6 @@ import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.widget.base.TitleBarLayout
 import com.lodz.android.pandora.widget.rv.decoration.*
-import org.jetbrains.anko.padding
 
 /**
  * 装饰器测试类
@@ -291,7 +291,7 @@ class DecorationTestActivity : BaseActivity() {
     private fun configByType(type: Int) {
         mList = getList()
         if (type == DECORATION_TYPE_GRID) {
-            mRecyclerView.padding = dp2px(8)
+            mRecyclerView.setPadding(dp2px(8))
         }
         if (type == DECORATION_TYPE_SECTION_FIX || type == DECORATION_TYPE_STICKY_SECTION_FIX) {
             val list = ArrayList<String>()

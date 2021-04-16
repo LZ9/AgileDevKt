@@ -15,6 +15,7 @@ import android.webkit.WebSettings
 import android.webkit.WebView
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.core.view.setPadding
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.corekt.anko.dp2px
 import com.lodz.android.corekt.anko.getColorCompat
@@ -22,7 +23,6 @@ import com.lodz.android.corekt.anko.getDrawableCompat
 import com.lodz.android.pandora.widget.webview.PgWebChromeClient
 import com.lodz.android.pandora.widget.webview.PgWebView
 import com.lodz.android.pandora.widget.webview.PgWebViewClient
-import org.jetbrains.anko.padding
 
 /**
  * 简单配置的WebView
@@ -61,7 +61,7 @@ class SimpleWebView : PgWebView {
 
     private fun createTextView() {
         mPercentageTv = TextView(context)
-        mPercentageTv.padding = dp2px(10)
+        mPercentageTv.setPadding(dp2px(10))
         mPercentageTv.setBackgroundResource(R.drawable.pandora_bg_a0191919_corners_8)
         mPercentageTv.setTextColor(getColorCompat(R.color.white))
         val lp = LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)

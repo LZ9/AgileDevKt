@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.*
 import androidx.core.widget.NestedScrollView
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.switchmaterial.SwitchMaterial
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.corekt.album.AlbumUtils
@@ -44,11 +45,11 @@ class RxUtilsTestActivity : BaseActivity() {
     /** 结果 */
     private val mResultTv by bindView<TextView>(R.id.result_tv)
     /** 内存缓存 */
-    private val mMemorySwitch by bindView<Switch>(R.id.memory_switch)
+    private val mMemorySwitch by bindView<SwitchMaterial>(R.id.memory_switch)
     /** 磁盘缓存 */
-    private val mDiskSwitch by bindView<Switch>(R.id.disk_switch)
+    private val mDiskSwitch by bindView<SwitchMaterial>(R.id.disk_switch)
     /** 网络数据 */
-    private val mNetworkSwitch by bindView<Switch>(R.id.network_switch)
+    private val mNetworkSwitch by bindView<SwitchMaterial>(R.id.network_switch)
     /** 请求数据 */
     private val mRequestDataBtn by bindView<MaterialButton>(R.id.request_data_btn)
     /** 搜索框 */

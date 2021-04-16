@@ -28,7 +28,7 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <Switch
+        <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/backpressure_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -124,7 +124,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Switch
+        <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/auto_request_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -154,7 +154,7 @@
         android:text="@string/rx_flowable_request_test"
         android:textColor="@color/white" />
 
-    <Switch
+    <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/fail_switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -167,7 +167,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Switch
+        <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/cancelable_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -175,7 +175,7 @@
             android:switchPadding="5dp"
             android:text="@string/rx_cancelable" />
 
-        <Switch
+        <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/canceled_outside_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

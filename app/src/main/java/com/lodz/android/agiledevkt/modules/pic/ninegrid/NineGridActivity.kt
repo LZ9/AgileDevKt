@@ -7,10 +7,10 @@ import android.os.Build
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.RadioGroup
-import android.widget.Switch
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.github.chrisbanes.photoview.PhotoView
+import com.google.android.material.switchmaterial.SwitchMaterial
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.utils.file.FileManager
 import com.lodz.android.corekt.album.PicInfo
@@ -63,21 +63,21 @@ class NineGridActivity : BaseActivity() {
     /** 获取九宫格路径按钮 */
     private val mGetPicBtn by bindView<TextView>(R.id.get_pic_btn)
     /** 预览缩放图片 */
-    private val mScaleSwitch by bindView<Switch>(R.id.scale_switch)
+    private val mScaleSwitch by bindView<SwitchMaterial>(R.id.scale_switch)
     /** 显示拍照 */
-    private val mShowCameraSwitch by bindView<Switch>(R.id.show_camera_switch)
+    private val mShowCameraSwitch by bindView<SwitchMaterial>(R.id.show_camera_switch)
     /** 单张预览 */
-    private val mItemPreviewSwitch by bindView<Switch>(R.id.item_preview_switch)
+    private val mItemPreviewSwitch by bindView<SwitchMaterial>(R.id.item_preview_switch)
     /** 点击关闭预览 */
-    private val mClickClosePreviewSwitch by bindView<Switch>(R.id.click_close_preview_switch)
+    private val mClickClosePreviewSwitch by bindView<SwitchMaterial>(R.id.click_close_preview_switch)
     /** 添加图片按钮 */
-    private val mAddBtnSwitch by bindView<Switch>(R.id.add_btn_switch)
+    private val mAddBtnSwitch by bindView<SwitchMaterial>(R.id.add_btn_switch)
     /** 删除图片按钮 */
-    private val mDeleteBtnSwitch by bindView<Switch>(R.id.delete_btn_switch)
+    private val mDeleteBtnSwitch by bindView<SwitchMaterial>(R.id.delete_btn_switch)
     /** 允许拖拽 */
-    private val mDragSwitch by bindView<Switch>(R.id.drag_switch)
+    private val mDragSwitch by bindView<SwitchMaterial>(R.id.drag_switch)
     /** 拖拽震动 */
-    private val mDragVibrateSwitch by bindView<Switch>(R.id.drag_vibrate_switch)
+    private val mDragVibrateSwitch by bindView<SwitchMaterial>(R.id.drag_vibrate_switch)
     /** 选项组 */
     private val mRadioGroup by bindView<RadioGroup>(R.id.radio_group)
 

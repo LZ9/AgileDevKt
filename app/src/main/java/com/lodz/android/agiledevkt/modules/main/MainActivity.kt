@@ -12,7 +12,6 @@ import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.MainBean
 import com.lodz.android.agiledevkt.modules.acache.ACacheTestActivity
 import com.lodz.android.agiledevkt.modules.album.AlbumActivity
-import com.lodz.android.agiledevkt.modules.anko.AnkoLayoutActivity
 import com.lodz.android.agiledevkt.modules.annotation.AnnotationTestActivity
 import com.lodz.android.agiledevkt.modules.api.ApiTestActivity
 import com.lodz.android.agiledevkt.modules.array.ArrayTestActivity
@@ -41,7 +40,6 @@ import com.lodz.android.agiledevkt.modules.idcard.IdcardTestActivity
 import com.lodz.android.agiledevkt.modules.image.GlideActivity
 import com.lodz.android.agiledevkt.modules.info.InfoTestActivity
 import com.lodz.android.agiledevkt.modules.keyboard.KeyboardTestActivity
-import com.lodz.android.agiledevkt.modules.koin.KoinTestActivity
 import com.lodz.android.agiledevkt.modules.location.LocationTestActivity
 import com.lodz.android.agiledevkt.modules.menubar.MenuBarTestActivity
 import com.lodz.android.agiledevkt.modules.mvc.MvcDemoActivity
@@ -100,7 +98,7 @@ class MainActivity : BaseActivity() {
             "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "#")
 
     private val MAIN_DATA_LIST = arrayListOf(
-        MainBean("AnkoLayout测试类", "A", AnkoLayoutActivity::class.java),
+//        MainBean("AnkoLayout测试类", "A", AnkoLayoutActivity::class.java),
         MainBean("文件测试类", "W", FileTestActivity::class.java),
         MainBean("加密测试类", "J", EncryptTestActivity::class.java),
         MainBean("Bitmap图片测试类", "B", BitmapTestActivity::class.java),
@@ -162,7 +160,7 @@ class MainActivity : BaseActivity() {
         MainBean("下载测试", "X", DownloadMarketActivity::class.java),
         MainBean("子控件透明布局测试类", "Z", HoleTestActivity::class.java),
         MainBean("MVP模式测试类", "M", MvpDemoActivity::class.java),
-        MainBean("Koin注入测试类", "K", KoinTestActivity::class.java),
+//        MainBean("Koin注入测试类", "K", KoinTestActivity::class.java),
         MainBean("相机测试类", "X", CameraMainActivity::class.java),
         MainBean("自定义键盘测试类", "Z", KeyboardTestActivity::class.java)
     )

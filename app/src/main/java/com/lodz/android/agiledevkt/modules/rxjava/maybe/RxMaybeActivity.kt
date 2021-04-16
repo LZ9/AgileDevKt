@@ -4,10 +4,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ScrollView
-import android.widget.Switch
 import android.widget.TextView
 import androidx.core.widget.NestedScrollView
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.switchmaterial.SwitchMaterial
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.base.response.ResponseBean
 import com.lodz.android.agiledevkt.modules.main.MainActivity
@@ -47,7 +47,7 @@ class RxMaybeActivity : BaseActivity() {
     /** 结果 */
     private val mResultTv by bindView<TextView>(R.id.result_tv)
     /** 订阅失败开关 */
-    private val mFailSwitch by bindView<Switch>(R.id.fail_switch)
+    private val mFailSwitch by bindView<SwitchMaterial>(R.id.fail_switch)
     /** Maybe转Observable订阅按钮 */
     private val mMaybeToObservableBtn by bindView<MaterialButton>(R.id.maybe_to_observable_btn)
     /** 成功订阅按钮 */
@@ -55,9 +55,9 @@ class RxMaybeActivity : BaseActivity() {
     /** 完成订阅按钮 */
     private val mCompleteBtn by bindView<MaterialButton>(R.id.complete_btn)
     /** 返回键关闭开关 */
-    private val mCancelableSwitch by bindView<Switch>(R.id.cancelable_switch)
+    private val mCancelableSwitch by bindView<SwitchMaterial>(R.id.cancelable_switch)
     /** 空白处关闭开关 */
-    private val mCanceledOutsideSwitch by bindView<Switch>(R.id.canceled_outside_switch)
+    private val mCanceledOutsideSwitch by bindView<SwitchMaterial>(R.id.canceled_outside_switch)
     /** 响应数据封装按钮 */
     private val mRxBtn by bindView<MaterialButton>(R.id.rx_btn)
     /** 进度条封装按钮 */

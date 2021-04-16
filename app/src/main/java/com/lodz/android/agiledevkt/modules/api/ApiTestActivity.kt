@@ -3,9 +3,9 @@ package com.lodz.android.agiledevkt.modules.api
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Switch
 import android.widget.TextView
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.switchmaterial.SwitchMaterial
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.apiservice.ApiService
 import com.lodz.android.agiledevkt.bean.SpotBean
@@ -33,9 +33,9 @@ class ApiTestActivity : BaseActivity() {
     }
 
     /** 网络异常 */
-    private val mNetSwitch by bindView<Switch>(R.id.net_switch)
+    private val mNetSwitch by bindView<SwitchMaterial>(R.id.net_switch)
     /** 接口失败 */
-    private val mDataSwitch by bindView<Switch>(R.id.data_switch)
+    private val mDataSwitch by bindView<SwitchMaterial>(R.id.data_switch)
     /** mock请求 */
     private val mMockBtn by bindView<MaterialButton>(R.id.mock_btn)
     /** Post按钮 */

@@ -4,12 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Switch
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.google.android.material.switchmaterial.SwitchMaterial
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.agiledevkt.modules.rv.popup.LayoutManagerPopupWindow
@@ -34,11 +34,11 @@ class DragRvActivity : BaseActivity() {
     }
 
     /** 侧滑模式 */
-    private val mSwipeModeSwitch by bindView<Switch>(R.id.swipe_mode_switch)
+    private val mSwipeModeSwitch by bindView<SwitchMaterial>(R.id.swipe_mode_switch)
     /** 触摸拖拽 */
-    private val mDragSwitch by bindView<Switch>(R.id.touch_drag_switch)
+    private val mDragSwitch by bindView<SwitchMaterial>(R.id.touch_drag_switch)
     /** 匀速拖拽 */
-    private val mConstantSpeedSwitch by bindView<Switch>(R.id.constant_speed_switch)
+    private val mConstantSpeedSwitch by bindView<SwitchMaterial>(R.id.constant_speed_switch)
     /** 方向 */
     private val mOrientationBtn by bindView<TextView>(R.id.orientation_btn)
     /** 布局 */

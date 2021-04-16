@@ -4,12 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Switch
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.google.android.material.switchmaterial.SwitchMaterial
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.agiledevkt.modules.rv.popup.LayoutManagerPopupWindow
@@ -44,7 +44,7 @@ class RefreshLoadMoreActivity : BaseRefreshActivity() {
     /** 列表 */
     private val mRecyclerView by bindView<RecyclerView>(R.id.recycler_view)
     /** 加载失败开关 */
-    private val mLoadFailSwitch by bindView<Switch>(R.id.load_fail_switch)
+    private val mLoadFailSwitch by bindView<SwitchMaterial>(R.id.load_fail_switch)
     /** 布局按钮 */
     private val mLayoutManagerBtn by bindView<TextView>(R.id.layout_manager_btn)
 

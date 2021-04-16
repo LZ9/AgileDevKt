@@ -20,7 +20,7 @@
             android:textColor="@color/color_00a0e9"
             android:textSize="16sp" />
 
-        <Switch
+        <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/ble_switch_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
             android:textColor="@color/color_00a0e9"
             android:textSize="16sp">
 
-        </Switch>
+        </com.google.android.material.switchmaterial.SwitchMaterial>
     </LinearLayout>
 
     <LinearLayout

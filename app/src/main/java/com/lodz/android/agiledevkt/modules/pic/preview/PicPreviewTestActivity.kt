@@ -5,7 +5,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.widget.ImageView
-import android.widget.Switch
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.load.DataSource
@@ -16,6 +15,7 @@ import com.davemorrissey.labs.subscaleview.ImageSource
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
 import com.github.chrisbanes.photoview.PhotoView
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.switchmaterial.SwitchMaterial
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.runOnMain
@@ -53,11 +53,11 @@ class PicPreviewTestActivity : BaseActivity() {
             "http://bmob-cdn-15177.b0.upaiyun.com/2018/08/23/8fa7f1c2404bafbd808bde10ff072ceb.jpg")
 
     /** 缩放按钮 */
-    private val mScaleSwitch by bindView<Switch>(R.id.scale_switch)
+    private val mScaleSwitch by bindView<SwitchMaterial>(R.id.scale_switch)
     /** 显示页码按钮 */
-    private val mShowPagerSwitch by bindView<Switch>(R.id.show_pager_switch)
+    private val mShowPagerSwitch by bindView<SwitchMaterial>(R.id.show_pager_switch)
     /** 点击关闭按钮 */
-    private val mClickCloseSwitch by bindView<Switch>(R.id.click_close_switch)
+    private val mClickCloseSwitch by bindView<SwitchMaterial>(R.id.click_close_switch)
     /** 加页码 */
     private val mPlusBtn by bindView<TextView>(R.id.plus_btn)
     /** 减页码 */

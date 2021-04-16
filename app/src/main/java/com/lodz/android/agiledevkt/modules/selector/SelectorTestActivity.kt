@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
-import android.widget.Switch
+import com.google.android.material.switchmaterial.SwitchMaterial
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.corekt.anko.bindView
@@ -47,11 +47,11 @@ class SelectorTestActivity : BaseActivity() {
     private val TEXT_FOCUSED = R.color.color_ffa630
 
     /** 禁用开关 */
-    private val mUnableSwitchBtn by bindView<Switch>(R.id.unable_switch_btn)
+    private val mUnableSwitchBtn by bindView<SwitchMaterial>(R.id.unable_switch_btn)
     /** 选中开关 */
-    private val mSelectSwitchBtn by bindView<Switch>(R.id.select_switch_btn)
+    private val mSelectSwitchBtn by bindView<SwitchMaterial>(R.id.select_switch_btn)
     /** 焦点开关 */
-    private val mFocusedSwitchBtn by bindView<Switch>(R.id.focused_switch_btn)
+    private val mFocusedSwitchBtn by bindView<SwitchMaterial>(R.id.focused_switch_btn)
 
     /** 正常+按压 */
     private val mPressedBtn by bindView<Button>(R.id.pressed_btn)

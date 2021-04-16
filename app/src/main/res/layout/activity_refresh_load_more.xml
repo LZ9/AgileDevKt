@@ -14,7 +14,7 @@
         android:padding="8dp"
         tools:targetApi="lollipop">
 
-        <Switch
+        <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/load_fail_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

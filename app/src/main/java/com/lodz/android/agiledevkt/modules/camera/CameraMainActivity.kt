@@ -17,7 +17,7 @@ import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.pandora.base.activity.BaseActivity
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import permissions.dispatcher.*
+import  permissions.dispatcher.*
 
 /**
  * 相机测试类

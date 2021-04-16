@@ -9,7 +9,6 @@ import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.TransitionBean
 import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
 import com.lodz.android.pandora.widget.rv.recycler.DataViewHolder
-import org.jetbrains.anko.imageResource
 
 /**
  * 共享动画列表适配器
@@ -32,7 +31,7 @@ class TransitionAdapter(context: Context) : BaseRecyclerViewAdapter<TransitionBe
 
     private fun showItem(holder: DataViewHolder, bean: TransitionBean, position: Int) {
         val img = holder.withView<ImageView>(R.id.img)
-        img.imageResource = bean.imgRes
+        img.setImageResource(bean.imgRes)
         val tv = holder.withView<TextView>(R.id.title)
         tv.text = bean.title
         holder.itemView.setOnClickListener {

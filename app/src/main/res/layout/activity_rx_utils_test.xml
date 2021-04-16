@@ -35,14 +35,14 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Switch
+        <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/memory_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
             android:text="@string/rx_utils_memory_cache" />
 
-        <Switch
+        <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/disk_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
             android:checked="true"
             android:text="@string/rx_utils_disk_cache" />
 
-        <Switch
+        <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/network_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

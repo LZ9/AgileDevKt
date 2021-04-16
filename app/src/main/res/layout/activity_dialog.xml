@@ -1,53 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.flexbox.FlexboxLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
-    app:alignContent="flex_start"
-    app:flexDirection="row"
-    app:flexWrap="wrap"
-    app:justifyContent="flex_start">
+    android:padding="5dp">
 
     <Button
         android:id="@+id/normal_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="3dp"
         android:text="@string/dialog_normal" />
 
     <Button
         android:id="@+id/center_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="3dp"
         android:text="@string/dialog_center" />
 
     <Button
         android:id="@+id/left_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="3dp"
         android:text="@string/dialog_left" />
 
     <Button
         android:id="@+id/right_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="3dp"
         android:text="@string/dialog_right" />
 
     <Button
         android:id="@+id/bottom_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="3dp"
         android:text="@string/dialog_bottom" />
 
     <Button
         android:id="@+id/top_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="3dp"
         android:text="@string/dialog_top" />
-</com.google.android.flexbox.FlexboxLayout>
+</LinearLayout>

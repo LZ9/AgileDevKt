@@ -9,8 +9,6 @@ import com.lodz.android.agiledevkt.R
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.getColorCompat
 import com.lodz.android.pandora.widget.popup.BasePopupWindow
-import org.jetbrains.anko.backgroundResource
-import org.jetbrains.anko.textColor
 
 /**
  * RV布局类型
@@ -56,12 +54,12 @@ class LayoutManagerPopupWindow(context: Context) : BasePopupWindow(context) {
 
     /** 设置布局类型[type] */
     fun setLayoutManagerType(@LayoutManagerType type: Int) {
-        mLinearBtn.backgroundResource = if (type == TYPE_LINEAR) R.drawable.bg_f0f0f0_stroke_00a0e9 else R.drawable.bg_f0f0f0_stroke_cccccc
-        mLinearBtn.textColor = getContext().getColorCompat(if (type == TYPE_LINEAR) R.color.color_00a0e9 else R.color.color_9a9a9a)
-        mGridBtn.backgroundResource = if (type == TYPE_GRID) R.drawable.bg_f0f0f0_stroke_00a0e9 else R.drawable.bg_f0f0f0_stroke_cccccc
-        mGridBtn.textColor = getContext().getColorCompat(if (type == TYPE_GRID) R.color.color_00a0e9 else R.color.color_9a9a9a)
-        mStaggeredBtn.backgroundResource = if (type == TYPE_STAGGERED) R.drawable.bg_f0f0f0_stroke_00a0e9 else R.drawable.bg_f0f0f0_stroke_cccccc
-        mStaggeredBtn.textColor = getContext().getColorCompat(if (type == TYPE_STAGGERED) R.color.color_00a0e9 else R.color.color_9a9a9a)
+        mLinearBtn.setBackgroundResource(if (type == TYPE_LINEAR) R.drawable.bg_f0f0f0_stroke_00a0e9 else R.drawable.bg_f0f0f0_stroke_cccccc)
+        mLinearBtn.setTextColor(getContext().getColorCompat(if (type == TYPE_LINEAR) R.color.color_00a0e9 else R.color.color_9a9a9a))
+        mGridBtn.setBackgroundResource(if (type == TYPE_GRID) R.drawable.bg_f0f0f0_stroke_00a0e9 else R.drawable.bg_f0f0f0_stroke_cccccc)
+        mGridBtn.setTextColor(getContext().getColorCompat(if (type == TYPE_GRID) R.color.color_00a0e9 else R.color.color_9a9a9a))
+        mStaggeredBtn.setBackgroundResource(if (type == TYPE_STAGGERED) R.drawable.bg_f0f0f0_stroke_00a0e9 else R.drawable.bg_f0f0f0_stroke_cccccc)
+        mStaggeredBtn.setTextColor(getContext().getColorCompat(if (type == TYPE_STAGGERED) R.color.color_00a0e9 else R.color.color_9a9a9a))
     }
 
 
