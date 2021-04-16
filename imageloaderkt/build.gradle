@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-//apply plugin: 'com.novoda.bintray-release'
+//apply from: 'publish.gradle'
 
 android {
     compileSdkVersion 30
@@ -11,7 +11,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 20
-        versionName "1.1.9"// 未上传
+        versionName "1.1.9"// 成功上传
     }
 
     buildTypes {
@@ -36,12 +36,3 @@ dependencies {
     implementation "com.github.bumptech.glide:okhttp3-integration:4.12.0"
     api 'jp.wasabeef:glide-transformations:4.3.0'
 }
-
-//publish {
-//    userOrg = 'lz9'
-//    groupId = 'com.lodz'
-//    artifactId = 'imageloader-kt'
-//    publishVersion = '1.1.8'
-//    desc = 'Hi, this is a image loader'
-//    website = 'https://github.com/LZ9/AgileDevKt'
-//}
