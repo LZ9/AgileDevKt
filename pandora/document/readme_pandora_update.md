@@ -6,7 +6,7 @@
 3. 更新依赖库
 4. 修复BottomSheet的bug
 4. 优化CameraHelper.kt的代码
-5. 发布1.6.2版
+5. 发布1.6.3版
 
 ##### 2021/02/24
 1. 优化CameraHelper类
