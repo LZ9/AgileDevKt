@@ -1,5 +1,13 @@
 # Pandora更新记录
 
+##### 2021/04/21
+1. 修改域名
+2. 迁移发布到mavenCentral
+3. 更新依赖库
+4. 修复BottomSheet的bug
+4. 优化CameraHelper.kt的代码
+5. 发布1.6.2版
+
 ##### 2021/02/24
 1. 优化CameraHelper类
 2. 优化图片选择、预览和拍照管理类
