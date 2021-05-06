@@ -1,7 +1,5 @@
 package com.lodz.android.agiledevkt.modules.koin.coffee.heater
 
-import com.lodz.android.agiledevkt.modules.koin.KoinManager
-import com.lodz.android.corekt.log.PrintLog
 
 /**
  * 电子加热器
@@ -14,12 +12,12 @@ open class ElectricHeater : Heater {
 
     override fun on() {
         isHot = true
-        PrintLog.v(KoinManager.KOIN_TAG, "ElectricHeater 打开电子加热器")
+//        PrintLog.v(KoinManager.KOIN_TAG, "ElectricHeater 打开电子加热器")
     }
 
     override fun off() {
         isHot = false
-        PrintLog.v(KoinManager.KOIN_TAG, "ElectricHeater 关闭电子加热器")
+//        PrintLog.v(KoinManager.KOIN_TAG, "ElectricHeater 关闭电子加热器")
     }
 
     override fun isHot(): Boolean = isHot

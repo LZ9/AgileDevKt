@@ -28,7 +28,7 @@
         api 'androidx.lifecycle:lifecycle-extensions:2.2.0'
         api 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
         api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.3'
-        api 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.32'
+        api 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.5.0'
     }
 ```
 

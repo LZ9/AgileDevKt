@@ -1,6 +1,5 @@
 package com.lodz.android.agiledevkt.modules.koin.coffee
 
-import com.lodz.android.agiledevkt.modules.koin.KoinManager
 import com.lodz.android.agiledevkt.modules.koin.coffee.heater.Heater
 import com.lodz.android.agiledevkt.modules.koin.coffee.pump.Pump
 import com.lodz.android.corekt.log.PrintLog
@@ -17,15 +16,15 @@ class CoffeeMaker(private val pump: Pump, private val heater: Heater) {
         heater.on()
         val isSuucess =
             if (heater.isHot()) {
-                PrintLog.i(KoinManager.KOIN_TAG, "CoffeeMaker 加热器已打开")
+//                PrintLog.i(KoinManager.KOIN_TAG, "CoffeeMaker 加热器已打开")
                 pump.pump()
                 true
             } else {
-                PrintLog.e(KoinManager.KOIN_TAG, "CoffeeMaker 加热器已关闭，告警")
+//                PrintLog.e(KoinManager.KOIN_TAG, "CoffeeMaker 加热器已关闭，告警")
                 false
             }
         if (isSuucess) {
-            PrintLog.i(KoinManager.KOIN_TAG, "CoffeeMaker 完成咖啡 ")
+//            PrintLog.i(KoinManager.KOIN_TAG, "CoffeeMaker 完成咖啡 ")
         }
         heater.off()
     }

@@ -133,28 +133,28 @@ class ArrayTestActivity : BaseActivity() {
         // 取最大值
         mGetMaxBtn.setOnClickListener {
             val result = "---数字Int---\n" +
-                    getString(R.string.array_toarray, NUM_ARRAY.max().toString()) + "\n" +
-                    getString(R.string.array_tolist, NUM_LIST.max().toString()) + "\n" +
+                    getString(R.string.array_toarray, NUM_ARRAY.maxOrNull()?.toString()) + "\n" +
+                    getString(R.string.array_tolist, NUM_LIST.maxOrNull()?.toString()) + "\n" +
                     "\n---数字Long---\n" +
-                    getString(R.string.array_toarray, NUM_ARRAY_LONG.max().toString()) + "\n" +
-                    getString(R.string.array_tolist, NUM_LIST_LONG.max().toString()) + "\n" +
+                    getString(R.string.array_toarray, NUM_ARRAY_LONG.maxOrNull()?.toString()) + "\n" +
+                    getString(R.string.array_tolist, NUM_LIST_LONG.maxOrNull()?.toString()) + "\n" +
                     "\n---字符---\n" +
-                    getString(R.string.array_toarray, STR_ARRAY.max().toString()) + "\n" +
-                    getString(R.string.array_tolist, STR_LIST.max().toString())
+                    getString(R.string.array_toarray, STR_ARRAY.maxOrNull()?.toString()) + "\n" +
+                    getString(R.string.array_tolist, STR_LIST.maxOrNull()?.toString())
             mResultTv.text = result
         }
 
         // 取最小值
         mGetMinBtn.setOnClickListener {
             val result = "---数字Int---\n" +
-                    getString(R.string.array_toarray, NUM_ARRAY.min().toString()) + "\n" +
-                    getString(R.string.array_tolist, NUM_LIST.min().toString()) + "\n" +
+                    getString(R.string.array_toarray, NUM_ARRAY.minOrNull()?.toString()) + "\n" +
+                    getString(R.string.array_tolist, NUM_LIST.minOrNull()?.toString()) + "\n" +
                     "\n---数字Long---\n" +
-                    getString(R.string.array_toarray, NUM_ARRAY_LONG.min().toString()) + "\n" +
-                    getString(R.string.array_tolist, NUM_LIST_LONG.min().toString()) + "\n" +
+                    getString(R.string.array_toarray, NUM_ARRAY_LONG.minOrNull()?.toString()) + "\n" +
+                    getString(R.string.array_tolist, NUM_LIST_LONG.minOrNull()?.toString()) + "\n" +
                     "\n---字符---\n" +
-                    getString(R.string.array_toarray, STR_ARRAY.min().toString()) + "\n" +
-                    getString(R.string.array_tolist, STR_LIST.min().toString())
+                    getString(R.string.array_toarray, STR_ARRAY.minOrNull()?.toString()) + "\n" +
+                    getString(R.string.array_tolist, STR_LIST.minOrNull()?.toString())
             mResultTv.text = result
         }
 

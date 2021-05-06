@@ -1,7 +1,5 @@
 package com.lodz.android.agiledevkt.modules.koin.coffee.heater
 
-import com.lodz.android.agiledevkt.modules.koin.KoinManager
-import com.lodz.android.corekt.log.PrintLog
 
 /**
  * 功率电子加热器
@@ -12,7 +10,7 @@ class PowerElectricHeater(val power: Int) :ElectricHeater(){
 
     override fun on() {
         super.on()
-        PrintLog.v(KoinManager.KOIN_TAG, "PowerElectricHeater 功率：${power}瓦")
+//        PrintLog.v(KoinManager.KOIN_TAG, "PowerElectricHeater 功率：${power}瓦")
     }
 
 }

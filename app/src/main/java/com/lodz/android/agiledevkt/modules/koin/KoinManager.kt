@@ -21,51 +21,51 @@ import org.koin.dsl.module
  * @author zhouL
  * @date 2020/12/9
  */
-object KoinManager {
-
-    const val KOIN_TAG = "koin_tag"
-
-    private val modules = module {
-        single(named("blz")) {
-            SpotBean("白鹭洲", "5")
-        }
-        factory(named("hdl")) { (score: String) ->
-            SpotBean("环岛路", score)
-        }
-
-
-        factory {
-            CoffeeMaker(get(), get())
-        }
-        factory<Pump> {
-            Thermosiphon()
-        }
-        factory<Heater> {
-            ElectricHeater()
-        }
-
-
-        factory(named("high")) {
-            CoffeeMaker(get(), get(named("high")))
-        }
-        factory<Heater>(named("high")) {
-            PowerElectricHeater(3000)
-        }
-
-        factory(named("low")) {
-            CoffeeMaker(get(), get(named("low")))
-        }
-        factory<Heater>(named("low")) {
-            PowerElectricHeater(1000)
-        }
-    }
-
-    fun koinInit(context: Context) {
-        startKoin {
-            androidLogger(Level.DEBUG)
-            androidContext(context)
-            androidFileProperties()
-            modules(listOf(modules))
-        }
-    }
-}
+//object KoinManager {
+//
+//    const val KOIN_TAG = "koin_tag"
+//
+//    private val modules = module {
+//        single(named("blz")) {
+//            SpotBean("白鹭洲", "5")
+//        }
+//        factory(named("hdl")) { (score: String) ->
+//            SpotBean("环岛路", score)
+//        }
+//
+//
+//        factory {
+//            CoffeeMaker(get(), get())
+//        }
+//        factory<Pump> {
+//            Thermosiphon()
+//        }
+//        factory<Heater> {
+//            ElectricHeater()
+//        }
+//
+//
+//        factory(named("high")) {
+//            CoffeeMaker(get(), get(named("high")))
+//        }
+//        factory<Heater>(named("high")) {
+//            PowerElectricHeater(3000)
+//        }
+//
+//        factory(named("low")) {
+//            CoffeeMaker(get(), get(named("low")))
+//        }
+//        factory<Heater>(named("low")) {
+//            PowerElectricHeater(1000)
+//        }
+//    }
+//
+//    fun koinInit(context: Context) {
+//        startKoin {
+//            androidLogger(Level.DEBUG)
+//            androidContext(context)
+//            androidFileProperties()
+//            modules(listOf(modules))
+//        }
+//    }
+//}

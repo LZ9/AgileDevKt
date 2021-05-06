@@ -1,7 +1,5 @@
 package com.lodz.android.agiledevkt.modules.koin.coffee.pump
 
-import com.lodz.android.agiledevkt.modules.koin.KoinManager
-import com.lodz.android.corekt.log.PrintLog
 
 /**
  * 热虹吸式泵
@@ -11,7 +9,7 @@ import com.lodz.android.corekt.log.PrintLog
 class Thermosiphon : Pump {
 
     override fun pump() {
-        PrintLog.d(KoinManager.KOIN_TAG, "Thermosiphon 开始注水")
+//        PrintLog.d(KoinManager.KOIN_TAG, "Thermosiphon 开始注水")
     }
 
 }
