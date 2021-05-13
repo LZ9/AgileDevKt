@@ -26,12 +26,12 @@ import com.lodz.android.pandora.photopicker.picker.PickerManager
 import com.lodz.android.pandora.photopicker.picker.PickerUIConfig
 import com.lodz.android.pandora.photopicker.preview.AbsImageView
 import permissions.dispatcher.*
+import permissions.dispatcher.ktx.constructPermissionsRequest
 
 /**
  * 图片选择测试类
  * Created by zhouL on 2018/12/21.
  */
-@RuntimePermissions
 class PicPickerTestActivity : BaseActivity() {
 
     companion object {
@@ -79,6 +79,14 @@ class PicPickerTestActivity : BaseActivity() {
 
     private var mConfig = PickerUIConfig.createDefault()
 
+    private val hasPermissions = constructPermissionsRequest(
+        Manifest.permission.CAMERA,// 相机
+        onShowRationale = ::onShowRationaleBeforeRequest,
+        onPermissionDenied = ::onDenied,
+        onNeverAskAgain = ::onNeverAskAgain,
+        requiresPermission = ::onRequestPermission
+    )
+
     override fun getLayoutId(): Int = R.layout.activity_pic_picker
 
     override fun findViews(savedInstanceState: Bundle?) {
@@ -94,7 +102,7 @@ class PicPickerTestActivity : BaseActivity() {
     override fun onClickReload() {
         super.onClickReload()
         showStatusLoading()
-        onRequestPermissionWithPermissionCheck()//申请权限
+        onRequestPermission()//申请权限
     }
 
     override fun setListeners() {
@@ -325,44 +333,36 @@ class PicPickerTestActivity : BaseActivity() {
     override fun initData() {
         super.initData()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {// 6.0以上的手机对权限进行动态申请
-            onRequestPermissionWithPermissionCheck()//申请权限
+            onRequestPermission()//申请权限
         } else {
             init()
         }
     }
 
     /** 权限申请成功 */
-    @NeedsPermission(Manifest.permission.CAMERA)// 相机
-    fun onRequestPermission() {
+    private fun onRequestPermission() {
         if (!isPermissionGranted(Manifest.permission.CAMERA)) {
+            hasPermissions.launch()
             return
         }
         init()
     }
 
     /** 用户拒绝后再次申请前告知用户为什么需要该权限 */
-    @OnShowRationale(Manifest.permission.CAMERA)// 相机
-    fun onShowRationaleBeforeRequest(request: PermissionRequest) {
+    private fun onShowRationaleBeforeRequest(request: PermissionRequest) {
         request.proceed()//请求权限
     }
 
     /** 被拒绝 */
-    @OnPermissionDenied(Manifest.permission.CAMERA)// 相机
-    fun onDenied() {
-        onRequestPermissionWithPermissionCheck()//申请权限
+    private fun onDenied() {
+        onRequestPermission()//申请权限
     }
 
     /** 被拒绝并且勾选了不再提醒 */
-    @OnNeverAskAgain(Manifest.permission.CAMERA)// 相机
-    fun onNeverAskAgain() {
+    private fun onNeverAskAgain() {
         toastShort(R.string.splash_check_permission_tips)
         goAppDetailSetting()
         showStatusError()
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        onRequestPermissionsResult(requestCode, grantResults)
     }
 
     private fun init() {

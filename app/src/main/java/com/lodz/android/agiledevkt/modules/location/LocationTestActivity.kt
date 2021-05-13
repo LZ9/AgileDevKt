@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.widget.RadioGroup
 import android.widget.ScrollView
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import com.google.android.material.button.MaterialButton
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
@@ -22,12 +23,14 @@ import kotlinx.coroutines.GlobalScope
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import permissions.dispatcher.*
+import permissions.dispatcher.ktx.LocationPermission
+import permissions.dispatcher.ktx.constructLocationPermissionRequest
+import permissions.dispatcher.ktx.constructPermissionsRequest
 
 /**
  * 定位测试
  * Created by zhouL on 2018/9/28.
  */
-@RuntimePermissions
 class LocationTestActivity : BaseActivity() {
 
     companion object {
@@ -88,6 +91,30 @@ class LocationTestActivity : BaseActivity() {
     /** 是否绑定 */
     private var isBind = false
 
+    private val hasFinePermissions = constructLocationPermissionRequest(
+        LocationPermission.FINE,//后台定位
+        onShowRationale = ::onShowRationaleBeforeRequest,
+        onPermissionDenied = ::onDenied,
+        onNeverAskAgain = ::onNeverAskAgain,
+        requiresPermission = ::onRequestPermission
+    )
+
+    private val hasCoarsePermissions = constructLocationPermissionRequest(
+        LocationPermission.COARSE,//后台定位
+        onShowRationale = ::onShowRationaleBeforeRequest,
+        onPermissionDenied = ::onDenied,
+        onNeverAskAgain = ::onNeverAskAgain,
+        requiresPermission = ::onRequestPermission
+    )
+
+    private val hasBackgroundPermissions = constructLocationPermissionRequest(
+        LocationPermission.BACKGROUND,//后台定位
+        onShowRationale = ::onShowRationaleBeforeRequest,
+        onPermissionDenied = ::onDenied,
+        onNeverAskAgain = ::onNeverAskAgain,
+        requiresPermission = ::onRequestPermission
+    )
+
     override fun getLayoutId(): Int = R.layout.activity_location_test
 
     override fun findViews(savedInstanceState: Bundle?) {
@@ -102,77 +129,49 @@ class LocationTestActivity : BaseActivity() {
     override fun onClickReload() {
         super.onClickReload()
         showStatusLoading()
-        onRequestPermissionWithPermissionCheck()
+        onRequestPermission()
     }
 
     override fun initData() {
         super.initData()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {// 6.0以上的手机对权限进行动态申请
-            onRequestPermissionWithPermissionCheck()//申请权限
+            onRequestPermission()//申请权限
         } else {
             initLogic()
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
-            permissions.forEachIndexed { index, permission ->
-                if (permission == Manifest.permission.ACCESS_BACKGROUND_LOCATION){
-                    grantResults[index] = PackageManager.PERMISSION_GRANTED
-                }
-            }
-        }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        onRequestPermissionsResult(requestCode, grantResults)
-    }
-
     /** 权限申请成功 */
-    @NeedsPermission(
-        Manifest.permission.ACCESS_FINE_LOCATION,// 定位
-        Manifest.permission.ACCESS_COARSE_LOCATION,// 定位
-        Manifest.permission.ACCESS_BACKGROUND_LOCATION// 后台定位
-    )
-    fun onRequestPermission() {
+    private fun onRequestPermission() {
         if (!isPermissionGranted(Manifest.permission.ACCESS_FINE_LOCATION)) {
+            hasFinePermissions.launch()
             return
         }
         if (!isPermissionGranted(Manifest.permission.ACCESS_COARSE_LOCATION)) {
+            hasCoarsePermissions.launch()
             return
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && !isPermissionGranted(Manifest.permission.ACCESS_BACKGROUND_LOCATION)) {
+            hasBackgroundPermissions.launch()
             return
         }
         initLogic()
     }
 
+
     /** 用户拒绝后再次申请前告知用户为什么需要该权限 */
-    @OnShowRationale(
-        Manifest.permission.ACCESS_FINE_LOCATION,// 定位
-        Manifest.permission.ACCESS_COARSE_LOCATION,// 定位
-        Manifest.permission.ACCESS_BACKGROUND_LOCATION// 后台定位
-    )
-    fun onShowRationaleBeforeRequest(request: PermissionRequest) {
+    private fun onShowRationaleBeforeRequest(request: PermissionRequest) {
         request.proceed()//请求权限
     }
 
     /** 被拒绝 */
-    @OnPermissionDenied(
-        Manifest.permission.ACCESS_FINE_LOCATION,// 定位
-        Manifest.permission.ACCESS_COARSE_LOCATION,// 定位
-        Manifest.permission.ACCESS_BACKGROUND_LOCATION// 后台定位
-    )
-    fun onDenied() {
+    private fun onDenied() {
         toastShort(R.string.location_denied_permission_tips)
         showStatusError()
     }
 
     /** 被拒绝并且勾选了不再提醒 */
-    @OnNeverAskAgain(
-        Manifest.permission.ACCESS_FINE_LOCATION,// 定位
-        Manifest.permission.ACCESS_COARSE_LOCATION,// 定位
-        Manifest.permission.ACCESS_BACKGROUND_LOCATION// 后台定位
-    )
-    fun onNeverAskAgain() {
+    private fun onNeverAskAgain() {
         toastShort(R.string.location_check_permission_tips)
         showPermissionCheckDialog()
         goAppDetailSetting()
@@ -183,7 +182,7 @@ class LocationTestActivity : BaseActivity() {
         val checkDialog = CheckDialog(getContext())
         checkDialog.setContentMsg(R.string.location_check_permission_title)
         checkDialog.setPositiveText(R.string.splash_check_permission_confirm, DialogInterface.OnClickListener { dialog, which ->
-            onRequestPermissionWithPermissionCheck()
+            onRequestPermission()
             dialog.dismiss()
         })
         checkDialog.setNegativeText(R.string.splash_check_permission_unconfirmed, DialogInterface.OnClickListener { dialog, which ->
