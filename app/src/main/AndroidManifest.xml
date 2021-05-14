@@ -152,6 +152,7 @@
 
         <service
             android:name=".modules.service.BusService"
+            android:foregroundServiceType="location"
             android:exported="false"
             android:label="服务总线">
 
