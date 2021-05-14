@@ -148,9 +148,10 @@ open class CameraHelper @JvmOverloads constructor(activity: Activity, surfaceVie
         var autoFocus = false
         val listFocusMode = mParameters.supportedFocusModes
         for (mode in listFocusMode) {
-            if (mode == focusMode)
-                autoFocus = true
             Log.d("testtag","相机支持的对焦模式： $mode")
+            if (mode == focusMode){
+                autoFocus = true
+            }
         }
         return autoFocus
     }
