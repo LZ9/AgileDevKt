@@ -117,9 +117,12 @@ open class CameraHelper @JvmOverloads constructor(activity: Activity, surfaceVie
             }
             mParameters = configParameters(mParameters)
             camera.parameters = mParameters
+            mListener?.onStatusChange(OnCameraListener.CAMERA_PARAMETERS_INIT_SUCCESS, "相机参数初始化成功")
+            mListener?.onStatusChange(OnCameraListener.CAMERA_OPEN_SUCCESS, "相机打开成功")
         } catch (e: Exception) {
             e.printStackTrace()
             toast("相机初始化失败!")
+            mListener?.onStatusChange(OnCameraListener.CAMERA_PARAMETERS_INIT_FAIL, "相机参数初始化失败")
         }
     }
 

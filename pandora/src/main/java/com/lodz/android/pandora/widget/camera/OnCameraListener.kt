@@ -16,6 +16,10 @@ interface OnCameraListener {
         const val CAMERA_OPEN_FAIL = 2
         /** 不支持的摄像头类型 */
         const val CAMERA_UNSUPPORT_CAMERA_FACING = 3
+        /** 相机参数初始化成功 */
+        const val CAMERA_PARAMETERS_INIT_SUCCESS = 4
+        /** 相机参数初始化失败 */
+        const val CAMERA_PARAMETERS_INIT_FAIL = 5
     }
 
     /** 状态变化 */
