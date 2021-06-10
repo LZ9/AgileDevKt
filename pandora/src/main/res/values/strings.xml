@@ -9,9 +9,9 @@
     <string name="pandora_load_fail_net">网络异常，请点击重试…</string>
 
     <!-- 加载更多 -->
-    <string name="pandora_load_finish_tips">已经全部加载完毕了哟~</string>
-    <string name="pandora_loading_more_tips">努力为您加载中~</string>
-    <string name="pandora_load_fail_tips">加载失败，请点击重试~</string>
+    <string name="pandora_load_finish_tips">已经全部加载完毕</string>
+    <string name="pandora_loading_more_tips">努力为您加载中</string>
+    <string name="pandora_load_fail_tips">加载失败，请点击重试</string>
 
     <!-- 图片预览/选择 -->
     <string name="pandora_photo_loader_unset">您尚未设置图片加载器</string>
