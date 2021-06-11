@@ -871,4 +871,17 @@ object BitmapUtils {
         return Bitmap.createBitmap(rawBitmap, 0, 0, rawBitmap.width, rawBitmap.height, matrix, true)
     }
 
+    /** 把相机的预览图数据[datas]，根绝给定宽[width]高[height]转Bitmap */
+    @JvmStatic
+    fun createPreviewBitmap(datas: ByteArray, width: Int, height: Int): Bitmap {
+        val yuvImage = YuvImage(datas, ImageFormat.NV21, width, height, null)
+        ByteArrayOutputStream().use {
+            yuvImage.compressToJpeg(Rect(0, 0, width, height), 100, it)
+            val rawImage = it.toByteArray()
+            val options = BitmapFactory.Options()
+            options.inJustDecodeBounds = true
+            options.inPreferredConfig = Bitmap.Config.ARGB_8888
+            return BitmapFactory.decodeByteArray(rawImage, 0, rawImage.size, options)
+        }
+    }
 }
