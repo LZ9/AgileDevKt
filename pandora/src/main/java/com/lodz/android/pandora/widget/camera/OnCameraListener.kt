@@ -1,6 +1,7 @@
 package com.lodz.android.pandora.widget.camera
 
 import android.graphics.RectF
+import android.hardware.Camera
 
 /**
  * 相机监听器
@@ -26,10 +27,10 @@ interface OnCameraListener {
     fun onStatusChange(status: Int, msg: String)
 
     /** 预览 */
-    fun onPreviewFrame(data: ByteArray?)
+    fun onPreviewFrame(data: ByteArray?, camera: Camera)
 
     /** 拍照 */
-    fun onTakePic(data: ByteArray?)
+    fun onTakePic(data: ByteArray?, camera: Camera)
 
     /** 人脸框 */
     fun onFaceDetect(faces: ArrayList<RectF>)

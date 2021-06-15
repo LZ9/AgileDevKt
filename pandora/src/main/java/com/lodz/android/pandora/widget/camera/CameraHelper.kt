@@ -65,7 +65,7 @@ open class CameraHelper @JvmOverloads constructor(activity: Activity, surfaceVie
     fun takePic() {
         mCamera?.takePicture({}, null, { data, camera ->
             camera.startPreview()
-            mListener?.onTakePic(data)
+            mListener?.onTakePic(data, camera)
         })
     }
 
@@ -77,7 +77,7 @@ open class CameraHelper @JvmOverloads constructor(activity: Activity, surfaceVie
                 mCamera = Camera.open(cameraFacing)
                 initParameters()
                 mCamera?.setPreviewCallback { data, camera ->
-                    mListener?.onPreviewFrame(data)
+                    mListener?.onPreviewFrame(data, camera)
                 }
             } catch (e: Exception) {
                 e.printStackTrace()

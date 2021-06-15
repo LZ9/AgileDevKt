@@ -13,15 +13,13 @@ import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.event.TakePhotoEvent
 import com.lodz.android.agiledevkt.utils.file.FileManager
 import com.lodz.android.corekt.album.AlbumUtils
-import com.lodz.android.corekt.anko.append
-import com.lodz.android.corekt.anko.bindView
-import com.lodz.android.corekt.anko.toastShort
+import com.lodz.android.corekt.anko.*
+import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.corekt.utils.BitmapUtils
 import com.lodz.android.corekt.utils.DateUtils
 import com.lodz.android.corekt.utils.FileUtils
+import com.lodz.android.corekt.utils.YUV420Utils
 import com.lodz.android.pandora.base.activity.AbsActivity
-import com.lodz.android.pandora.event.ActivityFinishEvent
-import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
 import com.lodz.android.pandora.rx.subscribe.observer.ProgressObserver
 import com.lodz.android.pandora.rx.utils.RxUtils
 import com.lodz.android.pandora.widget.camera.CameraHelper
@@ -30,8 +28,6 @@ import io.reactivex.rxjava3.core.Observable
 import okio.buffer
 import okio.sink
 import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 import java.io.File
 
 /**
@@ -93,10 +89,10 @@ class CameraTakeActivity : AbsActivity() {
 
             }
 
-            override fun onPreviewFrame(data: ByteArray?) {
+            override fun onPreviewFrame(data: ByteArray?, camera: Camera) {
             }
 
-            override fun onTakePic(data: ByteArray?) {
+            override fun onTakePic(data: ByteArray?, camera: Camera) {
                 savePic(data)
             }
 
