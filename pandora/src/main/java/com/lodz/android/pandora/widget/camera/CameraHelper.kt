@@ -24,11 +24,11 @@ open class CameraHelper @JvmOverloads constructor(activity: Activity, surfaceVie
     protected lateinit var mParameters: Camera.Parameters
 
     /** 用于预览的SurfaceView对象 */
-    protected var mSurfaceView: SurfaceView = surfaceView
+    protected var mSurfaceView = surfaceView
     /** SurfaceHolder对象 */
-    protected var mSurfaceHolder: SurfaceHolder
+    protected var mSurfaceHolder = mSurfaceView.holder
 
-    protected var mActivity: Activity = activity
+    protected var mActivity = activity
     /** 监听器 */
     protected var mListener: OnCameraListener? = null
 
@@ -43,7 +43,6 @@ open class CameraHelper @JvmOverloads constructor(activity: Activity, surfaceVie
     protected var picHeight = 3840
 
     init {
-        mSurfaceHolder = mSurfaceView.holder
         mSurfaceHolder.addCallback(object :SurfaceHolder.Callback{
             override fun surfaceCreated(holder: SurfaceHolder) {
                 if (mCamera == null) {
@@ -133,7 +132,7 @@ open class CameraHelper @JvmOverloads constructor(activity: Activity, surfaceVie
     /** 开始预览 */
     fun startPreview() {
         mCamera?.setPreviewDisplay(mSurfaceHolder)
-        setCameraDisplayOrientation(mActivity)
+        mCamera?.setDisplayOrientation(getCameraDisplayOrientation(mActivity))
         mCamera?.startPreview()
         startFaceDetect()
     }
@@ -207,8 +206,8 @@ open class CameraHelper @JvmOverloads constructor(activity: Activity, surfaceVie
         return bestSize
     }
 
-    /** 设置预览旋转的角度 */
-    private fun setCameraDisplayOrientation(activity: Activity) {
+    /** 获取预览旋转的角度 */
+    private fun getCameraDisplayOrientation(activity: Activity) :Int{
         val info = Camera.CameraInfo()
         Camera.getCameraInfo(mCameraFacing, info)
         val rotation = activity.windowManager.defaultDisplay.rotation
@@ -227,10 +226,9 @@ open class CameraHelper @JvmOverloads constructor(activity: Activity, surfaceVie
         } else {
             mDisplayOrientation = (info.orientation - screenDegree + 360) % 360
         }
-        mCamera?.setDisplayOrientation(mDisplayOrientation)
-
         Log.d("testtag","屏幕的旋转角度 : $rotation")
         Log.d("testtag","setDisplayOrientation(result) : $mDisplayOrientation")
+        return mDisplayOrientation
     }
 
     /** 判断是否支持[cameraFacing]摄像头位置 */

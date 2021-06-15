@@ -1,5 +1,8 @@
 package com.lodz.android.corekt.utils
 
+import android.hardware.Camera
+
+
 /**
  * Android相机的YUV420（NV21）帮助类
  * @author zhouL
@@ -7,9 +10,11 @@ package com.lodz.android.corekt.utils
  */
 object YUV420Utils {
 
-    /** 将数据流[datas]翻转90度，原图宽度[width]，原图高度[height] */
+    /** 将相机[camera]数据流[datas]翻转90度 */
     @JvmStatic
-    fun rotateDegree90(data: ByteArray, imageWidth: Int, imageHeight: Int): ByteArray {
+    fun rotateDegree90(data: ByteArray, camera: Camera): ByteArray {
+        val imageWidth = camera.parameters.previewSize.width
+        val imageHeight = camera.parameters.previewSize.height
         val yuv = ByteArray(imageWidth * imageHeight * 3 / 2)
         // Rotate the Y luma
         var i = 0
@@ -34,9 +39,11 @@ object YUV420Utils {
         return yuv
     }
 
-    /** 将数据流[datas]翻转180度，原图宽度[width]，原图高度[height] */
+    /** 将相机[camera]数据流[datas]翻转180度 */
     @JvmStatic
-    fun rotateDegree180(data: ByteArray, imageWidth: Int, imageHeight: Int): ByteArray {
+    fun rotateDegree180(data: ByteArray, camera: Camera): ByteArray {
+        val imageWidth = camera.parameters.previewSize.width
+        val imageHeight = camera.parameters.previewSize.height
         val yuv = ByteArray(imageWidth * imageHeight * 3 / 2)
         var count = 0
         var i = imageWidth * imageHeight - 1
@@ -54,9 +61,11 @@ object YUV420Utils {
         return yuv
     }
 
-    /** 将数据流[datas]翻转270度，原图宽度[width]，原图高度[height] */
+    /** 将相机[camera]数据流[datas]翻转270度 */
     @JvmStatic
-    fun rotateDegree270(data: ByteArray, imageWidth: Int, imageHeight: Int): ByteArray {
+    fun rotateDegree270(data: ByteArray, camera: Camera): ByteArray {
+        val imageWidth = camera.parameters.previewSize.width
+        val imageHeight = camera.parameters.previewSize.height
         val yuv = ByteArray(imageWidth * imageHeight * 3 / 2)
         // Rotate the Y luma
         var i = 0
