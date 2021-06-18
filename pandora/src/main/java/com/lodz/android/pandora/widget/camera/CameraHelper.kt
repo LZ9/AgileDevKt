@@ -10,6 +10,7 @@ import android.view.Surface
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import android.widget.Toast
+import com.lodz.android.corekt.log.PrintLog
 
 /**
  * 相机帮助类
@@ -179,30 +180,31 @@ open class CameraHelper @JvmOverloads constructor(activity: Activity, surfaceVie
     }
 
     /** 获取与指定宽高相等或最接近的尺寸 */
-    private fun getBestSize(targetWidth: Int, targetHeight: Int, sizeList: List<Camera.Size>): Camera.Size? {
-        var bestSize: Camera.Size? = null
-        val targetRatio = (targetHeight.toDouble() / targetWidth)  //目标大小的宽高比
-        var minDiff = targetRatio
-
+    private fun getBestSize(width: Int, height: Int, sizeList: List<Camera.Size>): Camera.Size? {
+        val targetRatio = height.toDouble() / width //传入的高宽比
+        PrintLog.v("testtag","目标尺寸 ：$height * $width ，   高宽比  $targetRatio")
+        val suitableList = ArrayList<Camera.Size>()
         for (size in sizeList) {
-            val supportedRatio = (size.width.toDouble() / size.height)
-            Log.d("testtag","系统支持的尺寸 : ${size.width} * ${size.height} ,    比例$supportedRatio")
-        }
-
-        for (size in sizeList) {
-            if (size.width == targetHeight && size.height == targetWidth) {
-                bestSize = size
-                break
-            }
-
-            val supportedRatio = (size.width.toDouble() / size.height)
-            if (Math.abs(supportedRatio - targetRatio) < minDiff) {
-                minDiff = Math.abs(supportedRatio - targetRatio)
-                bestSize = size
+            val sizeRatio = size.width.toDouble() / size.height
+            PrintLog.i("testtag","系统支持的尺寸 : ${size.width} * ${size.height} ,    比例$sizeRatio")
+            if (targetRatio <= sizeRatio){
+                suitableList.add(size)
             }
         }
-        Log.d("testtag","目标尺寸 ：$targetWidth * $targetHeight ，   比例  $targetRatio")
-        Log.d("testtag","最优尺寸 ：${bestSize?.height} * ${bestSize?.width}")
+        if (suitableList.size == 0){
+            return null
+        }
+        if (suitableList.size == 1){
+            Log.d("testtag","最优尺寸 ：${suitableList[0].height} * ${suitableList[0].width}")
+            return suitableList[0]
+        }
+        var bestSize: Camera.Size = suitableList[0]
+        suitableList.forEach {
+            if (it.width > bestSize.width ){
+                bestSize = it
+            }
+        }
+        Log.d("testtag","最优尺寸 ：${bestSize.width} * ${bestSize.height}")
         return bestSize
     }
 
