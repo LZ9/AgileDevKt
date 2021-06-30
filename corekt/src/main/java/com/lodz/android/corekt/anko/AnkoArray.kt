@@ -2,6 +2,7 @@ package com.lodz.android.corekt.anko
 
 import androidx.annotation.IntRange
 import com.lodz.android.corekt.array.Groupable
+import java.nio.ByteBuffer
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -113,9 +114,20 @@ fun <T> Collection<T>.getPositionByIndex(groups: List<String>, indexText: String
     return getPositionByIndex(groups, groups[position - 1])
 }
 
+fun ByteBuffer.toByteArray(): ByteArray {
+    this.flip()
+    val length = this.limit() - this.position()
 
+    val byte = ByteArray(length)
+    for (i in byte.indices) {
+        byte[i] = get()
+    }
+    return byte;
+}
 
-
-
-
-
+fun ByteArray.toByteBuffer(): ByteBuffer {
+    val buffer = ByteBuffer.allocate(this.size)
+    buffer.put(this)
+    buffer.flip()
+    return buffer
+}
