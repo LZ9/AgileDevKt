@@ -5,6 +5,7 @@ import com.lodz.android.corekt.array.Groupable
 import java.nio.ByteBuffer
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.experimental.and
 
 /**
  * 数组列表帮助类
@@ -114,20 +115,34 @@ fun <T> Collection<T>.getPositionByIndex(groups: List<String>, indexText: String
     return getPositionByIndex(groups, groups[position - 1])
 }
 
+/** ByteBuffer转ByteArray */
 fun ByteBuffer.toByteArray(): ByteArray {
     this.flip()
     val length = this.limit() - this.position()
 
-    val byte = ByteArray(length)
-    for (i in byte.indices) {
-        byte[i] = get()
+    val bytes = ByteArray(length)
+    for (i in bytes.indices) {
+        bytes[i] = get()
     }
-    return byte;
+    return bytes
 }
 
+/** ByteArray转ByteBuffer */
 fun ByteArray.toByteBuffer(): ByteBuffer {
     val buffer = ByteBuffer.allocate(this.size)
     buffer.put(this)
     buffer.flip()
     return buffer
 }
+
+/** ShortArray转ByteArray */
+fun ShortArray.toByteArray(): ByteArray {
+    val bytes = ByteArray(this.size * 2)
+    for (i in bytes.indices) {
+        bytes[i * 2] = (this[i] and 0xff).toByte()
+        bytes[i * 2 + 1] = ((this[i].toInt() and 0xff00) shr 8).toByte()
+    }
+    return bytes
+}
+
+
