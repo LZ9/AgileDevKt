@@ -13,10 +13,10 @@ import kotlin.experimental.and
  */
 
 /** 数组数据去重 */
-inline fun <reified T> Array<T>.deduplication(): Array<*> = LinkedHashSet<T>(toList()).toTypedArray()
+inline fun <reified T> Array<T>.deduplication(): Array<*> = LinkedHashSet(toList()).toTypedArray()
 
 /** 列表数据去重 */
-fun <T> Collection<T>.deduplication(): Collection<T> = LinkedHashSet<T>(this).toList()
+fun <T> Collection<T>.deduplication(): Collection<T> = LinkedHashSet(this).toList()
 
 /** 列表转ArrayList */
 fun <T> Collection<T>.toArrayList(): ArrayList<T> = ArrayList(this)
@@ -35,6 +35,9 @@ fun Array<*>?.isNullOrEmpty(): Boolean = this == null || this.isEmpty()
 
 /** 列表是否为空 */
 fun Collection<*>?.isNullOrEmpty(): Boolean = this == null || this.isEmpty()
+
+/** 将列表转为数组 */
+inline fun <reified T> Collection<T>.toArrays(): Array<T> = this.toTypedArray()
 
 /** 将数据分组，泛型T可以为String或者实现了Groupable的任意类，[groups]为分组标题，[compareLength]为匹配长度 */
 @JvmOverloads
