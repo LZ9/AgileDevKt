@@ -94,6 +94,7 @@
     <string name="toast_custom_title">注意</string>
     <string name="toast_custom_content">我是内容</string>
     <string name="toast_io_thread">异步线程</string>
+    <string name="toast_replace_forward">可覆盖前次</string>
 
     <!-- toast测试 -->
     <string name="reflect_use_kclass">使用KClass</string>

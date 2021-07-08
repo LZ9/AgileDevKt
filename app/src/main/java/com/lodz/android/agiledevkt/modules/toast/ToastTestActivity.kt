@@ -7,11 +7,13 @@ import android.view.Gravity
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.toastLong
 import com.lodz.android.corekt.anko.toastShort
+import com.lodz.android.corekt.utils.DateUtils
 import com.lodz.android.corekt.utils.ToastUtils
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
@@ -43,6 +45,11 @@ class ToastTestActivity : BaseActivity(){
     private val mCustomViewBtn by bindView<Button>(R.id.custom_view_btn)
     /** 异步线程 */
     private val mIoThreadBtn by bindView<Button>(R.id.io_thread_btn)
+    /** 可覆盖前次 */
+    private val mReplaceForwardBtn by bindView<Button>(R.id.replace_forward_btn)
+
+    /** Toast对象 */
+    private var mToast: Toast? = null
 
     override fun getLayoutId() = R.layout.activity_toast_test
 
@@ -104,10 +111,17 @@ class ToastTestActivity : BaseActivity(){
                     .compose(RxUtils.ioToMainObservable())
                     .subscribe(BaseObserver.empty())
         }
+
+        // 可覆盖前次（android8.0及以上不能连续覆盖弹出）
+        mReplaceForwardBtn.setOnClickListener {
+            mToast?.setText(DateUtils.getCurrentFormatString(DateUtils.TYPE_10))
+            mToast?.show()
+        }
     }
 
     override fun initData() {
         super.initData()
+        mToast = ToastUtils.create(getContext()).setText(R.string.toast_replace_forward).setShort().getToast()
         showStatusCompleted()
     }
 

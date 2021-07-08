@@ -117,19 +117,8 @@ class ToastUtils private constructor(private val mContext: Context) {
         return this
     }
 
-    /** 显示Toast */
-    fun show() {
-        if (AppUtils.isMainThread()) {//主线程直接显示
-            assembleShowToast()
-            return
-        }
-        GlobalScope.runOnMain {
-            assembleShowToast()//非主线程post到主线程显示
-        }
-    }
-
-    /** 组装并显示Toast */
-    private fun assembleShowToast() {
+    /** 获取Toast对象 */
+    fun getToast(): Toast? {
         var toast: Toast? = null
         if (!mText.isNullOrEmpty()) {
             toast = getDefaultToast()
@@ -138,7 +127,7 @@ class ToastUtils private constructor(private val mContext: Context) {
         }
 
         if (toast == null) {
-            return
+            return null
         }
 
         if (mGravity != Gravity.NO_GRAVITY) {
@@ -151,7 +140,18 @@ class ToastUtils private constructor(private val mContext: Context) {
             imageCodeProject.setImageResource(mImgResId)
             toastView.addView(imageCodeProject, 0)
         }
-        toast.show()
+        return toast
+    }
+
+    /** 显示Toast */
+    fun show() {
+        if (AppUtils.isMainThread()) {//主线程直接显示
+            getToast()?.show()
+            return
+        }
+        GlobalScope.runOnMain {
+            getToast()?.show()//非主线程post到主线程显示
+        }
     }
 
     /** 获取默认的toast */

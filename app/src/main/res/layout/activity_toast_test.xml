@@ -51,4 +51,12 @@
         android:layout_marginStart="3dp"
         android:text="@string/toast_io_thread"
         android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/replace_forward_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:text="@string/toast_replace_forward"
+        android:textAllCaps="false" />
 </LinearLayout>
