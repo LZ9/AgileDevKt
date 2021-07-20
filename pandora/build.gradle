@@ -13,6 +13,10 @@ android {
         versionName "1.6.7"// 成功上传
     }
 
+    viewBinding {
+        enabled = true
+    }
+
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }

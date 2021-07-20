@@ -71,6 +71,7 @@ import com.lodz.android.agiledevkt.modules.str.StrTestActivity
 import com.lodz.android.agiledevkt.modules.threadpool.ThreadPoolActivity
 import com.lodz.android.agiledevkt.modules.toast.ToastTestActivity
 import com.lodz.android.agiledevkt.modules.transition.TransitionActivity
+import com.lodz.android.agiledevkt.modules.viewbinding.ViewBindingTestActivity
 import com.lodz.android.agiledevkt.modules.viewpager.ViewPagerActivity
 import com.lodz.android.agiledevkt.modules.webview.WebViewActivity
 import com.lodz.android.corekt.anko.*
@@ -162,7 +163,8 @@ class MainActivity : BaseActivity() {
         MainBean("MVP模式测试类", "M", MvpDemoActivity::class.java),
 //        MainBean("Koin注入测试类", "K", KoinTestActivity::class.java),
         MainBean("相机测试类", "X", CameraMainActivity::class.java),
-        MainBean("自定义键盘测试类", "Z", KeyboardTestActivity::class.java)
+        MainBean("自定义键盘测试类", "Z", KeyboardTestActivity::class.java),
+        MainBean("ViewBinding测试类", "V", ViewBindingTestActivity::class.java),
     )
 
     /** 列表 */
