@@ -64,8 +64,8 @@ abstract class AbsActivity : RxAppCompatActivity() {
     }
 
     final override fun onBackPressed() {
-        val list: List<Fragment>? = supportFragmentManager.fragments// 获取activity下的fragment
-        if (list != null && list.isNotEmpty()) {
+        val list: List<Fragment> = supportFragmentManager.fragments// 获取activity下的fragment
+        if (list.isNotEmpty()) {
             for (fragment in list) {
                 if (isFragmentConsumeBackPressed(fragment)) {
                     return
