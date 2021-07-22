@@ -24,6 +24,7 @@ class ViewBindingTestActivity : AppCompatActivity() {
         mBinding = ActivityViewBindingTestBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
         initViewPager()
+        setListeners()
     }
 
     private fun initViewPager() {
@@ -37,5 +38,17 @@ class ViewBindingTestActivity : AppCompatActivity() {
         TabLayoutMediator(mBinding.tabLayout, mBinding.viewPager) { tab, position ->
             tab.text = TOP_TAB_NAMES[position]
         }.attach()
+    }
+
+    private fun setListeners() {
+        mBinding.dialogBtn.setOnClickListener {
+            val dialog = ViewBindingDialog(this@ViewBindingTestActivity)
+            dialog.show()
+        }
+
+        mBinding.popupBtn.setOnClickListener {
+
+        }
+
     }
 }
