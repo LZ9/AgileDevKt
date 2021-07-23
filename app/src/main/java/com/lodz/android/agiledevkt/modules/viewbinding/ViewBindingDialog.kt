@@ -26,7 +26,7 @@ class ViewBindingDialog(context: Context) : Dialog(context) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setCanceledOnTouchOutside(false)
-        mBinding.okBtn.setOnClickListener {
+        mBinding.closeBtn.setOnClickListener {
             dismiss()
         }
     }

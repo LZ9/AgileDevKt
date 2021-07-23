@@ -25,7 +25,14 @@ abstract class BasePopupWindow(context: Context) {
     }
 
     private fun createPopupWindow(context: Context): PopupWindow {
-        val popView = LayoutInflater.from(context).inflate(getLayoutId(), null)
+        val popView = if (getLayoutId() != 0) {
+            LayoutInflater.from(context).inflate(getLayoutId(), null)
+        } else {
+            getLayoutView()
+        }
+        if (popView == null) {
+            throw NullPointerException("please override getLayoutId() or getLayoutView() to create")
+        }
         val popupWindow = PopupWindow(popView, getWidthPx(), getHeightPx(), true)
         popupWindow.isTouchable = true
         popupWindow.isOutsideTouchable = true
@@ -56,7 +63,9 @@ abstract class BasePopupWindow(context: Context) {
     protected open fun startCreate() {}
 
     @LayoutRes
-    protected abstract fun getLayoutId(): Int
+    protected open fun getLayoutId(): Int = 0
+
+    protected open fun getLayoutView(): View? = null
 
     protected open fun findViews(view: View) {}
 

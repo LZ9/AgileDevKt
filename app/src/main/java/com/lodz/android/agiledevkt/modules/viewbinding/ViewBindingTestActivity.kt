@@ -1,6 +1,7 @@
 package com.lodz.android.agiledevkt.modules.viewbinding
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
@@ -47,8 +48,15 @@ class ViewBindingTestActivity : AppCompatActivity() {
         }
 
         mBinding.popupBtn.setOnClickListener {
-
+            showViewBindingPopupWindow(it)
         }
 
+    }
+
+    /** 显示动画的PopupWindow */
+    private fun showViewBindingPopupWindow(view: View) {
+        val popupWindow = ViewBindingPopupWindow(this@ViewBindingTestActivity)
+        popupWindow.create()
+        popupWindow.getPopup().showAsDropDown(view, 100, 20)
     }
 }

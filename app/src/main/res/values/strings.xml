@@ -765,5 +765,11 @@
     <string name="keyboard_common_cert">通用证件：</string>
     <string name="keyboard_default">默认：</string>
 
+    <!-- ViewBinding测试 -->
+    <string name="vb_title">ViewBinding测试</string>
+    <string name="vb_close">关闭</string>
+    <string name="vb_dialog">Dialog测试</string>
+    <string name="vb_popup">PopupWindow测试</string>
+
 
 </resources>

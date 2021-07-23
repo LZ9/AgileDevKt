@@ -9,8 +9,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 38
-        versionName "1.6.7"// 成功上传
+        versionCode 39
+        versionName "1.6.8"// 未上传
     }
 
     viewBinding {
