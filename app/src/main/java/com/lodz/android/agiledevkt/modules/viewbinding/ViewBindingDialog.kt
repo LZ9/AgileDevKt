@@ -3,7 +3,9 @@ package com.lodz.android.agiledevkt.modules.viewbinding
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
+import androidx.viewbinding.ViewBinding
 import com.lodz.android.agiledevkt.databinding.DialogViewBindingBinding
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 
 /**
  * ViewBinding弹框测试
@@ -12,14 +14,13 @@ import com.lodz.android.agiledevkt.databinding.DialogViewBindingBinding
  */
 class ViewBindingDialog(context: Context) : Dialog(context) {
 
-    private lateinit var mBinding: DialogViewBindingBinding
+    private val mBinding: DialogViewBindingBinding by bindingLayout(DialogViewBindingBinding::inflate)
 
     init {
         init()
     }
 
     private fun init() {
-        mBinding = DialogViewBindingBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
     }
 

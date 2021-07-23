@@ -43,15 +43,16 @@ class ViewBindingTestFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        val adapter = ViewBindingAdapter(getTestList())
+        val adapter = ViewBindingAdapter(requireContext())
         val layoutManager = LinearLayoutManager(getContext())
         layoutManager.orientation = RecyclerView.VERTICAL
         mBinding?.recyclerView?.layoutManager = layoutManager
         mBinding?.recyclerView?.setHasFixedSize(true)
         mBinding?.recyclerView?.adapter = adapter
+        adapter.setData(getTestList())
     }
 
-    private fun getTestList(): List<String> {
+    private fun getTestList(): ArrayList<String> {
         val list = ArrayList<String>()
         for (i in 0..99) {
             list.add((i + 1).toString())

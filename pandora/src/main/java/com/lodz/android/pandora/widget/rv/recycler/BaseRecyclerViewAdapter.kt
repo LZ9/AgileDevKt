@@ -10,6 +10,7 @@ import androidx.annotation.IntDef
 import androidx.annotation.IntRange
 import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBinding
 import com.lodz.android.corekt.anko.getSize
 import com.lodz.android.pandora.widget.rv.animation.*
 
@@ -187,6 +188,14 @@ abstract class BaseRecyclerViewAdapter<T>(protected val context: Context) : Recy
     @JvmOverloads
     protected fun getLayoutView(parent: ViewGroup, @LayoutRes layoutId: Int, attachToRoot: Boolean = false): View =
             LayoutInflater.from(context).inflate(layoutId, parent, attachToRoot)
+
+    /** 在onCreateViewHolder方法中根据[layoutId]获取View */
+    @JvmOverloads
+    protected fun <VB : ViewBinding> getLayoutView(
+        inflate: (LayoutInflater, parent: ViewGroup, attachToRoot: Boolean) -> VB,
+        parent: ViewGroup,
+        attachToRoot: Boolean = false
+    ): VB = inflate(LayoutInflater.from(parent.context), parent, attachToRoot)
 
     /** 设置[itemView]的宽度值[width] */
     protected fun setItemViewWidth(itemView: View, width: Int) {

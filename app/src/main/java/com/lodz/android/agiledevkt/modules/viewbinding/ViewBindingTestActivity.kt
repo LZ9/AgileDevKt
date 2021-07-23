@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lodz.android.agiledevkt.databinding.ActivityViewBindingTestBinding
+import com.lodz.android.corekt.log.PrintLog
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.vp2.SimpleTabAdapter
 
 /**
@@ -18,11 +20,10 @@ class ViewBindingTestActivity : AppCompatActivity() {
     /** tab数据 */
     private val TOP_TAB_NAMES = arrayListOf("A", "B", "C")
 
-    private lateinit var mBinding: ActivityViewBindingTestBinding
+    private  val mBinding: ActivityViewBindingTestBinding by bindingLayout(ActivityViewBindingTestBinding::inflate)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mBinding = ActivityViewBindingTestBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
         initViewPager()
         setListeners()

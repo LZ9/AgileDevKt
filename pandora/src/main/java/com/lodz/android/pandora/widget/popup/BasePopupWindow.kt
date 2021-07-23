@@ -18,11 +18,7 @@ abstract class BasePopupWindow(context: Context) {
     /** 上下文 */
     private val mPdrContext: Context = context
     /** PopupWindow */
-    private val mPdrPopupWindow: PopupWindow
-
-    init {
-        mPdrPopupWindow = createPopupWindow(mPdrContext)
-    }
+    private lateinit var mPdrPopupWindow: PopupWindow
 
     private fun createPopupWindow(context: Context): PopupWindow {
         val popView = if (getLayoutId() != 0) {
@@ -44,6 +40,7 @@ abstract class BasePopupWindow(context: Context) {
     }
 
     fun create() {
+        mPdrPopupWindow = createPopupWindow(mPdrContext)
         startCreate()
         findViews(mPdrPopupWindow.contentView)
         setListeners()
