@@ -189,9 +189,9 @@ abstract class BaseRecyclerViewAdapter<T>(protected val context: Context) : Recy
     protected fun getLayoutView(parent: ViewGroup, @LayoutRes layoutId: Int, attachToRoot: Boolean = false): View =
             LayoutInflater.from(context).inflate(layoutId, parent, attachToRoot)
 
-    /** 在onCreateViewHolder方法中根据[layoutId]获取View */
+    /** 在onCreateViewHolder方法中使用ViewBinding */
     @JvmOverloads
-    protected fun <VB : ViewBinding> getLayoutView(
+    protected fun <VB : ViewBinding> getViewBindingLayout(
         inflate: (LayoutInflater, parent: ViewGroup, attachToRoot: Boolean) -> VB,
         parent: ViewGroup,
         attachToRoot: Boolean = false
