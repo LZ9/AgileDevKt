@@ -16,9 +16,7 @@ class ViewBindingPopupWindow(context: Context) : BasePopupWindow(context) {
 
     private val mBinding: PopupViewBindingBinding by context.bindingLayout(PopupViewBindingBinding::inflate)
 
-    override fun getLayoutView(): View {
-        return  mBinding.root
-    }
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun setListeners() {
         super.setListeners()

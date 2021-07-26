@@ -5,6 +5,7 @@ import android.content.DialogInterface
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import androidx.annotation.LayoutRes
 import androidx.annotation.StyleRes
 import com.lodz.android.pandora.R
@@ -17,21 +18,15 @@ import com.trello.rxlifecycle4.android.FragmentEvent
  */
 abstract class BaseDialog : RxDialog {
 
-    constructor(context: Context) : super(context, R.style.BaseDialog) {
-        init()
-    }
+    constructor(context: Context) : super(context, R.style.BaseDialog)
 
-    constructor(context: Context, @StyleRes themeResId: Int) : super(context, themeResId) {
-        init()
-    }
+    constructor(context: Context, themeResId: Int) : super(context, themeResId)
 
-    private fun init() {
-        setContentView(getLayoutId())
-        setWindowAnimations()
-    }
+    constructor(context: Context, cancelable: Boolean, cancelListener: DialogInterface.OnCancelListener?) : super(context, cancelable, cancelListener)
 
     final override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        init()
         startCreate()
         findViews()
         setListeners()
@@ -39,10 +34,25 @@ abstract class BaseDialog : RxDialog {
         endCreate()
     }
 
+    private fun init() {
+        val layoutId = getLayoutId()
+        val view = getViewBindingLayout()
+        if (layoutId != 0) {
+            setContentView(layoutId)
+        } else if (view != null) {
+            setContentView(view)
+        } else {
+            throw NullPointerException("please override getLayoutId() or getViewBindingLayout() to set layout")
+        }
+        setWindowAnimations()
+    }
+
     protected open fun startCreate() {}
 
     @LayoutRes
-    protected abstract fun getLayoutId(): Int
+    protected open fun getLayoutId(): Int = 0
+
+    protected open fun getViewBindingLayout(): View? = null
 
     protected open fun findViews() {}
 
