@@ -2,6 +2,7 @@ package com.lodz.android.pandora.base.activity
 
 import android.content.Context
 import android.os.Bundle
+import android.view.View
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
@@ -32,7 +33,15 @@ abstract class AbsActivity : RxAppCompatActivity() {
         EventBus.getDefault().register(this)
         startCreate()
         if (!isPdrUseAnko) {//不使用AnkoLayout再加载布局
-            setContentView(getAbsLayoutId())
+            val layoutId = getAbsLayoutId()
+            val view = getAbsViewBindingLayout()
+            if (layoutId != 0) {
+                setContentView(layoutId)
+            } else if (view != null) {
+                setContentView(view)
+            } else {
+                throw NullPointerException("please override getAbsLayoutId() or getViewBindingLayout() to set layout")
+            }
         }
         afterSetContentView()
         findViews(savedInstanceState)
@@ -44,7 +53,9 @@ abstract class AbsActivity : RxAppCompatActivity() {
     protected open fun startCreate() {}
 
     @LayoutRes
-    protected abstract fun getAbsLayoutId(): Int
+    protected open fun getAbsLayoutId(): Int = 0
+
+    protected open fun getAbsViewBindingLayout(): View? = null
 
     protected open fun afterSetContentView() {}
 

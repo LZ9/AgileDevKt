@@ -12,6 +12,7 @@
     </com.lodz.android.pandora.widget.base.TitleBarLayout>
 
     <TextView
+        android:id="@+id/top_name_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/color_ea413c"

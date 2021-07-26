@@ -2,11 +2,10 @@ package com.lodz.android.agiledevkt.modules.viewbinding
 
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lodz.android.agiledevkt.databinding.ActivityViewBindingTestBinding
-import com.lodz.android.corekt.log.PrintLog
+import com.lodz.android.pandora.base.activity.AbsActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.vp2.SimpleTabAdapter
 
@@ -15,18 +14,29 @@ import com.lodz.android.pandora.widget.vp2.SimpleTabAdapter
  * @author zhouL
  * @date 2021/7/19
  */
-class ViewBindingTestActivity : AppCompatActivity() {
+class ViewBindingTestActivity : AbsActivity() {
 
     /** tab数据 */
     private val TOP_TAB_NAMES = arrayListOf("A", "B", "C")
 
-    private  val mBinding: ActivityViewBindingTestBinding by bindingLayout(ActivityViewBindingTestBinding::inflate)
+    private val mBinding: ActivityViewBindingTestBinding by bindingLayout(ActivityViewBindingTestBinding::inflate)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(mBinding.root)
+    override fun findViews(savedInstanceState: Bundle?) {
+        super.findViews(savedInstanceState)
         initViewPager()
-        setListeners()
+    }
+
+    override fun getAbsViewBindingLayout(): View = mBinding.root
+
+    override fun setListeners() {
+        super.setListeners()
+        mBinding.dialogBtn.setOnClickListener {
+            val dialog = ViewBindingDialog(this@ViewBindingTestActivity)
+            dialog.show()
+        }
+        mBinding.popupBtn.setOnClickListener {
+            showViewBindingPopupWindow(it)
+        }
     }
 
     private fun initViewPager() {
@@ -40,18 +50,6 @@ class ViewBindingTestActivity : AppCompatActivity() {
         TabLayoutMediator(mBinding.tabLayout, mBinding.viewPager) { tab, position ->
             tab.text = TOP_TAB_NAMES[position]
         }.attach()
-    }
-
-    private fun setListeners() {
-        mBinding.dialogBtn.setOnClickListener {
-            val dialog = ViewBindingDialog(this@ViewBindingTestActivity)
-            dialog.show()
-        }
-
-        mBinding.popupBtn.setOnClickListener {
-            showViewBindingPopupWindow(it)
-        }
-
     }
 
     /** 显示动画的PopupWindow */

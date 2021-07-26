@@ -46,6 +46,8 @@ abstract class BaseRefreshActivity : AbsActivity() {
 
     final override fun getAbsLayoutId(): Int = R.layout.pandora_activity_base_refresh
 
+    final override fun getAbsViewBindingLayout(): View? = super.getAbsViewBindingLayout()
+
     final override fun afterSetContentView() {
         super.afterSetContentView()
         if (isUseAnkoLayout()) {
@@ -70,17 +72,24 @@ abstract class BaseRefreshActivity : AbsActivity() {
 
     /** 把内容布局设置进来 */
     private fun setContainerView() {
-        if (getLayoutId() == 0) {
+        val layoutId = getLayoutId()
+        val view = if (layoutId != 0) {
+            LayoutInflater.from(this).inflate(layoutId, null)
+        } else {
+            getViewBindingLayout()
+        }
+        if (view == null) {
             showStatusNoData()
             return
         }
-        val view = LayoutInflater.from(this).inflate(getLayoutId(), null)
         val layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         mPdrContentLayout.addView(view, layoutParams)
     }
 
     @LayoutRes
-    protected abstract fun getLayoutId(): Int
+    protected open fun getLayoutId(): Int = 0
+
+    protected open fun getViewBindingLayout(): View? = null
 
     override fun setListeners() {
         super.setListeners()

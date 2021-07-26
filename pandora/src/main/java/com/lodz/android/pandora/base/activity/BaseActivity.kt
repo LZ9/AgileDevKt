@@ -40,7 +40,8 @@ abstract class BaseActivity : AbsActivity() {
     /** 内容布局 */
     private val mPdrContentLayout by bindView<LinearLayout>(R.id.pdr_content_layout)
 
-    @LayoutRes
+    final override fun getAbsViewBindingLayout(): View? = super.getAbsViewBindingLayout()
+
     final override fun getAbsLayoutId(): Int = R.layout.pandora_activity_base
 
     final override fun afterSetContentView() {
@@ -54,17 +55,24 @@ abstract class BaseActivity : AbsActivity() {
 
     /** 把内容布局设置进来 */
     private fun setContainerView() {
-        if (getLayoutId() == 0) {
+        val layoutId = getLayoutId()
+        val view = if (layoutId != 0) {
+            LayoutInflater.from(this).inflate(layoutId, null)
+        } else {
+            getViewBindingLayout()
+        }
+        if (view == null) {
             showStatusNoData()
             return
         }
-        val view = LayoutInflater.from(this).inflate(getLayoutId(), null)
         val layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         mPdrContentLayout.addView(view, layoutParams)
     }
 
     @LayoutRes
-    protected abstract fun getLayoutId(): Int
+    protected open fun getLayoutId(): Int = 0
+
+    protected open fun getViewBindingLayout(): View? = null
 
     override fun setListeners() {
         super.setListeners()

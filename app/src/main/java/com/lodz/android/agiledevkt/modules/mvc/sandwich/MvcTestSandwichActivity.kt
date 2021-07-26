@@ -3,16 +3,17 @@ package com.lodz.android.agiledevkt.modules.mvc.sandwich
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.TextView
+import android.view.View
 import com.lodz.android.agiledevkt.R
+import com.lodz.android.agiledevkt.databinding.ActivityMvcTestBinding
+import com.lodz.android.agiledevkt.databinding.ViewMvcTestBottomBinding
+import com.lodz.android.agiledevkt.databinding.ViewMvcTestTopBinding
 import com.lodz.android.agiledevkt.modules.mvc.ApiModuleRx
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.pandora.base.activity.BaseSandwichActivity
 import com.lodz.android.pandora.rx.subscribe.observer.RxObserver
 import com.lodz.android.pandora.rx.utils.RxUtils
-import com.lodz.android.pandora.widget.base.TitleBarLayout
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.trello.rxlifecycle4.android.ActivityEvent
 import kotlin.random.Random
 
@@ -29,23 +30,20 @@ class MvcTestSandwichActivity : BaseSandwichActivity(){
         }
     }
 
-    /** 结果 */
-    private val mResult by bindView<TextView>(R.id.result)
-    /** 获取成功数据按钮 */
-    private val mGetSuccessResultBtn by bindView<Button>(R.id.get_success_reuslt_btn)
-    /** 获取失败数据按钮 */
-    private val mGetFailResultBtn by bindView<Button>(R.id.get_fail_reuslt_btn)
-    /** 顶部标题栏 */
-    private val mTitleBarLayout by bindView<TitleBarLayout>(R.id.title_bar_layout)
+    private val mContentBinding: ActivityMvcTestBinding by bindingLayout(ActivityMvcTestBinding::inflate)
 
-    override fun getLayoutId(): Int = R.layout.activity_mvc_test
+    private val mTopBinding: ViewMvcTestTopBinding by bindingLayout(ViewMvcTestTopBinding::inflate)
 
-    override fun getTopLayoutId(): Int = R.layout.view_mvc_test_top
+    private val mBottomBinding: ViewMvcTestBottomBinding by bindingLayout(ViewMvcTestBottomBinding::inflate)
 
-    override fun getBottomLayoutId(): Int = R.layout.view_mvc_test_bottom
+    override fun getViewBindingLayout(): View = mContentBinding.root
+
+    override fun getTopViewBindingLayout(): View = mTopBinding.root
+
+    override fun getBottomViewBindingLayout(): View = mBottomBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
-        mTitleBarLayout.setTitleName(R.string.mvc_demo_sandwich_title)
+        mTopBinding.titleBarLayout.setTitleName(R.string.mvc_demo_sandwich_title)
         setSwipeRefreshEnabled(true)
     }
 
@@ -63,18 +61,29 @@ class MvcTestSandwichActivity : BaseSandwichActivity(){
     override fun setListeners() {
         super.setListeners()
 
-        mTitleBarLayout.setOnBackBtnClickListener {
+        // 顶部标题栏
+        mTopBinding.titleBarLayout.setOnBackBtnClickListener {
             finish()
         }
 
-        mGetSuccessResultBtn.setOnClickListener {
+        mTopBinding.topNameTv.setOnClickListener {
+            toastShort(mTopBinding.topNameTv.text.toString())
+        }
+
+        // 获取成功数据按钮
+        mContentBinding.getSuccessReusltBtn.setOnClickListener {
             showStatusLoading()
             getResult(true)
         }
 
-        mGetFailResultBtn.setOnClickListener {
+        // 获取失败数据按钮
+        mContentBinding.getFailReusltBtn.setOnClickListener {
             showStatusLoading()
             getResult(false)
+        }
+
+        mBottomBinding.bottomNameTv.setOnClickListener {
+            toastShort(mBottomBinding.bottomNameTv.text.toString())
         }
     }
 
@@ -89,7 +98,7 @@ class MvcTestSandwichActivity : BaseSandwichActivity(){
                 .compose(bindUntilEvent(ActivityEvent.DESTROY))
                 .subscribe(object : RxObserver<String>() {
                     override fun onRxNext(any: String) {
-                        mResult.text = any
+                        mContentBinding.resultTv.text = any
                         showStatusCompleted()
                     }
 
@@ -106,7 +115,7 @@ class MvcTestSandwichActivity : BaseSandwichActivity(){
                 .subscribe(object : RxObserver<String>() {
                     override fun onRxNext(any: String) {
                         setSwipeRefreshFinish()
-                        mResult.text = any
+                        mContentBinding.resultTv.text = any
                         showStatusCompleted()
                     }
 

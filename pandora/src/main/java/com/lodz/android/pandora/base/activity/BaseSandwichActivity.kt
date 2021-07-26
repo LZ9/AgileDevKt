@@ -48,6 +48,8 @@ abstract class BaseSandwichActivity : AbsActivity() {
 
     final override fun getAbsLayoutId(): Int = R.layout.pandora_activity_base_sandwich
 
+    final override fun getAbsViewBindingLayout(): View? = super.getAbsViewBindingLayout()
+
     final override fun afterSetContentView() {
         super.afterSetContentView()
         if (isUseAnkoLayout()) {
@@ -75,47 +77,68 @@ abstract class BaseSandwichActivity : AbsActivity() {
 
     /** 把顶部布局设置进来 */
     private fun setTopView() {
-        if (getTopLayoutId() == 0) {
+        val layoutId = getTopLayoutId()
+        val view = if (layoutId != 0) {
+            LayoutInflater.from(this).inflate(layoutId, null)
+        } else {
+            getTopViewBindingLayout()
+        }
+        if (view == null) {
             mPdrTopLayout.visibility = View.GONE
             return
         }
-        val view = LayoutInflater.from(this).inflate(getTopLayoutId(), null)
         val layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         mPdrTopLayout.addView(view, layoutParams)
         mPdrTopLayout.visibility = View.VISIBLE
     }
+
+    protected open fun getTopViewBindingLayout(): View? = null
 
     @LayoutRes
     protected open fun getTopLayoutId(): Int = 0
 
     /** 把底部布局设置进来 */
     private fun setBottomView() {
-        if (getBottomLayoutId() == 0) {
+        val layoutId = getBottomLayoutId()
+        val view = if (layoutId != 0) {
+            LayoutInflater.from(this).inflate(layoutId, null)
+        } else {
+            getBottomViewBindingLayout()
+        }
+        if (view == null) {
             mPdrBottomLayout.visibility = View.GONE
             return
         }
-        val view = LayoutInflater.from(this).inflate(getBottomLayoutId(), null)
         val layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         mPdrBottomLayout.addView(view, layoutParams)
         mPdrBottomLayout.visibility = View.VISIBLE
     }
+
+    protected open fun getBottomViewBindingLayout(): View? = null
 
     @LayoutRes
     protected open fun getBottomLayoutId(): Int = 0
 
     /** 把内容布局设置进来 */
     private fun setContainerView() {
-        if (getLayoutId() == 0) {
+        val layoutId = getLayoutId()
+        val view = if (layoutId != 0) {
+            LayoutInflater.from(this).inflate(layoutId, null)
+        } else {
+            getViewBindingLayout()
+        }
+        if (view == null) {
             showStatusNoData()
             return
         }
-        val view = LayoutInflater.from(this).inflate(getLayoutId(), null)
         val layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         mPdrContentLayout.addView(view, layoutParams)
     }
 
     @LayoutRes
-    protected abstract fun getLayoutId(): Int
+    protected open fun getLayoutId(): Int = 0
+
+    protected open fun getViewBindingLayout(): View? = null
 
     override fun setListeners() {
         super.setListeners()
