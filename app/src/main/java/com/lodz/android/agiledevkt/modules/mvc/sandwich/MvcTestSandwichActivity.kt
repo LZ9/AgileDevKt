@@ -30,10 +30,11 @@ class MvcTestSandwichActivity : BaseSandwichActivity(){
         }
     }
 
+    /** 内容布局 */
     private val mContentBinding: ActivityMvcTestBinding by bindingLayout(ActivityMvcTestBinding::inflate)
-
+    /** 顶部布局 */
     private val mTopBinding: ViewMvcTestTopBinding by bindingLayout(ViewMvcTestTopBinding::inflate)
-
+    /** 底部布局 */
     private val mBottomBinding: ViewMvcTestBottomBinding by bindingLayout(ViewMvcTestBottomBinding::inflate)
 
     override fun getViewBindingLayout(): View = mContentBinding.root
