@@ -9,10 +9,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
-import android.view.ViewGroup
 import android.view.ViewTreeObserver
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,6 +20,7 @@ import com.lodz.android.corekt.anko.*
 import com.lodz.android.corekt.utils.*
 import com.lodz.android.pandora.R
 import com.lodz.android.pandora.base.activity.AbsActivity
+import com.lodz.android.pandora.databinding.PandoraActivityPickerBinding
 import com.lodz.android.pandora.photopicker.picker.PickerBean
 import com.lodz.android.pandora.photopicker.picker.PickerItemBean
 import com.lodz.android.pandora.photopicker.picker.dialog.ImageFolderDialog
@@ -31,6 +29,7 @@ import com.lodz.android.pandora.photopicker.preview.PreviewManager
 import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
 import com.lodz.android.pandora.rx.subscribe.observer.ProgressObserver
 import com.lodz.android.pandora.rx.utils.RxUtils
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import io.reactivex.rxjava3.core.Observable
 import kotlinx.coroutines.GlobalScope
 
@@ -61,20 +60,7 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
     /** 照相请求码 */
     private val REQUEST_CAMERA = 777
 
-    /** 返回按钮 */
-    private val mPdrBackBtn by bindView<ImageView>(R.id.pdr_back_btn)
-    /** 确定按钮 */
-    private val mPdrConfirmBtn by bindView<TextView>(R.id.pdr_confirm_btn)
-    /** 列表 */
-    private val mPdrRecyclerView by bindView<RecyclerView>(R.id.pdr_picker_photot_rv)
-    /** 文件夹按钮 */
-    private val mPdrFolderBtn by bindView<ViewGroup>(R.id.pdr_folder_btn)
-    /** 文件夹名称 */
-    private val mPdrFolderNameTv by bindView<TextView>(R.id.pdr_folder_name_tv)
-    /** 更多图片 */
-    private val mPdrMoreImg by bindView<ImageView>(R.id.pdr_more_img)
-    /** 预览按钮 */
-    private val mPdrPreviewBtn by bindView<TextView>(R.id.pdr_preview_btn)
+    private val mBinding: PandoraActivityPickerBinding by bindingLayout(PandoraActivityPickerBinding::inflate)
 
     /** 列表适配器 */
     private lateinit var mPdrAdapter: PhotoPickerAdapter
@@ -97,15 +83,10 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
         mPdrPickerBean = sPickerBean as PickerBean<V>
     }
 
-    override fun getAbsLayoutId(): Int = R.layout.pandora_activity_picker
+    override fun getAbsViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         super.findViews(savedInstanceState)
-        val rootLayout = findViewById<ViewGroup>(R.id.pdr_root_layout)
-        val topLayout = findViewById<ViewGroup>(R.id.pdr_top_layout)
-        val bottomLayout = findViewById<ViewGroup>(R.id.pdr_bottom_layout)
-        val titleTv = findViewById<TextView>(R.id.pdr_title_tv)
-
         val bean = mPdrPickerBean
         if (bean == null) {
             finish()
@@ -113,26 +94,26 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
         }
 
         initRecyclerView(bean)
-        rootLayout.setBackgroundColor(getColorCompat(bean.pickerUIConfig.getItemBgColor()))
-        topLayout.setBackgroundColor(getColorCompat(bean.pickerUIConfig.getTopLayoutColor()))//设置顶部栏背景色
-        bottomLayout.setBackgroundColor(getColorCompat(bean.pickerUIConfig.getBottomLayoutColor()))//设置底部栏背景色
-        titleTv.setTextColor(getColorCompat(bean.pickerUIConfig.getMainTextColor()))//设置标题文字颜色
-        mPdrFolderNameTv.setTextColor(getColorCompat(bean.pickerUIConfig.getMainTextColor()))//设置文件夹名称文字颜色
+        mBinding.pdrRootLayout.setBackgroundColor(getColorCompat(bean.pickerUIConfig.getItemBgColor()))
+        mBinding.pdrTopLayout.setBackgroundColor(getColorCompat(bean.pickerUIConfig.getTopLayoutColor()))//设置顶部栏背景色
+        mBinding.pdrBottomLayout.setBackgroundColor(getColorCompat(bean.pickerUIConfig.getBottomLayoutColor()))//设置底部栏背景色
+        mBinding.pdrTitleTv.setTextColor(getColorCompat(bean.pickerUIConfig.getMainTextColor()))//设置标题文字颜色
+        mBinding.pdrFolderNameTv.setTextColor(getColorCompat(bean.pickerUIConfig.getMainTextColor()))//设置文件夹名称文字颜色
         drawBackBtn(bean.pickerUIConfig.getBackBtnColor())//绘制返回按钮
         if (bean.pickerUIConfig.getMoreFolderImg() != 0) {
-            mPdrMoreImg.setImageResource(bean.pickerUIConfig.getMoreFolderImg())//设置更多文件夹图片
+            mBinding.pdrMoreImg.setImageResource(bean.pickerUIConfig.getMoreFolderImg())//设置更多文件夹图片
         } else {
             drawMoreImg(bean.pickerUIConfig.getMainTextColor())//绘制默认更多文件夹图标
         }
         drawConfirmBtn(bean)//绘制确认按钮
-        mPdrPreviewBtn.setTextColor(SelectorUtils.createTxPressedUnableColor(//绘制预览按钮
+        mBinding.pdrPreviewBtn.setTextColor(SelectorUtils.createTxPressedUnableColor(//绘制预览按钮
                 getContext(),
                 bean.pickerUIConfig.getPreviewBtnNormal(),
                 bean.pickerUIConfig.getPreviewBtnPressed(),
                 bean.pickerUIConfig.getPreviewBtnUnable()
         ))
-        mPdrConfirmBtn.isEnabled = false
-        mPdrPreviewBtn.isEnabled = false
+        mBinding.pdrConfirmBtn.isEnabled = false
+        mBinding.pdrPreviewBtn.isEnabled = false
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//设置状态栏和导航栏颜色
             StatusBarUtil.setColor(window, getColorCompat(bean.pickerUIConfig.getStatusBarColor()))
             StatusBarUtil.setNavigationBarColor(window, getColorCompat(bean.pickerUIConfig.getNavigationBarColor()))
@@ -144,9 +125,9 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
         val layoutManager = GridLayoutManager(getContext(), 3)
         layoutManager.orientation = RecyclerView.VERTICAL
         mPdrAdapter = PhotoPickerAdapter(getContext(), bean.imgLoader, bean.isNeedCamera, bean.pickerUIConfig)
-        mPdrRecyclerView.layoutManager = layoutManager
-        mPdrRecyclerView.setHasFixedSize(true)
-        mPdrRecyclerView.adapter = mPdrAdapter
+        mBinding.pdrPickerPhototRv.layoutManager = layoutManager
+        mBinding.pdrPickerPhototRv.setHasFixedSize(true)
+        mBinding.pdrPickerPhototRv.adapter = mPdrAdapter
     }
 
     override fun onPressBack(): Boolean {
@@ -157,13 +138,13 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
     override fun setListeners() {
         super.setListeners()
         // 返回按钮
-        mPdrBackBtn.setOnClickListener {
+        mBinding.pdrBackBtn.setOnClickListener {
             mPdrPickerBean?.photoPickerListener?.onPickerSelected(ArrayList())
             finish()
         }
 
         // 文件夹按钮
-        mPdrFolderBtn.setOnClickListener {
+        mBinding.pdrFolderBtn.setOnClickListener {
             val bean = mPdrPickerBean ?: return@setOnClickListener
             Observable.just("")
                 .map {
@@ -192,7 +173,7 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
                         dialog.setData(any)
                         dialog.setOnCancelListener { dialogInterface ->
                             dialogInterface.dismiss()
-                            mPdrMoreImg.startRotateSelf(-180, 0, 500, true)
+                            mBinding.pdrMoreImg.startRotateSelf(-180, 0, 500, true)
                         }
                         dialog.setListener { dialogInterface, folderItemBean ->
                             dialogInterface.dismiss()
@@ -201,12 +182,12 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
                                 return@setListener
                             }
                             mPdrCurrentImageFolder = imageFolder
-                            mPdrFolderNameTv.text = imageFolder.name
+                            mBinding.pdrFolderNameTv.text = imageFolder.name
                             configAdapterData(imageFolder.picList)
-                            mPdrMoreImg.startRotateSelf(-180, 0, 500, true)
+                            mBinding.pdrMoreImg.startRotateSelf(-180, 0, 500, true)
                         }
                         dialog.show()
-                        mPdrMoreImg.startRotateSelf(0, -180, 500, true)
+                        mBinding.pdrMoreImg.startRotateSelf(0, -180, 500, true)
                     }
 
                     override fun onPgError(e: Throwable, isNetwork: Boolean) {}
@@ -214,7 +195,7 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
         }
 
         // 确定按钮
-        mPdrConfirmBtn.setOnClickListener {
+        mBinding.pdrConfirmBtn.setOnClickListener {
             val list = ArrayList<PicInfo>()
             for (itemBean in mPdrSelectedList) {
                 list.add(itemBean.info)
@@ -224,7 +205,7 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
         }
 
         // 预览按钮
-        mPdrPreviewBtn.setOnClickListener {
+        mBinding.pdrPreviewBtn.setOnClickListener {
             val bean = mPdrPickerBean ?: return@setOnClickListener
             val view = bean.imgView ?: return@setOnClickListener
 
@@ -274,14 +255,14 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
                                 }
                             }
                             // 设置按钮状态
-                            mPdrConfirmBtn.isEnabled = mPdrSelectedList.isNotEmpty()
-                            mPdrConfirmBtn.text = if (mPdrSelectedList.isNotEmpty()) {
+                            mBinding.pdrConfirmBtn.isEnabled = mPdrSelectedList.isNotEmpty()
+                            mBinding.pdrConfirmBtn.text = if (mPdrSelectedList.isNotEmpty()) {
                                 getString(R.string.pandora_picker_confirm_num, mPdrSelectedList.size.toString(), pickerBean.maxCount.toString())
                             } else {
                                 getString(R.string.pandora_picker_confirm)
                             }
-                            mPdrPreviewBtn.isEnabled = mPdrSelectedList.isNotEmpty()
-                            mPdrPreviewBtn.text = if (mPdrSelectedList.isNotEmpty()) {
+                            mBinding.pdrPreviewBtn.isEnabled = mPdrSelectedList.isNotEmpty()
+                            mBinding.pdrPreviewBtn.text = if (mPdrSelectedList.isNotEmpty()) {
                                 getString(R.string.pandora_picker_preview_num, mPdrSelectedList.size.toString())
                             } else {
                                 getString(R.string.pandora_picker_preview)
@@ -331,9 +312,9 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
         } else {// 挑选指定图片
             mPdrCurrentImageFolder = null
             configAdapterData(bean.sourceList!!)//让用户选择指定的图片
-            mPdrFolderBtn.isEnabled = false
-            mPdrFolderNameTv.setText(R.string.pandora_picker_custom_photo)
-            mPdrMoreImg.visibility = View.GONE
+            mBinding.pdrFolderBtn.isEnabled = false
+            mBinding.pdrFolderNameTv.setText(R.string.pandora_picker_custom_photo)
+            mBinding.pdrMoreImg.visibility = View.GONE
         }
     }
 
@@ -352,7 +333,7 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
             mPdrCurrentPhotoList.add(itemBean)
         }
         mPdrAdapter.setData(mPdrCurrentPhotoList)
-        mPdrRecyclerView.smoothScrollToPosition(0)
+        mBinding.pdrPickerPhototRv.smoothScrollToPosition(0)
         mPdrAdapter.notifyDataSetChanged()
     }
 
@@ -365,7 +346,7 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
                 .compose(RxUtils.ioToMainObservable())
                 .subscribe(object : BaseObserver<Bitmap>() {
                     override fun onBaseNext(any: Bitmap) {
-                        mPdrBackBtn.setImageBitmap(any)
+                        mBinding.pdrBackBtn.setImageBitmap(any)
                     }
 
                     override fun onBaseError(e: Throwable) {}
@@ -382,7 +363,7 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
                 .compose(RxUtils.ioToMainObservable())
                 .subscribe(object : BaseObserver<Bitmap>() {
                     override fun onBaseNext(any: Bitmap) {
-                        mPdrMoreImg.setImageBitmap(any)
+                        mBinding.pdrMoreImg.setImageBitmap(any)
                     }
 
                     override fun onBaseError(e: Throwable) {}
@@ -417,19 +398,19 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
 
     /** 绘制确定按钮 */
     private fun drawConfirmBtn(bean: PickerBean<V>) {
-        mPdrConfirmBtn.viewTreeObserver.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
+        mBinding.pdrConfirmBtn.viewTreeObserver.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
             override fun onPreDraw(): Boolean {
-                mPdrConfirmBtn.viewTreeObserver.removeOnPreDrawListener(this)
-                val width = mPdrConfirmBtn.measuredWidth
-                val height = mPdrConfirmBtn.measuredHeight
+                mBinding.pdrConfirmBtn.viewTreeObserver.removeOnPreDrawListener(this)
+                val width = mBinding.pdrConfirmBtn.measuredWidth
+                val height = mBinding.pdrConfirmBtn.measuredHeight
 
-                mPdrConfirmBtn.background = SelectorUtils.createBgPressedUnableDrawable(
+                mBinding.pdrConfirmBtn.background = SelectorUtils.createBgPressedUnableDrawable(
                         getCornerDrawable(bean.pickerUIConfig.getConfirmBtnNormal(), width, height),
                         getCornerDrawable(bean.pickerUIConfig.getConfirmBtnPressed(), width, height),
                         getCornerDrawable(bean.pickerUIConfig.getConfirmBtnUnable(), width, height)
                 )
 
-                mPdrConfirmBtn.setTextColor(SelectorUtils.createTxPressedUnableColor(
+                mBinding.pdrConfirmBtn.setTextColor(SelectorUtils.createTxPressedUnableColor(
                         getContext(),
                         bean.pickerUIConfig.getConfirmTextNormal(),
                         bean.pickerUIConfig.getConfirmTextPressed(),

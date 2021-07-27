@@ -7,17 +7,15 @@ import android.os.Build
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.getColorCompat
 import com.lodz.android.corekt.anko.getSize
 import com.lodz.android.corekt.utils.StatusBarUtil
-import com.lodz.android.pandora.R
 import com.lodz.android.pandora.base.activity.AbsActivity
+import com.lodz.android.pandora.databinding.PandoraActivityPreviewBinding
 import com.lodz.android.pandora.photopicker.contract.preview.PreviewController
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.rv.snap.ViewPagerSnapHelper
 
 /**
@@ -43,12 +41,7 @@ internal class PicturePreviewActivity<V : View, T : Any> : AbsActivity() {
         }
     }
 
-    /** 背景控件 */
-    private val mPdrRootView by bindView<ViewGroup>(R.id.pdr_root_view)
-    /** 翻页控件 */
-    private val mPdrRecyclerView by bindView<RecyclerView>(R.id.pdr_preview_rv)
-    /** 页码提示 */
-    private val mPdrPagerTv by bindView<TextView>(R.id.pdr_pager_tv)
+    private val mBinding: PandoraActivityPreviewBinding by bindingLayout(PandoraActivityPreviewBinding::inflate)
 
     /** 预览控制器 */
     private lateinit var mPdrPreviewController: PreviewController
@@ -66,7 +59,7 @@ internal class PicturePreviewActivity<V : View, T : Any> : AbsActivity() {
         mPdrPreviewController = PreviewControllerImpl(this)
     }
 
-    override fun getAbsLayoutId(): Int = R.layout.pandora_activity_preview
+    override fun getAbsViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         super.findViews(savedInstanceState)
@@ -88,11 +81,11 @@ internal class PicturePreviewActivity<V : View, T : Any> : AbsActivity() {
         val layoutManager = LinearLayoutManager(getContext())
         layoutManager.orientation = RecyclerView.HORIZONTAL
         mPdrAdapter = PicturePagerAdapter(getContext(), view, mPdrPreviewController)
-        mPdrRecyclerView.layoutManager = layoutManager
-        mPdrRecyclerView.setHasFixedSize(true)
-        mPdrRecyclerView.adapter = mPdrAdapter
+        mBinding.pdrPreviewRv.layoutManager = layoutManager
+        mBinding.pdrPreviewRv.setHasFixedSize(true)
+        mBinding.pdrPreviewRv.adapter = mPdrAdapter
         mPdrSnapHelper = ViewPagerSnapHelper(bean.showPosition)
-        mPdrSnapHelper.attachToRecyclerView(mPdrRecyclerView)
+        mPdrSnapHelper.attachToRecyclerView(mBinding.pdrPreviewRv)
     }
 
     override fun setListeners() {
@@ -115,25 +108,27 @@ internal class PicturePreviewActivity<V : View, T : Any> : AbsActivity() {
             return
         }
 
-        mPdrRootView.setBackgroundColor(getColorCompat(bean.backgroundColor))
+        // 设置背景控件颜色
+        mBinding.pdrRootView.setBackgroundColor(getColorCompat(bean.backgroundColor))
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             StatusBarUtil.setColor(window, getColorCompat(bean.statusBarColor))
             StatusBarUtil.setNavigationBarColor(window, getColorCompat(bean.navigationBarColor))
         }
         setPagerNum(bean.showPosition)
-        mPdrPagerTv.visibility = if (bean.isShowPagerText) View.VISIBLE else View.GONE
-        mPdrPagerTv.setTextColor(getColorCompat(bean.pagerTextColor))
-        mPdrPagerTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, bean.pagerTextSize.toFloat())
+        // 配置页码提示
+        mBinding.pdrPagerTv.visibility = if (bean.isShowPagerText) View.VISIBLE else View.GONE
+        mBinding.pdrPagerTv.setTextColor(getColorCompat(bean.pagerTextColor))
+        mBinding.pdrPagerTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, bean.pagerTextSize.toFloat())
 
         mPdrAdapter.setData(list.toMutableList())
         mPdrAdapter.notifyDataSetChanged()
-        mPdrRecyclerView.scrollToPosition(bean.showPosition)
+        mBinding.pdrPreviewRv.scrollToPosition(bean.showPosition)
     }
 
     /** 设置页码[position] */
     private fun setPagerNum(position: Int) {
         if (mPdrPreviewBean != null) {
-            mPdrPagerTv.text = StringBuffer().append(position + 1).append(" / ").append(mPdrPreviewBean!!.sourceList.getSize())
+            mBinding.pdrPagerTv.text = StringBuffer().append(position + 1).append(" / ").append(mPdrPreviewBean!!.sourceList.getSize())
         }
     }
 

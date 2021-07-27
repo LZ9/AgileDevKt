@@ -5,8 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.provider.MediaStore
-import android.view.ViewGroup
-import android.widget.ImageView
+import android.view.View
 import com.lodz.android.corekt.album.AlbumUtils
 import com.lodz.android.corekt.anko.*
 import com.lodz.android.corekt.utils.DateUtils
@@ -14,6 +13,8 @@ import com.lodz.android.corekt.utils.FileUtils
 import com.lodz.android.corekt.utils.StatusBarUtil
 import com.lodz.android.pandora.R
 import com.lodz.android.pandora.base.activity.AbsActivity
+import com.lodz.android.pandora.databinding.PandoraActivityTakePhotoBinding
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import kotlinx.coroutines.GlobalScope
 
 /**
@@ -43,15 +44,7 @@ internal class TakePhotoActivity : AbsActivity() {
     /** 照相请求码 */
     private val REQUEST_CAMERA = 777
 
-
-    /** 根布局 */
-    private val mPdrRootLayout by bindView<ViewGroup>(R.id.pdr_root_layout)
-    /** 照片图片 */
-    private val mPdrPhotoImg by bindView<ImageView>(R.id.pdr_photo_img)
-    /** 取消按钮 */
-    private val mPdrCancelBtn by bindView<ImageView>(R.id.pdr_cancel_btn)
-    /** 确定按钮 */
-    private val mPdrConfirmBtn by bindView<ImageView>(R.id.pdr_confirm_btn)
+    private val mBinding: PandoraActivityTakePhotoBinding by bindingLayout(PandoraActivityTakePhotoBinding::inflate)
 
     /** 拍照数据 */
     private var mPdrTakeBean: TakeBean? = null
@@ -63,7 +56,7 @@ internal class TakePhotoActivity : AbsActivity() {
         mPdrTakeBean = sTakeBean
     }
 
-    override fun getAbsLayoutId(): Int = R.layout.pandora_activity_take_photo
+    override fun getAbsViewBindingLayout(): View = mBinding.root
 
     override fun onPressBack(): Boolean {
         handleCameraCancel()
@@ -74,12 +67,12 @@ internal class TakePhotoActivity : AbsActivity() {
         super.setListeners()
 
         // 取消按钮
-        mPdrCancelBtn.setOnClickListener {
+        mBinding.pdrCancelBtn.setOnClickListener {
             handleCameraCancel()
         }
 
         // 确定按钮
-        mPdrConfirmBtn.setOnClickListener {
+        mBinding.pdrConfirmBtn.setOnClickListener {
             handleConfirm()
         }
     }
@@ -87,7 +80,7 @@ internal class TakePhotoActivity : AbsActivity() {
     override fun initData() {
         super.initData()
         val bean = mPdrTakeBean ?: return
-        mPdrRootLayout.setBackgroundColor(getColorCompat(bean.previewBgColor))
+        mBinding.pdrRootLayout.setBackgroundColor(getColorCompat(bean.previewBgColor))
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//设置状态栏和导航栏颜色
             StatusBarUtil.setColor(window, getColorCompat(bean.statusBarColor))
             StatusBarUtil.setNavigationBarColor(window, getColorCompat(bean.navigationBarColor))
@@ -157,7 +150,7 @@ internal class TakePhotoActivity : AbsActivity() {
 
     /** 处理拍照成功 */
     private fun handleCameraSuccess() {
-        mPdrTakeBean?.imgLoader?.displayImg(getContext(), mPdrTempFilePath, mPdrPhotoImg)
+        mPdrTakeBean?.imgLoader?.displayImg(getContext(), mPdrTempFilePath, mBinding.pdrPhotoImg)
     }
 
     override fun finish() {
