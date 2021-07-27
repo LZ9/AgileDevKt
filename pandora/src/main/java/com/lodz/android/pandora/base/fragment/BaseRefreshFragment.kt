@@ -1,5 +1,6 @@
 package com.lodz.android.pandora.base.fragment
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,6 +47,12 @@ abstract class BaseRefreshFragment : LazyFragment() {
 
     final override fun getAnkoLayoutView(): View? = super.getAnkoLayoutView()
 
+    final override fun getAbsViewBindingLayout(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? = super.getAbsViewBindingLayout(inflater, container, savedInstanceState)
+
     final override fun getAbsLayoutId(): Int = R.layout.pandora_fragment_base_refresh
 
     final override fun beforeFindViews(view: View) {
@@ -72,17 +79,24 @@ abstract class BaseRefreshFragment : LazyFragment() {
 
     /** 把内容布局设置进来 */
     private fun setContainerView() {
-        if (getLayoutId() == 0) {
+        val layoutId = getLayoutId()
+        val view = if (layoutId != 0) {
+            LayoutInflater.from(context).inflate(layoutId, null)
+        } else {
+            getViewBindingLayout()
+        }
+        if (view == null) {
             showStatusNoData()
             return
         }
-        val view = LayoutInflater.from(context).inflate(getLayoutId(), null)
         val layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         mPdrContentLayout.addView(view, layoutParams)
     }
 
     @LayoutRes
-    protected abstract fun getLayoutId(): Int
+    protected open fun getLayoutId(): Int = 0
+
+    protected open fun getViewBindingLayout(): View? = null
 
     override fun setListeners(view: View) {
         super.setListeners(view)

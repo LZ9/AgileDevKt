@@ -38,7 +38,7 @@ abstract class LazyFragment : RxFragment(), IFragmentBackPressed {
     /** 是否从OnPause离开 */
     private var isPdrOnPauseOut = false
     /** 是否使用lifecycle判断懒加载 */
-    private var isUseLifecycle = true
+    private var isPdrUseLifecycle = true
 
     /** 是否使用AnkoLayout */
     protected fun isUseAnkoLayout(): Boolean = isPdrUseAnko
@@ -46,7 +46,16 @@ abstract class LazyFragment : RxFragment(), IFragmentBackPressed {
     final override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         isPdrUseAnko = injectAnko()
         if (!isPdrUseAnko) {//不使用AnkoLayout再加载布局
-            return inflater.inflate(getAbsLayoutId(), container, false)
+            val layoutId = getAbsLayoutId()
+            val view = if (layoutId != 0) {
+                inflater.inflate(layoutId, container, false)
+            } else {
+                getAbsViewBindingLayout(inflater, container, savedInstanceState)
+            }
+            if (view == null){
+                throw NullPointerException("please override getAbsLayoutId() or getAbsViewBindingLayout() to set layout")
+            }
+            return view
         }
         val view = getAnkoLayoutView()
         if (view != null) {
@@ -56,13 +65,15 @@ abstract class LazyFragment : RxFragment(), IFragmentBackPressed {
     }
 
     @LayoutRes
-    protected abstract fun getAbsLayoutId(): Int
+    protected open fun getAbsLayoutId(): Int = 0
+
+    protected open fun getAbsViewBindingLayout(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? = null
 
     protected open fun getAnkoLayoutView(): View? = null
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
-        isUseLifecycle = false
+        isPdrUseLifecycle = false
         PrintLog.i("testtag", "${javaClass.simpleName} setUserVisibleHint lifecycle.currentState : ${lifecycle.currentState}")
         isPdrLazyLoad = configIsLazyLoad()
         var isInit = false
@@ -93,7 +104,7 @@ abstract class LazyFragment : RxFragment(), IFragmentBackPressed {
         super.onViewCreated(view, savedInstanceState)
         PrintLog.e("testtag", "${javaClass.simpleName} onViewCreated lifecycle.currentState : ${lifecycle.currentState}")
         mPdrParentView = view
-        if (!isUseLifecycle) {// 不使用lifecycle判断懒加载
+        if (!isPdrUseLifecycle) {// 不使用lifecycle判断懒加载
             if (!isPdrLazyLoad || userVisibleHint) {// 不使用懒加载 || fragment可见
                 init(view, savedInstanceState)
                 isPdrLoadComplete = true
@@ -138,12 +149,12 @@ abstract class LazyFragment : RxFragment(), IFragmentBackPressed {
     override fun onResume() {
         super.onResume()
         PrintLog.d("testtag", "${javaClass.simpleName} onResume lifecycle.currentState : ${lifecycle.currentState}")
-        if (isUseLifecycle && !isPdrLoadComplete && isPdrFirstCreate){// 使用Lifecycle && 未加载完成 && 首次加载
+        if (isPdrUseLifecycle && !isPdrLoadComplete && isPdrFirstCreate){// 使用Lifecycle && 未加载完成 && 首次加载
             init(mPdrParentView!!, null)
             isPdrLoadComplete = true
             isPdrFirstCreate = false
         }
-        if (isUseLifecycle){
+        if (isPdrUseLifecycle){
             onFragmentResume()
             return
         }
@@ -189,7 +200,7 @@ abstract class LazyFragment : RxFragment(), IFragmentBackPressed {
     override fun onPause() {
         super.onPause()
         PrintLog.v("testtag", "${javaClass.simpleName} onPause lifecycle.currentState : ${lifecycle.currentState}")
-        if (isUseLifecycle){
+        if (isPdrUseLifecycle){
             onFragmentPause()
             return
         }

@@ -1,17 +1,17 @@
 package com.lodz.android.agiledevkt.modules.mvc.sandwich
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
-import android.widget.TextView
 import com.lodz.android.agiledevkt.R
+import com.lodz.android.agiledevkt.databinding.ActivityMvcTestBinding
+import com.lodz.android.agiledevkt.databinding.ViewMvcTestBottomBinding
+import com.lodz.android.agiledevkt.databinding.ViewMvcTestTopBinding
 import com.lodz.android.agiledevkt.modules.mvc.ApiModuleRx
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.pandora.base.fragment.BaseSandwichFragment
 import com.lodz.android.pandora.rx.subscribe.observer.RxObserver
 import com.lodz.android.pandora.rx.utils.RxUtils
-import com.lodz.android.pandora.widget.base.TitleBarLayout
 import com.trello.rxlifecycle4.android.FragmentEvent
 import kotlin.random.Random
 
@@ -25,23 +25,30 @@ class MvcTestSandwichFragment : BaseSandwichFragment(){
         fun newInstance(): MvcTestSandwichFragment = MvcTestSandwichFragment()
     }
 
-    /** 结果 */
-    private val mResult by bindView<TextView>(R.id.result)
-    /** 获取成功数据按钮 */
-    private val mGetSuccessResultBtn by bindView<Button>(R.id.get_success_reuslt_btn)
-    /** 获取失败数据按钮 */
-    private val mGetFailResultBtn by bindView<Button>(R.id.get_fail_reuslt_btn)
-    /** 顶部标题栏 */
-    private val mTitleBarLayout by bindView<TitleBarLayout>(R.id.title_bar_layout)
+    /** 内容布局 */
+    private var mContentBinding: ActivityMvcTestBinding? = null
+    /** 顶部布局 */
+    private var mTopBinding: ViewMvcTestTopBinding? = null
+    /** 底部布局 */
+    private var mBottomBinding: ViewMvcTestBottomBinding? = null
 
-    override fun getLayoutId(): Int = R.layout.activity_mvc_test
+    override fun getViewBindingLayout(): View? {
+        mContentBinding = ActivityMvcTestBinding.inflate(LayoutInflater.from(context))
+        return mContentBinding?.root
+    }
 
-    override fun getTopLayoutId(): Int = R.layout.view_mvc_test_top
+    override fun getTopViewBindingLayout(): View? {
+        mTopBinding = ViewMvcTestTopBinding.inflate(LayoutInflater.from(context))
+        return mTopBinding?.root
+    }
 
-    override fun getBottomLayoutId(): Int = R.layout.view_mvc_test_bottom
+    override fun getBottomViewBindingLayout(): View? {
+        mBottomBinding = ViewMvcTestBottomBinding.inflate(LayoutInflater.from(context))
+        return mBottomBinding?.root
+    }
 
     override fun findViews(view: View, savedInstanceState: Bundle?) {
-        mTitleBarLayout.visibility = View.GONE
+        mTopBinding?.titleBarLayout?.visibility = View.GONE
         setSwipeRefreshEnabled(true)
     }
 
@@ -58,12 +65,13 @@ class MvcTestSandwichFragment : BaseSandwichFragment(){
 
     override fun setListeners(view: View) {
         super.setListeners(view)
-        mGetSuccessResultBtn.setOnClickListener {
+        // 获取成功数据按钮
+        mContentBinding?.getSuccessReusltBtn?.setOnClickListener {
             showStatusLoading()
             getResult(true)
         }
-
-        mGetFailResultBtn.setOnClickListener {
+        // 获取失败数据按钮
+        mContentBinding?.getFailReusltBtn?.setOnClickListener {
             showStatusLoading()
             getResult(false)
         }
@@ -80,7 +88,7 @@ class MvcTestSandwichFragment : BaseSandwichFragment(){
                 .compose(bindUntilEvent(FragmentEvent.DESTROY_VIEW))
                 .subscribe(object : RxObserver<String>() {
                     override fun onRxNext(any: String) {
-                        mResult.text = any
+                        mContentBinding?.resultTv?.text = any
                         showStatusCompleted()
                     }
 
@@ -97,7 +105,7 @@ class MvcTestSandwichFragment : BaseSandwichFragment(){
                 .subscribe(object : RxObserver<String>() {
                     override fun onRxNext(any: String) {
                         setSwipeRefreshFinish()
-                        mResult.text = any
+                        mContentBinding?.resultTv?.text = any
                         showStatusCompleted()
                     }
 
@@ -106,5 +114,12 @@ class MvcTestSandwichFragment : BaseSandwichFragment(){
                         toastShort(R.string.mvc_demo_refresh_data_fail)
                     }
                 })
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        mContentBinding = null
+        mTopBinding = null
+        mBottomBinding = null
     }
 }
