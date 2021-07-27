@@ -3,16 +3,14 @@ package com.lodz.android.agiledevkt.modules.acache
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import com.lodz.android.agiledevkt.R
+import android.view.View
+import com.lodz.android.agiledevkt.databinding.ActivityAcacheTestBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.corekt.cache.ACache
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.utils.acache.ACacheUtils
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 
 /**
  * ACache缓存测试类
@@ -21,29 +19,18 @@ import com.lodz.android.pandora.utils.acache.ACacheUtils
 class ACacheTestActivity : BaseActivity() {
 
     companion object {
+        /** 缓存键 */
+        private const val CACHE_KEY = "cache_key"
+
         fun start(context: Context) {
             val intent = Intent(context, ACacheTestActivity::class.java)
             context.startActivity(intent)
         }
     }
 
-    /** 缓存键 */
-    private val CACHE_KEY = "cache_key"
+    private val mBinding: ActivityAcacheTestBinding by bindingLayout(ActivityAcacheTestBinding::inflate)
 
-    /** 结果显示 */
-    private val mResultTv by bindView<TextView>(R.id.result_tv)
-    /** 缓存输入框 */
-    private val mContentEdit by bindView<EditText>(R.id.content_edit)
-    /** 获取缓存 */
-    private val mGetBtn by bindView<Button>(R.id.get_btn)
-    /** 缓存无时间限制 */
-    private val mForeverBtn by bindView<Button>(R.id.forever_btn)
-    /** 缓存5秒 */
-    private val mSecondBtn by bindView<Button>(R.id.second_btn)
-    /** 缓存1天 */
-    private val mDayBtn by bindView<Button>(R.id.day_btn)
-
-    override fun getLayoutId(): Int = R.layout.activity_acache_test
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME) ?: "")
@@ -57,33 +44,37 @@ class ACacheTestActivity : BaseActivity() {
     override fun setListeners() {
         super.setListeners()
 
-        mGetBtn.setOnClickListener {
+        // 获取缓存
+        mBinding.getBtn.setOnClickListener {
             val cache = ACacheUtils.get().create().getAsString(CACHE_KEY)
-            mResultTv.text = StringBuilder("结果： $cache")
+            mBinding.resultTv.text = StringBuilder("结果： $cache")
         }
 
-        mForeverBtn.setOnClickListener {
+        // 缓存无时间限制
+        mBinding.foreverBtn.setOnClickListener {
             if (!isCanSave()) {
                 toastShort("请输入缓存内容")
                 return@setOnClickListener
             }
-            ACacheUtils.get().create().put(CACHE_KEY, mContentEdit.text.toString())
+            ACacheUtils.get().create().put(CACHE_KEY, mBinding.contentEdit.text.toString())
         }
 
-        mSecondBtn.setOnClickListener {
+        // 缓存5秒
+        mBinding.secondBtn.setOnClickListener {
             if (!isCanSave()) {
                 toastShort("请输入缓存内容")
                 return@setOnClickListener
             }
-            ACacheUtils.get().create().put(CACHE_KEY, mContentEdit.text.toString(), 5)
+            ACacheUtils.get().create().put(CACHE_KEY, mBinding.contentEdit.text.toString(), 5)
         }
 
-        mDayBtn.setOnClickListener {
+        // 缓存1天
+        mBinding.dayBtn.setOnClickListener {
             if (!isCanSave()) {
                 toastShort("请输入缓存内容")
                 return@setOnClickListener
             }
-            ACacheUtils.get().create().put(CACHE_KEY, mContentEdit.text.toString(), 1 * ACache.TIME_DAY)
+            ACacheUtils.get().create().put(CACHE_KEY, mBinding.contentEdit.text.toString(), 1 * ACache.TIME_DAY)
         }
     }
 
@@ -92,5 +83,5 @@ class ACacheTestActivity : BaseActivity() {
         showStatusCompleted()
     }
 
-    private fun isCanSave(): Boolean = mContentEdit.text.isNotEmpty()
+    private fun isCanSave(): Boolean = mBinding.contentEdit.text.isNotEmpty()
 }
