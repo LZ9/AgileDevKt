@@ -4,12 +4,14 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
+import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.agiledevkt.App
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.MainBean
+import com.lodz.android.agiledevkt.databinding.ActivityMainBinding
 import com.lodz.android.agiledevkt.modules.acache.ACacheTestActivity
 import com.lodz.android.agiledevkt.modules.album.AlbumActivity
 import com.lodz.android.agiledevkt.modules.annotation.AnnotationTestActivity
@@ -76,9 +78,9 @@ import com.lodz.android.agiledevkt.modules.viewpager.ViewPagerActivity
 import com.lodz.android.agiledevkt.modules.webview.WebViewActivity
 import com.lodz.android.corekt.anko.*
 import com.lodz.android.pandora.base.activity.BaseActivity
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.base.TitleBarLayout
 import com.lodz.android.pandora.widget.index.IndexBar
-import com.lodz.android.pandora.widget.rv.decoration.SectionItemDecoration
 import com.lodz.android.pandora.widget.rv.decoration.StickyItemDecoration
 
 class MainActivity : BaseActivity() {
@@ -167,22 +169,17 @@ class MainActivity : BaseActivity() {
         MainBean("ViewBinding测试类", "V", ViewBindingTestActivity::class.java),
     )
 
-    /** 列表 */
-    private val mRecyclerView by bindView<RecyclerView>(R.id.recycler_view)
-    /** 索引栏 */
-    private val mIndexBar by bindView<IndexBar>(R.id.index_bar)
-    /** 提示控件 */
-    private val mHintTv by bindView<TextView>(R.id.hint_tv)
+    private val mBinding: ActivityMainBinding by bindingLayout(ActivityMainBinding::inflate)
 
     private lateinit var mAdapter: MainAdapter
     private lateinit var mList: List<MainBean>
 
-    override fun getLayoutId(): Int = R.layout.activity_main
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         initTitleBar(getTitleBarLayout())
         initRecyclerView()
-        mIndexBar.setHintTextView(mHintTv)
+        mBinding.indexBar.setHintTextView(mBinding.hintTv)
     }
 
     private fun initTitleBar(titleBarLayout: TitleBarLayout) {
@@ -198,14 +195,15 @@ class MainActivity : BaseActivity() {
         titleBarLayout.needBackButton(false)
     }
 
+    /** 初始化RV */
     private fun initRecyclerView() {
         val layoutManager = LinearLayoutManager(getContext())
         layoutManager.orientation = RecyclerView.VERTICAL
         mAdapter = MainAdapter(getContext())
-        mRecyclerView.layoutManager = layoutManager
-        mRecyclerView.addItemDecoration(getItemDecoration())
-        mRecyclerView.setHasFixedSize(true)
-        mRecyclerView.adapter = mAdapter
+        mBinding.recyclerView.layoutManager = layoutManager
+        mBinding.recyclerView.addItemDecoration(getItemDecoration())
+        mBinding.recyclerView.setHasFixedSize(true)
+        mBinding.recyclerView.adapter = mAdapter
     }
 
     private fun getItemDecoration(): RecyclerView.ItemDecoration =
@@ -234,9 +232,10 @@ class MainActivity : BaseActivity() {
             startActivity(intent)
         }
 
-        mIndexBar.setOnIndexListener(object : IndexBar.OnIndexListener {
+        // 索引栏
+        mBinding.indexBar.setOnIndexListener(object : IndexBar.OnIndexListener {
             override fun onStart(position: Int, indexText: String) {
-                val layoutManager = mRecyclerView.layoutManager
+                val layoutManager = mBinding.recyclerView.layoutManager
                 if (layoutManager != null && layoutManager is LinearLayoutManager) {
                     layoutManager.scrollToPositionWithOffset(mList.getPositionByIndex(INDEX_TITLE, indexText), 0)
                 }
@@ -249,7 +248,7 @@ class MainActivity : BaseActivity() {
     override fun initData() {
         super.initData()
         mList = MAIN_DATA_LIST.group(INDEX_TITLE).toList()
-        mIndexBar.setIndexList(INDEX_TITLE)
+        mBinding.indexBar.setIndexList(INDEX_TITLE)
         mAdapter.setData(mList.toMutableList())
         showStatusCompleted()
     }

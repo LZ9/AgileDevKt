@@ -4,12 +4,15 @@ import android.Manifest
 import android.content.DialogInterface
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import com.lodz.android.agiledevkt.App
 import com.lodz.android.agiledevkt.R
+import com.lodz.android.agiledevkt.databinding.ActivitySplashBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.corekt.anko.*
 import com.lodz.android.corekt.utils.StatusBarUtil
 import com.lodz.android.pandora.base.activity.AbsActivity
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import kotlinx.coroutines.GlobalScope
 import permissions.dispatcher.*
 import permissions.dispatcher.ktx.constructPermissionsRequest
@@ -19,6 +22,8 @@ import permissions.dispatcher.ktx.constructPermissionsRequest
  * Created by zhouL on 2018/6/20.
  */
 class SplashActivity : AbsActivity() {
+
+    private val mBinding: ActivitySplashBinding by bindingLayout(ActivitySplashBinding::inflate)
 
     private val hasReadPhoneStatePermissions = constructPermissionsRequest(
         Manifest.permission.READ_PHONE_STATE,// 手机状态
@@ -44,7 +49,7 @@ class SplashActivity : AbsActivity() {
         requiresPermission = ::onRequestPermission
     )
 
-    override fun getAbsLayoutId() = R.layout.activity_splash
+    override fun getAbsViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         StatusBarUtil.setColor(window, getColorCompat(R.color.color_00a0e9))
