@@ -44,24 +44,27 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="5dp">
 
-        <Button
+        <TextView
             android:id="@+id/pressed_btn"
-            style="?android:attr/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
+            android:clickable="true"
+            android:focusable="true"
             android:padding="5dp"
             android:text="@string/selector_pressed"
             android:textSize="12sp" />
 
-        <Button
+        <TextView
             android:id="@+id/selected_btn"
-            style="?android:attr/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
+            android:clickable="true"
+            android:focusable="true"
             android:padding="5dp"
             android:text="@string/selector_selected"
             android:textSize="12sp" />
@@ -71,24 +74,27 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="5dp">
 
-        <Button
+        <TextView
             android:id="@+id/unable_btn"
-            style="?android:attr/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
+            android:clickable="true"
+            android:focusable="true"
             android:padding="5dp"
             android:text="@string/selector_unable"
             android:textSize="12sp" />
 
-        <Button
+        <TextView
             android:id="@+id/focused_btn"
-            style="?android:attr/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
+            android:clickable="true"
+            android:focusable="true"
             android:padding="5dp"
             android:text="@string/selector_focused"
             android:textSize="12sp" />
@@ -97,24 +103,27 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="5dp">
 
-        <Button
+        <TextView
             android:id="@+id/pressed_unable_btn"
-            style="?android:attr/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
+            android:clickable="true"
+            android:focusable="true"
             android:padding="5dp"
             android:text="@string/selector_pressed_unable"
             android:textSize="12sp" />
 
-        <Button
+        <TextView
             android:id="@+id/pressed_selected_btn"
-            style="?android:attr/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
+            android:clickable="true"
+            android:focusable="true"
             android:padding="5dp"
             android:text="@string/selector_pressed_selected"
             android:textSize="12sp" />
@@ -124,24 +133,27 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="5dp">
 
-        <Button
+        <TextView
             android:id="@+id/pressed_focused_btn"
-            style="?android:attr/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
+            android:clickable="true"
+            android:focusable="true"
             android:padding="5dp"
             android:text="@string/selector_pressed_focused"
             android:textSize="12sp" />
 
-        <Button
+        <TextView
             android:id="@+id/unable_selected_btn"
-            style="?android:attr/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
+            android:clickable="true"
+            android:focusable="true"
             android:padding="5dp"
             android:text="@string/selector_unable_selected"
             android:textSize="12sp" />
@@ -151,24 +163,27 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="5dp">
 
-        <Button
+        <TextView
             android:id="@+id/unable_focused_btn"
-            style="?android:attr/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
+            android:clickable="true"
+            android:focusable="true"
             android:padding="5dp"
             android:text="@string/selector_unable_focused"
             android:textSize="12sp" />
 
-        <Button
+        <TextView
             android:id="@+id/selected_focused_btn"
-            style="?android:attr/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
+            android:clickable="true"
+            android:focusable="true"
             android:padding="5dp"
             android:text="@string/selector_selected_focused"
             android:textSize="12sp" />
@@ -178,24 +193,27 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="5dp">
 
-        <Button
+        <TextView
             android:id="@+id/pressed_unable_selected_btn"
-            style="?android:attr/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
+            android:clickable="true"
+            android:focusable="true"
             android:padding="5dp"
             android:text="@string/selector_pressed_unable_selected"
             android:textSize="12sp" />
 
-        <Button
+        <TextView
             android:id="@+id/pressed_unable_focused_btn"
-            style="?android:attr/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
+            android:clickable="true"
+            android:focusable="true"
             android:padding="5dp"
             android:text="@string/selector_pressed_unable_focused"
             android:textSize="12sp" />
@@ -206,36 +224,40 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="5dp">
 
-        <Button
+        <TextView
             android:id="@+id/unable_selected_focused_btn"
-            style="?android:attr/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
+            android:clickable="true"
+            android:focusable="true"
             android:padding="5dp"
             android:text="@string/selector_unable_selected_focused"
             android:textSize="12sp" />
 
-        <Button
+        <TextView
             android:id="@+id/pressed_selected_focused_btn"
-            style="?android:attr/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
+            android:clickable="true"
+            android:focusable="true"
             android:padding="5dp"
             android:text="@string/selector_pressed_selected_focused"
             android:textSize="12sp" />
 
     </LinearLayout>
 
-    <Button
+    <TextView
         android:id="@+id/pressed_unable_selected_focused_btn"
-        style="?android:attr/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="2dp"
+        android:layout_margin="7dp"
+        android:clickable="true"
+        android:focusable="true"
         android:padding="5dp"
         android:text="@string/selector_pressed_unable_selected_focused"
         android:textSize="12sp" />
