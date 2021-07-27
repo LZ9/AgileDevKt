@@ -158,7 +158,8 @@ class LongImageView : FrameLayout {
         Observable.just(resId)
             .map { id ->
                 return@map BitmapFactory.decodeResource(context.resources, id)
-            }.compose(RxUtils.ioToMainObservable())
+            }
+            .compose(RxUtils.ioToMainObservable())
             .subscribe(object : BaseObserver<Bitmap>() {
                 override fun onBaseNext(any: Bitmap) {
                     setImageBitmap(any)
@@ -193,13 +194,11 @@ class LongImageView : FrameLayout {
             .map { bmp ->
                 return@map BitmapUtils.createLongLargeBitmaps(context, bmp)
             }.compose(RxUtils.ioToMainObservable())
-            .subscribe(object : BaseObserver<List<Bitmap>>() {
-                override fun onBaseNext(any: List<Bitmap>) {
-                    loadImageBitmaps(any)
-                }
-
-                override fun onBaseError(e: Throwable) {}
-            })
+            .subscribe(
+                BaseObserver.action(next = { list ->
+                    loadImageBitmaps(list)
+                })
+            )
     }
 
     /** 加载位图列表[bitmaps] */
