@@ -4,14 +4,16 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.agiledevkt.R
+import com.lodz.android.agiledevkt.databinding.ActivityCardViewBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.getColorCompat
 import com.lodz.android.corekt.utils.SnackbarUtils
 import com.lodz.android.pandora.base.activity.BaseActivity
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 
 /**
  * CardView测试类
@@ -27,12 +29,11 @@ class CardViewActivity : BaseActivity() {
         }
     }
 
-
-    private val mRecyclerView by bindView<RecyclerView>(R.id.recycler_view)
+    private val mBinding: ActivityCardViewBinding by bindingLayout(ActivityCardViewBinding::inflate)
 
     private lateinit var mAdapter: CardViewAdapter
 
-    override fun getLayoutId(): Int = R.layout.activity_card_view
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME) ?: "")
@@ -43,10 +44,10 @@ class CardViewActivity : BaseActivity() {
         mAdapter = CardViewAdapter(getContext())
         val layoutManager = LinearLayoutManager(getContext())
         layoutManager.orientation = RecyclerView.VERTICAL
-        mRecyclerView.layoutManager = layoutManager
-        mAdapter.onAttachedToRecyclerView(mRecyclerView)// 如果使用网格布局请设置此方法
-        mRecyclerView.setHasFixedSize(true)
-        mRecyclerView.adapter = mAdapter
+        mBinding.recyclerView.layoutManager = layoutManager
+        mAdapter.onAttachedToRecyclerView(mBinding.recyclerView)// 如果使用网格布局请设置此方法
+        mBinding.recyclerView.setHasFixedSize(true)
+        mBinding.recyclerView.adapter = mAdapter
     }
 
     override fun onClickBackBtn() {
@@ -57,7 +58,7 @@ class CardViewActivity : BaseActivity() {
     override fun setListeners() {
         super.setListeners()
         mAdapter.setOnItemClickListener { viewHolder, item, position ->
-            SnackbarUtils.createShort(mRecyclerView, item)
+            SnackbarUtils.createShort(mBinding.recyclerView, item)
                     .setBackgroundColor(getColorCompat(R.color.color_00a0e9))
                     .setTextColor(Color.WHITE)
                     .show()
