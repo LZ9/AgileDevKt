@@ -4,15 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.core.widget.NestedScrollView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.button.MaterialButton
-import com.lodz.android.agiledevkt.R
+import com.lodz.android.agiledevkt.databinding.ActivityBottomSheetsBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.pandora.base.activity.AbsActivity
-import com.lodz.android.pandora.widget.base.TitleBarLayout
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 
 /**
  * BottomSheets测试类
@@ -27,42 +24,34 @@ class BottomSheetsActivity : AbsActivity() {
         }
     }
 
-    /** 标题栏 */
-    private val mTitleBarLayout by bindView<TitleBarLayout>(R.id.title_bar_layout)
-    /** BottomSheets */
-    private val mBottomSheetsBtn by bindView<MaterialButton>(R.id.bottom_sheets_btn)
-    /** BottomSheetDialog */
-    private val mDialogBtn by bindView<MaterialButton>(R.id.dialog_btn)
-    /** BottomSheetDialogFragment */
-    private val mDialogFragmentBtn by bindView<MaterialButton>(R.id.dialog_fragment_btn)
-    /** 底部BottomSheet */
-    private val mBottomSheet by bindView<NestedScrollView>(R.id.bottom_sheet)
+    private val mBinding: ActivityBottomSheetsBinding by bindingLayout(ActivityBottomSheetsBinding::inflate)
 
     private lateinit var mBottomSheetBehavior: BottomSheetBehavior<View>
 
-    override fun getAbsLayoutId(): Int = R.layout.activity_bottom_sheets
+    override fun getAbsViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
-        mTitleBarLayout.setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME) ?: "")
-        mBottomSheetBehavior = BottomSheetBehavior.from(mBottomSheet)
+        mBinding.titleBarLayout.setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME) ?: "")
+        mBottomSheetBehavior = BottomSheetBehavior.from(mBinding.scrollView)
     }
 
     override fun setListeners() {
         super.setListeners()
-        mTitleBarLayout.setOnBackBtnClickListener {
+        // 标题栏返回按钮
+        mBinding.titleBarLayout.setOnBackBtnClickListener {
             finish()
         }
 
-        mBottomSheetsBtn.setOnClickListener {
+        mBinding.bottomSheetsBtn.setOnClickListener {
             mBottomSheetBehavior.state = if (mBottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED)
                 BottomSheetBehavior.STATE_COLLAPSED else BottomSheetBehavior.STATE_EXPANDED
         }
 
-        mDialogBtn.setOnClickListener {
+        mBinding.dialogBtn.setOnClickListener {
             ImgBottomSheetDialog(getContext()).show()
         }
 
-        mDialogFragmentBtn.setOnClickListener {
+        mBinding.dialogFragmentBtn.setOnClickListener {
             TabBottomSheetDialogFragment().show(supportFragmentManager, "TabBottomSheetDialogFragment")
         }
 
