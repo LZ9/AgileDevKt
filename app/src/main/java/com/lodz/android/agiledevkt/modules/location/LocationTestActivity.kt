@@ -4,28 +4,25 @@ import android.Manifest
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.widget.RadioGroup
+import android.view.View
 import android.widget.ScrollView
-import android.widget.TextView
-import androidx.annotation.RequiresApi
-import com.google.android.material.button.MaterialButton
 import com.lodz.android.agiledevkt.R
+import com.lodz.android.agiledevkt.databinding.ActivityLocationTestBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.agiledevkt.modules.service.BusService
 import com.lodz.android.agiledevkt.modules.splash.CheckDialog
 import com.lodz.android.corekt.anko.*
 import com.lodz.android.corekt.utils.DateUtils
 import com.lodz.android.pandora.base.activity.BaseActivity
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import kotlinx.coroutines.GlobalScope
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import permissions.dispatcher.*
 import permissions.dispatcher.ktx.LocationPermission
 import permissions.dispatcher.ktx.constructLocationPermissionRequest
-import permissions.dispatcher.ktx.constructPermissionsRequest
 
 /**
  * 定位测试
@@ -54,37 +51,7 @@ class LocationTestActivity : BaseActivity() {
         }
     }
 
-    /** 间隔时间 */
-    private val mIntervalTv by bindView<TextView>(R.id.interval_tv)
-    /** 更新时间 */
-    private val mUpdateTimeTv by bindView<TextView>(R.id.update_time_tv)
-    /** 经度 */
-    private val mLongitudeTv by bindView<TextView>(R.id.longitude_tv)
-    /** 纬度 */
-    private val mLatitudeTv by bindView<TextView>(R.id.latitude_tv)
-    /** 基站信息mcc */
-    private val mMccTv by bindView<TextView>(R.id.mcc_tv)
-    /** 基站信息mnc */
-    private val mMncTv by bindView<TextView>(R.id.mnc_tv)
-    /** 基站信息lac */
-    private val mLacTv by bindView<TextView>(R.id.lac_tv)
-    /** 基站信息cid */
-    private val mCidTv by bindView<TextView>(R.id.cid_tv)
-
-    /** 滚动控件 */
-    private val mScrollView by bindView<ScrollView>(R.id.scroll_view)
-    /** 日志信息 */
-    private val mLogTv by bindView<TextView>(R.id.log_tv)
-    /** 清空日志 */
-    private val mCleanBtn by bindView<TextView>(R.id.clean_btn)
-
-    /** 定位方式 */
-    private val mRadioGroup by bindView<RadioGroup>(R.id.radio_group)
-
-    /** 绑定定位服务 */
-    private val mBindServiceBtn by bindView<MaterialButton>(R.id.bind_service_btn)
-    /** 解绑定位服务 */
-    private val mUnbindServiceBtn by bindView<MaterialButton>(R.id.unbind_service_btn)
+    private val mBinding: ActivityLocationTestBinding by bindingLayout(ActivityLocationTestBinding::inflate)
 
     /** 定位方式 */
     private var mLocationType = LOCATION_GPS
@@ -115,7 +82,7 @@ class LocationTestActivity : BaseActivity() {
         requiresPermission = ::onRequestPermission
     )
 
-    override fun getLayoutId(): Int = R.layout.activity_location_test
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME) ?: "")
@@ -198,7 +165,8 @@ class LocationTestActivity : BaseActivity() {
     override fun setListeners() {
         super.setListeners()
 
-        mRadioGroup.setOnCheckedChangeListener { group, checkedId ->
+        // 定位方式
+        mBinding.radioGroup.setOnCheckedChangeListener { group, checkedId ->
             mLocationType = when (checkedId) {
                 R.id.gps_rb -> LOCATION_GPS
                 R.id.tencent_rb -> LOCATION_TENCENT
@@ -207,7 +175,8 @@ class LocationTestActivity : BaseActivity() {
             }
         }
 
-        mBindServiceBtn.setOnClickListener {
+        // 绑定定位服务
+        mBinding.bindServiceBtn.setOnClickListener {
             if (mLocationType != LOCATION_TENCENT && !isGpsOpen()) {
                 toastShort(R.string.location_open_gps)
                 goLocationSetting()
@@ -216,25 +185,27 @@ class LocationTestActivity : BaseActivity() {
             bind(mLocationType)
         }
 
-        mUnbindServiceBtn.setOnClickListener {
+        // 解绑定位服务
+        mBinding.unbindServiceBtn.setOnClickListener {
             unbind()
         }
 
-        mCleanBtn.setOnClickListener {
-            mLogTv.text = ""
+        // 清空日志
+        mBinding.cleanBtn.setOnClickListener {
+            mBinding.logTv.text = ""
         }
     }
 
     /** 初始化 */
     private fun initLogic() {
-        mIntervalTv.text = getString(R.string.location_interval, (LOCATION_INTERVAL_TIME / 1000).toString())
-        mUpdateTimeTv.text = getString(R.string.location_update_time, "无")
-        mLongitudeTv.text = getString(R.string.location_longitude, "无")
-        mLatitudeTv.text = getString(R.string.location_latitude, "无")
-        mMccTv.text = getString(R.string.location_mcc, "无")
-        mMncTv.text = getString(R.string.location_mnc, "无")
-        mLacTv.text = getString(R.string.location_lac, "无")
-        mCidTv.text = getString(R.string.location_cid, "无")
+        mBinding.intervalTv.text = getString(R.string.location_interval, (LOCATION_INTERVAL_TIME / 1000).toString())
+        mBinding.updateTimeTv.text = getString(R.string.location_update_time, "无")
+        mBinding.longitudeTv.text = getString(R.string.location_longitude, "无")//经度
+        mBinding.latitudeTv.text = getString(R.string.location_latitude, "无")//纬度
+        mBinding.mccTv.text = getString(R.string.location_mcc, "无")// 基站信息mcc
+        mBinding.mncTv.text = getString(R.string.location_mnc, "无")// 基站信息mnc
+        mBinding.lacTv.text = getString(R.string.location_lac, "无") // 基站信息lac
+        mBinding.cidTv.text = getString(R.string.location_cid, "无") // 基站信息cid
 
         updateBindBtn()
         showStatusCompleted()
@@ -242,15 +213,15 @@ class LocationTestActivity : BaseActivity() {
 
     /** 更新按钮状态 */
     private fun updateBindBtn() {
-        mBindServiceBtn.isEnabled = !isBind
-        mUnbindServiceBtn.isEnabled = isBind
+        mBinding.bindServiceBtn.isEnabled = !isBind
+        mBinding.unbindServiceBtn.isEnabled = isBind
     }
 
     /** 打印信息[result] */
     private fun printResult(result: String) {
-        mLogTv.text = (mLogTv.text.toString() + result + "\n")
+        mBinding.logTv.text = (mBinding.logTv.text.toString() + result + "\n")
         GlobalScope.runOnMainDelay(100){
-            mScrollView.fullScroll(ScrollView.FOCUS_DOWN)
+            mBinding.scrollView.fullScroll(ScrollView.FOCUS_DOWN)
         }
     }
 
@@ -258,13 +229,13 @@ class LocationTestActivity : BaseActivity() {
     fun onLocationUpdateEvent(event: LocationUpdateEvent) {
         if (event.isLocationData) {
             val time = DateUtils.getCurrentFormatString(DateUtils.TYPE_2)
-            mUpdateTimeTv.text = getString(R.string.location_update_time, time)
-            mLongitudeTv.text = getString(R.string.location_longitude, event.longitude)
-            mLatitudeTv.text = getString(R.string.location_latitude, event.latitude)
-            mMccTv.text = getString(R.string.location_mcc, event.mcc)
-            mMncTv.text = getString(R.string.location_mnc, event.mnc)
-            mLacTv.text = getString(R.string.location_lac, event.lac)
-            mCidTv.text = getString(R.string.location_cid, event.cid)
+            mBinding.updateTimeTv.text = getString(R.string.location_update_time, time)
+            mBinding.longitudeTv.text = getString(R.string.location_longitude, event.longitude)
+            mBinding.latitudeTv.text = getString(R.string.location_latitude, event.latitude)
+            mBinding.mccTv.text = getString(R.string.location_mcc, event.mcc)
+            mBinding.mncTv.text = getString(R.string.location_mnc, event.mnc)
+            mBinding.lacTv.text = getString(R.string.location_lac, event.lac)
+            mBinding.cidTv.text = getString(R.string.location_cid, event.cid)
             printResult(event.log + "    " + time)
         } else {
             printResult(event.log)
