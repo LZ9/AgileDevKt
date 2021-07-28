@@ -52,7 +52,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/result"
+            android:id="@+id/result_tv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -63,6 +63,7 @@
     </LinearLayout>
 
     <include
+        android:id="@+id/drawer_left_view"
         layout="@layout/drawer_left_test"
         android:layout_width="@dimen/pandora_nav_width"
         android:layout_height="match_parent"

@@ -31,7 +31,7 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/user_logo"
+                        android:id="@+id/user_logo_img"
                         android:layout_width="65dp"
                         android:layout_height="65dp"
                         android:layout_margin="10dp"
@@ -78,7 +78,7 @@
                     </LinearLayout>
 
                     <TextView
-                        android:id="@+id/title"
+                        android:id="@+id/title_tv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"

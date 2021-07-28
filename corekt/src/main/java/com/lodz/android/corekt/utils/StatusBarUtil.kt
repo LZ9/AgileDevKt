@@ -90,9 +90,6 @@ object StatusBarUtil {
     @JvmStatic
     @JvmOverloads
     fun setTransparentForOffsetView(activity: Activity, needOffsetView: View, @FloatRange(from = 0.0, to = 1.0) alpha: Float = DEFAULT_ALPHA, @ColorInt colorBg: Int = Color.BLACK) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            return
-        }
         configStatusBarTransparent(activity.window)
         addStatusBarView(activity, alpha, colorBg)
         configOffsetView(needOffsetView)
@@ -108,9 +105,6 @@ object StatusBarUtil {
     @JvmStatic
     @JvmOverloads
     fun setTransparentForDrawerLayout(activity: Activity, drawerLayout: DrawerLayout, needOffsetView: View, @FloatRange(from = 0.0, to = 1.0) alpha: Float = DEFAULT_ALPHA, @ColorInt colorBg: Int = Color.BLACK) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            return
-        }
         val drawer = drawerLayout.getChildAt(1)
         if (drawer == null || drawer !is ViewGroup) {
             return
