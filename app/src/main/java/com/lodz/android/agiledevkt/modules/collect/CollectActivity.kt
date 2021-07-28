@@ -3,22 +3,18 @@ package com.lodz.android.agiledevkt.modules.collect
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.TextView
+import android.view.View
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder
 import com.bigkoo.pickerview.builder.TimePickerBuilder
-import com.bigkoo.pickerview.listener.OnOptionsSelectListener
-import com.bigkoo.pickerview.listener.OnTimeSelectListener
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.PersonTypeBean
+import com.lodz.android.agiledevkt.databinding.ActivityCollectBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.runOnMainDelay
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.corekt.utils.DateUtils
 import com.lodz.android.pandora.base.activity.BaseActivity
-import com.lodz.android.pandora.widget.collect.CltEditView
-import com.lodz.android.pandora.widget.collect.CltTextView
-import com.lodz.android.pandora.widget.collect.radio.CltRadioGroup
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.collect.radio.Radioable
 import kotlinx.coroutines.GlobalScope
 import java.util.*
@@ -38,6 +34,8 @@ class CollectActivity : BaseActivity() {
         }
     }
 
+    private val mBinding: ActivityCollectBinding by bindingLayout(ActivityCollectBinding::inflate)
+
     /** 姓名列表 */
     private val NAME_LIST = arrayListOf("张三", "李四", "王五", "赵四")
     /** 性别列表 */
@@ -47,26 +45,7 @@ class CollectActivity : BaseActivity() {
     /** 运动类型列表 */
     private val SPORT_TYPE_LIST = arrayListOf("唱", "跳", "rap", "篮球")
 
-    /** 姓名 */
-    private val mNameCltv by bindView<CltTextView>(R.id.name_cltv)
-    /** 性别 */
-    private val mSexCltv by bindView<CltTextView>(R.id.sex_cltv)
-    /** 出生日期 */
-    private val mBirthCltv by bindView<CltTextView>(R.id.birth_cltv)
-    /** 年龄 */
-    private val mAgeCltv by bindView<CltTextView>(R.id.age_cltv)
-    /** 兴趣 */
-    private val mHobbyCedit by bindView<CltEditView>(R.id.hobby_cedit)
-    /** 备注 */
-    private val mRemarkCedit by bindView<CltEditView>(R.id.remark_cedit)
-    /** 人员类型 */
-    private val mPersonTypeCrg by bindView<CltRadioGroup>(R.id.person_type_crg)
-    /** 运动类型 */
-    private val mSportTypeCrg by bindView<CltRadioGroup>(R.id.sport_type_crg)
-    /** 提交按钮 */
-    private val mSubmitBtn by bindView<TextView>(R.id.submit_btn)
-
-    override fun getLayoutId(): Int = R.layout.activity_collect
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         super.findViews(savedInstanceState)
@@ -80,11 +59,11 @@ class CollectActivity : BaseActivity() {
 
     override fun setListeners() {
         super.setListeners()
-        mNameCltv.setOnJumpClickListener {
-            val dialog = OptionsPickerBuilder(getContext(),
-                OnOptionsSelectListener { options1, options2, options3, v ->
-                    mNameCltv.setContentText(NAME_LIST[options1])
-                })
+        // 姓名
+        mBinding.nameCltv.setOnJumpClickListener {
+            val dialog = OptionsPickerBuilder(getContext()) { options1, options2, options3, v ->
+                mBinding.nameCltv.setContentText(NAME_LIST[options1])
+            }
                 .setSubmitText(getString(R.string.clt_confirm))
                 .setCancelText(getString(R.string.clt_cancel))
                 .setTitleText(getString(R.string.clt_name_title))
@@ -93,11 +72,11 @@ class CollectActivity : BaseActivity() {
             dialog.show()
         }
 
-        mSexCltv.setOnContentClickListener {
-            val dialog = OptionsPickerBuilder(getContext(),
-                OnOptionsSelectListener { options1, options2, options3, v ->
-                    mSexCltv.setContentText(SEX_LIST[options1])
-                })
+        // 性别
+        mBinding.sexCltv.setOnContentClickListener {
+            val dialog = OptionsPickerBuilder(getContext()) { options1, options2, options3, v ->
+                mBinding.sexCltv.setContentText(SEX_LIST[options1])
+            }
                 .setSubmitText(getString(R.string.clt_confirm))
                 .setCancelText(getString(R.string.clt_cancel))
                 .setTitleText(getString(R.string.clt_sex_title))
@@ -106,8 +85,9 @@ class CollectActivity : BaseActivity() {
             dialog.show()
         }
 
-        mBirthCltv.setOnContentClickListener {
-            var calendar = DateUtils.parseFormatToCalendar(DateUtils.TYPE_13, mBirthCltv.getContentText())
+        // 出生日期
+        mBinding.birthCltv.setOnContentClickListener {
+            var calendar = DateUtils.parseFormatToCalendar(DateUtils.TYPE_13, mBinding.birthCltv.getContentText())
             if (calendar == null) {
                 calendar = Calendar.getInstance()
             }
@@ -116,52 +96,55 @@ class CollectActivity : BaseActivity() {
             startDate.set(startDate.get(Calendar.YEAR) - 100, Calendar.JANUARY, 1)
             endDate.set(endDate.get(Calendar.YEAR) + 100, Calendar.DECEMBER, 31)
 
-            val dialog = TimePickerBuilder(getContext(),
-                OnTimeSelectListener { date, v ->
-                    val time = if (date != null) DateUtils.getFormatString(DateUtils.TYPE_13, date) else ""
-                    if (time.isNotEmpty()) {
-                        mBirthCltv.setContentText(time)
-                        val age = DateUtils.getCurrentFormatString(DateUtils.TYPE_14).toInt() - DateUtils.changeFormatString(DateUtils.TYPE_13, DateUtils.TYPE_14, time).toInt()
-                        mAgeCltv.setContentText(if (age > 0) age.toString() else "")
-                    }
-                })
-                    .setTitleText(getString(R.string.clt_birth_title))
-                    .setDate(calendar)
-                    .setRangDate(startDate, endDate)
-                    .setType(booleanArrayOf(true, true, false, false, false, false))
-                    .setLabel("年", "月", "日", "时", "分", "秒")
-                    .isCyclic(true)
-                    .build()
+            val dialog = TimePickerBuilder(getContext()) { date, v ->
+                val time = if (date != null) DateUtils.getFormatString(DateUtils.TYPE_13, date) else ""
+                if (time.isNotEmpty()) {
+                    mBinding.birthCltv.setContentText(time)
+                    val age = DateUtils.getCurrentFormatString(DateUtils.TYPE_14).toInt() -
+                            DateUtils.changeFormatString(DateUtils.TYPE_13, DateUtils.TYPE_14, time).toInt()
+                    mBinding.ageCltv.setContentText(if (age >= 0) age.toString() else "")
+                }
+            }
+                .setTitleText(getString(R.string.clt_birth_title))
+                .setDate(calendar)
+                .setRangDate(startDate, endDate)
+                .setType(booleanArrayOf(true, true, false, false, false, false))
+                .setLabel("年", "月", "日", "时", "分", "秒")
+                .isCyclic(true)
+                .build()
             dialog.show()
         }
 
-        mRemarkCedit.setOnInputTextLimit { s, start, before, count, max ->
+        // 备注
+        mBinding.remarkCedit.setOnInputTextLimit { s, start, before, count, max ->
             toastShort("只能输入${max}字")
         }
 
-        mSubmitBtn.setOnClickListener {
-            if (mNameCltv.getContentText().isEmpty()) {
+        // 提交按钮
+        mBinding.submitBtn.setOnClickListener {
+            if (mBinding.nameCltv.getContentText().isEmpty()) {
                 toastShort(R.string.clt_name_tips)
                 return@setOnClickListener
             }
-            if (mSexCltv.getContentText().isEmpty()) {
+            if (mBinding.sexCltv.getContentText().isEmpty()) {
                 toastShort(R.string.clt_sex_hint)
                 return@setOnClickListener
             }
-            if (mBirthCltv.getContentText().isEmpty()) {
+            if (mBinding.birthCltv.getContentText().isEmpty()) {
                 toastShort(R.string.clt_birth_hint)
                 return@setOnClickListener
             }
-            if (mHobbyCedit.getContentText().isEmpty()) {
+            if (mBinding.hobbyCedit.getContentText().isEmpty()) {
                 toastShort(R.string.clt_hobby_tips)
                 return@setOnClickListener
             }
-            if (!mPersonTypeCrg.isSelectedId()){
+            if (!mBinding.personTypeCrg.isSelectedId()){
                 toastShort(R.string.clt_person_type_tips)
                 return@setOnClickListener
             }
             toastShort(R.string.clt_success)
             GlobalScope.runOnMainDelay(500) {
+                toastShort("提交完成")
                 finish()
             }
         }
@@ -169,11 +152,12 @@ class CollectActivity : BaseActivity() {
 
     override fun initData() {
         super.initData()
-        mPersonTypeCrg.setDataList(getPersonTypeList())
-        mSportTypeCrg.setDataList(getSportTypeList())
+        mBinding.personTypeCrg.setDataList(getPersonTypeList())
+        mBinding.sportTypeCrg.setDataList(getSportTypeList())
         showStatusCompleted()
     }
 
+    /** 获取人员类型列表 */
     private fun getPersonTypeList(): MutableList<Radioable> {
         val list: MutableList<Radioable> = ArrayList()
         PERSON_TYPE_LIST.forEachIndexed { index, type ->
@@ -185,6 +169,7 @@ class CollectActivity : BaseActivity() {
         return list
     }
 
+    /** 获取运动类型列表 */
     private fun getSportTypeList(): MutableList<Radioable> {
         val list: MutableList<Radioable> = ArrayList()
         SPORT_TYPE_LIST.forEachIndexed { index, type ->
