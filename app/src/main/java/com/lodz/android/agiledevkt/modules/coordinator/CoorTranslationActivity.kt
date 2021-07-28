@@ -3,19 +3,19 @@ package com.lodz.android.agiledevkt.modules.coordinator
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageView
-import android.widget.TextView
-import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.AppBarLayout
 import com.lodz.android.agiledevkt.R
-import com.lodz.android.corekt.anko.bindView
+import com.lodz.android.agiledevkt.databinding.ActivityCoorTranslationBinding
 import com.lodz.android.corekt.anko.dp2pxRF
 import com.lodz.android.corekt.anko.getScreenWidth
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.base.activity.AbsActivity
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.contract.OnAppBarStateChangeListener
 import java.util.*
 
@@ -26,33 +26,18 @@ import java.util.*
 class CoorTranslationActivity : AbsActivity() {
 
     companion object {
+        /** 按钮右侧间距（单位dp） */
+        private const val BTN_MARGIN_END_DP = 10
+
         fun start(context: Context) {
             val intent = Intent(context, CoorTranslationActivity::class.java)
             context.startActivity(intent)
         }
     }
 
-    /** 按钮右侧间距（单位dp） */
-    private val BTN_MARGIN_END_DP = 10
+    private val mBinding: ActivityCoorTranslationBinding by bindingLayout(ActivityCoorTranslationBinding::inflate)
 
-    /** 返回按钮 */
-    private val mBackBtn by bindView<ImageView>(R.id.back_btn)
-
-    /** 头像 */
-    private val mHeadImg by bindView<ImageView>(R.id.head_img)
-    /** 用户名 */
-    private val mUserNameTv by bindView<TextView>(R.id.user_name_tv)
-    /** 订阅按钮 */
-    private val mSubscribeBtn by bindView<TextView>(R.id.subscribe_btn)
-
-    /** 数据列表 */
-    private val mRecyclerView by bindView<RecyclerView>(R.id.recycler_view)
     private lateinit var mAdapter: CoordinatorDataAdapter
-
-    /** AppBarLayout */
-    private val mAppBarLayout by bindView<AppBarLayout>(R.id.app_bar_layout)
-    /** Toolbar */
-    private val mToolbar by bindView<Toolbar>(R.id.toolbar)
 
     /** 标题栏中心Y坐标 */
     private var mToolbarCenterY: Float = 0f
@@ -65,7 +50,7 @@ class CoorTranslationActivity : AbsActivity() {
     /** 订阅按钮中心X坐标 */
     private var mSubscribeBtnCenterX: Float = 0f
 
-    override fun getAbsLayoutId() = R.layout.activity_coor_translation
+    override fun getAbsViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         initRecyclerView()
@@ -75,47 +60,49 @@ class CoorTranslationActivity : AbsActivity() {
         val layoutManager = LinearLayoutManager(getContext())
         layoutManager.orientation = RecyclerView.VERTICAL
         mAdapter = CoordinatorDataAdapter(getContext())
-        mRecyclerView.layoutManager = layoutManager
-        mRecyclerView.setHasFixedSize(true)
-        mRecyclerView.adapter = mAdapter
+        mBinding.recyclerView.layoutManager = layoutManager
+        mBinding.recyclerView.setHasFixedSize(true)
+        mBinding.recyclerView.adapter = mAdapter
     }
 
     override fun setListeners() {
         super.setListeners()
 
-        mBackBtn.setOnClickListener {
+        // 返回按钮
+        mBinding.backBtn.setOnClickListener {
             finish()
         }
 
-        mSubscribeBtn.setOnClickListener {
+        // 订阅按钮
+        mBinding.subscribeBtn.setOnClickListener {
             toastShort(R.string.coordinator_subscribe_tips)
         }
 
-        mAppBarLayout.addOnOffsetChangedListener(object : OnAppBarStateChangeListener() {
+        mBinding.appBarLayout.addOnOffsetChangedListener(object : OnAppBarStateChangeListener() {
             override fun onStateChanged(appBarLayout: AppBarLayout, state: Int, delta: Double) {
                 if (mToolbarCenterY == 0f){
                     return
                 }
 
                 // 图片缩放和位移
-                mHeadImg.scaleX = delta.toFloat()
-                mHeadImg.scaleY = delta.toFloat()
-                mHeadImg.translationY = (mHeadImgCenterY - mToolbarCenterY) * (delta.toFloat() - 1)
+                mBinding.headImg.scaleX = delta.toFloat()
+                mBinding.headImg.scaleY = delta.toFloat()
+                mBinding.headImg.translationY = (mHeadImgCenterY - mToolbarCenterY) * (delta.toFloat() - 1)
 
                 // 用户名位移
-                mUserNameTv.translationY = (mUserNameCenterY - mToolbarCenterY) * (delta.toFloat() - 1)
+                mBinding.userNameTv.translationY = (mUserNameCenterY - mToolbarCenterY) * (delta.toFloat() - 1)
 
                 // 订阅按钮位移
-                mSubscribeBtn.translationY = (mSubscribeBtnCenterY - mToolbarCenterY) * (delta.toFloat() - 1)
-                mSubscribeBtn.translationX = (getScreenWidth() - mSubscribeBtn.width / 2 - dp2pxRF(BTN_MARGIN_END_DP) - mSubscribeBtnCenterX) * (1 - delta.toFloat())
+                mBinding.subscribeBtn.translationY = (mSubscribeBtnCenterY - mToolbarCenterY) * (delta.toFloat() - 1)
+                mBinding.subscribeBtn.translationX = (getScreenWidth() - mBinding.subscribeBtn.width / 2 - dp2pxRF(BTN_MARGIN_END_DP) - mSubscribeBtnCenterX) * (1 - delta.toFloat())
             }
         })
     }
 
     override fun initData() {
         super.initData()
-        showHeadImg(mHeadImg)
-        mUserNameTv.setText(R.string.coordinator_user_name)
+        showHeadImg(mBinding.headImg)
+        mBinding.userNameTv.setText(R.string.coordinator_user_name)
         initListData()
     }
 
@@ -139,11 +126,11 @@ class CoorTranslationActivity : AbsActivity() {
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
         if (hasFocus){
-            mToolbarCenterY = mToolbar.height / 2.0f
-            mHeadImgCenterY = mHeadImg.top + mHeadImg.height / 2.0f
-            mUserNameCenterY = mUserNameTv.top + mUserNameTv.height / 2.0f
-            mSubscribeBtnCenterY = mSubscribeBtn.top + mSubscribeBtn.height / 2.0f
-            mSubscribeBtnCenterX = mSubscribeBtn.left + mSubscribeBtn.width / 2.0f
+            mToolbarCenterY = mBinding.toolbar.height / 2.0f
+            mHeadImgCenterY = mBinding.headImg.top + mBinding.headImg.height / 2.0f
+            mUserNameCenterY = mBinding.userNameTv.top + mBinding.userNameTv.height / 2.0f
+            mSubscribeBtnCenterY = mBinding.subscribeBtn.top + mBinding.subscribeBtn.height / 2.0f
+            mSubscribeBtnCenterX = mBinding.subscribeBtn.left + mBinding.subscribeBtn.width / 2.0f
         }
     }
 }

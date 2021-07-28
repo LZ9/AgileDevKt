@@ -5,22 +5,19 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
-import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.lodz.android.agiledevkt.R
+import com.lodz.android.agiledevkt.databinding.ActivityCoorStatusBarTestBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.dp2px
 import com.lodz.android.corekt.anko.getColorCompat
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.corekt.utils.SnackbarUtils
 import com.lodz.android.corekt.utils.StatusBarUtil
 import com.lodz.android.pandora.base.activity.AbsActivity
-import com.lodz.android.pandora.widget.base.TitleBarLayout
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.contract.OnAppBarStateChangeListener
 import java.util.*
 
@@ -38,54 +35,44 @@ class CoorStatusBarTestActivity : AbsActivity() {
         }
     }
 
-    /** AppBarLayout */
-    private val mAppBarLayout by bindView<AppBarLayout>(R.id.app_bar_layout)
-    /** Toolbar */
-    private val mToolbar by bindView<Toolbar>(R.id.toolbar)
-    /** 标题栏 */
-    private val mTitleBarLayout by bindView<TitleBarLayout>(R.id.title_bar_layout)
-    /** 右侧按钮 */
-    private val mRightBtn by bindView<ImageView>(R.id.right_btn)
-    /** 浮动按钮 */
-    private val mFloatingActionBtn by bindView<FloatingActionButton>(R.id.fa_btn)
-    /** 数据列表 */
-    private val mRecyclerView by bindView<RecyclerView>(R.id.recycler_view)
+    private val mBinding: ActivityCoorStatusBarTestBinding by bindingLayout(ActivityCoorStatusBarTestBinding::inflate)
 
     /** 列表适配器 */
     private lateinit var mAdapter: CoordinatorDataAdapter
 
-    override fun getAbsLayoutId() = R.layout.activity_coor_status_bar_test
+    override fun getAbsViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
-        mTitleBarLayout.setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME) ?: "")
+        mBinding.titleBarLayout.setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME) ?: "")
         initRecyclerView()
-        StatusBarUtil.setTransparentFullyForOffsetView(this@CoorStatusBarTestActivity, mToolbar)
+        StatusBarUtil.setTransparentFullyForOffsetView(this@CoorStatusBarTestActivity, mBinding.toolbar)
     }
 
     private fun initRecyclerView() {
         val layoutManager = LinearLayoutManager(getContext())
         layoutManager.orientation = RecyclerView.VERTICAL
         mAdapter = CoordinatorDataAdapter(getContext())
-        mRecyclerView.layoutManager = layoutManager
-        mRecyclerView.setHasFixedSize(true)
-        mRecyclerView.adapter = mAdapter
+        mBinding.recyclerView.layoutManager = layoutManager
+        mBinding.recyclerView.setHasFixedSize(true)
+        mBinding.recyclerView.adapter = mAdapter
     }
 
     override fun setListeners() {
         super.setListeners()
 
         // 标题栏
-        mTitleBarLayout.setOnBackBtnClickListener {
+        mBinding.titleBarLayout.setOnBackBtnClickListener {
             finish()
         }
 
-        mRightBtn.setOnClickListener {
+        // 右侧按钮
+        mBinding.rightBtn.setOnClickListener {
             finish()
         }
 
         // 浮动按钮
-        mFloatingActionBtn.setOnClickListener {
-            SnackbarUtils.createShort(mRecyclerView, getString(R.string.snackbar_sign_title))
+        mBinding.faBtn.setOnClickListener {
+            SnackbarUtils.createShort(mBinding.recyclerView, getString(R.string.snackbar_sign_title))
                     .setTextColor(Color.WHITE)
                     .addLeftImage(R.drawable.ic_launcher, dp2px(5))
                     .getSnackbar()
@@ -96,24 +83,24 @@ class CoorStatusBarTestActivity : AbsActivity() {
                 .show()
         }
 
-        mAppBarLayout.addOnOffsetChangedListener(object : OnAppBarStateChangeListener() {
+        mBinding.appBarLayout.addOnOffsetChangedListener(object : OnAppBarStateChangeListener() {
             override fun onStateChanged(appBarLayout: AppBarLayout, state: Int, delta: Double) {
                 when (state) {
                     OnAppBarStateChangeListener.EXPANDED -> {// 完全展开
-                        mRightBtn.visibility = View.VISIBLE
-                        mRightBtn.alpha = 1f
-                        mTitleBarLayout.visibility = View.GONE
+                        mBinding.rightBtn.visibility = View.VISIBLE
+                        mBinding.rightBtn.alpha = 1f
+                        mBinding.titleBarLayout.visibility = View.GONE
                     }
                     OnAppBarStateChangeListener.COLLAPSED -> {// 完全折叠
-                        mRightBtn.visibility = View.GONE
-                        mTitleBarLayout.visibility = View.VISIBLE
-                        mTitleBarLayout.alpha = 1f
+                        mBinding.rightBtn.visibility = View.GONE
+                        mBinding.titleBarLayout.visibility = View.VISIBLE
+                        mBinding.titleBarLayout.alpha = 1f
                     }
                     else -> { // 滑动中
-                        mRightBtn.alpha = delta.toFloat()
-                        mTitleBarLayout.alpha = (1 - delta).toFloat()
-                        mRightBtn.visibility = View.VISIBLE
-                        mTitleBarLayout.visibility = View.VISIBLE
+                        mBinding.rightBtn.alpha = delta.toFloat()
+                        mBinding.titleBarLayout.alpha = (1 - delta).toFloat()
+                        mBinding.rightBtn.visibility = View.VISIBLE
+                        mBinding.titleBarLayout.visibility = View.VISIBLE
                     }
                 }
 

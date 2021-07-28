@@ -3,11 +3,12 @@ package com.lodz.android.agiledevkt.modules.coordinator
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
+import android.view.View
 import com.lodz.android.agiledevkt.R
+import com.lodz.android.agiledevkt.databinding.ActivityCoordinatorTestBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.pandora.base.activity.BaseActivity
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 
 /**
  * CoordinatorLayout测试类
@@ -22,12 +23,9 @@ class CoordinatorTestActivity : BaseActivity(){
         }
     }
 
-    /** 位移按钮 */
-    private val mTranslationBtn by bindView<Button>(R.id.translation_btn)
-    /** 状态栏按钮 */
-    private val mStatusBarBtn by bindView<Button>(R.id.status_bar_btn)
+    private val mBinding: ActivityCoordinatorTestBinding by bindingLayout(ActivityCoordinatorTestBinding::inflate)
 
-    override fun getLayoutId() = R.layout.activity_coordinator_test
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME) ?: "")
@@ -41,11 +39,12 @@ class CoordinatorTestActivity : BaseActivity(){
     override fun setListeners() {
         super.setListeners()
 
-        mTranslationBtn.setOnClickListener {
+        // 位移按钮
+        mBinding.translationBtn.setOnClickListener {
             CoorTranslationActivity.start(getContext())
         }
-
-        mStatusBarBtn.setOnClickListener {
+        // 状态栏按钮
+        mBinding.statusBarBtn.setOnClickListener {
             CoorStatusBarTestActivity.start(getContext(), getString(R.string.status_bar_test_coordinator))
         }
     }
