@@ -18,7 +18,12 @@ abstract class BasePopupWindow(context: Context) {
     /** 上下文 */
     private val mPdrContext: Context = context
     /** PopupWindow */
-    private lateinit var mPdrPopupWindow: PopupWindow
+    private var mPdrPopupWindow: PopupWindow
+
+    init {
+        mPdrPopupWindow = createPopupWindow(mPdrContext)
+    }
+
 
     private fun createPopupWindow(context: Context): PopupWindow {
         val popView = if (getLayoutId() != 0) {
@@ -32,15 +37,13 @@ abstract class BasePopupWindow(context: Context) {
         val popupWindow = PopupWindow(popView, getWidthPx(), getHeightPx(), true)
         popupWindow.isTouchable = true
         popupWindow.isOutsideTouchable = true
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            popupWindow.elevation = getElevationValue()
-        }
+        popupWindow.elevation = getElevationValue()
         popupWindow.setBackgroundDrawable(ColorDrawable(Color.WHITE))
         return popupWindow
     }
 
     fun create() {
-        mPdrPopupWindow = createPopupWindow(mPdrContext)
+//        mPdrPopupWindow = createPopupWindow(mPdrContext)
         startCreate()
         findViews(mPdrPopupWindow.contentView)
         setListeners()

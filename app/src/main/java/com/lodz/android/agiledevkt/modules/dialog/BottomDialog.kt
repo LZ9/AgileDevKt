@@ -4,7 +4,7 @@ import android.content.Context
 import android.os.Build
 import android.view.View
 import com.lodz.android.agiledevkt.databinding.DialogBottomBinding
-import com.lodz.android.pandora.utils.viewbinding.bindingLayout
+import com.lodz.android.pandora.utils.viewbinding.bindingLayoutLazy
 import com.lodz.android.pandora.widget.dialog.BaseBottomDialog
 
 /**
@@ -13,7 +13,7 @@ import com.lodz.android.pandora.widget.dialog.BaseBottomDialog
  */
 class BottomDialog(context: Context) : BaseBottomDialog(context) {
 
-    private val mBinding : DialogBottomBinding by bindingLayout(DialogBottomBinding::inflate)
+    private val mBinding : DialogBottomBinding by bindingLayoutLazy(DialogBottomBinding::inflate)
 
     override fun getViewBindingLayout(): View = mBinding.root
 

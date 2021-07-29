@@ -7,7 +7,7 @@ import android.view.View
 import com.lodz.android.agiledevkt.databinding.ActivityDialogBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.pandora.base.activity.BaseActivity
-import com.lodz.android.pandora.utils.viewbinding.bindingLayout
+import com.lodz.android.pandora.utils.viewbinding.bindingLayoutLazy
 
 /**
  * Dialog测试
@@ -22,7 +22,7 @@ class DialogActivity : BaseActivity() {
         }
     }
 
-    private val mBinding: ActivityDialogBinding by bindingLayout(ActivityDialogBinding::inflate)
+    private val mBinding: ActivityDialogBinding by bindingLayoutLazy(ActivityDialogBinding::inflate)
 
     override fun getViewBindingLayout(): View = mBinding.root
 

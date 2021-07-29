@@ -16,7 +16,7 @@ import com.lodz.android.agiledevkt.modules.splash.CheckDialog
 import com.lodz.android.corekt.anko.*
 import com.lodz.android.corekt.utils.DateUtils
 import com.lodz.android.pandora.base.activity.BaseActivity
-import com.lodz.android.pandora.utils.viewbinding.bindingLayout
+import com.lodz.android.pandora.utils.viewbinding.bindingLayoutLazy
 import kotlinx.coroutines.GlobalScope
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -51,7 +51,7 @@ class LocationTestActivity : BaseActivity() {
         }
     }
 
-    private val mBinding: ActivityLocationTestBinding by bindingLayout(ActivityLocationTestBinding::inflate)
+    private val mBinding: ActivityLocationTestBinding by bindingLayoutLazy(ActivityLocationTestBinding::inflate)
 
     /** 定位方式 */
     private var mLocationType = LOCATION_GPS

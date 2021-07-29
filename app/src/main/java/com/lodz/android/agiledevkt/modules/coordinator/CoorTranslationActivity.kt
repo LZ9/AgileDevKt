@@ -15,7 +15,7 @@ import com.lodz.android.corekt.anko.getScreenWidth
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.base.activity.AbsActivity
-import com.lodz.android.pandora.utils.viewbinding.bindingLayout
+import com.lodz.android.pandora.utils.viewbinding.bindingLayoutLazy
 import com.lodz.android.pandora.widget.contract.OnAppBarStateChangeListener
 import java.util.*
 
@@ -35,7 +35,7 @@ class CoorTranslationActivity : AbsActivity() {
         }
     }
 
-    private val mBinding: ActivityCoorTranslationBinding by bindingLayout(ActivityCoorTranslationBinding::inflate)
+    private val mBinding: ActivityCoorTranslationBinding by bindingLayoutLazy(ActivityCoorTranslationBinding::inflate)
 
     private lateinit var mAdapter: CoordinatorDataAdapter
 

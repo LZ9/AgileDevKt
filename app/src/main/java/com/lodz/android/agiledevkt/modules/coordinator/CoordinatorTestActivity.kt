@@ -8,7 +8,7 @@ import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.databinding.ActivityCoordinatorTestBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.pandora.base.activity.BaseActivity
-import com.lodz.android.pandora.utils.viewbinding.bindingLayout
+import com.lodz.android.pandora.utils.viewbinding.bindingLayoutLazy
 
 /**
  * CoordinatorLayout测试类
@@ -23,7 +23,7 @@ class CoordinatorTestActivity : BaseActivity(){
         }
     }
 
-    private val mBinding: ActivityCoordinatorTestBinding by bindingLayout(ActivityCoordinatorTestBinding::inflate)
+    private val mBinding: ActivityCoordinatorTestBinding by bindingLayoutLazy(ActivityCoordinatorTestBinding::inflate)
 
     override fun getViewBindingLayout(): View = mBinding.root
 

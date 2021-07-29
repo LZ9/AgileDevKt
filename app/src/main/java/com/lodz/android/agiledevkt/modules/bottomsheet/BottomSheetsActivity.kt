@@ -9,7 +9,7 @@ import com.lodz.android.agiledevkt.databinding.ActivityBottomSheetsBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.pandora.base.activity.AbsActivity
-import com.lodz.android.pandora.utils.viewbinding.bindingLayout
+import com.lodz.android.pandora.utils.viewbinding.bindingLayoutLazy
 
 /**
  * BottomSheets测试类
@@ -24,7 +24,7 @@ class BottomSheetsActivity : AbsActivity() {
         }
     }
 
-    private val mBinding: ActivityBottomSheetsBinding by bindingLayout(ActivityBottomSheetsBinding::inflate)
+    private val mBinding: ActivityBottomSheetsBinding by bindingLayoutLazy(ActivityBottomSheetsBinding::inflate)
 
     private lateinit var mBottomSheetBehavior: BottomSheetBehavior<View>
 

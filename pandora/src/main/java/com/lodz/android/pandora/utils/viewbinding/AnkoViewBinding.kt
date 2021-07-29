@@ -13,22 +13,22 @@ import androidx.viewbinding.ViewBinding
  */
 
 /** 在Activity中绑定layout */
-fun <VB : ViewBinding> Activity.bindingLayout(inflate: (LayoutInflater) -> VB): Lazy<VB> = lazy {
+fun <VB : ViewBinding> Activity.bindingLayoutLazy(inflate: (LayoutInflater) -> VB): Lazy<VB> = lazy {
     return@lazy inflate(layoutInflater)
 }
 
 /** 在Dialog中绑定layout */
-fun <VB : ViewBinding> Dialog.bindingLayout(inflate: (LayoutInflater) -> VB): Lazy<VB> = lazy {
+fun <VB : ViewBinding> Dialog.bindingLayoutLazy(inflate: (LayoutInflater) -> VB): Lazy<VB> = lazy {
     return@lazy inflate(layoutInflater)
 }
 
 /** 通过上下文绑定layout */
-fun <VB : ViewBinding> Context.bindingLayout(inflate: (LayoutInflater) -> VB): Lazy<VB> = lazy {
+fun <VB : ViewBinding> Context.bindingLayoutLazy(inflate: (LayoutInflater) -> VB): Lazy<VB> = lazy {
     return@lazy inflate(LayoutInflater.from(this))
 }
 
 /** 通过LayoutInflater绑定layout */
-fun <VB : ViewBinding> LayoutInflater.bindingLayout(
+fun <VB : ViewBinding> LayoutInflater.bindingLayoutLazy(
     inflate: (LayoutInflater, parent: ViewGroup, attachToRoot: Boolean) -> VB,
     parent: ViewGroup,
     attachToRoot: Boolean = false
@@ -37,7 +37,7 @@ fun <VB : ViewBinding> LayoutInflater.bindingLayout(
 }
 
 /** 通过Context绑定layout */
-fun <VB : ViewBinding> Context.bindingLayout(
+fun <VB : ViewBinding> Context.bindingLayoutLazy(
     inflate: (LayoutInflater, parent: ViewGroup, attachToRoot: Boolean) -> VB,
     parent: ViewGroup,
     attachToRoot: Boolean = false

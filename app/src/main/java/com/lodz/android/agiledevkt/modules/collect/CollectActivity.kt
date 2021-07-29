@@ -14,7 +14,7 @@ import com.lodz.android.corekt.anko.runOnMainDelay
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.corekt.utils.DateUtils
 import com.lodz.android.pandora.base.activity.BaseActivity
-import com.lodz.android.pandora.utils.viewbinding.bindingLayout
+import com.lodz.android.pandora.utils.viewbinding.bindingLayoutLazy
 import com.lodz.android.pandora.widget.collect.radio.Radioable
 import kotlinx.coroutines.GlobalScope
 import java.util.*
@@ -34,7 +34,7 @@ class CollectActivity : BaseActivity() {
         }
     }
 
-    private val mBinding: ActivityCollectBinding by bindingLayout(ActivityCollectBinding::inflate)
+    private val mBinding: ActivityCollectBinding by bindingLayoutLazy(ActivityCollectBinding::inflate)
 
     /** 姓名列表 */
     private val NAME_LIST = arrayListOf("张三", "李四", "王五", "赵四")

@@ -5,7 +5,7 @@ import android.view.View
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.databinding.DialogRightBinding
 import com.lodz.android.corekt.anko.createColorDrawable
-import com.lodz.android.pandora.utils.viewbinding.bindingLayout
+import com.lodz.android.pandora.utils.viewbinding.bindingLayoutLazy
 import com.lodz.android.pandora.widget.dialog.BaseRightDialog
 
 /**
@@ -14,7 +14,7 @@ import com.lodz.android.pandora.widget.dialog.BaseRightDialog
  */
 class RightDialog(context: Context) : BaseRightDialog(context, R.style.NoDimDialog) {
 
-    private val mBinding : DialogRightBinding by bindingLayout(DialogRightBinding::inflate)
+    private val mBinding : DialogRightBinding by bindingLayoutLazy(DialogRightBinding::inflate)
 
     override fun getViewBindingLayout(): View = mBinding.root
 

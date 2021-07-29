@@ -15,7 +15,7 @@ import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.base.activity.AbsActivity
 import com.lodz.android.pandora.rx.subscribe.observer.ProgressObserver
 import com.lodz.android.pandora.rx.utils.RxUtils
-import com.lodz.android.pandora.utils.viewbinding.bindingLayout
+import com.lodz.android.pandora.utils.viewbinding.bindingLayoutLazy
 import com.trello.rxlifecycle4.android.ActivityEvent
 import io.reactivex.rxjava3.core.Observable
 import java.util.*
@@ -37,7 +37,7 @@ class DrawerTestActivity : AbsActivity() {
     private val TITLES = arrayOf("无名的旅人", "路旁的落叶", "水面上的小草", "呢喃的歌声", "地上的月影", "奔跑的春风",
             "苍之风云", "摇曳的金星", "欢喜的慈雨", "蕴含的太阳", "敬畏的寂静", "无尽星空")
 
-    private val mBinding: ActivityDrawerTestBinding by bindingLayout(ActivityDrawerTestBinding::inflate)
+    private val mBinding: ActivityDrawerTestBinding by bindingLayoutLazy(ActivityDrawerTestBinding::inflate)
 
     override fun getAbsViewBindingLayout(): View = mBinding.root
 

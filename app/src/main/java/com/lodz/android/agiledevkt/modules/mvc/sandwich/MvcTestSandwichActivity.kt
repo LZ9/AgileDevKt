@@ -13,7 +13,7 @@ import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.pandora.base.activity.BaseSandwichActivity
 import com.lodz.android.pandora.rx.subscribe.observer.RxObserver
 import com.lodz.android.pandora.rx.utils.RxUtils
-import com.lodz.android.pandora.utils.viewbinding.bindingLayout
+import com.lodz.android.pandora.utils.viewbinding.bindingLayoutLazy
 import com.trello.rxlifecycle4.android.ActivityEvent
 import kotlin.random.Random
 
@@ -31,11 +31,11 @@ class MvcTestSandwichActivity : BaseSandwichActivity(){
     }
 
     /** 内容布局 */
-    private val mContentBinding: ActivityMvcTestBinding by bindingLayout(ActivityMvcTestBinding::inflate)
+    private val mContentBinding: ActivityMvcTestBinding by bindingLayoutLazy(ActivityMvcTestBinding::inflate)
     /** 顶部布局 */
-    private val mTopBinding: ViewMvcTestTopBinding by bindingLayout(ViewMvcTestTopBinding::inflate)
+    private val mTopBinding: ViewMvcTestTopBinding by bindingLayoutLazy(ViewMvcTestTopBinding::inflate)
     /** 底部布局 */
-    private val mBottomBinding: ViewMvcTestBottomBinding by bindingLayout(ViewMvcTestBottomBinding::inflate)
+    private val mBottomBinding: ViewMvcTestBottomBinding by bindingLayoutLazy(ViewMvcTestBottomBinding::inflate)
 
     override fun getViewBindingLayout(): View = mContentBinding.root
 

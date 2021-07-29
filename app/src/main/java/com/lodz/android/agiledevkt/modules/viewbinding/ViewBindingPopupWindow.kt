@@ -4,7 +4,6 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import com.lodz.android.agiledevkt.databinding.PopupViewBindingBinding
-import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.popup.BasePopupWindow
 
 /**
@@ -14,9 +13,16 @@ import com.lodz.android.pandora.widget.popup.BasePopupWindow
  */
 class ViewBindingPopupWindow(context: Context) : BasePopupWindow(context) {
 
-    private val mBinding: PopupViewBindingBinding by context.bindingLayout(PopupViewBindingBinding::inflate)
+//    private val mBinding: PopupViewBindingBinding by context.bindingLayout(PopupViewBindingBinding::inflate)
 
-    override fun getViewBindingLayout(): View = mBinding.root
+    private lateinit var mBinding: PopupViewBindingBinding
+
+//    override fun getViewBindingLayout(): View = mBinding.root
+
+    override fun getViewBindingLayout(): View {
+        mBinding = PopupViewBindingBinding.inflate(LayoutInflater.from(getContext()))
+        return mBinding.root
+    }
 
     override fun setListeners() {
         super.setListeners()

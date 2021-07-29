@@ -20,7 +20,7 @@ import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
 import com.lodz.android.pandora.rx.utils.RxUtils
-import com.lodz.android.pandora.utils.viewbinding.bindingLayout
+import com.lodz.android.pandora.utils.viewbinding.bindingLayoutLazy
 import io.reactivex.rxjava3.core.Observable
 import kotlinx.coroutines.GlobalScope
 import java.io.File
@@ -40,7 +40,7 @@ class BitmapTestActivity : BaseActivity() {
         }
     }
 
-    private val mBinding: ActivityBitmapTestBinding by bindingLayout(ActivityBitmapTestBinding::inflate)
+    private val mBinding: ActivityBitmapTestBinding by bindingLayoutLazy(ActivityBitmapTestBinding::inflate)
 
     override fun getViewBindingLayout(): View = mBinding.root
 

@@ -3,7 +3,7 @@ package com.lodz.android.agiledevkt.modules.dialog
 import android.content.Context
 import android.view.View
 import com.lodz.android.agiledevkt.databinding.DialogTopBinding
-import com.lodz.android.pandora.utils.viewbinding.bindingLayout
+import com.lodz.android.pandora.utils.viewbinding.bindingLayoutLazy
 import com.lodz.android.pandora.widget.dialog.BaseTopDialog
 
 /**
@@ -12,7 +12,7 @@ import com.lodz.android.pandora.widget.dialog.BaseTopDialog
  */
 class TopDialog(context: Context) : BaseTopDialog(context) {
 
-    private val mBinding : DialogTopBinding by bindingLayout(DialogTopBinding::inflate)
+    private val mBinding : DialogTopBinding by bindingLayoutLazy(DialogTopBinding::inflate)
 
     override fun getViewBindingLayout(): View = mBinding.root
 }

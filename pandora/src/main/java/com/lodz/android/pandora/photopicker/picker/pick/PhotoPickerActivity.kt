@@ -29,7 +29,7 @@ import com.lodz.android.pandora.photopicker.preview.PreviewManager
 import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
 import com.lodz.android.pandora.rx.subscribe.observer.ProgressObserver
 import com.lodz.android.pandora.rx.utils.RxUtils
-import com.lodz.android.pandora.utils.viewbinding.bindingLayout
+import com.lodz.android.pandora.utils.viewbinding.bindingLayoutLazy
 import io.reactivex.rxjava3.core.Observable
 import kotlinx.coroutines.GlobalScope
 
@@ -60,7 +60,7 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
     /** 照相请求码 */
     private val REQUEST_CAMERA = 777
 
-    private val mBinding: PandoraActivityPickerBinding by bindingLayout(PandoraActivityPickerBinding::inflate)
+    private val mBinding: PandoraActivityPickerBinding by bindingLayoutLazy(PandoraActivityPickerBinding::inflate)
 
     /** 列表适配器 */
     private lateinit var mPdrAdapter: PhotoPickerAdapter
