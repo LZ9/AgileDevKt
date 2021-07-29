@@ -18,33 +18,37 @@ import com.trello.rxlifecycle4.android.FragmentEvent
  */
 abstract class BaseDialog : RxDialog {
 
-    constructor(context: Context) : super(context, R.style.BaseDialog)
+    constructor(context: Context) : super(context, R.style.BaseDialog){
+        init()
+    }
 
-    constructor(context: Context, themeResId: Int) : super(context, themeResId)
+    constructor(context: Context, themeResId: Int) : super(context, themeResId){
+        init()
+    }
 
-    constructor(context: Context, cancelable: Boolean, cancelListener: DialogInterface.OnCancelListener?) : super(context, cancelable, cancelListener)
+    private fun init() {
+        val layoutId = getLayoutId()
+        if (layoutId != 0){
+            setContentView(layoutId)
+        }
+        setWindowAnimations()
+    }
 
     final override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        init()
+        if (getLayoutId() == 0) {
+            val view = getViewBindingLayout()
+            if (view != null) {
+                setContentView(view)
+            } else {
+                throw NullPointerException("please override getLayoutId() or getViewBindingLayout() to set layout")
+            }
+        }
         startCreate()
         findViews()
         setListeners()
         initData()
         endCreate()
-    }
-
-    private fun init() {
-        val layoutId = getLayoutId()
-        val view = getViewBindingLayout()
-        if (layoutId != 0) {
-            setContentView(layoutId)
-        } else if (view != null) {
-            setContentView(view)
-        } else {
-            throw NullPointerException("please override getLayoutId() or getViewBindingLayout() to set layout")
-        }
-        setWindowAnimations()
     }
 
     protected open fun startCreate() {}
