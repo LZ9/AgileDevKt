@@ -1,7 +1,9 @@
 package com.lodz.android.agiledevkt.modules.dialog
 
 import android.content.Context
-import com.lodz.android.agiledevkt.R
+import android.view.View
+import com.lodz.android.agiledevkt.databinding.DialogLeftBinding
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.dialog.BaseLeftDialog
 
 /**
@@ -9,5 +11,9 @@ import com.lodz.android.pandora.widget.dialog.BaseLeftDialog
  * Created by zhouL on 2018/11/1.
  */
 class LeftDialog(context: Context) : BaseLeftDialog(context) {
-    override fun getLayoutId(): Int = R.layout.dialog_left
+
+    private val mBinding : DialogLeftBinding by bindingLayout(DialogLeftBinding::inflate)
+
+    override fun getViewBindingLayout(): View = mBinding.root
+
 }

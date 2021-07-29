@@ -20,6 +20,7 @@ abstract class BaseTopDialog : BaseDialog {
     override fun configAnimations(): Int = R.style.animation_top_in_top_out
 
     override fun show() {
+        super.show()
         val wd = window
         if (wd != null) {
             wd.setGravity(Gravity.TOP or Gravity.CENTER_HORIZONTAL)
@@ -29,7 +30,6 @@ abstract class BaseTopDialog : BaseDialog {
                 wd.attributes = layoutParams
             }
         }
-        super.show()
     }
 
     /** 是否需要填满宽度 */

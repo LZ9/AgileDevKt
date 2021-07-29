@@ -1,7 +1,9 @@
 package com.lodz.android.agiledevkt.modules.dialog
 
 import android.content.Context
-import com.lodz.android.agiledevkt.R
+import android.view.View
+import com.lodz.android.agiledevkt.databinding.DialogCenterBinding
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.dialog.BaseCenterDialog
 
 /**
@@ -9,5 +11,8 @@ import com.lodz.android.pandora.widget.dialog.BaseCenterDialog
  * Created by zhouL on 2018/11/1.
  */
 class CenterDialog(context: Context) : BaseCenterDialog(context) {
-    override fun getLayoutId(): Int = R.layout.dialog_center
+
+    private val mBinding : DialogCenterBinding by bindingLayout(DialogCenterBinding::inflate)
+
+    override fun getViewBindingLayout(): View = mBinding.root
 }

@@ -22,6 +22,7 @@ abstract class BaseBottomDialog : BaseDialog {
     }
 
     override fun show() {
+        super.show()
         val wd = window
         if (wd != null) {
             wd.setGravity(Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL)
@@ -31,7 +32,6 @@ abstract class BaseBottomDialog : BaseDialog {
                 wd.attributes = layoutParams
             }
         }
-        super.show()
     }
 
     /** 是否需要填满宽度 */

@@ -20,6 +20,7 @@ abstract class BaseRightDialog : BaseDialog {
     override fun configAnimations(): Int = R.style.animation_right_in_right_out
 
     override fun show() {
+        super.show()
         val wd = window
         if (wd != null) {
             wd.setGravity(Gravity.END or Gravity.CENTER_VERTICAL)
@@ -29,7 +30,6 @@ abstract class BaseRightDialog : BaseDialog {
                 wd.attributes = layoutParams
             }
         }
-        super.show()
     }
 
     /** 是否需要填满高度 */

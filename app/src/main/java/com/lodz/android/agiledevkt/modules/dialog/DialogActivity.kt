@@ -3,10 +3,11 @@ package com.lodz.android.agiledevkt.modules.dialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import com.lodz.android.agiledevkt.R
+import android.view.View
+import com.lodz.android.agiledevkt.databinding.ActivityDialogBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.pandora.base.activity.BaseActivity
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 
 /**
  * Dialog测试
@@ -21,7 +22,9 @@ class DialogActivity : BaseActivity() {
         }
     }
 
-    override fun getLayoutId(): Int = R.layout.activity_dialog
+    private val mBinding: ActivityDialogBinding by bindingLayout(ActivityDialogBinding::inflate)
+
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME) ?: "")
@@ -34,27 +37,34 @@ class DialogActivity : BaseActivity() {
 
     override fun setListeners() {
         super.setListeners()
-        findViewById<Button>(R.id.normal_btn).setOnClickListener {
+
+        // 普通弹框
+        mBinding.normalBtn.setOnClickListener {
             NormalDialog(getContext()).show()
         }
 
-        findViewById<Button>(R.id.center_btn).setOnClickListener {
+        // 中间弹框
+        mBinding.centerBtn.setOnClickListener {
             CenterDialog(getContext()).show()
         }
 
-        findViewById<Button>(R.id.left_btn).setOnClickListener {
+        // 左侧弹框
+        mBinding.leftBtn.setOnClickListener {
             LeftDialog(getContext()).show()
         }
 
-        findViewById<Button>(R.id.right_btn).setOnClickListener {
+        // 右侧弹框
+        mBinding.rightBtn.setOnClickListener {
             RightDialog(getContext()).show()
         }
 
-        findViewById<Button>(R.id.bottom_btn).setOnClickListener {
+        // 底部弹框
+        mBinding.bottomBtn.setOnClickListener {
             BottomDialog(getContext()).show()
         }
 
-        findViewById<Button>(R.id.top_btn).setOnClickListener {
+        // 顶部弹框
+        mBinding.topBtn.setOnClickListener {
             TopDialog(getContext()).show()
         }
     }
