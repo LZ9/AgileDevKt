@@ -11,7 +11,6 @@ import android.widget.TextView
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.corekt.anko.*
-import com.lodz.android.corekt.network.NetInfo
 import com.lodz.android.corekt.network.NetworkManager
 import com.lodz.android.corekt.utils.AppUtils
 import com.lodz.android.corekt.utils.DeviceUtils
@@ -210,6 +209,7 @@ class InfoTestActivity : BaseActivity() {
         if (isQQInstalled) {
             mQQIconTv.visibility = View.VISIBLE
             mQQIconTv.setCompoundDrawablesWithIntrinsicBounds(null, getAppIcon(QQ_PACKAGE_NAME), null,null)
+            mQQIconTv.text = getAppName(QQ_PACKAGE_NAME)
         } else {
             mQQIconTv.visibility = View.GONE
         }
@@ -218,6 +218,7 @@ class InfoTestActivity : BaseActivity() {
         if (isWechatInstalled) {
             mWechatIconTv.visibility = View.VISIBLE
             mWechatIconTv.setCompoundDrawablesWithIntrinsicBounds(null, getAppIcon(WECHAT_PACKAGE_NAME), null,null)
+            mWechatIconTv.text = getAppName(WECHAT_PACKAGE_NAME)
         } else {
             mWechatIconTv.visibility = View.GONE
         }

@@ -27,7 +27,8 @@ import java.util.*
 @JvmOverloads
 fun Context.getAppName(packageName: String = getPackageName()): String {
     try {
-        return resources.getString(packageManager.getPackageInfo(packageName, 0).applicationInfo.labelRes)
+        val packageInfo: PackageInfo? = packageManager.getPackageInfo(packageName, 0)
+        return packageInfo?.applicationInfo?.loadLabel(packageManager)?.toString() ?: ""
     } catch (e: Exception) {
         e.printStackTrace()
     }
