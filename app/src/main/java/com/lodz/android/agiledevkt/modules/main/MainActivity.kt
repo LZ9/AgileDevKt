@@ -78,7 +78,7 @@ import com.lodz.android.agiledevkt.modules.viewpager.ViewPagerActivity
 import com.lodz.android.agiledevkt.modules.webview.WebViewActivity
 import com.lodz.android.corekt.anko.*
 import com.lodz.android.pandora.base.activity.BaseActivity
-import com.lodz.android.pandora.utils.viewbinding.bindingLayoutLazy
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.base.TitleBarLayout
 import com.lodz.android.pandora.widget.index.IndexBar
 import com.lodz.android.pandora.widget.rv.decoration.StickyItemDecoration
@@ -169,7 +169,7 @@ class MainActivity : BaseActivity() {
         MainBean("ViewBinding测试类", "V", ViewBindingTestActivity::class.java),
     )
 
-    private val mBinding: ActivityMainBinding by bindingLayoutLazy(ActivityMainBinding::inflate)
+    private val mBinding: ActivityMainBinding by bindingLayout(ActivityMainBinding::inflate)
 
     private lateinit var mAdapter: MainAdapter
     private lateinit var mList: List<MainBean>

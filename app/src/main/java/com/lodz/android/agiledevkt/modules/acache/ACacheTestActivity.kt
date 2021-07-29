@@ -10,7 +10,7 @@ import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.corekt.cache.ACache
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.utils.acache.ACacheUtils
-import com.lodz.android.pandora.utils.viewbinding.bindingLayoutLazy
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 
 /**
  * ACache缓存测试类
@@ -28,7 +28,7 @@ class ACacheTestActivity : BaseActivity() {
         }
     }
 
-    private val mBinding: ActivityAcacheTestBinding by bindingLayoutLazy(ActivityAcacheTestBinding::inflate)
+    private val mBinding: ActivityAcacheTestBinding by bindingLayout(ActivityAcacheTestBinding::inflate)
 
     override fun getViewBindingLayout(): View = mBinding.root
 

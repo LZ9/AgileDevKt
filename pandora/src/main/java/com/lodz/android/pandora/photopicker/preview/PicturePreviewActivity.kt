@@ -15,7 +15,7 @@ import com.lodz.android.corekt.utils.StatusBarUtil
 import com.lodz.android.pandora.base.activity.AbsActivity
 import com.lodz.android.pandora.databinding.PandoraActivityPreviewBinding
 import com.lodz.android.pandora.photopicker.contract.preview.PreviewController
-import com.lodz.android.pandora.utils.viewbinding.bindingLayoutLazy
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.rv.snap.ViewPagerSnapHelper
 
 /**
@@ -41,7 +41,7 @@ internal class PicturePreviewActivity<V : View, T : Any> : AbsActivity() {
         }
     }
 
-    private val mBinding: PandoraActivityPreviewBinding by bindingLayoutLazy(PandoraActivityPreviewBinding::inflate)
+    private val mBinding: PandoraActivityPreviewBinding by bindingLayout(PandoraActivityPreviewBinding::inflate)
 
     /** 预览控制器 */
     private lateinit var mPdrPreviewController: PreviewController

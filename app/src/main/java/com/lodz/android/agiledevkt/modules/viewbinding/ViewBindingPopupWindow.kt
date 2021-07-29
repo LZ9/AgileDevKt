@@ -13,7 +13,7 @@ import com.lodz.android.pandora.widget.popup.BasePopupWindow
  */
 class ViewBindingPopupWindow(context: Context) : BasePopupWindow(context) {
 
-//    private val mBinding: PopupViewBindingBinding by context.bindingLayout(PopupViewBindingBinding::inflate)
+//    private val mBinding: PopupViewBindingBinding by getPopup().bindingLayoutLazy(context, PopupViewBindingBinding::inflate)
 
     private lateinit var mBinding: PopupViewBindingBinding
 

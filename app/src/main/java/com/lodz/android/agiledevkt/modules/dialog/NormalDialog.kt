@@ -3,7 +3,7 @@ package com.lodz.android.agiledevkt.modules.dialog
 import android.content.Context
 import android.view.View
 import com.lodz.android.agiledevkt.databinding.DialogNormalBinding
-import com.lodz.android.pandora.utils.viewbinding.bindingLayoutLazy
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.dialog.BaseDialog
 
 /**
@@ -12,7 +12,7 @@ import com.lodz.android.pandora.widget.dialog.BaseDialog
  */
 class NormalDialog(context: Context) : BaseDialog(context) {
 
-    private val mBinding : DialogNormalBinding by bindingLayoutLazy(DialogNormalBinding::inflate)
+    private val mBinding : DialogNormalBinding by bindingLayout(DialogNormalBinding::inflate)
 
     override fun getViewBindingLayout(): View = mBinding.root
 }

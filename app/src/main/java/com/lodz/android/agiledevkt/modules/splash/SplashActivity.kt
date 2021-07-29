@@ -12,7 +12,7 @@ import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.corekt.anko.*
 import com.lodz.android.corekt.utils.StatusBarUtil
 import com.lodz.android.pandora.base.activity.AbsActivity
-import com.lodz.android.pandora.utils.viewbinding.bindingLayoutLazy
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import kotlinx.coroutines.GlobalScope
 import permissions.dispatcher.*
 import permissions.dispatcher.ktx.constructPermissionsRequest
@@ -23,7 +23,7 @@ import permissions.dispatcher.ktx.constructPermissionsRequest
  */
 class SplashActivity : AbsActivity() {
 
-    private val mBinding: ActivitySplashBinding by bindingLayoutLazy(ActivitySplashBinding::inflate)
+    private val mBinding: ActivitySplashBinding by bindingLayout(ActivitySplashBinding::inflate)
 
     private val hasReadPhoneStatePermissions = constructPermissionsRequest(
         Manifest.permission.READ_PHONE_STATE,// 手机状态

@@ -10,7 +10,7 @@ import com.lodz.android.agiledevkt.modules.splash.SplashActivity
 import com.lodz.android.agiledevkt.utils.crash.CrashManager
 import com.lodz.android.corekt.anko.runOnMainDelay
 import com.lodz.android.pandora.base.activity.BaseActivity
-import com.lodz.android.pandora.utils.viewbinding.bindingLayoutLazy
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import kotlinx.coroutines.GlobalScope
 
 /**
@@ -26,7 +26,7 @@ class CrashTestActivity : BaseActivity() {
         }
     }
 
-    private val mBinding: ActivityCrashTestBinding by bindingLayoutLazy(ActivityCrashTestBinding::inflate)
+    private val mBinding: ActivityCrashTestBinding by bindingLayout(ActivityCrashTestBinding::inflate)
 
     override fun getViewBindingLayout(): View = mBinding.root
 

@@ -13,7 +13,7 @@ import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.corekt.anko.getColorCompat
 import com.lodz.android.corekt.utils.SnackbarUtils
 import com.lodz.android.pandora.base.activity.BaseActivity
-import com.lodz.android.pandora.utils.viewbinding.bindingLayoutLazy
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 
 /**
  * CardView测试类
@@ -29,7 +29,7 @@ class CardViewActivity : BaseActivity() {
         }
     }
 
-    private val mBinding: ActivityCardViewBinding by bindingLayoutLazy(ActivityCardViewBinding::inflate)
+    private val mBinding: ActivityCardViewBinding by bindingLayout(ActivityCardViewBinding::inflate)
 
     private lateinit var mAdapter: CardViewAdapter
 

@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lodz.android.agiledevkt.databinding.ActivityViewBindingTestBinding
 import com.lodz.android.pandora.base.activity.AbsActivity
-import com.lodz.android.pandora.utils.viewbinding.bindingLayoutLazy
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.vp2.SimpleTabAdapter
 
 /**
@@ -19,7 +19,7 @@ class ViewBindingTestActivity : AbsActivity() {
     /** tab数据 */
     private val TOP_TAB_NAMES = arrayListOf("A", "B", "C")
 
-    private val mBinding: ActivityViewBindingTestBinding by bindingLayoutLazy(ActivityViewBindingTestBinding::inflate)
+    private val mBinding: ActivityViewBindingTestBinding by bindingLayout(ActivityViewBindingTestBinding::inflate)
 
     override fun findViews(savedInstanceState: Bundle?) {
         super.findViews(savedInstanceState)

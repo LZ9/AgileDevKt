@@ -9,7 +9,7 @@ import com.lodz.android.agiledevkt.databinding.ActivitySelectorTestBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.corekt.utils.SelectorUtils
 import com.lodz.android.pandora.base.activity.BaseActivity
-import com.lodz.android.pandora.utils.viewbinding.bindingLayoutLazy
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 
 /**
  * 背景选择器测试类
@@ -46,7 +46,7 @@ class SelectorTestActivity : BaseActivity() {
     /** 文字焦点颜色 */
     private val TEXT_FOCUSED = R.color.color_ffa630
 
-    private val mBinding: ActivitySelectorTestBinding by bindingLayoutLazy(ActivitySelectorTestBinding::inflate)
+    private val mBinding: ActivitySelectorTestBinding by bindingLayout(ActivitySelectorTestBinding::inflate)
 
     override fun getViewBindingLayout(): View = mBinding.root
 

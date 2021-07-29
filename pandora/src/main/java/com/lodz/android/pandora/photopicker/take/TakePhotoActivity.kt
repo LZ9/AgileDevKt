@@ -14,7 +14,7 @@ import com.lodz.android.corekt.utils.StatusBarUtil
 import com.lodz.android.pandora.R
 import com.lodz.android.pandora.base.activity.AbsActivity
 import com.lodz.android.pandora.databinding.PandoraActivityTakePhotoBinding
-import com.lodz.android.pandora.utils.viewbinding.bindingLayoutLazy
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import kotlinx.coroutines.GlobalScope
 
 /**
@@ -44,7 +44,7 @@ internal class TakePhotoActivity : AbsActivity() {
     /** 照相请求码 */
     private val REQUEST_CAMERA = 777
 
-    private val mBinding: PandoraActivityTakePhotoBinding by bindingLayoutLazy(PandoraActivityTakePhotoBinding::inflate)
+    private val mBinding: PandoraActivityTakePhotoBinding by bindingLayout(PandoraActivityTakePhotoBinding::inflate)
 
     /** 拍照数据 */
     private var mPdrTakeBean: TakeBean? = null
