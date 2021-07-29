@@ -24,17 +24,15 @@ abstract class BasePopupWindow(context: Context) {
         mPdrPopupWindow = createPopupWindow(mPdrContext)
     }
 
-
     private fun createPopupWindow(context: Context): PopupWindow {
-        val popView = if (getLayoutId() != 0) {
-            LayoutInflater.from(context).inflate(getLayoutId(), null)
+        val layoutId = getLayoutId()
+        val popView =  if (layoutId != 0) LayoutInflater.from(context).inflate(layoutId, null) else null
+        val popupWindow = if (popView != null) {
+            PopupWindow(popView, getWidthPx(), getHeightPx(), true)
         } else {
-            getViewBindingLayout()
+            PopupWindow(getWidthPx(), getHeightPx())
         }
-        if (popView == null) {
-            throw NullPointerException("please override getLayoutId() or getViewBindingLayout() to create")
-        }
-        val popupWindow = PopupWindow(popView, getWidthPx(), getHeightPx(), true)
+        popupWindow.isFocusable = true
         popupWindow.isTouchable = true
         popupWindow.isOutsideTouchable = true
         popupWindow.elevation = getElevationValue()
@@ -43,7 +41,12 @@ abstract class BasePopupWindow(context: Context) {
     }
 
     fun create() {
-//        mPdrPopupWindow = createPopupWindow(mPdrContext)
+        if (mPdrPopupWindow.contentView == null){
+            mPdrPopupWindow.contentView = getViewBindingLayout()
+        }
+        if (mPdrPopupWindow.contentView == null) {
+            throw NullPointerException("please override getLayoutId() or getViewBindingLayout() to create")
+        }
         startCreate()
         findViews(mPdrPopupWindow.contentView)
         setListeners()
