@@ -18,37 +18,33 @@ import com.trello.rxlifecycle4.android.FragmentEvent
  */
 abstract class BaseDialog : RxDialog {
 
-    constructor(context: Context) : super(context, R.style.BaseDialog){
-        init()
-    }
+    constructor(context: Context) : super(context, R.style.BaseDialog)
 
-    constructor(context: Context, themeResId: Int) : super(context, themeResId){
-        init()
-    }
+    constructor(context: Context, themeResId: Int) : super(context, themeResId)
 
-    private fun init() {
-        val layoutId = getLayoutId()
-        if (layoutId != 0){
-            setContentView(layoutId)
-        }
-        setWindowAnimations()
-    }
+    constructor(context: Context, cancelable: Boolean, cancelListener: DialogInterface.OnCancelListener?) : super(context, cancelable, cancelListener)
 
     final override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (getLayoutId() == 0) {
-            val view = getViewBindingLayout()
-            if (view != null) {
-                setContentView(view)
-            } else {
-                throw NullPointerException("please override getLayoutId() or getViewBindingLayout() to set layout")
-            }
-        }
+        init()
         startCreate()
         findViews()
         setListeners()
         initData()
         endCreate()
+    }
+
+    private fun init() {
+        val layoutId = getLayoutId()
+        val view = getViewBindingLayout()
+        if (layoutId != 0) {
+            setContentView(layoutId)
+        } else if (view != null) {
+            setContentView(view)
+        } else {
+            throw NullPointerException("please override getLayoutId() or getViewBindingLayout() to set layout")
+        }
+        setWindowAnimations()
     }
 
     protected open fun startCreate() {}
@@ -80,10 +76,8 @@ abstract class BaseDialog : RxDialog {
     /** 设置阴影值[elevation]和背景[background]（需要设置背景才能设置阴影） */
     protected fun setElevation(elevation: Float, background: Drawable) {
         val wd = window ?: return
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            wd.decorView.elevation = elevation
-            wd.decorView.background = background
-        }
+        wd.decorView.elevation = elevation
+        wd.decorView.background = background
     }
 
     /** 获取dialog接口对象 */
