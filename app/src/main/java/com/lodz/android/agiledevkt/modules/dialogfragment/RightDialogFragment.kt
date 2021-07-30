@@ -1,13 +1,14 @@
 package com.lodz.android.agiledevkt.modules.dialogfragment
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lodz.android.agiledevkt.R
-import com.lodz.android.corekt.anko.bindView
+import com.lodz.android.agiledevkt.databinding.DialogFragmentRightBinding
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.dialogfragment.BaseRightDialogFragment
 import com.lodz.android.pandora.widget.vp2.SimpleTabAdapter
 
@@ -23,12 +24,13 @@ class RightDialogFragment : BaseRightDialogFragment() {
             R.string.bottom_sheets_pikachu_specialized
     )
 
-    /** TabLayout */
-    private val mTabLayout by bindView<TabLayout>(R.id.tab_layout)
-    /** ViewPager */
-    private val mViewPager by bindView<ViewPager2>(R.id.view_pager)
+    private val mBinding: DialogFragmentRightBinding by bindingLayout(DialogFragmentRightBinding::inflate)
 
-    override fun getLayoutId(): Int = R.layout.dialog_fragment_right
+    override fun getViewBindingLayout(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View = mBinding.root
 
     override fun findViews(view: View, savedInstanceState: Bundle?) {
         super.findViews(view, savedInstanceState)
@@ -40,10 +42,10 @@ class RightDialogFragment : BaseRightDialogFragment() {
         for (i in 0 until TABS.size){
             list.add(TestFragment.newInstance(context.getString(TABS[i])))
         }
-        mViewPager.adapter = SimpleTabAdapter(this, list)
-        mViewPager.offscreenPageLimit = TABS.size
-        mViewPager.setCurrentItem(0, true)
-        TabLayoutMediator(mTabLayout, mViewPager) { tab, position ->
+        mBinding.viewPager.adapter = SimpleTabAdapter(this, list)
+        mBinding.viewPager.offscreenPageLimit = TABS.size
+        mBinding.viewPager.setCurrentItem(0, true)
+        TabLayoutMediator(mBinding.tabLayout, mBinding.viewPager) { tab, position ->
             tab.text = context.getText(TABS[position])
         }.attach()
     }

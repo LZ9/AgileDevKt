@@ -20,12 +20,23 @@ import com.trello.rxlifecycle4.components.support.RxDialogFragment
  */
 abstract class BaseDialogFragment : RxDialogFragment() {
 
-    final override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(getLayoutId(), container, false)
+    final override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        val layoutId = getLayoutId()
+        val view = if (layoutId != 0) {
+            inflater.inflate(layoutId, container, false)
+        } else {
+            getViewBindingLayout(inflater, container, savedInstanceState)
+        }
+        if (view == null){
+            throw NullPointerException("please override getAbsLayoutId() or getAbsViewBindingLayout() to set layout")
+        }
+        return view
     }
 
     @LayoutRes
-    protected abstract fun getLayoutId(): Int
+    protected open fun getLayoutId(): Int = 0
+
+    protected open fun getViewBindingLayout(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? = null
 
     final override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

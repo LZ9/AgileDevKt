@@ -3,10 +3,11 @@ package com.lodz.android.agiledevkt.modules.dialogfragment
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import com.lodz.android.agiledevkt.R
+import android.view.View
+import com.lodz.android.agiledevkt.databinding.ActivityDialogFragmentBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.pandora.base.activity.BaseActivity
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 
 /**
  * DialogFragment测试类
@@ -21,7 +22,9 @@ class DialogFragmentActivity : BaseActivity(){
         }
     }
 
-    override fun getLayoutId(): Int = R.layout.activity_dialog_fragment
+    private val mBinding: ActivityDialogFragmentBinding by bindingLayout(ActivityDialogFragmentBinding::inflate)
+
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME) ?: "")
@@ -34,27 +37,27 @@ class DialogFragmentActivity : BaseActivity(){
 
     override fun setListeners() {
         super.setListeners()
-        findViewById<Button>(R.id.normal_df_btn).setOnClickListener {
+        mBinding.normalDfBtn.setOnClickListener {
             NormalDialogFragment().show(supportFragmentManager, "NormalDialogFragment")
         }
 
-        findViewById<Button>(R.id.center_df_btn).setOnClickListener {
+        mBinding.centerDfBtn.setOnClickListener {
             CenterDialogFragment().show(supportFragmentManager, "CenterDialogFragment")
         }
 
-        findViewById<Button>(R.id.left_df_btn).setOnClickListener {
+        mBinding.leftDfBtn.setOnClickListener {
             LeftDialogFragment().show(supportFragmentManager, "LeftDialogFragment")
         }
 
-        findViewById<Button>(R.id.right_df_btn).setOnClickListener {
+        mBinding.rightDfBtn.setOnClickListener {
             RightDialogFragment().show(supportFragmentManager, "RightDialogFragment")
         }
 
-        findViewById<Button>(R.id.bottom_df_btn).setOnClickListener {
+        mBinding.bottomDfBtn.setOnClickListener {
             BottomDialogFragment().show(supportFragmentManager, "BottomDialogFragment")
         }
 
-        findViewById<Button>(R.id.top_df_btn).setOnClickListener {
+        mBinding.topDfBtn.setOnClickListener {
             TopDialogFragment().show(supportFragmentManager, "TopDialogFragment")
         }
     }
