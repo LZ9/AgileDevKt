@@ -1,12 +1,13 @@
 package com.lodz.android.agiledevkt.modules.fglifecycle.vp
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.TextView
-import com.lodz.android.agiledevkt.R
-import com.lodz.android.corekt.anko.bindView
+import android.view.ViewGroup
+import com.lodz.android.agiledevkt.databinding.FragmentTestBinding
 import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.pandora.base.fragment.LazyFragment
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 
 /**
  * 弹框内的测试fragment
@@ -31,7 +32,7 @@ class TestContentFragment : LazyFragment() {
         }
     }
 
-    private val mContentTv by bindView<TextView>(R.id.content_tv)
+    private val mBinding: FragmentTestBinding by bindingLayout(FragmentTestBinding::inflate)
 
     private var mName = ""
     private var mTop = ""
@@ -47,11 +48,15 @@ class TestContentFragment : LazyFragment() {
         }
     }
 
-    override fun getAbsLayoutId(): Int = R.layout.fragment_test
+    override fun getAbsViewBindingLayout(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View = mBinding.root
 
     override fun initData(view: View) {
         super.initData(view)
-        mContentTv.text = mBottom
+        mBinding.contentTv.text = mBottom
         PrintLog.i("fgtag", "TestContentFragment $mName/$mTop/$mBottom -> showStatusCompleted")
     }
 

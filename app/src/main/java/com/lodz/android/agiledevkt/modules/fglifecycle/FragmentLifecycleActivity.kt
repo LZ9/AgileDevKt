@@ -3,13 +3,13 @@ package com.lodz.android.agiledevkt.modules.fglifecycle
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.button.MaterialButton
-import com.lodz.android.agiledevkt.R
+import android.view.View
+import com.lodz.android.agiledevkt.databinding.ActivityFgLifecycleBinding
 import com.lodz.android.agiledevkt.modules.fglifecycle.vp.FgVpTestActivity
 import com.lodz.android.agiledevkt.modules.fglifecycle.vp2.FgVp2TestActivity
 import com.lodz.android.agiledevkt.modules.main.MainActivity
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.pandora.base.activity.BaseActivity
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 
 /**
  * Fragment生命周期测试
@@ -25,15 +25,14 @@ class FragmentLifecycleActivity :BaseActivity(){
         }
     }
 
-    private val mVpBtn by bindView<MaterialButton>(R.id.vp_btn)
-    private val mVp2Btn by bindView<MaterialButton>(R.id.vp2_btn)
+    private val mBinding: ActivityFgLifecycleBinding by bindingLayout(ActivityFgLifecycleBinding::inflate)
+
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         super.findViews(savedInstanceState)
         getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME) ?: "")
     }
-
-    override fun getLayoutId(): Int = R.layout.activity_fg_lifecycle
 
     override fun onClickBackBtn() {
         super.onClickBackBtn()
@@ -42,11 +41,11 @@ class FragmentLifecycleActivity :BaseActivity(){
 
     override fun setListeners() {
         super.setListeners()
-        mVpBtn.setOnClickListener {
+        mBinding.vpBtn.setOnClickListener {
             FgVpTestActivity.start(getContext())
         }
 
-        mVp2Btn.setOnClickListener {
+        mBinding.vp2Btn.setOnClickListener {
             FgVp2TestActivity.start(getContext())
         }
     }

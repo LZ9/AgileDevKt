@@ -3,14 +3,14 @@ package com.lodz.android.agiledevkt.modules.fglifecycle.vp
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import androidx.viewpager.widget.ViewPager
-import com.google.android.material.tabs.TabLayout
 import com.lodz.android.agiledevkt.R
-import com.lodz.android.corekt.anko.bindView
+import com.lodz.android.agiledevkt.databinding.ActivityFgVpTestBinding
 import com.lodz.android.pandora.base.activity.BaseActivity
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 
 /**
  * ViewPager嵌套Fragment测试
@@ -29,10 +29,9 @@ class FgVpTestActivity :BaseActivity(){
     /** 顶部tab */
     private val TOP_TAB_NAMES = arrayListOf("A", "B", "C")
 
-    private val mAcTabLayout by bindView<TabLayout>(R.id.ac_tab_layout)
-    private val mAcViewPager by bindView<ViewPager>(R.id.ac_view_pager)
+    private val mBinding: ActivityFgVpTestBinding by bindingLayout(ActivityFgVpTestBinding::inflate)
 
-    override fun getLayoutId(): Int = R.layout.activity_fg_vp_test
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         super.findViews(savedInstanceState)
@@ -41,10 +40,10 @@ class FgVpTestActivity :BaseActivity(){
     }
 
     private fun initViewPager() {
-        mAcViewPager.adapter = TabAdapter(supportFragmentManager, TOP_TAB_NAMES)
-        mAcViewPager.offscreenPageLimit = TOP_TAB_NAMES.size
-        mAcViewPager.setCurrentItem(0, true)
-        mAcTabLayout.setupWithViewPager(mAcViewPager)
+        mBinding.acViewPager.adapter = TabAdapter(supportFragmentManager, TOP_TAB_NAMES)
+        mBinding.acViewPager.offscreenPageLimit = TOP_TAB_NAMES.size
+        mBinding.acViewPager.setCurrentItem(0, true)
+        mBinding.acTabLayout.setupWithViewPager(mBinding.acViewPager)
     }
 
     override fun onClickBackBtn() {

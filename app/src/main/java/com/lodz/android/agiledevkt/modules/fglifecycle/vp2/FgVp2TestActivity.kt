@@ -3,13 +3,13 @@ package com.lodz.android.agiledevkt.modules.fglifecycle.vp2
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lodz.android.agiledevkt.R
-import com.lodz.android.corekt.anko.bindView
+import com.lodz.android.agiledevkt.databinding.ActivityFgVp2TestBinding
 import com.lodz.android.pandora.base.activity.BaseActivity
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.vp2.SimpleTabAdapter
 
 /**
@@ -29,10 +29,9 @@ class FgVp2TestActivity :BaseActivity(){
     /** 顶部tab */
     private val TOP_TAB_NAMES = arrayListOf("A", "B", "C")
 
-    private val mAcTabLayout by bindView<TabLayout>(R.id.ac_tab_layout)
-    private val mAcViewPager by bindView<ViewPager2>(R.id.ac_view_pager)
+    private val mBinding: ActivityFgVp2TestBinding by bindingLayout(ActivityFgVp2TestBinding::inflate)
 
-    override fun getLayoutId(): Int = R.layout.activity_fg_vp2_test
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         super.findViews(savedInstanceState)
@@ -45,10 +44,10 @@ class FgVp2TestActivity :BaseActivity(){
         for (i in 0 until TOP_TAB_NAMES.size) {
             list.add(Vp2TopTestFragment.newInstance(TOP_TAB_NAMES[i]))
         }
-        mAcViewPager.adapter = SimpleTabAdapter(this, list)
-        mAcViewPager.offscreenPageLimit = TOP_TAB_NAMES.size
-        mAcViewPager.setCurrentItem(0, true)
-        TabLayoutMediator(mAcTabLayout, mAcViewPager) { tab, position ->
+        mBinding.acViewPager.adapter = SimpleTabAdapter(this, list)
+        mBinding.acViewPager.offscreenPageLimit = TOP_TAB_NAMES.size
+        mBinding.acViewPager.setCurrentItem(0, true)
+        TabLayoutMediator(mBinding.acTabLayout, mBinding.acViewPager) { tab, position ->
             tab.text = TOP_TAB_NAMES[position]
         }.attach()
     }

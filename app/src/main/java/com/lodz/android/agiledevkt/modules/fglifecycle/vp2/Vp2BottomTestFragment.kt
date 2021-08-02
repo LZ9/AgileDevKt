@@ -3,14 +3,12 @@ package com.lodz.android.agiledevkt.modules.fglifecycle.vp2
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import com.lodz.android.agiledevkt.R
+import com.lodz.android.agiledevkt.databinding.FragmentVp2TestBinding
 import com.lodz.android.agiledevkt.modules.fglifecycle.vp.TestContentFragment
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.pandora.base.fragment.BaseFragment
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.vp2.SimpleTabAdapter
 
 /**
@@ -38,13 +36,12 @@ class Vp2BottomTestFragment :BaseFragment(){
         }
     }
 
-    private val mFgTabLayout by bindView<TabLayout>(R.id.fg_tab_layout)
-    private val mFgViewPager by bindView<ViewPager2>(R.id.fg_view_pager)
+    private val mBinding: FragmentVp2TestBinding by bindingLayout(FragmentVp2TestBinding::inflate)
 
     private var mName: String = ""
     private var mTop: String = ""
 
-    override fun getLayoutId(): Int = R.layout.fragment_vp2_test
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(view: View, savedInstanceState: Bundle?) {
         super.findViews(view, savedInstanceState)
@@ -58,10 +55,10 @@ class Vp2BottomTestFragment :BaseFragment(){
         for (i in 0 until MIDDLE_TAB_NAMES.size) {
             list.add(TestContentFragment.newInstance(mName, mTop, MIDDLE_TAB_NAMES[i]))
         }
-        mFgViewPager.adapter = SimpleTabAdapter(this, list)
-        mFgViewPager.offscreenPageLimit = MIDDLE_TAB_NAMES.size
-        mFgViewPager.setCurrentItem(0, true)
-        TabLayoutMediator(mFgTabLayout, mFgViewPager) { tab, position ->
+        mBinding.fgViewPager.adapter = SimpleTabAdapter(this, list)
+        mBinding.fgViewPager.offscreenPageLimit = MIDDLE_TAB_NAMES.size
+        mBinding.fgViewPager.setCurrentItem(0, true)
+        TabLayoutMediator(mBinding.fgTabLayout, mBinding.fgViewPager) { tab, position ->
             tab.text = MIDDLE_TAB_NAMES[position]
         }.attach()
     }

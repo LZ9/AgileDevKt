@@ -5,12 +5,10 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import androidx.viewpager.widget.ViewPager
-import com.google.android.material.tabs.TabLayout
-import com.lodz.android.agiledevkt.R
-import com.lodz.android.corekt.anko.bindView
+import com.lodz.android.agiledevkt.databinding.FragmentVpTestBinding
 import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.pandora.base.fragment.BaseFragment
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 
 /**
  * ViewPager嵌套Fragment测试
@@ -37,13 +35,12 @@ class VpBottomTestFragment :BaseFragment(){
         }
     }
 
-    private val mFgTabLayout by bindView<TabLayout>(R.id.fg_tab_layout)
-    private val mFgViewPager by bindView<ViewPager>(R.id.fg_view_pager)
+    private val mBinding: FragmentVpTestBinding by bindingLayout(FragmentVpTestBinding::inflate)
 
     private var mName: String = ""
     private var mTop: String = ""
 
-    override fun getLayoutId(): Int = R.layout.fragment_vp_test
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(view: View, savedInstanceState: Bundle?) {
         super.findViews(view, savedInstanceState)
@@ -53,10 +50,10 @@ class VpBottomTestFragment :BaseFragment(){
     }
 
     private fun initViewPager() {
-        mFgViewPager.adapter = TabAdapter(mName, mTop, childFragmentManager)
-        mFgViewPager.offscreenPageLimit = MIDDLE_TAB_NAMES.size
-        mFgViewPager.setCurrentItem(0, true)
-        mFgTabLayout.setupWithViewPager(mFgViewPager)
+        mBinding.fgViewPager.adapter = TabAdapter(mName, mTop, childFragmentManager)
+        mBinding.fgViewPager.offscreenPageLimit = MIDDLE_TAB_NAMES.size
+        mBinding.fgViewPager.setCurrentItem(0, true)
+        mBinding.fgTabLayout.setupWithViewPager(mBinding.fgViewPager)
     }
 
     override fun initData(view: View) {
