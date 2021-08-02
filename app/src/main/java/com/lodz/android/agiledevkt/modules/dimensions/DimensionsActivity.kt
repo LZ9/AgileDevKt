@@ -3,13 +3,12 @@ package com.lodz.android.agiledevkt.modules.dimensions
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.TextView
-import com.lodz.android.agiledevkt.R
+import android.view.View
+import com.lodz.android.agiledevkt.databinding.ActivityDimensionsBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.corekt.anko.*
 import com.lodz.android.pandora.base.activity.BaseActivity
-import com.lodz.android.pandora.widget.collect.CltEditView
-import com.lodz.android.pandora.widget.collect.CltTextView
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 
 /**
  * 单位转换测试类
@@ -25,24 +24,9 @@ class DimensionsActivity :BaseActivity(){
         }
     }
 
-    /** 屏幕宽高 */
-    private val mScreenInfoTv by bindView<TextView>(R.id.screen_info_tv)
-    /** px输入 */
-    private val mPxCedit by bindView<CltEditView>(R.id.px_cedit)
-    /** px转dp */
-    private val mPxDpCtv by bindView<CltTextView>(R.id.px_dp_ctv)
-    /** px转sp */
-    private val mPxSpCtv by bindView<CltTextView>(R.id.px_sp_ctv)
-    /** dp输入 */
-    private val mDpCedit by bindView<CltEditView>(R.id.dp_cedit)
-    /** dp转px */
-    private val mDpPxCtv by bindView<CltTextView>(R.id.dp_px_ctv)
-    /** sp输入 */
-    private val mSpCedit by bindView<CltEditView>(R.id.sp_cedit)
-    /** sp转px */
-    private val mSpPxCtv by bindView<CltTextView>(R.id.sp_px_ctv)
+    private val mBinding: ActivityDimensionsBinding by bindingLayout(ActivityDimensionsBinding::inflate)
 
-    override fun getLayoutId(): Int = R.layout.activity_dimensions
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         super.findViews(savedInstanceState)
@@ -56,35 +40,39 @@ class DimensionsActivity :BaseActivity(){
 
     override fun setListeners() {
         super.setListeners()
-        mPxCedit.setOnJumpClickListener {
-            if (mPxCedit.getContentText().isEmpty()){
+
+        // px输入
+        mBinding.pxCedit.setOnJumpClickListener {
+            if (mBinding.pxCedit.getContentText().isEmpty()){
                 return@setOnJumpClickListener
             }
-            val px = mPxCedit.getContentText().toFloat()
-            mPxDpCtv.setContentText(px2dp(px).toString())
-            mPxSpCtv.setContentText(px2sp(px).toString())
+            val px = mBinding.pxCedit.getContentText().toFloat()
+            mBinding.pxDpCtv.setContentText(px2dp(px).toString())
+            mBinding.pxSpCtv.setContentText(px2sp(px).toString())
         }
 
-        mDpCedit.setOnJumpClickListener {
-            if (mDpCedit.getContentText().isEmpty()){
+        // dp输入
+        mBinding.dpCedit.setOnJumpClickListener {
+            if (mBinding.dpCedit.getContentText().isEmpty()){
                 return@setOnJumpClickListener
             }
-            val dp = mDpCedit.getContentText().toFloat()
-            mDpPxCtv.setContentText(dp2px(dp).toString())
+            val dp = mBinding.dpCedit.getContentText().toFloat()
+            mBinding.dpPxCtv.setContentText(dp2px(dp).toString())
         }
 
-        mSpCedit.setOnJumpClickListener {
-            if (mSpCedit.getContentText().isEmpty()){
+        // sp输入
+        mBinding.spCedit.setOnJumpClickListener {
+            if (mBinding.spCedit.getContentText().isEmpty()){
                 return@setOnJumpClickListener
             }
-            val sp = mSpCedit.getContentText().toFloat()
-            mSpPxCtv.setContentText(sp2px(sp).toString())
+            val sp = mBinding.spCedit.getContentText().toFloat()
+            mBinding.spPxCtv.setContentText(sp2px(sp).toString())
         }
     }
 
     override fun initData() {
         super.initData()
-        mScreenInfoTv.text = StringBuilder().append("width : ").append(getScreenWidth()).append(" ; ").append("height : ").append(getRealScreenHeight())
+        mBinding.screenInfoTv.text = StringBuilder().append("width : ").append(getScreenWidth()).append(" ; ").append("height : ").append(getRealScreenHeight())
         showStatusCompleted()
     }
 
