@@ -1,5 +1,6 @@
 package com.lodz.android.pandora.widget.navigation
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
 import android.content.res.TypedArray
@@ -11,8 +12,9 @@ import android.widget.TextView
 import androidx.annotation.LayoutRes
 import androidx.appcompat.view.menu.MenuItemImpl
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
-import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationBarItemView
+import com.google.android.material.navigation.NavigationBarMenuView
 import com.lodz.android.corekt.utils.ReflectUtils
 import com.lodz.android.pandora.R
 
@@ -30,14 +32,14 @@ class BaseNavigationView : BottomNavigationView {
         const val BADGE_ALL_NUM_MODE = 1
         /** 红点角标 */
         const val BADGE_ALL_POINT_MODE = 2
-        /** 红点角标 */
+        /** 混合自定义 */
         const val BADGE_CUSTOM_MODE = 3
     }
 
     /** 默认的ItemIconTintList */
     private var mPdrDefaultItemIconTintList: ColorStateList? = null
     /** Item布局列表 */
-    private var mPdrItemViews: ArrayList<BottomNavigationItemView>? = null
+    private var mPdrItemViews: ArrayList<NavigationBarItemView>? = null
     /** 角标模式 */
     private var mPdrBadgeMode = BADGE_NONE_MODE
 
@@ -73,16 +75,14 @@ class BaseNavigationView : BottomNavigationView {
     }
 
     /** 配置默认的角标布局 */
+    @SuppressLint("RestrictedApi")
     private fun configBadgeLayout() {
-        val menuView = ReflectUtils.getFieldValue<BottomNavigationView>(this, "menuView") as? BottomNavigationMenuView
-        if (menuView != null) {
-            val itemView = ReflectUtils.getFieldValue<BottomNavigationMenuView>(menuView, "buttons") as? Array<*>
-            if (itemView != null) {
-                mPdrItemViews = ArrayList()
-                itemView.forEach { any ->
-                    if (any is BottomNavigationItemView) {
-                        mPdrItemViews?.add(any)
-                    }
+        val itemView = ReflectUtils.getFieldValue<NavigationBarMenuView>(menuView, "buttons") as? Array<*>
+        if (itemView != null) {
+            mPdrItemViews = ArrayList()
+            itemView.forEach { any ->
+                if (any is BottomNavigationItemView) {
+                    mPdrItemViews?.add(any)
                 }
             }
         }
@@ -135,9 +135,10 @@ class BaseNavigationView : BottomNavigationView {
     }
 
     /** 设置Item的角标数字，菜单项[item]，数字[num] */
+    @SuppressLint("RestrictedApi")
     fun setItemBadgeNum(item: MenuItem, num: Int) {
         mPdrItemViews?.forEachIndexed { index, itemView ->
-            val itemData = ReflectUtils.getFieldValue<BottomNavigationItemView>(itemView, "itemData") as? MenuItemImpl
+            val itemData = ReflectUtils.getFieldValue<NavigationBarItemView>(itemView, "itemData") as? MenuItemImpl
             if (itemData != null){
                 if (itemData.itemId == item.itemId){
                     setItemBadgeNum(index, num)
@@ -167,9 +168,10 @@ class BaseNavigationView : BottomNavigationView {
     }
 
     /** 设置Item的角标红点提示，菜单项[item]，是否显示[isVisibility] */
+    @SuppressLint("RestrictedApi")
     fun setItemBadgePoint(item: MenuItem, isVisibility: Boolean) {
         mPdrItemViews?.forEachIndexed { index, itemView ->
-            val itemData = ReflectUtils.getFieldValue<BottomNavigationItemView>(itemView, "itemData") as? MenuItemImpl
+            val itemData = ReflectUtils.getFieldValue<NavigationBarItemView>(itemView, "itemData") as? MenuItemImpl
             if (itemData != null){
                 if (itemData.itemId == item.itemId){
                     setItemBadgePoint(index, isVisibility)

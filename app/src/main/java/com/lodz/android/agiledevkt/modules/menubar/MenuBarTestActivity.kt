@@ -9,13 +9,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.google.android.material.tabs.TabLayout
 import com.lodz.android.agiledevkt.R
+import com.lodz.android.agiledevkt.databinding.ActivityMenuBarTestBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.dp2px
 import com.lodz.android.pandora.base.activity.BaseActivity
-import com.lodz.android.pandora.widget.menu.BottomMenuBar
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.menu.MenuConfig
-import com.lodz.android.pandora.widget.navigation.BaseNavigationView
 
 /**
  * 底部菜单栏测试类
@@ -40,17 +39,9 @@ class MenuBarTestActivity : BaseActivity() {
     /** 我的 */
     private val TYPE_MINE = 4
 
-    /** 提示控件 */
-    private val mTabTv by bindView<TextView>(R.id.tab_tv)
-    /** TabLayout */
-    private val mTabLayout by bindView<TabLayout>(R.id.tab_layout)
-    /** 底部菜单栏 */
-    private val mMenuBar by bindView<BottomMenuBar>(R.id.menu_bar)
-    /** 底部菜单栏 */
-    private val mBottomNavigationView by bindView<BaseNavigationView>(R.id.bottom_nv)
+    private val mBinding: ActivityMenuBarTestBinding by bindingLayout(ActivityMenuBarTestBinding::inflate)
 
-
-    override fun getLayoutId(): Int = R.layout.activity_menu_bar_test
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         super.findViews(savedInstanceState)
@@ -61,8 +52,8 @@ class MenuBarTestActivity : BaseActivity() {
     }
 
     private fun initMenuBar() {
-        mMenuBar.setMenuConfigs(getConfigs())
-        mMenuBar.setSelectedMenu(TYPE_HOME)
+        mBinding.menuBar.setMenuConfigs(getConfigs())
+        mBinding.menuBar.setSelectedMenu(TYPE_HOME)
     }
 
     private fun getConfigs(): List<MenuConfig> {
@@ -105,14 +96,16 @@ class MenuBarTestActivity : BaseActivity() {
             textTv.text = title
             numTv.text = (i + 1).toString()
             numTv.visibility = if (i % 2 == 1) View.VISIBLE else View.GONE
-            mTabLayout.addTab(mTabLayout.newTab().setCustomView(tabView), i == 0)
+            mBinding.tabLayout.addTab(mBinding.tabLayout.newTab().setCustomView(tabView), i == 0)
         }
-        mTabTv.text = "首页"
+        mBinding.tabTv.text = "首页"
     }
 
     private fun initNavigation() {
-        mBottomNavigationView.setItemBadgeNum(0, 2)
-        mBottomNavigationView.setItemBadgePoint(2, true)
+        mBinding.bottomNv.setItemBadgeNum(0, 2)
+        mBinding.bottomNv.setItemBadgeNum(mBinding.bottomNv.menu.getItem(1), 13)
+        mBinding.bottomNv.setItemBadgePoint(2, true)
+        mBinding.bottomNv.setItemBadgePoint(mBinding.bottomNv.menu.getItem(3), true)
     }
 
     override fun onClickBackBtn() {
@@ -123,7 +116,7 @@ class MenuBarTestActivity : BaseActivity() {
     override fun setListeners() {
         super.setListeners()
 
-        mTabLayout.addOnTabSelectedListener(object :TabLayout.OnTabSelectedListener{
+        mBinding.tabLayout.addOnTabSelectedListener(object :TabLayout.OnTabSelectedListener{
             override fun onTabReselected(tab: TabLayout.Tab?) {
             }
 
@@ -133,7 +126,7 @@ class MenuBarTestActivity : BaseActivity() {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 val textTv = tab?.customView?.findViewById<TextView>(R.id.text_tv)
                 if (textTv != null){
-                    mTabTv.text = textTv.text
+                    mBinding.tabTv.text = textTv.text
                 }
 //                val numTv = tab?.customView?.findViewById<TextView>(R.id.num_tv)
 //                if (numTv != null){
@@ -142,8 +135,9 @@ class MenuBarTestActivity : BaseActivity() {
             }
         })
 
-        mMenuBar.setOnSelectedListener { type ->
-            mTabTv.text =when(type){
+        // 底部菜单栏
+        mBinding.menuBar.setOnSelectedListener { type ->
+            mBinding.tabTv.text = when (type) {
                 TYPE_HOME -> "首页"
                 TYPE_WORK -> "功能"
                 TYPE_MSG -> "消息"
@@ -152,15 +146,15 @@ class MenuBarTestActivity : BaseActivity() {
             }
         }
 
-        mBottomNavigationView.setOnNavigationItemSelectedListener { item ->
-            mTabTv.text =when(item.itemId){
+        mBinding.bottomNv.setOnItemSelectedListener { item ->
+            mBinding.tabTv.text = when (item.itemId) {
                 R.id.develop_tab -> "首页"
                 R.id.product_tab -> "功能"
                 R.id.project_tab -> "消息"
                 R.id.personnel_tab -> "我的"
                 else -> ""
             }
-            return@setOnNavigationItemSelectedListener true
+            return@setOnItemSelectedListener true
         }
     }
 
