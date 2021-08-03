@@ -15,9 +15,15 @@
         app:tabSelectedTextColor="@color/color_00a0e9"
         app:tabTextColor="@color/color_5a5a5a" />
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/fg_view_pager"
+    <com.lodz.android.pandora.widget.vp2.NestedScrollableHost
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/fg_view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </com.lodz.android.pandora.widget.vp2.NestedScrollableHost>
 
 </LinearLayout>
