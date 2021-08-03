@@ -12,8 +12,7 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.widget.Button
-import android.widget.ImageView
+import android.view.View
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
@@ -21,14 +20,13 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.target.NotificationTarget
 import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
 import com.bumptech.glide.request.transition.ViewPropertyTransition
 import com.lodz.android.agiledevkt.R
+import com.lodz.android.agiledevkt.databinding.ActivityGlideBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.agiledevkt.utils.file.FileManager
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.corekt.utils.FileUtils
@@ -36,6 +34,7 @@ import com.lodz.android.corekt.utils.NotificationUtils
 import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.imageloaderkt.glide.impl.NotificationTargetFix
 import com.lodz.android.pandora.base.activity.BaseActivity
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 
 /**
@@ -60,53 +59,9 @@ class GlideActivity : BaseActivity() {
     /** 图片的BASE64 */
     private val PIC_BASE64 = "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"
 
-    /** 自定义通知栏 */
-    private val mCustomNotifyBtn by bindView<Button>(R.id.custom_notification_button)
-    /** 原生通知栏 */
-    private val mSystemNotifyBtn by bindView<Button>(R.id.notification_button)
+    private val mBinding: ActivityGlideBinding by bindingLayout(ActivityGlideBinding::inflate)
 
-    /** BASE64图片 */
-    private val mBase64Img by bindView<ImageView>(R.id.base64_img)
-    /** 本地居中剪切图片 */
-    private val mLocalCropImg by bindView<ImageView>(R.id.local_crop_img)
-    /** 网络图片 */
-    private val mUrlImg by bindView<ImageView>(R.id.url_img)
-    /** 动画显示 */
-    private val mAnimImg by bindView<ImageView>(R.id.anim_img)
-    /** 网络gif */
-    private val mUrlGifImg by bindView<ImageView>(R.id.url_gif_img)
-    /** 本地gif */
-    private val mLocalGifImg by bindView<ImageView>(R.id.local_gif_img)
-    /** 毛玻璃 */
-    private val mBlurImg by bindView<ImageView>(R.id.blur_img)
-    /** 覆盖颜色 */
-    private val mFilterColorImg by bindView<ImageView>(R.id.filter_color_img)
-    /** 全圆角 */
-    private val mCornersAllImg by bindView<ImageView>(R.id.corners_all_img)
-    /** 顶部圆角 */
-    private val mCornersTopImg by bindView<ImageView>(R.id.corners_top_img)
-    /** 灰度化 */
-    private val mGrayscaleImg by bindView<ImageView>(R.id.grayscale_img)
-    /** 圆角/灰度化 */
-    private val mCornersGrayscaleImg by bindView<ImageView>(R.id.corners_grayscale_img)
-    /** 圆形 */
-    private val mCircleImg by bindView<ImageView>(R.id.circle_img)
-    /** 圆形/毛玻璃 */
-    private val mCircleBlurImg by bindView<ImageView>(R.id.circle_blur_img)
-    /** 圆形/灰度化/毛玻璃 */
-    private val mCircleGrayscaleBlurImg by bindView<ImageView>(R.id.circle_grayscale_blur_img)
-    /** 蒙板效果 */
-    private val mMaskImg by bindView<ImageView>(R.id.mask_img)
-    /** 正方形 */
-    private val mSquareImg by bindView<ImageView>(R.id.square_img)
-    /** 正方形/毛玻璃 */
-    private val mSquareBlurImg by bindView<ImageView>(R.id.square_blur_img)
-    /** 本地webp */
-    private val mLocalWebpImg by bindView<ImageView>(R.id.local_webp_img)
-    /** 本地视频 */
-    private val mLocalVideoImg by bindView<ImageView>(R.id.local_video_img)
-
-    override fun getLayoutId() = R.layout.activity_glide
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME) ?: "")
@@ -121,7 +76,7 @@ class GlideActivity : BaseActivity() {
         super.setListeners()
 
         // 自定义通知栏
-        mCustomNotifyBtn.setOnClickListener {
+        mBinding.customNotificationBtn.setOnClickListener {
             val builder = NotificationCompat.Builder(getContext(), NOTIFI_CHANNEL_MAIN_ID)
             builder.setTicker("")// 通知栏显示的文字
             builder.setAutoCancel(true)// 设置为true，点击该条通知会自动删除，false时只能通过滑动来删除（一般都是true）
@@ -142,7 +97,7 @@ class GlideActivity : BaseActivity() {
         }
 
         // 原生通知栏
-        mSystemNotifyBtn.setOnClickListener {
+        mBinding.sysNotificationBtn.setOnClickListener {
             ImageLoader.create(getContext())
                     .loadUrl(IMG_URL)
                     .setCenterCrop()
@@ -225,7 +180,7 @@ class GlideActivity : BaseActivity() {
         ImageLoader.create(getContext())
                 .loadBase64(PIC_BASE64)
                 .setCenterInside()
-                .into(mBase64Img)
+                .into(mBinding.base64Img)
     }
 
     /** 本地居中剪切图片 */
@@ -233,7 +188,7 @@ class GlideActivity : BaseActivity() {
         ImageLoader.create(getContext())
                 .loadResId(R.drawable.bg_pokemon)
                 .setCenterCrop()
-                .into(mLocalCropImg)
+                .into(mBinding.localCropImg)
     }
 
     /** 网络图片 */
@@ -241,7 +196,7 @@ class GlideActivity : BaseActivity() {
         ImageLoader.create(getContext())
                 .loadUrl(IMG_URL)
                 .setFitCenter()
-                .into(mUrlImg, object :RequestListener<Drawable>{
+                .into(mBinding.urlImg, object :RequestListener<Drawable>{
                     override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
                         if (e != null) {
                             PrintLog.e("testtag", model?.toString() ?: "", e)
@@ -267,7 +222,7 @@ class GlideActivity : BaseActivity() {
                 fadeAnim.start()
             })
             .setFitCenter()
-            .into(mAnimImg)
+            .into(mBinding.animImg)
     }
 
     /** 网络gif */
@@ -275,7 +230,7 @@ class GlideActivity : BaseActivity() {
         ImageLoader.create(getContext())
                 .loadUrl(GIF_URL)
                 .setFitCenter()
-                .into(mUrlGifImg)
+                .into(mBinding.urlGifImg)
     }
 
     /** 本地gif */
@@ -283,7 +238,7 @@ class GlideActivity : BaseActivity() {
         ImageLoader.create(getContext())
                 .loadResId(R.drawable.ic_gif)
                 .setFitCenter()
-                .into(mLocalGifImg)
+                .into(mBinding.localGifImg)
     }
 
     /** 毛玻璃 */
@@ -292,7 +247,7 @@ class GlideActivity : BaseActivity() {
                 .loadUrl(IMG_URL)
                 .useBlur()
                 .setFitCenter()
-                .into(mBlurImg)
+                .into(mBinding.blurImg)
     }
 
     /** 覆盖颜色 */
@@ -302,7 +257,7 @@ class GlideActivity : BaseActivity() {
                 .setFitCenter()
                 .setFilterColor(ContextCompat.getColor(getContext(), R.color.color_60ea413c))
                 .useFilterColor()
-                .into(mFilterColorImg)
+                .into(mBinding.filterColorImg)
     }
 
     /** 全圆角 */
@@ -313,7 +268,7 @@ class GlideActivity : BaseActivity() {
                 .setRoundCorner(10)
                 .setRoundedCornerType(RoundedCornersTransformation.CornerType.ALL)
                 .setFitCenter()
-                .into(mCornersAllImg)
+                .into(mBinding.cornersAllImg)
     }
 
     /** 顶部圆角 */
@@ -324,7 +279,7 @@ class GlideActivity : BaseActivity() {
                 .setRoundCorner(10)
                 .setRoundedCornerType(RoundedCornersTransformation.CornerType.TOP)
                 .setCenterCrop()
-                .into(mCornersTopImg)
+                .into(mBinding.cornersTopImg)
     }
 
     /** 灰度化 */
@@ -333,7 +288,7 @@ class GlideActivity : BaseActivity() {
                 .loadUrl(IMG_URL)
                 .setFitCenter()
                 .useGrayscale()
-                .into(mGrayscaleImg)
+                .into(mBinding.grayscaleImg)
     }
 
     /** 圆角/灰度化 */
@@ -344,7 +299,7 @@ class GlideActivity : BaseActivity() {
                 .setRoundCorner(10)
                 .useGrayscale()
                 .setFitCenter()
-                .into(mCornersGrayscaleImg)
+                .into(mBinding.cornersGrayscaleImg)
     }
 
     /** 圆形 */
@@ -353,7 +308,7 @@ class GlideActivity : BaseActivity() {
                 .loadUrl(IMG_URL)
                 .useCircle()
                 .setFitCenter()
-                .into(mCircleImg)
+                .into(mBinding.circleImg)
     }
 
     /** 圆形/毛玻璃 */
@@ -363,7 +318,7 @@ class GlideActivity : BaseActivity() {
                 .useBlur()
                 .useCircle()
                 .setFitCenter()
-                .into(mCircleBlurImg)
+                .into(mBinding.circleBlurImg)
     }
 
     /** 圆形/灰度化/毛玻璃 */
@@ -374,7 +329,7 @@ class GlideActivity : BaseActivity() {
                 .useBlur()
                 .useGrayscale()
                 .setFitCenter()
-                .into(mCircleGrayscaleBlurImg)
+                .into(mBinding.circleGrayscaleBlurImg)
     }
 
     /** 蒙板效果 */
@@ -383,7 +338,7 @@ class GlideActivity : BaseActivity() {
                 .loadUrl(IMG_URL)
                 .useMask()
                 .setFitCenter()
-                .into(mMaskImg)
+                .into(mBinding.maskImg)
     }
 
     /** 正方形 */
@@ -392,7 +347,7 @@ class GlideActivity : BaseActivity() {
                 .loadUrl(IMG_URL)
                 .setCenterCrop()
                 .useCropSquare()
-                .into(mSquareImg)
+                .into(mBinding.squareImg)
     }
 
     /** 正方形/毛玻璃 */
@@ -402,7 +357,7 @@ class GlideActivity : BaseActivity() {
                 .useBlur()
                 .setCenterCrop()
                 .useCropSquare()
-                .into(mSquareBlurImg)
+                .into(mBinding.squareBlurImg)
     }
 
     /** 本地webp */
@@ -410,7 +365,7 @@ class GlideActivity : BaseActivity() {
         ImageLoader.create(getContext())
                 .loadResId(R.drawable.ic_webp)
                 .setFitCenter()
-                .into(mLocalWebpImg)
+                .into(mBinding.localWebpImg)
     }
 
     /** 本地视频 */
@@ -425,7 +380,7 @@ class GlideActivity : BaseActivity() {
         ImageLoader.create(getContext())
                 .loadUri(Uri.fromFile(file))
                 .setVideo()
-                .into(mLocalVideoImg)
+                .into(mBinding.localVideoImg)
     }
 
 }

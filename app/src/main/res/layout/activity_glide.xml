@@ -16,7 +16,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/custom_notification_button"
+                android:id="@+id/custom_notification_btn"
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -25,7 +25,7 @@
                 android:text="@string/glide_custom_notify" />
 
             <Button
-                android:id="@+id/notification_button"
+                android:id="@+id/sys_notification_btn"
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

@@ -70,7 +70,7 @@
     <!-- glide测试类 -->
     <string name="glide_custom_notify">自定义通知栏</string>
     <string name="glide_system_notify">原生通知栏</string>
-    <string name="glide_video_file_unexists">文件不存在</string>
+    <string name="glide_video_file_unexists">视频文件不存在</string>
 
     <!-- 通知测试 -->
     <string name="notify_base">基本通知</string>
