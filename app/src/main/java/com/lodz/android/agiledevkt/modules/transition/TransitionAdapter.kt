@@ -5,10 +5,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.TransitionBean
+import com.lodz.android.agiledevkt.databinding.RvItemTransitionBinding
 import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
-import com.lodz.android.pandora.widget.rv.recycler.DataViewHolder
+import com.lodz.android.pandora.widget.rv.recycler.DataVBViewHolder
 
 /**
  * 共享动画列表适配器
@@ -19,23 +19,23 @@ class TransitionAdapter(context: Context) : BaseRecyclerViewAdapter<TransitionBe
     private var mItemClickListener: ((img: ImageView, tv: TextView, item: TransitionBean, position: Int) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
-            DataViewHolder(getLayoutView(parent, R.layout.rv_item_transition))
+        DataVBViewHolder(getViewBindingLayout(RvItemTransitionBinding::inflate, parent))
 
     override fun onBind(holder: RecyclerView.ViewHolder, position: Int) {
         val bean = getItem(position)
-        if (bean == null || holder !is DataViewHolder) {
+        if (bean == null || holder !is DataVBViewHolder) {
             return
         }
         showItem(holder, bean, position)
     }
 
-    private fun showItem(holder: DataViewHolder, bean: TransitionBean, position: Int) {
-        val img = holder.withView<ImageView>(R.id.img)
-        img.setImageResource(bean.imgRes)
-        val tv = holder.withView<TextView>(R.id.title)
-        tv.text = bean.title
-        holder.itemView.setOnClickListener {
-            mItemClickListener?.invoke(img, tv, bean, position)
+    private fun showItem(holder: DataVBViewHolder, bean: TransitionBean, position: Int) {
+        holder.getVB<RvItemTransitionBinding>().apply {
+            img.setImageResource(bean.imgRes)
+            titleTv.text = bean.title
+            holder.itemView.setOnClickListener {
+                mItemClickListener?.invoke(img, titleTv, bean, position)
+            }
         }
     }
 

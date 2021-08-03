@@ -9,11 +9,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.TransitionBean
+import com.lodz.android.agiledevkt.databinding.ActivityTransitionBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
-import com.lodz.android.corekt.anko.bindView
-import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.pandora.base.activity.BaseActivity
-import com.lodz.android.pandora.widget.rv.recycler.DataViewHolder
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 
 /**
  * 共享元素动画
@@ -61,12 +60,12 @@ class TransitionActivity : BaseActivity() {
             "明天的好朋友",
             "好朋友")
 
-    /** 列表 */
-    private val mRecyclerView by bindView<RecyclerView>(R.id.recycler_view)
+    private val mBinding: ActivityTransitionBinding by bindingLayout(ActivityTransitionBinding::inflate)
+
     /** 适配器 */
     private lateinit var mAdapter: TransitionAdapter
 
-    override fun getLayoutId(): Int = R.layout.activity_transition
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME) ?: "")
@@ -77,9 +76,9 @@ class TransitionActivity : BaseActivity() {
         val layoutManager = LinearLayoutManager(getContext())
         layoutManager.orientation = RecyclerView.VERTICAL
         mAdapter = TransitionAdapter(getContext())
-        mRecyclerView.layoutManager = layoutManager
-        mRecyclerView.setHasFixedSize(true)
-        mRecyclerView.adapter = mAdapter
+        mBinding.recyclerView.layoutManager = layoutManager
+        mBinding.recyclerView.setHasFixedSize(true)
+        mBinding.recyclerView.adapter = mAdapter
     }
 
     override fun onClickBackBtn() {

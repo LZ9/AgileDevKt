@@ -4,14 +4,13 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.core.util.Pair
 import com.lodz.android.agiledevkt.R
-import com.lodz.android.corekt.anko.bindView
+import com.lodz.android.agiledevkt.databinding.ActivityElementBinding
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.utils.transition.TransitionHelper
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 
 /**
  * 共享元素详情
@@ -32,10 +31,7 @@ class ElementActivity : BaseActivity() {
         }
     }
 
-    /** 标题 */
-    private val mTitleTv by bindView<TextView>(R.id.title_name_tv)
-    /** 图标 */
-    private val mIconImg by bindView<ImageView>(R.id.icon_img)
+    private val mBinding: ActivityElementBinding by bindingLayout(ActivityElementBinding::inflate)
 
     /** 标题 */
     private var mTitle = ""
@@ -49,7 +45,7 @@ class ElementActivity : BaseActivity() {
         mImgResId = intent.getIntExtra(EXTRA_IMG_RES_ID, R.drawable.ic_launcher)
     }
 
-    override fun getLayoutId(): Int = R.layout.activity_element
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         getTitleBarLayout().setTitleName(R.string.share_element_title)
@@ -62,10 +58,10 @@ class ElementActivity : BaseActivity() {
 
     override fun initData() {
         super.initData()
-        mTitleTv.text = mTitle
-        mIconImg.setImageResource(mImgResId)
-        TransitionHelper.setTransition(mTitleTv, TransitionActivity.TITLE)
-        TransitionHelper.setTransition(mIconImg, TransitionActivity.IMG)
+        mBinding.titleNameTv.text = mTitle
+        mBinding.iconImg.setImageResource(mImgResId)
+        TransitionHelper.setTransition(mBinding.titleNameTv, TransitionActivity.TITLE)
+        TransitionHelper.setTransition(mBinding.iconImg, TransitionActivity.IMG)
         TransitionHelper.setEnterTransitionDuration(this, 500)
         showStatusCompleted()
     }
