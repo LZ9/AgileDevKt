@@ -81,18 +81,25 @@ class MenuBarTestActivity : BaseActivity() {
         config.text = text
         config.setTextColor(getContext(), R.color.color_666666, R.color.color_00a0e9)
 //        config.textSizeSp = 18f
+        config.drawablePaddingPx = dp2px(2)
+
         config.num = num
 //        config.setNumTextColor(getContext(), R.color.color_00a0e9)
 //        config.numTextSizeSp = 15f
 //        config.numBackgroundDrawableResId = R.drawable.bg_ffffff_circle
-        config.drawablePaddingPx = dp2px(2)
+//        config.numTextAngle = 90
+//        config.numTextRadiusPx = dp2px(5)
+
         config.pointVisibility = pointVisibility
+//        config.pointAngle = 90
+//        config.pointRadiusPx = dp2px(5)
 
         config.badgeImgVisibility = badgeImgVisibility
         config.badgeImgResId = R.drawable.pandora_ic_take_photo_cancel
         config.badgeImgWidthPx = dp2px(16)
         config.badgeImgHeightPx = dp2px(16)
-        config.badgeImgMarginEndPx = dp2px(26)
+//        config.badgeImgAngle = 90
+//        config.badgeImgRadiusPx = dp2px(5)
         return config
     }
 

@@ -45,11 +45,11 @@ open class MenuConfig {
      var numTextColor = 0
     /** 数字背景 */
     @DrawableRes
-     var numBackgroundDrawableResId = 0
-    /** 数字上间距 */
-     var numTextMarginTopPx = 0
-    /** 数字右间距 */
-     var numTextMarginEndPx = 0
+     var numTextBackgroundDrawableResId = 0
+    /** 数字距中心点的旋转角度 */
+     var numTextAngle = 0
+    /** 数字距中心点的距离 */
+     var numTextRadiusPx = 0
     /** 数字背景大小 */
      var numTextBgSizeDp = 0
 
@@ -58,6 +58,10 @@ open class MenuConfig {
     /** 提醒点颜色（默认红色） */
     @DrawableRes
     var pointBackgroundDrawableResId = R.drawable.pandora_bg_ea413c_circle
+    /** 提醒点距中心点的旋转角度 */
+    var pointAngle = 0
+    /** 提醒点距中心点的距离 */
+    var pointRadiusPx = 0
 
     /** 角标图片显隐 */
     var badgeImgVisibility = View.GONE
@@ -68,10 +72,10 @@ open class MenuConfig {
     var badgeImgWidthPx = ViewGroup.LayoutParams.WRAP_CONTENT
     /** 角标图片 */
     var badgeImgHeightPx = ViewGroup.LayoutParams.WRAP_CONTENT
-    /** 角标图片右侧距离 */
-    var badgeImgMarginEndPx = 0
-    /** 角标图片顶部距离 */
-    var badgeImgMarginTopPx = 0
+    /** 提醒点距中心点的旋转角度 */
+    var badgeImgAngle = 0
+    /** 提醒点距中心点的距离 */
+    var badgeImgRadiusPx = 0
 
 
     /** 设置图标资源Id，[context]上下文，[normal]正常图标，[selected]选中图标 */

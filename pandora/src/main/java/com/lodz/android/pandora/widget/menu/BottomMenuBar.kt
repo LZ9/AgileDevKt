@@ -8,11 +8,11 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.DrawableRes
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.util.Pair
 import com.lodz.android.corekt.anko.dp2px
 import com.lodz.android.pandora.R
@@ -89,8 +89,8 @@ class BottomMenuBar : LinearLayout {
             }
 
             numTv.text = config.num.toString()
-            if (config.numBackgroundDrawableResId != 0) {
-                numTv.setBackgroundResource(config.numBackgroundDrawableResId)
+            if (config.numTextBackgroundDrawableResId != 0) {
+                numTv.setBackgroundResource(config.numTextBackgroundDrawableResId)
             }
             if (config.numTextColor != 0) {
                 numTv.setTextColor(config.numTextColor)
@@ -98,13 +98,13 @@ class BottomMenuBar : LinearLayout {
             if (config.numTextSizeSp > 0f) {
                 numTv.textSize = config.numTextSizeSp
             }
-            if (config.numTextMarginTopPx > 0){
-                val lp = numTv.layoutParams as FrameLayout.LayoutParams
-                lp.topMargin = config.numTextMarginTopPx
+            if (config.numTextAngle > 0) {
+                val lp = numTv.layoutParams as ConstraintLayout.LayoutParams
+                lp.circleAngle = config.numTextAngle.toFloat()
             }
-            if (config.numTextMarginEndPx > 0){
-                val lp = numTv.layoutParams as FrameLayout.LayoutParams
-                lp.marginEnd = config.numTextMarginEndPx
+            if (config.numTextRadiusPx > 0) {
+                val lp = numTv.layoutParams as ConstraintLayout.LayoutParams
+                lp.circleRadius = config.numTextRadiusPx
             }
             if (config.numTextBgSizeDp > 0){
                 val lp = numTv.layoutParams
@@ -115,6 +115,14 @@ class BottomMenuBar : LinearLayout {
 
             pointView.visibility = config.pointVisibility
             pointView.setBackgroundResource(config.pointBackgroundDrawableResId)
+            if (config.pointAngle > 0) {
+                val lp = pointView.layoutParams as ConstraintLayout.LayoutParams
+                lp.circleAngle = config.pointAngle.toFloat()
+            }
+            if (config.pointRadiusPx > 0) {
+                val lp = pointView.layoutParams as ConstraintLayout.LayoutParams
+                lp.circleRadius = config.pointRadiusPx
+            }
 
             badgeImg.visibility = config.badgeImgVisibility
             if (config.badgeImgResId != 0){
@@ -122,13 +130,13 @@ class BottomMenuBar : LinearLayout {
             }
             badgeImg.layoutParams.width = config.badgeImgWidthPx
             badgeImg.layoutParams.height = config.badgeImgHeightPx
-            if (config.badgeImgMarginEndPx > 0){
-                val lp = badgeImg.layoutParams as FrameLayout.LayoutParams
-                lp.marginEnd = config.badgeImgMarginEndPx
+            if (config.badgeImgAngle > 0) {
+                val lp = badgeImg.layoutParams as ConstraintLayout.LayoutParams
+                lp.circleAngle = config.badgeImgAngle.toFloat()
             }
-            if (config.badgeImgMarginTopPx > 0){
-                val lp = badgeImg.layoutParams as FrameLayout.LayoutParams
-                lp.topMargin = config.badgeImgMarginTopPx
+            if (config.badgeImgRadiusPx > 0) {
+                val lp = badgeImg.layoutParams as ConstraintLayout.LayoutParams
+                lp.circleRadius = config.badgeImgRadiusPx
             }
             badgeImg.setOnClickListener {
                 mPdrOnMenuBadgeImgClickListener?.invoke(it, config)
