@@ -125,9 +125,15 @@ class MenuBarTestActivity : BaseActivity() {
 
     private fun initNavigation() {
         mBinding.bottomNv.setItemBadgeNum(0, 2)
-        mBinding.bottomNv.setItemBadgeNum(mBinding.bottomNv.menu.getItem(1), 13)
-        mBinding.bottomNv.setItemBadgePoint(2, true)
-        mBinding.bottomNv.setItemBadgePoint(mBinding.bottomNv.menu.getItem(3), true)
+        mBinding.bottomNv.setItemBadgeImg(
+            mBinding.bottomNv.menu.getItem(1),
+            View.VISIBLE,
+            R.drawable.pandora_ic_take_photo_cancel,
+            dp2px(17),
+            dp2px(17)
+        )
+        mBinding.bottomNv.setItemBadgePoint(2, View.VISIBLE)
+        mBinding.bottomNv.setItemBadgePoint(mBinding.bottomNv.menu.getItem(3), View.VISIBLE)
     }
 
     override fun onClickBackBtn() {
@@ -218,5 +224,5 @@ class MenuBarTestActivity : BaseActivity() {
         showStatusCompleted()
     }
 
-    private fun getTimeText(text: String) :String = DateUtils.getCurrentFormatString(DateUtils.TYPE_2).append("\n").append(text)
+    private fun getTimeText(text: String) :String = DateUtils.getCurrentFormatString(DateUtils.TYPE_10).append("\n").append(text)
 }

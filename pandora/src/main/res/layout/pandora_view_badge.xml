@@ -1,28 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <View
+        android:id="@+id/center_view"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/pdr_num_tv"
-        android:layout_width="18dp"
-        android:layout_height="18dp"
-        android:layout_gravity="end|top"
-        android:layout_marginEnd="20dp"
+        android:layout_width="17dp"
+        android:layout_height="17dp"
         android:background="@drawable/pandora_bg_ea413c_circle"
         android:gravity="center"
         android:textColor="@android:color/white"
         android:textSize="12sp"
-        android:visibility="gone" />
+        android:visibility="gone"
+        app:layout_constraintCircle="@+id/center_view"
+        app:layout_constraintCircleAngle="35"
+        app:layout_constraintCircleRadius="22dp"
+        tools:ignore="MissingConstraints"
+        tools:text="99+" />
 
     <View
         android:id="@+id/pdr_point_view"
         android:layout_width="8dp"
         android:layout_height="8dp"
-        android:layout_gravity="end|top"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="25dp"
         android:background="@drawable/pandora_bg_ea413c_circle"
-        android:visibility="gone" />
-</FrameLayout>
+        android:visibility="gone"
+        app:layout_constraintCircle="@+id/center_view"
+        app:layout_constraintCircleAngle="32"
+        app:layout_constraintCircleRadius="23dp"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/badge_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/pandora_app_img_name"
+        android:scaleType="centerInside"
+        android:visibility="gone"
+        app:layout_constraintCircle="@+id/center_view"
+        app:layout_constraintCircleAngle="35"
+        app:layout_constraintCircleRadius="22dp"
+        tools:ignore="MissingConstraints" />
+</androidx.constraintlayout.widget.ConstraintLayout>

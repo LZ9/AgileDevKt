@@ -8,7 +8,9 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
 import androidx.appcompat.view.menu.MenuItemImpl
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
@@ -28,12 +30,15 @@ class BaseNavigationView : BottomNavigationView {
     companion object {
         /** 不需要角标 */
         const val BADGE_NONE_MODE = 0
-        /** 数字角标 */
-        const val BADGE_ALL_NUM_MODE = 1
-        /** 红点角标 */
-        const val BADGE_ALL_POINT_MODE = 2
         /** 混合自定义 */
-        const val BADGE_CUSTOM_MODE = 3
+        const val BADGE_CUSTOM_MODE = 1
+        /** 数字角标 */
+        const val BADGE_ALL_NUM_MODE = 2
+        /** 红点角标 */
+        const val BADGE_ALL_POINT_MODE = 3
+        /** 角标图片 */
+        const val BADGE_ALL_IMG_MODE = 4
+
     }
 
     /** 默认的ItemIconTintList */
@@ -121,10 +126,17 @@ class BaseNavigationView : BottomNavigationView {
         if (mPdrBadgeMode == BADGE_ALL_POINT_MODE) {
             return
         }
+        if (mPdrBadgeMode == BADGE_ALL_IMG_MODE) {
+            return
+        }
         if (position < mPdrItemViews?.size ?: 0) {
             val pointView = mPdrItemViews?.get(position)?.findViewById<View>(R.id.pdr_point_view)
             if (pointView != null) {
                 pointView.visibility = View.GONE
+            }
+            val badgeImg = mPdrItemViews?.get(position)?.findViewById<ImageView>(R.id.badge_img)
+            if (badgeImg != null) {
+                badgeImg.visibility = View.GONE
             }
             val numTv = mPdrItemViews?.get(position)?.findViewById<TextView>(R.id.pdr_num_tv)
             if (numTv != null) {
@@ -147,12 +159,15 @@ class BaseNavigationView : BottomNavigationView {
         }
     }
 
-    /** 设置Item的角标红点提示，位置[position]，是否显示[isVisibility] */
-    fun setItemBadgePoint(position: Int, isVisibility: Boolean) {
+    /** 设置Item的角标红点提示，位置[position]，是否显示[visibility] */
+    fun setItemBadgePoint(position: Int, visibility: Int) {
         if (mPdrBadgeMode == BADGE_NONE_MODE) {
             return
         }
         if (mPdrBadgeMode == BADGE_ALL_NUM_MODE) {
+            return
+        }
+        if (mPdrBadgeMode == BADGE_ALL_IMG_MODE) {
             return
         }
         if (position < mPdrItemViews?.size ?: 0) {
@@ -160,21 +175,87 @@ class BaseNavigationView : BottomNavigationView {
             if (numTv != null) {
                 numTv.visibility = View.GONE
             }
+            val badgeImg = mPdrItemViews?.get(position)?.findViewById<ImageView>(R.id.badge_img)
+            if (badgeImg != null) {
+                badgeImg.visibility = View.GONE
+            }
             val pointView = mPdrItemViews?.get(position)?.findViewById<View>(R.id.pdr_point_view)
             if (pointView != null) {
-                pointView.visibility = if (isVisibility) View.VISIBLE else View.GONE
+                pointView.visibility = visibility
             }
         }
     }
 
-    /** 设置Item的角标红点提示，菜单项[item]，是否显示[isVisibility] */
+    /** 设置Item的角标红点提示，菜单项[item]，是否显示[visibility] */
     @SuppressLint("RestrictedApi")
-    fun setItemBadgePoint(item: MenuItem, isVisibility: Boolean) {
+    fun setItemBadgePoint(item: MenuItem, visibility: Int) {
         mPdrItemViews?.forEachIndexed { index, itemView ->
             val itemData = ReflectUtils.getFieldValue<NavigationBarItemView>(itemView, "itemData") as? MenuItemImpl
             if (itemData != null){
                 if (itemData.itemId == item.itemId){
-                    setItemBadgePoint(index, isVisibility)
+                    setItemBadgePoint(index, visibility)
+                }
+            }
+        }
+    }
+
+    /** 设置Item的角标数字，位置[position]，数字[num] */
+    fun setItemBadgeImg(
+        position: Int,
+        visibility: Int,
+        @DrawableRes resId: Int = 0,
+        widthPx: Int = 0,
+        heightPx: Int = 0
+    ) {
+        if (mPdrBadgeMode == BADGE_NONE_MODE) {
+            return
+        }
+        if (mPdrBadgeMode == BADGE_ALL_POINT_MODE) {
+            return
+        }
+        if (mPdrBadgeMode == BADGE_ALL_NUM_MODE) {
+            return
+        }
+        if (position < mPdrItemViews?.size ?: 0) {
+            val pointView = mPdrItemViews?.get(position)?.findViewById<View>(R.id.pdr_point_view)
+            if (pointView != null) {
+                pointView.visibility = View.GONE
+            }
+            val numTv = mPdrItemViews?.get(position)?.findViewById<TextView>(R.id.pdr_num_tv)
+            if (numTv != null) {
+                numTv.visibility = View.GONE
+            }
+
+            val badgeImg = mPdrItemViews?.get(position)?.findViewById<ImageView>(R.id.badge_img)
+            if (badgeImg != null) {
+                if (resId != 0){
+                    badgeImg.setImageResource(resId)
+                }
+                badgeImg.visibility = visibility
+                if (widthPx != 0){
+                    badgeImg.layoutParams.width = widthPx
+                }
+                if (heightPx != 0){
+                    badgeImg.layoutParams.height = heightPx
+                }
+            }
+        }
+    }
+
+    /** 设置Item的角标数字，菜单项[item]，数字[num] */
+    @SuppressLint("RestrictedApi")
+    fun setItemBadgeImg(
+        item: MenuItem,
+        visibility: Int,
+        @DrawableRes resId: Int,
+        widthPx: Int = 0,
+        heightPx: Int = 0
+    ) {
+        mPdrItemViews?.forEachIndexed { index, itemView ->
+            val itemData = ReflectUtils.getFieldValue<NavigationBarItemView>(itemView, "itemData") as? MenuItemImpl
+            if (itemData != null) {
+                if (itemData.itemId == item.itemId) {
+                    setItemBadgeImg(index, visibility, resId, widthPx, heightPx)
                 }
             }
         }
