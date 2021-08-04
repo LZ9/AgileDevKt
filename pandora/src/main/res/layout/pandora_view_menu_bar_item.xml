@@ -41,4 +41,24 @@
         tools:text="99+"
         tools:visibility="visible" />
 
+    <View
+        android:id="@+id/pdr_point_view"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:layout_gravity="end|top"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="25dp"
+        android:background="@drawable/pandora_bg_ea413c_circle"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/badge_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|top"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="20dp"
+        android:contentDescription="@string/pandora_app_img_name"
+        android:scaleType="centerInside"
+        android:visibility="gone" />
 </FrameLayout>

@@ -12,6 +12,7 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.DrawableRes
 import androidx.core.util.Pair
 import com.lodz.android.corekt.anko.dp2px
 import com.lodz.android.pandora.R
@@ -26,7 +27,13 @@ class BottomMenuBar : LinearLayout {
     /** 数据 */
     private var mPdrList: ArrayList<Pair<MenuConfig, ViewGroup>> = ArrayList()
     /** 菜单选择监听器 */
-    private var mPdrOnSelectedListener: ((type: Int) -> Unit)? = null
+    private var mPdrOnMenuSelectedListener: ((view: View, menuConfig: MenuConfig) -> Unit)? = null
+    /** 菜单点击监听器 */
+    private var mPdrOnMenuClickListener: ((view: View, menuConfig: MenuConfig) -> Boolean)? = null
+    /** 菜单长按监听器 */
+    private var mPdrOnMenuLongClickListener: ((view: View, menuConfig: MenuConfig) -> Boolean)? = null
+    /** 菜单角标图片点击监听器 */
+    private var mPdrOnMenuBadgeImgClickListener: ((view: View, menuConfig: MenuConfig) -> Unit)? = null
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
@@ -58,54 +65,82 @@ class BottomMenuBar : LinearLayout {
             val iconImg = viewGroup.findViewById<ImageView>(R.id.pdr_ic_img)
             val textTv = viewGroup.findViewById<TextView>(R.id.pdr_text_tv)
             val numTv = viewGroup.findViewById<TextView>(R.id.pdr_num_tv)
+            val pointView = viewGroup.findViewById<View>(R.id.pdr_point_view)
+            val badgeImg = viewGroup.findViewById<ImageView>(R.id.badge_img)
 
-            if (config.getIconDrawableState() == null || config.getTextColorState() == null) {// 未设置图标和文字颜色
+            if (config.iconDrawableState == null || config.textColorState == null) {// 未设置图标和文字颜色
                 break
             }
 
-            iconImg.setImageDrawable(config.getIconDrawableState())
-            if (config.getIconSize() > 0){
-                iconImg.layoutParams.height = dp2px(config.getIconSize())
-                iconImg.layoutParams.width = dp2px(config.getIconSize())
+            iconImg.setImageDrawable(config.iconDrawableState)
+            if (config.iconSizeDp > 0){
+                iconImg.layoutParams.height = dp2px(config.iconSizeDp)
+                iconImg.layoutParams.width = dp2px(config.iconSizeDp)
             }
 
-            textTv.text = config.getText()
-            if (config.getTextSize() > 0f) {
-                textTv.textSize = config.getTextSize()
+            textTv.text = config.text
+            if (config.textSizeSp > 0f) {
+                textTv.textSize = config.textSizeSp
             }
-            textTv.setTextColor(config.getTextColorState())
-            if (config.getDrawablePadding() > 0){
+            textTv.setTextColor(config.textColorState)
+            if (config.drawablePaddingPx > 0){
                 val lp = textTv.layoutParams as LayoutParams
-                lp.topMargin = config.getDrawablePadding()
+                lp.topMargin = config.drawablePaddingPx
             }
 
-            numTv.text = config.getNum().toString()
-            if (config.getNumBackgroundDrawableResId() != 0) {
-                numTv.setBackgroundResource(config.getNumBackgroundDrawableResId())
+            numTv.text = config.num.toString()
+            if (config.numBackgroundDrawableResId != 0) {
+                numTv.setBackgroundResource(config.numBackgroundDrawableResId)
             }
-            if (config.getNumTextColor() != 0) {
-                numTv.setTextColor(config.getNumTextColor())
+            if (config.numTextColor != 0) {
+                numTv.setTextColor(config.numTextColor)
             }
-            if (config.getNumTextSize() > 0f) {
-                numTv.textSize = config.getNumTextSize()
+            if (config.numTextSizeSp > 0f) {
+                numTv.textSize = config.numTextSizeSp
             }
-            if (config.getNumTextMarginTop() > 0){
+            if (config.numTextMarginTopPx > 0){
                 val lp = numTv.layoutParams as FrameLayout.LayoutParams
-                lp.topMargin = config.getNumTextMarginTop()
+                lp.topMargin = config.numTextMarginTopPx
             }
-            if (config.getNumTextMarginEnd() > 0){
+            if (config.numTextMarginEndPx > 0){
                 val lp = numTv.layoutParams as FrameLayout.LayoutParams
-                lp.marginEnd = config.getNumTextMarginEnd()
+                lp.marginEnd = config.numTextMarginEndPx
             }
-            if (config.getNumTextBgSizeDp() > 0){
+            if (config.numTextBgSizeDp > 0){
                 val lp = numTv.layoutParams
-                lp.width = dp2px(config.getNumTextBgSizeDp())
-                lp.width = dp2px(config.getNumTextBgSizeDp())
+                lp.width = dp2px(config.numTextBgSizeDp)
+                lp.width = dp2px(config.numTextBgSizeDp)
             }
-            numTv.visibility = if (config.getNum() == 0) View.GONE else View.VISIBLE
+            numTv.visibility = if (config.num == 0) View.GONE else View.VISIBLE
+
+            pointView.visibility = config.pointVisibility
+            pointView.setBackgroundResource(config.pointBackgroundDrawableResId)
+
+            badgeImg.visibility = config.badgeImgVisibility
+            if (config.badgeImgResId != 0){
+                badgeImg.setImageResource(config.badgeImgResId)
+            }
+            badgeImg.layoutParams.width = config.badgeImgWidthPx
+            badgeImg.layoutParams.height = config.badgeImgHeightPx
+            if (config.badgeImgMarginEndPx > 0){
+                val lp = badgeImg.layoutParams as FrameLayout.LayoutParams
+                lp.marginEnd = config.badgeImgMarginEndPx
+            }
+            if (config.badgeImgMarginTopPx > 0){
+                val lp = badgeImg.layoutParams as FrameLayout.LayoutParams
+                lp.topMargin = config.badgeImgMarginTopPx
+            }
+            badgeImg.setOnClickListener {
+                mPdrOnMenuBadgeImgClickListener?.invoke(it, config)
+            }
 
             viewGroup.setOnClickListener {
-                setSelectedMenu(config.getType())
+                if (!onClickMenu(config.type)){
+                    setSelectedMenu(config.type)
+                }
+            }
+            viewGroup.setOnLongClickListener {
+                onLongClickMenu(config.type)
             }
             mPdrList.add(Pair(config, viewGroup))
         }
@@ -122,15 +157,62 @@ class BottomMenuBar : LinearLayout {
             if (config == null || viewGroup == null) {
                 continue
             }
-            if (config.getType() == type) {
+            if (config.type == type) {
                 val numTv = viewGroup.findViewById<TextView>(R.id.pdr_num_tv)
                 numTv.text = num.toString()
                 numTv.visibility = if (num == 0) View.GONE else View.VISIBLE
+                config.num = num
             }
         }
     }
 
-    /** 设置选中的菜单 */
+    /** 更新菜单类型[type]对应的提示点显隐[visibility]和颜色[resId] */
+    fun updatePointVisibility(type: Int, visibility: Int, @DrawableRes resId: Int = 0) {
+        if (mPdrList.size == 0) {
+            return
+        }
+        for (pair in mPdrList) {
+            val config = pair.first
+            val viewGroup = pair.second
+            if (config == null || viewGroup == null) {
+                continue
+            }
+            if (config.type == type) {
+                val pointView = viewGroup.findViewById<View>(R.id.pdr_point_view)
+                pointView.visibility = visibility
+                config.pointVisibility = visibility
+                if (resId != 0) {
+                    pointView.setBackgroundResource(resId)
+                    config.pointBackgroundDrawableResId = resId
+                }
+            }
+        }
+    }
+
+    /** 更新菜单类型[type]对应的角标图片显隐[visibility]和资源[resId] */
+    fun updateBadgeImgVisibility(type: Int, visibility: Int, @DrawableRes resId: Int = 0) {
+        if (mPdrList.size == 0) {
+            return
+        }
+        for (pair in mPdrList) {
+            val config = pair.first
+            val viewGroup = pair.second
+            if (config == null || viewGroup == null) {
+                continue
+            }
+            if (config.type == type) {
+                val badgeImg = viewGroup.findViewById<ImageView>(R.id.badge_img)
+                badgeImg.visibility = visibility
+                config.badgeImgVisibility = visibility
+                if (resId != 0) {
+                    badgeImg.setImageResource(resId)
+                    config.badgeImgResId = resId
+                }
+            }
+        }
+    }
+
+    /** 设置选中的菜单，如果点击已选中的菜单，则不会再回调 */
     fun setSelectedMenu(type: Int){
         for (pair in mPdrList) {
             val cfg = pair.first
@@ -138,10 +220,10 @@ class BottomMenuBar : LinearLayout {
             if (cfg == null || vg == null) {
                 continue
             }
-            if (cfg.getType() == type){
+            if (cfg.type == type){
                 if (!vg.isSelected){
                     vg.isSelected = true
-                    mPdrOnSelectedListener?.invoke(type)
+                    mPdrOnMenuSelectedListener?.invoke(vg, cfg)
                 }
             }else{
                 vg.isSelected = false
@@ -149,8 +231,59 @@ class BottomMenuBar : LinearLayout {
         }
     }
 
-    /** 设置点击事件监听器 */
-    fun setOnSelectedListener(listener: (type: Int) -> Unit) {
-        mPdrOnSelectedListener = listener
+    /** 点击菜单回调 */
+    private fun onClickMenu(type: Int): Boolean {
+        for (pair in mPdrList) {
+            val cfg = pair.first
+            val vg = pair.second
+            if (cfg == null || vg == null) {
+                continue
+            }
+            if (cfg.type == type) {
+                return mPdrOnMenuClickListener?.invoke(vg, cfg) ?: false
+            }
+        }
+        return false
+    }
+
+    /** 长按菜单回调 */
+    private fun onLongClickMenu(type: Int): Boolean {
+        for (pair in mPdrList) {
+            val cfg = pair.first
+            val vg = pair.second
+            if (cfg == null || vg == null) {
+                continue
+            }
+            if (cfg.type == type) {
+                return mPdrOnMenuLongClickListener?.invoke(vg, cfg) ?: false
+            }
+        }
+        return false
+    }
+
+    fun cleanMenu(){
+        mPdrList.clear()
+        mPdrList = ArrayList()
+        removeAllViews()
+    }
+
+    /** 设置菜单选中监听器 */
+    fun setOnMenuSelectedListener(listener: (view: View, menuConfig: MenuConfig) -> Unit) {
+        mPdrOnMenuSelectedListener = listener
+    }
+
+    /** 设置菜单点击监听器 */
+    fun setOnMenuClickListener(listener: (view: View, menuConfig: MenuConfig) -> Boolean) {
+        mPdrOnMenuClickListener = listener
+    }
+
+    /** 设置菜单长按监听器 */
+    fun setOnMenuLongClickListener(listener: (view: View, menuConfig: MenuConfig) -> Boolean) {
+        mPdrOnMenuLongClickListener = listener
+    }
+
+    /** 设置菜单角标图片点击监听器 */
+    fun setOnMenuBadgeImgClickListener(listener: (view: View, menuConfig: MenuConfig) -> Unit) {
+        mPdrOnMenuBadgeImgClickListener = listener
     }
 }

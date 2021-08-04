@@ -11,7 +11,9 @@ import com.google.android.material.tabs.TabLayout
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.databinding.ActivityMenuBarTestBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
-import com.lodz.android.corekt.anko.dp2px
+import com.lodz.android.corekt.anko.*
+import com.lodz.android.corekt.utils.DateUtils
+import com.lodz.android.corekt.utils.SnackbarUtils
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.menu.MenuConfig
@@ -59,25 +61,38 @@ class MenuBarTestActivity : BaseActivity() {
     private fun getConfigs(): List<MenuConfig> {
         val list = ArrayList<MenuConfig>()
         list.add(createMenuConfig(TYPE_HOME, "首页", 8))
-        list.add(createMenuConfig(TYPE_WORK, "功能", 0))
+        list.add(createMenuConfig(TYPE_WORK, "功能", 0, View.VISIBLE))
         list.add(createMenuConfig(TYPE_MSG, "消息", 87))
-        list.add(createMenuConfig(TYPE_MINE, "我的", 12))
+        list.add(createMenuConfig(TYPE_MINE, "我的", 0, badgeImgVisibility = View.VISIBLE))
         return list
     }
 
-    private fun createMenuConfig(type: Int, text: String, num: Int): MenuConfig {
+    private fun createMenuConfig(
+        type: Int,
+        text: String,
+        num: Int,
+        pointVisibility: Int = View.GONE,
+        badgeImgVisibility: Int = View.GONE
+    ): MenuConfig {
         val config = MenuConfig()
-        config.setType(type)
-        config.setIconSize(30)
+        config.type = type
+        config.iconSizeDp = 30
         config.setIconResId(getContext(), R.drawable.ic_person, R.drawable.ic_person_sel)
-        config.setText(text)
+        config.text = text
         config.setTextColor(getContext(), R.color.color_666666, R.color.color_00a0e9)
-//        config.setTextSize(18f)
-        config.setNum(num)
+//        config.textSizeSp = 18f
+        config.num = num
 //        config.setNumTextColor(getContext(), R.color.color_00a0e9)
-//        config.setNumTextSize(15f)
-//        config.setNumBackground(R.drawable.bg_ffffff_circle)
-        config.setDrawablePadding(dp2px(2))
+//        config.numTextSizeSp = 15f
+//        config.numBackgroundDrawableResId = R.drawable.bg_ffffff_circle
+        config.drawablePaddingPx = dp2px(2)
+        config.pointVisibility = pointVisibility
+
+        config.badgeImgVisibility = badgeImgVisibility
+        config.badgeImgResId = R.drawable.pandora_ic_take_photo_cancel
+        config.badgeImgWidthPx = dp2px(16)
+        config.badgeImgHeightPx = dp2px(16)
+        config.badgeImgMarginEndPx = dp2px(26)
         return config
     }
 
@@ -98,7 +113,7 @@ class MenuBarTestActivity : BaseActivity() {
             numTv.visibility = if (i % 2 == 1) View.VISIBLE else View.GONE
             mBinding.tabLayout.addTab(mBinding.tabLayout.newTab().setCustomView(tabView), i == 0)
         }
-        mBinding.tabTv.text = "首页"
+        mBinding.tabTv.text = getTimeText("首页")
     }
 
     private fun initNavigation() {
@@ -126,7 +141,7 @@ class MenuBarTestActivity : BaseActivity() {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 val textTv = tab?.customView?.findViewById<TextView>(R.id.text_tv)
                 if (textTv != null){
-                    mBinding.tabTv.text = textTv.text
+                    mBinding.tabTv.text = getTimeText(textTv.text.toString())
                 }
 //                val numTv = tab?.customView?.findViewById<TextView>(R.id.num_tv)
 //                if (numTv != null){
@@ -135,23 +150,56 @@ class MenuBarTestActivity : BaseActivity() {
             }
         })
 
-        // 底部菜单栏
-        mBinding.menuBar.setOnSelectedListener { type ->
-            mBinding.tabTv.text = when (type) {
-                TYPE_HOME -> "首页"
-                TYPE_WORK -> "功能"
-                TYPE_MSG -> "消息"
-                TYPE_MINE -> "我的"
+        // 底部菜单栏设置菜单选中监听器
+        mBinding.menuBar.setOnMenuSelectedListener { view, menuConfig ->
+            mBinding.tabTv.text = when (menuConfig.type) {
+                TYPE_HOME -> getTimeText("首页")
+                TYPE_WORK -> getTimeText("功能")
+                TYPE_MSG -> getTimeText("消息")
+                TYPE_MINE -> getTimeText("我的")
                 else -> ""
             }
         }
 
+        // 底部菜单栏设置菜单点击监听器
+        mBinding.menuBar.setOnMenuClickListener { view, menuConfig ->
+            if (menuConfig.type == TYPE_WORK) {
+                mBinding.menuBar.updatePointVisibility(
+                    menuConfig.type,
+                    visibility = (menuConfig.pointVisibility == View.GONE).then { View.VISIBLE }?: View.GONE)
+                return@setOnMenuClickListener true
+            }
+
+            if (menuConfig.type == TYPE_MINE) {
+                mBinding.menuBar.updateBadgeImgVisibility(
+                    menuConfig.type,
+                    visibility = (menuConfig.badgeImgVisibility == View.GONE).then { View.VISIBLE }?: View.GONE)
+                return@setOnMenuClickListener true
+            }
+            return@setOnMenuClickListener false
+        }
+
+        // 底部菜单栏设置菜单长按监听器
+        mBinding.menuBar.setOnMenuLongClickListener { view, menuConfig ->
+            SnackbarUtils.createShort(view, menuConfig.text).show()
+            return@setOnMenuLongClickListener true
+        }
+
+        mBinding.menuBar.setOnMenuBadgeImgClickListener { view, menuConfig ->
+            mBinding.menuBar.cleanMenu()
+            val list = ArrayList<MenuConfig>()
+            list.add(createMenuConfig(TYPE_HOME, "首页", 1))
+            list.add(createMenuConfig(TYPE_WORK, "功能", 0, View.VISIBLE))
+            list.add(createMenuConfig(TYPE_MSG, "消息", 2))
+            mBinding.menuBar.setMenuConfigs(list)
+        }
+
         mBinding.bottomNv.setOnItemSelectedListener { item ->
             mBinding.tabTv.text = when (item.itemId) {
-                R.id.develop_tab -> "首页"
-                R.id.product_tab -> "功能"
-                R.id.project_tab -> "消息"
-                R.id.personnel_tab -> "我的"
+                R.id.develop_tab -> getTimeText("首页")
+                R.id.product_tab -> getTimeText("功能")
+                R.id.project_tab -> getTimeText("消息")
+                R.id.personnel_tab -> getTimeText("我的")
                 else -> ""
             }
             return@setOnItemSelectedListener true
@@ -162,4 +210,6 @@ class MenuBarTestActivity : BaseActivity() {
         super.initData()
         showStatusCompleted()
     }
+
+    private fun getTimeText(text: String) :String = DateUtils.getCurrentFormatString(DateUtils.TYPE_2).append("\n").append(text)
 }
