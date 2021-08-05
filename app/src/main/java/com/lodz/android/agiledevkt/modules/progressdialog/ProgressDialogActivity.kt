@@ -1,18 +1,18 @@
 package com.lodz.android.agiledevkt.modules.progressdialog
 
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AlertDialog
-import com.google.android.material.button.MaterialButton
 import com.lodz.android.agiledevkt.R
+import com.lodz.android.agiledevkt.databinding.ActivityProgressDialogBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
 import com.lodz.android.pandora.utils.progress.ProgressDialogHelper
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import java.util.concurrent.TimeUnit
@@ -30,18 +30,9 @@ class ProgressDialogActivity : BaseActivity() {
         }
     }
 
-    /** 无提示语 */
-    private val mNoTipsBtn by bindView<MaterialButton>(R.id.no_tips_btn)
-    /** 有提示语 */
-    private val mTipsBtn by bindView<MaterialButton>(R.id.tips_btn)
-    /** 自定义图标 */
-    private val mCustomIconBtn by bindView<MaterialButton>(R.id.custom_icon_btn)
-    /** 点击空白不可消失 */
-    private val mCanceledOnTouchOutsideBtn by bindView<MaterialButton>(R.id.canceled_on_touch_outside_btn)
-    /** 点击空白和返回不可消失 */
-    private val mCancelableBtn by bindView<MaterialButton>(R.id.cancelable_btn)
+    private val mBinding: ActivityProgressDialogBinding by bindingLayout(ActivityProgressDialogBinding::inflate)
 
-    override fun getLayoutId(): Int = R.layout.activity_progress_dialog
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         super.findViews(savedInstanceState)
@@ -57,69 +48,69 @@ class ProgressDialogActivity : BaseActivity() {
         super.setListeners()
 
         // 无提示语
-        mNoTipsBtn.setOnClickListener {
+        mBinding.noTipsBtn.setOnClickListener {
             ProgressDialogHelper.get()
-                    .setCancelable(true)
-                    .setCanceledOnTouchOutside(true)
-                    .create(getContext())
-                    .show()
+                .setCancelable(true)
+                .setCanceledOnTouchOutside(true)
+                .create(getContext())
+                .show()
         }
 
         // 有提示语
-        mTipsBtn.setOnClickListener {
+        mBinding.tipsBtn.setOnClickListener {
             ProgressDialogHelper.get()
-                    .setCancelable(true)
-                    .setCanceledOnTouchOutside(true)
-                    .setMsg(getString(R.string.pd_loading))
-                    .create(getContext())
-                    .show()
+                .setCancelable(true)
+                .setCanceledOnTouchOutside(true)
+                .setMsg(getString(R.string.pd_loading))
+                .create(getContext())
+                .show()
         }
 
         // 自定义图标
-        mCustomIconBtn.setOnClickListener {
+        mBinding.customIconBtn.setOnClickListener {
             ProgressDialogHelper.get()
-                    .setCancelable(true)
-                    .setCanceledOnTouchOutside(true)
-                    .setMsg(getString(R.string.pd_loading))
-                    .setIndeterminateDrawable(R.drawable.anims_custom_progress)
-                    .create(getContext())
-                    .show()
+                .setCancelable(true)
+                .setCanceledOnTouchOutside(true)
+                .setMsg(getString(R.string.pd_loading))
+                .setIndeterminateDrawable(R.drawable.anims_custom_progress)
+                .create(getContext())
+                .show()
         }
 
         // 点击空白不可消失
-        mCanceledOnTouchOutsideBtn.setOnClickListener {
+        mBinding.canceledOnTouchOutsideBtn.setOnClickListener {
             ProgressDialogHelper.get()
-                    .setCancelable(true)
-                    .setCanceledOnTouchOutside(false)
-                    .setMsg(getString(R.string.pd_loading))
-                    .setOnCancelListener(DialogInterface.OnCancelListener { dialog ->
-                        toastShort(R.string.pd_dismiss)
-                    })
-                    .create(getContext())
-                    .show()
+                .setCancelable(true)
+                .setCanceledOnTouchOutside(false)
+                .setMsg(getString(R.string.pd_loading))
+                .setOnCancelListener {
+                    toastShort(R.string.pd_dismiss)
+                }
+                .create(getContext())
+                .show()
         }
 
         // 点击空白和返回不可消失
-        mCancelableBtn.setOnClickListener {
+        mBinding.cancelableBtn.setOnClickListener {
             var dialog: AlertDialog? = null
             Observable.interval(0, 1, TimeUnit.SECONDS)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .map { i ->
-                        if (i == 0L) {
-                            dialog = ProgressDialogHelper.get()
-                                    .setCancelable(false)
-                                    .setCanceledOnTouchOutside(true)
-                                    .setMsg(getString(R.string.pd_loading))
-                                    .create(getContext())
-                            dialog?.show()
-                        }
-                        if (i == 5L) {
-                            dialog?.dismiss()
-                            throw RuntimeException("dismiss")
-                        }
+                .observeOn(AndroidSchedulers.mainThread())
+                .map { i ->
+                    if (i == 0L) {
+                        dialog = ProgressDialogHelper.get()
+                            .setCancelable(false)
+                            .setCanceledOnTouchOutside(true)
+                            .setMsg(getString(R.string.pd_loading))
+                            .create(getContext())
+                        dialog?.show()
                     }
-                    .compose(bindDestroyEvent())
-                    .subscribe(BaseObserver.empty())
+                    if (i == 5L) {
+                        dialog?.dismiss()
+                        throw RuntimeException("dismiss")
+                    }
+                }
+                .compose(bindDestroyEvent())
+                .subscribe(BaseObserver.empty())
         }
     }
 
