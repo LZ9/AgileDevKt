@@ -98,8 +98,7 @@ class BleSimpleHelper private constructor() {
         if (mBluetoothAdapter.isDiscovering) {
             return false
         }
-        mBluetoothAdapter.startDiscovery()
-        return true
+        return mBluetoothAdapter.startDiscovery()
     }
 
     /** 停止扫描 */
@@ -112,8 +111,7 @@ class BleSimpleHelper private constructor() {
             return false
         }
         if (mBluetoothAdapter.isDiscovering) {
-            mBluetoothAdapter.cancelDiscovery()
-            return true
+            return mBluetoothAdapter.cancelDiscovery()
         }
         return false
     }
