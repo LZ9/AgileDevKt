@@ -6,11 +6,14 @@ import android.os.Bundle
 import android.view.View
 import com.google.android.material.tabs.TabLayout
 import com.lodz.android.agiledevkt.R
+import com.lodz.android.agiledevkt.databinding.ActivityConfigLayoutBinding
+import com.lodz.android.agiledevkt.databinding.ActivityMainBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.getColorCompat
 import com.lodz.android.corekt.utils.StatusBarUtil
 import com.lodz.android.pandora.base.activity.AbsActivity
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.base.ErrorLayout
 import com.lodz.android.pandora.widget.base.LoadingLayout
 import com.lodz.android.pandora.widget.base.NoDataLayout
@@ -31,36 +34,27 @@ class ConfigLayoutActivity : AbsActivity() {
         }
     }
 
-    /** 标题栏 */
-    private val mTitleBarLayout by bindView<TitleBarLayout>(R.id.title_bar_layout)
-    /** TabLayout */
-    private val mTabLayout by bindView<MmsTabLayout>(R.id.tab_layout)
-    /** 加载页 */
-    private val mLoadingLayout by bindView<LoadingLayout>(R.id.loading_layout)
-    /** 无数据页 */
-    private val mNoDataLayout by bindView<NoDataLayout>(R.id.no_data_layout)
-    /** 异常页 */
-    private val mErrorLayout by bindView<ErrorLayout>(R.id.error_layout)
+    private val mBinding: ActivityConfigLayoutBinding by bindingLayout(ActivityConfigLayoutBinding::inflate)
 
-    override fun getAbsLayoutId(): Int = R.layout.activity_config_layout
+    override fun getAbsViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         super.findViews(savedInstanceState)
         StatusBarUtil.setColor(window, getColorCompat(R.color.color_ea413c))
-        mTitleBarLayout.setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME) ?: "")
+        mBinding.titleBarLayout.setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME) ?: "")
         initTitleBar()
     }
 
     private fun initTitleBar() {
-        mTabLayout.addTab(mTabLayout.newTab().setText(R.string.config_loading), true)
-        mTabLayout.addTab(mTabLayout.newTab().setText(R.string.config_no_data))
-        mTabLayout.addTab(mTabLayout.newTab().setText(R.string.config_fail))
+        mBinding.tabLayout.addTab(mBinding.tabLayout.newTab().setText(R.string.config_loading), true)
+        mBinding.tabLayout.addTab(mBinding.tabLayout.newTab().setText(R.string.config_no_data))
+        mBinding.tabLayout.addTab(mBinding.tabLayout.newTab().setText(R.string.config_fail))
     }
 
     override fun setListeners() {
         super.setListeners()
 
-        mTabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+        mBinding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabReselected(p0: TabLayout.Tab?) {}
 
             override fun onTabUnselected(p0: TabLayout.Tab?) {}
@@ -78,35 +72,37 @@ class ConfigLayoutActivity : AbsActivity() {
             }
         })
 
-        mTitleBarLayout.setOnBackBtnClickListener {
+        // 标题栏返回按钮
+        mBinding.titleBarLayout.setOnBackBtnClickListener {
             finish()
         }
 
-        mTitleBarLayout.getExpandView().setOnClickListener {
-            mTabLayout.getTabAt(1)?.select()
+        // 标题栏右侧自定义按钮
+        mBinding.titleBarLayout.getExpandView().setOnClickListener {
+            mBinding.tabLayout.getTabAt(1)?.select()
         }
 
-        mErrorLayout.setReloadListener {
-            mTabLayout.getTabAt(0)?.select()
+        mBinding.errorLayout.setReloadListener {
+            mBinding.tabLayout.getTabAt(0)?.select()
         }
     }
 
     private fun showLoading() {
-        mLoadingLayout.visibility = View.VISIBLE
-        mNoDataLayout.visibility = View.GONE
-        mErrorLayout.visibility = View.GONE
+        mBinding.loadingLayout.visibility = View.VISIBLE
+        mBinding.noDataLayout.visibility = View.GONE
+        mBinding.errorLayout.visibility = View.GONE
     }
 
     private fun showNoData() {
-        mLoadingLayout.visibility = View.GONE
-        mNoDataLayout.visibility = View.VISIBLE
-        mErrorLayout.visibility = View.GONE
+        mBinding.loadingLayout.visibility = View.GONE
+        mBinding.noDataLayout.visibility = View.VISIBLE
+        mBinding.errorLayout.visibility = View.GONE
     }
 
     private fun showError() {
-        mLoadingLayout.visibility = View.GONE
-        mNoDataLayout.visibility = View.GONE
-        mErrorLayout.visibility = View.VISIBLE
+        mBinding.loadingLayout.visibility = View.GONE
+        mBinding.noDataLayout.visibility = View.GONE
+        mBinding.errorLayout.visibility = View.VISIBLE
     }
 
     override fun initData() {
