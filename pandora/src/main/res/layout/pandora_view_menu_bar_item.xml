@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/icon_layout"
+        android:id="@+id/pdr_icon_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -41,7 +41,7 @@
         android:textColor="@android:color/white"
         android:textSize="12sp"
         android:visibility="gone"
-        app:layout_constraintCircle="@+id/icon_layout"
+        app:layout_constraintCircle="@+id/pdr_icon_layout"
         app:layout_constraintCircleAngle="35"
         app:layout_constraintCircleRadius="25dp"
         tools:ignore="MissingConstraints"
@@ -53,19 +53,19 @@
         android:layout_height="8dp"
         android:background="@drawable/pandora_bg_ea413c_circle"
         android:visibility="gone"
-        app:layout_constraintCircle="@+id/icon_layout"
+        app:layout_constraintCircle="@+id/pdr_icon_layout"
         app:layout_constraintCircleAngle="32"
         app:layout_constraintCircleRadius="28dp"
         tools:ignore="MissingConstraints" />
 
     <ImageView
-        android:id="@+id/badge_img"
+        android:id="@+id/pdr_badge_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/pandora_app_img_name"
         android:scaleType="centerInside"
         android:visibility="gone"
-        app:layout_constraintCircle="@+id/icon_layout"
+        app:layout_constraintCircle="@+id/pdr_icon_layout"
         app:layout_constraintCircleAngle="35"
         app:layout_constraintCircleRadius="25dp"
         tools:ignore="MissingConstraints" />

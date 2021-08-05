@@ -66,7 +66,7 @@ class BottomMenuBar : LinearLayout {
             val textTv = viewGroup.findViewById<TextView>(R.id.pdr_text_tv)
             val numTv = viewGroup.findViewById<TextView>(R.id.pdr_num_tv)
             val pointView = viewGroup.findViewById<View>(R.id.pdr_point_view)
-            val badgeImg = viewGroup.findViewById<ImageView>(R.id.badge_img)
+            val badgeImg = viewGroup.findViewById<ImageView>(R.id.pdr_badge_img)
 
             if (config.iconDrawableState == null || config.textColorState == null) {// 未设置图标和文字颜色
                 break
@@ -209,7 +209,7 @@ class BottomMenuBar : LinearLayout {
                 continue
             }
             if (config.type == type) {
-                val badgeImg = viewGroup.findViewById<ImageView>(R.id.badge_img)
+                val badgeImg = viewGroup.findViewById<ImageView>(R.id.pdr_badge_img)
                 badgeImg.visibility = visibility
                 config.badgeImgVisibility = visibility
                 if (resId != 0) {

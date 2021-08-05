@@ -134,7 +134,7 @@ class BaseNavigationView : BottomNavigationView {
             if (pointView != null) {
                 pointView.visibility = View.GONE
             }
-            val badgeImg = mPdrItemViews?.get(position)?.findViewById<ImageView>(R.id.badge_img)
+            val badgeImg = mPdrItemViews?.get(position)?.findViewById<ImageView>(R.id.pdr_badge_img)
             if (badgeImg != null) {
                 badgeImg.visibility = View.GONE
             }
@@ -175,7 +175,7 @@ class BaseNavigationView : BottomNavigationView {
             if (numTv != null) {
                 numTv.visibility = View.GONE
             }
-            val badgeImg = mPdrItemViews?.get(position)?.findViewById<ImageView>(R.id.badge_img)
+            val badgeImg = mPdrItemViews?.get(position)?.findViewById<ImageView>(R.id.pdr_badge_img)
             if (badgeImg != null) {
                 badgeImg.visibility = View.GONE
             }
@@ -226,7 +226,7 @@ class BaseNavigationView : BottomNavigationView {
                 numTv.visibility = View.GONE
             }
 
-            val badgeImg = mPdrItemViews?.get(position)?.findViewById<ImageView>(R.id.badge_img)
+            val badgeImg = mPdrItemViews?.get(position)?.findViewById<ImageView>(R.id.pdr_badge_img)
             if (badgeImg != null) {
                 if (resId != 0){
                     badgeImg.setImageResource(resId)
