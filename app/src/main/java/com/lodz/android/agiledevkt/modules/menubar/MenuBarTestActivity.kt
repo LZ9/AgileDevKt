@@ -17,6 +17,7 @@ import com.lodz.android.corekt.utils.SnackbarUtils
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.menu.MenuConfig
+import kotlin.random.Random
 
 /**
  * 底部菜单栏测试类
@@ -113,11 +114,21 @@ class MenuBarTestActivity : BaseActivity() {
             val iconImg = tabView.findViewById<ImageView>(R.id.ic_img)
             val textTv = tabView.findViewById<TextView>(R.id.text_tv)
             val numTv = tabView.findViewById<TextView>(R.id.num_tv)
+            val pointView = tabView.findViewById<View>(R.id.point_view)
+            val badgeImg = tabView.findViewById<ImageView>(R.id.badge_img)
 
             iconImg.setImageResource(R.drawable.selector_ic_tab)
             textTv.text = title
             numTv.text = (i + 1).toString()
             numTv.visibility = if (i % 2 == 1) View.VISIBLE else View.GONE
+
+            pointView.visibility = if (i == 0) View.VISIBLE else View.GONE
+
+            badgeImg.visibility = if (i == 2) View.VISIBLE else View.GONE
+            badgeImg.setImageResource(R.drawable.pandora_ic_take_photo_cancel)
+
+            tabView.tag = i + 1
+
             mBinding.tabLayout.addTab(mBinding.tabLayout.newTab().setCustomView(tabView), i == 0)
         }
         mBinding.tabTv.text = getTimeText("首页")
@@ -156,10 +167,15 @@ class MenuBarTestActivity : BaseActivity() {
                 if (textTv != null){
                     mBinding.tabTv.text = getTimeText(textTv.text.toString())
                 }
-//                val numTv = tab?.customView?.findViewById<TextView>(R.id.num_tv)
-//                if (numTv != null){
-//                    numTv.visibility = View.GONE
-//                }
+                val type = tab?.customView?.tag as? Int
+                if (type != null && (type == TYPE_WORK || type == TYPE_MINE)) {
+                    val numTv = tab.customView?.findViewById<TextView>(R.id.num_tv)
+                    if (numTv != null) {
+                        val num = Random.nextInt(20)
+                        numTv.visibility = (num == 0).then { View.GONE } ?: View.VISIBLE
+                        numTv.text = num.toString()
+                    }
+                }
             }
         })
 
@@ -209,7 +225,10 @@ class MenuBarTestActivity : BaseActivity() {
 
         mBinding.bottomNv.setOnItemSelectedListener { item ->
             mBinding.tabTv.text = when (item.itemId) {
-                R.id.develop_tab -> getTimeText("首页")
+                R.id.develop_tab -> {
+                    mBinding.bottomNv.setItemBadgeNum(item, Random.nextInt(20))
+                    getTimeText("首页")
+                }
                 R.id.product_tab -> getTimeText("功能")
                 R.id.project_tab -> getTimeText("消息")
                 R.id.personnel_tab -> getTimeText("我的")
