@@ -5,4 +5,10 @@ package com.lodz.android.agiledevkt.bean
  * @author zhouL
  * @date 2019/4/12
  */
-class SpotBean @JvmOverloads constructor(var spotName: String = "", var score: String = "")
+class SpotBean {
+
+    var spotName: String = ""
+
+    var score: String = ""
+
+}
