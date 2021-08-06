@@ -3,13 +3,13 @@ package com.lodz.android.agiledevkt.modules.mvvm.sandwich
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.TextView
-import androidx.lifecycle.Observer
+import android.view.View
 import com.lodz.android.agiledevkt.R
-import com.lodz.android.corekt.anko.bindView
+import com.lodz.android.agiledevkt.databinding.ActivityMvvmTestBinding
+import com.lodz.android.agiledevkt.databinding.ViewMvvmTestBottomBinding
+import com.lodz.android.agiledevkt.databinding.ViewMvvmTestTopBinding
 import com.lodz.android.pandora.mvvm.base.activity.BaseSandwichVmActivity
-import com.lodz.android.pandora.widget.base.TitleBarLayout
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import kotlin.random.Random
 
 /**
@@ -26,26 +26,24 @@ class MvvmTestSandwichActivity : BaseSandwichVmActivity<MvvmTestSandwichViewMode
         }
     }
 
-    /** 结果 */
-    private val mResult by bindView<TextView>(R.id.result)
-    /** 获取成功数据按钮 */
-    private val mGetSuccessResultBtn by bindView<Button>(R.id.get_success_reuslt_btn)
-    /** 获取失败数据按钮 */
-    private val mGetFailResultBtn by bindView<Button>(R.id.get_fail_reuslt_btn)
-    /** 顶部标题栏 */
-    private val mTitleBarLayout by bindView<TitleBarLayout>(R.id.title_bar_layout)
-
     override fun createViewModel(): Class<MvvmTestSandwichViewModel> = MvvmTestSandwichViewModel::class.java
 
-    override fun getLayoutId(): Int = R.layout.activity_mvvm_test
+    /** 内容布局 */
+    private val mContentBinding: ActivityMvvmTestBinding by bindingLayout(ActivityMvvmTestBinding::inflate)
+    /** 顶部布局 */
+    private val mTopBinding: ViewMvvmTestTopBinding by bindingLayout(ViewMvvmTestTopBinding::inflate)
+    /** 底部布局 */
+    private val mBottomBinding: ViewMvvmTestBottomBinding by bindingLayout(ViewMvvmTestBottomBinding::inflate)
 
-    override fun getTopLayoutId(): Int = R.layout.view_mvvm_test_top
+    override fun getViewBindingLayout(): View = mContentBinding.root
 
-    override fun getBottomLayoutId(): Int = R.layout.view_mvvm_test_bottom
+    override fun getTopViewBindingLayout(): View = mTopBinding.root
+
+    override fun getBottomViewBindingLayout(): View = mBottomBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         super.findViews(savedInstanceState)
-        mTitleBarLayout.setTitleName(R.string.mvvm_demo_sandwich_title)
+        mTopBinding.titleBarLayout.setTitleName(R.string.mvvm_demo_sandwich_title)
         setSwipeRefreshEnabled(true)
     }
 
@@ -63,23 +61,25 @@ class MvvmTestSandwichActivity : BaseSandwichVmActivity<MvvmTestSandwichViewMode
     override fun setListeners() {
         super.setListeners()
 
-        mTitleBarLayout.setOnBackBtnClickListener {
+        mTopBinding.titleBarLayout.setOnBackBtnClickListener {
             finish()
         }
 
-        mGetSuccessResultBtn.setOnClickListener {
+        // 获取成功数据按钮
+        mContentBinding.getSuccessReusltBtn.setOnClickListener {
             showStatusLoading()
             getViewModel().getResult(true)
         }
 
-        mGetFailResultBtn.setOnClickListener {
+        // 获取失败数据按钮
+        mContentBinding.getFailReusltBtn.setOnClickListener {
             showStatusLoading()
             getViewModel().getResult(false)
         }
 
-        getViewModel().mResultText.observe(this, Observer { value ->
-            mResult.text = value
-        })
+        getViewModel().mResultText.observe(this) { value ->
+            mContentBinding.resultTv.text = value
+        }
     }
 
     override fun initData() {

@@ -84,36 +84,36 @@ class MvcTestSandwichFragment : BaseSandwichFragment(){
 
     private fun getResult(isSuccess: Boolean) {
         ApiModuleRx.requestResult(isSuccess)
-                .compose(RxUtils.ioToMainObservable())
-                .compose(bindUntilEvent(FragmentEvent.DESTROY_VIEW))
-                .subscribe(object : RxObserver<String>() {
-                    override fun onRxNext(any: String) {
-                        mContentBinding?.resultTv?.text = any
-                        showStatusCompleted()
-                    }
+            .compose(RxUtils.ioToMainObservable())
+            .compose(bindUntilEvent(FragmentEvent.DESTROY_VIEW))
+            .subscribe(object : RxObserver<String>() {
+                override fun onRxNext(any: String) {
+                    mContentBinding?.resultTv?.text = any
+                    showStatusCompleted()
+                }
 
-                    override fun onRxError(e: Throwable, isNetwork: Boolean) {
-                        showStatusError(e)
-                    }
-                })
+                override fun onRxError(e: Throwable, isNetwork: Boolean) {
+                    showStatusError(e)
+                }
+            })
     }
 
     private fun getRefreshData(isSuccess: Boolean) {
         ApiModuleRx.requestResult(isSuccess)
-                .compose(RxUtils.ioToMainObservable())
-                .compose(bindUntilEvent(FragmentEvent.DESTROY_VIEW))
-                .subscribe(object : RxObserver<String>() {
-                    override fun onRxNext(any: String) {
-                        setSwipeRefreshFinish()
-                        mContentBinding?.resultTv?.text = any
-                        showStatusCompleted()
-                    }
+            .compose(RxUtils.ioToMainObservable())
+            .compose(bindUntilEvent(FragmentEvent.DESTROY_VIEW))
+            .subscribe(object : RxObserver<String>() {
+                override fun onRxNext(any: String) {
+                    setSwipeRefreshFinish()
+                    mContentBinding?.resultTv?.text = any
+                    showStatusCompleted()
+                }
 
-                    override fun onRxError(e: Throwable, isNetwork: Boolean) {
-                        setSwipeRefreshFinish()
-                        toastShort(R.string.mvc_demo_refresh_data_fail)
-                    }
-                })
+                override fun onRxError(e: Throwable, isNetwork: Boolean) {
+                    setSwipeRefreshFinish()
+                    toastShort(R.string.mvc_demo_refresh_data_fail)
+                }
+            })
     }
 
     override fun onDestroyView() {
