@@ -3,15 +3,15 @@ package com.lodz.android.agiledevkt.modules.mvc.refresh
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.TextView
+import android.view.View
 import com.lodz.android.agiledevkt.R
+import com.lodz.android.agiledevkt.databinding.ActivityMvcTestBinding
 import com.lodz.android.agiledevkt.modules.mvc.ApiModuleRx
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.pandora.base.activity.BaseRefreshActivity
 import com.lodz.android.pandora.rx.subscribe.observer.RxObserver
 import com.lodz.android.pandora.rx.utils.RxUtils
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.base.TitleBarLayout
 import com.trello.rxlifecycle4.android.ActivityEvent
 import kotlin.random.Random
@@ -29,14 +29,9 @@ class MvcTestRefreshActivity : BaseRefreshActivity(){
         }
     }
 
-    /** 结果 */
-    private val mResult by bindView<TextView>(R.id.result)
-    /** 获取成功数据按钮 */
-    private val mGetSuccessResultBtn by bindView<Button>(R.id.get_success_reuslt_btn)
-    /** 获取失败数据按钮 */
-    private val mGetFailResultBtn by bindView<Button>(R.id.get_fail_reuslt_btn)
+    private val mBinding: ActivityMvcTestBinding by bindingLayout(ActivityMvcTestBinding::inflate)
 
-    override fun getLayoutId(): Int = R.layout.activity_mvc_test
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         initTitleBarLayout(getTitleBarLayout())
@@ -63,12 +58,14 @@ class MvcTestRefreshActivity : BaseRefreshActivity(){
 
     override fun setListeners() {
         super.setListeners()
-        mGetSuccessResultBtn.setOnClickListener {
+        // 获取成功数据按钮
+        mBinding.getSuccessReusltBtn.setOnClickListener {
             showStatusLoading()
             getResult(true)
         }
 
-        mGetFailResultBtn.setOnClickListener {
+        // 获取失败数据按钮
+        mBinding.getFailReusltBtn.setOnClickListener {
             showStatusLoading()
             getResult(false)
         }
@@ -86,7 +83,7 @@ class MvcTestRefreshActivity : BaseRefreshActivity(){
                 .compose(bindUntilEvent(ActivityEvent.DESTROY))
                 .subscribe(object : RxObserver<String>() {
                     override fun onRxNext(any: String) {
-                        mResult.text = any
+                        mBinding.resultTv.text = any
                         showStatusCompleted()
                     }
 
@@ -103,7 +100,7 @@ class MvcTestRefreshActivity : BaseRefreshActivity(){
                 .subscribe(object : RxObserver<String>() {
                     override fun onRxNext(any: String) {
                         setSwipeRefreshFinish()
-                        mResult.text = any
+                        mBinding.resultTv.text = any
                         showStatusCompleted()
                     }
 
