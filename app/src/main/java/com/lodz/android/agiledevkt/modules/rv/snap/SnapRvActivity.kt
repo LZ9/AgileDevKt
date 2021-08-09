@@ -3,16 +3,16 @@ package com.lodz.android.agiledevkt.modules.rv.snap
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.TextView
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.tabs.TabLayout
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.NationBean
 import com.lodz.android.agiledevkt.config.Constant
+import com.lodz.android.agiledevkt.databinding.ActivitySnapBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.pandora.base.activity.BaseActivity
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.rv.snap.TabPagerSnapHelper
 import com.lodz.android.pandora.widget.rv.snap.ViewPagerSnapHelper
 
@@ -51,12 +51,10 @@ class SnapRvActivity : BaseActivity() {
     private val NATION_CODES = arrayOf(
             "CHN", "USA", "RUS", "JPN", "KOR", "AUS", "UKR", "PRK", "BRA"
     )
-    private val mTabLayout by bindView<TabLayout>(R.id.tab_layout)
-    private val mTabRecyclerView by bindView<RecyclerView>(R.id.tab_rv)
-    private val mPageTv by bindView<TextView>(R.id.page_tv)
-    private val mPagerRecyclerView by bindView<RecyclerView>(R.id.pager_rv)
 
-    override fun getLayoutId(): Int = R.layout.activity_snap
+    private val mBinding: ActivitySnapBinding by bindingLayout(ActivitySnapBinding::inflate)
+
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME) ?: "")
@@ -66,7 +64,7 @@ class SnapRvActivity : BaseActivity() {
 
     private fun initTab() {
         NATION_NAMES.forEachIndexed { index, name ->
-            mTabLayout.addTab(mTabLayout.newTab().setText(name), index == 0)
+            mBinding.tabLayout.addTab(mBinding.tabLayout.newTab().setText(name), index == 0)
         }
         initTabRecyclerView()
     }
@@ -75,12 +73,12 @@ class SnapRvActivity : BaseActivity() {
         val layoutManager = LinearLayoutManager(getContext())
         layoutManager.orientation = RecyclerView.HORIZONTAL
         val adapter = SnapAdapter(getContext())
-        mTabRecyclerView.layoutManager = layoutManager
-        mTabRecyclerView.setHasFixedSize(true)
-        mTabRecyclerView.adapter = adapter
+        mBinding.tabRv.layoutManager = layoutManager
+        mBinding.tabRv.setHasFixedSize(true)
+        mBinding.tabRv.adapter = adapter
         val snapHelper = TabPagerSnapHelper(0)
-        snapHelper.attachToRecyclerView(mTabRecyclerView)
-        snapHelper.setupWithTabLayout(mTabLayout)
+        snapHelper.attachToRecyclerView(mBinding.tabRv)
+        snapHelper.setupWithTabLayout(mBinding.tabLayout)
 
         adapter.setData(getNationList())
         adapter.notifyDataSetChanged()
@@ -90,17 +88,17 @@ class SnapRvActivity : BaseActivity() {
         val layoutManager = LinearLayoutManager(getContext())
         layoutManager.orientation = RecyclerView.HORIZONTAL
         val adapter = SnapAdapter(getContext())
-        mPagerRecyclerView.layoutManager = layoutManager
-        mPagerRecyclerView.setHasFixedSize(true)
-        mPagerRecyclerView.adapter = adapter
+        mBinding.pagerRv.layoutManager = layoutManager
+        mBinding.pagerRv.setHasFixedSize(true)
+        mBinding.pagerRv.adapter = adapter
         val snapHelper = ViewPagerSnapHelper(0)
-        snapHelper.attachToRecyclerView(mPagerRecyclerView)
+        snapHelper.attachToRecyclerView(mBinding.pagerRv)
         snapHelper.setOnPageChangeListener { position ->
-            mPageTv.text = getString(R.string.rvsnap_page, (position + 1).toString())
+            mBinding.pageTv.text = getString(R.string.rvsnap_page, (position + 1).toString())
         }
         adapter.setData(getNationList())
         adapter.notifyDataSetChanged()
-        mPageTv.text = getString(R.string.rvsnap_page, "1")
+        mBinding.pageTv.text = getString(R.string.rvsnap_page, "1")
     }
 
     override fun onClickBackBtn() {
