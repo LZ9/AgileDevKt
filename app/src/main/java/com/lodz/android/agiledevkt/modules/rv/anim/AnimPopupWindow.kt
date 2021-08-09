@@ -1,11 +1,12 @@
 package com.lodz.android.agiledevkt.modules.rv.anim
 
 import android.content.Context
+import android.view.View
 import android.widget.PopupWindow
-import android.widget.TextView
 import com.lodz.android.agiledevkt.R
-import com.lodz.android.corekt.anko.bindView
+import com.lodz.android.agiledevkt.databinding.PopupAnimBinding
 import com.lodz.android.corekt.anko.getColorCompat
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.popup.BasePopupWindow
 import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
 
@@ -20,65 +21,60 @@ class AnimPopupWindow(context: Context) : BasePopupWindow(context) {
         const val TYPE_CUSTOM = 0
     }
 
-    /** 淡入 */
-    private val mAlphaInBtn by getPopup().bindView<TextView>(R.id.alpha_in_btn)
-    /** 缩放 */
-    private val mScaleInBtn by getPopup().bindView<TextView>(R.id.scale_in_btn)
-    /** 底部进入 */
-    private val mSlideInBottomBtn by getPopup().bindView<TextView>(R.id.slide_in_bottom_btn)
-    /** 左侧进入 */
-    private val mSlideInLeftBtn by getPopup().bindView<TextView>(R.id.slide_in_left_btn)
-    /** 右侧进入 */
-    private val mSlideInRightBtn by getPopup().bindView<TextView>(R.id.slide_in_right_btn)
-    /** 自定义 */
-    private val mCustomBtn by getPopup().bindView<TextView>(R.id.custom_btn)
-
     /** 点击 */
     private var mOnClickListener: ((popup: PopupWindow, type: Int) -> Unit)? = null
 
-    override fun getLayoutId(): Int = R.layout.popup_anim
+    private val mBinding: PopupAnimBinding by getContext().bindingLayout(PopupAnimBinding::inflate)
+
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun setListeners() {
         super.setListeners()
-        mAlphaInBtn.setOnClickListener {
+        // 淡入
+        mBinding.alphaInBtn.setOnClickListener {
             mOnClickListener?.invoke(getPopup(), BaseRecyclerViewAdapter.ALPHA_IN)
         }
 
-        mScaleInBtn.setOnClickListener {
+        // 缩放
+        mBinding.scaleInBtn.setOnClickListener {
             mOnClickListener?.invoke(getPopup(), BaseRecyclerViewAdapter.SCALE_IN)
         }
 
-        mSlideInBottomBtn.setOnClickListener {
+        // 底部进入
+        mBinding.slideInBottomBtn.setOnClickListener {
             mOnClickListener?.invoke(getPopup(), BaseRecyclerViewAdapter.SLIDE_IN_BOTTOM)
         }
 
-        mSlideInLeftBtn.setOnClickListener {
+        // 左侧进入
+        mBinding.slideInLeftBtn.setOnClickListener {
             mOnClickListener?.invoke(getPopup(), BaseRecyclerViewAdapter.SLIDE_IN_LEFT)
         }
 
-        mSlideInRightBtn.setOnClickListener {
+        // 右侧进入
+        mBinding.slideInRightBtn.setOnClickListener {
             mOnClickListener?.invoke(getPopup(), BaseRecyclerViewAdapter.SLIDE_IN_RIGHT)
         }
 
-        mCustomBtn.setOnClickListener {
+        // 自定义
+        mBinding.customBtn.setOnClickListener {
             mOnClickListener?.invoke(getPopup(), TYPE_CUSTOM)
         }
     }
 
     /** 设置动画类型[animType] */
     fun setAnimType(animType: Int) {
-        mAlphaInBtn.setBackgroundResource(if (animType == BaseRecyclerViewAdapter.ALPHA_IN) R.drawable.bg_f0f0f0_stroke_00a0e9 else R.drawable.bg_f0f0f0_stroke_cccccc)
-        mAlphaInBtn.setTextColor(getContext().getColorCompat(if (animType == BaseRecyclerViewAdapter.ALPHA_IN) R.color.color_00a0e9 else R.color.color_9a9a9a))
-        mScaleInBtn.setBackgroundResource(if (animType == BaseRecyclerViewAdapter.SCALE_IN) R.drawable.bg_f0f0f0_stroke_00a0e9 else R.drawable.bg_f0f0f0_stroke_cccccc)
-        mScaleInBtn.setTextColor(getContext().getColorCompat(if (animType == BaseRecyclerViewAdapter.SCALE_IN) R.color.color_00a0e9 else R.color.color_9a9a9a))
-        mSlideInBottomBtn.setBackgroundResource(if (animType == BaseRecyclerViewAdapter.SLIDE_IN_BOTTOM) R.drawable.bg_f0f0f0_stroke_00a0e9 else R.drawable.bg_f0f0f0_stroke_cccccc)
-        mSlideInBottomBtn.setTextColor(getContext().getColorCompat(if (animType == BaseRecyclerViewAdapter.SLIDE_IN_BOTTOM) R.color.color_00a0e9 else R.color.color_9a9a9a))
-        mSlideInLeftBtn.setBackgroundResource(if (animType == BaseRecyclerViewAdapter.SLIDE_IN_LEFT) R.drawable.bg_f0f0f0_stroke_00a0e9 else R.drawable.bg_f0f0f0_stroke_cccccc)
-        mSlideInLeftBtn.setTextColor(getContext().getColorCompat(if (animType == BaseRecyclerViewAdapter.SLIDE_IN_LEFT) R.color.color_00a0e9 else R.color.color_9a9a9a))
-        mSlideInRightBtn.setBackgroundResource(if (animType == BaseRecyclerViewAdapter.SLIDE_IN_RIGHT) R.drawable.bg_f0f0f0_stroke_00a0e9 else R.drawable.bg_f0f0f0_stroke_cccccc)
-        mSlideInRightBtn.setTextColor(getContext().getColorCompat(if (animType == BaseRecyclerViewAdapter.SLIDE_IN_RIGHT) R.color.color_00a0e9 else R.color.color_9a9a9a))
-        mCustomBtn.setBackgroundResource(if (animType == TYPE_CUSTOM) R.drawable.bg_f0f0f0_stroke_00a0e9 else R.drawable.bg_f0f0f0_stroke_cccccc)
-        mCustomBtn.setTextColor(getContext().getColorCompat(if (animType == TYPE_CUSTOM) R.color.color_00a0e9 else R.color.color_9a9a9a))
+        mBinding.alphaInBtn.setBackgroundResource(if (animType == BaseRecyclerViewAdapter.ALPHA_IN) R.drawable.bg_f0f0f0_stroke_00a0e9 else R.drawable.bg_f0f0f0_stroke_cccccc)
+        mBinding.alphaInBtn.setTextColor(getContext().getColorCompat(if (animType == BaseRecyclerViewAdapter.ALPHA_IN) R.color.color_00a0e9 else R.color.color_9a9a9a))
+        mBinding.scaleInBtn.setBackgroundResource(if (animType == BaseRecyclerViewAdapter.SCALE_IN) R.drawable.bg_f0f0f0_stroke_00a0e9 else R.drawable.bg_f0f0f0_stroke_cccccc)
+        mBinding.scaleInBtn.setTextColor(getContext().getColorCompat(if (animType == BaseRecyclerViewAdapter.SCALE_IN) R.color.color_00a0e9 else R.color.color_9a9a9a))
+        mBinding.slideInBottomBtn.setBackgroundResource(if (animType == BaseRecyclerViewAdapter.SLIDE_IN_BOTTOM) R.drawable.bg_f0f0f0_stroke_00a0e9 else R.drawable.bg_f0f0f0_stroke_cccccc)
+        mBinding.slideInBottomBtn.setTextColor(getContext().getColorCompat(if (animType == BaseRecyclerViewAdapter.SLIDE_IN_BOTTOM) R.color.color_00a0e9 else R.color.color_9a9a9a))
+        mBinding.slideInLeftBtn.setBackgroundResource(if (animType == BaseRecyclerViewAdapter.SLIDE_IN_LEFT) R.drawable.bg_f0f0f0_stroke_00a0e9 else R.drawable.bg_f0f0f0_stroke_cccccc)
+        mBinding.slideInLeftBtn.setTextColor(getContext().getColorCompat(if (animType == BaseRecyclerViewAdapter.SLIDE_IN_LEFT) R.color.color_00a0e9 else R.color.color_9a9a9a))
+        mBinding.slideInRightBtn.setBackgroundResource(if (animType == BaseRecyclerViewAdapter.SLIDE_IN_RIGHT) R.drawable.bg_f0f0f0_stroke_00a0e9 else R.drawable.bg_f0f0f0_stroke_cccccc)
+        mBinding.slideInRightBtn.setTextColor(getContext().getColorCompat(if (animType == BaseRecyclerViewAdapter.SLIDE_IN_RIGHT) R.color.color_00a0e9 else R.color.color_9a9a9a))
+        mBinding.customBtn.setBackgroundResource(if (animType == TYPE_CUSTOM) R.drawable.bg_f0f0f0_stroke_00a0e9 else R.drawable.bg_f0f0f0_stroke_cccccc)
+        mBinding.customBtn.setTextColor(getContext().getColorCompat(if (animType == TYPE_CUSTOM) R.color.color_00a0e9 else R.color.color_9a9a9a))
     }
 
     /** 设置监听器[listener] */

@@ -5,9 +5,9 @@ import android.app.Dialog
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
-import com.lodz.android.pandora.widget.dialogfragment.BaseDialogFragment
 
 /**
  * 控件绑定
@@ -25,7 +25,7 @@ fun <VB : ViewBinding> Dialog.bindingLayout(inflate: (LayoutInflater) -> VB): La
 }
 
 /** 在BaseDialogFragment中绑定layout */
-fun <VB : ViewBinding> BaseDialogFragment.bindingLayout(inflate: (LayoutInflater) -> VB): Lazy<VB> = lazy {
+fun <VB : ViewBinding> DialogFragment.bindingLayout(inflate: (LayoutInflater) -> VB): Lazy<VB> = lazy {
     return@lazy inflate(layoutInflater)
 }
 

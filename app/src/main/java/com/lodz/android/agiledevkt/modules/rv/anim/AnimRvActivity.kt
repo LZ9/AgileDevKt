@@ -12,11 +12,12 @@ import androidx.annotation.StringRes
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.agiledevkt.R
+import com.lodz.android.agiledevkt.databinding.ActivityAnimRvBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.dp2px
 import com.lodz.android.corekt.utils.DateUtils
 import com.lodz.android.pandora.base.activity.BaseActivity
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.base.TitleBarLayout
 import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
 
@@ -33,16 +34,15 @@ class AnimRvActivity : BaseActivity() {
         }
     }
 
-    /** 列表 */
-    private val mRecyclerView by bindView<RecyclerView>(R.id.recycler_view)
     /** 适配器 */
     private lateinit var mAdapter: AnimRvAdapter
 
     /** 当前动画类型 */
     private var mAnimType = BaseRecyclerViewAdapter.SCALE_IN
 
-    override fun getLayoutId(): Int = R.layout.activity_anim_rv
+    private val mBinding: ActivityAnimRvBinding by bindingLayout(ActivityAnimRvBinding::inflate)
 
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         initTitleBar(getTitleBarLayout())
@@ -63,9 +63,9 @@ class AnimRvActivity : BaseActivity() {
         mAdapter.setOpenItemAnim(true)//开启动画
         mAdapter.setItemAnimStartPosition(7)//设置动画起始位置
         mAdapter.setAnimationType(mAnimType)//设置动画类型
-        mRecyclerView.layoutManager = layoutManager
-        mRecyclerView.setHasFixedSize(true)
-        mRecyclerView.adapter = mAdapter
+        mBinding.recyclerView.layoutManager = layoutManager
+        mBinding.recyclerView.setHasFixedSize(true)
+        mBinding.recyclerView.adapter = mAdapter
     }
 
     override fun onClickBackBtn() {
@@ -101,7 +101,7 @@ class AnimRvActivity : BaseActivity() {
 
         val resetTv = getTextView(R.string.rvanim_reset)//重置
         resetTv.setOnClickListener {
-            mRecyclerView.scrollToPosition(0)//滚动到顶部
+            mBinding.recyclerView.scrollToPosition(0)//滚动到顶部
             mAdapter.resetItemAnimPosition()//重置效果
         }
         linearLayout.addView(resetTv, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
