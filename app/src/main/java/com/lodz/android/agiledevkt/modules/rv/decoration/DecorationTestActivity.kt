@@ -15,13 +15,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.lodz.android.agiledevkt.R
+import com.lodz.android.agiledevkt.databinding.ActivityDecorationTestBinding
 import com.lodz.android.agiledevkt.modules.rv.popup.LayoutManagerPopupWindow
 import com.lodz.android.agiledevkt.modules.rv.popup.OrientationPopupWindow
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.dp2px
 import com.lodz.android.corekt.anko.getColorCompat
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.pandora.base.activity.BaseActivity
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.base.TitleBarLayout
 import com.lodz.android.pandora.widget.rv.decoration.*
 
@@ -67,8 +68,8 @@ class DecorationTestActivity : BaseActivity() {
             listOf("欧文", "杰拉德", "卡拉格", "福勒", "雷纳", "阿隆索", "库伊特", "里瑟")
     )
 
-    /** 列表 */
-    private val mRecyclerView by bindView<RecyclerView>(R.id.recycler_view)
+    private val mBinding: ActivityDecorationTestBinding by bindingLayout(ActivityDecorationTestBinding::inflate)
+
     private lateinit var mAdapter: DecorationRvAdapter
 
     /** 装饰器类型 */
@@ -87,7 +88,7 @@ class DecorationTestActivity : BaseActivity() {
         mDecorationType = intent.getIntExtra(EXTRA_DECORATION_TYPE, DECORATION_TYPE_ROUND)
     }
 
-    override fun getLayoutId(): Int = R.layout.activity_decoration_test
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         initTitleBar(getTitleBarLayout())
@@ -97,13 +98,13 @@ class DecorationTestActivity : BaseActivity() {
     /** 初始化RV */
     private fun initRecyclerView() {
         mAdapter = DecorationRvAdapter(getContext())
-        mRecyclerView.layoutManager = getLayoutManager()
-        mAdapter.onAttachedToRecyclerView(mRecyclerView)// 如果使用网格布局请设置此方法
+        mBinding.recyclerView.layoutManager = getLayoutManager()
+        mAdapter.onAttachedToRecyclerView(mBinding.recyclerView)// 如果使用网格布局请设置此方法
         mAdapter.setLayoutManagerType(mLayoutManagerType)
         mAdapter.setOrientation(mOrientation)
-        mRecyclerView.addItemDecoration(getItemDecoration(mDecorationType))
-        mRecyclerView.setHasFixedSize(true)
-        mRecyclerView.adapter = mAdapter
+        mBinding.recyclerView.addItemDecoration(getItemDecoration(mDecorationType))
+        mBinding.recyclerView.setHasFixedSize(true)
+        mBinding.recyclerView.adapter = mAdapter
     }
 
     /** 初始化标题栏 */
@@ -174,8 +175,8 @@ class DecorationTestActivity : BaseActivity() {
         popupWindow.setOnClickListener { popup, orientation ->
             mOrientation = orientation
             mAdapter.setOrientation(mOrientation)
-            mRecyclerView.layoutManager = getLayoutManager()
-            mAdapter.onAttachedToRecyclerView(mRecyclerView)
+            mBinding.recyclerView.layoutManager = getLayoutManager()
+            mAdapter.onAttachedToRecyclerView(mBinding.recyclerView)
             mAdapter.notifyDataSetChanged()
             popup.dismiss()
         }
@@ -191,8 +192,8 @@ class DecorationTestActivity : BaseActivity() {
         popupWindow.setOnClickListener { popup, type ->
             mLayoutManagerType = type
             mAdapter.setLayoutManagerType(mLayoutManagerType)
-            mRecyclerView.layoutManager = getLayoutManager()
-            mAdapter.onAttachedToRecyclerView(mRecyclerView)
+            mBinding.recyclerView.layoutManager = getLayoutManager()
+            mAdapter.onAttachedToRecyclerView(mBinding.recyclerView)
             mAdapter.notifyDataSetChanged()
             popup.dismiss()
         }
@@ -291,7 +292,7 @@ class DecorationTestActivity : BaseActivity() {
     private fun configByType(type: Int) {
         mList = getList()
         if (type == DECORATION_TYPE_GRID) {
-            mRecyclerView.setPadding(dp2px(8))
+            mBinding.recyclerView.setPadding(dp2px(8))
         }
         if (type == DECORATION_TYPE_SECTION_FIX || type == DECORATION_TYPE_STICKY_SECTION_FIX) {
             val list = ArrayList<String>()

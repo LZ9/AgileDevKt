@@ -3,11 +3,11 @@ package com.lodz.android.agiledevkt.modules.rv.decoration
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.button.MaterialButton
-import com.lodz.android.agiledevkt.R
+import android.view.View
+import com.lodz.android.agiledevkt.databinding.ActivityDecorationMainBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.pandora.base.activity.BaseActivity
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 
 /**
  * RV装饰器测试
@@ -22,22 +22,9 @@ class DecorationRvActivity : BaseActivity(){
         }
     }
 
-    /** 底部分割线 */
-    private val mRoundBottomBtn by bindView<MaterialButton>(R.id.round_bottom_btn)
-    /** 外围分割线 */
-    private val mRoundBtn by bindView<MaterialButton>(R.id.round_btn)
-    /** 网格分割线 */
-    private val mGridBtn by bindView<MaterialButton>(R.id.grid_btn)
-    /** 分组标签 */
-    private val mSectionBtn by bindView<MaterialButton>(R.id.section_btn)
-    /** 固定数据的分组标签 */
-    private val mSectionFixBtn by bindView<MaterialButton>(R.id.section_fix_btn)
-    /** 粘黏分组标签 */
-    private val mStickySectionBtn by bindView<MaterialButton>(R.id.sticky_section_btn)
-    /** 固定数据的粘黏分组标签 */
-    private val mStickySectionFixBtn by bindView<MaterialButton>(R.id.sticky_section_fix_btn)
+    private val mBinding: ActivityDecorationMainBinding by bindingLayout(ActivityDecorationMainBinding::inflate)
 
-    override fun getLayoutId(): Int = R.layout.activity_decoration_main
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME) ?: "")
@@ -51,31 +38,38 @@ class DecorationRvActivity : BaseActivity(){
     override fun setListeners() {
         super.setListeners()
 
-        mRoundBottomBtn.setOnClickListener {
+        // 底部分割线
+        mBinding.roundBottomBtn.setOnClickListener {
             DecorationTestActivity.start(getContext(), DecorationTestActivity.DECORATION_TYPE_ROUND_BOTTOM)
         }
 
-        mRoundBtn.setOnClickListener {
+        // 外围分割线
+        mBinding.roundBtn.setOnClickListener {
             DecorationTestActivity.start(getContext(), DecorationTestActivity.DECORATION_TYPE_ROUND)
         }
 
-        mGridBtn.setOnClickListener {
+        // 网格分割线
+        mBinding.gridBtn.setOnClickListener {
             DecorationTestActivity.start(getContext(), DecorationTestActivity.DECORATION_TYPE_GRID)
         }
 
-        mSectionBtn.setOnClickListener {
+        // 分组标签
+        mBinding.sectionBtn.setOnClickListener {
             DecorationTestActivity.start(getContext(), DecorationTestActivity.DECORATION_TYPE_SECTION)
         }
 
-        mSectionFixBtn.setOnClickListener {
+        // 固定数据的分组标签
+        mBinding.sectionFixBtn.setOnClickListener {
             DecorationTestActivity.start(getContext(), DecorationTestActivity.DECORATION_TYPE_SECTION_FIX)
         }
 
-        mStickySectionBtn.setOnClickListener {
+        // 粘黏分组标签
+        mBinding.stickySectionBtn.setOnClickListener {
             DecorationTestActivity.start(getContext(), DecorationTestActivity.DECORATION_TYPE_STICKY_SECTION)
         }
 
-        mStickySectionFixBtn.setOnClickListener {
+        // 固定数据的粘黏分组标签
+        mBinding.stickySectionFixBtn.setOnClickListener {
             DecorationTestActivity.start(getContext(), DecorationTestActivity.DECORATION_TYPE_STICKY_SECTION_FIX)
         }
     }
