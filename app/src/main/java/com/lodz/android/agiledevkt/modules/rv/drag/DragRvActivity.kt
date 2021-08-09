@@ -4,20 +4,19 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.google.android.material.switchmaterial.SwitchMaterial
 import com.lodz.android.agiledevkt.R
+import com.lodz.android.agiledevkt.databinding.ActivityDragBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.agiledevkt.modules.rv.popup.LayoutManagerPopupWindow
 import com.lodz.android.agiledevkt.modules.rv.popup.OrientationPopupWindow
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.pandora.base.activity.BaseActivity
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.rv.drag.RecyclerViewDragHelper
 
 /**
@@ -33,19 +32,8 @@ class DragRvActivity : BaseActivity() {
         }
     }
 
-    /** 侧滑模式 */
-    private val mSwipeModeSwitch by bindView<SwitchMaterial>(R.id.swipe_mode_switch)
-    /** 触摸拖拽 */
-    private val mDragSwitch by bindView<SwitchMaterial>(R.id.touch_drag_switch)
-    /** 匀速拖拽 */
-    private val mConstantSpeedSwitch by bindView<SwitchMaterial>(R.id.constant_speed_switch)
-    /** 方向 */
-    private val mOrientationBtn by bindView<TextView>(R.id.orientation_btn)
-    /** 布局 */
-    private val mLayoutManagerBtn by bindView<TextView>(R.id.layout_manager_btn)
+    private val mBinding: ActivityDragBinding by bindingLayout(ActivityDragBinding::inflate)
 
-    /** 列表 */
-    private val mRecyclerView by bindView<RecyclerView>(R.id.recycler_view)
     /** 适配器 */
     private lateinit var mAdapter: DragRvAdapter
     /** 拖拽帮助类 */
@@ -58,7 +46,7 @@ class DragRvActivity : BaseActivity() {
     /** 拖拽回调 */
     private val mCallback = DragSpeedCallback<String>()
 
-    override fun getLayoutId(): Int = R.layout.activity_drag
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME) ?: "")
@@ -67,20 +55,20 @@ class DragRvActivity : BaseActivity() {
 
     private fun initRecyclerView() {
         mAdapter = DragRvAdapter(getContext())
-        mRecyclerView.layoutManager = getLayoutManager()
-        mAdapter.onAttachedToRecyclerView(mRecyclerView)// 如果使用网格布局请设置此方法
+        mBinding.recyclerView.layoutManager = getLayoutManager()
+        mAdapter.onAttachedToRecyclerView(mBinding.recyclerView)// 如果使用网格布局请设置此方法
         mAdapter.setLayoutManagerType(mLayoutManagerType)
         mAdapter.setOrientation(mOrientation)
-        mRecyclerView.setHasFixedSize(true)
-        mRecyclerView.adapter = mAdapter
+        mBinding.recyclerView.setHasFixedSize(true)
+        mBinding.recyclerView.adapter = mAdapter
         mRecyclerViewDragHelper = RecyclerViewDragHelper(getContext())
         mRecyclerViewDragHelper.setUseDrag(true)// 设置是否允许拖拽
-                .setLongPressDragEnabled(true)// 是否启用长按拖拽效果
-                .setUseLeftToRightSwipe(true)// 设置允许从左往右滑动
-                .setUseRightToLeftSwipe(true)// 设置允许从右往左滑动
-                .setSwipeEnabled(false)// 设置是否允许滑动
-                .setVibrateEnabled(true)// 启用震动效果
-        mRecyclerViewDragHelper.build(mRecyclerView, mAdapter, mCallback)
+            .setLongPressDragEnabled(true)// 是否启用长按拖拽效果
+            .setUseLeftToRightSwipe(true)// 设置允许从左往右滑动
+            .setUseRightToLeftSwipe(true)// 设置允许从右往左滑动
+            .setSwipeEnabled(false)// 设置是否允许滑动
+            .setVibrateEnabled(true)// 启用震动效果
+        mRecyclerViewDragHelper.build(mBinding.recyclerView, mAdapter, mCallback)
     }
 
     private fun getLayoutManager(): RecyclerView.LayoutManager {
@@ -107,14 +95,14 @@ class DragRvActivity : BaseActivity() {
         super.setListeners()
 
         // 侧滑模式
-        mSwipeModeSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked){
+        mBinding.swipeModeSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
                 mOrientation = RecyclerView.VERTICAL
                 mLayoutManagerType = LayoutManagerPopupWindow.TYPE_LINEAR
                 mAdapter.setOrientation(mOrientation)
                 mAdapter.setLayoutManagerType(mLayoutManagerType)
-                mRecyclerView.layoutManager = getLayoutManager()
-                mAdapter.onAttachedToRecyclerView(mRecyclerView)
+                mBinding.recyclerView.layoutManager = getLayoutManager()
+                mAdapter.onAttachedToRecyclerView(mBinding.recyclerView)
                 mAdapter.notifyDataSetChanged()
             }
             mRecyclerViewDragHelper.setUseDrag(!isChecked)
@@ -123,21 +111,21 @@ class DragRvActivity : BaseActivity() {
         }
 
         // 触摸拖拽
-        mDragSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
+        mBinding.touchDragSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
             mRecyclerViewDragHelper.setLongPressDragEnabled(!isChecked)
             mAdapter.setItemTouchHelper(if (isChecked) mRecyclerViewDragHelper.getItemTouchHelper() else null)
-            mRecyclerView.scrollToPosition(0)
+            mBinding.recyclerView.scrollToPosition(0)
             mAdapter.notifyDataSetChanged()
         }
 
         // 匀速拖拽
-        mConstantSpeedSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
+        mBinding.constantSpeedSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
             mCallback.isLimit = isChecked
         }
 
         // 方向
-        mOrientationBtn.setOnClickListener { view ->
-            if (mSwipeModeSwitch.isChecked){
+        mBinding.orientationBtn.setOnClickListener { view ->
+            if (mBinding.swipeModeSwitch.isChecked){
                 toastShort(R.string.rvdrag_orientation_unenable)
                 return@setOnClickListener
             }
@@ -145,8 +133,8 @@ class DragRvActivity : BaseActivity() {
         }
 
         // 布局
-        mLayoutManagerBtn.setOnClickListener { view ->
-            if (mSwipeModeSwitch.isChecked){
+        mBinding.layoutManagerBtn.setOnClickListener { view ->
+            if (mBinding.swipeModeSwitch.isChecked){
                 toastShort(R.string.rvdrag_layout_manager_unenable)
                 return@setOnClickListener
             }
@@ -187,8 +175,8 @@ class DragRvActivity : BaseActivity() {
         popupWindow.setOnClickListener { popup, orientation ->
             mOrientation = orientation
             mAdapter.setOrientation(mOrientation)
-            mRecyclerView.layoutManager = getLayoutManager()
-            mAdapter.onAttachedToRecyclerView(mRecyclerView)
+            mBinding.recyclerView.layoutManager = getLayoutManager()
+            mAdapter.onAttachedToRecyclerView(mBinding.recyclerView)
             mAdapter.notifyDataSetChanged()
             popup.dismiss()
         }
@@ -204,8 +192,8 @@ class DragRvActivity : BaseActivity() {
         popupWindow.setOnClickListener { popup, type ->
             mLayoutManagerType = type
             mAdapter.setLayoutManagerType(mLayoutManagerType)
-            mRecyclerView.layoutManager = getLayoutManager()
-            mAdapter.onAttachedToRecyclerView(mRecyclerView)
+            mBinding.recyclerView.layoutManager = getLayoutManager()
+            mAdapter.onAttachedToRecyclerView(mBinding.recyclerView)
             mAdapter.notifyDataSetChanged()
             popup.dismiss()
         }
