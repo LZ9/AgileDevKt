@@ -4,20 +4,19 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.google.android.material.switchmaterial.SwitchMaterial
 import com.lodz.android.agiledevkt.R
+import com.lodz.android.agiledevkt.databinding.ActivityRefreshLoadMoreBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.agiledevkt.modules.rv.popup.LayoutManagerPopupWindow
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.pandora.base.activity.BaseRefreshActivity
 import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
 import com.lodz.android.pandora.rx.utils.RxUtils
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.rv.recycler.RecyclerLoadMoreHelper
 import com.trello.rxlifecycle4.android.ActivityEvent
 
@@ -41,12 +40,7 @@ class RefreshLoadMoreActivity : BaseRefreshActivity() {
     /** 预加载偏移量 */
     private val LOAD_MORE_INDEX = 1
 
-    /** 列表 */
-    private val mRecyclerView by bindView<RecyclerView>(R.id.recycler_view)
-    /** 加载失败开关 */
-    private val mLoadFailSwitch by bindView<SwitchMaterial>(R.id.load_fail_switch)
-    /** 布局按钮 */
-    private val mLayoutManagerBtn by bindView<TextView>(R.id.layout_manager_btn)
+    private val mBinding: ActivityRefreshLoadMoreBinding by bindingLayout(ActivityRefreshLoadMoreBinding::inflate)
 
     /** 适配器 */
     private lateinit var mAdapter: LoadMoreRvAdapter
@@ -61,7 +55,7 @@ class RefreshLoadMoreActivity : BaseRefreshActivity() {
     @LayoutManagerPopupWindow.LayoutManagerType
     private var mLayoutManagerType = LayoutManagerPopupWindow.TYPE_LINEAR
 
-    override fun getLayoutId(): Int = R.layout.activity_refresh_load_more
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME) ?: "")
@@ -70,11 +64,11 @@ class RefreshLoadMoreActivity : BaseRefreshActivity() {
 
     private fun initRecyclerView() {
         mAdapter = LoadMoreRvAdapter(getContext())
-        mRecyclerView.layoutManager = getLayoutManager()
-        mAdapter.onAttachedToRecyclerView(mRecyclerView)// 如果使用网格布局请设置此方法
+        mBinding.recyclerView.layoutManager = getLayoutManager()
+        mAdapter.onAttachedToRecyclerView(mBinding.recyclerView)// 如果使用网格布局请设置此方法
         mAdapter.setLayoutManagerType(mLayoutManagerType)
-        mRecyclerView.setHasFixedSize(true)
-        mRecyclerView.adapter = mAdapter
+        mBinding.recyclerView.setHasFixedSize(true)
+        mBinding.recyclerView.adapter = mAdapter
         mLoadMoreHelper = RecyclerLoadMoreHelper(mAdapter)
     }
 
@@ -100,25 +94,25 @@ class RefreshLoadMoreActivity : BaseRefreshActivity() {
 
     override fun onDataRefresh() {
         DataModule.get().requestData(1)
-                .compose(RxUtils.ioToMainObservable())
-                .compose(bindUntilEvent(ActivityEvent.DESTROY))
-                .subscribe(object : BaseObserver<List<String>>() {
-                    override fun onBaseNext(any: List<String>) {
-                        setSwipeRefreshFinish()
-                        if (isLoadFail) {
-                            toastShort(R.string.rvrefresh_refresh_fail)
-                            return
-                        }
-                        mList.clear()
-                        mList.addAll(any)
-                        mLoadMoreHelper.config(mList, MAX_SIZE, PAGE_SIZE, true, LOAD_MORE_INDEX)
-                        showStatusCompleted()
+            .compose(RxUtils.ioToMainObservable())
+            .compose(bindUntilEvent(ActivityEvent.DESTROY))
+            .subscribe(object : BaseObserver<List<String>>() {
+                override fun onBaseNext(any: List<String>) {
+                    setSwipeRefreshFinish()
+                    if (isLoadFail) {
+                        toastShort(R.string.rvrefresh_refresh_fail)
+                        return
                     }
+                    mList.clear()
+                    mList.addAll(any)
+                    mLoadMoreHelper.config(mList, MAX_SIZE, PAGE_SIZE, true, LOAD_MORE_INDEX)
+                    showStatusCompleted()
+                }
 
-                    override fun onBaseError(e: Throwable) {
-                        setSwipeRefreshFinish()
-                    }
-                })
+                override fun onBaseError(e: Throwable) {
+                    setSwipeRefreshFinish()
+                }
+            })
     }
 
     override fun setListeners() {
@@ -126,40 +120,40 @@ class RefreshLoadMoreActivity : BaseRefreshActivity() {
         mLoadMoreHelper.setListener(object : RecyclerLoadMoreHelper.Listener {
             override fun onLoadMore(currentPage: Int, nextPage: Int, size: Int, position: Int) {
                 DataModule.get().requestData(nextPage)
-                        .compose(RxUtils.ioToMainObservable())
-                        .compose(bindUntilEvent(ActivityEvent.DESTROY))
-                        .subscribe(object : BaseObserver<List<String>>() {
-                            override fun onBaseNext(any: List<String>) {
-                                if (isLoadFail) {
-                                    mLoadMoreHelper.loadMoreFail()
-                                    return
-                                }
-                                mList.addAll(any)
-                                mLoadMoreHelper.loadMoreSuccess(mList)
+                    .compose(RxUtils.ioToMainObservable())
+                    .compose(bindUntilEvent(ActivityEvent.DESTROY))
+                    .subscribe(object : BaseObserver<List<String>>() {
+                        override fun onBaseNext(any: List<String>) {
+                            if (isLoadFail) {
+                                mLoadMoreHelper.loadMoreFail()
+                                return
                             }
+                            mList.addAll(any)
+                            mLoadMoreHelper.loadMoreSuccess(mList)
+                        }
 
-                            override fun onBaseError(e: Throwable) {
-                            }
-                        })
+                        override fun onBaseError(e: Throwable) {
+                        }
+                    })
             }
 
             override fun onClickLoadFail(reloadPage: Int, size: Int) {
                 DataModule.get().requestData(reloadPage)
-                        .compose(RxUtils.ioToMainObservable())
-                        .compose(bindUntilEvent(ActivityEvent.DESTROY))
-                        .subscribe(object : BaseObserver<List<String>>() {
-                            override fun onBaseNext(any: List<String>) {
-                                if (isLoadFail) {
-                                    mLoadMoreHelper.loadMoreFail()
-                                    return
-                                }
-                                mList.addAll(any)
-                                mLoadMoreHelper.loadMoreSuccess(mList)
+                    .compose(RxUtils.ioToMainObservable())
+                    .compose(bindUntilEvent(ActivityEvent.DESTROY))
+                    .subscribe(object : BaseObserver<List<String>>() {
+                        override fun onBaseNext(any: List<String>) {
+                            if (isLoadFail) {
+                                mLoadMoreHelper.loadMoreFail()
+                                return
                             }
+                            mList.addAll(any)
+                            mLoadMoreHelper.loadMoreSuccess(mList)
+                        }
 
-                            override fun onBaseError(e: Throwable) {
-                            }
-                        })
+                        override fun onBaseError(e: Throwable) {
+                        }
+                    })
             }
         })
 
@@ -179,11 +173,13 @@ class RefreshLoadMoreActivity : BaseRefreshActivity() {
             showStatusNoData()
         }
 
-        mLoadFailSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
+        // 加载失败开关
+        mBinding.loadFailSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
             isLoadFail = isChecked
         }
 
-        mLayoutManagerBtn.setOnClickListener { view ->
+        // 布局按钮
+        mBinding.layoutManagerBtn.setOnClickListener { view ->
             showLayoutManagerPopupWindow(view)
         }
     }
@@ -195,20 +191,20 @@ class RefreshLoadMoreActivity : BaseRefreshActivity() {
 
     private fun requestFirstData() {
         DataModule.get().requestData(1)
-                .compose(RxUtils.ioToMainObservable())
-                .compose(bindUntilEvent(ActivityEvent.DESTROY))
-                .subscribe(object : BaseObserver<List<String>>() {
-                    override fun onBaseNext(any: List<String>) {
-                        mList.clear()
-                        mList.addAll(any)
-                        mLoadMoreHelper.config(mList, MAX_SIZE, PAGE_SIZE, true, LOAD_MORE_INDEX)
-                        showStatusCompleted()
-                    }
+            .compose(RxUtils.ioToMainObservable())
+            .compose(bindUntilEvent(ActivityEvent.DESTROY))
+            .subscribe(object : BaseObserver<List<String>>() {
+                override fun onBaseNext(any: List<String>) {
+                    mList.clear()
+                    mList.addAll(any)
+                    mLoadMoreHelper.config(mList, MAX_SIZE, PAGE_SIZE, true, LOAD_MORE_INDEX)
+                    showStatusCompleted()
+                }
 
-                    override fun onBaseError(e: Throwable) {
+                override fun onBaseError(e: Throwable) {
 
-                    }
-                })
+                }
+            })
     }
 
     /** 显示布局的PopupWindow */
@@ -219,9 +215,9 @@ class RefreshLoadMoreActivity : BaseRefreshActivity() {
         popupWindow.getPopup().showAsDropDown(view, -45, 20)
         popupWindow.setOnClickListener { popup, type ->
             mLayoutManagerType = type
-            mRecyclerView.layoutManager = getLayoutManager()
+            mBinding.recyclerView.layoutManager = getLayoutManager()
             mAdapter.setLayoutManagerType(mLayoutManagerType)
-            mAdapter.onAttachedToRecyclerView(mRecyclerView)
+            mAdapter.onAttachedToRecyclerView(mBinding.recyclerView)
             mAdapter.notifyDataSetChanged()
             popup.dismiss()
         }
