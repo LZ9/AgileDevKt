@@ -4,19 +4,18 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.google.android.material.switchmaterial.SwitchMaterial
 import com.lodz.android.agiledevkt.R
+import com.lodz.android.agiledevkt.databinding.ActivityHeadRvBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.agiledevkt.modules.rv.popup.LayoutManagerPopupWindow
 import com.lodz.android.agiledevkt.modules.rv.popup.OrientationPopupWindow
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.pandora.base.activity.BaseActivity
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 
 /**
  * RV带头/底部测试
@@ -31,16 +30,8 @@ class HeadFooterRvActivity : BaseActivity() {
         }
     }
 
-    /** 头部选择按钮 */
-    private val mHeaderSwitch by bindView<SwitchMaterial>(R.id.header_switch)
-    /** 底部选择按钮 */
-    private val mFooterSwitch by bindView<SwitchMaterial>(R.id.footer_switch)
-    /** 方向按钮 */
-    private val mOrientationBtn by bindView<TextView>(R.id.orientation_btn)
-    /** 布局按钮 */
-    private val mLayoutManagerBtn by bindView<TextView>(R.id.layout_manager_btn)
-    /** 列表 */
-    private val mRecyclerView by bindView<RecyclerView>(R.id.recycler_view)
+    private val mBinding: ActivityHeadRvBinding by bindingLayout(ActivityHeadRvBinding::inflate)
+
     /** 适配器 */
     private lateinit var mAdapter: HeadFooterAdapter
 
@@ -50,8 +41,7 @@ class HeadFooterRvActivity : BaseActivity() {
     /** 布局方向 */
     private var mOrientation = RecyclerView.VERTICAL
 
-
-    override fun getLayoutId(): Int = R.layout.activity_head_rv
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME) ?: "")
@@ -60,12 +50,12 @@ class HeadFooterRvActivity : BaseActivity() {
 
     private fun initRecyclerView() {
         mAdapter = HeadFooterAdapter(getContext())
-        mRecyclerView.layoutManager = getLayoutManager()
-        mAdapter.onAttachedToRecyclerView(mRecyclerView)// 如果使用网格布局请设置此方法
+        mBinding.recyclerView.layoutManager = getLayoutManager()
+        mAdapter.onAttachedToRecyclerView(mBinding.recyclerView)// 如果使用网格布局请设置此方法
         mAdapter.setLayoutManagerType(mLayoutManagerType)
         mAdapter.setOrientation(mOrientation)
-        mRecyclerView.setHasFixedSize(true)
-        mRecyclerView.adapter = mAdapter
+        mBinding.recyclerView.setHasFixedSize(true)
+        mBinding.recyclerView.adapter = mAdapter
     }
 
     private fun getLayoutManager(): RecyclerView.LayoutManager {
@@ -90,23 +80,27 @@ class HeadFooterRvActivity : BaseActivity() {
 
     override fun setListeners() {
         super.setListeners()
-        mHeaderSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
+        // 头部选择按钮
+        mBinding.headerSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
             mAdapter.setHeaderData(if (isChecked) getString(R.string.rvhead_header_tips) else null)
             mAdapter.notifyDataSetChanged()
-            mRecyclerView.smoothScrollToPosition(0)
+            mBinding.recyclerView.smoothScrollToPosition(0)
         }
 
-        mFooterSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
+        // 底部选择按钮
+        mBinding.footerSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
             mAdapter.setFooterData(if (isChecked) getString(R.string.rvhead_footer_tips) else null)
             mAdapter.notifyDataSetChanged()
-            mRecyclerView.smoothScrollToPosition(mAdapter.itemCount)
+            mBinding.recyclerView.smoothScrollToPosition(mAdapter.itemCount)
         }
 
-        mOrientationBtn.setOnClickListener { view ->
+        // 方向按钮
+        mBinding.orientationBtn.setOnClickListener { view ->
             showOrientationPopupWindow(view)
         }
 
-        mLayoutManagerBtn.setOnClickListener { view ->
+        // 布局按钮
+        mBinding.layoutManagerBtn.setOnClickListener { view ->
             showLayoutManagerPopupWindow(view)
         }
 
@@ -149,8 +143,8 @@ class HeadFooterRvActivity : BaseActivity() {
         popupWindow.setOnClickListener { popup, orientation ->
             mOrientation = orientation
             mAdapter.setOrientation(mOrientation)
-            mRecyclerView.layoutManager = getLayoutManager()
-            mAdapter.onAttachedToRecyclerView(mRecyclerView)
+            mBinding.recyclerView.layoutManager = getLayoutManager()
+            mAdapter.onAttachedToRecyclerView(mBinding.recyclerView)
             mAdapter.notifyDataSetChanged()
             popup.dismiss()
         }
@@ -166,8 +160,8 @@ class HeadFooterRvActivity : BaseActivity() {
         popupWindow.setOnClickListener { popup, type ->
             mLayoutManagerType = type
             mAdapter.setLayoutManagerType(mLayoutManagerType)
-            mRecyclerView.layoutManager = getLayoutManager()
-            mAdapter.onAttachedToRecyclerView(mRecyclerView)
+            mBinding.recyclerView.layoutManager = getLayoutManager()
+            mAdapter.onAttachedToRecyclerView(mBinding.recyclerView)
             mAdapter.notifyDataSetChanged()
             popup.dismiss()
         }
