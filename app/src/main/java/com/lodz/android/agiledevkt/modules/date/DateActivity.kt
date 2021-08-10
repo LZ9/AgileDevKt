@@ -6,18 +6,15 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.widget.TextView
+import android.view.View
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder
 import com.bigkoo.pickerview.builder.TimePickerBuilder
-import com.bigkoo.pickerview.listener.OnOptionsSelectListener
-import com.bigkoo.pickerview.listener.OnTimeSelectListener
-import com.google.android.material.button.MaterialButton
 import com.lodz.android.agiledevkt.R
+import com.lodz.android.agiledevkt.databinding.ActivityDateBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.utils.DateUtils
 import com.lodz.android.pandora.base.activity.BaseActivity
-import com.lodz.android.pandora.widget.collect.CltTextView
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import java.util.*
 
 
@@ -38,28 +35,9 @@ class DateActivity : BaseActivity() {
     private val FORMAT_TYPE_LIST = arrayListOf("yyyyMMddHHmmss", "HH:mm", "yyyy-MM-dd HH:mm:ss", "yyyyMMddHHmmssSSS", "yyyyMMdd"
             , "yyyy-MM-dd", "yyyy-MM-dd-HH-mm-ss", "HH:mm:ss", "yyyy-MM-dd HH-mm-ss", "yyyy-MM-dd HH:mm:ss:SSS", "yyyy-MM-dd HH:mm", "yyyyMM")
 
-    /** 日期格式选择控件 */
-    private val mFormatTypeClttv by bindView<CltTextView>(R.id.format_type_clttv)
-    /** 当前日期 */
-    private val mCurrentDateTv by bindView<TextView>(R.id.current_date_tv)
-    /** 当前日期之前5天 */
-    private val mBeforeTv by bindView<TextView>(R.id.before_tv)
-    /** 当前日期之后5天 */
-    private val mAfterTv by bindView<TextView>(R.id.after_tv)
-    /** 系统日期选择框 */
-    private val mDatePickerBtn by bindView<MaterialButton>(R.id.date_picker_btn)
-    /** 选择日期 */
-    private val mDatePickerTv by bindView<TextView>(R.id.date_picker_tv)
-    /** 系统时间选择框 */
-    private val mTimePickerBtn by bindView<MaterialButton>(R.id.time_picker_btn)
-    /** 选择时间 */
-    private val mTimePickerTv by bindView<TextView>(R.id.time_picker_tv)
-    /** 时间日期滚动选择框 */
-    private val mTimeWheelBtn by bindView<MaterialButton>(R.id.time_wheel_btn)
-    /** 选择时间日期 */
-    private val mTimeWheelTv by bindView<TextView>(R.id.time_wheel_tv)
+    private val mBinding: ActivityDateBinding by bindingLayout(ActivityDateBinding::inflate)
 
-    override fun getLayoutId(): Int = R.layout.activity_date
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         super.findViews(savedInstanceState)
@@ -73,24 +51,26 @@ class DateActivity : BaseActivity() {
 
     override fun setListeners() {
         super.setListeners()
-        mFormatTypeClttv.setOnContentClickListener {
-            val dialog = OptionsPickerBuilder(getContext(),
-                OnOptionsSelectListener { options1, options2, options3, v ->
-                    mFormatTypeClttv.setContentText(FORMAT_TYPE_LIST[options1])
-                    mFormatTypeClttv.setContentTag(options1.toString())
-                    updateUI()
-                })
-                    .setSubmitText(getString(R.string.date_confirm))
-                    .setCancelText(getString(R.string.date_cancel))
-                    .setTitleText(getString(R.string.date_format_title))
-                    .setSelectOptions(mFormatTypeClttv.getContentTag().toInt())
-                    .build<String>()
+
+        // 日期格式选择控件
+        mBinding.formatTypeClttv.setOnContentClickListener {
+            val dialog = OptionsPickerBuilder(getContext()) { options1, options2, options3, v ->
+                mBinding.formatTypeClttv.setContentText(FORMAT_TYPE_LIST[options1])
+                mBinding.formatTypeClttv.setContentTag(options1.toString())
+                updateUI()
+            }
+                .setSubmitText(getString(R.string.date_confirm))
+                .setCancelText(getString(R.string.date_cancel))
+                .setTitleText(getString(R.string.date_format_title))
+                .setSelectOptions(mBinding.formatTypeClttv.getContentTag().toInt())
+                .build<String>()
             dialog.setPicker(FORMAT_TYPE_LIST)
             dialog.show()
         }
 
-        mTimeWheelBtn.setOnClickListener {
-            var calendar = DateUtils.parseFormatToCalendar(DateUtils.TYPE_2, mTimeWheelTv.text.toString())
+        // 时间日期滚动选择框
+        mBinding.timeWheelBtn.setOnClickListener {
+            var calendar = DateUtils.parseFormatToCalendar(DateUtils.TYPE_2, mBinding.timeWheelTv.text.toString())
             if (calendar == null) {
                 calendar = Calendar.getInstance()
             }
@@ -100,25 +80,26 @@ class DateActivity : BaseActivity() {
             startDate.set(startDate.get(Calendar.YEAR) - 100, Calendar.JANUARY, 1)
             endDate.set(endDate.get(Calendar.YEAR) + 100, Calendar.DECEMBER, 31)
 
-            val dialog = TimePickerBuilder(getContext(),
-                OnTimeSelectListener { date, v ->
-                    mTimeWheelTv.text = if (date != null) DateUtils.getFormatString(DateUtils.TYPE_2, date) else ""
-                })
+            val dialog = TimePickerBuilder(getContext()) { date, v ->
+                mBinding.timeWheelTv.text =
+                    if (date != null) DateUtils.getFormatString(DateUtils.TYPE_2, date) else ""
+            }
                 .setTitleText(getString(R.string.date_pick_title))
                 .setDate(calendar)
                 .setRangDate(startDate, endDate)
                 .setType(booleanArrayOf(true, true, true, true, true, true))
                 .setLabel("年", "月", "日", "时", "分", "秒")
                 .isCyclic(true)
-                .setSubmitColor(Color.WHITE)
-                .setCancelColor(Color.WHITE)
+                .setSubmitColor(Color.BLUE)
+                .setCancelColor(Color.BLUE)
                 .build()
             dialog.show()
         }
 
-        mDatePickerBtn.setOnClickListener {
+        // 系统日期选择框
+        mBinding.datePickerBtn.setOnClickListener {
             var calendar = Calendar.getInstance()
-            val dateStr = mDatePickerTv.text.toString()
+            val dateStr = mBinding.datePickerTv.text.toString()
             if (dateStr.isNotEmpty()) {
                 val result = DateUtils.parseFormatToCalendar(DateUtils.TYPE_6, dateStr)
                 if (result != null) {
@@ -132,13 +113,14 @@ class DateActivity : BaseActivity() {
                     c.set(Calendar.YEAR, year)
                     c.set(Calendar.MONTH, month)
                     c.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-                    mDatePickerTv.text = DateUtils.parseFormatCalendar(DateUtils.TYPE_6, c)
+                    mBinding.datePickerTv.text = DateUtils.parseFormatCalendar(DateUtils.TYPE_6, c)
                 }, calendar)
         }
 
-        mTimePickerBtn.setOnClickListener {
+        // 系统时间选择框
+        mBinding.timePickerBtn.setOnClickListener {
             var calendar = Calendar.getInstance()
-            val dateStr = mTimePickerTv.text.toString()
+            val dateStr = mBinding.timePickerTv.text.toString()
             if (dateStr.isNotEmpty()) {
                 val result = DateUtils.parseFormatToCalendar(DateUtils.TYPE_8, dateStr)
                 if (result != null) {
@@ -151,7 +133,7 @@ class DateActivity : BaseActivity() {
                     val c = Calendar.getInstance()
                     c.set(Calendar.HOUR_OF_DAY, hourOfDay)
                     c.set(Calendar.MINUTE, minute)
-                    mTimePickerTv.text = DateUtils.parseFormatCalendar(DateUtils.TYPE_8, c)
+                    mBinding.timePickerTv.text = DateUtils.parseFormatCalendar(DateUtils.TYPE_8, c)
                 }, calendar)
         }
     }
@@ -159,17 +141,17 @@ class DateActivity : BaseActivity() {
 
     override fun initData() {
         super.initData()
-        mFormatTypeClttv.setContentText(FORMAT_TYPE_LIST[0])
-        mFormatTypeClttv.setContentTag("0")
+        mBinding.formatTypeClttv.setContentText(FORMAT_TYPE_LIST[0])
+        mBinding.formatTypeClttv.setContentTag("0")
         updateUI()
         showStatusCompleted()
     }
 
     /** 更新界面 */
     private fun updateUI() {
-        val current = DateUtils.getCurrentFormatString(mFormatTypeClttv.getContentText())
-        mCurrentDateTv.text = current
-        mBeforeTv.text = DateUtils.getBeforeDay(mFormatTypeClttv.getContentText(), current, 5)
-        mAfterTv.text = DateUtils.getAfterDay(mFormatTypeClttv.getContentText(), current, 5)
+        val current = DateUtils.getCurrentFormatString(mBinding.formatTypeClttv.getContentText())
+        mBinding.currentDateTv.text = current
+        mBinding.beforeTv.text = DateUtils.getBeforeDay(mBinding.formatTypeClttv.getContentText(), current, 5)
+        mBinding.afterTv.text = DateUtils.getAfterDay(mBinding.formatTypeClttv.getContentText(), current, 5)
     }
 }
