@@ -3,21 +3,22 @@ package com.lodz.android.agiledevkt.modules.rv.binder
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.ViewGroup
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.NationBean
 import com.lodz.android.agiledevkt.config.Constant
+import com.lodz.android.agiledevkt.databinding.ActivityRvBinderBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.agiledevkt.modules.rv.binder.first.FirstBinder
 import com.lodz.android.agiledevkt.modules.rv.binder.second.SecondBinder
 import com.lodz.android.agiledevkt.modules.rv.binder.third.ThirdBinder
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.getColorCompat
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.corekt.utils.SnackbarUtils
 import com.lodz.android.pandora.base.activity.BaseActivity
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.rv.binder.RvBinderAdapter
 
 /**
@@ -62,14 +63,11 @@ class BinderRvActivity : BaseActivity() {
     )
 
 
-    /** 根布局 */
-    private val mRootLayout by bindView<ViewGroup>(R.id.root_layout)
+    private val mBinding: ActivityRvBinderBinding by bindingLayout(ActivityRvBinderBinding::inflate)
 
-    /** 列表 */
-    private val mRecyclerView by bindView<RecyclerView>(R.id.recycler_view)
     private lateinit var mAdapter: RvBinderAdapter
 
-    override fun getLayoutId(): Int = R.layout.activity_rv_binder
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME) ?: "")
@@ -82,9 +80,9 @@ class BinderRvActivity : BaseActivity() {
         val layoutManager = LinearLayoutManager(getContext())
         layoutManager.orientation = RecyclerView.VERTICAL
         mAdapter = RvBinderAdapter(getContext())
-        mRecyclerView.layoutManager = layoutManager
-        mRecyclerView.setHasFixedSize(true)
-        mRecyclerView.adapter = mAdapter
+        mBinding.recyclerView.layoutManager = layoutManager
+        mBinding.recyclerView.setHasFixedSize(true)
+        mBinding.recyclerView.adapter = mAdapter
     }
 
     /** 添加binder */
@@ -115,7 +113,7 @@ class BinderRvActivity : BaseActivity() {
         val binder = ThirdBinder(getContext(), THIRD_BINDER)
         binder.setData(getNationList())
         binder.setListener { item ->
-            SnackbarUtils.createShort(mRootLayout, item.name).setBackgroundColor(getColorCompat(R.color.color_a0191919)).show()
+            SnackbarUtils.createShort(mBinding.root, item.name).setBackgroundColor(getColorCompat(R.color.color_a0191919)).show()
         }
         return binder
     }

@@ -1,15 +1,12 @@
 package com.lodz.android.agiledevkt.modules.rv.binder.first
 
 import android.content.Context
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.NationBean
-import com.lodz.android.corekt.anko.bindView
+import com.lodz.android.agiledevkt.databinding.RvBinderFirstBinding
 import com.lodz.android.pandora.widget.rv.binder.RecyclerBinder
-import com.lodz.android.pandora.widget.rv.horizontal.HorRecyclerView
 
 /**
  * Created by zhouL on 2018/12/10.
@@ -20,7 +17,7 @@ class FirstBinder(context: Context, binderType: Int) : RecyclerBinder<List<Natio
     private var mListener: Listener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder =
-            DataViewHolder(getLayoutView(parent, R.layout.rv_binder_first))
+            DataViewHolder(getViewBindingLayout(RvBinderFirstBinding::inflate, parent))
 
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -45,9 +42,7 @@ class FirstBinder(context: Context, binderType: Int) : RecyclerBinder<List<Natio
         return mData
     }
 
-    private inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        /** 水平RV */
-        val horRv by bindView<HorRecyclerView>(R.id.hor_recycler_view)
+    private inner class DataViewHolder(private val binding: RvBinderFirstBinding) : RecyclerView.ViewHolder(binding.root) {
 
         private var mAdapter: FirstBinderAdapter? = null
 
@@ -56,9 +51,9 @@ class FirstBinder(context: Context, binderType: Int) : RecyclerBinder<List<Natio
                 val layoutManager = LinearLayoutManager(getContext())
                 layoutManager.orientation = RecyclerView.HORIZONTAL
                 mAdapter = FirstBinderAdapter(getContext())
-                horRv.layoutManager = layoutManager
-                horRv.setHasFixedSize(true)
-                horRv.adapter = mAdapter
+                binding.horRecyclerView.layoutManager = layoutManager
+                binding.horRecyclerView.setHasFixedSize(true)
+                binding.horRecyclerView.adapter = mAdapter
                 mAdapter?.setOnItemClickListener { viewHolder, item, position ->
                     mListener?.onClick(item)
                 }
