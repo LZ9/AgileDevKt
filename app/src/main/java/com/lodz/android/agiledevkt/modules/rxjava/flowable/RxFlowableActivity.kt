@@ -3,14 +3,12 @@ package com.lodz.android.agiledevkt.modules.rxjava.flowable
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.*
-import androidx.core.widget.NestedScrollView
-import com.google.android.material.button.MaterialButton
-import com.google.android.material.switchmaterial.SwitchMaterial
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.base.response.ResponseBean
+import com.lodz.android.agiledevkt.databinding.ActivityRxFlowableBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.runOnMainDelay
 import com.lodz.android.corekt.anko.then
 import com.lodz.android.corekt.anko.toastShort
@@ -23,6 +21,7 @@ import com.lodz.android.pandora.rx.utils.RxUtils
 import com.lodz.android.pandora.rx.utils.doComplete
 import com.lodz.android.pandora.rx.utils.doError
 import com.lodz.android.pandora.rx.utils.doNext
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import kotlinx.coroutines.GlobalScope
@@ -46,37 +45,6 @@ class RxFlowableActivity : BaseActivity() {
         }
     }
 
-    /** 滚动控件 */
-    private val mScrollView by bindView<NestedScrollView>(R.id.scroll_view)
-    /** 结果 */
-    private val mResultTv by bindView<TextView>(R.id.result_tv)
-    /** 背压类型组 */
-    private val mRadioGroup by bindView<RadioGroup>(R.id.bp_rg)
-    /** 单选按钮 */
-    private val mErrorRb by bindView<RadioButton>(R.id.error_rb)
-    /** 停止订阅按钮 */
-    private val mStopBtn by bindView<MaterialButton>(R.id.stop_btn)
-    /** 背压测试开关 */
-    private val mBackpressureSwitch by bindView<SwitchMaterial>(R.id.backpressure_switch)
-    /** 背压测试 */
-    private val mBpTestBtn by bindView<MaterialButton>(R.id.bp_test_btn)
-    /** 数据自动拉取开关 */
-    private val mAutoRequestSwitch by bindView<SwitchMaterial>(R.id.auto_request_switch)
-    /** 数据拉取按钮 */
-    private val mRequestBtn by bindView<MaterialButton>(R.id.request_btn)
-    /** 数据拉取测试 */
-    private val mRequestTestBtn by bindView<MaterialButton>(R.id.request_test_btn)
-    /** 订阅失败开关 */
-    private val mFailSwitch by bindView<SwitchMaterial>(R.id.fail_switch)
-    /** 返回键关闭开关 */
-    private val mCancelableSwitch by bindView<SwitchMaterial>(R.id.cancelable_switch)
-    /** 空白处关闭开关 */
-    private val mCanceledOutsideSwitch by bindView<SwitchMaterial>(R.id.canceled_outside_switch)
-    /** 响应数据封装 */
-    private val mRxBtn by bindView<MaterialButton>(R.id.rx_btn)
-    /** 进度条封装 */
-    private val mProgressBtn by bindView<MaterialButton>(R.id.progress_btn)
-
     /** 背压类型 */
     private var mBackpressureType = BackpressureStrategy.ERROR
     /** 背压订阅器 */
@@ -84,7 +52,9 @@ class RxFlowableActivity : BaseActivity() {
     /** 数据拉取订阅器 */
     private var mDataSubscription: Subscription? = null
 
-    override fun getLayoutId(): Int = R.layout.activity_rx_flowable
+    private val mBinding: ActivityRxFlowableBinding by bindingLayout(ActivityRxFlowableBinding::inflate)
+
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         super.findViews(savedInstanceState)
@@ -100,7 +70,7 @@ class RxFlowableActivity : BaseActivity() {
         super.setListeners()
 
         // 背压类型组
-        mRadioGroup.setOnCheckedChangeListener { group, checkedId ->
+        mBinding.bpRg.setOnCheckedChangeListener { group, checkedId ->
             mBackpressureType = when (checkedId) {
                 R.id.missing_rb -> BackpressureStrategy.MISSING
                 R.id.error_rb -> BackpressureStrategy.ERROR
@@ -112,20 +82,20 @@ class RxFlowableActivity : BaseActivity() {
         }
 
         // 背压测试开关
-        mBackpressureSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
+        mBinding.backpressureSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
             if (!isChecked) {
                 toastShort(R.string.rx_flowable_bp_close_tips)
             }
         }
 
         // 停止订阅按钮
-        mStopBtn.setOnClickListener {
+        mBinding.stopBtn.setOnClickListener {
             mBpSubscription?.cancel()
             mBpSubscription = null
         }
 
         // 背压测试
-        mBpTestBtn.setOnClickListener {
+        mBinding.bpTestBtn.setOnClickListener {
             cleanLog()
             mBpSubscription = null
             createBpFlowable()
@@ -155,18 +125,18 @@ class RxFlowableActivity : BaseActivity() {
         }
 
         // 数据自动拉取开关
-        mAutoRequestSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
-            mRequestBtn.isEnabled = !isChecked
+        mBinding.autoRequestSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
+            mBinding.requestBtn.isEnabled = !isChecked
         }
 
         // 数据拉取按钮
-        mRequestBtn.setOnClickListener {
+        mBinding.requestBtn.setOnClickListener {
             mDataSubscription?.request(Long.MAX_VALUE)
             mDataSubscription = null
         }
 
         // 数据拉取测试
-        mRequestTestBtn.setOnClickListener {
+        mBinding.requestTestBtn.setOnClickListener {
             cleanLog()
             val list = arrayListOf(4, 54, 8, 7, 4, 64, 187, 6, 314, 34, 6, 87)
             Flowable.fromIterable(list)
@@ -188,41 +158,48 @@ class RxFlowableActivity : BaseActivity() {
                         }
 
                         override fun isAutoSubscribe(): Boolean {
-                            return mAutoRequestSwitch.isChecked
+                            return mBinding.autoRequestSwitch.isChecked
                         }
                     })
         }
 
         // 返回键关闭开关
-        mCancelableSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
+        mBinding.cancelableSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
             if (!isChecked) {
-                mCanceledOutsideSwitch.isChecked = false
+                mBinding.canceledOutsideSwitch.isChecked = false
             }
-            mCanceledOutsideSwitch.isEnabled = isChecked
+            mBinding.canceledOutsideSwitch.isEnabled = isChecked
         }
 
         // 响应数据封装
-        mRxBtn.setOnClickListener {
+        mBinding.rxBtn.setOnClickListener {
             cleanLog()
             createFlowable(false)
-                    .compose(RxUtils.ioToMainFlowable())
-                    .compose(bindDestroyEvent())
-                    .subscribe(RxSubscriber.action({ any ->
+                .compose(RxUtils.ioToMainFlowable())
+                .compose(bindDestroyEvent())
+                .subscribe(RxSubscriber.action(
+                    { any ->
                         printLog("onRxNext num : ${any.data}")
                     }, { e, isNetwork ->
                         printLog("onRxError message : ${RxUtils.getExceptionTips(e, isNetwork, "create fail")}")
-                    }))
+                    })
+                )
         }
 
         // 进度条封装
-        mProgressBtn.setOnClickListener {
+        mBinding.progressBtn.setOnClickListener {
             cleanLog()
             createFlowable(true)
                 .compose(RxUtils.ioToMainFlowable())
                 .compose(bindDestroyEvent())
-                .subscribe(ProgressSubscriber.action(getContext(), "loading", mCancelableSwitch.isChecked, mCanceledOutsideSwitch.isChecked,
-                    { any -> printLog("onPgNext num : ${any.data}") },
-                    { e, isNetwork -> printLog("onPgError message : ${RxUtils.getExceptionTips(e, isNetwork, "create fail")}")}))
+                .subscribe(
+                    ProgressSubscriber.action(
+                        getContext(),
+                        "loading",
+                        mBinding.cancelableSwitch.isChecked,
+                        mBinding.canceledOutsideSwitch.isChecked,
+                        { any -> printLog("onPgNext num : ${any.data}") },
+                        { e, isNetwork -> printLog("onPgError message : ${RxUtils.getExceptionTips(e, isNetwork, "create fail")}")}))
         }
     }
 
@@ -241,7 +218,7 @@ class RxFlowableActivity : BaseActivity() {
                 while (true) {
                     line = br.readLine() ?: break
                     emitter.requested()
-                    while (!mBackpressureSwitch.isChecked && emitter.requested() == 0L) {
+                    while (!mBinding.backpressureSwitch.isChecked && emitter.requested() == 0L) {
                         //下游无法处理数据时循环等待
                         PrintLog.d("testtag", "等待下游")
                         if (emitter.isCancelled) {
@@ -272,7 +249,7 @@ class RxFlowableActivity : BaseActivity() {
     private fun createFlowable(isDelay: Boolean): Flowable<ResponseBean<String>> =
         Flowable.create({ emitter ->
             val delayTime = isDelay.then { 3 } ?: 0
-            val responseBean: ResponseBean<String> = if (mFailSwitch.isChecked) {
+            val responseBean: ResponseBean<String> = if (mBinding.failSwitch.isChecked) {
                 val bean: ResponseBean<String> = ResponseBean.createFail()
                 bean.msg = "数据获取失败"
                 bean
@@ -293,25 +270,25 @@ class RxFlowableActivity : BaseActivity() {
 
     override fun initData() {
         super.initData()
-        mErrorRb.isChecked = true
+        mBinding.errorRb.isChecked = true
         showStatusCompleted()
     }
 
     /** 清空日志 */
     private fun cleanLog() {
-        mResultTv.text = ""
+        mBinding.resultTv.text = ""
     }
 
     /** 打印日志 */
     private fun printLog(text: String) {
-        val log = if (mResultTv.text.isEmpty()) {
+        val log = if (mBinding.resultTv.text.isEmpty()) {
             text
         } else {
-            "${mResultTv.text}\n$text"
+            "${mBinding.resultTv.text}\n$text"
         }
-        mResultTv.text = log
+        mBinding.resultTv.text = log
         GlobalScope.runOnMainDelay(100) {
-            mScrollView.fullScroll(ScrollView.FOCUS_DOWN)
+            mBinding.scrollView.fullScroll(ScrollView.FOCUS_DOWN)
         }
     }
 }
