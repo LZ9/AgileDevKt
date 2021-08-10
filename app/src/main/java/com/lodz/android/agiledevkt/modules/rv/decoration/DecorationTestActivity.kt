@@ -63,7 +63,7 @@ class DecorationTestActivity : BaseActivity() {
     private val CLUB_INDEX_TITLE = arrayListOf("曼联", "阿森纳", "切尔西", "利物浦")
     private val PLAYER_FIX_SECTIONS = listOf(
             listOf("贝克汉姆", "吉格斯", "斯科尔斯", "鲁尼", "费迪南德", "范德萨", "卡里克", "罗伊基恩", "埃弗拉"),
-            listOf("亨利", "皮雷", "博格坎普", "莱曼", "维埃拉", "罗西基", "阿什利科尔", "索尔坎贝尔"),
+            listOf("亨利"),
             listOf("兰帕德", "切赫", "特里", "乔科尔", "德罗巴", "巴拉克", "舍甫琴科", "罗本"),
             listOf("欧文", "杰拉德", "卡拉格", "福勒", "雷纳", "阿隆索", "库伊特", "里瑟")
     )

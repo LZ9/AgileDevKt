@@ -41,6 +41,12 @@ class StickyFixItemDecoration<T> private constructor(context: Context, sections:
             val sectionTop = Math.max(top, view.top - mPdrSectionHeightPx)// 顶部section上坐标，取top和viewtop最大值
             val sectionBottom = Math.max(bottom, view.top)// 顶部section下坐标，取bottom和viewbottom的最大值
 
+            if (isFirstGroupItem(position) && isLastGroupItem(position) && view.bottom <= mPdrSectionHeightPx) {//分组内只有1条数据
+                drawBgPaint(canvas, left, top, right, view.bottom)
+                drawTextPaint(canvas, getSectionText(position), left, top, right, view.bottom)
+                continue
+            }
+
             if (isFirstGroupItem(position)) {// 分组的第一个数据，绘制分组样式
                 drawBgPaint(canvas, left, sectionTop, right, sectionBottom)
                 drawTextPaint(canvas, getSectionText(position), left, sectionTop, right, sectionBottom)
