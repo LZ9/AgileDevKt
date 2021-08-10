@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBinding
 
 /**
  * RecyclerBinder基类
@@ -29,4 +30,12 @@ abstract class RecyclerBinder<T>(private val context: Context, private val binde
     @JvmOverloads
     protected fun getLayoutView(parent: ViewGroup, @LayoutRes layoutId: Int, attachToRoot: Boolean = false): View =
             LayoutInflater.from(context).inflate(layoutId, parent, attachToRoot)
+
+    /** 在onCreateViewHolder方法中使用ViewBinding */
+    @JvmOverloads
+    protected fun <VB : ViewBinding> getViewBindingLayout(
+        inflate: (LayoutInflater, parent: ViewGroup, attachToRoot: Boolean) -> VB,
+        parent: ViewGroup,
+        attachToRoot: Boolean = false
+    ): VB = inflate(LayoutInflater.from(parent.context), parent, attachToRoot)
 }
