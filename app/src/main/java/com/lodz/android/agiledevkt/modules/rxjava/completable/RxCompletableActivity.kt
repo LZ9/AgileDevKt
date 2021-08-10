@@ -3,14 +3,10 @@ package com.lodz.android.agiledevkt.modules.rxjava.completable
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.ScrollView
-import android.widget.TextView
-import androidx.core.widget.NestedScrollView
-import com.google.android.material.button.MaterialButton
-import com.google.android.material.switchmaterial.SwitchMaterial
-import com.lodz.android.agiledevkt.R
+import com.lodz.android.agiledevkt.databinding.ActivityRxCompletableBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.runOnMainDelay
 import com.lodz.android.corekt.anko.then
 import com.lodz.android.pandora.base.activity.BaseActivity
@@ -21,6 +17,7 @@ import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
 import com.lodz.android.pandora.rx.utils.RxUtils
 import com.lodz.android.pandora.rx.utils.doComplete
 import com.lodz.android.pandora.rx.utils.doError
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.CompletableObserver
 import io.reactivex.rxjava3.disposables.Disposable
@@ -40,28 +37,9 @@ class RxCompletableActivity : BaseActivity() {
         }
     }
 
-    /** 滚动控件 */
-    private val mScrollView by bindView<NestedScrollView>(R.id.scroll_view)
-    /** 结果 */
-    private val mResultTv by bindView<TextView>(R.id.result_tv)
-    /** 订阅失败开关 */
-    private val mFailSwitch by bindView<SwitchMaterial>(R.id.fail_switch)
-    /** Completable转Observable订阅按钮 */
-    private val mCompletableToObservableBtn by bindView<MaterialButton>(R.id.completable_to_observable_btn)
-    /** 完成订阅按钮 */
-    private val mCompleteBtn by bindView<MaterialButton>(R.id.complete_btn)
-    /** 基类封装订阅按钮 */
-    private val mBaseBtn by bindView<MaterialButton>(R.id.base_btn)
-    /** 响应数据封装按钮 */
-    private val mRxBtn by bindView<MaterialButton>(R.id.rx_btn)
-    /** 返回键关闭开关 */
-    private val mCancelableSwitch by bindView<SwitchMaterial>(R.id.cancelable_switch)
-    /** 空白处关闭开关 */
-    private val mCanceledOutsideSwitch by bindView<SwitchMaterial>(R.id.canceled_outside_switch)
-    /** 进度条封装按钮 */
-    private val mProgressBtn by bindView<MaterialButton>(R.id.progress_btn)
+    private val mBinding: ActivityRxCompletableBinding by bindingLayout(ActivityRxCompletableBinding::inflate)
 
-    override fun getLayoutId(): Int = R.layout.activity_rx_completable
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         super.findViews(savedInstanceState)
@@ -78,7 +56,7 @@ class RxCompletableActivity : BaseActivity() {
         super.setListeners()
 
         // Completable转Observable订阅按钮
-        mCompletableToObservableBtn.setOnClickListener {
+        mBinding.completableToObservableBtn.setOnClickListener {
             cleanLog()
             createCompletable()
                     .toObservable<Any>()
@@ -106,7 +84,7 @@ class RxCompletableActivity : BaseActivity() {
         }
 
         // 完成订阅按钮
-        mCompleteBtn.setOnClickListener {
+        mBinding.completeBtn.setOnClickListener {
             cleanLog()
             createCompletable()
                     .compose(RxUtils.ioToMainCompletable())
@@ -127,7 +105,7 @@ class RxCompletableActivity : BaseActivity() {
         }
 
         // 基类封装订阅按钮
-        mBaseBtn.setOnClickListener {
+        mBinding.baseBtn.setOnClickListener {
             cleanLog()
             createCompletable()
                     .compose(RxUtils.ioToMainCompletable())
@@ -141,7 +119,7 @@ class RxCompletableActivity : BaseActivity() {
 
 
         // 响应数据封装按钮
-        mRxBtn.setOnClickListener {
+        mBinding.rxBtn.setOnClickListener {
             cleanLog()
             createCompletable()
                     .compose(RxUtils.ioToMainCompletable())
@@ -154,20 +132,20 @@ class RxCompletableActivity : BaseActivity() {
         }
 
         // 返回键关闭开关
-        mCancelableSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
+        mBinding.cancelableSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
             if (!isChecked) {
-                mCanceledOutsideSwitch.isChecked = false
+                mBinding.canceledOutsideSwitch.isChecked = false
             }
-            mCanceledOutsideSwitch.isEnabled = isChecked
+            mBinding.canceledOutsideSwitch.isEnabled = isChecked
         }
 
         // 进度条封装按钮
-        mProgressBtn.setOnClickListener {
+        mBinding.progressBtn.setOnClickListener {
             cleanLog()
             createCompletable(true)
                 .compose(RxUtils.ioToMainCompletable())
                 .compose(bindAnyDestroyEvent())
-                .subscribe(ProgressCompletableObserver.action(getContext(),"loading", mCancelableSwitch.isChecked, mCanceledOutsideSwitch.isChecked,
+                .subscribe(ProgressCompletableObserver.action(getContext(),"loading", mBinding.cancelableSwitch.isChecked, mBinding.canceledOutsideSwitch.isChecked,
                     { printLog("onPgComplete") },
                     { e, isNetwork -> printLog("onPgError message : ${RxUtils.getExceptionTips(e, isNetwork, "create fail")}")}))
         }
@@ -178,7 +156,7 @@ class RxCompletableActivity : BaseActivity() {
             val delayTime = isDelay.then { 3 } ?: 0
             try {
                 Thread.sleep(delayTime * 1000L)
-                if (mFailSwitch.isChecked) {
+                if (mBinding.failSwitch.isChecked) {
                     emitter.doError(NullPointerException("data empty"))
                 } else {
                     emitter.doComplete()
@@ -196,19 +174,19 @@ class RxCompletableActivity : BaseActivity() {
 
     /** 清空日志 */
     private fun cleanLog() {
-        mResultTv.text = ""
+        mBinding.resultTv.text = ""
     }
 
     /** 打印日志 */
     private fun printLog(text: String) {
-        val log = if (mResultTv.text.isEmpty()) {
+        val log = if (mBinding.resultTv.text.isEmpty()) {
             text
         } else {
-            "${mResultTv.text}\n$text"
+            "${mBinding.resultTv.text}\n$text"
         }
-        mResultTv.text = log
+        mBinding.resultTv.text = log
         GlobalScope.runOnMainDelay(100) {
-            mScrollView.fullScroll(ScrollView.FOCUS_DOWN)
+            mBinding.scrollView.fullScroll(ScrollView.FOCUS_DOWN)
         }
     }
 

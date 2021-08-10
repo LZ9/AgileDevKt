@@ -41,10 +41,11 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginEnd="5dp"
-            android:layout_weight="3"
+            android:layout_weight="2"
             android:text="@string/rx_completable_to_observable"
             android:textAllCaps="false"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="12sp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/complete_btn"
@@ -54,7 +55,8 @@
             android:layout_weight="1"
             android:text="@string/rx_maybe_complete"
             android:textAllCaps="false"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="12sp" />
     </LinearLayout>
 
     <LinearLayout
