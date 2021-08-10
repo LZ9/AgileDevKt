@@ -3,15 +3,11 @@ package com.lodz.android.agiledevkt.modules.rxjava.maybe
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.ScrollView
-import android.widget.TextView
-import androidx.core.widget.NestedScrollView
-import com.google.android.material.button.MaterialButton
-import com.google.android.material.switchmaterial.SwitchMaterial
-import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.base.response.ResponseBean
+import com.lodz.android.agiledevkt.databinding.ActivityRxMaybeBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.runOnMainDelay
 import com.lodz.android.corekt.anko.then
 import com.lodz.android.pandora.base.activity.BaseActivity
@@ -23,6 +19,7 @@ import com.lodz.android.pandora.rx.utils.RxUtils
 import com.lodz.android.pandora.rx.utils.doComplete
 import com.lodz.android.pandora.rx.utils.doError
 import com.lodz.android.pandora.rx.utils.doSuccess
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.MaybeObserver
 import io.reactivex.rxjava3.disposables.Disposable
@@ -42,28 +39,9 @@ class RxMaybeActivity : BaseActivity() {
         }
     }
 
-    /** 滚动控件 */
-    private val mScrollView by bindView<NestedScrollView>(R.id.scroll_view)
-    /** 结果 */
-    private val mResultTv by bindView<TextView>(R.id.result_tv)
-    /** 订阅失败开关 */
-    private val mFailSwitch by bindView<SwitchMaterial>(R.id.fail_switch)
-    /** Maybe转Observable订阅按钮 */
-    private val mMaybeToObservableBtn by bindView<MaterialButton>(R.id.maybe_to_observable_btn)
-    /** 成功订阅按钮 */
-    private val mSuccessBtn by bindView<MaterialButton>(R.id.success_btn)
-    /** 完成订阅按钮 */
-    private val mCompleteBtn by bindView<MaterialButton>(R.id.complete_btn)
-    /** 返回键关闭开关 */
-    private val mCancelableSwitch by bindView<SwitchMaterial>(R.id.cancelable_switch)
-    /** 空白处关闭开关 */
-    private val mCanceledOutsideSwitch by bindView<SwitchMaterial>(R.id.canceled_outside_switch)
-    /** 响应数据封装按钮 */
-    private val mRxBtn by bindView<MaterialButton>(R.id.rx_btn)
-    /** 进度条封装按钮 */
-    private val mProgressBtn by bindView<MaterialButton>(R.id.progress_btn)
+    private val mBinding: ActivityRxMaybeBinding by bindingLayout(ActivityRxMaybeBinding::inflate)
 
-    override fun getLayoutId(): Int = R.layout.activity_rx_maybe
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         super.findViews(savedInstanceState)
@@ -79,11 +57,11 @@ class RxMaybeActivity : BaseActivity() {
         super.setListeners()
 
         // Maybe转Observable订阅按钮
-        mMaybeToObservableBtn.setOnClickListener {
+        mBinding.maybeToObservableBtn.setOnClickListener {
             cleanLog()
 
             Maybe.create<String> { emitter ->
-                if (mFailSwitch.isChecked) {
+                if (mBinding.failSwitch.isChecked) {
                     emitter.doError(NullPointerException("data empty"))
                 } else {
                     emitter.doSuccess("data")
@@ -113,10 +91,10 @@ class RxMaybeActivity : BaseActivity() {
         }
 
         // 成功订阅按钮
-        mSuccessBtn.setOnClickListener {
+        mBinding.successBtn.setOnClickListener {
             cleanLog()
             Maybe.create<String> { emitter ->
-                val data = mFailSwitch.isChecked.then { "" } ?: "data"
+                val data = mBinding.failSwitch.isChecked.then { "" } ?: "data"
                 try {
                     if (data.isNotEmpty()) {
                         emitter.doSuccess(data)
@@ -129,17 +107,19 @@ class RxMaybeActivity : BaseActivity() {
                 }
             }.compose(RxUtils.ioToMainMaybe())
                 .compose(bindDestroyEvent())
-                .subscribe(BaseMaybeObserver.action(
-                    { any -> printLog("onBaseSuccess : $any")},
-                    { printLog("onBaseComplete")},
-                    { e -> printLog("onBaseError : ${e.message}")}))
+                .subscribe(
+                    BaseMaybeObserver.action(
+                        { any -> printLog("onBaseSuccess : $any") },
+                        { printLog("onBaseComplete") },
+                        { e -> printLog("onBaseError : ${e.message}") })
+                )
         }
 
         // 完成订阅按钮
-        mCompleteBtn.setOnClickListener {
+        mBinding.completeBtn.setOnClickListener {
             cleanLog()
             Maybe.create<String> { emitter ->
-                val data = mFailSwitch.isChecked.then { "" } ?: "data"
+                val data = mBinding.failSwitch.isChecked.then { "" } ?: "data"
                 try {
                     if (data.isNotEmpty()) {
                         emitter.doComplete()
@@ -172,7 +152,7 @@ class RxMaybeActivity : BaseActivity() {
         }
 
         // 响应数据封装按钮
-        mRxBtn.setOnClickListener {
+        mBinding.rxBtn.setOnClickListener {
             cleanLog()
             createMaybe(false)
                     .compose(RxUtils.ioToMainMaybe())
@@ -187,20 +167,20 @@ class RxMaybeActivity : BaseActivity() {
         }
 
         // 返回键关闭开关
-        mCancelableSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
+        mBinding.cancelableSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
             if (!isChecked) {
-                mCanceledOutsideSwitch.isChecked = false
+                mBinding.canceledOutsideSwitch.isChecked = false
             }
-            mCanceledOutsideSwitch.isEnabled = isChecked
+            mBinding.canceledOutsideSwitch.isEnabled = isChecked
         }
 
         // 进度条封装按钮
-        mProgressBtn.setOnClickListener {
+        mBinding.progressBtn.setOnClickListener {
             cleanLog()
             createMaybe(true)
                 .compose(RxUtils.ioToMainMaybe())
                 .compose(bindDestroyEvent())
-                .subscribe(ProgressMaybeObserver.action(getContext(), "loading", mCancelableSwitch.isChecked, mCanceledOutsideSwitch.isChecked,
+                .subscribe(ProgressMaybeObserver.action(getContext(), "loading", mBinding.cancelableSwitch.isChecked, mBinding.canceledOutsideSwitch.isChecked,
                     { any -> printLog("onPgSuccess num : ${any.data}")},
                     { printLog("onPgComplete")},
                     { e, isNetwork -> printLog("onPgError message : ${RxUtils.getExceptionTips(e, isNetwork,"create fail")}")}))
@@ -210,7 +190,7 @@ class RxMaybeActivity : BaseActivity() {
     private fun createMaybe(isDelay: Boolean): Maybe<ResponseBean<String>> =
         Maybe.create { emitter ->
             val delayTime = isDelay.then { 3 } ?: 0
-            val responseBean: ResponseBean<String> = if (mFailSwitch.isChecked) {
+            val responseBean: ResponseBean<String> = if (mBinding.failSwitch.isChecked) {
                 val bean: ResponseBean<String> = ResponseBean.createFail()
                 bean.msg = "数据获取失败"
                 bean
@@ -235,19 +215,19 @@ class RxMaybeActivity : BaseActivity() {
 
     /** 清空日志 */
     private fun cleanLog() {
-        mResultTv.text = ""
+        mBinding.resultTv.text = ""
     }
 
     /** 打印日志 */
     private fun printLog(text: String) {
-        val log = if (mResultTv.text.isEmpty()) {
+        val log = if (mBinding.resultTv.text.isEmpty()) {
             text
         } else {
-            "${mResultTv.text}\n$text"
+            "${mBinding.resultTv.text}\n$text"
         }
-        mResultTv.text = log
+        mBinding.resultTv.text = log
         GlobalScope.runOnMainDelay(100) {
-            mScrollView.fullScroll(ScrollView.FOCUS_DOWN)
+            mBinding.scrollView.fullScroll(ScrollView.FOCUS_DOWN)
         }
     }
 
