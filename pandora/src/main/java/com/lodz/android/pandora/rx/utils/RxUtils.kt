@@ -5,7 +5,6 @@ import android.net.Uri
 import android.view.View
 import android.widget.TextView
 import androidx.core.widget.addTextChangedListener
-import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.corekt.utils.BitmapUtils
 import com.lodz.android.pandora.rx.exception.DataException
 import com.lodz.android.pandora.rx.status.ResponseStatus
@@ -107,9 +106,7 @@ object RxUtils {
     fun decodeUriToBase64(context: Context, uri: Uri, widthPx: Int, heightPx: Int): Observable<String> =
         Observable.create { emitter ->
             try {
-                PrintLog.e("testtag", Thread.currentThread().name + "   decodePathToBase64")
                 val bitmap = BitmapUtils.compressBitmap(context, uri, widthPx, heightPx)
-                PrintLog.e("testtag", Thread.currentThread().name + "   compressBitmap")
                 if (emitter.isDisposed) {
                     return@create
                 }
@@ -118,7 +115,6 @@ object RxUtils {
                     return@create
                 }
                 val base64 = BitmapUtils.bitmapToBase64(bitmap)
-                PrintLog.e("testtag", Thread.currentThread().name + "   bitmapToBase64")
                 if (emitter.isDisposed) {
                     return@create
                 }
