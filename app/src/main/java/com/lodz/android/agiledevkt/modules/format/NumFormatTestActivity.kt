@@ -3,13 +3,13 @@ package com.lodz.android.agiledevkt.modules.format
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
+import android.view.View
 import com.lodz.android.agiledevkt.R
+import com.lodz.android.agiledevkt.databinding.ActivityNumFormatTestBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.corekt.anko.*
 import com.lodz.android.pandora.base.activity.BaseActivity
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 
 /**
  * 数字格式化测试类
@@ -24,22 +24,9 @@ class NumFormatTestActivity : BaseActivity() {
         }
     }
 
-    /** 按钮1 */
-    private val mOneBtn by bindView<TextView>(R.id.one_btn)
-    /** 按钮2 */
-    private val mTwoBtn by bindView<TextView>(R.id.two_btn)
-    /** 按钮3 */
-    private val mThreeBtn by bindView<TextView>(R.id.three_btn)
-    /** 数字输入框 */
-    private val mNumEdit by bindView<EditText>(R.id.num_edit)
-    /** 转换按钮 */
-    private val mTransformationBtn by bindView<Button>(R.id.transformation_btn)
+    private val mBinding: ActivityNumFormatTestBinding by bindingLayout(ActivityNumFormatTestBinding::inflate)
 
-
-    /** 结果 */
-    private val mResultTv by bindView<TextView>(R.id.result_tv)
-
-    override fun getLayoutId() = R.layout.activity_num_format_test
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME) ?: "")
@@ -53,25 +40,29 @@ class NumFormatTestActivity : BaseActivity() {
     override fun setListeners() {
         super.setListeners()
 
-        mOneBtn.setOnClickListener {
-            printFormat(mOneBtn.text.toString())
+        // 按钮1
+        mBinding.oneBtn.setOnClickListener {
+            printFormat(mBinding.oneBtn.text.toString())
         }
 
-        mTwoBtn.setOnClickListener {
-            printFormat(mTwoBtn.text.toString())
+        // 按钮2
+        mBinding.twoBtn.setOnClickListener {
+            printFormat(mBinding.twoBtn.text.toString())
         }
 
-        mThreeBtn.setOnClickListener {
-            printFormat(mThreeBtn.text.toString())
+        // 按钮3
+        mBinding.threeBtn.setOnClickListener {
+            printFormat(mBinding.threeBtn.text.toString())
         }
 
-        mTransformationBtn.setOnClickListener {
-            val str = mNumEdit.text.toString()
+        // 转换按钮
+        mBinding.transformationBtn.setOnClickListener {
+            val str = mBinding.numEdit.text.toString()
             if (str.isEmpty()){
                 toastShort(R.string.format_num_hint)
                 return@setOnClickListener
             }
-            mResultTv.text = str.toInt().toChinese()
+            mBinding.resultTv.text = str.toInt().toChinese()
         }
     }
 
@@ -89,6 +80,6 @@ class NumFormatTestActivity : BaseActivity() {
                 .append(num.format(AnkoNumFormat.TYPE_FOUR_DECIMAL)).append("\n")
                 .append(num.format(AnkoNumFormat.TYPE_FIVE_DECIMAL)).append("\n")
 
-        mResultTv.text = result
+        mBinding.resultTv.text = result
     }
 }
