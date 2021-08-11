@@ -23,7 +23,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
-            android:text="@string/file_create_new_file" />
+            android:text="@string/file_create_new_file"
+            android:textSize="12sp" />
 
         <Button
             android:id="@+id/create_directory_btn"
@@ -31,7 +32,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
-            android:text="@string/file_create_directory" />
+            android:text="@string/file_create_directory"
+            android:textSize="12sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -45,7 +47,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
-            android:text="@string/file_exists" />
+            android:text="@string/file_exists"
+            android:textSize="12sp" />
 
         <Button
             android:id="@+id/file_rename_btn"
@@ -53,7 +56,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
-            android:text="@string/file_rename" />
+            android:text="@string/file_rename"
+            android:textSize="12sp" />
 
     </LinearLayout>
 
@@ -68,7 +72,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
-            android:text="@string/file_delete_suffix_jpg" />
+            android:text="@string/file_delete_suffix_jpg"
+            android:textSize="12sp" />
 
         <Button
             android:id="@+id/move_file_btn"
@@ -76,7 +81,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
-            android:text="@string/file_move" />
+            android:text="@string/file_move"
+            android:textSize="12sp" />
 
         <Button
             android:id="@+id/copy_file_btn"
@@ -84,7 +90,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
-            android:text="@string/file_copy" />
+            android:text="@string/file_copy"
+            android:textSize="12sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -98,7 +105,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
-            android:text="@string/file_get_length" />
+            android:text="@string/file_get_length"
+            android:textSize="12sp" />
 
         <Button
             android:id="@+id/delete_file_btn"
@@ -106,7 +114,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
-            android:text="@string/file_delete_path" />
+            android:text="@string/file_delete_path"
+            android:textSize="12sp" />
 
     </LinearLayout>
 
@@ -116,7 +125,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"
-        android:text="@string/file_save_by_bytes" />
+        android:text="@string/file_save_by_bytes"
+        android:textSize="12sp" />
 
     <Button
         android:id="@+id/save_bitmap_btn"
@@ -124,6 +134,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"
-        android:text="@string/file_save_bitmap" />
+        android:text="@string/file_save_bitmap"
+        android:textSize="12sp" />
 
 </LinearLayout>

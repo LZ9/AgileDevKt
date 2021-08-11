@@ -20,6 +20,7 @@
             android:layout_weight="1"
             android:text="@string/vb_dialog"
             android:textAllCaps="false"
+            android:textSize="12sp"
             tools:ignore="ButtonStyle" />
 
         <Button
@@ -30,6 +31,7 @@
             android:layout_weight="1"
             android:text="@string/vb_popup"
             android:textAllCaps="false"
+            android:textSize="12sp"
             tools:ignore="ButtonStyle" />
 
     </LinearLayout>

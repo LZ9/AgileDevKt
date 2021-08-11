@@ -4,15 +4,15 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.widget.Button
-import android.widget.TextView
+import android.view.View
 import com.lodz.android.agiledevkt.R
+import com.lodz.android.agiledevkt.databinding.ActivityFileTestBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.agiledevkt.utils.file.FileManager
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.corekt.utils.FileUtils
 import com.lodz.android.pandora.base.activity.BaseActivity
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import java.io.File
 
 /**
@@ -28,6 +28,7 @@ class FileTestActivity : BaseActivity() {
         }
     }
 
+    // TODO: 2021/8/11 待添加文件转BASE64的方法
     /** 根目录地址 */
     private val ROOT_PATH = FileManager.getCacheFolderPath()
     /** 新增文件路径 */
@@ -37,44 +38,9 @@ class FileTestActivity : BaseActivity() {
     /** 保存文件夹路径 */
     private val SAVE_PATH = ROOT_PATH + "test" + File.separator + "dasdqweq"
 
+    private val mBinding: ActivityFileTestBinding by bindingLayout(ActivityFileTestBinding::inflate)
 
-    /** 根目录地址 */
-    private val mRootPathTv by bindView<TextView>(R.id.root_path_tv)
-
-    /** 创建一个文件按钮 */
-    private val mCreateNewFileBtn by bindView<Button>(R.id.create_new_file_btn)
-
-    /** 创建一个文件夹按钮 */
-    private val mCreateDirectoryBtn by bindView<Button>(R.id.create_directory_btn)
-
-    /** 文件（文件夹）是否存在 */
-    private val mFileExists by bindView<Button>(R.id.file_exists_btn)
-
-    /** 重命名文件（文件夹） */
-    private val mFileRenameBtn by bindView<Button>(R.id.file_rename_btn)
-
-    /** 删除jpg后缀文件 */
-    private val mFileDeleteSuffixJpgBtn by bindView<Button>(R.id.file_delete_suffix_jpg_btn)
-
-    /** 移动文件 */
-    private val mMoveFileBtn by bindView<Button>(R.id.move_file_btn)
-
-    /** 复制文件 */
-    private val mCopyFileBtn by bindView<Button>(R.id.copy_file_btn)
-
-    /** 获取路径下的文件总大小 */
-    private val mGetFileLengthBtn by bindView<Button>(R.id.get_file_length)
-
-    /** 删除路径下文件 */
-    private val mDeleteFileBtn by bindView<Button>(R.id.delete_file_btn)
-
-    /** 将文件保存为byte数组并保存到其他路径 */
-    private val mSaveByBytesBtn by bindView<Button>(R.id.save_by_bytes_btn)
-
-    /** bitmap转文件 */
-    private val mSaveBitmapBtn by bindView<Button>(R.id.save_bitmap_btn)
-
-    override fun getLayoutId() = R.layout.activity_file_test
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME) ?: "")
@@ -89,61 +55,61 @@ class FileTestActivity : BaseActivity() {
         super.setListeners()
 
         // 创建一个文件
-        mCreateNewFileBtn.setOnClickListener {
+        mBinding.createNewFileBtn.setOnClickListener {
             val isSuccess = FileUtils.createNewFile(NEW_FILE_PATH)
             toastShort("创建 : $isSuccess")
         }
 
         // 创建一个文件夹
-        mCreateDirectoryBtn.setOnClickListener {
+        mBinding.createDirectoryBtn.setOnClickListener {
             val isSuccess = FileUtils.createFolder(NEW_FOLDER_PATH)
             toastShort("创建 : $isSuccess")
         }
 
         // 文件（文件夹）是否存在
-        mFileExists.setOnClickListener {
+        mBinding.fileExistsBtn.setOnClickListener {
             val file = FileUtils.create(NEW_FILE_PATH)
             toastShort(if (FileUtils.isFileExists(file)) "文件存在" else "文件不存在")
         }
 
         // 重命名文件（文件夹）
-        mFileRenameBtn.setOnClickListener {
+        mBinding.fileRenameBtn.setOnClickListener {
             val isSuccess = FileUtils.renameFile(FileUtils.create(NEW_FILE_PATH), "asdsada.txt")
             toastShort("修改 : $isSuccess")
         }
 
         // 删除jpg后缀文件
-        mFileDeleteSuffixJpgBtn.setOnClickListener {
+        mBinding.fileDeleteSuffixJpgBtn.setOnClickListener {
             FileUtils.deleteFileWithSuffix(ROOT_PATH, "jpg")
             toastShort("删除完成")
         }
 
         // 移动文件
-        mMoveFileBtn.setOnClickListener {
+        mBinding.moveFileBtn.setOnClickListener {
             val isSuccess = FileUtils.moveFile(ROOT_PATH, NEW_FOLDER_PATH, "test.txt")
             toastShort("移动 : $isSuccess")
         }
 
         // 复制文件
-        mCopyFileBtn.setOnClickListener {
+        mBinding.copyFileBtn.setOnClickListener {
             val isSuccess = FileUtils.copyFile(ROOT_PATH, NEW_FOLDER_PATH, "test.txt")
             toastShort("复制 : $isSuccess")
         }
 
         // 获取路径下的文件总大小
-        mGetFileLengthBtn.setOnClickListener {
+        mBinding.getFileLength.setOnClickListener {
             val size = FileUtils.getFileTotalLengthUnit(NEW_FILE_PATH)
             toastShort("大小 : $size")
         }
 
         // 删除路径下文件
-        mDeleteFileBtn.setOnClickListener {
+        mBinding.deleteFileBtn.setOnClickListener {
             FileUtils.delFile(ROOT_PATH)
             toastShort("删除完成")
         }
 
         // 将文件保存为byte数组并保存到其他路径
-        mSaveByBytesBtn.setOnClickListener {
+        mBinding.saveByBytesBtn.setOnClickListener {
             val bytes: ByteArray? = FileUtils.fileToByte(NEW_FILE_PATH)
             if (bytes == null){
                 toastShort("转换失败")
@@ -154,7 +120,7 @@ class FileTestActivity : BaseActivity() {
         }
 
         // bitmap转文件
-        mSaveBitmapBtn.setOnClickListener {
+        mBinding.saveBitmapBtn.setOnClickListener {
             val bitmap = BitmapFactory.decodeResource(resources, R.drawable.pandora_ic_search)
             FileUtils.bitmapToPath(bitmap, SAVE_PATH, "12sdaww","png", 100)
             toastShort("保存完成")
@@ -163,7 +129,7 @@ class FileTestActivity : BaseActivity() {
 
     override fun initData() {
         super.initData()
-        mRootPathTv.text = ("根目录地址：$ROOT_PATH")
+        mBinding.rootPathTv.text = ("根目录地址：$ROOT_PATH")
         showStatusCompleted()
     }
 
