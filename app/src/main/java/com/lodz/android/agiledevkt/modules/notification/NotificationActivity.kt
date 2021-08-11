@@ -6,16 +6,17 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
-import android.widget.Button
+import android.view.View
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.config.Constant
+import com.lodz.android.agiledevkt.databinding.ActivityNotificationBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.utils.NotificationUtils
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import io.reactivex.rxjava3.core.Observable
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -33,27 +34,9 @@ class NotificationActivity : BaseActivity() {
         }
     }
 
+    private val mBinding: ActivityNotificationBinding by bindingLayout(ActivityNotificationBinding::inflate)
 
-
-    /** 基本通知 */
-    private val mBbaseBtn by bindView<Button>(R.id.base_btn)
-    /** 带意图通知 */
-    private val mIntentBtn by bindView<Button>(R.id.intent_btn)
-    /** 带进度条 */
-    private val mProgressBtn by bindView<Button>(R.id.progress_btn)
-    /** 单行大文本样式 */
-    private val mSingleTxtBtn by bindView<Button>(R.id.single_txt_btn)
-    /** 多行大文本样式 */
-    private val mMultiTxtBtn by bindView<Button>(R.id.multi_txt_btn)
-    /** 大图文本样式 */
-    private val mLargeImgBtn by bindView<Button>(R.id.large_img_btn)
-    /** 自定义内容样式 */
-    private val mCustomBtn by bindView<Button>(R.id.custom_btn)
-    /** 跳转详情页通知 */
-    private val mMsgBtn by bindView<Button>(R.id.msg_btn)
-
-
-    override fun getLayoutId() = R.layout.activity_notification
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME) ?: "")
@@ -68,41 +51,42 @@ class NotificationActivity : BaseActivity() {
         super.setListeners()
 
         // 基本通知
-        mBbaseBtn.setOnClickListener {
+        mBinding.baseBtn.setOnClickListener {
             showBaseNotify()
         }
 
         // 带意图通知
-        mIntentBtn.setOnClickListener {
+        mBinding.intentBtn.setOnClickListener {
             showIntentNotify()
         }
 
         // 带进度条
-        mProgressBtn.setOnClickListener {
+        mBinding.progressBtn.setOnClickListener {
             startProgressNotify()
         }
 
         // 单行大文本样式
-        mSingleTxtBtn.setOnClickListener {
+        mBinding.singleTxtBtn.setOnClickListener {
             showSingleTxtNotify()
         }
 
         // 多行大文本样式
-        mMultiTxtBtn.setOnClickListener {
+        mBinding.multiTxtBtn.setOnClickListener {
             showMultiTxtNotify()
         }
 
         // 大图文本样式
-        mLargeImgBtn.setOnClickListener {
+        mBinding.largeImgBtn.setOnClickListener {
             showLargeImgNotify()
         }
 
         // 自定义内容样式
-        mCustomBtn.setOnClickListener {
+        mBinding.customBtn.setOnClickListener {
             showCustomNotify()
         }
 
-        mMsgBtn.setOnClickListener {
+        // 跳转详情页通知
+        mBinding.msgBtn.setOnClickListener {
             goMsgDetail()
         }
     }

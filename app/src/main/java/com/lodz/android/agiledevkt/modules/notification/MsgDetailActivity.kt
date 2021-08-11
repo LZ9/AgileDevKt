@@ -4,12 +4,13 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.TextView
+import android.view.View
 import com.lodz.android.agiledevkt.R
-import com.lodz.android.corekt.anko.bindView
+import com.lodz.android.agiledevkt.databinding.ActivityMsgDetailBinding
 import com.lodz.android.corekt.anko.isTopAndBottomActivityTheSame
 import com.lodz.android.corekt.anko.restartApp
 import com.lodz.android.pandora.base.activity.BaseActivity
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import java.util.*
 
 /**
@@ -31,12 +32,12 @@ class MsgDetailActivity : BaseActivity() {
         }
     }
 
-    /** 数据展示 */
-    private val mDataTv by bindView<TextView>(R.id.data_tv)
     /** 数据 */
     private var mData = ""
 
-    override fun getLayoutId(): Int = R.layout.activity_msg_detail
+    private val mBinding: ActivityMsgDetailBinding by bindingLayout(ActivityMsgDetailBinding::inflate)
+
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         super.findViews(savedInstanceState)
@@ -72,7 +73,7 @@ class MsgDetailActivity : BaseActivity() {
             return
         }
         mData = data
-        mDataTv.text = mData
+        mBinding.dataTv.text = mData
         showStatusCompleted()
     }
 
