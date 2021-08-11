@@ -114,10 +114,9 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
         ))
         mBinding.pdrConfirmBtn.isEnabled = false
         mBinding.pdrPreviewBtn.isEnabled = false
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//设置状态栏和导航栏颜色
-            StatusBarUtil.setColor(window, getColorCompat(bean.pickerUIConfig.getStatusBarColor()))
-            StatusBarUtil.setNavigationBarColor(window, getColorCompat(bean.pickerUIConfig.getNavigationBarColor()))
-        }
+        //设置状态栏和导航栏颜色
+        StatusBarUtil.setColor(window, getColorCompat(bean.pickerUIConfig.getStatusBarColor()))
+        StatusBarUtil.setNavigationBarColor(window, getColorCompat(bean.pickerUIConfig.getNavigationBarColor()))
     }
 
     /** 初始化RecyclerView */

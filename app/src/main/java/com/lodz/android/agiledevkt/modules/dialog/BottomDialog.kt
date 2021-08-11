@@ -18,10 +18,8 @@ class BottomDialog(context: Context) : BaseBottomDialog(context) {
     override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            mBinding.tipsTv.elevation = 16f
-            mBinding.sureBtn.elevation = 16f
-        }
+        mBinding.tipsTv.elevation = 16f
+        mBinding.sureBtn.elevation = 16f
     }
 
     override fun setListeners() {

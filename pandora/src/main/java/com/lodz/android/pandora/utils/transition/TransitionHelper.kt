@@ -17,7 +17,7 @@ object TransitionHelper {
     /** 使用过度动画跳转，[list]为共享元素列表 */
     @JvmStatic
     fun jumpTransition(activity: Activity, intent: Intent, list: List<Pair<View, String>>) {
-        if (list.isEmpty() || Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+        if (list.isEmpty()) {
             activity.startActivity(intent)
         } else {
             activity.startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(activity, *list.toTypedArray()).toBundle())
@@ -27,21 +27,13 @@ object TransitionHelper {
     /** 使用过度动画跳转，共享元素对象[sharedElement]，共享元素名称[sharedElementName] */
     @JvmStatic
     fun jumpTransition(activity: Activity, intent: Intent, sharedElement: View, sharedElementName: String) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            activity.startActivity(intent)
-        } else {
-            activity.startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(activity, sharedElement, sharedElementName).toBundle())
-        }
+        activity.startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(activity, sharedElement, sharedElementName).toBundle())
     }
 
     /** 关闭页面 */
     @JvmStatic
     fun finish(activity: Activity) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            activity.finishAfterTransition()
-        } else {
-            activity.finish()
-        }
+        activity.finishAfterTransition()
     }
 
     /** 设置共享元素，控件[view]，共享元素名称[shareElementName] */
@@ -53,16 +45,12 @@ object TransitionHelper {
     /** 设置进入的过度时间，[duration]时间长度（毫秒） */
     @JvmStatic
     fun setEnterTransitionDuration(activity: Activity, duration: Long) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            activity.window.enterTransition.duration = duration
-        }
+        activity.window.enterTransition.duration = duration
     }
 
     /** 设置退出的过度时间，[duration]时间长度（毫秒） */
     @JvmStatic
     fun setReturnTransitionDuration(activity: Activity, duration: Long) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            activity.window.returnTransition.duration = duration
-        }
+        activity.window.returnTransition.duration = duration
     }
 }

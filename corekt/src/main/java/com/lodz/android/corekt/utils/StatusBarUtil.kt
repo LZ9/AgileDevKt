@@ -28,42 +28,28 @@ object StatusBarUtil {
     /** 获取状态栏颜色 */
     @ColorInt
     @JvmStatic
-    fun getColor(window: Window): Int {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            return window.statusBarColor
-        }
-        return Color.BLACK
-    }
+    fun getColor(window: Window): Int = window.statusBarColor
 
     /** 设置状态栏颜色[color]和透明度[alpha]（默认不透明） */
     @JvmStatic
     @JvmOverloads
     fun setColor(window: Window, @ColorInt color: Int, @FloatRange(from = 0.0, to = 1.0) alpha: Float = 1.0f) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-            window.statusBarColor = ColorUtils.getColorAlphaInt(color, alpha)
-        }
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        window.statusBarColor = ColorUtils.getColorAlphaInt(color, alpha)
     }
 
     /** 获取导航栏颜色 */
     @ColorInt
     @JvmStatic
-    fun getNavigationBarColor(window: Window): Int {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            return window.navigationBarColor
-        }
-        return Color.BLACK
-    }
+    fun getNavigationBarColor(window: Window): Int = window.navigationBarColor
 
     /** 设置导航栏颜色[color] */
     @JvmStatic
     fun setNavigationBarColor(window: Window, @ColorInt color: Int) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-            window.navigationBarColor = color
-        }
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        window.navigationBarColor = color
     }
 
     /** 设置状态栏全透明 */
@@ -117,10 +103,8 @@ object StatusBarUtil {
 
     /** 配置状态栏为透明 */
     private fun configStatusBarTransparent(window: Window) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.statusBarColor = Color.TRANSPARENT
-            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-        }
+        window.statusBarColor = Color.TRANSPARENT
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
     }
 
     /** 配置需要偏移的控件[needOffsetView] */

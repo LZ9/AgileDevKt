@@ -161,7 +161,7 @@ open class TitleBarLayout : LinearLayout {
         // 是否需要阴影
         val isNeedElevation: Boolean = typedArray?.getBoolean(R.styleable.TitleBarLayout_isNeedElevation, mPdrConfig.isNeedElevation)
                 ?: mPdrConfig.isNeedElevation
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && isNeedElevation) {
+        if (isNeedElevation) {
             val elevationVale: Int = typedArray?.getDimensionPixelSize(R.styleable.TitleBarLayout_elevationVale, 0)
                     ?: 0
             elevation = if (elevationVale != 0) elevationVale.toFloat() else mPdrConfig.elevationVale

@@ -5,17 +5,17 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.widget.TextView
-import com.google.android.material.button.MaterialButton
+import android.view.View
 import com.lodz.android.agiledevkt.R
+import com.lodz.android.agiledevkt.databinding.ActivityTakePhotoTestBinding
 import com.lodz.android.agiledevkt.utils.file.FileManager
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.goAppDetailSetting
 import com.lodz.android.corekt.anko.isPermissionGranted
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.photopicker.take.TakePhotoManager
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import permissions.dispatcher.*
 import permissions.dispatcher.ktx.constructPermissionsRequest
 
@@ -32,13 +32,6 @@ class TakePhotoTestActivity : BaseActivity() {
         }
     }
 
-    /** 立即返回路径按钮 */
-    private val mImmediatelyBtn by bindView<MaterialButton>(R.id.immediately_btn)
-    /** 拍照后确认按钮 */
-    private val mConfirmPhotoBtn by bindView<MaterialButton>(R.id.confirm_photo_btn)
-    /** 结果 */
-    private val mResultTv by bindView<TextView>(R.id.result_tv)
-
     private val hasPermissions = constructPermissionsRequest(
         Manifest.permission.CAMERA,// 相机
         onShowRationale = ::onShowRationaleBeforeRequest,
@@ -47,7 +40,9 @@ class TakePhotoTestActivity : BaseActivity() {
         requiresPermission = ::onRequestPermission
     )
 
-    override fun getLayoutId(): Int = R.layout.activity_take_photo_test
+    private val mBinding: ActivityTakePhotoTestBinding by bindingLayout(ActivityTakePhotoTestBinding::inflate)
+
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         super.findViews(savedInstanceState)
@@ -67,40 +62,42 @@ class TakePhotoTestActivity : BaseActivity() {
 
     override fun setListeners() {
         super.setListeners()
-        mImmediatelyBtn.setOnClickListener {
-            mResultTv.text = ""
+        // 立即返回路径按钮
+        mBinding.immediatelyBtn.setOnClickListener {
+            mBinding.resultTv.text = ""
             TakePhotoManager.create()
-                    .setImmediately(true)
-                    .setCameraSavePath(FileManager.getCacheFolderPath())
-                    .setAuthority("com.lodz.android.agiledevkt.fileprovider")
-                    .setOnPhotoTakeListener { photo ->
-                        if (photo.isNotEmpty()) {
-                            mResultTv.text = photo
-                        }
+                .setImmediately(true)
+                .setCameraSavePath(FileManager.getCacheFolderPath())
+                .setAuthority("com.lodz.android.agiledevkt.fileprovider")
+                .setOnPhotoTakeListener { photo ->
+                    if (photo.isNotEmpty()) {
+                        mBinding.resultTv.text = photo
                     }
-                    .build()
-                    .take(getContext())
+                }
+                .build()
+                .take(getContext())
         }
 
-        mConfirmPhotoBtn.setOnClickListener {
-            mResultTv.text = ""
+        // 拍照后确认按钮
+        mBinding.confirmPhotoBtn.setOnClickListener {
+            mBinding.resultTv.text = ""
             TakePhotoManager.create()
-                    .setStatusBarColor(R.color.black)
-                    .setNavigationBarColor(R.color.black)
-                    .setPreviewBgColor(R.color.black)
-                    .setImmediately(false)
-                    .setCameraSavePath(FileManager.getCacheFolderPath())
-                    .setAuthority("com.lodz.android.agiledevkt.fileprovider")
-                    .setOnImgLoader { context, source, imageView ->
-                        ImageLoader.create(context).loadFilePath(source).setFitCenter().into(imageView)
+                .setStatusBarColor(R.color.black)
+                .setNavigationBarColor(R.color.black)
+                .setPreviewBgColor(R.color.black)
+                .setImmediately(false)
+                .setCameraSavePath(FileManager.getCacheFolderPath())
+                .setAuthority("com.lodz.android.agiledevkt.fileprovider")
+                .setOnImgLoader { context, source, imageView ->
+                    ImageLoader.create(context).loadFilePath(source).setFitCenter().into(imageView)
+                }
+                .setOnPhotoTakeListener { photo ->
+                    if (photo.isNotEmpty()) {
+                        mBinding.resultTv.text = photo
                     }
-                    .setOnPhotoTakeListener { photo ->
-                        if (photo.isNotEmpty()) {
-                            mResultTv.text = photo
-                        }
-                    }
-                    .build()
-                    .take(getContext())
+                }
+                .build()
+                .take(getContext())
         }
     }
 

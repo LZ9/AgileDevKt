@@ -539,7 +539,7 @@
     <string name="preview_long_click_tips">%s - 快松开奴家</string>
     <string name="preview_click_tips">%s - 哪里不懂点哪里</string>
     <string name="preview_unsupport_scale">该控件不支持缩放</string>
-    <string name="preview_only_scale">该控件仅支持缩放</string>
+    <string name="preview_only_scale">该控件支持缩放</string>
 
     <!-- 图片选择器 -->
     <string name="picker_phone_pic">挑选手机相册</string>

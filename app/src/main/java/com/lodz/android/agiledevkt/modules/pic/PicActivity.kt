@@ -1,15 +1,15 @@
 package com.lodz.android.agiledevkt.modules.pic
 
 import android.os.Bundle
-import com.google.android.material.button.MaterialButton
-import com.lodz.android.agiledevkt.R
+import android.view.View
+import com.lodz.android.agiledevkt.databinding.ActivityPicBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.agiledevkt.modules.pic.ninegrid.NineGridActivity
 import com.lodz.android.agiledevkt.modules.pic.picker.PicPickerTestActivity
 import com.lodz.android.agiledevkt.modules.pic.preview.PicPreviewTestActivity
 import com.lodz.android.agiledevkt.modules.pic.take.TakePhotoTestActivity
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.pandora.base.activity.BaseActivity
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 
 /**
  * 图片测试类
@@ -17,16 +17,9 @@ import com.lodz.android.pandora.base.activity.BaseActivity
  */
 class PicActivity : BaseActivity() {
 
-    /** 图片选择按钮 */
-    private val mPickBtn by bindView<MaterialButton>(R.id.pick_btn)
-    /** 预览按钮 */
-    private val mPreviewBtn by bindView<MaterialButton>(R.id.preview_btn)
-    /** 拍照按钮 */
-    private val mTakePhotoBtn by bindView<MaterialButton>(R.id.take_photo_btn)
-    /** 获取九宫格数据按钮 */
-    private val mNineGridBtn by bindView<MaterialButton>(R.id.nine_grid_btn)
+    private val mBinding: ActivityPicBinding by bindingLayout(ActivityPicBinding::inflate)
 
-    override fun getLayoutId(): Int = R.layout.activity_pic
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         super.findViews(savedInstanceState)
@@ -35,19 +28,23 @@ class PicActivity : BaseActivity() {
 
     override fun setListeners() {
         super.setListeners()
-        mPickBtn.setOnClickListener {
+        // 图片选择按钮
+        mBinding.pickBtn.setOnClickListener {
             PicPickerTestActivity.start(getContext())
         }
 
-        mPreviewBtn.setOnClickListener {
+        // 预览按钮
+        mBinding.previewBtn.setOnClickListener {
             PicPreviewTestActivity.start(getContext())
         }
 
-        mTakePhotoBtn.setOnClickListener {
+        // 拍照按钮
+        mBinding.takePhotoBtn.setOnClickListener {
             TakePhotoTestActivity.start(getContext())
         }
 
-        mNineGridBtn.setOnClickListener {
+        // 获取九宫格数据按钮
+        mBinding.nineGridBtn.setOnClickListener {
             NineGridActivity.start(getContext())
         }
     }

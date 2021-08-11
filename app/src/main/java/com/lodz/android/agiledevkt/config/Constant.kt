@@ -44,4 +44,16 @@ object Constant {
     /** 无证船舶 */
     const val SHIP_TYPE_WZCB = 1
 
+    /** 图片列表 */
+    val IMG_URLS = arrayOf(
+        "https://img2.baidu.com/it/u=2708377121,1834652983&fm=26&fmt=auto&gp=0.jpg",
+        "https://img0.baidu.com/it/u=2970214283,39526714&fm=26&fmt=auto&gp=0.jpg",
+        "https://img1.baidu.com/it/u=1652265273,240556906&fm=26&fmt=auto&gp=0.jpg",
+        "https://img2.baidu.com/it/u=3110729474,1069055955&fm=26&fmt=auto&gp=0.jpg",
+        "https://img1.baidu.com/it/u=2376176874,2890312163&fm=26&fmt=auto&gp=0.jpg",
+        "https://img2.baidu.com/it/u=1322408633,2941655592&fm=26&fmt=auto&gp=0.jpg",
+        "https://img1.baidu.com/it/u=459425216,3647770325&fm=26&fmt=auto&gp=0.jpg",
+        "http://www.cznews.gov.cn/newweb/d/file/zhuanti/jzfkgz/2021-08-05/e82c7f811539344b89c27c598113033e.jpg"
+    )
+
 }

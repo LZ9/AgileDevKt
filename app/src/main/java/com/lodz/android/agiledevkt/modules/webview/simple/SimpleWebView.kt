@@ -90,13 +90,14 @@ class SimpleWebView : PgWebView {
             mPercentageTv.visibility = View.GONE
         }
 
-
         override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && request != null) {
+            if (request != null) {
                 if ("http" == request.url.scheme || "https" == request.url.scheme) {
                     return super.shouldOverrideUrlLoading(view, request)
                 }
-                return mListener?.invoke(view, request.url) ?: super.shouldOverrideUrlLoading(view, request)
+                if (mListener!= null){
+                    return mListener?.invoke(view, request.url) ?: super.shouldOverrideUrlLoading(view, request)
+                }
             }
             return super.shouldOverrideUrlLoading(view, request)
         }
@@ -120,9 +121,7 @@ class SimpleWebView : PgWebView {
         // 网页图片展示
         settings.blockNetworkImage = false
         settings.blockNetworkLoads = false
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            settings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
-        }
+        settings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
     }
 
     /** 设置地址重定向回调监听器[listener] */

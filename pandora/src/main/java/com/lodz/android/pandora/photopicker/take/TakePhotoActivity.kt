@@ -81,10 +81,9 @@ internal class TakePhotoActivity : AbsActivity() {
         super.initData()
         val bean = mPdrTakeBean ?: return
         mBinding.pdrRootLayout.setBackgroundColor(getColorCompat(bean.previewBgColor))
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//设置状态栏和导航栏颜色
-            StatusBarUtil.setColor(window, getColorCompat(bean.statusBarColor))
-            StatusBarUtil.setNavigationBarColor(window, getColorCompat(bean.navigationBarColor))
-        }
+        //设置状态栏和导航栏颜色
+        StatusBarUtil.setColor(window, getColorCompat(bean.statusBarColor))
+        StatusBarUtil.setNavigationBarColor(window, getColorCompat(bean.navigationBarColor))
         takeCameraPhoto(bean)
     }
 
