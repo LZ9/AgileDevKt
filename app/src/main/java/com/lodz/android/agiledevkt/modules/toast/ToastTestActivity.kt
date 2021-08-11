@@ -4,13 +4,13 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
-import android.widget.Button
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.lodz.android.agiledevkt.R
+import com.lodz.android.agiledevkt.databinding.ActivityToastTestBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.toastLong
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.corekt.utils.DateUtils
@@ -18,6 +18,7 @@ import com.lodz.android.corekt.utils.ToastUtils
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
 import com.lodz.android.pandora.rx.utils.RxUtils
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import io.reactivex.rxjava3.core.Observable
 
 /**
@@ -33,25 +34,12 @@ class ToastTestActivity : BaseActivity(){
         }
     }
 
-    /** 短时间 */
-    private val mShortDurationBtn by bindView<Button>(R.id.short_duration_btn)
-    /** 长时间 */
-    private val mLongDurationBtn by bindView<Button>(R.id.long_duration_btn)
-    /** 自定义位置（中间） */
-    private val mCustomPositionBtn by bindView<Button>(R.id.custom_position_btn)
-    /** 带顶部图片 */
-    private val mTopImgBtn by bindView<Button>(R.id.top_img_btn)
-    /** 完全自定义 */
-    private val mCustomViewBtn by bindView<Button>(R.id.custom_view_btn)
-    /** 异步线程 */
-    private val mIoThreadBtn by bindView<Button>(R.id.io_thread_btn)
-    /** 可覆盖前次 */
-    private val mReplaceForwardBtn by bindView<Button>(R.id.replace_forward_btn)
-
     /** Toast对象 */
     private var mToast: Toast? = null
 
-    override fun getLayoutId() = R.layout.activity_toast_test
+    private val mBinding: ActivityToastTestBinding by bindingLayout(ActivityToastTestBinding::inflate)
+
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME) ?: "")
@@ -66,27 +54,27 @@ class ToastTestActivity : BaseActivity(){
         super.setListeners()
 
         // 短时间
-        mShortDurationBtn.setOnClickListener {
+        mBinding.shortDurationBtn.setOnClickListener {
             toastShort(R.string.toast_short_time)
         }
 
         // 长时间
-        mLongDurationBtn.setOnClickListener {
+        mBinding.longDurationBtn.setOnClickListener {
             toastLong(R.string.toast_long_time)
         }
 
         // 自定义位置（中间）
-        mCustomPositionBtn.setOnClickListener {
+        mBinding.customPositionBtn.setOnClickListener {
             ToastUtils.create(getContext()).setText(R.string.toast_gravity_center).setShort().setGravity(Gravity.CENTER).show()
         }
 
         // 带顶部图片
-        mTopImgBtn.setOnClickListener {
+        mBinding.topImgBtn.setOnClickListener {
             ToastUtils.create(getContext()).setText(R.string.toast_top_drawable).setShort().setTopImg(R.drawable.ic_launcher).show()
         }
 
         // 完全自定义
-        mCustomViewBtn.setOnClickListener {
+        mBinding.customViewBtn.setOnClickListener {
             val layout = layoutInflater.inflate(R.layout.toast_custom, null)
             val title = layout.findViewById<TextView>(R.id.title)
             title.setText(R.string.toast_custom)
@@ -101,7 +89,7 @@ class ToastTestActivity : BaseActivity(){
         }
 
         // 异步线程
-        mIoThreadBtn.setOnClickListener {
+        mBinding.ioThreadBtn.setOnClickListener {
             Observable.just("")
                     .map {str ->
                         val threadName = Thread.currentThread().name
@@ -113,7 +101,7 @@ class ToastTestActivity : BaseActivity(){
         }
 
         // 可覆盖前次（android8.0及以上不能连续覆盖弹出）
-        mReplaceForwardBtn.setOnClickListener {
+        mBinding.replaceForwardBtn.setOnClickListener {
             mToast?.setText(DateUtils.getCurrentFormatString(DateUtils.TYPE_10))
             mToast?.show()
         }
