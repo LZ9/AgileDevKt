@@ -3,15 +3,15 @@ package com.lodz.android.agiledevkt.modules.viewpager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.button.MaterialButton
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.ScrollTypeBean
+import com.lodz.android.agiledevkt.databinding.ActivityViewPagerBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.pandora.base.activity.BaseActivity
-import com.lodz.android.pandora.widget.collect.radio.CltRadioGroup
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.collect.radio.Radioable
 import com.lodz.android.pandora.widget.vp2.ScaleInTransformer
 
@@ -36,20 +36,12 @@ class ViewPagerActivity : BaseActivity() {
         }
     }
 
-    /** 滑动类型单选 */
-    private val mScrollRadioGroup by bindView<CltRadioGroup>(R.id.scroll_type_crg)
-    /** 允许滑动单选 */
-    private val mEnableRadioGroup by bindView<CltRadioGroup>(R.id.scroll_enable_crg)
-    /** 上一页 */
-    private val mPreBtn by bindView<MaterialButton>(R.id.pre_btn)
-    /** 下一页 */
-    private val mNextBtn by bindView<MaterialButton>(R.id.next_btn)
-
-    private val mViewPager by bindView<ViewPager2>(R.id.view_pager)
     private lateinit var mAdapter: ViewPagerAdapter
     private var mList: MutableList<Pair<String, Int>>? = null
 
-    override fun getLayoutId(): Int = R.layout.activity_view_pager
+    private val mBinding: ActivityViewPagerBinding by bindingLayout(ActivityViewPagerBinding::inflate)
+
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         super.findViews(savedInstanceState)
@@ -59,20 +51,20 @@ class ViewPagerActivity : BaseActivity() {
     }
 
     private fun initRadioGroup() {
-        mScrollRadioGroup.setDataList(getScrollTypeList())
-        mScrollRadioGroup.setSelectedId(ViewPager2.ORIENTATION_HORIZONTAL.toString())
-        mEnableRadioGroup.setDataList(getEnableTypeList())
-        mEnableRadioGroup.setSelectedId(SCROLL_ENABLE_TYPE[0].toString())
+        mBinding.scrollTypeCrg.setDataList(getScrollTypeList())
+        mBinding.scrollTypeCrg.setSelectedId(ViewPager2.ORIENTATION_HORIZONTAL.toString())
+        mBinding.scrollEnableCrg.setDataList(getEnableTypeList())
+        mBinding.scrollEnableCrg.setSelectedId(SCROLL_ENABLE_TYPE[0].toString())
     }
 
     private fun initViewPager() {
         mAdapter = ViewPagerAdapter(getContext())
-        mViewPager.adapter = mAdapter
-        mViewPager.orientation = mScrollRadioGroup.getSelectedId()[0].toInt()
-        mViewPager.isUserInputEnabled = mEnableRadioGroup.getSelectedId()[0] == R.string.vp_yes.toString()
+        mBinding.viewPager.adapter = mAdapter
+        mBinding.viewPager.orientation = mBinding.scrollTypeCrg.getSelectedId()[0].toInt()
+        mBinding.viewPager.isUserInputEnabled = mBinding.scrollEnableCrg.getSelectedId()[0] == R.string.vp_yes.toString()
         val compositePageTransformer = CompositePageTransformer()
         compositePageTransformer.addTransformer(ScaleInTransformer())
-        mViewPager.setPageTransformer(compositePageTransformer)
+        mBinding.viewPager.setPageTransformer(compositePageTransformer)
     }
 
     override fun onClickBackBtn() {
@@ -82,31 +74,36 @@ class ViewPagerActivity : BaseActivity() {
 
     override fun setListeners() {
         super.setListeners()
-        mScrollRadioGroup.setOnCheckedChangeListener { radioable, isSelected ->
+
+        // 滑动类型单选
+        mBinding.scrollTypeCrg.setOnCheckedChangeListener { radioable, isSelected ->
             if (isSelected) {
-                mViewPager.orientation = radioable.getIdTag().toInt()
+                mBinding.viewPager.orientation = radioable.getIdTag().toInt()
             }
         }
 
-        mEnableRadioGroup.setOnCheckedChangeListener { radioable, isSelected ->
+        // 允许滑动单选
+        mBinding.scrollEnableCrg.setOnCheckedChangeListener { radioable, isSelected ->
             if (isSelected) {
-                mViewPager.isUserInputEnabled = radioable.getIdTag() == R.string.vp_yes.toString()
+                mBinding.viewPager.isUserInputEnabled = radioable.getIdTag() == R.string.vp_yes.toString()
             }
         }
 
-        mViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+        mBinding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
 //                PrintLog.d("testtag", "show pager ".append(mList?.get(position)?.first))
             }
         })
 
-        mPreBtn.setOnClickListener {
-            mViewPager.setCurrentItem(mViewPager.currentItem - 1)
+        // 上一页
+        mBinding.preBtn.setOnClickListener {
+            mBinding.viewPager.setCurrentItem(mBinding.viewPager.currentItem - 1)
         }
 
-        mNextBtn.setOnClickListener {
-            mViewPager.setCurrentItem(mViewPager.currentItem + 1)
+        // 下一页
+        mBinding.nextBtn.setOnClickListener {
+            mBinding.viewPager.setCurrentItem(mBinding.viewPager.currentItem + 1)
         }
     }
 
