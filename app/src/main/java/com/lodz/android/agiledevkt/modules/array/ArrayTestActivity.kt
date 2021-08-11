@@ -3,15 +3,15 @@ package com.lodz.android.agiledevkt.modules.array
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.TextView
+import android.view.View
 import com.lodz.android.agiledevkt.R
+import com.lodz.android.agiledevkt.databinding.ActivityArrayTestBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.deduplication
 import com.lodz.android.corekt.anko.getSize
 import com.lodz.android.corekt.anko.group
 import com.lodz.android.pandora.base.activity.BaseActivity
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 
 /**
  * 数组列表测试类
@@ -44,31 +44,9 @@ class ArrayTestActivity : BaseActivity() {
     private val NUM_GROUP = arrayOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
     private val STR_GROUP = arrayOf("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z")
 
-    /** 数字int数组 */
-    private val mNumIntTv by bindView<TextView>(R.id.num_int_tv)
-    /** 数字long数组 */
-    private val mNumLongTv by bindView<TextView>(R.id.num_long_tv)
-    /** 字符数组 */
-    private val mStrArrayTv by bindView<TextView>(R.id.str_array_tv)
+    private val mBinding: ActivityArrayTestBinding by bindingLayout(ActivityArrayTestBinding::inflate)
 
-    /** 结果 */
-    private val mResultTv by bindView<TextView>(R.id.result_tv)
-
-    /** 去重 */
-    private val mDeduplicationBtn by bindView<Button>(R.id.deduplication_btn)
-    /** 获取长度 */
-    private val mGetSizeBtn by bindView<Button>(R.id.get_size_btn)
-    /** 默认排序 */
-    private val mdefaultSortBtn by bindView<Button>(R.id.default_sort_btn)
-    /** 取最大值 */
-    private val mGetMaxBtn by bindView<Button>(R.id.get_max_btn)
-    /** 取最小值 */
-    private val mGetMinBtn by bindView<Button>(R.id.get_min_btn)
-    /** 数据分组 */
-    private val mGroupBtn by bindView<Button>(R.id.group_btn)
-
-
-    override fun getLayoutId(): Int = R.layout.activity_array_test
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME) ?: "")
@@ -83,7 +61,7 @@ class ArrayTestActivity : BaseActivity() {
         super.setListeners()
 
         // 去重
-        mDeduplicationBtn.setOnClickListener {
+        mBinding.deduplicationBtn.setOnClickListener {
             val result = "---数字Int---\n" +
                     getString(R.string.array_toarray, NUM_ARRAY.deduplication().contentToString()) + "\n" +
                     getString(R.string.array_tolist, NUM_LIST.deduplication().toString()) + "\n" +
@@ -93,11 +71,11 @@ class ArrayTestActivity : BaseActivity() {
                     "\n---字符---\n" +
                     getString(R.string.array_toarray, STR_ARRAY.deduplication().contentToString()) + "\n" +
                     getString(R.string.array_tolist, STR_LIST.deduplication().toString())
-            mResultTv.text = result
+            mBinding.resultTv.text = result
         }
 
         // 获取长度
-        mGetSizeBtn.setOnClickListener {
+        mBinding.getSizeBtn.setOnClickListener {
             val result = "---数字Int---\n" +
                     getString(R.string.array_toarray, NUM_ARRAY.getSize().toString()) + "\n" +
                     getString(R.string.array_toarray_null, NUM_ARRAY_NULL.getSize().toString()) + "\n" +
@@ -113,11 +91,11 @@ class ArrayTestActivity : BaseActivity() {
                     getString(R.string.array_toarray_null, STR_ARRAY_NULL.getSize().toString()) + "\n" +
                     getString(R.string.array_tolist, STR_LIST.getSize().toString()) + "\n" +
                     getString(R.string.array_tolist_null, STR_LIST_NULL.getSize().toString())
-            mResultTv.text = result
+            mBinding.resultTv.text = result
         }
 
         // 默认排序
-        mdefaultSortBtn.setOnClickListener {
+        mBinding.defaultSortBtn.setOnClickListener {
             val result = "---数字Int---\n" +
                     getString(R.string.array_toarray, NUM_ARRAY.sortedArray().contentToString()) + "\n" +
                     getString(R.string.array_tolist, NUM_LIST.sorted().toString()) + "\n" +
@@ -127,11 +105,11 @@ class ArrayTestActivity : BaseActivity() {
                     "\n---字符---\n" +
                     getString(R.string.array_toarray, STR_ARRAY.sortedArray().contentToString()) + "\n" +
                     getString(R.string.array_tolist, STR_LIST.sorted().toString())
-            mResultTv.text = result
+            mBinding.resultTv.text = result
         }
 
         // 取最大值
-        mGetMaxBtn.setOnClickListener {
+        mBinding.getMaxBtn.setOnClickListener {
             val result = "---数字Int---\n" +
                     getString(R.string.array_toarray, NUM_ARRAY.maxOrNull()?.toString()) + "\n" +
                     getString(R.string.array_tolist, NUM_LIST.maxOrNull()?.toString()) + "\n" +
@@ -141,11 +119,11 @@ class ArrayTestActivity : BaseActivity() {
                     "\n---字符---\n" +
                     getString(R.string.array_toarray, STR_ARRAY.maxOrNull()?.toString()) + "\n" +
                     getString(R.string.array_tolist, STR_LIST.maxOrNull()?.toString())
-            mResultTv.text = result
+            mBinding.resultTv.text = result
         }
 
         // 取最小值
-        mGetMinBtn.setOnClickListener {
+        mBinding.getMinBtn.setOnClickListener {
             val result = "---数字Int---\n" +
                     getString(R.string.array_toarray, NUM_ARRAY.minOrNull()?.toString()) + "\n" +
                     getString(R.string.array_tolist, NUM_LIST.minOrNull()?.toString()) + "\n" +
@@ -155,11 +133,11 @@ class ArrayTestActivity : BaseActivity() {
                     "\n---字符---\n" +
                     getString(R.string.array_toarray, STR_ARRAY.minOrNull()?.toString()) + "\n" +
                     getString(R.string.array_tolist, STR_LIST.minOrNull()?.toString())
-            mResultTv.text = result
+            mBinding.resultTv.text = result
         }
 
         // 数据分组
-        mGroupBtn.setOnClickListener {
+        mBinding.groupBtn.setOnClickListener {
             val staffs = ArrayList<StaffBean>()
             for (i in 0..5) {
                 val bean = StaffBean()
@@ -171,7 +149,7 @@ class ArrayTestActivity : BaseActivity() {
 
             val result = getString(R.string.array_source, staffs.toString()) + "\n" +
                     getString(R.string.array_group_result, staffs.group(STR_GROUP.toList()).toString())
-            mResultTv.text = result
+            mBinding.resultTv.text = result
 
 //            val result = getString(R.string.array_source, STR_ARRAY.contentToString()) + "\n" +
 //                    getString(R.string.array_group_result, STR_ARRAY.group(STR_GROUP).contentToString())
@@ -181,9 +159,9 @@ class ArrayTestActivity : BaseActivity() {
 
     override fun initData() {
         super.initData()
-        mNumIntTv.text = getString(R.string.array_num_int, NUM_ARRAY.contentToString())
-        mNumLongTv.text = getString(R.string.array_num_long, NUM_ARRAY_LONG.contentToString())
-        mStrArrayTv.text = getString(R.string.array_str, STR_ARRAY.contentToString())
+        mBinding.numIntTv.text = getString(R.string.array_num_int, NUM_ARRAY.contentToString())
+        mBinding.numLongTv.text = getString(R.string.array_num_long, NUM_ARRAY_LONG.contentToString())
+        mBinding.strArrayTv.text = getString(R.string.array_str, STR_ARRAY.contentToString())
         showStatusCompleted()
     }
 
