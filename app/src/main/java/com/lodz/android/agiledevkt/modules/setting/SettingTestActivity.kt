@@ -7,14 +7,17 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
 import com.lodz.android.agiledevkt.R
+import com.lodz.android.agiledevkt.databinding.ActivitySettingTestBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.corekt.anko.*
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
 import com.lodz.android.pandora.rx.utils.RxUtils
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import io.reactivex.rxjava3.core.Observable
 
 /**
@@ -33,31 +36,6 @@ class SettingTestActivity : BaseActivity() {
     /** 写入设置权限请求码 */
     private val REQUEST_CODE_WRITE_SETTINGS = 77
 
-    /** 亮度模式单选组 */
-    private val mBrightnessRadioGroup by bindView<RadioGroup>(R.id.brightness_rg)
-    /** 系统亮度值 */
-    private val mSystemBrightnessTv by bindView<TextView>(R.id.system_brightness_tv)
-    /** 系统亮度值拖拽条 */
-    private val mSystemBrightnessSeekBar by bindView<SeekBar>(R.id.system_brightness_sb)
-    /** 窗口亮度值 */
-    private val mWindowBrightnessTv by bindView<TextView>(R.id.window_brightness_tv)
-    /** 窗口亮度值拖拽条 */
-    private val mWindowBrightnessSeekBar by bindView<SeekBar>(R.id.window_brightness_sb)
-
-    /** 屏幕休眠时间 */
-    private val mScreenDdormantTimeTv by bindView<TextView>(R.id.screen_dormant_time_tv)
-    /** 刷新屏幕休眠时间 */
-    private val mRefreshScreenDdormantTimeBtn by bindView<Button>(R.id.refresh_screen_dormant_time_btn)
-    /** 屏幕休眠时间输入框 */
-    private val mScreenDdormantTimeEdit by bindView<EditText>(R.id.screen_dormant_time_edit)
-    /** 屏幕休眠时间设置按钮 */
-    private val mScreenDdormantTimeSettingBtn by bindView<Button>(R.id.screen_dormant_time_setting_btn)
-
-    /** 铃声音量值 */
-    private val mRingVolumeTv by bindView<TextView>(R.id.ring_volume_tv)
-    /** 铃声音量值拖拽条 */
-    private val mRingVolumeSeekBar by bindView<SeekBar>(R.id.ring_volume_sb)
-
     /** 亮度监听器 */
     private val mBrightnessObserver = BrightnessObserver()
     /** 屏幕休眠时间变化监听器 */
@@ -65,7 +43,9 @@ class SettingTestActivity : BaseActivity() {
     /** 铃声音量变化监听器 */
     private val mRingVolumeObserver = RingVolumeObserver()
 
-    override fun getLayoutId() = R.layout.activity_setting_test
+    private val mBinding: ActivitySettingTestBinding by bindingLayout(ActivitySettingTestBinding::inflate)
+
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME) ?: "")
@@ -80,7 +60,7 @@ class SettingTestActivity : BaseActivity() {
         super.setListeners()
 
         // 亮度模式单选组
-        mBrightnessRadioGroup.setOnCheckedChangeListener { group, checkedId ->
+        mBinding.brightnessRg.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
                 R.id.automatic_rb -> setAutomaticMode()
                 R.id.manual_rb -> setManualMode()
@@ -88,9 +68,9 @@ class SettingTestActivity : BaseActivity() {
         }
 
         // 系统亮度值拖拽条
-        mSystemBrightnessSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        mBinding.systemBrightnessSb.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                mSystemBrightnessSeekBar.progress = progress
+                mBinding.systemBrightnessSb.progress = progress
                 if (fromUser) {
                     setScreenBrightness(progress)
                     return
@@ -103,14 +83,14 @@ class SettingTestActivity : BaseActivity() {
         })
 
         // 窗口亮度值拖拽条
-        mWindowBrightnessSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        mBinding.windowBrightnessSb.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 if (!fromUser) {
                     return
                 }
-                mWindowBrightnessSeekBar.progress = progress
+                mBinding.windowBrightnessSb.progress = progress
                 setWindowBrightness(progress)
-                mWindowBrightnessTv.text = getWindowBrightness().toString()
+                mBinding.windowBrightnessTv.text = getWindowBrightness().toString()
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
@@ -119,16 +99,16 @@ class SettingTestActivity : BaseActivity() {
         })
 
         // 刷新屏幕休眠时间
-        mRefreshScreenDdormantTimeBtn.setOnClickListener {
+        mBinding.refreshScreenDormantTimeBtn.setOnClickListener {
             showScreenDdormantTime()
         }
 
-        mScreenDdormantTimeSettingBtn.setOnClickListener {
-            if (mScreenDdormantTimeEdit.text.isEmpty()) {
+        mBinding.screenDormantTimeSettingBtn.setOnClickListener {
+            if (mBinding.screenDormantTimeEdit.text.isEmpty()) {
                 toastShort(R.string.setting_screen_dormant_time_error)
                 return@setOnClickListener
             }
-            val second = mScreenDdormantTimeEdit.text.toString().toInt()
+            val second = mBinding.screenDormantTimeEdit.text.toString().toInt()
             if (second !in 15..600) {
                 toastShort(R.string.setting_screen_dormant_time_error)
                 return@setOnClickListener
@@ -138,11 +118,11 @@ class SettingTestActivity : BaseActivity() {
         }
 
         // 铃声音量值拖拽条
-        mRingVolumeSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        mBinding.ringVolumeSb.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                mRingVolumeSeekBar.progress = progress
+                mBinding.ringVolumeSb.progress = progress
                 if (fromUser) {
-                    mRingVolumeTv.text = progress.toString()
+                    mBinding.ringVolumeTv.text = progress.toString()
                     setRingVolume(progress)
                     return
                 }
@@ -164,8 +144,8 @@ class SettingTestActivity : BaseActivity() {
                     .compose(RxUtils.ioToMainObservable())
                     .subscribe(object : BaseObserver<Int>() {
                         override fun onBaseNext(any: Int) {
-                            mSystemBrightnessTv.text = any.toString()
-                            mSystemBrightnessSeekBar.progress = any
+                            mBinding.systemBrightnessTv.text = any.toString()
+                            mBinding.systemBrightnessSb.progress = any
                         }
 
                         override fun onBaseError(e: Throwable) {
@@ -245,7 +225,7 @@ class SettingTestActivity : BaseActivity() {
     /** 初始化逻辑 */
     private fun initLogic() {
         contentResolver.registerContentObserver(Settings.System.getUriFor(Settings.System.SCREEN_BRIGHTNESS), true, mBrightnessObserver)
-        mBrightnessRadioGroup.check(if (isScreenBrightnessModeAutomatic()) R.id.automatic_rb else R.id.manual_rb)// 根据当前亮度模式设置按钮选中
+        mBinding.brightnessRg.check(if (isScreenBrightnessModeAutomatic()) R.id.automatic_rb else R.id.manual_rb)// 根据当前亮度模式设置按钮选中
 
         contentResolver.registerContentObserver(Settings.System.getUriFor(Settings.System.SCREEN_OFF_TIMEOUT), true, mScreenDdormantTimeObserver)
         showScreenDdormantTime()
@@ -259,41 +239,41 @@ class SettingTestActivity : BaseActivity() {
     /** 设置亮度自动模式 */
     private fun setAutomaticMode() {
         setScreenBrightnessMode(Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC)
-        mSystemBrightnessSeekBar.isEnabled = false
-        mWindowBrightnessSeekBar.isEnabled = false
+        mBinding.systemBrightnessSb.isEnabled = false
+        mBinding.windowBrightnessSb.isEnabled = false
     }
 
     /** 设置亮度手动模式 */
     private fun setManualMode() {
         setScreenBrightnessMode(Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL)
 
-        mSystemBrightnessSeekBar.isEnabled = true
+        mBinding.systemBrightnessSb.isEnabled = true
         val systemValue = getScreenBrightness()
-        mSystemBrightnessTv.text = systemValue.toString()
-        mSystemBrightnessSeekBar.progress = systemValue
+        mBinding.systemBrightnessTv.text = systemValue.toString()
+        mBinding.systemBrightnessSb.progress = systemValue
 
-        mWindowBrightnessSeekBar.isEnabled = true
+        mBinding.windowBrightnessSb.isEnabled = true
         val windowValue = getWindowBrightness()
-        mWindowBrightnessTv.text = windowValue.toString()
-        mWindowBrightnessSeekBar.progress = windowValue
+        mBinding.windowBrightnessTv.text = windowValue.toString()
+        mBinding.windowBrightnessSb.progress = windowValue
     }
 
     private fun showScreenDdormantTime() {
         val time = getScreenDormantTime() / 1000.0f
-        mScreenDdormantTimeTv.text = (time.toString() + "秒")
+        mBinding.screenDormantTimeTv.text = (time.toString() + "秒")
     }
 
     /** 初始化铃音 */
     private fun initRingVolume() {
-        mRingVolumeSeekBar.max = getMaxRingVolume()
+        mBinding.ringVolumeSb.max = getMaxRingVolume()
         showRingVolume()
     }
 
     /** 显示铃音 */
     private fun showRingVolume() {
         val volume = getRingVolume()
-        mRingVolumeTv.text = volume.toString()
-        mRingVolumeSeekBar.progress = volume
+        mBinding.ringVolumeTv.text = volume.toString()
+        mBinding.ringVolumeSb.progress = volume
     }
 
     override fun finish() {
