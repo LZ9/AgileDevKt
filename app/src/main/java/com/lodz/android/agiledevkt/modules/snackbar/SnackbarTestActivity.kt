@@ -48,31 +48,30 @@ class SnackbarTestActivity : AbsActivity() {
         // 显示短的snackbar按钮
         mBinding.shortBtn.setOnClickListener {
             SnackbarUtils.createShort(mBinding.root, R.string.snackbar_sign_title)
-                    .setTextColor(Color.WHITE)
-                    .setTextSize(17)
-                    .setBackgroundColor(getColorCompat(R.color.color_00a0e9))
-                    .addLeftImage(R.drawable.ic_launcher, dp2px(5))
-                    .getSnackbar()
-                    .setActionTextColor(getColorCompat(R.color.color_ffa630))
-                    .setAction(getString(R.string.snackbar_sign)) { view ->
-                        toastShort(R.string.snackbar_sign)
-                    }
+                .setTextColor(Color.WHITE)
+                .setTextSize(17)
+                .setBackgroundColor(getColorCompat(R.color.color_00a0e9))
+                .addLeftImage(R.drawable.ic_launcher, dp2px(5))
+                .getSnackbar()
+                .setActionTextColor(getColorCompat(R.color.color_ffa630))
+                .setAction(getString(R.string.snackbar_sign)) { view ->
+                    toastShort(R.string.snackbar_sign)
+                }
                 .show()
-
         }
 
         // 关注按钮
         mBinding.attentionBtn.setOnClickListener {
             SnackbarUtils.createLong(mBinding.root, R.string.snackbar_attention_title)
-                    .setTextColor(Color.WHITE)
-                    .setTextSize(15)
-                    .setBackgroundColor(getColorCompat(R.color.color_ea5e5e))
-                    .addRightImage(R.drawable.ic_launcher, dp2px(5))
-                    .getSnackbar()
-                    .setActionTextColor(getColorCompat(R.color.color_ffa630))
-                    .setAction(getString(R.string.snackbar_cancel_attention)) { view ->
-                        toastShort(R.string.snackbar_cancel_attention)
-                    }
+                .setTextColor(Color.WHITE)
+                .setTextSize(15)
+                .setBackgroundColor(getColorCompat(R.color.color_ea5e5e))
+                .addRightImage(R.drawable.ic_launcher, dp2px(5))
+                .getSnackbar()
+                .setActionTextColor(getColorCompat(R.color.color_ffa630))
+                .setAction(getString(R.string.snackbar_cancel_attention)) { view ->
+                    toastShort(R.string.snackbar_cancel_attention)
+                }
                 .show()
         }
 
@@ -83,17 +82,17 @@ class SnackbarTestActivity : AbsActivity() {
             imageView.scaleType = ImageView.ScaleType.CENTER_CROP
 
             SnackbarUtils.createLong(mBinding.root, R.string.snackbar_custom_img)
-                    .setBackgroundColor(Color.WHITE)
-                    .replaceLayoutView(imageView)
-                    .show()
+                .setBackgroundColor(Color.WHITE)
+                .replaceLayoutView(imageView)
+                .show()
         }
 
         // 自定义布局按钮
         mBinding.customLayoutBtn.setOnClickListener {
             val snackbar = SnackbarUtils.createLong(mBinding.root, R.string.snackbar_custom_layout)
-                    .setBackgroundColor(Color.WHITE)
-                    .replaceLayoutView(R.layout.snackbar_custom)
-                    .getSnackbar()
+                .setBackgroundColor(Color.WHITE)
+                .replaceLayoutView(R.layout.snackbar_custom)
+                .getSnackbar()
             val detailBtn = snackbar.view.findViewById<Button>(R.id.detail_btn)
             detailBtn.setOnClickListener { view ->
                 toastShort(R.string.snackbar_detail)
