@@ -3,10 +3,11 @@ package com.lodz.android.agiledevkt.modules.webview
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import com.lodz.android.agiledevkt.R
-import com.lodz.android.corekt.anko.bindView
+import com.lodz.android.agiledevkt.databinding.ActivityPgWebviewBinding
 import com.lodz.android.pandora.base.activity.BaseActivity
-import com.lodz.android.pandora.widget.webview.PgWebView
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 
 /**
  * 带加载控件的WebView测试类
@@ -24,10 +25,9 @@ class PgWebViewActivity : BaseActivity() {
 
     private val BAIDU_URL = "https://www.baidu.com/"
 
-    /** 加载进度控件 */
-    private val mPgWebView by bindView<PgWebView>(R.id.pg_webview)
+    private val mBinding: ActivityPgWebviewBinding by bindingLayout(ActivityPgWebviewBinding::inflate)
 
-    override fun getLayoutId(): Int = R.layout.activity_pg_webview
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         super.findViews(savedInstanceState)
@@ -45,12 +45,12 @@ class PgWebViewActivity : BaseActivity() {
 
     override fun initData() {
         super.initData()
-        mPgWebView.loadUrl(BAIDU_URL)
+        mBinding.pgWebview.loadUrl(BAIDU_URL)
         showStatusCompleted()
     }
 
     override fun finish() {
         super.finish()
-        mPgWebView.release()
+        mBinding.pgWebview.release()
     }
 }

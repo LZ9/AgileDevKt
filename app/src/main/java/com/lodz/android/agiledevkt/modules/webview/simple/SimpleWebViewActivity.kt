@@ -6,14 +6,15 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
-import android.widget.ImageView
 import com.lodz.android.agiledevkt.R
+import com.lodz.android.agiledevkt.databinding.ActivitySimpleWebviewBinding
 import com.lodz.android.agiledevkt.modules.splash.CheckDialog
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.pandora.base.activity.BaseActivity
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.webview.OnPgStatusChangeListener
 
 /**
@@ -32,14 +33,9 @@ class SimpleWebViewActivity : BaseActivity() {
 
     private val BAIDU_URL = "https://www.bilibili.com/"
 
-    /** WebView */
-    private val mWebView by bindView<SimpleWebView>(R.id.simple_webview)
-    /** 后退按钮 */
-    private val mBackwardBtn by bindView<ImageView>(R.id.backward_btn)
-    /** 前进按钮 */
-    private val mForwardBtn by bindView<ImageView>(R.id.forward_btn)
+    private val mBinding: ActivitySimpleWebviewBinding by bindingLayout(ActivitySimpleWebviewBinding::inflate)
 
-    override fun getLayoutId(): Int = R.layout.activity_simple_webview
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         super.findViews(savedInstanceState)
@@ -47,8 +43,8 @@ class SimpleWebViewActivity : BaseActivity() {
     }
 
     override fun onPressBack(): Boolean {
-        if (mWebView.isCanGoBack()) {
-            mWebView.goBack()
+        if (mBinding.simpleWebview.isCanGoBack()) {
+            mBinding.simpleWebview.goBack()
             return true
         }
         return super.onPressBack()
@@ -61,39 +57,41 @@ class SimpleWebViewActivity : BaseActivity() {
 
     override fun setListeners() {
         super.setListeners()
-        mBackwardBtn.setOnClickListener {
-            if (mWebView.isCanGoBack()) {
-                mWebView.goBack()
+        // 后退按钮
+        mBinding.backwardBtn.setOnClickListener {
+            if (mBinding.simpleWebview.isCanGoBack()) {
+                mBinding.simpleWebview.goBack()
             }
-            mBackwardBtn.isEnabled = mWebView.isCanGoBack()
-            mForwardBtn.isEnabled = mWebView.isCanForward()
+            mBinding.backwardBtn.isEnabled = mBinding.simpleWebview.isCanGoBack()
+            mBinding.forwardBtn.isEnabled = mBinding.simpleWebview.isCanForward()
         }
 
-        mForwardBtn.setOnClickListener {
-            if (mWebView.isCanForward()) {
-                mWebView.goForward()
+        // 前进按钮
+        mBinding.forwardBtn.setOnClickListener {
+            if (mBinding.simpleWebview.isCanForward()) {
+                mBinding.simpleWebview.goForward()
             }
-            mBackwardBtn.isEnabled = mWebView.isCanGoBack()
-            mForwardBtn.isEnabled = mWebView.isCanForward()
+            mBinding.backwardBtn.isEnabled = mBinding.simpleWebview.isCanGoBack()
+            mBinding.forwardBtn.isEnabled = mBinding.simpleWebview.isCanForward()
         }
 
-        mWebView.setOnPgStatusChangeListener(object : OnPgStatusChangeListener {
+        mBinding.simpleWebview.setOnPgStatusChangeListener(object : OnPgStatusChangeListener {
             override fun onPageStarted(webView: WebView?, url: String?, favicon: Bitmap?) {}
 
             override fun onProgressChanged(webView: WebView?, progress: Int) {}
 
             override fun onReceivedError(webView: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
-                mBackwardBtn.isEnabled = mWebView.isCanGoBack()
-                mForwardBtn.isEnabled = mWebView.isCanForward()
+                mBinding.backwardBtn.isEnabled = mBinding.simpleWebview.isCanGoBack()
+                mBinding.forwardBtn.isEnabled = mBinding.simpleWebview.isCanForward()
             }
 
             override fun onPageFinished(webView: WebView?, url: String?) {
-                mBackwardBtn.isEnabled = mWebView.isCanGoBack()
-                mForwardBtn.isEnabled = mWebView.isCanForward()
+                mBinding.backwardBtn.isEnabled = mBinding.simpleWebview.isCanGoBack()
+                mBinding.forwardBtn.isEnabled = mBinding.simpleWebview.isCanForward()
             }
         })
 
-        mWebView.setOnOtherOverrideUrlLoading { view, uri ->
+        mBinding.simpleWebview.setOnOtherOverrideUrlLoading { view, uri ->
             if ("bilibili" == uri.scheme) {
                 showJumpBilibiliDialog(uri)
             }
@@ -103,9 +101,9 @@ class SimpleWebViewActivity : BaseActivity() {
 
     override fun initData() {
         super.initData()
-        mWebView.loadUrl(BAIDU_URL)
-        mBackwardBtn.isEnabled = false
-        mForwardBtn.isEnabled = false
+        mBinding.simpleWebview.loadUrl(BAIDU_URL)
+        mBinding.backwardBtn.isEnabled = false
+        mBinding.forwardBtn.isEnabled = false
         doDebug()
         showStatusCompleted()
     }
@@ -117,7 +115,7 @@ class SimpleWebViewActivity : BaseActivity() {
 
     override fun finish() {
         super.finish()
-        mWebView.release()
+        mBinding.simpleWebview.release()
     }
 
     /** 显示跳转哔哩哔哩提示弹框 */
