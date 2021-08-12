@@ -1,5 +1,16 @@
 # Pandora更新记录
 
+##### 2021/08/12
+1. 框架增加ViewBinding支持
+2. 增加AnkoViewBinding.kt扩展函数
+3. 修复BaseNavigationView.kt里的反射BUG
+4. 增加NestedScrollableHost.kt支持ViewPager2的嵌套滑动
+5. 增加BottomMenuBar.kt的配置方法，支持自定义角标和图片
+6. 修复粘黏分组标签装饰器分组中只有1条数据时没有过度动画的BUG
+7. 去掉android5.0以下的兼容判断
+8. 更新依赖库版本
+9. 发布1.7.0版
+
 ##### 2021/06/29
 1. 修复CameraHelper.kt代码里尺寸匹配逻辑问题
 2. 发布1.6.7版

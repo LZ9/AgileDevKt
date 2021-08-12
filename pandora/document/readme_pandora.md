@@ -15,8 +15,8 @@ Pandora支持Androidx和Kotlin开发插件，内部集成了包括
 如果你的app有重复引用可以选择去掉顶层引用或者保证版本一致
 ```
     dependencies {
-        api 'ink.lodz:core-kt:1.3.7'
-        api 'io.reactivex.rxjava3:rxjava:3.0.13'
+        api 'ink.lodz:core-kt:1.3.9'
+        api 'io.reactivex.rxjava3:rxjava:3.1.0'
         api 'com.squareup.retrofit2:retrofit:2.9.0'
         api 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'
         api 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2'
