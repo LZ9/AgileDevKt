@@ -5,16 +5,16 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.widget.Button
-import android.widget.TextView
+import android.view.View
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.event.TakePhotoEvent
+import com.lodz.android.agiledevkt.databinding.ActivityCameraMainBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.goAppDetailSetting
 import com.lodz.android.corekt.anko.isPermissionGranted
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.pandora.base.activity.BaseActivity
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import  permissions.dispatcher.*
@@ -34,12 +34,7 @@ class CameraMainActivity : BaseActivity() {
         }
     }
 
-    /** 拍照 */
-    private val mTakeBtn by bindView<Button>(R.id.take_btn)
-    /** 录像 */
-    private val mVideoBtn by bindView<Button>(R.id.video_btn)
-    /** 结果 */
-    private val mResultTv by bindView<TextView>(R.id.result_tv)
+    private val mBinding: ActivityCameraMainBinding by bindingLayout(ActivityCameraMainBinding::inflate)
 
     private val hasCameraPermissions = constructPermissionsRequest(
         Manifest.permission.CAMERA,// 相机
@@ -57,7 +52,7 @@ class CameraMainActivity : BaseActivity() {
         requiresPermission = ::onRequestPermission
     )
 
-    override fun getLayoutId(): Int = R.layout.activity_camera_main
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         super.findViews(savedInstanceState)
@@ -77,13 +72,14 @@ class CameraMainActivity : BaseActivity() {
 
     override fun setListeners() {
         super.setListeners()
-        mTakeBtn.setOnClickListener {
+        // 拍照
+        mBinding.takeBtn.setOnClickListener {
             CameraTakeActivity.start(getContext())
         }
 
-        mVideoBtn.setOnClickListener {
-
-
+        // 录像
+        mBinding.videoBtn.setOnClickListener {
+            // TODO: 2021/8/16 待完善
         }
     }
 
@@ -132,6 +128,6 @@ class CameraMainActivity : BaseActivity() {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onTakePhotoEvent(event: TakePhotoEvent) {
-        mResultTv.text = event.path
+        mBinding.resultTv.text = event.path
     }
 }

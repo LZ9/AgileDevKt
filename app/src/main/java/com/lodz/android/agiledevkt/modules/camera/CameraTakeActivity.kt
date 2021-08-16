@@ -6,22 +6,21 @@ import android.graphics.BitmapFactory
 import android.graphics.RectF
 import android.hardware.Camera
 import android.os.Bundle
-import android.view.SurfaceView
+import android.view.View
 import android.view.WindowManager
-import android.widget.ImageView
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.event.TakePhotoEvent
+import com.lodz.android.agiledevkt.databinding.ActivityCameraTakeBinding
 import com.lodz.android.agiledevkt.utils.file.FileManager
 import com.lodz.android.corekt.album.AlbumUtils
 import com.lodz.android.corekt.anko.*
-import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.corekt.utils.BitmapUtils
 import com.lodz.android.corekt.utils.DateUtils
 import com.lodz.android.corekt.utils.FileUtils
-import com.lodz.android.corekt.utils.YUV420Utils
 import com.lodz.android.pandora.base.activity.AbsActivity
 import com.lodz.android.pandora.rx.subscribe.observer.ProgressObserver
 import com.lodz.android.pandora.rx.utils.RxUtils
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.camera.CameraHelper
 import com.lodz.android.pandora.widget.camera.OnCameraListener
 import io.reactivex.rxjava3.core.Observable
@@ -44,43 +43,38 @@ class CameraTakeActivity : AbsActivity() {
         }
     }
 
-    /** SurfaceView */
-    private val mSurfaceView by bindView<SurfaceView>(R.id.surface_view)
-    /** 闪光灯 */
-    private val mFlashBtn by bindView<ImageView>(R.id.flash_btn)
-    /** 摄像头选择 */
-    private val mCameraSwitchBtn by bindView<ImageView>(R.id.camera_switch_btn)
-    /** 拍照 */
-    private val mTakeBtn by bindView<ImageView>(R.id.take_btn)
+    private val mBinding: ActivityCameraTakeBinding by bindingLayout(ActivityCameraTakeBinding::inflate)
 
     /** 相机帮助类 */
     private var mCameraHelper: CameraHelper? = null
 
-    override fun getAbsLayoutId(): Int = R.layout.activity_camera_take
+    override fun getAbsViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         super.findViews(savedInstanceState)
         window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
-        mCameraHelper = CameraHelper(this, mSurfaceView)
+        mCameraHelper = CameraHelper(this, mBinding.surfaceView)
     }
 
     override fun setListeners() {
         super.setListeners()
-
-        mFlashBtn.setOnClickListener {
+        // 闪光灯
+        mBinding.flashBtn.setOnClickListener {
             val isSuccess = mCameraHelper?.controlFlash() ?: false
             if (isSuccess) {
-                mFlashBtn.isSelected = !mFlashBtn.isSelected
+                mBinding.flashBtn.isSelected = !mBinding.flashBtn.isSelected
             } else {
                 toastShort(R.string.camera_take_unsupport_flash)
             }
         }
 
-        mCameraSwitchBtn.setOnClickListener {
+        // 摄像头选择
+        mBinding.cameraSwitchBtn.setOnClickListener {
             mCameraHelper?.exchangeCamera()
         }
 
-        mTakeBtn.setOnClickListener {
+        // 拍照
+        mBinding.takeBtn.setOnClickListener {
             mCameraHelper?.takePic()
         }
 
