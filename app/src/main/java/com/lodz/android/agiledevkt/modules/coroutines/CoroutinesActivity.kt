@@ -3,16 +3,13 @@ package com.lodz.android.agiledevkt.modules.coroutines
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.RadioGroup
-import android.widget.TextView
-import com.google.android.material.button.MaterialButton
+import android.view.View
 import com.lodz.android.agiledevkt.R
+import com.lodz.android.agiledevkt.databinding.ActivityCoroutinesBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
-import com.lodz.android.corekt.anko.bindView
-import com.lodz.android.corekt.anko.runOnIO
-import com.lodz.android.corekt.anko.runOnMain
-import com.lodz.android.corekt.anko.toastShort
+import com.lodz.android.corekt.anko.*
 import com.lodz.android.pandora.base.activity.BaseActivity
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlin.system.measureTimeMillis
@@ -48,26 +45,14 @@ class CoroutinesActivity : BaseActivity() {
     /** 协程异步 */
     private val TYPE_ASYNC = 7
 
-
-    /** 单选组 */
-    private val mRadioGroup by bindView<RadioGroup>(R.id.radio_group)
-
-    /** 启动按钮 */
-    private val mStartBtn by bindView<MaterialButton>(R.id.start_btn)
-    /** 取消按钮 */
-    private val mCancelBtn by bindView<MaterialButton>(R.id.cancel_btn)
-    /** 清空按钮 */
-    private val mCleanBtn by bindView<MaterialButton>(R.id.clean_btn)
-
-    /** 日志 */
-    private val mResultTv by bindView<TextView>(R.id.result_tv)
+    private val mBinding: ActivityCoroutinesBinding by bindingLayout(ActivityCoroutinesBinding::inflate)
 
     /** 类型 */
     private var mType = TYPE_NONE
     /** 协程工作 */
     private var mJob: Job? = null
 
-    override fun getLayoutId(): Int = R.layout.activity_coroutines
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         super.findViews(savedInstanceState)
@@ -82,7 +67,8 @@ class CoroutinesActivity : BaseActivity() {
     override fun setListeners() {
         super.setListeners()
 
-        mRadioGroup.setOnCheckedChangeListener { group, checkedId ->
+        // 单选组
+        mBinding.radioGroup.setOnCheckedChangeListener { group, checkedId ->
             mType = when (checkedId) {
                 R.id.main_rbtn -> TYPE_MAIN
                 R.id.io_rbtn -> TYPE_IO
@@ -95,7 +81,8 @@ class CoroutinesActivity : BaseActivity() {
             }
         }
 
-        mStartBtn.setOnClickListener {
+        // 启动按钮
+        mBinding.startBtn.setOnClickListener {
             if (mType == TYPE_NONE) {
                 toastShort(R.string.coroutines_type_none_tips)
                 return@setOnClickListener
@@ -134,11 +121,13 @@ class CoroutinesActivity : BaseActivity() {
 
         }
 
-        mCancelBtn.setOnClickListener {
+        // 取消按钮
+        mBinding.cancelBtn.setOnClickListener {
             mJob?.cancel()
         }
 
-        mCleanBtn.setOnClickListener {
+        // 清空按钮
+        mBinding.cleanBtn.setOnClickListener {
             cleanResult()
         }
     }
@@ -150,151 +139,161 @@ class CoroutinesActivity : BaseActivity() {
 
     /** 主线程执行协程 */
     private fun main(): Job {
-        return GlobalScope.launch(Dispatchers.Main) {
-            logResult("${Thread.currentThread().name} ---> 开始执行协程")
+        return MainScope().launch(Dispatchers.Main) {
+            logResult(Thread.currentThread().name, "开始执行协程")
             for (i in 10 downTo 1) {
-                logResult(i.toString())
+                logResult(Thread.currentThread().name, i.toString())
                 delay(500)
             }
-            logResult("完成")
-            logResult("${Thread.currentThread().name} ---> 结束协程")
+            logResult(Thread.currentThread().name, "完成")
+            logResult(Thread.currentThread().name, "结束协程")
         }
     }
 
     /** 异步线程执行协程 */
     private fun io(): Job {
-        val job = GlobalScope.launch {
-            logResult("${Thread.currentThread().name} ---> 开始执行协程")
+        val job = MainScope().launch(Dispatchers.IO) {
+            logResult(Thread.currentThread().name, "开始执行协程")
             delay(1000L)
-            logResult("完成")
-            logResult("${Thread.currentThread().name} ---> 结束协程")
+            logResult(Thread.currentThread().name, "完成")
+            logResult(Thread.currentThread().name, "结束协程")
         }
-        logResult("开始")
-        logResult("${Thread.currentThread().name} ---> 结束")
+        logResult(Thread.currentThread().name, "开始")
+        logResult(Thread.currentThread().name, "结束")
         return job
     }
 
     /** 等待协程执行，join阻塞主线程 */
     private suspend fun join(): Job {
-        val job = GlobalScope.launch {
-            logResult("${Thread.currentThread().name} ---> 开始执行协程")
-            delay(5000L)
-            logResult("完成")
-            logResult("${Thread.currentThread().name} ---> 结束协程")
+        val job = MainScope().launch(Dispatchers.IO) {
+            logResult(Thread.currentThread().name, "开始执行协程")
+            delay(3000L)
+            logResult(Thread.currentThread().name, "完成")
+            logResult(Thread.currentThread().name, "结束协程")
         }
-        logResult("开始")
+        logResult(Thread.currentThread().name, "开始")
         job.join() // 等待直到子协程执行结束
-        logResult("${Thread.currentThread().name} ---> 结束")
+        logResult(Thread.currentThread().name, "结束")
         return job
     }
 
     /** 协程执行重复数据 */
-    private fun repeat(): Job {
-        return GlobalScope.launch {
-            logResult("${Thread.currentThread().name} ---> 开始执行协程")
-            repeat(12) { i ->
-                logResult("${Thread.currentThread().name} ---> $i")
-                delay(500)
-            }
-            logResult("${Thread.currentThread().name} ---> 结束协程")
+    private fun repeat(): Job = MainScope().launch(Dispatchers.IO) {
+        logResult(Thread.currentThread().name, "开始执行协程")
+        repeat(12) { i ->
+            logResult(Thread.currentThread().name, "$i")
+            delay(500)
         }
+        logResult(Thread.currentThread().name, "结束协程")
     }
 
     /** 超时限制 */
-    private fun timeout(): Job {
-        return GlobalScope.launch {
-            withTimeout(1500) {
-                logResult("${Thread.currentThread().name} ---> 开始执行协程")
-                repeat(12) { i ->
-                    logResult("${Thread.currentThread().name} ---> $i")
-                    delay(400)
-                }
-                logResult("${Thread.currentThread().name} ---> 结束协程")
+    private fun timeout(): Job = MainScope().runOnSuspendIOCatch({
+        withTimeout(1500) {
+            logResult(Thread.currentThread().name, "开始执行协程")
+            repeat(12) { i ->
+                logResult(Thread.currentThread().name, "$i")
+                delay(400)
             }
+            logResult(Thread.currentThread().name, "结束协程")
         }
-    }
+    }, {
+        logResult(Thread.currentThread().name, "已超时,${it.message}")
+    })
 
     /** 协程通道 */
-    private fun channel(): Job {
-        return GlobalScope.launch {
-            logResult("${Thread.currentThread().name} ---> 开始执行协程")
-            val channel = Channel<Int>()
-            launch {
-                for (i in 1..12) {
-                    if (i % 2 == 0) {
-                        channel.send(i)
-                    }
-                    delay(400)
+    private fun channel(): Job = MainScope().launch(Dispatchers.IO) {
+        logResult(Thread.currentThread().name, "开始执行协程")
+        val channel = Channel<Int>()
+        launch {
+            logResult(Thread.currentThread().name, "设置通道数据")
+            for (i in 1..12) {
+                if (i % 2 == 0) {
+                    channel.send(i)
                 }
-                channel.close()
+                delay(400)
             }
-            for (c in channel) {// 遍历通道内的元素，直到通道被关闭
-                logResult("${Thread.currentThread().name} ---> $c")
-            }
-            logResult("${Thread.currentThread().name} ---> 结束协程")
+            logResult(Thread.currentThread().name, "设置通道数据完成")
+            channel.close()//通道只有关闭才会终止遍历
         }
+        logResult(Thread.currentThread().name, "开始遍历")
+        for (c in channel) {// 遍历通道内的元素，直到通道被关闭
+            logResult(Thread.currentThread().name, "$c")
+        }
+        logResult(Thread.currentThread().name, "结束协程")
     }
 
     /** 协程异步 */
-    private fun async(): Job? {
-        return GlobalScope.runOnIO {
-            logResult("顺序执行开始")
-            val time1 = measureTimeMillis {
-                runBlocking {
-                    val one = getNum(12, 1200)
-                    val two = getNum(32, 400)
-                    logResult("one + two = ${one + two}")
-                }
+    private fun async(): Job = MainScope().runOnIO {
+        logResult(Thread.currentThread().name,"顺序执行开始")
+        val time1 = measureTimeMillis {
+            runBlocking {
+                val one = getNum(12, 1200)
+                val two = getNum(32, 400)
+                // 顺序执行one 和 two ，延时为：1200 + 400
+                logResult(Thread.currentThread().name,"one + two = ${one + two}")
             }
-            logResult("顺序执行耗时：$time1")
-            logResult("顺序执行结束")
-
-            logResult("-----------")
-
-            logResult("异步执行开始")
-            val time2 = measureTimeMillis {
-                runBlocking {
-                    val one: Deferred<Int> = async { getNum(12, 1200) }
-                    val two: Deferred<Int> = async { getNum(32, 400) }
-                    logResult("one + two = ${one.await() + two.await()}")
-                }
-            }
-            logResult("异步执行耗时：$time2")
-            logResult("异步执行结束")
-
-            logResult("-----------")
-
-            logResult("懒加载异步执行开始")
-            val time3 = measureTimeMillis {
-                runBlocking {
-                    val one: Deferred<Int> = async(start = CoroutineStart.LAZY) { getNum(12, 1200) }
-                    val two: Deferred<Int> = async(start = CoroutineStart.LAZY) { getNum(32, 400) }
-                    one.start()
-                    delay(1300)
-                    two.start()
-                    logResult("one + two = ${one.await() + two.await()}")
-                }
-            }
-            logResult("懒加载异步执行耗时：$time3")
-            logResult("懒加载异步执行结束")
         }
+        logResult(Thread.currentThread().name,"顺序执行耗时：$time1")
+        logResult(Thread.currentThread().name,"顺序执行结束")
+
+        logResult(Thread.currentThread().name,"-----------")
+
+        logResult(Thread.currentThread().name,"异步执行开始")
+        val time2 = measureTimeMillis {
+            runBlocking {
+                val one: Deferred<Int> = async { getNum(12, 1200) }
+                val two: Deferred<Int> = async { getNum(32, 400) }
+                logResult(Thread.currentThread().name, "延迟1300秒开始")
+                delay(1300)
+                logResult(Thread.currentThread().name, "延迟1300秒结束")
+                // 异步执行one 和 two （创建后就立即执行），延时为：1300
+                logResult(Thread.currentThread().name,"one + two = ${one.await() + two.await()}")
+            }
+        }
+        logResult(Thread.currentThread().name,"异步执行耗时：$time2")
+        logResult(Thread.currentThread().name,"异步执行结束")
+
+        logResult(Thread.currentThread().name,"-----------")
+
+        logResult(Thread.currentThread().name, "懒加载异步执行开始")
+        val time3 = measureTimeMillis {
+            runBlocking {
+                val one: Deferred<Int> = async(start = CoroutineStart.LAZY) { getNum(12, 1200) }
+                val two: Deferred<Int> = async(start = CoroutineStart.LAZY) { getNum(32, 400) }
+                one.start()
+                logResult(Thread.currentThread().name, "延迟1300秒开始")
+                delay(1300)
+                logResult(Thread.currentThread().name, "延迟1300秒结束")
+                two.start()
+                // 异步执行one 和 two （创建后不会立即执行，只有调用start方法才会执行），延时为：1300 + 400
+                logResult(Thread.currentThread().name,"one + two = ${one.await() + two.await()}")
+            }
+        }
+        logResult(Thread.currentThread().name,"懒加载异步执行耗时：$time3")
+        logResult(Thread.currentThread().name,"懒加载异步执行结束")
     }
 
     /** 获取数字[num]，延时[delay]毫秒 */
     private suspend fun getNum(num: Int, delay: Long): Int {
+        logResult(Thread.currentThread().name,"$num 延迟 $delay 开始")
         delay(delay)
+        logResult(Thread.currentThread().name,"$num 延迟 $delay 结束")
         return num
     }
 
-    private fun logResult(log: String) {
-        GlobalScope.runOnMain {
-            mResultTv.text = StringBuilder(mResultTv.text).append("\n").append(log).toString()
+    private fun logResult(threadName: String, log: String) {
+        MainScope().runOnMain {
+            mBinding.resultTv.text = StringBuilder(mBinding.resultTv.text).append("\n")
+                .append(threadName)
+                .append(" ---> ")
+                .append(log)
+                .toString()
         }
     }
 
     private fun cleanResult() {
-        mResultTv.text = ""
+        mBinding.resultTv.text = ""
     }
-
 }
 
