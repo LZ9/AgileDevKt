@@ -8,8 +8,10 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBinding
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.AppInfoBean
+import com.lodz.android.agiledevkt.databinding.RvItemDownloadMarketBinding
 import com.lodz.android.agiledevkt.utils.file.FileManager
 import com.lodz.android.corekt.anko.append
 import com.lodz.android.corekt.anko.bindView
@@ -32,7 +34,7 @@ class DownloadMarketAdapter(context : Context) :BaseRecyclerViewAdapter<AppInfoB
     private var mListener: OnDownloadListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder  =
-        DownloadViewHolder(getLayoutView(parent, R.layout.rv_item_download_market))
+        DownloadViewHolder(getViewBindingLayout(RvItemDownloadMarketBinding::inflate, parent))
 
     override fun onBind(holder: RecyclerView.ViewHolder, position: Int) {
         val bean = getItem(position)
@@ -48,9 +50,9 @@ class DownloadMarketAdapter(context : Context) :BaseRecyclerViewAdapter<AppInfoB
             holder.taskManager?.dispose(tag)
         }
         // 图标
-        showImg(holder.withView(R.id.app_img), bean.imgUrl)
+        showImg(holder.viewBinding.appImg, bean.imgUrl)
         // 名称
-        holder.withView<TextView>(R.id.app_name_tv).text = bean.appName
+        holder.viewBinding.appNameTv.text = bean.appName
         if (FileUtils.isFileExists(FileManager.getDownloadFolderPath().append(bean.getSaveName()))){
             showCompleted(holder, bean)
         } else {
@@ -70,38 +72,38 @@ class DownloadMarketAdapter(context : Context) :BaseRecyclerViewAdapter<AppInfoB
         holder.taskManager = bean.downloadUrl.pathTaskManager(bean.getSaveName())
         holder.tag = holder.taskManager?.subscribe { status ->
             when (status) {
-                is Normal -> {
+                is Normal -> {// app未下载
                     showReady(holder, bean)
-                }// app未下载
-                is Deleted -> {
+                }
+                is Deleted -> {// app下载已被删除
                     showReady(holder, bean)
-                }// app下载已被删除
-                is Started -> {
+                }
+                is Started -> {// 开始下载
                     showDownloading(holder, bean, status)
-                }// 开始下载
-                is Downloading -> {
+                }
+                is Downloading -> {// 下载中
                     showDownloading(holder, bean, status)
-                }// 下载中
-                is Paused -> {
+                }
+                is Paused -> {// 暂停下载
                     showPause(holder, bean, status)
-                }// 暂停下载
-                is Completed -> {
+                }
+                is Completed -> {// 下载完成
                     showCompleted(holder, bean)
-                }// 下载完成
-                is Failed -> {
+                }
+                is Failed -> {// 下载失败
                     showFailed(holder, bean, status)
-                }// 下载失败
+                }
             }
         }
     }
 
     private fun showReady(holder: DownloadViewHolder, bean: AppInfoBean) {
-        holder.tipsTv.text = bean.appDesc
-        holder.tipsTv.setTextColor(context.getColorCompat(R.color.color_1a1a1a))
-        holder.tipsTv.visibility = View.VISIBLE
-        holder.downloadingLayout.visibility = View.GONE
-        holder.statusBtn.setText(R.string.market_download)
-        holder.statusBtn.setOnClickListener {
+        holder.viewBinding.tipsTv.text = bean.appDesc
+        holder.viewBinding.tipsTv.setTextColor(context.getColorCompat(R.color.color_1a1a1a))
+        holder.viewBinding.tipsTv.visibility = View.VISIBLE
+        holder.viewBinding.downloadingLayout.visibility = View.GONE
+        holder.viewBinding.statusBtn.setText(R.string.market_download)
+        holder.viewBinding.statusBtn.setOnClickListener {
             val taskManager = holder.taskManager
             if (taskManager != null) {
                 mListener?.onClickDownload(taskManager, bean)
@@ -110,8 +112,8 @@ class DownloadMarketAdapter(context : Context) :BaseRecyclerViewAdapter<AppInfoB
     }
 
     private fun showDownloading(holder: DownloadViewHolder, bean: AppInfoBean, status: Status) {
-        holder.tipsTv.visibility = View.GONE
-        holder.downloadingLayout.visibility = View.VISIBLE
+        holder.viewBinding.tipsTv.visibility = View.GONE
+        holder.viewBinding.downloadingLayout.visibility = View.VISIBLE
         var progress = status.progress.percent().toInt()
         if (progress > 100){
             progress = 100
@@ -119,10 +121,10 @@ class DownloadMarketAdapter(context : Context) :BaseRecyclerViewAdapter<AppInfoB
         if (progress < 0){
             progress = 0
         }
-        holder.progressBar.progress = progress
-        holder.percentTv.text = status.progress.percent().format().append("%")
-        holder.statusBtn.setText(R.string.market_pause)
-        holder.statusBtn.setOnClickListener {
+        holder.viewBinding.progressBar.progress = progress
+        holder.viewBinding.percentTv.text = status.progress.percent().format().append("%")
+        holder.viewBinding.statusBtn.setText(R.string.market_pause)
+        holder.viewBinding.statusBtn.setOnClickListener {
             val taskManager = holder.taskManager
             if (taskManager != null){
                 mListener?.onClickPause(taskManager, bean)
@@ -131,8 +133,8 @@ class DownloadMarketAdapter(context : Context) :BaseRecyclerViewAdapter<AppInfoB
     }
 
     private fun showPause(holder: DownloadViewHolder, bean: AppInfoBean, status: Status) {
-        holder.tipsTv.visibility = View.GONE
-        holder.downloadingLayout.visibility = View.VISIBLE
+        holder.viewBinding.tipsTv.visibility = View.GONE
+        holder.viewBinding.downloadingLayout.visibility = View.VISIBLE
         var progress = status.progress.percent().toInt()
         if (progress > 100){
             progress = 100
@@ -140,10 +142,10 @@ class DownloadMarketAdapter(context : Context) :BaseRecyclerViewAdapter<AppInfoB
         if (progress < 0){
             progress = 0
         }
-        holder.progressBar.progress = progress
-        holder.percentTv.text = status.progress.percent().format().append("%")
-        holder.statusBtn.setText(R.string.market_download)
-        holder.statusBtn.setOnClickListener {
+        holder.viewBinding.progressBar.progress = progress
+        holder.viewBinding.percentTv.text = status.progress.percent().format().append("%")
+        holder.viewBinding.statusBtn.setText(R.string.market_download)
+        holder.viewBinding.statusBtn.setOnClickListener {
             val taskManager = holder.taskManager
             if (taskManager != null){
                 mListener?.onClickDownload(taskManager, bean)
@@ -152,12 +154,12 @@ class DownloadMarketAdapter(context : Context) :BaseRecyclerViewAdapter<AppInfoB
     }
 
     private fun showCompleted(holder: DownloadViewHolder, bean: AppInfoBean) {
-        holder.tipsTv.text = bean.appDesc
-        holder.tipsTv.setTextColor(context.getColorCompat(R.color.color_1a1a1a))
-        holder.tipsTv.visibility = View.VISIBLE
-        holder.downloadingLayout.visibility = View.GONE
-        holder.statusBtn.setText(R.string.market_delete)
-        holder.statusBtn.setOnClickListener {
+        holder.viewBinding.tipsTv.text = bean.appDesc
+        holder.viewBinding.tipsTv.setTextColor(context.getColorCompat(R.color.color_1a1a1a))
+        holder.viewBinding.tipsTv.visibility = View.VISIBLE
+        holder.viewBinding.downloadingLayout.visibility = View.GONE
+        holder.viewBinding.statusBtn.setText(R.string.market_delete)
+        holder.viewBinding.statusBtn.setOnClickListener {
             val taskManager = holder.taskManager
             if (taskManager != null){
                 mListener?.onClickDelete(taskManager, bean)
@@ -167,12 +169,12 @@ class DownloadMarketAdapter(context : Context) :BaseRecyclerViewAdapter<AppInfoB
 
     private fun showFailed(holder: DownloadViewHolder, bean: AppInfoBean, status: Failed) {
         PrintLog.e("testtag", "  下载失败  ", status.throwable)
-        holder.tipsTv.text = context.getString(R.string.market_failed).append(" : ").append(status.throwable.message)
-        holder.tipsTv.setTextColor(context.getColorCompat(R.color.red))
-        holder.tipsTv.visibility = View.VISIBLE
-        holder.downloadingLayout.visibility = View.GONE
-        holder.statusBtn.setText(R.string.market_download)
-        holder.statusBtn.setOnClickListener {
+        holder.viewBinding.tipsTv.text = context.getString(R.string.market_failed).append(" : ").append(status.throwable.message)
+        holder.viewBinding.tipsTv.setTextColor(context.getColorCompat(R.color.red))
+        holder.viewBinding.tipsTv.visibility = View.VISIBLE
+        holder.viewBinding.downloadingLayout.visibility = View.GONE
+        holder.viewBinding.statusBtn.setText(R.string.market_download)
+        holder.viewBinding.statusBtn.setOnClickListener {
             val taskManager = holder.taskManager
             if (taskManager != null){
                 mListener?.onClickDownload(taskManager, bean)
@@ -195,19 +197,8 @@ class DownloadMarketAdapter(context : Context) :BaseRecyclerViewAdapter<AppInfoB
         fun onClickDelete(taskManager: TaskManager, bean: AppInfoBean)
     }
 
-    private inner class DownloadViewHolder(itemView: View) : DataViewHolder(itemView) {
-        /** 提示语 */
-        val tipsTv by bindView<TextView>(R.id.tips_tv)
-        /** 下载布局 */
-        val downloadingLayout by bindView<ViewGroup>(R.id.downloading_layout)
-        /** 进度条 */
-        val progressBar by bindView<ProgressBar>(R.id.progress_bar)
-        /** 进度百分比 */
-        val percentTv by bindView<TextView>(R.id.percent_tv)
-        /** 状态按钮 */
-        val statusBtn by bindView<Button>(R.id.status_btn)
-
-        internal var taskManager: TaskManager? = null
-        internal var tag: Any? = null
+    private inner class DownloadViewHolder(val viewBinding: RvItemDownloadMarketBinding) : DataViewHolder(viewBinding.root) {
+        var taskManager: TaskManager? = null
+        var tag: Any? = null
     }
 }

@@ -1,13 +1,17 @@
 package com.lodz.android.agiledevkt.modules.download
 
 import android.os.Bundle
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.AppInfoBean
+import com.lodz.android.agiledevkt.databinding.ActivityDownloadMarketBinding
+import com.lodz.android.agiledevkt.databinding.ActivityMainBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.pandora.base.activity.BaseActivity
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import zlc.season.rxdownload4.manager.TaskManager
 import zlc.season.rxdownload4.manager.delete
 import zlc.season.rxdownload4.manager.start
@@ -20,10 +24,11 @@ import zlc.season.rxdownload4.manager.stop
  */
 class DownloadMarketActivity :BaseActivity() {
 
-    private val mRecyclerView by bindView<RecyclerView>(R.id.recycler_view)
     private lateinit var mAdapter: DownloadMarketAdapter
 
-    override fun getLayoutId(): Int = R.layout.activity_download_market
+    private val mBinding: ActivityDownloadMarketBinding by bindingLayout(ActivityDownloadMarketBinding::inflate)
+
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         super.findViews(savedInstanceState)
@@ -35,9 +40,9 @@ class DownloadMarketActivity :BaseActivity() {
         val layoutManager = LinearLayoutManager(getContext())
         layoutManager.orientation = RecyclerView.VERTICAL
         mAdapter = DownloadMarketAdapter(getContext())
-        mRecyclerView.layoutManager = layoutManager
-        mRecyclerView.setHasFixedSize(true)
-        mRecyclerView.adapter = mAdapter
+        mBinding.recyclerView.layoutManager = layoutManager
+        mBinding.recyclerView.setHasFixedSize(true)
+        mBinding.recyclerView.adapter = mAdapter
     }
 
     override fun onClickBackBtn() {
@@ -47,7 +52,7 @@ class DownloadMarketActivity :BaseActivity() {
 
     override fun setListeners() {
         super.setListeners()
-        mAdapter.setOnDownloadListener(object : DownloadMarketAdapter.OnDownloadListener{
+        mAdapter.setOnDownloadListener(object : DownloadMarketAdapter.OnDownloadListener {
             override fun onClickDownload(taskManager: TaskManager, bean: AppInfoBean) {
                 try {
                     taskManager.start()
