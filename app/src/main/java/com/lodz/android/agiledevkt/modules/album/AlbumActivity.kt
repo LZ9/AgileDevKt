@@ -2,10 +2,11 @@ package com.lodz.android.agiledevkt.modules.album
 
 import android.app.Activity
 import android.app.RecoverableSecurityException
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.IntentSenderRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.databinding.ActivityAlbumBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
@@ -127,6 +128,13 @@ class AlbumActivity : BaseActivity() {
         }
     }
 
+    /** 删除图片的ActivityResult回调 */
+    private val mdeleteImgResult = registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()){
+        if (it.resultCode == Activity.RESULT_OK) {
+            deleteImg(mDeleteInfo)
+        }
+    }
+
     private fun deleteImg(picInfo: PicInfo?) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             try {
@@ -136,9 +144,7 @@ class AlbumActivity : BaseActivity() {
                 mBinding.resultTv.text = result
             } catch (e: RecoverableSecurityException) {
                 e.printStackTrace()
-                startIntentSenderForResult(
-                    e.getUserAction().getActionIntent().getIntentSender(), Build.VERSION.SDK_INT, null, 0, 0, 0
-                )
+                mdeleteImgResult.launch(IntentSenderRequest.Builder(e.getUserAction().getActionIntent().intentSender).build())
             }
             return
         }
@@ -177,11 +183,4 @@ class AlbumActivity : BaseActivity() {
     /** 获取图片文件夹[folder]信息内容 */
     private fun imageFolderStr(folder: ImageFolder): String =
             "name : ${folder.name}\n" + "coverImgPath : ${folder.getCoverPicInfo()}\n" + "dir : ${folder.dir}\n" + "count : ${folder.getCount()}\n" + "isAllPicture : ${folder.isAllPicture()}\n"
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == Build.VERSION.SDK_INT && resultCode == Activity.RESULT_OK){
-            deleteImg(mDeleteInfo)
-        }
-    }
 }
