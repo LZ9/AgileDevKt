@@ -5,12 +5,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.SeekBar
-import android.widget.TextView
 import com.lodz.android.agiledevkt.R
+import com.lodz.android.agiledevkt.databinding.ActivityColorTestBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.utils.ColorUtils
 import com.lodz.android.pandora.base.activity.BaseActivity
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 
 /**
  * 颜色透明度测试
@@ -25,14 +25,9 @@ class ColorAlphaTestActivity : BaseActivity() {
         }
     }
 
-    /** 透明度拖动条 */
-    private val mSeekBar by bindView<SeekBar>(R.id.seek_bar)
-    /** 颜色百分比文字 */
-    private val mPercentageTv by bindView<TextView>(R.id.percentage_tv)
-    /** 封面颜色控件 */
-    private val mCoverView by bindView<View>(R.id.cover_view)
+    private val mBinding: ActivityColorTestBinding by bindingLayout(ActivityColorTestBinding::inflate)
 
-    override fun getLayoutId() = R.layout.activity_color_test
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME) ?: "")
@@ -45,14 +40,15 @@ class ColorAlphaTestActivity : BaseActivity() {
 
     override fun setListeners() {
         super.setListeners()
-        mSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        // 透明度拖动条
+        mBinding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 if (!fromUser){
                     return
                 }
-                mPercentageTv.text = ("$progress%")
+                mBinding.percentageTv.text = ("$progress%")
                 val colorInt = ColorUtils.getColorAlphaRes(getContext(), R.color.yellow, (progress / 100.0).toFloat())
-                mCoverView.setBackgroundColor(colorInt)
+                mBinding.coverView.setBackgroundColor(colorInt)
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {}
@@ -63,7 +59,7 @@ class ColorAlphaTestActivity : BaseActivity() {
 
     override fun initData() {
         super.initData()
-        mPercentageTv.text = ("100%")
+        mBinding.percentageTv.text = ("100%")
         showStatusCompleted()
     }
 }
