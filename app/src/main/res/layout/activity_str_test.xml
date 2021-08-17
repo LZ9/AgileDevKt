@@ -2,51 +2,105 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="8dp">
+    android:orientation="vertical">
 
     <TextView
-        android:id="@+id/original_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/str_original"
-        android:textColor="@color/color_00a0e9"
-        android:textSize="16sp" />
+        android:background="@color/color_00a0e9"
+        android:padding="8dp"
+        android:text="@string/str_utf8"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/original_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/str_original"
+            android:textColor="@color/color_00a0e9"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/encode_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/str_encode"
+            android:textColor="@color/color_ea413c"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/decode_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/str_decode"
+            android:textColor="@color/color_00a0e9"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
 
     <TextView
-        android:id="@+id/encode_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/str_encode"
-        android:textColor="@color/color_ea413c"
-        android:textSize="16sp" />
+        android:background="@color/color_00a0e9"
+        android:padding="8dp"
+        android:text="@string/str_separator"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/decode_tv"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/str_decode"
-        android:textColor="@color/color_00a0e9"
-        android:textSize="16sp" />
+        android:orientation="vertical"
+        android:padding="8dp">
 
-    <TextView
-        android:id="@+id/separator_to_list_tv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/str_separator_to_list"
-        android:textColor="@color/color_d28928"
-        android:textSize="16sp" />
+        <TextView
+            android:id="@+id/original_list_str_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/str_original"
+            android:textColor="@color/color_00a0e9"
+            android:textSize="16sp" />
 
-    <TextView
-        android:id="@+id/list_to_separator_tv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/str_list_to_separator"
-        android:textColor="@color/color_ff6307"
-        android:textSize="16sp" />
+        <TextView
+            android:id="@+id/separator_to_list_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/str_separator_to_list"
+            android:textColor="@color/color_d28928"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/original_list_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/str_original"
+            android:textColor="@color/color_00a0e9"
+            android:textSize="16sp" />
+
+
+        <TextView
+            android:id="@+id/list_to_separator_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/str_list_to_separator"
+            android:textColor="@color/color_ff6307"
+            android:textSize="16sp" />
+
+    </LinearLayout>
 
 </LinearLayout>

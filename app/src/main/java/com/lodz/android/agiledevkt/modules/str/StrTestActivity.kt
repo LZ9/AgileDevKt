@@ -3,12 +3,14 @@ package com.lodz.android.agiledevkt.modules.str
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.TextView
+import android.view.View
 import com.lodz.android.agiledevkt.R
+import com.lodz.android.agiledevkt.databinding.ActivityStrTestBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
-import com.lodz.android.corekt.anko.bindView
+import com.lodz.android.corekt.anko.append
 import com.lodz.android.corekt.utils.StringUtils
 import com.lodz.android.pandora.base.activity.BaseActivity
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 
 /**
  * 字符测试类
@@ -24,17 +26,6 @@ class StrTestActivity : BaseActivity() {
     }
 
     /** 原始字符 */
-    private val mOriginalTv by bindView<TextView>(R.id.original_tv)
-    /** UTF-8编码 */
-    private val mEncodeTv by bindView<TextView>(R.id.encode_tv)
-    /** UTF-8解码 */
-    private val mDecodeTv by bindView<TextView>(R.id.decode_tv)
-    /** 分隔符字符串转数组 */
-    private val mSeparatorToListTv by bindView<TextView>(R.id.separator_to_list_tv)
-    /** 数组转分隔符字符串 */
-    private val mListToSeparatorTv by bindView<TextView>(R.id.list_to_separator_tv)
-
-    /** 原始字符 */
     private val mOriginalStr = "测试asdqw123@#!$%<>?}*/-{}:"
     /** 编码字符 */
     private var mEncodeStr = ""
@@ -43,7 +34,10 @@ class StrTestActivity : BaseActivity() {
     /** 原始数组 */
     private val mOriginalList = listOf("dwe", "123", "&*%&", "@[]<48", "")
 
-    override fun getLayoutId() = R.layout.activity_str_test
+
+    private val mBinding: ActivityStrTestBinding by bindingLayout(ActivityStrTestBinding::inflate)
+
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME) ?: "")
@@ -56,17 +50,18 @@ class StrTestActivity : BaseActivity() {
 
     override fun initData() {
         super.initData()
-        mOriginalTv.text = (getString(R.string.str_original) + mOriginalStr)
+        mBinding.originalTv.text = getString(R.string.str_original).append(mOriginalStr)// 原始字符
 
         mEncodeStr = StringUtils.encodeUtf8(mOriginalStr)
-        mEncodeTv.text = (getString(R.string.str_encode) + mEncodeStr)
-        mDecodeTv.text = (getString(R.string.str_decode) + StringUtils.decodeUtf8(mEncodeStr))
+        mBinding.encodeTv.text = getString(R.string.str_encode).append(mEncodeStr)// UTF-8编码
+        mBinding.decodeTv.text = getString(R.string.str_decode).append(StringUtils.decodeUtf8(mEncodeStr))// UTF-8解码
 
-        val list = StringUtils.getListBySeparator(mOriginalSeparatorStr, ",")
-        mSeparatorToListTv.text = (getString(R.string.str_separator_to_list) + list.toString())
-
-        mListToSeparatorTv.text = (getString(R.string.str_list_to_separator) + StringUtils.getStringBySeparator(mOriginalList, "/"))
-
+        mBinding.originalListStrTv.text = getString(R.string.str_original).append(mOriginalSeparatorStr)
+        mBinding.separatorToListTv.text = getString(R.string.str_separator_to_list)
+            .append(StringUtils.getListBySeparator(mOriginalSeparatorStr, ","))// 分隔符字符串转数组
+        mBinding.originalListTv.text = getString(R.string.str_original).append(mOriginalList)
+        mBinding.listToSeparatorTv.text = getString(R.string.str_list_to_separator)
+            .append(StringUtils.getStringBySeparator(mOriginalList, "/"))// 数组转分隔符字符串
         showStatusCompleted()
     }
 }
