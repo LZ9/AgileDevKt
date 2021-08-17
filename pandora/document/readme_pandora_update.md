@@ -1,5 +1,9 @@
 # Pandora更新记录
 
+##### 2021/08/17
+1. BottomMenuBar增加指示器配置
+2. 发布1.7.1版
+
 ##### 2021/08/12
 1. 框架增加ViewBinding支持
 2. 增加AnkoViewBinding.kt扩展函数
