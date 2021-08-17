@@ -69,4 +69,11 @@
         app:layout_constraintCircleAngle="35"
         app:layout_constraintCircleRadius="25dp"
         tools:ignore="MissingConstraints" />
+
+    <View
+        android:id="@+id/pdr_indicator_view"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

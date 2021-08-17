@@ -101,6 +101,12 @@ class MenuBarTestActivity : BaseActivity() {
         config.badgeImgHeightPx = dp2px(16)
 //        config.badgeImgAngle = 90
 //        config.badgeImgRadiusPx = dp2px(5)
+
+        config.isUseIndicator = true
+        config.indicatorHeightPx = dp2px(3)
+        config.indicatorMarginStartPx = dp2px(30)
+        config.indicatorMarginEndPx = dp2px(30)
+        config.setIndicatorColor(getContext(), R.color.color_00a0e9)
         return config
     }
 

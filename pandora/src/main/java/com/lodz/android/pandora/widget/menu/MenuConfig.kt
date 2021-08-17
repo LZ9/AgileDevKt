@@ -2,6 +2,7 @@ package com.lodz.android.pandora.widget.menu
 
 import android.content.Context
 import android.content.res.ColorStateList
+import android.graphics.Color
 import android.graphics.drawable.StateListDrawable
 import android.view.View
 import android.view.ViewGroup
@@ -77,6 +78,23 @@ open class MenuConfig {
     /** 提醒点距中心点的距离 */
     var badgeImgRadiusPx = 0
 
+    /** 指示器宽度 */
+    var indicatorWidthPx = ViewGroup.LayoutParams.MATCH_PARENT
+    /** 指示器高度 */
+    var indicatorHeightPx = 0
+    /** 使用指示器 */
+    var isUseIndicator = false
+    /** 指示器左间距 */
+    var indicatorMarginStartPx = 0
+    /** 指示器右间距 */
+    var indicatorMarginEndPx = 0
+    /** 指示器上间距 */
+    var indicatorMarginTopPx = 0
+    /** 指示器下间距 */
+    var indicatorMarginBottomPx = 0
+    /** 指示器颜色 */
+    @ColorInt
+    var indicatorColor = Color.BLUE
 
     /** 设置图标资源Id，[context]上下文，[normal]正常图标，[selected]选中图标 */
     fun setIconResId(context: Context, @DrawableRes normal: Int, @DrawableRes selected: Int) {
@@ -96,6 +114,11 @@ open class MenuConfig {
     /** 设置数字颜色[color] */
     fun setNumTextColor(context: Context, @ColorRes color: Int) {
         numTextColor = context.getColorCompat(color)
+    }
+
+    /** 设置指示器颜色[color] */
+    fun setIndicatorColor(context: Context, @ColorRes color: Int) {
+        indicatorColor = context.getColorCompat(color)
     }
 
 }

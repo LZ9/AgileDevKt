@@ -3,6 +3,7 @@ package com.lodz.android.pandora.widget.menu
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.content.Context
+import android.graphics.Color
 import android.os.Build
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -14,7 +15,9 @@ import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.util.Pair
+import com.lodz.android.corekt.anko.createColorIntDrawable
 import com.lodz.android.corekt.anko.dp2px
+import com.lodz.android.corekt.utils.SelectorUtils
 import com.lodz.android.pandora.R
 
 /**
@@ -67,22 +70,23 @@ class BottomMenuBar : LinearLayout {
             val numTv = viewGroup.findViewById<TextView>(R.id.pdr_num_tv)
             val pointView = viewGroup.findViewById<View>(R.id.pdr_point_view)
             val badgeImg = viewGroup.findViewById<ImageView>(R.id.pdr_badge_img)
+            val indicatorView = viewGroup.findViewById<View>(R.id.pdr_indicator_view)
 
-            if (config.iconDrawableState == null || config.textColorState == null) {// 未设置图标和文字颜色
-                break
-            }
-
+            iconImg.visibility = if (config.iconDrawableState != null) View.VISIBLE else View.GONE
             iconImg.setImageDrawable(config.iconDrawableState)
             if (config.iconSizeDp > 0){
                 iconImg.layoutParams.height = dp2px(config.iconSizeDp)
                 iconImg.layoutParams.width = dp2px(config.iconSizeDp)
             }
 
+            textTv.visibility = if (config.text.isEmpty()) View.GONE else View.VISIBLE
             textTv.text = config.text
             if (config.textSizeSp > 0f) {
                 textTv.textSize = config.textSizeSp
             }
-            textTv.setTextColor(config.textColorState)
+            if (config.textColorState != null){
+                textTv.setTextColor(config.textColorState)
+            }
             if (config.drawablePaddingPx > 0){
                 val lp = textTv.layoutParams as LayoutParams
                 lp.topMargin = config.drawablePaddingPx
@@ -125,7 +129,7 @@ class BottomMenuBar : LinearLayout {
             }
 
             badgeImg.visibility = config.badgeImgVisibility
-            if (config.badgeImgResId != 0){
+            if (config.badgeImgResId != 0) {
                 badgeImg.setImageResource(config.badgeImgResId)
             }
             badgeImg.layoutParams.width = config.badgeImgWidthPx
@@ -140,6 +144,24 @@ class BottomMenuBar : LinearLayout {
             }
             badgeImg.setOnClickListener {
                 mPdrOnMenuBadgeImgClickListener?.invoke(it, config)
+            }
+
+            if (config.isUseIndicator) {
+                indicatorView.background = SelectorUtils.createBgSelectedDrawable(
+                    context.createColorIntDrawable(Color.TRANSPARENT),
+                    context.createColorIntDrawable(config.indicatorColor)
+                )
+                val lp = indicatorView.layoutParams as ConstraintLayout.LayoutParams
+                lp.width = config.indicatorWidthPx
+                lp.height = config.indicatorHeightPx
+                lp.marginStart = config.indicatorMarginStartPx
+                lp.marginEnd = config.indicatorMarginEndPx
+                lp.topMargin = config.indicatorMarginTopPx
+                lp.bottomMargin = config.indicatorMarginBottomPx
+                indicatorView.layoutParams = lp
+                indicatorView.visibility = View.VISIBLE
+            } else {
+                indicatorView.visibility = View.GONE
             }
 
             viewGroup.setOnClickListener {
@@ -228,12 +250,12 @@ class BottomMenuBar : LinearLayout {
             if (cfg == null || vg == null) {
                 continue
             }
-            if (cfg.type == type){
-                if (!vg.isSelected){
+            if (cfg.type == type) {
+                if (!vg.isSelected) {
                     vg.isSelected = true
                     mPdrOnMenuSelectedListener?.invoke(vg, cfg)
                 }
-            }else{
+            } else {
                 vg.isSelected = false
             }
         }
