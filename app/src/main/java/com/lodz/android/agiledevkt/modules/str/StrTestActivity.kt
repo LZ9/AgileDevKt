@@ -59,7 +59,7 @@ class StrTestActivity : BaseActivity() {
         mBinding.originalListStrTv.text = getString(R.string.str_original).append(mOriginalSeparatorStr)
         mBinding.separatorToListTv.text = getString(R.string.str_separator_to_list)
             .append(StringUtils.getListBySeparator(mOriginalSeparatorStr, ","))// 分隔符字符串转数组
-        mBinding.originalListTv.text = getString(R.string.str_original).append(mOriginalList)
+        mBinding.originalListTv.text = getString(R.string.str_original_list).append(mOriginalList)
         mBinding.listToSeparatorTv.text = getString(R.string.str_list_to_separator)
             .append(StringUtils.getStringBySeparator(mOriginalList, "/"))// 数组转分隔符字符串
         showStatusCompleted()

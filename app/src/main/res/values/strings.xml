@@ -183,6 +183,7 @@
     <!-- 字符测试类 -->
     <string name="str_utf8">UTF-8编码</string>
     <string name="str_original">原始字符：</string>
+    <string name="str_original_list">原始数组：</string>
     <string name="str_encode">UTF-8编码：</string>
     <string name="str_decode">UTF-8解码：</string>
     <string name="str_separator">字符串数组互转</string>
