@@ -2,18 +2,13 @@ package com.lodz.android.agiledevkt.modules.keyboard
 
 import android.content.Context
 import android.content.Intent
-import android.inputmethodservice.KeyboardView
 import android.os.Bundle
-import android.widget.EditText
-import com.lodz.android.agiledevkt.R
+import android.view.View
+import com.lodz.android.agiledevkt.databinding.ActivityKeyboardTestBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.pandora.base.activity.BaseActivity
-import com.lodz.android.pandora.widget.collect.CltEditView
-import com.lodz.android.pandora.widget.keyboard.CarPlateKeyboardView
-import com.lodz.android.pandora.widget.keyboard.CommonCertKeyboardView
-import com.lodz.android.pandora.widget.keyboard.IdcardKeyboardView
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 
 /**
  * 自定义键盘测试类
@@ -29,30 +24,16 @@ class KeyboardTestActivity : BaseActivity() {
         }
     }
 
-    /** 身份证 */
-    private val mIdcardCltedt by bindView<CltEditView>(R.id.idcard_cltedt)
-    /** 身份证键盘 */
-    private val mIdcardKeyboardView by bindView<IdcardKeyboardView>(R.id.idcard_keyboard_view)
-    /** 车牌 */
-    private val mCarplateCltedt by bindView<CltEditView>(R.id.carplate_cltedt)
-    /** 车牌键盘 */
-    private val mCarplateKeyboardView by bindView<CarPlateKeyboardView>(R.id.carplate_keyboard_view)
-    /** 全键盘 */
-    private val mCommonCertCltedt by bindView<CltEditView>(R.id.common_cert_cltedt)
-    /** 全键盘 */
-    private val mCommonCertKeyboardView by bindView<CommonCertKeyboardView>(R.id.common_cert_keyboard_view)
+    private val mBinding: ActivityKeyboardTestBinding by bindingLayout(ActivityKeyboardTestBinding::inflate)
 
-    /** 默认 */
-    private val mDefaultCltedt by bindView<CltEditView>(R.id.default_cltedt)
-
-    override fun getLayoutId(): Int = R.layout.activity_keyboard_test
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         super.findViews(savedInstanceState)
         getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME) ?: "")
-        mIdcardKeyboardView.initView(window, mIdcardCltedt.getEditText())
-        mCarplateKeyboardView.initView(window, mCarplateCltedt.getEditText())
-        mCommonCertKeyboardView.initView(window, mCommonCertCltedt.getEditText())
+        mBinding.idcardKeyboardView.initView(window, mBinding.idcardCltedt.getEditText())
+        mBinding.carplateKeyboardView.initView(window, mBinding.carplateCltedt.getEditText())
+        mBinding.commonCertKeyboardView.initView(window, mBinding.commonCertCltedt.getEditText())
     }
 
     override fun onClickBackBtn() {
@@ -62,22 +43,25 @@ class KeyboardTestActivity : BaseActivity() {
 
     override fun setListeners() {
         super.setListeners()
-        mIdcardKeyboardView.setOnClickFinishListener{
-            mIdcardKeyboardView.goneKeyboard()
+        // 身份证键盘
+        mBinding.idcardKeyboardView.setOnClickFinishListener{
+            mBinding.idcardKeyboardView.goneKeyboard()
             if (it.isNotEmpty()){
                 toastShort(it)
             }
         }
 
-        mCarplateKeyboardView.setOnClickFinishListener{
-            mCarplateKeyboardView.goneKeyboard()
+        // 车牌键盘
+        mBinding.carplateKeyboardView.setOnClickFinishListener{
+            mBinding.carplateKeyboardView.goneKeyboard()
             if (it.isNotEmpty()){
                 toastShort(it)
             }
         }
 
-        mCommonCertKeyboardView.setOnClickFinishListener{
-            mCommonCertKeyboardView.goneKeyboard()
+        // 全键盘
+        mBinding.commonCertKeyboardView.setOnClickFinishListener{
+            mBinding.commonCertKeyboardView.goneKeyboard()
             if (it.isNotEmpty()){
                 toastShort(it)
             }
