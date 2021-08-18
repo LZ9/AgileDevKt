@@ -4,15 +4,14 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.view.ViewGroup
-import android.widget.ImageView
+import android.view.View
 import android.widget.SeekBar
-import android.widget.TextView
 import com.lodz.android.agiledevkt.R
-import com.lodz.android.corekt.anko.bindView
+import com.lodz.android.agiledevkt.databinding.ActivityStatusbarImgTestBinding
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.corekt.utils.StatusBarUtil
 import com.lodz.android.pandora.base.activity.AbsActivity
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 
 /**
  * 带ImageView的状态栏颜色测试
@@ -27,39 +26,32 @@ class StatusBarImgTestActivity : AbsActivity() {
         }
     }
 
-    /** 标题布局 */
-    private val mTitleLayout by bindView<ViewGroup>(R.id.title_layout)
-    /** 返回按钮 */
-    private val mBackBtn by bindView<ImageView>(R.id.back_btn)
-    /** 描述按钮 */
-    private val mDescBtn by bindView<ImageView>(R.id.desc_btn)
+    private val mBinding: ActivityStatusbarImgTestBinding by bindingLayout(ActivityStatusbarImgTestBinding::inflate)
 
-    /** 透明度滚动条 */
-    private val mAlphaSeekBar by bindView<SeekBar>(R.id.alpha_sb)
-    /** 透明度值 */
-    private val mAlphaValueTv by bindView<TextView>(R.id.alpha_value_tv)
-
-    override fun getAbsLayoutId() = R.layout.activity_statusbar_img_test
+    override fun getAbsViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
     }
 
     override fun setListeners() {
         super.setListeners()
-        mBackBtn.setOnClickListener {
+        // 返回按钮
+        mBinding.backBtn.setOnClickListener {
             finish()
         }
 
-        mDescBtn.setOnClickListener {
+        // 描述按钮
+        mBinding.descBtn.setOnClickListener {
             toastShort(R.string.status_bar_old_trafford)
         }
 
-        mAlphaSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        // 透明度滚动条
+        mBinding.alphaSb.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 if (!fromUser) {
                     return
                 }
-                StatusBarUtil.setTransparentForOffsetView(this@StatusBarImgTestActivity, mTitleLayout, progress / 100.0f, Color.DKGRAY)
+                StatusBarUtil.setTransparentForOffsetView(this@StatusBarImgTestActivity, mBinding.titleLayout, progress / 100.0f, Color.DKGRAY)
                 updateAlphaValue()
             }
 
@@ -70,13 +62,13 @@ class StatusBarImgTestActivity : AbsActivity() {
 
     override fun initData() {
         super.initData()
-        StatusBarUtil.setTransparentForOffsetView(this@StatusBarImgTestActivity, mTitleLayout, mAlphaSeekBar.progress / 100.0f, Color.DKGRAY)
+        StatusBarUtil.setTransparentForOffsetView(this@StatusBarImgTestActivity, mBinding.titleLayout, mBinding.alphaSb.progress / 100.0f, Color.DKGRAY)
         updateAlphaValue()
     }
 
     /** 更新透明度 */
     private fun updateAlphaValue() {
-        mAlphaValueTv.text = mAlphaSeekBar.progress.toString()
+        mBinding.alphaValueTv.text = mBinding.alphaSb.progress.toString()
     }
 
 }
