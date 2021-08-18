@@ -3,15 +3,15 @@ package com.lodz.android.agiledevkt.modules.annotation
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.TextView
+import android.view.View
 import com.google.android.material.button.MaterialButton
 import com.lodz.android.agiledevkt.R
+import com.lodz.android.agiledevkt.databinding.ActivityAnnotationTestBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.corekt.security.AES
 import com.lodz.android.pandora.base.activity.BaseActivity
-import com.lodz.android.pandora.widget.collect.CltEditView
+import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 
 /*
     java中元注解有四个： @Retention @Target @Document @Inherited；
@@ -43,7 +43,6 @@ import com.lodz.android.pandora.widget.collect.CltEditView
 　  @Repeatable：说明该注释在同个位置可以使用多次
  */
 
-
 /**
  * 注解测试类
  * @author zhouL
@@ -59,12 +58,6 @@ class AnnotationTestActivity : BaseActivity() {
         }
     }
 
-    /** 注解内容展示 */
-    private val mContentTv by bindView<TextView>(R.id.content_tv)
-    /** 内容输入框 */
-    private val mContentCltedit by bindView<CltEditView>(R.id.content_cltedit)
-    /** 注解使用按钮 */
-    private val mAnnotationBtn by bindView<MaterialButton>(R.id.annotation_btn)
     /** 解密按钮 */
     @BindViews(R.id.decrypt_btn)
     private lateinit var mDecryptBtn : MaterialButton
@@ -73,7 +66,9 @@ class AnnotationTestActivity : BaseActivity() {
     @EncryptionAES(AES_KEY)
     private var mContent = ""
 
-    override fun getLayoutId(): Int = R.layout.activity_annotation_test
+    private val mBinding: ActivityAnnotationTestBinding by bindingLayout(ActivityAnnotationTestBinding::inflate)
+
+    override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
         super.findViews(savedInstanceState)
@@ -89,22 +84,24 @@ class AnnotationTestActivity : BaseActivity() {
     override fun setListeners() {
         super.setListeners()
 
-        mAnnotationBtn.setOnClickListener {
-            mContent = mContentCltedit.getContentText()
+        // 注解使用按钮
+        mBinding.annotationBtn.setOnClickListener {
+            mContent = mBinding.contentCltedit.getContentText()
             if (mContent.isEmpty()) {
                 toastShort(R.string.annotation_content_hint)
                 return@setOnClickListener
             }
 
             AnnotationTestUtils.injectEncryption(this)
-            mContentTv.text = mContent
+            mBinding.contentTv.text = mContent
         }
 
+        // 解密按钮
         mDecryptBtn.setOnClickListener {
-            val content = mContentTv.text.toString()
+            val content = mBinding.contentTv.text.toString()
             if (content.isNotEmpty()) {
                 val result = AES.decrypt(content, AES_KEY) ?: ""
-                mContentTv.text = result
+                mBinding.contentTv.text = result
             }
         }
     }
