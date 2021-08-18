@@ -128,13 +128,30 @@
         android:text="@string/file_save_by_bytes"
         android:textSize="12sp" />
 
-    <Button
-        android:id="@+id/save_bitmap_btn"
-        style="?android:attr/button"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="3dp"
-        android:text="@string/file_save_bitmap"
-        android:textSize="12sp" />
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/save_bitmap_btn"
+            style="?android:attr/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:text="@string/file_save_bitmap"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/file_to_base64_btn"
+            style="?android:attr/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:text="@string/file_to_base64"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
 
 </LinearLayout>

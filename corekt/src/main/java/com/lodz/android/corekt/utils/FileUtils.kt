@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
 import android.provider.MediaStore
+import android.util.Base64
 import androidx.annotation.IntRange
 import com.lodz.android.corekt.anko.append
 import java.io.*
@@ -409,7 +410,7 @@ object FileUtils {
     }
 
     /** 文件路径转uri */
-    fun filePath2Uri(context: Context, path: String): Uri {
+    fun filePathToUri(context: Context, path: String): Uri {
         val mediaUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
         val cursor = context.contentResolver.query(
             mediaUri,
@@ -417,10 +418,7 @@ object FileUtils {
             MediaStore.Images.Media.DISPLAY_NAME + "= ?",
             arrayOf(path.substring(path.lastIndexOf("/") + 1)),
             null
-        )
-        if (cursor == null) {
-            return Uri.EMPTY
-        }
+        ) ?: return Uri.EMPTY
         var uri: Uri? = null
         if (cursor.moveToFirst()) {
             uri = ContentUris.withAppendedId(
@@ -431,6 +429,73 @@ object FileUtils {
         cursor.close()
         return uri ?: Uri.EMPTY
     }
+
+    /** 把[path]文件转Base64，转码类型[flags]默认Base64.NO_WRAP */
+    @JvmStatic
+    @JvmOverloads
+    fun fileToBase64(context: Context, uri: Uri, toPath: String, fileName: String, flags: Int = Base64.NO_WRAP): String {
+        val isSuccess = copyFileFromUri(context, uri, toPath, fileName)
+        if (!isSuccess) {
+            return ""
+        }
+        val newToPath = if (toPath.endsWith(File.separator)) toPath else toPath.append(File.separator)
+        return fileToBase64(newToPath.append(fileName), flags)
+    }
+
+    /** 把[path]文件转Base64，转码类型[flags]默认Base64.NO_WRAP */
+    @JvmStatic
+    @JvmOverloads
+    fun fileToBase64(path: String, flags: Int = Base64.NO_WRAP): String = fileToBase64(File(path), flags)
+
+    /** 把[file]文件转Base64，转码类型[flags]默认Base64.NO_WRAP */
+    @JvmStatic
+    @JvmOverloads
+    fun fileToBase64(file: File, flags: Int = Base64.NO_WRAP): String {
+        if (!file.exists()) {
+            return ""
+        }
+        FileInputStream(file).use {
+            val bytes = ByteArray(it.available())
+            val length = it.read(bytes)
+            return Base64.encodeToString(bytes, 0, length, flags) ?: ""
+        }
+    }
+
+    /** 把[base64]转文件，文件路径[toPath]，保存文件名[fileName]，转码类型[flags]默认Base64.NO_WRAP */
+    @JvmStatic
+    @JvmOverloads
+    fun Base64ToFile(base64: String, toPath: String, fileName: String, flags: Int = Base64.NO_WRAP): File? {
+        if (base64.isEmpty() || toPath.isEmpty() || fileName.isEmpty()) {
+            return null
+        }
+        val newToPath = if (toPath.endsWith(File.separator)) toPath else toPath.append(File.separator)
+        val toDirectoryFile = create(newToPath) ?: return null
+        if (!toDirectoryFile.exists()) {
+            toDirectoryFile.mkdirs()
+        }
+        if (!toDirectoryFile.isDirectory) {
+            return null
+        }
+        val toFile = File(newToPath.append(fileName))
+        if (toFile.exists()) {
+            toFile.delete()
+        }
+        if (!toFile.createNewFile()) {
+            return null
+        }
+        val bytes = Base64.decode(base64, flags)
+        FileOutputStream(toFile).use {
+            it.write(bytes)
+        }
+        return toFile
+    }
+
+
+
+    //   fun base64ToBitmap(base64Data: String, flags: Int = Base64.NO_WRAP): Bitmap? {
+    //        val bytes = base64ToByte(base64Data, flags)
+    //        return BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+    //    }
 
     ///**往FileDescriptor中写入数据
     // * @param fileDescriptor

@@ -9,10 +9,14 @@ import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.databinding.ActivityFileTestBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.agiledevkt.utils.file.FileManager
+import com.lodz.android.corekt.anko.append
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.corekt.utils.FileUtils
 import com.lodz.android.pandora.base.activity.BaseActivity
+import com.lodz.android.pandora.rx.subscribe.observer.ProgressObserver
+import com.lodz.android.pandora.rx.utils.RxUtils
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
+import io.reactivex.rxjava3.core.Observable
 import java.io.File
 
 /**
@@ -28,15 +32,18 @@ class FileTestActivity : BaseActivity() {
         }
     }
 
-    // TODO: 2021/8/11 待添加文件转BASE64的方法
     /** 根目录地址 */
     private val ROOT_PATH = FileManager.getCacheFolderPath()
+    /** 测试文件名称 */
+    private val TEST_FILE_NAME = "test.txt"
     /** 新增文件路径 */
-    private val NEW_FILE_PATH = ROOT_PATH + "test.txt"
+    private val NEW_FILE_PATH = ROOT_PATH + TEST_FILE_NAME
     /** 新增文件夹路径 */
     private val NEW_FOLDER_PATH = ROOT_PATH + "test" + File.separator + "12321"
     /** 保存文件夹路径 */
     private val SAVE_PATH = ROOT_PATH + "test" + File.separator + "dasdqweq"
+    /** 视频文件名称 */
+    private val VIDEO_FILE_NAME = "video.mp4"
 
     private val mBinding: ActivityFileTestBinding by bindingLayout(ActivityFileTestBinding::inflate)
 
@@ -86,13 +93,13 @@ class FileTestActivity : BaseActivity() {
 
         // 移动文件
         mBinding.moveFileBtn.setOnClickListener {
-            val isSuccess = FileUtils.moveFile(ROOT_PATH, NEW_FOLDER_PATH, "test.txt")
+            val isSuccess = FileUtils.moveFile(ROOT_PATH, NEW_FOLDER_PATH, TEST_FILE_NAME)
             toastShort("移动 : $isSuccess")
         }
 
         // 复制文件
         mBinding.copyFileBtn.setOnClickListener {
-            val isSuccess = FileUtils.copyFile(ROOT_PATH, NEW_FOLDER_PATH, "test.txt")
+            val isSuccess = FileUtils.copyFile(ROOT_PATH, NEW_FOLDER_PATH, TEST_FILE_NAME)
             toastShort("复制 : $isSuccess")
         }
 
@@ -125,6 +132,43 @@ class FileTestActivity : BaseActivity() {
             FileUtils.bitmapToPath(bitmap, SAVE_PATH, "12sdaww","png", 100)
             toastShort("保存完成")
         }
+
+        mBinding.fileToBase64Btn.setOnClickListener {
+            val videoFile = File(FileManager.getContentFolderPath().append(VIDEO_FILE_NAME))
+            if (!videoFile.exists()) {
+                toastShort(R.string.file_video_no_found)
+                return@setOnClickListener
+            }
+            fileToBase64(videoFile)
+        }
+    }
+
+    /** 文件转base64 */
+    private fun fileToBase64(file: File) {
+        Observable.just(file)
+            .map {
+                FileUtils.fileToBase64(it)
+            }
+            .map {
+                if (it.isEmpty()){
+                    throw TypeCastException("base64 is null")
+                }
+                FileUtils.Base64ToFile(it, FileManager.getContentFolderPath(), "111".append(VIDEO_FILE_NAME))
+            }
+            .compose(RxUtils.ioToMainObservable())
+            .subscribe(
+                ProgressObserver.action(
+                    context = getContext(),
+                    msg = "转码中",
+                    cancelable = false,
+                    canceledOnTouchOutside = false,
+                    next = {
+                        if (it != null) toastShort("转码成功") else toastShort("转码失败")
+                    },
+                    error = { e, isNetwork ->
+                        toastShort("转码失败：${e.message}")
+                    })
+            )
     }
 
     override fun initData() {
