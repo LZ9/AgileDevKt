@@ -5,6 +5,8 @@ import android.annotation.TargetApi
 import android.content.Context
 import android.graphics.Color
 import android.os.Build
+import android.text.InputFilter
+import android.text.InputFilter.LengthFilter
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +21,7 @@ import com.lodz.android.corekt.anko.createColorIntDrawable
 import com.lodz.android.corekt.anko.dp2px
 import com.lodz.android.corekt.utils.SelectorUtils
 import com.lodz.android.pandora.R
+import java.sql.Array
 
 /**
  * 底部菜单栏
@@ -80,10 +83,18 @@ class BottomMenuBar : LinearLayout {
             }
 
             textTv.visibility = if (config.text.isEmpty()) View.GONE else View.VISIBLE
-            textTv.text = config.text
             if (config.textSizeSp > 0f) {
                 textTv.textSize = config.textSizeSp
             }
+            textTv.layoutParams.width = config.textWidthPx
+            textTv.layoutParams.height = config.textHeightPx
+            if (config.textEllipsize != null) {
+                textTv.ellipsize = config.textEllipsize
+            }
+            if (config.textMaxLength > 0) {
+                textTv.setFilters(arrayOf<InputFilter>(LengthFilter(config.textMaxLength)))
+            }
+            textTv.setLines(config.textLines)
             if (config.textColorState != null){
                 textTv.setTextColor(config.textColorState)
             }
@@ -91,6 +102,7 @@ class BottomMenuBar : LinearLayout {
                 val lp = textTv.layoutParams as LayoutParams
                 lp.topMargin = config.drawablePaddingPx
             }
+            textTv.text = config.text
 
             numTv.text = config.num.toString()
             if (config.numTextBackgroundDrawableResId != 0) {

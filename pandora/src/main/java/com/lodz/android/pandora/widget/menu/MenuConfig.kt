@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.StateListDrawable
+import android.text.TextUtils
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.ColorInt
@@ -32,6 +33,16 @@ open class MenuConfig {
      var text = ""
     /** 菜单文字大小 */
      var textSizeSp = 0f
+    /** 菜单文字宽度 */
+    var textWidthPx = ViewGroup.LayoutParams.WRAP_CONTENT
+    /** 菜单文字高度 */
+    var textHeightPx = ViewGroup.LayoutParams.WRAP_CONTENT
+    /** 菜单文字省略（例如TextUtils.TruncateAt.END） */
+    var textEllipsize: TextUtils.TruncateAt? = null
+    /** 菜单文字数量 */
+    var textMaxLength = 0
+    /** 菜单文字行数 */
+    var textLines = 1
     /** 文字状态Drawable */
      var textColorState: ColorStateList? = null
     /** 文字和图片间距 */

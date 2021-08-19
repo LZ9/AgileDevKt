@@ -3,6 +3,7 @@ package com.lodz.android.agiledevkt.modules.menubar
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
@@ -61,7 +62,7 @@ class MenuBarTestActivity : BaseActivity() {
 
     private fun getConfigs(): List<MenuConfig> {
         val list = ArrayList<MenuConfig>()
-        list.add(createMenuConfig(TYPE_HOME, "首页", 8))
+        list.add(createMenuConfig(TYPE_HOME, "首页阿萨现在才王鹏噢四点", 8))
         list.add(createMenuConfig(TYPE_WORK, "功能", 0, View.VISIBLE))
         list.add(createMenuConfig(TYPE_MSG, "消息", 87))
         list.add(createMenuConfig(TYPE_MINE, "我的", 0, badgeImgVisibility = View.VISIBLE))
@@ -79,10 +80,14 @@ class MenuBarTestActivity : BaseActivity() {
         config.type = type
         config.iconSizeDp = 30
         config.setIconResId(getContext(), R.drawable.ic_person, R.drawable.ic_person_sel)
+
         config.text = text
         config.setTextColor(getContext(), R.color.color_666666, R.color.color_00a0e9)
-//        config.textSizeSp = 18f
+        config.textSizeSp = 12f
         config.drawablePaddingPx = dp2px(2)
+//        config.textWidthPx = dp2px(70)
+        config.textEllipsize = TextUtils.TruncateAt.END
+//        config.textMaxLength = 3
 
         config.num = num
 //        config.setNumTextColor(getContext(), R.color.color_00a0e9)

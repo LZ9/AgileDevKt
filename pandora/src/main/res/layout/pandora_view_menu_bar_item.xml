@@ -28,6 +28,7 @@
             android:id="@+id/pdr_text_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:textSize="15sp"
             tools:text="首页" />
     </LinearLayout>
