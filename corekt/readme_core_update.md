@@ -1,5 +1,9 @@
 # core-kt库更新记录
 
+##### 2021/08/19
+1. FileUtils.kt增加文件和base64互转的方法
+2. 发布1.4.0版
+
 ##### 2021/08/12
 1. 更新依赖库版本
 2. 增加ByteBuffer、ByteArray和ShortArray互转方法
