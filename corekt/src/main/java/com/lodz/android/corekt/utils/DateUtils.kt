@@ -26,6 +26,16 @@ object DateUtils {
     const val TYPE_12 = "yyyyMM"
     const val TYPE_13 = "yyyy-MM"
     const val TYPE_14 = "yyyy"
+    const val TYPE_15 = "yyyy年MM月dd日"
+    const val TYPE_16 = "yyyy年MM月dd日 HH:mm"
+    const val TYPE_17 = "yyyy年MM月dd日 HH:mm:ss"
+    const val TYPE_18 = "yyyy年MM月"
+    const val TYPE_19 = "MM月dd日"
+    const val TYPE_20 = "HH点mm分"
+    const val TYPE_21 = "HH点mm分ss秒"
+    const val TYPE_22 = "yyyy年MM月dd日 HH点mm分"
+    const val TYPE_23 = "yyyy年MM月dd日 HH点mm分ss秒"
+
 
     @StringDef(TYPE_1, TYPE_2, TYPE_3, TYPE_4, TYPE_5, TYPE_6, TYPE_7, TYPE_8, TYPE_9, TYPE_10, TYPE_11, TYPE_12, TYPE_13, TYPE_14)
     @Retention(AnnotationRetention.SOURCE)
