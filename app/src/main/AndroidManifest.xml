@@ -31,7 +31,8 @@
     <!--允许读取手机信息权限-->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!-- 写存储 -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
     <!-- 读存储 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -95,7 +96,8 @@
     <!--<uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>-->
 
     <!-- 适配android11允许获取手机里所有的应用信息 -->
-    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"
+    <uses-permission
+        android:name="android.permission.QUERY_ALL_PACKAGES"
         tools:ignore="QueryAllPackagesPermission" />
 
     <application
@@ -109,6 +111,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
+        tools:replace="android:allowBackup"
         tools:targetApi="n">
 
         <provider
@@ -154,8 +157,8 @@
 
         <service
             android:name=".modules.service.BusService"
-            android:foregroundServiceType="location"
             android:exported="false"
+            android:foregroundServiceType="location"
             android:label="服务总线">
 
         </service>
@@ -182,13 +185,13 @@
 
         </activity>
 
-<!--        <activity-->
-<!--            android:name=".modules.anko.AnkoLayoutActivity"-->
-<!--            android:label="AnkoLayout测试类"-->
-<!--            android:screenOrientation="portrait"-->
-<!--            tools:ignore="LockedOrientationActivity">-->
+        <!--        <activity-->
+        <!--            android:name=".modules.anko.AnkoLayoutActivity"-->
+        <!--            android:label="AnkoLayout测试类"-->
+        <!--            android:screenOrientation="portrait"-->
+        <!--            tools:ignore="LockedOrientationActivity">-->
 
-<!--        </activity>-->
+        <!--        </activity>-->
 
         <activity
             android:name=".modules.file.FileTestActivity"
@@ -929,13 +932,13 @@
 
         </activity>
 
-<!--        <activity-->
-<!--            android:name=".modules.koin.KoinTestActivity"-->
-<!--            android:label="Koin注入测试类"-->
-<!--            android:screenOrientation="portrait"-->
-<!--            tools:ignore="LockedOrientationActivity">-->
+        <!--        <activity-->
+        <!--            android:name=".modules.koin.KoinTestActivity"-->
+        <!--            android:label="Koin注入测试类"-->
+        <!--            android:screenOrientation="portrait"-->
+        <!--            tools:ignore="LockedOrientationActivity">-->
 
-<!--        </activity>-->
+        <!--        </activity>-->
 
         <activity
             android:name=".modules.camera.CameraMainActivity"

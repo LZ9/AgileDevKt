@@ -129,7 +129,7 @@ class AlbumActivity : BaseActivity() {
     }
 
     /** 删除图片的ActivityResult回调 */
-    private val mdeleteImgResult = registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()){
+    private val mDeleteImgResult = registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()){
         if (it.resultCode == Activity.RESULT_OK) {
             deleteImg(mDeleteInfo)
         }
@@ -144,7 +144,7 @@ class AlbumActivity : BaseActivity() {
                 mBinding.resultTv.text = result
             } catch (e: RecoverableSecurityException) {
                 e.printStackTrace()
-                mdeleteImgResult.launch(IntentSenderRequest.Builder(e.getUserAction().getActionIntent().intentSender).build())
+                mDeleteImgResult.launch(IntentSenderRequest.Builder(e.getUserAction().getActionIntent().intentSender).build())
             }
             return
         }
