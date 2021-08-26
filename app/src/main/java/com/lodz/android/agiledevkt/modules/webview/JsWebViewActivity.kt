@@ -90,7 +90,7 @@ class JsWebViewActivity : BaseActivity() {
 
     override fun setListeners() {
         super.setListeners()
-        // AVA调用WEB（有回调）
+        // JAVA调用WEB（有回调）
         mBinding.callWebResponse.setOnClickListener {
             val data = JSON.toJSONString(UserBean("1238784791", "qwesdw"))
             appendLog("java 发给web ：$data")
