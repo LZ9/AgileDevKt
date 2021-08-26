@@ -116,9 +116,6 @@ dependencies {
     // okio
     implementation 'com.squareup.okio:okio:2.10.0'
 
-    // JsBridge
-    implementation 'com.github.lzyzsd:jsbridge:1.0.4'
-
     // 单元测试
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test:runner:1.4.0'
