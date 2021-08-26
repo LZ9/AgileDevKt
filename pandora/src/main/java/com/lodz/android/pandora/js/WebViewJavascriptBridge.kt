@@ -6,8 +6,6 @@ package com.lodz.android.pandora.js
  */
 interface WebViewJavascriptBridge {
 
-    fun send(data: String)
-
-    fun send(data: String, function: CallBackFunction?)
+    fun send(data: String, function: CallBackFunction? = null)
 
 }

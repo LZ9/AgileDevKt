@@ -11,12 +11,6 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-<!--    <com.github.lzyzsd.jsbridge.BridgeWebView-->
-<!--        android:id="@+id/js_web_view"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:layout_weight="1" />-->
-
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="100dp"

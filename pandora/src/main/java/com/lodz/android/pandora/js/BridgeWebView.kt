@@ -10,6 +10,7 @@ import java.util.ArrayList
 import android.os.SystemClock
 
 import android.os.Looper
+import com.alibaba.fastjson.JSON
 
 
 /**
@@ -24,7 +25,7 @@ open class BridgeWebView : WebView, WebViewJavascriptBridge {
     private val messageHandlers: HashMap<String, BridgeHandler> = HashMap()
     private var defaultHandler: BridgeHandler = DefaultHandler()
 
-    private var startupMessage: ArrayList<Message>? = ArrayList()
+    private var startupMessage: ArrayList<MessageBean>? = ArrayList()
 
     private var uniqueId = 0L
 
@@ -70,14 +71,20 @@ open class BridgeWebView : WebView, WebViewJavascriptBridge {
         webViewClient = generateBridgeWebViewClient()
     }
 
-    fun getStartupMessage(): ArrayList<Message>? = startupMessage
+    fun getStartupMessage(): ArrayList<MessageBean>? = startupMessage
 
-    fun setStartupMessage(list: ArrayList<Message>?) {
+    fun setStartupMessage(list: ArrayList<MessageBean>?) {
         startupMessage = list
     }
 
     fun setDefaultHandler(handler: BridgeHandler) {
         defaultHandler = handler
+    }
+
+    fun registerHandler(handlerName: String, handler: BridgeHandler?) {
+        if (handler != null) {
+            messageHandlers[handlerName] = handler
+        }
     }
 
     open fun generateBridgeWebViewClient(): WebViewClient = BridgeWebViewClient(this)
@@ -92,16 +99,12 @@ open class BridgeWebView : WebView, WebViewJavascriptBridge {
         }
     }
 
-    override fun send(data: String) {
-        send(data, null)
-    }
-
     override fun send(data: String, function: CallBackFunction?) {
         doSend("", data, function)
     }
 
     private fun doSend(handlerName: String, data: String, function: CallBackFunction?) {
-        val message = Message()
+        val message = MessageBean()
         if (data.isNotEmpty()){
             message.data = data
         }
@@ -117,7 +120,7 @@ open class BridgeWebView : WebView, WebViewJavascriptBridge {
         queueMessage(message)
     }
 
-    private fun queueMessage(message: Message) {
+    private fun queueMessage(message: MessageBean) {
         if (startupMessage != null) {
             startupMessage?.add(message)
         } else {
@@ -125,8 +128,8 @@ open class BridgeWebView : WebView, WebViewJavascriptBridge {
         }
     }
 
-    fun dispatchMessage(message: Message) {
-        val json = message.toJson()
+    fun dispatchMessage(message: MessageBean) {
+        val json = JSON.toJSONString(message)
             .replace("(\\\\)([^utrn])".toRegex(), "\\\\\\\\$1$2")
             .replace("(?<=[^\\\\])(\")".toRegex(), "\\\\\"")
 
@@ -140,7 +143,7 @@ open class BridgeWebView : WebView, WebViewJavascriptBridge {
         if (Thread.currentThread() == Looper.getMainLooper().thread) {
             loadUrl(BridgeUtil.JS_FETCH_QUEUE_FROM_JAVA, object : CallBackFunction {
                 override fun onCallBack(data: String) {
-                    val list = Message.toArrayList(data)
+                    val list = JSON.parseArray(data, MessageBean::class.java)
                     if (list.isNullOrEmpty()) {
                         return
                     }
@@ -152,14 +155,11 @@ open class BridgeWebView : WebView, WebViewJavascriptBridge {
                             function?.onCallBack(responseData)
                             responseCallbacks.remove(responseId)
                         } else {
-                            var responseFunction: CallBackFunction = object : CallBackFunction {
-                                override fun onCallBack(data: String) {
-                                }
-                            }
+                            var responseFunction: CallBackFunction? = null
                             if (item.callbackId.isNotEmpty()) {
                                 responseFunction = object : CallBackFunction {
                                     override fun onCallBack(data: String) {
-                                        val responseMsg = Message()
+                                        val responseMsg = MessageBean()
                                         responseMsg.responseId = item.callbackId
                                         responseMsg.responseData = data
                                         queueMessage(responseMsg)
@@ -185,12 +185,6 @@ open class BridgeWebView : WebView, WebViewJavascriptBridge {
     fun loadUrl(jsUrl: String, returnCallback: CallBackFunction) {
         loadUrl(jsUrl)
         responseCallbacks[BridgeUtil.parseFunctionName(jsUrl)] = returnCallback
-    }
-
-    fun registerHandler(handlerName: String, handler: BridgeHandler?) {
-        if (handler != null) {
-            messageHandlers[handlerName] = handler
-        }
     }
 
     fun callHandler(handlerName: String, data: String, callBack: CallBackFunction) {
