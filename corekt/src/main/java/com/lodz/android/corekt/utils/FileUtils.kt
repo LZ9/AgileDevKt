@@ -12,6 +12,7 @@ import java.io.*
 import java.nio.channels.FileChannel
 import java.text.DecimalFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * 文件操作帮助类
@@ -205,17 +206,10 @@ object FileUtils {
     @JvmStatic
     fun getFileTotalLength(filePath: String): Long {
         val file: File? = create(filePath)
-
         if (file == null || !isFileExists(file)) {
             return 0
         }
-
-        try {
-            return if (file.isDirectory) getFileSizes(file) else getFileSize(file)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        return 0
+        return if (file.isDirectory) getFileSizes(file) else getFileSize(file)
     }
 
     /** 获取文件[File]大小 */
@@ -489,6 +483,32 @@ object FileUtils {
         }
         return toFile
     }
+
+
+    /** 获取路径[filePath]下的所有文件列表 */
+    @JvmStatic
+    fun getFileList(filePath: String): ArrayList<File> {
+        val file: File? = create(filePath)
+        if (file == null || !isFileExists(file)) {
+            return ArrayList()
+        }
+        return if (file.isDirectory) getFiles(file) else arrayListOf(file)
+    }
+
+    /** 获取文件列表 */
+    private fun getFiles(file: File): ArrayList<File> {
+        val files: Array<File>? = file.listFiles()
+        if (files == null || files.isEmpty()) {
+            return ArrayList()
+        }
+        val list = ArrayList<File>()
+        for (f in files) {
+            list.addAll(if (f.isDirectory) getFiles(f) else arrayListOf(f))
+        }
+        return list
+    }
+
+
 
 
 
