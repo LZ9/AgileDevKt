@@ -16,6 +16,8 @@ import com.lodz.android.agiledevkt.bean.UserBean
 import com.lodz.android.agiledevkt.databinding.ActivityJsWebviewBinding
 import com.lodz.android.corekt.anko.append
 import com.lodz.android.pandora.base.activity.BaseActivity
+import com.lodz.android.pandora.js.BridgeHandler
+import com.lodz.android.pandora.js.CallBackFunction
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 
 /**
@@ -92,9 +94,12 @@ class JsWebViewActivity : BaseActivity() {
         mBinding.callWebResponse.setOnClickListener {
             val data = JSON.toJSONString(UserBean("1238784791", "qwesdw"))
             appendLog("java 发给web ：$data")
-            mBinding.webView.callHandler("functionInJs", data) {
-                appendLog("web 响应数据：$it")
-            }
+            mBinding.webView.callHandler("functionInJs", data, object :CallBackFunction{
+                override fun onCallBack(data: String) {
+                    appendLog("web 响应数据：$data")
+                }
+
+            })
         }
 
         // JAVA调用WEB（无回调）
@@ -104,15 +109,19 @@ class JsWebViewActivity : BaseActivity() {
             mBinding.webView.send(msg)
         }
 
-        mBinding.webView.registerHandler("submitFromWeb") { data, function ->
-            appendLog("web 发送过来的数据：$data")
-            function.onCallBack("java get param")
-        }
+        mBinding.webView.registerHandler("submitFromWeb", object :BridgeHandler{
+            override fun handler(data: String, function: CallBackFunction) {
+                appendLog("web 发送过来的数据：$data")
+                function.onCallBack("java get param")
+            }
+        })
 
-        mBinding.webView.setDefaultHandler { data, function ->
-            appendLog("web 发送过来的数据：$data")
-            function.onCallBack("java get user info")
-        }
+        mBinding.webView.setDefaultHandler(object : BridgeHandler{
+            override fun handler(data: String, function: CallBackFunction) {
+                appendLog("web 发送过来的数据：$data")
+                function.onCallBack("java get user info")
+            }
+        })
     }
 
     override fun initData() {

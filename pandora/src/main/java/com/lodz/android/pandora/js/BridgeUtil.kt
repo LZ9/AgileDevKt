@@ -1,0 +1,92 @@
+package com.lodz.android.pandora.js
+
+import android.content.Context
+import android.webkit.WebView
+import com.lodz.android.corekt.anko.append
+import com.lodz.android.corekt.anko.getAssetsFileContent
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.lang.StringBuilder
+
+/**
+ *
+ * @author zhouL
+ * @date 2021/8/23
+ */
+object BridgeUtil {
+
+    const val YY_OVERRIDE_SCHEMA = "yy://"
+    const val YY_RETURN_DATA = YY_OVERRIDE_SCHEMA + "return/"//格式为   yy://return/{function}/returncontent
+    const val YY_FETCH_QUEUE = YY_RETURN_DATA + "_fetchQueue/"
+    const val EMPTY_STR = ""
+    const val UNDERLINE_STR = "_"
+    const val SPLIT_MARK = "/"
+
+    const val CALLBACK_ID_FORMAT = "JAVA_CB_%s"
+    const val JS_HANDLE_MESSAGE_FROM_JAVA = "javascript:WebViewJavascriptBridge._handleMessageFromNative('%s');"
+    const val JS_FETCH_QUEUE_FROM_JAVA = "javascript:WebViewJavascriptBridge._fetchQueue();"
+    const val JAVASCRIPT_STR = "javascript:"
+
+    const val JAVA_SCRIPT = "WebViewJavascriptBridge.js"
+
+    @JvmStatic
+    fun parseFunctionName(jsUrl: String): String {
+        return jsUrl.replace("javascript:WebViewJavascriptBridge.".toRegex(), EMPTY_STR).replace("\\(.*\\);".toRegex(), EMPTY_STR)
+    }
+
+    @JvmStatic
+    fun getDataFromReturnUrl(url: String): String? {
+        if (url.startsWith(YY_FETCH_QUEUE)) {
+            return url.replace(YY_FETCH_QUEUE, EMPTY_STR)
+        }
+        val temp = url.replace(YY_RETURN_DATA, EMPTY_STR)
+        val functionAndData = temp.split(SPLIT_MARK)
+        if (functionAndData.size >= 2) {
+            val sb = StringBuilder()
+            for (i in 1 until functionAndData.size) {
+                sb.append(functionAndData[i])
+            }
+            return sb.toString()
+        }
+        return null
+    }
+
+    @JvmStatic
+    fun getFunctionFromReturnUrl(url: String): String? {
+        val temp = url.replace(YY_RETURN_DATA, EMPTY_STR)
+        val functionAndData = temp.split(SPLIT_MARK)
+        return if (functionAndData.isNotEmpty()) functionAndData[0] else null
+    }
+
+    /** js文件将注入为第一个script引用 */
+    @JvmStatic
+    fun webViewLoadJs(webView: WebView, url: String) {
+        val jsUrl = JAVASCRIPT_STR
+            .append("var newscript = document.createElement(\"script\");")
+            .append("newscript.src=\"$url\";")
+            .append("document.scripts[0].parentNode.insertBefore(newscript,document.scripts[0]);")
+        webView.loadUrl(jsUrl)
+    }
+
+    /** 这里只是加载lib包中assets中的 WebViewJavascriptBridge.js */
+    @JvmStatic
+    fun webViewLoadLocalJs(webView: WebView?, fileName: String) {
+        webView?.loadUrl(JAVASCRIPT_STR.append(assetJsFile2Str(webView.context, fileName)))
+    }
+
+    private fun assetJsFile2Str(context: Context, fileName: String): String {
+        context.assets.open(fileName).use { inputStream ->
+            BufferedReader(InputStreamReader(inputStream)).use { bufferedReader ->
+                var line: String?
+                val sb = StringBuilder()
+                do {
+                    line = bufferedReader.readLine()
+                    if (line != null && !line.matches("^\\s*\\/\\/.*".toRegex())) {
+                        sb.append(line)
+                    }
+                } while (line != null)
+                return sb.toString()
+            }
+        }
+    }
+}
