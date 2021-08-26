@@ -16,7 +16,7 @@ import com.lodz.android.corekt.utils.DateUtils
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.collect.radio.Radioable
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -143,7 +143,7 @@ class CollectActivity : BaseActivity() {
                 return@setOnClickListener
             }
             toastShort(R.string.clt_success)
-            GlobalScope.runOnMainDelay(500) {
+            MainScope().runOnMainDelay(500) {
                 toastShort("提交完成")
                 finish()
             }

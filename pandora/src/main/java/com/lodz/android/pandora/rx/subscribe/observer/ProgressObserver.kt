@@ -7,7 +7,7 @@ import androidx.appcompat.app.AlertDialog
 import com.lodz.android.corekt.anko.runOnMainCatch
 import com.lodz.android.pandora.utils.progress.ProgressDialogHelper
 import io.reactivex.rxjava3.disposables.Disposable
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
 
 /**
  * 展示加载框的订阅者（无背压）
@@ -87,12 +87,12 @@ abstract class ProgressObserver<T> : RxObserver<T>() {
 
     /** 显示加载框 */
     private fun showProgress() {
-        GlobalScope.runOnMainCatch({ mProgressDialog?.show() })
+        MainScope().runOnMainCatch({ mProgressDialog?.show() })
     }
 
     /** 关闭加载框 */
     private fun dismissProgress() {
-        GlobalScope.runOnMainCatch({
+        MainScope().runOnMainCatch({
             mProgressDialog?.dismiss()
             mProgressDialog = null
         })

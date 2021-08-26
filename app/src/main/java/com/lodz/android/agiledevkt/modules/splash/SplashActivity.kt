@@ -13,7 +13,7 @@ import com.lodz.android.corekt.anko.*
 import com.lodz.android.corekt.utils.StatusBarUtil
 import com.lodz.android.pandora.base.activity.AbsActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
 import permissions.dispatcher.*
 import permissions.dispatcher.ktx.constructPermissionsRequest
 
@@ -25,29 +25,35 @@ class SplashActivity : AbsActivity() {
 
     private val mBinding: ActivitySplashBinding by bindingLayout(ActivitySplashBinding::inflate)
 
-    private val hasReadPhoneStatePermissions = constructPermissionsRequest(
-        Manifest.permission.READ_PHONE_STATE,// 手机状态
-        onShowRationale = ::onShowRationaleBeforeRequest,
-        onPermissionDenied = ::onDenied,
-        onNeverAskAgain = ::onNeverAsk,
-        requiresPermission = ::onRequestPermission
-    )
+    private val hasReadPhoneStatePermissions by lazy {
+        constructPermissionsRequest(
+            Manifest.permission.READ_PHONE_STATE,// 手机状态
+            onShowRationale = ::onShowRationaleBeforeRequest,
+            onPermissionDenied = ::onDenied,
+            onNeverAskAgain = ::onNeverAsk,
+            requiresPermission = ::onRequestPermission
+        )
+    }
 
-    private val hasWriteExternalStoragePermissions = constructPermissionsRequest(
-        Manifest.permission.WRITE_EXTERNAL_STORAGE,// 存储卡读写
-        onShowRationale = ::onShowRationaleBeforeRequest,
-        onPermissionDenied = ::onDenied,
-        onNeverAskAgain = ::onNeverAsk,
-        requiresPermission = ::onRequestPermission
-    )
+    private val hasWriteExternalStoragePermissions by lazy {
+        constructPermissionsRequest(
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,// 存储卡读写
+            onShowRationale = ::onShowRationaleBeforeRequest,
+            onPermissionDenied = ::onDenied,
+            onNeverAskAgain = ::onNeverAsk,
+            requiresPermission = ::onRequestPermission
+        )
+    }
 
-    private val hasReadExternalStoragePermissions = constructPermissionsRequest(
-        Manifest.permission.READ_EXTERNAL_STORAGE,// 存储卡读写
-        onShowRationale = ::onShowRationaleBeforeRequest,
-        onPermissionDenied = ::onDenied,
-        onNeverAskAgain = ::onNeverAsk,
-        requiresPermission = ::onRequestPermission
-    )
+    private val hasReadExternalStoragePermissions by lazy {
+        constructPermissionsRequest(
+            Manifest.permission.READ_EXTERNAL_STORAGE,// 存储卡读写
+            onShowRationale = ::onShowRationaleBeforeRequest,
+            onPermissionDenied = ::onDenied,
+            onNeverAskAgain = ::onNeverAsk,
+            requiresPermission = ::onRequestPermission
+        )
+    }
 
     override fun getAbsViewBindingLayout(): View = mBinding.root
 
@@ -62,7 +68,7 @@ class SplashActivity : AbsActivity() {
             finish()
             return
         }
-        GlobalScope.runOnMainDelay(1000) {
+        MainScope().runOnMainDelay(1000) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {// 6.0以上的手机对权限进行动态申请
                 onRequestPermission()
             } else {

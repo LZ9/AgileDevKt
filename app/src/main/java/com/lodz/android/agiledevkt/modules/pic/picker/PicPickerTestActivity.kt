@@ -47,13 +47,15 @@ class PicPickerTestActivity : BaseActivity() {
 
     private var mConfig = PickerUIConfig.createDefault()
 
-    private val hasPermissions = constructPermissionsRequest(
-        Manifest.permission.CAMERA,// 相机
-        onShowRationale = ::onShowRationaleBeforeRequest,
-        onPermissionDenied = ::onDenied,
-        onNeverAskAgain = ::onNeverAskAgain,
-        requiresPermission = ::onRequestPermission
-    )
+    private val hasPermissions by lazy {
+        constructPermissionsRequest(
+            Manifest.permission.CAMERA,// 相机
+            onShowRationale = ::onShowRationaleBeforeRequest,
+            onPermissionDenied = ::onDenied,
+            onNeverAskAgain = ::onNeverAskAgain,
+            requiresPermission = ::onRequestPermission
+        )
+    }
 
     override fun getViewBindingLayout(): View = mBinding.root
 

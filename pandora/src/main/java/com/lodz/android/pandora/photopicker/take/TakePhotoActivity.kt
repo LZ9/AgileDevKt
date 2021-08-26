@@ -15,7 +15,7 @@ import com.lodz.android.pandora.R
 import com.lodz.android.pandora.base.activity.AbsActivity
 import com.lodz.android.pandora.databinding.PandoraActivityTakePhotoBinding
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
 
 /**
  * 拍照页面
@@ -127,7 +127,7 @@ internal class TakePhotoActivity : AbsActivity() {
             handleConfirm()
             return
         }
-        GlobalScope.runOnMainDelay(300) {
+        MainScope().runOnMainDelay(300) {
             handleCameraSuccess()
         }
     }

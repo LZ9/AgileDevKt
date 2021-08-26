@@ -36,21 +36,25 @@ class CameraMainActivity : BaseActivity() {
 
     private val mBinding: ActivityCameraMainBinding by bindingLayout(ActivityCameraMainBinding::inflate)
 
-    private val hasCameraPermissions = constructPermissionsRequest(
-        Manifest.permission.CAMERA,// 相机
-        onShowRationale = ::onShowRationaleBeforeRequest,
-        onPermissionDenied = ::onDenied,
-        onNeverAskAgain = ::onNeverAskAgain,
-        requiresPermission = ::onRequestPermission
-    )
+    private val hasCameraPermissions by lazy {
+        constructPermissionsRequest(
+            Manifest.permission.CAMERA,// 相机
+            onShowRationale = ::onShowRationaleBeforeRequest,
+            onPermissionDenied = ::onDenied,
+            onNeverAskAgain = ::onNeverAskAgain,
+            requiresPermission = ::onRequestPermission
+        )
+    }
 
-    private val hasRecordAudioPermissions = constructPermissionsRequest(
-        Manifest.permission.RECORD_AUDIO,//录音
-        onShowRationale = ::onShowRationaleBeforeRequest,
-        onPermissionDenied = ::onDenied,
-        onNeverAskAgain = ::onNeverAskAgain,
-        requiresPermission = ::onRequestPermission
-    )
+    private val hasRecordAudioPermissions by lazy {
+        constructPermissionsRequest(
+            Manifest.permission.RECORD_AUDIO,//录音
+            onShowRationale = ::onShowRationaleBeforeRequest,
+            onPermissionDenied = ::onDenied,
+            onNeverAskAgain = ::onNeverAskAgain,
+            requiresPermission = ::onRequestPermission
+        )
+    }
 
     override fun getViewBindingLayout(): View = mBinding.root
 

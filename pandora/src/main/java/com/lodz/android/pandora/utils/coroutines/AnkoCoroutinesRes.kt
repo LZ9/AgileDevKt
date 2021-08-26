@@ -21,7 +21,7 @@ import kotlinx.coroutines.*
  */
 
 /** 网络接口使用的协程挂起方法，主要对接口进行判断处理 */
-fun <T> GlobalScope.runOnSuspendIOCatchRes(
+fun <T> CoroutineScope.runOnSuspendIOCatchRes(
     request: suspend () -> T,
     actionIO: (t: T) -> Unit,
     actionTokenUnauth: (t: T) -> Unit = {},
@@ -51,7 +51,7 @@ fun <T> ViewModel.runOnSuspendIOCatchRes(
 }
 
 /** 网络接口使用的协程方法，主要对接口进行判断处理 */
-fun <T> GlobalScope.runOnIOCatchRes(
+fun <T> CoroutineScope.runOnIOCatchRes(
     request: Deferred<T>,
     actionIO: (t: T) -> Unit,
     actionTokenUnauth: (t: T) -> Unit = {},
@@ -81,7 +81,7 @@ fun <T> ViewModel.runOnIOCatchRes(
 }
 
 /** 带加载框的协程挂起方法 */
-fun <T> GlobalScope.runOnSuspendIOCatchPg(
+fun <T> CoroutineScope.runOnSuspendIOCatchPg(
     progressDialog: AlertDialog,
     request: suspend () -> T,
     actionIO: (t: T) -> Unit,
@@ -143,7 +143,7 @@ fun <T> ViewModel.runOnSuspendIOCatchPg(
 }
 
 /** 带加载框的协程方法 */
-fun <T> GlobalScope.runOnIOCatchPg(
+fun <T> CoroutineScope.runOnIOCatchPg(
     progressDialog: AlertDialog,
     request: Deferred<T>,
     actionIO: (t: T) -> Unit,
@@ -205,7 +205,7 @@ fun <T> ViewModel.runOnIOCatchPg(
 }
 
 /** 带加载框的协程挂起方法 */
-fun <T> GlobalScope.runOnSuspendIOCatchPg(
+fun <T> CoroutineScope.runOnSuspendIOCatchPg(
     context: Context,
     msg: String = "正在加载，请稍候",
     cancelable: Boolean = true,
@@ -285,7 +285,7 @@ fun <T> ViewModel.runOnSuspendIOCatchPg(
 }
 
 /** 带加载框的协程方法 */
-fun <T> GlobalScope.runOnIOCatchPg(
+fun <T> CoroutineScope.runOnIOCatchPg(
     context: Context,
     msg: String = "正在加载，请稍候",
     cancelable: Boolean = true,

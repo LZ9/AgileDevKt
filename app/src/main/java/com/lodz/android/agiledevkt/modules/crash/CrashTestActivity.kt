@@ -11,7 +11,7 @@ import com.lodz.android.agiledevkt.utils.crash.CrashManager
 import com.lodz.android.corekt.anko.runOnMainDelay
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
 
 /**
  * 崩溃测试类
@@ -46,7 +46,7 @@ class CrashTestActivity : BaseActivity() {
         mBinding.crashBtn.setOnClickListener {
             mBinding.crashTips.visibility = View.VISIBLE
             mBinding.crashBtn.visibility = View.GONE
-            GlobalScope.runOnMainDelay(100){
+            MainScope().runOnMainDelay(100){
                 val case: String? = null
                 case!!.toInt()
             }

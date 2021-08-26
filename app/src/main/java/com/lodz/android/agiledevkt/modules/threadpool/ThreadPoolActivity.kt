@@ -12,7 +12,7 @@ import com.lodz.android.corekt.anko.runOnMainDelay
 import com.lodz.android.corekt.threadpool.ThreadPoolManager
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
 import java.util.concurrent.ThreadPoolExecutor
 import java.util.concurrent.TimeUnit
 
@@ -114,10 +114,10 @@ class ThreadPoolActivity : BaseActivity() {
 
     /** 打印信息[result] */
     private fun printResult(result: String) {
-        GlobalScope.runOnMain {
+        MainScope().runOnMain {
             mBinding.resultTv.text = (mBinding.resultTv.text.toString() + "\n" + result)
         }
-        GlobalScope.runOnMainDelay(100) {
+        MainScope().runOnMainDelay(100) {
             mBinding.scrollView.fullScroll(ScrollView.FOCUS_DOWN)
         }
     }

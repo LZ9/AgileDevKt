@@ -17,7 +17,7 @@ import com.lodz.android.corekt.anko.*
 import com.lodz.android.corekt.utils.DateUtils
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import permissions.dispatcher.*
@@ -220,7 +220,7 @@ class LocationTestActivity : BaseActivity() {
     /** 打印信息[result] */
     private fun printResult(result: String) {
         mBinding.logTv.text = (mBinding.logTv.text.toString() + result + "\n")
-        GlobalScope.runOnMainDelay(100){
+        MainScope().runOnMainDelay(100){
             mBinding.scrollView.fullScroll(ScrollView.FOCUS_DOWN)
         }
     }

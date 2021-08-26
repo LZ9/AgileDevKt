@@ -24,7 +24,7 @@ import com.lodz.android.pandora.rx.utils.doNext
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
 import org.reactivestreams.Subscriber
 import org.reactivestreams.Subscription
 import java.io.BufferedReader
@@ -109,7 +109,7 @@ class RxFlowableActivity : BaseActivity() {
 
                         override fun onNext(str: String?) {
                             printLog(str ?: "")
-                            GlobalScope.runOnMainDelay(100) {
+                            MainScope().runOnMainDelay(100) {
                                 mBpSubscription?.request(1)
                             }
                         }
@@ -287,7 +287,7 @@ class RxFlowableActivity : BaseActivity() {
             "${mBinding.resultTv.text}\n$text"
         }
         mBinding.resultTv.text = log
-        GlobalScope.runOnMainDelay(100) {
+        MainScope().runOnMainDelay(100) {
             mBinding.scrollView.fullScroll(ScrollView.FOCUS_DOWN)
         }
     }

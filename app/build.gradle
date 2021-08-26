@@ -83,7 +83,7 @@ dependencies {
     implementation project(':imageloaderkt')
     //    implementation 'com.lodz:imageloader-kt:1.0.4'
     // 权限申请
-    implementation "com.github.permissions-dispatcher:ktx:1.0.5"
+    implementation "com.github.permissions-dispatcher:ktx:1.1.2"
 
     // anko layout
 //    implementation 'org.jetbrains.anko:anko-sdk25:0.10.8'

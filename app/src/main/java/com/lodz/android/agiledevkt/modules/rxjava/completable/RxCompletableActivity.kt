@@ -21,7 +21,7 @@ import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.CompletableObserver
 import io.reactivex.rxjava3.disposables.Disposable
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
 
 /**
  * RxCompletable订阅测试
@@ -185,7 +185,7 @@ class RxCompletableActivity : BaseActivity() {
             "${mBinding.resultTv.text}\n$text"
         }
         mBinding.resultTv.text = log
-        GlobalScope.runOnMainDelay(100) {
+        MainScope().runOnMainDelay(100) {
             mBinding.scrollView.fullScroll(ScrollView.FOCUS_DOWN)
         }
     }

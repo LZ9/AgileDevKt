@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.lodz.android.corekt.anko.runOnMain
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
 
 /**
  * Toast帮助类
@@ -149,7 +149,7 @@ class ToastUtils private constructor(private val mContext: Context) {
             getToast()?.show()
             return
         }
-        GlobalScope.runOnMain {
+        MainScope().runOnMain {
             getToast()?.show()//非主线程post到主线程显示
         }
     }
