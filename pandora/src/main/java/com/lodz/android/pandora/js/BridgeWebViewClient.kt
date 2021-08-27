@@ -1,7 +1,7 @@
 package com.lodz.android.pandora.js
 
 import android.webkit.WebViewClient
-import android.webkit.WebView;
+import android.webkit.WebView
 import com.lodz.android.corekt.anko.append
 import com.lodz.android.corekt.utils.StringUtils
 

@@ -58,16 +58,6 @@ object BridgeUtil {
         return if (functionAndData.isNotEmpty()) functionAndData[0] else null
     }
 
-    /** js文件将注入为第一个script引用 */
-    @JvmStatic
-    fun webViewLoadJs(webView: WebView, url: String) {
-        val jsUrl = JAVASCRIPT_STR
-            .append("var newscript = document.createElement(\"script\");")
-            .append("newscript.src=\"$url\";")
-            .append("document.scripts[0].parentNode.insertBefore(newscript,document.scripts[0]);")
-        webView.loadUrl(jsUrl)
-    }
-
     fun assetJsFile2Str(context: Context, fileName: String): String {
         context.assets.open(fileName).use { inputStream ->
             BufferedReader(InputStreamReader(inputStream)).use { bufferedReader ->

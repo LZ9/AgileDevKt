@@ -5,16 +5,14 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.webkit.ValueCallback
-import android.webkit.WebChromeClient
-import android.webkit.WebSettings
-import android.webkit.WebView
+import android.webkit.*
 import androidx.activity.result.contract.ActivityResultContracts
 import com.alibaba.fastjson.JSON
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.UserBean
 import com.lodz.android.agiledevkt.databinding.ActivityJsWebviewBinding
 import com.lodz.android.corekt.anko.append
+import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.js.BridgeHandler
 import com.lodz.android.pandora.js.CallBackFunction
@@ -70,6 +68,11 @@ class JsWebViewActivity : BaseActivity() {
                 mFilePathCallback = filePathCallback
                 mGetImgResult.launch("image/*")
                 return true
+            }
+
+            override fun onConsoleMessage(consoleMessage: ConsoleMessage?): Boolean {
+                PrintLog.d("console", consoleMessage?.message() ?: "")
+                return super.onConsoleMessage(consoleMessage)
             }
         }
     }
