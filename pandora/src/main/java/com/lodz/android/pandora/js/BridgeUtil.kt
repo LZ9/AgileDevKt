@@ -68,13 +68,7 @@ object BridgeUtil {
         webView.loadUrl(jsUrl)
     }
 
-    /** 这里只是加载lib包中assets中的 WebViewJavascriptBridge.js */
-    @JvmStatic
-    fun webViewLoadLocalJs(webView: WebView?, fileName: String) {
-        webView?.loadUrl(JAVASCRIPT_STR.append(assetJsFile2Str(webView.context, fileName)))
-    }
-
-    private fun assetJsFile2Str(context: Context, fileName: String): String {
+    fun assetJsFile2Str(context: Context, fileName: String): String {
         context.assets.open(fileName).use { inputStream ->
             BufferedReader(InputStreamReader(inputStream)).use { bufferedReader ->
                 var line: String?

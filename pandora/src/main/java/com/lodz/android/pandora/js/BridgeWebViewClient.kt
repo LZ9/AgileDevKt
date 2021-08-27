@@ -2,6 +2,7 @@ package com.lodz.android.pandora.js
 
 import android.webkit.WebViewClient
 import android.webkit.WebView;
+import com.lodz.android.corekt.anko.append
 import com.lodz.android.corekt.utils.StringUtils
 
 /**
@@ -27,7 +28,7 @@ open class BridgeWebViewClient(private var webView: BridgeWebView?) : WebViewCli
 
     override fun onPageFinished(view: WebView?, url: String?) {
         super.onPageFinished(view, url)
-        BridgeUtil.webViewLoadLocalJs(view, BridgeUtil.JAVA_SCRIPT)
+        view?.loadUrl(BridgeUtil.JAVASCRIPT_STR.append(BridgeUtil.assetJsFile2Str(view.context, BridgeUtil.JAVA_SCRIPT)))
         val list = webView?.getStartupMessage()
         if (list != null){
             list.forEach {

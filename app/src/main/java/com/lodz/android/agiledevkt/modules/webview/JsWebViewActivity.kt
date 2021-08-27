@@ -98,7 +98,6 @@ class JsWebViewActivity : BaseActivity() {
                 override fun onCallBack(data: String) {
                     appendLog("web 响应数据：$data")
                 }
-
             })
         }
 
@@ -110,16 +109,16 @@ class JsWebViewActivity : BaseActivity() {
         }
 
         mBinding.webView.registerHandler("submitFromWeb", object :BridgeHandler{
-            override fun handler(data: String, function: CallBackFunction) {
+            override fun handler(data: String, function: CallBackFunction?) {
                 appendLog("web 发送过来的数据：$data")
-                function.onCallBack("java get param")
+                function?.onCallBack("java get param")
             }
         })
 
         mBinding.webView.setDefaultHandler(object : BridgeHandler{
-            override fun handler(data: String, function: CallBackFunction) {
+            override fun handler(data: String, function: CallBackFunction?) {
                 appendLog("web 发送过来的数据：$data")
-                function.onCallBack("java get user info")
+                function?.onCallBack("java get user info")
             }
         })
     }
