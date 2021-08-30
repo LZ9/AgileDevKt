@@ -77,13 +77,11 @@ open class BridgeWebView : WebView, WebViewJavascriptBridge {
         startupMessage = list
     }
 
-    fun setDefaultHandler(handler: BridgeHandler) {
-        defaultHandler = handler
-    }
-
-    fun registerHandler(handlerName: String, handler: BridgeHandler?) {
-        if (handler != null) {
-            messageHandlers[handlerName] = handler
+    override fun register(apiName: String, handler: BridgeHandler) {
+        if (apiName.isEmpty()) {
+            defaultHandler = handler
+        } else {
+            messageHandlers[apiName] = handler
         }
     }
 

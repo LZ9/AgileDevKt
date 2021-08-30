@@ -109,14 +109,14 @@ class JsWebViewActivity : BaseActivity() {
             mBinding.webView.send(data = msg)
         }
 
-        mBinding.webView.registerHandler("submitFromWeb", object :BridgeHandler{
+        mBinding.webView.register("submitFromWeb", object : BridgeHandler {
             override fun handler(data: String, function: CallBackFunction?) {
                 appendLog("web 发送过来的数据：$data")
                 function?.onCallBack("java get param")
             }
         })
 
-        mBinding.webView.setDefaultHandler(object : BridgeHandler{
+        mBinding.webView.register(handler = object : BridgeHandler {
             override fun handler(data: String, function: CallBackFunction?) {
                 appendLog("web 发送过来的数据：$data")
                 function?.onCallBack("java get user info")
