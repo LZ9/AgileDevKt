@@ -97,18 +97,16 @@ class JsWebViewActivity : BaseActivity() {
         mBinding.callWebResponse.setOnClickListener {
             val data = JSON.toJSONString(UserBean("1238784791", "qwesdw"))
             appendLog("java 发给web ：$data")
-            mBinding.webView.callHandler("functionInJs", data, object :CallBackFunction{
-                override fun onCallBack(data: String) {
-                    appendLog("web 响应数据：$data")
-                }
-            })
+            mBinding.webView.send("functionInJs", data) {
+                appendLog("web 响应数据：$it")
+            }
         }
 
         // JAVA调用WEB（无回调）
         mBinding.callWebUnresponse.setOnClickListener {
             val msg = "hello"
             appendLog("java 发给web ：$msg")
-            mBinding.webView.send(msg)
+            mBinding.webView.send(data = msg)
         }
 
         mBinding.webView.registerHandler("submitFromWeb", object :BridgeHandler{

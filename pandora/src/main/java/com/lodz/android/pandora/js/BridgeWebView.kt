@@ -99,8 +99,8 @@ open class BridgeWebView : WebView, WebViewJavascriptBridge {
         }
     }
 
-    override fun send(data: String, function: CallBackFunction?) {
-        doSend("", data, function)
+    override fun send(apiName: String, data: String, function: CallBackFunction?) {
+        doSend(apiName, data, function)
     }
 
     private fun doSend(handlerName: String, data: String, function: CallBackFunction?) {
@@ -185,9 +185,5 @@ open class BridgeWebView : WebView, WebViewJavascriptBridge {
     fun loadUrl(jsUrl: String, returnCallback: CallBackFunction) {
         loadUrl(jsUrl)
         responseCallbacks[BridgeUtil.parseFunctionName(jsUrl)] = returnCallback
-    }
-
-    fun callHandler(handlerName: String, data: String, callBack: CallBackFunction) {
-        doSend(handlerName, data, callBack)
     }
 }
