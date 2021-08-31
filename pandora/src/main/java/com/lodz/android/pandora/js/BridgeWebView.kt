@@ -21,9 +21,9 @@ import com.alibaba.fastjson.JSON
 @SuppressLint("SetJavaScriptEnabled")
 open class BridgeWebView : WebView, WebViewJavascriptBridge {
 
-    private val responseCallbacks: HashMap<String, CallBackFunction> = HashMap()
-    private val messageHandlers: HashMap<String, BridgeHandler> = HashMap()
-    private var defaultHandler: BridgeHandler = DefaultHandler()
+    private val responseCallbacks: HashMap<String, OnCallBackJsListener> = HashMap()
+    private val messageHandlers: HashMap<String, OnReceiveJsListener> = HashMap()
+    private var defaultHandler: OnReceiveJsListener = OnReceiveJsListener { data, listener -> }
 
     private var startupMessage: ArrayList<MessageBean>? = ArrayList()
 
@@ -77,7 +77,7 @@ open class BridgeWebView : WebView, WebViewJavascriptBridge {
         startupMessage = list
     }
 
-    override fun register(apiName: String, handler: BridgeHandler) {
+    override fun register(apiName: String, handler: OnReceiveJsListener) {
         if (apiName.isEmpty()) {
             defaultHandler = handler
         } else {
@@ -92,16 +92,16 @@ open class BridgeWebView : WebView, WebViewJavascriptBridge {
         val function = responseCallbacks[functionName]
         val data = BridgeUtil.getDataFromReturnUrl(url)
         if (function != null) {
-            function.onCallBack(data ?: "")
+            function.callbackJs(data ?: "")
             responseCallbacks.remove(functionName)
         }
     }
 
-    override fun send(apiName: String, data: String, function: CallBackFunction?) {
+    override fun send(apiName: String, data: String, function: OnCallBackJsListener?) {
         doSend(apiName, data, function)
     }
 
-    private fun doSend(handlerName: String, data: String, function: CallBackFunction?) {
+    private fun doSend(handlerName: String, data: String, function: OnCallBackJsListener?) {
         val message = MessageBean()
         if (data.isNotEmpty()){
             message.data = data
@@ -139,8 +139,8 @@ open class BridgeWebView : WebView, WebViewJavascriptBridge {
 
     fun flushMessageQueue() {
         if (Thread.currentThread() == Looper.getMainLooper().thread) {
-            loadUrl(BridgeUtil.JS_FETCH_QUEUE_FROM_JAVA, object : CallBackFunction {
-                override fun onCallBack(data: String) {
+            loadUrl(BridgeUtil.JS_FETCH_QUEUE_FROM_JAVA, object : OnCallBackJsListener {
+                override fun callbackJs(data: String) {
                     val list = JSON.parseArray(data, MessageBean::class.java)
                     if (list.isNullOrEmpty()) {
                         return
@@ -150,26 +150,28 @@ open class BridgeWebView : WebView, WebViewJavascriptBridge {
                         if (responseId.isNotEmpty()) {
                             val function = responseCallbacks[responseId]
                             val responseData = item.responseData
-                            function?.onCallBack(responseData)
+                            function?.callbackJs(responseData)
                             responseCallbacks.remove(responseId)
                         } else {
-                            var responseFunction: CallBackFunction? = null
+                            var responseFunction: OnCallBackJsListener = object :OnCallBackJsListener{
+                                override fun callbackJs(data: String) {
+                                }
+                            }
                             if (item.callbackId.isNotEmpty()) {
-                                responseFunction = object : CallBackFunction {
-                                    override fun onCallBack(data: String) {
+                                responseFunction =
+                                    OnCallBackJsListener {
                                         val responseMsg = MessageBean()
                                         responseMsg.responseId = item.callbackId
-                                        responseMsg.responseData = data
+                                        responseMsg.responseData = it
                                         queueMessage(responseMsg)
                                     }
-                                }
                             }
                             val handler = if (item.handlerName.isNotEmpty()) {
                                 messageHandlers[item.handlerName]
                             } else {
                                 defaultHandler
                             }
-                            handler?.handler(item.data, responseFunction)
+                            handler?.onReceive(item.data, responseFunction)
                         }
 
                     }
@@ -180,7 +182,7 @@ open class BridgeWebView : WebView, WebViewJavascriptBridge {
         }
     }
 
-    fun loadUrl(jsUrl: String, returnCallback: CallBackFunction) {
+    fun loadUrl(jsUrl: String, returnCallback: OnCallBackJsListener) {
         loadUrl(jsUrl)
         responseCallbacks[BridgeUtil.parseFunctionName(jsUrl)] = returnCallback
     }

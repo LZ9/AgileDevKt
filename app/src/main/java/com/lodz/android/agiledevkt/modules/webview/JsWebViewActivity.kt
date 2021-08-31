@@ -14,8 +14,6 @@ import com.lodz.android.agiledevkt.databinding.ActivityJsWebviewBinding
 import com.lodz.android.corekt.anko.append
 import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.pandora.base.activity.BaseActivity
-import com.lodz.android.pandora.js.BridgeHandler
-import com.lodz.android.pandora.js.CallBackFunction
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 
 /**
@@ -109,19 +107,15 @@ class JsWebViewActivity : BaseActivity() {
             mBinding.webView.send(data = msg)
         }
 
-        mBinding.webView.register("submitFromWeb", object : BridgeHandler {
-            override fun handler(data: String, function: CallBackFunction?) {
-                appendLog("web 发送过来的数据：$data")
-                function?.onCallBack("java get param")
-            }
-        })
+        mBinding.webView.register("submitFromWeb") { data, listener ->
+            appendLog("web 发送过来的数据：$data")
+            listener.callbackJs("java get param")
+        }
 
-        mBinding.webView.register(handler = object : BridgeHandler {
-            override fun handler(data: String, function: CallBackFunction?) {
-                appendLog("web 发送过来的数据：$data")
-                function?.onCallBack("java get user info")
-            }
-        })
+        mBinding.webView.register { data, listener ->
+            appendLog("web 发送过来的数据：$data")
+            listener.callbackJs("java get user info")
+        }
     }
 
     override fun initData() {
