@@ -5,7 +5,6 @@ import android.content.Context
 import android.util.AttributeSet
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import java.util.ArrayList
 
 import android.os.SystemClock
 
@@ -27,8 +26,6 @@ open class BridgeWebView : WebView, WebViewJavascriptBridge {
     private val responseCallbacks: HashMap<String, OnCallBackJsListener> = HashMap()
     private val messageHandlers: HashMap<String, OnReceiveJsListener> = HashMap()
     private var defaultHandler: OnReceiveJsListener = OnReceiveJsListener { data, listener -> }
-
-    private var startupMessage: ArrayList<MessageBean>? = ArrayList()
 
     private var uniqueId = 0L
 
@@ -74,12 +71,6 @@ open class BridgeWebView : WebView, WebViewJavascriptBridge {
         webViewClient = generateBridgeWebViewClient()
     }
 
-    fun getStartupMessage(): ArrayList<MessageBean>? = startupMessage
-
-    fun setStartupMessage(list: ArrayList<MessageBean>?) {
-        startupMessage = list
-    }
-
     override fun register(apiName: String, handler: OnReceiveJsListener) {
         if (apiName.isEmpty()) {
             defaultHandler = handler
@@ -122,11 +113,7 @@ open class BridgeWebView : WebView, WebViewJavascriptBridge {
     }
 
     private fun queueMessage(message: MessageBean) {
-        if (startupMessage != null) {
-            startupMessage?.add(message)
-        } else {
-            dispatchMessage(message)
-        }
+        dispatchMessage(message)
     }
 
     fun dispatchMessage(message: MessageBean) {

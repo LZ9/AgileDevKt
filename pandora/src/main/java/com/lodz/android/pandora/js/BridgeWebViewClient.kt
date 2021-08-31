@@ -29,13 +29,6 @@ open class BridgeWebViewClient(private var webView: BridgeWebView?) : WebViewCli
     override fun onPageFinished(view: WebView?, url: String?) {
         super.onPageFinished(view, url)
         view?.loadUrl(BridgeUtil.JAVASCRIPT_STR.append(BridgeUtil.assetJsFile2Str(view.context, BridgeUtil.JAVA_SCRIPT)))
-        val list = webView?.getStartupMessage()
-        if (list != null){
-            list.forEach {
-                webView?.dispatchMessage(it)
-            }
-            webView?.setStartupMessage(null)
-        }
     }
 
 }
