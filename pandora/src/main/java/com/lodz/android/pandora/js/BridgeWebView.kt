@@ -4,9 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.webkit.WebView
-import android.webkit.WebViewClient
-
-import android.os.SystemClock
 
 import android.os.Looper
 import com.alibaba.fastjson.JSON
@@ -28,8 +25,6 @@ open class BridgeWebView : WebView, WebViewJavascriptBridge {
     private val mCallBackJsMap: HashMap<String, OnCallBackJsListener> = HashMap()
     /** 接收JS数据接口缓存集合 */
     private val mReceiveJsMap: HashMap<String, OnReceiveJsListener> = HashMap()
-
-    private var uniqueId = 0L
 
     constructor(context: Context) : super(context){
         init()
@@ -87,18 +82,16 @@ open class BridgeWebView : WebView, WebViewJavascriptBridge {
         val message = MessageBean()
         message.data = data
         if (function != null) {
-            val callbackStr = String.format(
-                BridgeUtil.CALLBACK_ID_FORMAT,
-                (++uniqueId).toString() + BridgeUtil.UNDERLINE_STR + SystemClock.currentThreadTimeMillis()
-            )
-            mCallBackJsMap[callbackStr] = function
-            message.callbackId = callbackStr
-            message.handlerName = apiName
+            val callbackId = String.format(BridgeUtil.CALLBACK_ID_FORMAT, System.currentTimeMillis())
+            mCallBackJsMap[callbackId] = function
+            message.callbackId = callbackId
         }
-        queueMessage(message)
+        message.handlerName = apiName
+        sendMessageToJs(message)
     }
 
-    private fun queueMessage(message: MessageBean) {
+    /** 发送数据给H5 */
+    private fun sendMessageToJs(message: MessageBean) {
         val json = JSON.toJSONString(message)
             .replace("(\\\\)([^utrn])".toRegex(), "\\\\\\\\$1$2")
             .replace("(?<=[^\\\\])(\")".toRegex(), "\\\\\"")
@@ -110,42 +103,35 @@ open class BridgeWebView : WebView, WebViewJavascriptBridge {
     }
 
     fun flushMessageQueue() {
-        if (Thread.currentThread() == Looper.getMainLooper().thread) {
-            loadUrl(BridgeUtil.JS_FETCH_QUEUE_FROM_JAVA, object : OnCallBackJsListener {
-                override fun callbackJs(data: String) {
-                    val list = JSON.parseArray(data, MessageBean::class.java)
-                    if (list.isNullOrEmpty()) {
-                        return
-                    }
-                    for (item in list) {
-                        val responseId = item.responseId
-                        if (responseId.isNotEmpty()) {
-                            val function = mCallBackJsMap[responseId]
-                            val responseData = item.responseData
-                            function?.callbackJs(responseData)
-                            mCallBackJsMap.remove(responseId)
-                        } else {
-                            var responseFunction: OnCallBackJsListener = object : OnCallBackJsListener {
-                                override fun callbackJs(data: String) {
-                                }
-                            }
-                            if (item.callbackId.isNotEmpty()) {
-                                responseFunction = OnCallBackJsListener {
-                                        val responseMsg = MessageBean()
-                                        responseMsg.responseId = item.callbackId
-                                        responseMsg.responseData = it
-                                        queueMessage(responseMsg)
-                                    }
-                            }
-                            val apiName = if (item.handlerName.isEmpty()) DEFAULT_RECEIVE_API_NAME else item.handlerName
-                            mReceiveJsMap[apiName]?.onReceive(item.data, responseFunction)
+        if (Thread.currentThread() != Looper.getMainLooper().thread) {
+            return
+        }
+        loadUrl(BridgeUtil.JS_FETCH_QUEUE_FROM_JAVA)
+        mCallBackJsMap[BridgeUtil.parseFunctionName(BridgeUtil.JS_FETCH_QUEUE_FROM_JAVA)] = OnCallBackJsListener{
+            val list = JSON.parseArray(it, MessageBean::class.java)
+            if (list.isNullOrEmpty()) {
+                return@OnCallBackJsListener
+            }
+            for (item in list) {
+                val responseId = item.responseId
+                if (responseId.isNotEmpty()) {
+                    val function = mCallBackJsMap[responseId]
+                    val responseData = item.responseData
+                    function?.callbackJs(responseData)
+                    mCallBackJsMap.remove(responseId)
+                } else {
+                    val responseFunction = OnCallBackJsListener {
+                        if (item.callbackId.isNotEmpty()) {
+                            val responseMsg = MessageBean()
+                            responseMsg.responseId = item.callbackId
+                            responseMsg.responseData = it
+                            sendMessageToJs(responseMsg)
                         }
-
                     }
-
+                    val apiName = if (item.handlerName.isEmpty()) DEFAULT_RECEIVE_API_NAME else item.handlerName
+                    mReceiveJsMap[apiName]?.onReceive(item.data, responseFunction)
                 }
-
-            })
+            }
         }
     }
 
@@ -157,10 +143,5 @@ open class BridgeWebView : WebView, WebViewJavascriptBridge {
             function.callbackJs(data ?: "")
             mCallBackJsMap.remove(functionName)
         }
-    }
-
-    fun loadUrl(jsUrl: String, returnCallback: OnCallBackJsListener) {
-        loadUrl(jsUrl)
-        mCallBackJsMap[BridgeUtil.parseFunctionName(jsUrl)] = returnCallback
     }
 }
