@@ -1,4 +1,4 @@
-package com.lodz.android.pandora.js
+package com.lodz.android.pandora.js.contract
 
 /**
  * 回调数据给JS监听器

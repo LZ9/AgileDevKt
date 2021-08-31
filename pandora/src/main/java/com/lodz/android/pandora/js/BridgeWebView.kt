@@ -11,6 +11,9 @@ import android.os.SystemClock
 
 import android.os.Looper
 import com.alibaba.fastjson.JSON
+import com.lodz.android.pandora.js.contract.OnCallBackJsListener
+import com.lodz.android.pandora.js.contract.OnReceiveJsListener
+import com.lodz.android.pandora.js.contract.WebViewJavascriptBridge
 
 
 /**
@@ -153,13 +156,12 @@ open class BridgeWebView : WebView, WebViewJavascriptBridge {
                             function?.callbackJs(responseData)
                             responseCallbacks.remove(responseId)
                         } else {
-                            var responseFunction: OnCallBackJsListener = object :OnCallBackJsListener{
+                            var responseFunction: OnCallBackJsListener = object : OnCallBackJsListener {
                                 override fun callbackJs(data: String) {
                                 }
                             }
                             if (item.callbackId.isNotEmpty()) {
-                                responseFunction =
-                                    OnCallBackJsListener {
+                                responseFunction = OnCallBackJsListener {
                                         val responseMsg = MessageBean()
                                         responseMsg.responseId = item.callbackId
                                         responseMsg.responseData = it

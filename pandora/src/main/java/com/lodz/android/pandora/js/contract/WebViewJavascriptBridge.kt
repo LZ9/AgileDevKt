@@ -1,4 +1,4 @@
-package com.lodz.android.pandora.js
+package com.lodz.android.pandora.js.contract
 
 /**
  * JsBridge接口
