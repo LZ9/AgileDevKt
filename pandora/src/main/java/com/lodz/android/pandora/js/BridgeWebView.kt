@@ -70,35 +70,22 @@ open class BridgeWebView : WebView, WebViewJavascriptBridge {
         isHorizontalScrollBarEnabled = false
         settings.javaScriptEnabled = true
         setWebContentsDebuggingEnabled(true)
-        webViewClient = generateBridgeWebViewClient()
+        webViewClient = createBridgeWebViewClient()
     }
 
+    /** 创建一个BridgeWebViewClient */
+    open fun createBridgeWebViewClient(): BridgeWebViewClient = BridgeWebViewClient(this)
+
+    /** 注册接口名为[apiName]的接口，接收H5的回调[handler] */
     override fun register(apiName: String, handler: OnReceiveJsListener) {
         val name =  if (apiName.isEmpty()) DEFAULT_RECEIVE_API_NAME else apiName
         mReceiveJsMap[name] = handler
     }
 
-    open fun generateBridgeWebViewClient(): WebViewClient = BridgeWebViewClient(this)
-
-    fun handlerReturnData(url: String) {
-        val functionName = BridgeUtil.getFunctionFromReturnUrl(url)
-        val function = mCallBackJsMap[functionName]
-        val data = BridgeUtil.getDataFromReturnUrl(url)
-        if (function != null) {
-            function.callbackJs(data ?: "")
-            mCallBackJsMap.remove(functionName)
-        }
-    }
-
+    /** 发送接口名为[apiName]的数据[data]给H5，H5通过[function]回调结果 */
     override fun send(apiName: String, data: String, function: OnCallBackJsListener?) {
-        doSend(apiName, data, function)
-    }
-
-    private fun doSend(handlerName: String, data: String, function: OnCallBackJsListener?) {
         val message = MessageBean()
-        if (data.isNotEmpty()){
-            message.data = data
-        }
+        message.data = data
         if (function != null) {
             val callbackStr = String.format(
                 BridgeUtil.CALLBACK_ID_FORMAT,
@@ -106,16 +93,12 @@ open class BridgeWebView : WebView, WebViewJavascriptBridge {
             )
             mCallBackJsMap[callbackStr] = function
             message.callbackId = callbackStr
-            message.handlerName = handlerName
+            message.handlerName = apiName
         }
         queueMessage(message)
     }
 
     private fun queueMessage(message: MessageBean) {
-        dispatchMessage(message)
-    }
-
-    fun dispatchMessage(message: MessageBean) {
         val json = JSON.toJSONString(message)
             .replace("(\\\\)([^utrn])".toRegex(), "\\\\\\\\$1$2")
             .replace("(?<=[^\\\\])(\")".toRegex(), "\\\\\"")
@@ -154,12 +137,8 @@ open class BridgeWebView : WebView, WebViewJavascriptBridge {
                                         queueMessage(responseMsg)
                                     }
                             }
-                            val handler = if (item.handlerName.isNotEmpty()) {
-                                mReceiveJsMap[item.handlerName]
-                            } else {
-                                mReceiveJsMap[DEFAULT_RECEIVE_API_NAME]
-                            }
-                            handler?.onReceive(item.data, responseFunction)
+                            val apiName = if (item.handlerName.isEmpty()) DEFAULT_RECEIVE_API_NAME else item.handlerName
+                            mReceiveJsMap[apiName]?.onReceive(item.data, responseFunction)
                         }
 
                     }
@@ -167,6 +146,16 @@ open class BridgeWebView : WebView, WebViewJavascriptBridge {
                 }
 
             })
+        }
+    }
+
+    fun handlerReturnData(url: String) {
+        val functionName = BridgeUtil.getFunctionFromReturnUrl(url)
+        val function = mCallBackJsMap[functionName]
+        val data = BridgeUtil.getDataFromReturnUrl(url)
+        if (function != null) {
+            function.callbackJs(data ?: "")
+            mCallBackJsMap.remove(functionName)
         }
     }
 
