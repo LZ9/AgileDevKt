@@ -16,16 +16,18 @@ import com.lodz.android.pandora.js.contract.WebViewJavascriptBridge
 
 
 /**
- *
  * @author zhouL
  * @date 2021/8/23
  */
 @SuppressLint("SetJavaScriptEnabled")
 open class BridgeWebView : WebView, WebViewJavascriptBridge {
 
-    private val responseCallbacks: HashMap<String, OnCallBackJsListener> = HashMap()
-    private val messageHandlers: HashMap<String, OnReceiveJsListener> = HashMap()
-    private var defaultHandler: OnReceiveJsListener = OnReceiveJsListener { data, listener -> }
+    private val DEFAULT_RECEIVE_API_NAME = "default_receive"
+
+    /** 回调JS接口缓存集合 */
+    private val mCallBackJsMap: HashMap<String, OnCallBackJsListener> = HashMap()
+    /** 接收JS数据接口缓存集合 */
+    private val mReceiveJsMap: HashMap<String, OnReceiveJsListener> = HashMap()
 
     private var uniqueId = 0L
 
@@ -72,22 +74,19 @@ open class BridgeWebView : WebView, WebViewJavascriptBridge {
     }
 
     override fun register(apiName: String, handler: OnReceiveJsListener) {
-        if (apiName.isEmpty()) {
-            defaultHandler = handler
-        } else {
-            messageHandlers[apiName] = handler
-        }
+        val name =  if (apiName.isEmpty()) DEFAULT_RECEIVE_API_NAME else apiName
+        mReceiveJsMap[name] = handler
     }
 
     open fun generateBridgeWebViewClient(): WebViewClient = BridgeWebViewClient(this)
 
     fun handlerReturnData(url: String) {
         val functionName = BridgeUtil.getFunctionFromReturnUrl(url)
-        val function = responseCallbacks[functionName]
+        val function = mCallBackJsMap[functionName]
         val data = BridgeUtil.getDataFromReturnUrl(url)
         if (function != null) {
             function.callbackJs(data ?: "")
-            responseCallbacks.remove(functionName)
+            mCallBackJsMap.remove(functionName)
         }
     }
 
@@ -105,7 +104,7 @@ open class BridgeWebView : WebView, WebViewJavascriptBridge {
                 BridgeUtil.CALLBACK_ID_FORMAT,
                 (++uniqueId).toString() + BridgeUtil.UNDERLINE_STR + SystemClock.currentThreadTimeMillis()
             )
-            responseCallbacks[callbackStr] = function
+            mCallBackJsMap[callbackStr] = function
             message.callbackId = callbackStr
             message.handlerName = handlerName
         }
@@ -138,10 +137,10 @@ open class BridgeWebView : WebView, WebViewJavascriptBridge {
                     for (item in list) {
                         val responseId = item.responseId
                         if (responseId.isNotEmpty()) {
-                            val function = responseCallbacks[responseId]
+                            val function = mCallBackJsMap[responseId]
                             val responseData = item.responseData
                             function?.callbackJs(responseData)
-                            responseCallbacks.remove(responseId)
+                            mCallBackJsMap.remove(responseId)
                         } else {
                             var responseFunction: OnCallBackJsListener = object : OnCallBackJsListener {
                                 override fun callbackJs(data: String) {
@@ -156,9 +155,9 @@ open class BridgeWebView : WebView, WebViewJavascriptBridge {
                                     }
                             }
                             val handler = if (item.handlerName.isNotEmpty()) {
-                                messageHandlers[item.handlerName]
+                                mReceiveJsMap[item.handlerName]
                             } else {
-                                defaultHandler
+                                mReceiveJsMap[DEFAULT_RECEIVE_API_NAME]
                             }
                             handler?.onReceive(item.data, responseFunction)
                         }
@@ -173,6 +172,6 @@ open class BridgeWebView : WebView, WebViewJavascriptBridge {
 
     fun loadUrl(jsUrl: String, returnCallback: OnCallBackJsListener) {
         loadUrl(jsUrl)
-        responseCallbacks[BridgeUtil.parseFunctionName(jsUrl)] = returnCallback
+        mCallBackJsMap[BridgeUtil.parseFunctionName(jsUrl)] = returnCallback
     }
 }
