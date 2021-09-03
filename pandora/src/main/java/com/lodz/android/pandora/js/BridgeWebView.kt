@@ -7,6 +7,7 @@ import android.webkit.WebView
 
 import android.os.Looper
 import com.alibaba.fastjson.JSON
+import com.lodz.android.pandora.js.contract.OnBridgeReceiveListener
 import com.lodz.android.pandora.js.contract.OnCallBackJsListener
 import com.lodz.android.pandora.js.contract.OnReceiveJsListener
 import com.lodz.android.pandora.js.contract.WebViewJavascriptBridge
@@ -25,6 +26,8 @@ open class BridgeWebView : WebView, WebViewJavascriptBridge {
     private val mCallBackJsMap: HashMap<String, OnCallBackJsListener> = HashMap()
     /** 接收JS数据接口缓存集合 */
     private val mReceiveJsMap: HashMap<String, OnReceiveJsListener> = HashMap()
+    /** JsBridge接收接口缓存集合 */
+    private val mBridgeReceiveMap: HashMap<String, OnBridgeReceiveListener> = HashMap()
 
     constructor(context: Context) : super(context){
         init()
@@ -102,15 +105,15 @@ open class BridgeWebView : WebView, WebViewJavascriptBridge {
         }
     }
 
-    fun flushMessageQueue() {
+    fun registerBridgeReceive() {
         if (Thread.currentThread() != Looper.getMainLooper().thread) {
             return
         }
         loadUrl(BridgeUtil.JS_FETCH_QUEUE_FROM_JAVA)
-        mCallBackJsMap[BridgeUtil.parseFunctionName(BridgeUtil.JS_FETCH_QUEUE_FROM_JAVA)] = OnCallBackJsListener{
+        mBridgeReceiveMap[BridgeUtil.getJsBridgeName()] = OnBridgeReceiveListener {
             val list = JSON.parseArray(it, MessageBean::class.java)
             if (list.isNullOrEmpty()) {
-                return@OnCallBackJsListener
+                return@OnBridgeReceiveListener
             }
             for (item in list) {
                 val responseId = item.responseId
@@ -135,13 +138,13 @@ open class BridgeWebView : WebView, WebViewJavascriptBridge {
         }
     }
 
-    fun handlerReturnData(url: String) {
-        val functionName = BridgeUtil.getFunctionFromReturnUrl(url)
-        val function = mCallBackJsMap[functionName]
-        val data = BridgeUtil.getDataFromReturnUrl(url)
+    /** 处理JS发送来的[url]数据 */
+    fun handlerJsReturnData(url: String) {
+        val jsBridgeName = BridgeUtil.getJsBridgeNameFromReturnUrl(url)
+        val function = mBridgeReceiveMap[jsBridgeName]
         if (function != null) {
-            function.callbackJs(data ?: "")
-            mCallBackJsMap.remove(functionName)
+            function.onReceive(BridgeUtil.getDataFromReturnUrl(url) ?: "")
+            mBridgeReceiveMap.remove(jsBridgeName)
         }
     }
 }

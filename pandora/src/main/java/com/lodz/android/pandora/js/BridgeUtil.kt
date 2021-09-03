@@ -30,11 +30,15 @@ object BridgeUtil {
     const val JAVA_SCRIPT = "WebViewJavascriptBridge.js"
 
     @JvmStatic
-    fun parseFunctionName(jsUrl: String): String {
-        return jsUrl.replace("javascript:WebViewJavascriptBridge.".toRegex(), EMPTY_STR).replace("\\(.*\\);".toRegex(), EMPTY_STR)
+    /** 获取默认的JsBridgei接口名 */
+    fun getJsBridgeName(): String {
+        return JS_FETCH_QUEUE_FROM_JAVA
+            .replace("javascript:WebViewJavascriptBridge.".toRegex(), EMPTY_STR)
+            .replace("\\(.*\\);".toRegex(), EMPTY_STR)
     }
 
     @JvmStatic
+    /** 从[url]里解析回调数据 */
     fun getDataFromReturnUrl(url: String): String? {
         if (url.startsWith(YY_FETCH_QUEUE)) {
             return url.replace(YY_FETCH_QUEUE, EMPTY_STR)
@@ -52,7 +56,7 @@ object BridgeUtil {
     }
 
     @JvmStatic
-    fun getFunctionFromReturnUrl(url: String): String? {
+    fun getJsBridgeNameFromReturnUrl(url: String): String? {
         val temp = url.replace(YY_RETURN_DATA, EMPTY_STR)
         val functionAndData = temp.split(SPLIT_MARK)
         return if (functionAndData.isNotEmpty()) functionAndData[0] else null

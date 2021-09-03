@@ -16,11 +16,11 @@ open class BridgeWebViewClient(private var webView: BridgeWebView?) : WebViewCli
             return super.shouldOverrideUrlLoading(view, url)
         }
         val newUrl = StringUtils.decodeUtf8(url)
-        if (newUrl.startsWith(BridgeUtil.YY_RETURN_DATA)) {// 如果是返回数据
-            webView?.handlerReturnData(newUrl)
+        if (newUrl.startsWith(BridgeUtil.YY_RETURN_DATA)) {// 如果是JS返回数据
+            webView?.handlerJsReturnData(newUrl)
             return true
         } else if (newUrl.startsWith(BridgeUtil.YY_OVERRIDE_SCHEMA)) {
-            webView?.flushMessageQueue()
+            webView?.registerBridgeReceive()
             return true
         }
         return super.shouldOverrideUrlLoading(view, url)
