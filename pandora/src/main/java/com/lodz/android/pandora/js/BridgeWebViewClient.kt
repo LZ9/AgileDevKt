@@ -1,5 +1,6 @@
 package com.lodz.android.pandora.js
 
+import android.webkit.WebResourceRequest
 import android.webkit.WebViewClient
 import android.webkit.WebView
 import com.lodz.android.corekt.anko.append
@@ -11,9 +12,10 @@ import com.lodz.android.corekt.utils.StringUtils
  */
 open class BridgeWebViewClient(private var webView: BridgeWebView?) : WebViewClient() {
 
-    override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+    override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
+        val url = request?.url?.toString()
         if (url.isNullOrEmpty()) {
-            return super.shouldOverrideUrlLoading(view, url)
+            return super.shouldOverrideUrlLoading(view, request)
         }
         val newUrl = StringUtils.decodeUtf8(url)
         if (newUrl.startsWith(BridgeUtil.YY_RETURN_DATA)) {// 如果是JS返回数据
@@ -23,7 +25,7 @@ open class BridgeWebViewClient(private var webView: BridgeWebView?) : WebViewCli
             webView?.registerBridgeReceive()
             return true
         }
-        return super.shouldOverrideUrlLoading(view, url)
+        return super.shouldOverrideUrlLoading(view, request)
     }
 
     override fun onPageFinished(view: WebView?, url: String?) {
