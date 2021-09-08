@@ -12,4 +12,10 @@ interface WebViewJavascriptBridge {
 
     /** 注册接口名为[apiName]的接口，接收H5的回调[handler] */
     fun register(apiName: String = "", handler: OnReceiveJsListener)
+
+    /** 处理JS发送来的[url]数据 */
+    fun handlerJsReturnData(url: String)
+
+    /** 注册通信接收 */
+    fun registerBridgeReceive()
 }

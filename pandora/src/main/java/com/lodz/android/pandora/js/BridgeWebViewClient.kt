@@ -5,12 +5,13 @@ import android.webkit.WebViewClient
 import android.webkit.WebView
 import com.lodz.android.corekt.anko.append
 import com.lodz.android.corekt.utils.StringUtils
+import com.lodz.android.pandora.js.contract.WebViewJavascriptBridge
 
 /**
  * @author zhouL
  * @date 2021/8/23
  */
-open class BridgeWebViewClient(private var webView: BridgeWebView?) : WebViewClient() {
+open class BridgeWebViewClient(private val bridge: WebViewJavascriptBridge) : WebViewClient() {
 
     override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
         val url = request?.url?.toString()
@@ -19,10 +20,10 @@ open class BridgeWebViewClient(private var webView: BridgeWebView?) : WebViewCli
         }
         val newUrl = StringUtils.decodeUtf8(url)
         if (newUrl.startsWith(BridgeUtil.YY_RETURN_DATA)) {// 如果是JS返回数据
-            webView?.handlerJsReturnData(newUrl)
+            bridge.handlerJsReturnData(newUrl)
             return true
         } else if (newUrl.startsWith(BridgeUtil.YY_OVERRIDE_SCHEMA)) {
-            webView?.registerBridgeReceive()
+            bridge.registerBridgeReceive()
             return true
         }
         return super.shouldOverrideUrlLoading(view, request)
