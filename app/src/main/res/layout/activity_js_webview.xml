@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.lodz.android.pandora.js.BridgeWebView
+    <com.lodz.android.jsbridgekt.SimpleBridgeWebView
         android:id="@+id/web_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
