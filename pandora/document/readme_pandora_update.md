@@ -1,5 +1,11 @@
 # Pandora更新记录
 
+##### 2021/09/26
+1. GlobalScope替换为MainScope()
+2. 更新依赖库版本
+3.BottomMenuBar增加获取当前选中的menu类型方法
+4. 发布1.7.6版
+
 ##### 2021/08/19
 1. BottomMenuBar增加加文字配置方法
 2. 更新依赖库版本

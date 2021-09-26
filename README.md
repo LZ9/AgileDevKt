@@ -22,7 +22,7 @@
 如果你希望开发一个新的中小型应用，并且把自己的精力专注在业务UI和逻辑开发上，你可以选择依赖[Pandora](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/readme_pandora.md)，
 里面包含了控件的封装、调用方法的封装、开发工具封装等等，你可以从Pandora的盒子里拿到你需要的绝大多数东西。
 ```
-    implementation 'ink.lodz:pandora:1.7.4'
+    implementation 'ink.lodz:pandora:1.7.6'
 ```
 
 ## 3. 使用图片库：
