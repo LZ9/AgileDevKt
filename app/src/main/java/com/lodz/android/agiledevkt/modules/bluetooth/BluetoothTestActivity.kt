@@ -43,13 +43,15 @@ class BluetoothTestActivity : BaseActivity() {
     private val mBinding: ActivityBluetoothTestBinding by bindingLayout(ActivityBluetoothTestBinding::inflate)
 
     /** 申请定位权限 */
-    private val hasFinePermissions = constructLocationPermissionRequest(
-        LocationPermission.FINE,//后台定位
-        onShowRationale = ::onShowRationaleBeforeRequest,
-        onPermissionDenied = ::onDenied,
-        onNeverAskAgain = ::onNeverAskAgain,
-        requiresPermission = ::onRequestPermission
-    )
+    private val hasFinePermissions by lazy {
+        constructLocationPermissionRequest(
+            LocationPermission.FINE,//后台定位
+            onShowRationale = ::onShowRationaleBeforeRequest,
+            onPermissionDenied = ::onDenied,
+            onNeverAskAgain = ::onNeverAskAgain,
+            requiresPermission = ::onRequestPermission
+        )
+    }
 
     /** 蓝牙设备适配器 */
     private lateinit var mAdapter: BleDeviceAdapter

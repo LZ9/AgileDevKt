@@ -58,29 +58,35 @@ class LocationTestActivity : BaseActivity() {
     /** 是否绑定 */
     private var isBind = false
 
-    private val hasFinePermissions = constructLocationPermissionRequest(
-        LocationPermission.FINE,//后台定位
-        onShowRationale = ::onShowRationaleBeforeRequest,
-        onPermissionDenied = ::onDenied,
-        onNeverAskAgain = ::onNeverAskAgain,
-        requiresPermission = ::onRequestPermission
-    )
+    private val hasFinePermissions by lazy {
+        constructLocationPermissionRequest(
+            LocationPermission.FINE,//后台定位
+            onShowRationale = ::onShowRationaleBeforeRequest,
+            onPermissionDenied = ::onDenied,
+            onNeverAskAgain = ::onNeverAskAgain,
+            requiresPermission = ::onRequestPermission
+        )
+    }
 
-    private val hasCoarsePermissions = constructLocationPermissionRequest(
-        LocationPermission.COARSE,//后台定位
-        onShowRationale = ::onShowRationaleBeforeRequest,
-        onPermissionDenied = ::onDenied,
-        onNeverAskAgain = ::onNeverAskAgain,
-        requiresPermission = ::onRequestPermission
-    )
+    private val hasCoarsePermissions by lazy {
+        constructLocationPermissionRequest(
+            LocationPermission.COARSE,//后台定位
+            onShowRationale = ::onShowRationaleBeforeRequest,
+            onPermissionDenied = ::onDenied,
+            onNeverAskAgain = ::onNeverAskAgain,
+            requiresPermission = ::onRequestPermission
+        )
+    }
 
-    private val hasBackgroundPermissions = constructLocationPermissionRequest(
-        LocationPermission.BACKGROUND,//后台定位
-        onShowRationale = ::onShowRationaleBeforeRequest,
-        onPermissionDenied = ::onDenied,
-        onNeverAskAgain = ::onNeverAskAgain,
-        requiresPermission = ::onRequestPermission
-    )
+    private val hasBackgroundPermissions by lazy {
+        constructLocationPermissionRequest(
+            LocationPermission.BACKGROUND,//后台定位
+            onShowRationale = ::onShowRationaleBeforeRequest,
+            onPermissionDenied = ::onDenied,
+            onNeverAskAgain = ::onNeverAskAgain,
+            requiresPermission = ::onRequestPermission
+        )
+    }
 
     override fun getViewBindingLayout(): View = mBinding.root
 
