@@ -247,6 +247,13 @@ class MenuBarTestActivity : BaseActivity() {
             }
             return@setOnItemSelectedListener true
         }
+
+        mBinding.currentSelectedBtn.setOnClickListener {
+            val text = "menuBar : ".append(mBinding.menuBar.getCurrentSelectedType()).append("\n")
+                .append("tabLayout : ").append(mBinding.tabLayout.selectedTabPosition.toString()).append("\n")
+                .append("bottomNv : ").append(mBinding.bottomNv.selectedItemId.toString())
+            toastShort(text)
+        }
     }
 
     override fun initData() {

@@ -21,7 +21,6 @@ import com.lodz.android.corekt.anko.createColorIntDrawable
 import com.lodz.android.corekt.anko.dp2px
 import com.lodz.android.corekt.utils.SelectorUtils
 import com.lodz.android.pandora.R
-import java.sql.Array
 
 /**
  * 底部菜单栏
@@ -271,6 +270,24 @@ class BottomMenuBar : LinearLayout {
                 vg.isSelected = false
             }
         }
+    }
+
+    /** 获取当前选中得menu类型，没有menu被选中时返回-1 */
+    fun getCurrentSelectedType(): Int {
+        if (mPdrList.size == 0) {
+            return -1
+        }
+        for (pair in mPdrList) {
+            val config = pair.first
+            val viewGroup = pair.second
+            if (config == null || viewGroup == null) {
+                continue
+            }
+            if (viewGroup.isSelected) {
+                return config.type
+            }
+        }
+        return -1
     }
 
     /** 点击菜单回调 */
