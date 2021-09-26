@@ -23,7 +23,7 @@
         api 'androidx.cardview:cardview:1.0.0'
         api "androidx.viewpager2:viewpager2:1.0.0"
         api 'androidx.annotation:annotation:1.2.0'
-        api 'androidx.constraintlayout:constraintlayout:2.1.0'
+        api 'androidx.constraintlayout:constraintlayout:2.1.1'
         api 'androidx.multidex:multidex:2.0.1'
         api 'androidx.core:core-ktx:1.6.0'
         api 'androidx.activity:activity-ktx:1.3.1'
@@ -31,7 +31,7 @@
         api 'androidx.lifecycle:lifecycle-extensions:2.2.0'
         api 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
         api 'androidx.startup:startup-runtime:1.1.0'
-        api 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1'
+        api 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2'
     }
 ```
 
