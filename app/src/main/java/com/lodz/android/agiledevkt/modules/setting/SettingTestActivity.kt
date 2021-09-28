@@ -3,6 +3,7 @@ package com.lodz.android.agiledevkt.modules.setting
 import android.content.Context
 import android.content.Intent
 import android.database.ContentObserver
+import android.media.AudioManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -123,7 +124,7 @@ class SettingTestActivity : BaseActivity() {
                 mBinding.ringVolumeSb.progress = progress
                 if (fromUser) {
                     mBinding.ringVolumeTv.text = progress.toString()
-                    setRingVolume(progress)
+                    setVolume(AudioManager.STREAM_RING, progress)
                     return
                 }
             }
@@ -265,13 +266,13 @@ class SettingTestActivity : BaseActivity() {
 
     /** 初始化铃音 */
     private fun initRingVolume() {
-        mBinding.ringVolumeSb.max = getMaxRingVolume()
+        mBinding.ringVolumeSb.max = getMaxVolume(AudioManager.STREAM_RING)
         showRingVolume()
     }
 
     /** 显示铃音 */
     private fun showRingVolume() {
-        val volume = getRingVolume()
+        val volume = getVolume(AudioManager.STREAM_RING)
         mBinding.ringVolumeTv.text = volume.toString()
         mBinding.ringVolumeSb.progress = volume
     }

@@ -84,21 +84,21 @@ fun Context.setAirplaneMode(enable: Boolean) {
     sendBroadcast(Intent(Intent.ACTION_AIRPLANE_MODE_CHANGED))// 发送飞行模式已经改变广播
 }
 
-/** 获取铃声音量（一般取值范围为0-7） */
-fun Context.getRingVolume(): Int = (getSystemService(Context.AUDIO_SERVICE) as AudioManager).getStreamVolume(AudioManager.STREAM_RING)
+/** 获取[streamType]的音量（默认获取多媒体的音量） */
+fun Context.getVolume(streamType: Int = AudioManager.STREAM_MUSIC): Int = (getSystemService(Context.AUDIO_SERVICE) as AudioManager).getStreamVolume(streamType)
 
-/** 获取铃声音量最大值（一般是7） */
-fun Context.getMaxRingVolume(): Int = (getSystemService(Context.AUDIO_SERVICE) as AudioManager).getStreamMaxVolume(AudioManager.STREAM_RING)
+/** 获取[streamType]的音量最大值（默认获取多媒体的音量） */
+fun Context.getMaxVolume(streamType: Int = AudioManager.STREAM_MUSIC): Int = (getSystemService(Context.AUDIO_SERVICE) as AudioManager).getStreamMaxVolume(streamType)
 
-/** 设置铃声音量[volume] */
-fun Context.setRingVolume(volume: Int) {
+/** 设置[streamType]的音量[volume]（默认获取多媒体的音量） */
+fun Context.setVolume(streamType: Int = AudioManager.STREAM_MUSIC, volume: Int) {
     var fixVolume = volume
     if (fixVolume < 0) {
         fixVolume = 0
     }
-    if (fixVolume > getMaxRingVolume()) {
-        fixVolume = getMaxRingVolume()
+    if (fixVolume > getMaxVolume()) {
+        fixVolume = getMaxVolume()
     }
     val audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
-    audioManager.setStreamVolume(AudioManager.STREAM_RING, fixVolume, AudioManager.FLAG_PLAY_SOUND)
+    audioManager.setStreamVolume(streamType, fixVolume, AudioManager.FLAG_PLAY_SOUND)
 }
