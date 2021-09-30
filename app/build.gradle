@@ -123,6 +123,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     // jsbridge
-    implementation 'ink.lodz:jsbridge-kt:1.0.2'
+    implementation 'ink.lodz:jsbridge-kt:1.0.4'
 
 }

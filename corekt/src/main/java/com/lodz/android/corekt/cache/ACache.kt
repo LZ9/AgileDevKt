@@ -59,10 +59,11 @@ class ACache {
     }
 
     /** 读取String数据，[key]键 */
-    fun getAsString(key: String): String {
+    @JvmOverloads
+    fun getAsString(key: String, defaultValue: String = ""): String {
         val file = mCache.get(key)
         if (!file.exists()) {
-            return ""
+            return defaultValue
         }
         FileReader(file).use { fr: FileReader ->
             BufferedReader(fr).use { br: BufferedReader ->
@@ -80,11 +81,101 @@ class ACache {
                     Utils.clearDateInfo(readString)
                 } else {
                     remove(key)
-                    ""
+                    defaultValue
                 }
             }
         }
     }
+
+    // =======================================
+    // ============ Int数据 读写 ==============
+    // =======================================
+    /** 保存Int数据到缓存中，[key]键，[value]值 */
+    fun put(key: String, value: Int) {
+        put(key, value.toString())
+    }
+
+    /** 保存Int数据到缓存中，[key]键，[value]值，[saveTime]保存的时间（单位：秒） */
+    fun put(key: String, value: Int, saveTime: Int) {
+        put(key, value.toString(), saveTime)
+    }
+
+    /** 读取Int数据，[key]键 */
+    @JvmOverloads
+    fun getAsInt(key: String, defaultValue: Int = 0): Int =
+        if (getAsString(key).isEmpty()) defaultValue else getAsString(key).toInt()
+
+    // =======================================
+    // ============ Long数据 读写 ==============
+    // =======================================
+    /** 保存Long数据到缓存中，[key]键，[value]值 */
+    fun put(key: String, value: Long) {
+        put(key, value.toString())
+    }
+
+    /** 保存Long数据到缓存中，[key]键，[value]值，[saveTime]保存的时间（单位：秒） */
+    fun put(key: String, value: Long, saveTime: Int) {
+        put(key, value.toString(), saveTime)
+    }
+
+    /** 读取Long数据，[key]键 */
+    @JvmOverloads
+    fun getAsLong(key: String, defaultValue: Long = 0): Long =
+        if (getAsString(key).isEmpty()) defaultValue else getAsString(key).toLong()
+
+    // =======================================
+    // ============ Boolean数据 读写 ==============
+    // =======================================
+    /** 保存Boolean数据到缓存中，[key]键，[value]值 */
+    fun put(key: String, value: Boolean) {
+        put(key, value.toString())
+    }
+
+    /** 保存Boolean数据到缓存中，[key]键，[value]值，[saveTime]保存的时间（单位：秒） */
+    fun put(key: String, value: Boolean, saveTime: Int) {
+        put(key, value.toString(), saveTime)
+    }
+
+    /** 读取Boolean数据，[key]键 */
+    @JvmOverloads
+    fun getAsBoolean(key: String, defaultValue: Boolean = false): Boolean =
+        if (getAsString(key).isEmpty()) defaultValue else getAsString(key).toBoolean()
+
+    // =======================================
+    // ============ Double数据 读写 ==============
+    // =======================================
+    /** 保存Double数据到缓存中，[key]键，[value]值 */
+    fun put(key: String, value: Double) {
+        put(key, value.toString())
+    }
+
+    /** 保存Double数据到缓存中，[key]键，[value]值，[saveTime]保存的时间（单位：秒） */
+    fun put(key: String, value: Double, saveTime: Int) {
+        put(key, value.toString(), saveTime)
+    }
+
+    /** 读取Double数据，[key]键 */
+    @JvmOverloads
+    fun getAsDouble(key: String, defaultValue: Double = 0.0): Double =
+        if (getAsString(key).isEmpty()) defaultValue else getAsString(key).toDouble()
+
+    // =======================================
+    // ============ Float数据 读写 ==============
+    // =======================================
+    /** 保存Float数据到缓存中，[key]键，[value]值 */
+    fun put(key: String, value: Float) {
+        put(key, value.toString())
+    }
+
+    /** 保存Float数据到缓存中，[key]键，[value]值，[saveTime]保存的时间（单位：秒） */
+    fun put(key: String, value: Float, saveTime: Int) {
+        put(key, value.toString(), saveTime)
+    }
+
+    /** 读取Float数据，[key]键 */
+    @JvmOverloads
+    fun getAsFloat(key: String, defaultValue: Float = 0f): Float =
+        if (getAsString(key).isEmpty()) defaultValue else getAsString(key).toFloat()
 
     // =======================================
     // ============= JSONObject 数据 读写 ==============
