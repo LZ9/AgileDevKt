@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.os.Build
 import android.util.Base64
 import android.view.View
 import androidx.annotation.FloatRange
@@ -807,7 +808,14 @@ object BitmapUtils {
                     // isShareable如果为true，那BitmapRegionDecoder会对输入流保持一个表面的引用，
                     // 如果为false，那么它将会创建一个输入流的复制，并且一直使用它。即使为true，程序也有可能会创建一个输入流的深度复制。
                     // 如果图片是逐步解码的，那么为true会降低图片的解码速度。如果路径下的图片不是支持的格式，那就会抛出异常
-                    val decoder = BitmapRegionDecoder.newInstance(inputStream, true)
+                    val decoder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                        BitmapRegionDecoder.newInstance(inputStream)
+                    } else {
+                        BitmapRegionDecoder.newInstance(inputStream, true)
+                    }
+                    if (decoder == null) {
+                        return bitmapList
+                    }
 
                     val imgWidth = decoder.width
                     val imgHeight = decoder.height

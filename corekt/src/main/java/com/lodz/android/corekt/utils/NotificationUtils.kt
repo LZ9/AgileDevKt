@@ -117,7 +117,11 @@ class NotificationUtils private constructor(context: Context) {
 
         //---------------------- 设置意图 ---------------------
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.baidu.com"))
-        val pIntent = PendingIntent.getActivity(context, UUID.randomUUID().hashCode(), intent, PendingIntent.FLAG_CANCEL_CURRENT)
+        val pIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            PendingIntent.getActivity(context, UUID.randomUUID().hashCode(), intent, PendingIntent.FLAG_IMMUTABLE)
+        } else {
+            PendingIntent.getActivity(context, UUID.randomUUID().hashCode(), intent, PendingIntent.FLAG_CANCEL_CURRENT)
+        }
         builder.setContentIntent(pIntent)// 将意图设置到通知上
         builder.setFullScreenIntent(pIntent, true) // 横幅通知（有的系统会直接打开PendingIntent）推荐使用setContentIntent()
 

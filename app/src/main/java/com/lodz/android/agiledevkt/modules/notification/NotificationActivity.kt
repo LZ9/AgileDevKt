@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.RemoteViews
@@ -117,7 +118,11 @@ class NotificationActivity : BaseActivity() {
 
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.baidu.com"))
 //        val intent = Intent(getContext(), MainActivity::class.java)
-        val pIntent = PendingIntent.getActivity(getContext(), UUID.randomUUID().hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT)//创建一个意图
+        val pIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            PendingIntent.getActivity(getContext(), UUID.randomUUID().hashCode(), intent, PendingIntent.FLAG_IMMUTABLE)
+        } else {
+            PendingIntent.getActivity(getContext(), UUID.randomUUID().hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        }
         builder.setContentIntent(pIntent)// 将意图设置到通知上
 
         NotificationUtils.create(getContext()).send(builder.build())

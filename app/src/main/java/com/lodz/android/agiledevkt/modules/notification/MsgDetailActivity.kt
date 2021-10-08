@@ -3,6 +3,7 @@ package com.lodz.android.agiledevkt.modules.notification
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import com.lodz.android.agiledevkt.R
@@ -28,7 +29,11 @@ class MsgDetailActivity : BaseActivity() {
         fun startPendingIntent(context: Context, data: String): PendingIntent {
             val intent = Intent(context, MsgDetailActivity::class.java)
             intent.putExtra(EXTRA_MSG_DATA, data)
-            return PendingIntent.getActivity(context, UUID.randomUUID().hashCode(), intent, PendingIntent.FLAG_CANCEL_CURRENT)
+            return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                PendingIntent.getActivity(context, UUID.randomUUID().hashCode(), intent, PendingIntent.FLAG_IMMUTABLE)
+            } else {
+                PendingIntent.getActivity(context, UUID.randomUUID().hashCode(), intent, PendingIntent.FLAG_CANCEL_CURRENT)
+            }
         }
     }
 
