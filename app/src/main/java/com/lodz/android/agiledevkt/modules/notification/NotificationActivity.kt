@@ -232,8 +232,9 @@ class NotificationActivity : BaseActivity() {
 
     /** 自定义内容样式 */
     private fun showCustomNotify() {
+        val title = "电影头文字D即将上映"
         val builder = NotificationCompat.Builder(getContext(), Constant.NOTIFI_CHANNEL_MAIN_ID)// 获取构造器
-        builder.setTicker("电影头文字D即将上映")// 通知栏显示的文字
+        builder.setTicker(title)// 通知栏显示的文字
         builder.setAutoCancel(true)// 设置为true，点击该条通知会自动删除，false时只能通过滑动来删除（一般都是true）
         builder.setSmallIcon(R.mipmap.ic_launcher)//通知上面的小图标（必传）
         builder.setDefaults(NotificationCompat.DEFAULT_ALL)//通知默认的声音 震动 呼吸灯
@@ -243,7 +244,15 @@ class NotificationActivity : BaseActivity() {
         remoteViews.setImageViewResource(R.id.remoteview_icon, R.drawable.ic_regret)
         remoteViews.setTextViewText(R.id.remoteview_title, "头文字D首映")//设置对应id的标题
         remoteViews.setTextViewText(R.id.remoteview_msg, "周杰伦，铃木杏，陈冠希，黄秋生，余文乐，陈小春等主演悉数参加首映式")//设置对应id的内容
-        builder.setContent(remoteViews)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val headView = RemoteViews(packageName, R.layout.notify_remote_head)
+            headView.setTextViewText(R.id.title_tv, title)
+            builder.setCustomContentView(headView)
+            builder.setCustomBigContentView(remoteViews)
+        } else {
+            builder.setContent(remoteViews)
+        }
 
         NotificationUtils.create(getContext()).send(builder.build())
     }
