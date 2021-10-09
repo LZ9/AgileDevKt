@@ -92,12 +92,21 @@ class ToastUtils private constructor(private val mContext: Context) {
     }
 
     /** 设置显示位置[dravity] */
+
+    @Deprecated(
+        message = "在Android Build.VERSION_CODES.R 及以上版本，此方法不会生效",
+        level = DeprecationLevel.WARNING
+    )
     fun setGravity(dravity: Int): ToastUtils {
         mGravity = dravity
         return this
     }
 
     /** 设置显示位置[dravity]以及X轴偏移量[xOffset]和Y轴偏移量[yOffset] */
+    @Deprecated(
+        message = "在Android Build.VERSION_CODES.R 及以上版本，此方法不会生效",
+        level = DeprecationLevel.WARNING
+    )
     fun setGravity(dravity: Int, xOffset: Int, yOffset: Int): ToastUtils {
         mGravity = dravity
         mGravityOffsetX = xOffset
@@ -106,6 +115,10 @@ class ToastUtils private constructor(private val mContext: Context) {
     }
 
     /** 设置toast顶部图片资源[imgResId] */
+    @Deprecated(
+        message = "在Android Build.VERSION_CODES.R 及以上版本，此方法不会生效",
+        level = DeprecationLevel.WARNING
+    )
     fun setTopImg(@DrawableRes imgResId: Int): ToastUtils {
         mImgResId = imgResId
         return this
@@ -134,7 +147,7 @@ class ToastUtils private constructor(private val mContext: Context) {
             toast.setGravity(mGravity, mGravityOffsetX, mGravityOffsetY)
         }
 
-        if (mImgResId != 0 && mCustomView == null) {//没有自定义view的情况下才设置
+        if (mImgResId != 0 && mCustomView == null && toast.view != null) {//没有自定义view的情况下才设置
             val toastView: LinearLayout = toast.view as LinearLayout
             val imageCodeProject = ImageView(mContext)
             imageCodeProject.setImageResource(mImgResId)
