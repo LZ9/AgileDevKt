@@ -1,7 +1,6 @@
 package com.lodz.android.pandora.rx.subscribe.single
 
 import android.content.Context
-import android.content.DialogInterface
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import com.lodz.android.corekt.anko.runOnMainCatch
@@ -13,7 +12,7 @@ import kotlinx.coroutines.MainScope
  * 展示加载框的订阅者
  * Created by zhouL on 2019/1/18.
  */
-abstract class ProgressSingleObserver<T> : RxSingleObserver<T>() {
+abstract class ProgressSingleObserver<T : Any> : RxSingleObserver<T>() {
 
     final override fun onRxSubscribe(d: Disposable) {
         super.onRxSubscribe(d)
@@ -68,9 +67,9 @@ abstract class ProgressSingleObserver<T> : RxSingleObserver<T>() {
         ProgressDialogHelper.get()
             .setCanceledOnTouchOutside(canceledOnTouchOutside)
             .setCancelable(cancelable)
-            .setOnCancelListener(DialogInterface.OnCancelListener {
+            .setOnCancelListener {
                 cancelDialog()
-            })
+            }
             .setMsg(msg)
             .create(context)
 
@@ -117,7 +116,7 @@ abstract class ProgressSingleObserver<T> : RxSingleObserver<T>() {
         /** 创建lambda调用 */
         @JvmStatic
         @JvmOverloads
-        fun <T> action(
+        fun <T : Any> action(
             context: Context,
             msg: String = "",
             cancelable: Boolean = true,

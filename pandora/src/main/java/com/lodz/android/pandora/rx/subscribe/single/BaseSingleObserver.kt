@@ -11,7 +11,7 @@ import io.reactivex.rxjava3.disposables.Disposable
  * 只发射单个数据或错误事件
  * Created by zhouL on 2019/1/18.
  */
-abstract class BaseSingleObserver<T> : SingleObserver<T> {
+abstract class BaseSingleObserver<T : Any> : SingleObserver<T> {
 
     private var mDisposable: Disposable? = null
 
@@ -69,7 +69,7 @@ abstract class BaseSingleObserver<T> : SingleObserver<T> {
     companion object {
         /** 创建空调用 */
         @JvmStatic
-        fun <T> empty(): SingleObserver<T> = object : SingleObserver<T> {
+        fun <T : Any> empty(): SingleObserver<T> = object : SingleObserver<T> {
             override fun onSuccess(t: T) {}
             override fun onSubscribe(d: Disposable) {}
             override fun onError(e: Throwable) {}
@@ -78,7 +78,7 @@ abstract class BaseSingleObserver<T> : SingleObserver<T> {
         /** 创建lambda调用 */
         @JvmStatic
         @JvmOverloads
-        fun <T> action(
+        fun <T : Any> action(
             success: (any: T) -> Unit,
             error: (e: Throwable) -> Unit = {},
             subscribe: (d: Disposable) -> Unit = {},

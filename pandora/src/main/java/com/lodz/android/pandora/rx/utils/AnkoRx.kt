@@ -9,67 +9,67 @@ import io.reactivex.rxjava3.core.*
  * @date 2019/12/12
  */
 
-fun <T> ObservableEmitter<T>.doNext(t: T) {
+fun <T : Any> ObservableEmitter<T>.doNext(t: T) {
     if (!isDisposed) {
         onNext(t)
     }
 }
 
-fun <T> ObservableEmitter<T>.doError(error: Throwable) {
+fun <T : Any> ObservableEmitter<T>.doError(error: Throwable) {
     if (!isDisposed) {
         onError(error)
     }
 }
 
-fun <T> ObservableEmitter<T>.doComplete() {
+fun <T : Any> ObservableEmitter<T>.doComplete() {
     if (!isDisposed) {
         onComplete()
     }
 }
 
-fun <T> SingleEmitter<T>.doSuccess(t: T) {
+fun <T : Any> SingleEmitter<T>.doSuccess(t: T) {
     if (!isDisposed) {
         onSuccess(t)
     }
 }
 
-fun <T> SingleEmitter<T>.doError(error: Throwable) {
+fun <T : Any> SingleEmitter<T>.doError(error: Throwable) {
     if (!isDisposed) {
         onError(error)
     }
 }
 
-fun <T> MaybeEmitter<T>.doSuccess(t: T) {
+fun <T : Any> MaybeEmitter<T>.doSuccess(t: T) {
     if (!isDisposed) {
         onSuccess(t)
     }
 }
 
-fun <T> MaybeEmitter<T>.doComplete() {
+fun <T : Any> MaybeEmitter<T>.doComplete() {
     if (!isDisposed) {
         onComplete()
     }
 }
 
-fun <T> MaybeEmitter<T>.doError(error: Throwable) {
+fun <T : Any> MaybeEmitter<T>.doError(error: Throwable) {
     if (!isDisposed) {
         onError(error)
     }
 }
 
-fun <T> FlowableEmitter<T>.doNext(t: T) {
+fun <T : Any> FlowableEmitter<T>.doNext(t: T) {
     if (!isCancelled) {
         onNext(t)
     }
 }
 
-fun <T> FlowableEmitter<T>.doError(error: Throwable) {
+fun <T : Any> FlowableEmitter<T>.doError(error: Throwable) {
     if (!isCancelled) {
         onError(error)
     }
 }
 
-fun <T> FlowableEmitter<T>.doComplete() {
+fun <T : Any> FlowableEmitter<T>.doComplete() {
     if (!isCancelled) {
         onComplete()
     }

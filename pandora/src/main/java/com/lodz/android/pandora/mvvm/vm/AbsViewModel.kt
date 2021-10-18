@@ -42,9 +42,9 @@ open class AbsViewModel : ViewModel(), LifecycleProvider<ActivityEvent> {
 
     override fun lifecycle(): Observable<ActivityEvent> = mPdrLifecycleSubject.hide()
 
-    override fun <T : Any?> bindUntilEvent(event: ActivityEvent): LifecycleTransformer<T> = RxLifecycle.bindUntilEvent(mPdrLifecycleSubject, event)
+    override fun <T> bindUntilEvent(event: ActivityEvent): LifecycleTransformer<T> = RxLifecycle.bindUntilEvent(mPdrLifecycleSubject, event)
 
-    override fun <T : Any?> bindToLifecycle(): LifecycleTransformer<T> = RxLifecycleAndroid.bindActivity(mPdrLifecycleSubject)
+    override fun <T> bindToLifecycle(): LifecycleTransformer<T> = RxLifecycleAndroid.bindActivity(mPdrLifecycleSubject)
 
     /** 绑定Activity的Destroy生命周期 */
     protected fun <T> bindDestroyEvent(): LifecycleTransformer<T> = bindUntilEvent(ActivityEvent.DESTROY)

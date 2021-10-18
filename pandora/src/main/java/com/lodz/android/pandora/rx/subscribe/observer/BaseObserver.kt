@@ -11,7 +11,7 @@ import io.reactivex.rxjava3.disposables.Disposable
  * 能够发射0或n个数据，并以完成或错误事件终止。
  * Created by zhouL on 2018/7/5.
  */
-abstract class BaseObserver<T> : Observer<T> {
+abstract class BaseObserver<T : Any> : Observer<T> {
 
     private var mDisposable: Disposable? = null
 
@@ -74,7 +74,7 @@ abstract class BaseObserver<T> : Observer<T> {
     companion object {
         /** 创建空调用 */
         @JvmStatic
-        fun <T> empty(): Observer<T> = object : Observer<T> {
+        fun <T : Any> empty(): Observer<T> = object : Observer<T> {
             override fun onComplete() {}
             override fun onSubscribe(d: Disposable) {}
             override fun onNext(t: T) {}
@@ -84,7 +84,7 @@ abstract class BaseObserver<T> : Observer<T> {
         /** 创建lambda调用 */
         @JvmStatic
         @JvmOverloads
-        fun <T> action(
+        fun <T : Any> action(
             next: (any: T) -> Unit,
             error: (e: Throwable) -> Unit = {},
             subscribe: (d: Disposable) -> Unit = {},

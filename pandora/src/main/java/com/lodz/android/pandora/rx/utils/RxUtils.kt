@@ -21,25 +21,25 @@ object RxUtils {
 
     /** 在异步线程发起，在主线程订阅 */
     @JvmStatic
-    fun <T> ioToMainObservable(): ObservableTransformer<T, T> = ObservableTransformer { upstream ->
+    fun <T : Any> ioToMainObservable(): ObservableTransformer<T, T> = ObservableTransformer { upstream ->
         return@ObservableTransformer upstream.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
     /** 在异步线程发起，在主线程订阅 */
     @JvmStatic
-    fun <T> ioToMainFlowable(): FlowableTransformer<T, T> = FlowableTransformer { upstream ->
+    fun <T : Any> ioToMainFlowable(): FlowableTransformer<T, T> = FlowableTransformer { upstream ->
         return@FlowableTransformer upstream.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
     /** 在异步线程发起，在主线程订阅 */
     @JvmStatic
-    fun <T> ioToMainMaybe(): MaybeTransformer<T, T> = MaybeTransformer { upstream ->
+    fun <T : Any> ioToMainMaybe(): MaybeTransformer<T, T> = MaybeTransformer { upstream ->
         return@MaybeTransformer upstream.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
     /** 在异步线程发起，在主线程订阅 */
     @JvmStatic
-    fun <T> ioToMainSingle(): SingleTransformer<T, T> = SingleTransformer { upstream ->
+    fun <T : Any> ioToMainSingle(): SingleTransformer<T, T> = SingleTransformer { upstream ->
         return@SingleTransformer upstream.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 

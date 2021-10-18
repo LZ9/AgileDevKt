@@ -11,7 +11,7 @@ import io.reactivex.rxjava3.disposables.Disposable
  * 发送单个数据，以成功或失败或完成结束（三选一）
  * Created by zhouL on 2019/1/22.
  */
-abstract class BaseMaybeObserver<T> : MaybeObserver<T> {
+abstract class BaseMaybeObserver<T : Any> : MaybeObserver<T> {
 
     private var mDisposable: Disposable? = null
 
@@ -75,7 +75,7 @@ abstract class BaseMaybeObserver<T> : MaybeObserver<T> {
     companion object {
         /** 创建空调用 */
         @JvmStatic
-        fun <T> empty(): MaybeObserver<T> = object : MaybeObserver<T> {
+        fun <T : Any> empty(): MaybeObserver<T> = object : MaybeObserver<T> {
             override fun onSuccess(t: T) {}
             override fun onComplete() {}
             override fun onSubscribe(d: Disposable) {}
@@ -85,7 +85,7 @@ abstract class BaseMaybeObserver<T> : MaybeObserver<T> {
         /** 创建lambda调用 */
         @JvmStatic
         @JvmOverloads
-        fun <T> action(
+        fun <T : Any> action(
             success: (any: T) -> Unit,
             complete: () -> Unit = {},
             error: (e: Throwable) -> Unit = {},

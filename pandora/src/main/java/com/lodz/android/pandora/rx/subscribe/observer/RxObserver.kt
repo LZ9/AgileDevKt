@@ -8,7 +8,7 @@ import io.reactivex.rxjava3.disposables.Disposable
  * 网络接口使用的订阅者（无背压），主要对接口进行判断处理
  * Created by zhouL on 2018/7/5.
  */
-abstract class RxObserver<T> : BaseObserver<T>() {
+abstract class RxObserver<T : Any> : BaseObserver<T>() {
 
     final override fun onBaseSubscribe(d: Disposable) {
         super.onBaseSubscribe(d)
@@ -42,9 +42,6 @@ abstract class RxObserver<T> : BaseObserver<T>() {
 
     /** 核对数据 */
     private fun checkError(any: T) {
-        if (any == null) {
-            throw NullPointerException("数据是空的")
-        }
         if (any is ResponseStatus) {
             if (!any.isSuccess()) {//服务端返回接口失败
                 throw ExceptionFactory.createDataException(any)
@@ -69,7 +66,7 @@ abstract class RxObserver<T> : BaseObserver<T>() {
         /** 创建lambda调用 */
         @JvmStatic
         @JvmOverloads
-        fun <T> action(
+        fun <T : Any> action(
             next: (any: T) -> Unit,
             error: (e: Throwable, isNetwork: Boolean) -> Unit = { _, _ -> },
             subscribe: (d: Disposable) -> Unit = {},
