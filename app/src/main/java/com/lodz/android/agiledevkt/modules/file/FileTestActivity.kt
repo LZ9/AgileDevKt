@@ -153,7 +153,7 @@ class FileTestActivity : BaseActivity() {
                 if (it.isEmpty()){
                     throw TypeCastException("base64 is null")
                 }
-                FileUtils.Base64ToFile(it, FileManager.getContentFolderPath(), "111".append(VIDEO_FILE_NAME))
+                FileUtils.Base64ToFile(it, FileManager.getContentFolderPath(), "111".append(VIDEO_FILE_NAME)) ?: throw NullPointerException("file is null")
             }
             .compose(RxUtils.ioToMainObservable())
             .subscribe(

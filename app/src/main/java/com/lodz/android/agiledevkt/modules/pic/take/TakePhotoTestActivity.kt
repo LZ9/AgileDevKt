@@ -9,13 +9,17 @@ import android.view.View
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.databinding.ActivityTakePhotoTestBinding
 import com.lodz.android.agiledevkt.utils.file.FileManager
+import com.lodz.android.corekt.album.PicInfo
 import com.lodz.android.corekt.anko.goAppDetailSetting
 import com.lodz.android.corekt.anko.isPermissionGranted
+import com.lodz.android.corekt.anko.runOnMainDelay
 import com.lodz.android.corekt.anko.toastShort
+import com.lodz.android.corekt.utils.FileUtils.filePathToUri
 import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.photopicker.take.TakePhotoManager
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
+import kotlinx.coroutines.MainScope
 import permissions.dispatcher.*
 import permissions.dispatcher.ktx.constructPermissionsRequest
 
@@ -72,8 +76,20 @@ class TakePhotoTestActivity : BaseActivity() {
                 .setCameraSavePath(FileManager.getCacheFolderPath())
                 .setAuthority("com.lodz.android.agiledevkt.fileprovider")
                 .setOnPhotoTakeListener { photo ->
-                    if (photo.isNotEmpty()) {
-                        mBinding.resultTv.text = photo
+                    MainScope().runOnMainDelay(100) {//拍照后如果马上获取URI需要延迟一下，等待手机数据库更新一下
+                        if (photo.isNotEmpty()) {
+                            val picInfo = PicInfo(photo, filePathToUri(getContext(), photo))
+                            mBinding.resultTv.text = "photo : $photo \n uri : ${picInfo.uri}"
+                            ImageLoader.create(getContext())
+                                .loadFilePath(photo)
+                                .setCenterInside()
+                                .into(mBinding.pathImg)
+
+                            ImageLoader.create(getContext())
+                                .loadUri(picInfo.uri)
+                                .setCenterInside()
+                                .into(mBinding.uriImg)
+                        }
                     }
                 }
                 .build()
