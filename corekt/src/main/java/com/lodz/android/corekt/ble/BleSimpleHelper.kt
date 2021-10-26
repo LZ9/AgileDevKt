@@ -72,7 +72,7 @@ class BleSimpleHelper private constructor() {
     }
 
     /** 设置蓝牙状态是否启用[enable] */
-    @RequiresPermission(allOf = [Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_ADMIN])
+    @RequiresPermission(allOf = [Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_ADMIN, Manifest.permission.BLUETOOTH_CONNECT])
     fun setBluetoothState(enable: Boolean) {
         if (getBluetoothState() == BluetoothAdapter.STATE_ON && !enable) {
             mBluetoothAdapter?.disable()
@@ -87,7 +87,7 @@ class BleSimpleHelper private constructor() {
     fun isBluetoothEnabled(): Boolean = mBluetoothAdapter?.isEnabled ?: false
 
     /** 开始扫描 */
-    @RequiresPermission(allOf = [Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_ADMIN])
+    @RequiresPermission(allOf = [Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_ADMIN, Manifest.permission.BLUETOOTH_SCAN])
     fun startDiscovery(): Boolean {
         if (mBluetoothAdapter == null) {
             return false
@@ -102,7 +102,7 @@ class BleSimpleHelper private constructor() {
     }
 
     /** 停止扫描 */
-    @RequiresPermission(allOf = [Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_ADMIN])
+    @RequiresPermission(allOf = [Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_ADMIN, Manifest.permission.BLUETOOTH_SCAN])
     fun cancelDiscovery(): Boolean {
         if (mBluetoothAdapter == null) {
             return false
@@ -117,7 +117,7 @@ class BleSimpleHelper private constructor() {
     }
 
     /** 是否正在扫描 */
-    @RequiresPermission(Manifest.permission.BLUETOOTH)
+    @RequiresPermission(allOf = [Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_SCAN])
     fun isDiscovering(): Boolean = mBluetoothAdapter?.isDiscovering ?: false
 
     /** 添加蓝牙状态监听器 */

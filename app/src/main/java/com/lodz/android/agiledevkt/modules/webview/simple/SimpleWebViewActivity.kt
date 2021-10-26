@@ -32,6 +32,7 @@ class SimpleWebViewActivity : BaseActivity() {
     }
 
     private val BAIDU_URL = "https://www.bilibili.com/"
+//    private val BAIDU_URL = "https://liulanmi.com/labs/core.html"
 
     private val mBinding: ActivitySimpleWebviewBinding by bindingLayout(ActivitySimpleWebviewBinding::inflate)
 
