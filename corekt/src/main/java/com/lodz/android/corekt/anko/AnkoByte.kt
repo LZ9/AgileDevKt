@@ -39,15 +39,30 @@ fun Int.toByteArrayLF(): ByteArray {
 
 /** ByteArray转Int */
 fun ByteArray.toInt(): Int = ByteBuffer.wrap(this).int
+/** ByteArray转Int */
+@JvmOverloads
+fun ByteArray.toInt(offset: Int, length: Int = this.size): Int = ByteBuffer.wrap(this, offset, length).int
 
 /** ByteArray转Short */
 fun ByteArray.toShort(): Short = ByteBuffer.wrap(this).short
+/** ByteArray转Short */
+@JvmOverloads
+fun ByteArray.toShort(offset: Int, length: Int = this.size): Short = ByteBuffer.wrap(this, offset, length).short
 
 /** ByteArray转Long */
 fun ByteArray.toLong(): Long = ByteBuffer.wrap(this).long
+/** ByteArray转Long */
+@JvmOverloads
+fun ByteArray.toLong(offset: Int, length: Int = this.size): Long = ByteBuffer.wrap(this, offset, length).long
 
 /** ByteArray转Float */
 fun ByteArray.toFloat(): Float = ByteBuffer.wrap(this).float
+/** ByteArray转Float */
+@JvmOverloads
+fun ByteArray.toFloat(offset: Int, length: Int = this.size): Float = ByteBuffer.wrap(this, offset, length).float
 
 /** ByteArray转Double */
 fun ByteArray.toDouble(): Double = ByteBuffer.wrap(this).double
+/** ByteArray转Double */
+@JvmOverloads
+fun ByteArray.toDouble(offset: Int, length: Int = this.size): Double = ByteBuffer.wrap(this, offset, length).double
