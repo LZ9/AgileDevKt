@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <com.lodz.android.pandora.widget.collect.CltEditView
+        android:id="@+id/num_cltedit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:inputType="number"
+        app:jumpBackground="@drawable/selector_bg_jump"
+        app:jumpText="@string/bytes_transform"
+        app:requiredVisibility="gone"
+        app:titleText="@string/bytes_input_num" />
+
+    <TextView
+        android:id="@+id/int_to_bytearray_hf_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/bytes_int_to_bytearray_hf" />
+
+    <TextView
+        android:id="@+id/int_to_bytearray_lf_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/bytes_int_to_bytearray_lf" />
+
+    <TextView
+        android:id="@+id/bytearray_hf_to_int_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/bytes_bytearray_hf_to_int" />
+
+    <TextView
+        android:id="@+id/bytearray_lf_to_int_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/bytes_bytearray_lf_to_int" />
+
+    <TextView
+        android:id="@+id/merge_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/bytes_merge" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/color_9a9a9a" />
+
+    <TextView
+        android:id="@+id/array_to_buffer_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/bytes_array_to_buffer" />
+
+    <TextView
+        android:id="@+id/buffer_to_array_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/bytes_buffer_to_array" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/color_9a9a9a" />
+
+    <TextView
+        android:id="@+id/array_to_int_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/bytes_array_to_int" />
+
+    <TextView
+        android:id="@+id/array_to_short_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/bytes_array_to_short" />
+
+    <TextView
+        android:id="@+id/array_to_long_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/bytes_array_to_long" />
+
+    <TextView
+        android:id="@+id/array_to_float_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/bytes_array_to_float" />
+
+    <TextView
+        android:id="@+id/array_to_double_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/bytes_array_to_double" />
+
+    <TextView
+        android:id="@+id/array_to_shortarray_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/bytes_array_to_shortarray" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/color_9a9a9a" />
+
+    <TextView
+        android:id="@+id/shortarray_to_array_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/bytes_shortarray_to_array" />
+
+</LinearLayout>

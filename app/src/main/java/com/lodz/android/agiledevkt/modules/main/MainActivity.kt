@@ -20,6 +20,7 @@ import com.lodz.android.agiledevkt.modules.array.ArrayTestActivity
 import com.lodz.android.agiledevkt.modules.bitmap.BitmapTestActivity
 import com.lodz.android.agiledevkt.modules.bluetooth.BluetoothTestActivity
 import com.lodz.android.agiledevkt.modules.bottomsheet.BottomSheetsActivity
+import com.lodz.android.agiledevkt.modules.bytes.BytesTestActivity
 import com.lodz.android.agiledevkt.modules.camera.CameraMainActivity
 import com.lodz.android.agiledevkt.modules.cardview.CardViewActivity
 import com.lodz.android.agiledevkt.modules.collect.CollectActivity
@@ -167,6 +168,7 @@ class MainActivity : BaseActivity() {
         MainBean("相机测试类", "X", CameraMainActivity::class.java),
         MainBean("自定义键盘测试类", "Z", KeyboardTestActivity::class.java),
         MainBean("ViewBinding测试类", "V", ViewBindingTestActivity::class.java),
+        MainBean("Bytes字节转换测试类", "B", BytesTestActivity::class.java),
     )
 
     private val mBinding: ActivityMainBinding by bindingLayout(ActivityMainBinding::inflate)

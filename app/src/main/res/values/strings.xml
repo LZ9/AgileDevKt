@@ -782,5 +782,23 @@
     <string name="vb_dialog">Dialog测试</string>
     <string name="vb_popup">PopupWindow测试</string>
 
+    <!-- 字节转换测试类 -->
+    <string name="bytes_transform">转换</string>
+    <string name="bytes_input_num">输入数字</string>
+    <string name="bytes_num_no_int">输入数字非Int类型</string>
+    <string name="bytes_int_to_bytearray_hf">Int转ByteArray（高字节在前）：</string>
+    <string name="bytes_int_to_bytearray_lf">Int转ByteArray（低字节在前）：</string>
+    <string name="bytes_bytearray_hf_to_int">ByteArray（高字节在前）转Int：</string>
+    <string name="bytes_bytearray_lf_to_int">ByteArray（低字节在前）转Int：</string>
+    <string name="bytes_merge">线性合并：</string>
+    <string name="bytes_array_to_buffer">ByteArray转ByteBuffer：</string>
+    <string name="bytes_buffer_to_array">ByteBuffer转ByteArray：</string>
+    <string name="bytes_array_to_int">ByteArray转Int：</string>
+    <string name="bytes_array_to_short">ByteArray转Short：</string>
+    <string name="bytes_array_to_long">ByteArray转Long：</string>
+    <string name="bytes_array_to_float">ByteArray转Float：</string>
+    <string name="bytes_array_to_double">ByteArray转Double：</string>
+    <string name="bytes_array_to_shortarray">ByteArray转ShortArray：</string>
+    <string name="bytes_shortarray_to_array">ShortArray转ByteArray：</string>
 
 </resources>
