@@ -10,12 +10,13 @@ import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.net.Uri
 import android.os.Build
+import android.os.Parcelable
 import android.provider.MediaStore
 import android.provider.Settings
 import androidx.core.content.FileProvider
 import com.lodz.android.corekt.utils.FileUtils
 import java.io.File
-
+import java.io.Serializable
 
 /**
  * Intent扩展方法
@@ -228,4 +229,51 @@ fun Activity.takePhoto(savePath: String, authority: String, requestCode: Int): B
         return false
     }
     return true
+}
+
+@JvmOverloads
+fun Activity.intentExtrasInt(name: String, defaultValue: Int = 0): Lazy<Int> = lazy {
+    return@lazy this.intent?.getIntExtra(name, defaultValue) ?: defaultValue
+}
+
+@JvmOverloads
+fun Activity.intentExtrasBoolean(name: String, defaultValue: Boolean = false): Lazy<Boolean> = lazy {
+    return@lazy this.intent?.getBooleanExtra(name, defaultValue) ?: defaultValue
+}
+
+@JvmOverloads
+fun Activity.intentExtrasLong(name: String, defaultValue: Long = 0): Lazy<Long> = lazy {
+    return@lazy this.intent?.getLongExtra(name, defaultValue) ?: defaultValue
+}
+
+@JvmOverloads
+fun Activity.intentExtrasDouble(name: String, defaultValue: Double = 0.0): Lazy<Double> = lazy {
+    return@lazy this.intent?.getDoubleExtra(name, defaultValue) ?: defaultValue
+}
+
+@JvmOverloads
+fun Activity.intentExtrasFloat(name: String, defaultValue: Float = 0.0f): Lazy<Float> = lazy {
+    return@lazy this.intent?.getFloatExtra(name, defaultValue) ?: defaultValue
+}
+
+fun Activity.intentExtrasString(name: String): Lazy<String?> = lazy {
+    return@lazy this.intent?.getStringExtra(name)
+}
+
+fun Activity.intentExtrasString(name: String, defaultValue: String): Lazy<String> = lazy {
+    return@lazy this.intent?.getStringExtra(name) ?: defaultValue
+}
+
+@JvmOverloads
+fun <T : Parcelable> Activity.intentExtrasParcelable(name: String, defaultValue: T? = null): Lazy<T?> = lazy {
+    return@lazy this.intent?.getParcelableExtra(name) ?: defaultValue
+}
+
+@JvmOverloads
+inline fun <reified T : Serializable> Activity.intentExtrasSerializable(name: String, defaultValue: T? = null): Lazy<T?> = lazy {
+    val data = this.intent?.getSerializableExtra(name)
+    if (data is T) {
+        return@lazy data
+    }
+    return@lazy defaultValue
 }
