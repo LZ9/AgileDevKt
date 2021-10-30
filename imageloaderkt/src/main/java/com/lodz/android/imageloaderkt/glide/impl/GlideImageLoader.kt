@@ -1,5 +1,6 @@
 package com.lodz.android.imageloaderkt.glide.impl
 
+import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
@@ -25,6 +26,7 @@ import kotlin.collections.ArrayList
  * Glide图片加载库
  * Created by zhouL on 2018/7/11.
  */
+@SuppressLint("CheckResult")
 internal class GlideImageLoader internal constructor(
     private val mGlideBuilderBean: GlideBuilderBean,
     private val mRequestManager: RequestManager
