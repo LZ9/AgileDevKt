@@ -232,171 +232,304 @@ fun Activity.takePhoto(savePath: String, authority: String, requestCode: Int): B
     return true
 }
 
-/** 从intent中根据[nameKey]来获取传递过来的Int对象的值，默认值为[defaultValue]，若[bundleKey]不为空则从intent的Bundle中获取数据 */
+/** 从intent中根据[nameKey]来获取传递过来的对象的值，默认值为[defaultValue]，若[bundleKey]不为空则从intent的Bundle中获取数据 */
 @JvmOverloads
-fun Activity.intentExtrasInt(nameKey: String, defaultValue: Int = 0, bundleKey: String? = null): Lazy<Int> = lazy {
-    if (bundleKey == null){
-        return@lazy this.intent?.getIntExtra(nameKey, defaultValue) ?: defaultValue
+inline fun <reified T> Activity.intentExtrasNoNull(
+    nameKey: String,
+    defaultValue: T,
+    bundleKey: String? = null
+): Lazy<T> = lazy {
+    val value = getIntentExtras(nameKey, defaultValue, bundleKey)
+    if (value != null) {
+        return@lazy value
     }
-    return@lazy this.intent?.getBundleExtra(bundleKey)?.getInt(nameKey, defaultValue) ?: defaultValue
+    return@lazy defaultValue
 }
 
-/** 从arguments中根据[nameKey]来获取传递过来的Int对象的值，默认值为[defaultValue]，若[bundleKey]不为空则从arguments的Bundle中获取数据 */
+/** 从intent中根据[nameKey]来获取传递过来的对象的值，若[bundleKey]不为空则从intent的Bundle中获取数据 */
 @JvmOverloads
-fun Fragment.argumentsExtrasInt(nameKey: String, defaultValue: Int = 0, bundleKey: String? = null): Lazy<Int> = lazy {
-    if (bundleKey == null) {
-        return@lazy this.arguments?.getInt(nameKey, defaultValue) ?: defaultValue
-    }
-    return@lazy this.arguments?.getBundle(bundleKey)?.getInt(nameKey, defaultValue) ?: defaultValue
+inline fun <reified T> Activity.intentExtras(
+    nameKey: String,
+    bundleKey: String? = null
+): Lazy<T?> = lazy {
+    return@lazy getIntentExtras<T>(nameKey, null, bundleKey)
 }
 
-/** 从intent中根据[nameKey]来获取传递过来的Boolean对象的值，默认值为[defaultValue]，若[bundleKey]不为空则从intent的Bundle中获取数据 */
 @JvmOverloads
-fun Activity.intentExtrasBoolean(name: String, defaultValue: Boolean = false, bundleKey: String? = null): Lazy<Boolean> = lazy {
-    if (bundleKey == null) {
-        return@lazy this.intent?.getBooleanExtra(name, defaultValue) ?: defaultValue
-    }
-    return@lazy this.intent?.getBundleExtra(bundleKey)?.getBoolean(name, defaultValue) ?: defaultValue
-}
-
-/** 从arguments中根据[nameKey]来获取传递过来的Boolean对象的值，默认值为[defaultValue]，若[bundleKey]不为空则从arguments的Bundle中获取数据 */
-@JvmOverloads
-fun Fragment.argumentsExtrasBoolean(nameKey: String, defaultValue: Boolean = false, bundleKey: String? = null): Lazy<Boolean> = lazy {
-    if (bundleKey == null) {
-        return@lazy this.arguments?.getBoolean(nameKey, defaultValue) ?: defaultValue
-    }
-    return@lazy this.arguments?.getBundle(bundleKey)?.getBoolean(nameKey, defaultValue) ?: defaultValue
-}
-
-/** 从intent中根据[nameKey]来获取传递过来的Long对象的值，默认值为[defaultValue]，若[bundleKey]不为空则从intent的Bundle中获取数据 */
-@JvmOverloads
-fun Activity.intentExtrasLong(nameKey: String, defaultValue: Long = 0, bundleKey: String? = null): Lazy<Long> = lazy {
-    if (bundleKey == null) {
-        return@lazy this.intent?.getLongExtra(nameKey, defaultValue) ?: defaultValue
-    }
-    return@lazy this.intent?.getBundleExtra(bundleKey)?.getLong(nameKey, defaultValue) ?: defaultValue
-}
-
-/** 从arguments中根据[nameKey]来获取传递过来的Long对象的值，默认值为[defaultValue]，若[bundleKey]不为空则从arguments的Bundle中获取数据 */
-@JvmOverloads
-fun Fragment.argumentsExtrasLong(nameKey: String, defaultValue: Long = 0, bundleKey: String? = null): Lazy<Long> = lazy {
-    if (bundleKey == null) {
-        return@lazy this.arguments?.getLong(nameKey, defaultValue) ?: defaultValue
-    }
-    return@lazy this.arguments?.getBundle(bundleKey)?.getLong(nameKey, defaultValue) ?: defaultValue
-}
-
-/** 从intent中根据[nameKey]来获取传递过来的Double对象的值，默认值为[defaultValue]，若[bundleKey]不为空则从intent的Bundle中获取数据 */
-@JvmOverloads
-fun Activity.intentExtrasDouble(nameKey: String, defaultValue: Double = 0.0, bundleKey: String? = null): Lazy<Double> = lazy {
-    if (bundleKey == null) {
-        return@lazy this.intent?.getDoubleExtra(nameKey, defaultValue) ?: defaultValue
-    }
-    return@lazy this.intent?.getBundleExtra(bundleKey)?.getDouble(nameKey, defaultValue) ?: defaultValue
-}
-
-/** 从arguments中根据[nameKey]来获取传递过来的Double对象的值，默认值为[defaultValue]，若[bundleKey]不为空则从arguments的Bundle中获取数据 */
-@JvmOverloads
-fun Fragment.argumentsExtrasDouble(nameKey: String, defaultValue: Double = 0.0, bundleKey: String? = null): Lazy<Double> = lazy {
-    if (bundleKey == null) {
-        return@lazy this.arguments?.getDouble(nameKey, defaultValue) ?: defaultValue
-    }
-    return@lazy this.arguments?.getBundle(bundleKey)?.getDouble(nameKey, defaultValue) ?: defaultValue
-}
-
-/** 从intent中根据[nameKey]来获取传递过来的Float对象的值，默认值为[defaultValue]，若[bundleKey]不为空则从intent的Bundle中获取数据 */
-@JvmOverloads
-fun Activity.intentExtrasFloat(nameKey: String, defaultValue: Float = 0.0f, bundleKey: String? = null): Lazy<Float> = lazy {
-    if (bundleKey == null) {
-        return@lazy this.intent?.getFloatExtra(nameKey, defaultValue) ?: defaultValue
-    }
-    return@lazy this.intent?.getBundleExtra(bundleKey)?.getFloat(nameKey, defaultValue) ?: defaultValue
-}
-
-/** 从arguments中根据[nameKey]来获取传递过来的Float对象的值，默认值为[defaultValue]，若[bundleKey]不为空则从arguments的Bundle中获取数据 */
-@JvmOverloads
-fun Fragment.argumentsExtrasFloat(nameKey: String, defaultValue: Float = 0.0f, bundleKey: String? = null): Lazy<Float> = lazy {
-    if (bundleKey == null) {
-        return@lazy this.arguments?.getFloat(nameKey, defaultValue) ?: defaultValue
-    }
-    return@lazy this.arguments?.getBundle(bundleKey)?.getFloat(nameKey, defaultValue) ?: defaultValue
-}
-
-/** 从intent中根据[nameKey]来获取传递过来的String对象的值，若[bundleKey]不为空则从intent的Bundle中获取数据 */
-fun Activity.intentExtrasString(nameKey: String, bundleKey: String? = null): Lazy<String?> = lazy {
-    if (bundleKey == null) {
-        return@lazy this.intent?.getStringExtra(nameKey)
-    }
-    return@lazy this.intent?.getBundleExtra(bundleKey)?.getString(nameKey)
-}
-
-/** 从intent中根据[nameKey]来获取传递过来的Float对象的值，默认值为[defaultValue]，若[bundleKey]不为空则从intent的Bundle中获取数据 */
-fun Activity.intentExtrasStringNoNull(nameKey: String, defaultValue: String, bundleKey: String? = null): Lazy<String> = lazy {
-    if (bundleKey == null) {
-        return@lazy this.intent?.getStringExtra(nameKey) ?: defaultValue
-    }
-    return@lazy this.intent?.getBundleExtra(bundleKey)?.getString(nameKey, defaultValue) ?: defaultValue
-}
-
-/** 从arguments中根据[nameKey]来获取传递过来的Float对象的值，若[bundleKey]不为空则从arguments的Bundle中获取数据 */
-@JvmOverloads
-fun Fragment.argumentsExtrasString(nameKey: String, bundleKey: String? = null): Lazy<String?> = lazy {
-    if (bundleKey == null) {
-        return@lazy this.arguments?.getString(nameKey)
-    }
-    return@lazy this.arguments?.getBundle(bundleKey)?.getString(nameKey)
-}
-
-/** 从arguments中根据[nameKey]来获取传递过来的Float对象的值，默认值为[defaultValue]，若[bundleKey]不为空则从arguments的Bundle中获取数据 */
-@JvmOverloads
-fun Fragment.argumentsExtrasStringNoNull(nameKey: String, defaultValue: String, bundleKey: String? = null): Lazy<String> = lazy {
-    if (bundleKey == null) {
-        return@lazy this.arguments?.getString(nameKey, defaultValue) ?: defaultValue
-    }
-    return@lazy this.arguments?.getBundle(bundleKey)?.getString(nameKey, defaultValue) ?: defaultValue
-}
-
-/** 从intent中根据[nameKey]来获取传递过来的Parcelable对象的值，默认值为[defaultValue]，若[bundleKey]不为空则从intent的Bundle中获取数据 */
-@JvmOverloads
-fun <T : Parcelable> Activity.intentExtrasParcelable(nameKey: String, defaultValue: T? = null, bundleKey: String? = null): Lazy<T?> = lazy {
-    if (bundleKey == null) {
-        return@lazy this.intent?.getParcelableExtra(nameKey) ?: defaultValue
-    }
-    return@lazy this.intent?.getBundleExtra(bundleKey)?.getParcelable(nameKey) ?: defaultValue
-}
-
-/** 从arguments中根据[nameKey]来获取传递过来的Parcelable对象的值，默认值为[defaultValue]，若[bundleKey]不为空则从arguments的Bundle中获取数据 */
-@JvmOverloads
-fun <T : Parcelable> Fragment.argumentsExtrasParcelable(nameKey: String, defaultValue: T? = null, bundleKey: String? = null): Lazy<T?> = lazy {
-    if (bundleKey == null) {
-        return@lazy this.arguments?.getParcelable(nameKey) ?: defaultValue
-    }
-    return@lazy this.arguments?.getBundle(bundleKey)?.getParcelable(nameKey) ?: defaultValue
-}
-
-/** 从intent中根据[nameKey]来获取传递过来的Serializable对象的值，默认值为[defaultValue]，若[bundleKey]不为空则从intent的Bundle中获取数据 */
-@JvmOverloads
-inline fun <reified T : Serializable> Activity.intentExtrasSerializable(
+inline fun <reified T> Activity.getIntentExtras(
     nameKey: String,
     defaultValue: T? = null,
     bundleKey: String? = null
-): Lazy<T?> = lazy {
-    if (bundleKey == null) {
-        return@lazy this.intent?.getSerializableExtra(nameKey) as? T ?: defaultValue
+): T? = when (T::class) {
+    Int::class -> {
+        if (bundleKey == null) {
+            this.intent?.getIntExtra(nameKey, defaultValue as? Int ?: 0) as? T
+        } else {
+            this.intent?.getBundleExtra(bundleKey)?.getInt(nameKey, defaultValue as? Int ?: 0) as? T
+        }
     }
-    return@lazy this.intent?.getBundleExtra(bundleKey)?.getSerializable(nameKey) as? T
-        ?: defaultValue
+    IntArray::class -> {
+        if (bundleKey == null) {
+            (this.intent?.getIntArrayExtra(nameKey) as? T) ?: defaultValue
+        } else {
+            (this.intent?.getBundleExtra(bundleKey)?.getIntArray(nameKey) as? T) ?: defaultValue
+        }
+    }
+    Boolean::class -> {
+        if (bundleKey == null) {
+            this.intent?.getBooleanExtra(nameKey, defaultValue as? Boolean ?: false) as? T
+        } else {
+            this.intent?.getBundleExtra(bundleKey)?.getBoolean(nameKey, defaultValue as? Boolean ?: false) as? T
+        }
+    }
+    BooleanArray::class -> {
+        if (bundleKey == null) {
+            (this.intent?.getBooleanArrayExtra(nameKey) as? T) ?: defaultValue
+        } else {
+            (this.intent?.getBundleExtra(bundleKey)?.getBooleanArray(nameKey) as? T) ?: defaultValue
+        }
+    }
+    Long::class -> {
+        if (bundleKey == null) {
+            this.intent?.getLongExtra(nameKey, defaultValue as? Long ?: 0) as? T
+        } else {
+            this.intent?.getBundleExtra(bundleKey)?.getLong(nameKey, defaultValue as? Long ?: 0) as? T
+        }
+    }
+    LongArray::class -> {
+        if (bundleKey == null) {
+            (this.intent?.getLongArrayExtra(nameKey) as? T) ?: defaultValue
+        } else {
+            (this.intent?.getBundleExtra(bundleKey)?.getLongArray(nameKey) as? T) ?: defaultValue
+        }
+    }
+    Float::class -> {
+        if (bundleKey == null) {
+            this.intent?.getFloatExtra(nameKey, defaultValue as? Float ?: 0.0f) as? T
+        } else {
+            this.intent?.getBundleExtra(bundleKey)?.getFloat(nameKey, defaultValue as? Float ?: 0.0f) as? T
+        }
+    }
+    FloatArray::class -> {
+        if (bundleKey == null) {
+            (this.intent?.getFloatArrayExtra(nameKey) as? T) ?: defaultValue
+        } else {
+            (this.intent?.getBundleExtra(bundleKey)?.getFloatArray(nameKey) as? T) ?: defaultValue
+        }
+    }
+    Double::class -> {
+        if (bundleKey == null) {
+            this.intent?.getDoubleExtra(nameKey, defaultValue as? Double ?: 0.0) as? T
+        } else {
+            this.intent?.getBundleExtra(bundleKey)?.getDouble(nameKey, defaultValue as? Double ?: 0.0) as? T
+        }
+    }
+    DoubleArray::class -> {
+        if (bundleKey == null) {
+            (this.intent?.getDoubleArrayExtra(nameKey) as? T) ?: defaultValue
+        } else {
+            (this.intent?.getBundleExtra(bundleKey)?.getDoubleArray(nameKey) as? T) ?: defaultValue
+        }
+    }
+    String::class -> {
+        if (bundleKey == null) {
+            this.intent?.getStringExtra(nameKey) as? T ?: defaultValue
+        } else {
+            this.intent?.getBundleExtra(bundleKey)?.getString(nameKey, defaultValue as? String ?: "") as? T
+        }
+    }
+    Array<String>::class -> {
+        if (bundleKey == null) {
+            (this.intent?.getStringArrayExtra(nameKey) as? T) ?: defaultValue
+        } else {
+            (this.intent?.getBundleExtra(bundleKey)?.getStringArray(nameKey) as? T) ?: defaultValue
+        }
+    }
+    Parcelable::class -> {
+        if (bundleKey == null) {
+            (this.intent?.getParcelableExtra(nameKey) as? T) ?: defaultValue
+        } else {
+            (this.intent?.getBundleExtra(bundleKey)?.getParcelable(nameKey) as? T) ?: defaultValue
+        }
+    }
+    Array<Parcelable>::class -> {
+        if (bundleKey == null) {
+            (this.intent?.getParcelableArrayExtra(nameKey) as? T) ?: defaultValue
+        } else {
+            (this.intent?.getBundleExtra(bundleKey)?.getParcelableArray(nameKey) as? T) ?: defaultValue
+        }
+    }
+    Serializable::class -> {
+        if (bundleKey == null) {
+            (this.intent?.getSerializableExtra(nameKey) as? T) ?: defaultValue
+        } else {
+            (this.intent?.getBundleExtra(bundleKey)?.getSerializable(nameKey) as? T) ?: defaultValue
+        }
+    }
+    else -> null
 }
 
-/** 从arguments中根据[nameKey]来获取传递过来的Serializable对象的值，默认值为[defaultValue]，若[bundleKey]不为空则从arguments的Bundle中获取数据 */
+/** 从arguments中根据[nameKey]来获取传递过来的对象的值，默认值为[defaultValue]，若[bundleKey]不为空则从arguments的Bundle中获取数据 */
 @JvmOverloads
-inline fun <reified T : Serializable> Fragment.argumentsExtrasSerializable(
+inline fun <reified T> Fragment.argumentsExtrasNoNull(
+    nameKey: String,
+    defaultValue: T,
+    bundleKey: String? = null
+): Lazy<T> = lazy {
+    val value = getArgumentsExtras(nameKey, defaultValue, bundleKey)
+    if (value != null) {
+        return@lazy value
+    }
+    return@lazy defaultValue
+}
+
+/** 从arguments中根据[nameKey]来获取传递过来的对象的值，若[bundleKey]不为空则从arguments的Bundle中获取数据 */
+@JvmOverloads
+inline fun <reified T> Fragment.argumentsExtras(
+    nameKey: String,
+    bundleKey: String? = null
+): Lazy<T?> = lazy {
+    return@lazy getArgumentsExtras<T>(nameKey, null, bundleKey)
+}
+
+@JvmOverloads
+inline fun <reified T> Fragment.getArgumentsExtras(
     nameKey: String,
     defaultValue: T? = null,
     bundleKey: String? = null
-): Lazy<T?> = lazy {
-    if (bundleKey == null) {
-        return@lazy this.arguments?.getSerializable(nameKey) as? T ?: defaultValue
+): T? = when (T::class) {
+    Int::class -> {
+        if (bundleKey == null) {
+            this.arguments?.getInt(nameKey, defaultValue as? Int ?: 0) as? T
+        } else {
+            this.arguments?.getBundle(bundleKey)?.getInt(nameKey, defaultValue as? Int ?: 0) as? T
+        }
     }
-    return@lazy this.arguments?.getBundle(bundleKey)?.getSerializable(nameKey) as? T ?: defaultValue
+    IntArray::class -> {
+        if (bundleKey == null) {
+            (this.arguments?.getIntArray(nameKey) as? T) ?: defaultValue
+        } else {
+            (this.arguments?.getBundle(bundleKey)?.getIntArray(nameKey) as? T) ?: defaultValue
+        }
+    }
+    Boolean::class -> {
+        if (bundleKey == null) {
+            this.arguments?.getBoolean(nameKey, defaultValue as? Boolean ?: false) as? T
+        } else {
+            this.arguments?.getBundle(bundleKey)
+                ?.getBoolean(nameKey, defaultValue as? Boolean ?: false) as? T
+        }
+    }
+    BooleanArray::class -> {
+        if (bundleKey == null) {
+            (this.arguments?.getBooleanArray(nameKey) as? T) ?: defaultValue
+        } else {
+            (this.arguments?.getBundle(bundleKey)?.getBooleanArray(nameKey) as? T) ?: defaultValue
+        }
+    }
+    Long::class -> {
+        if (bundleKey == null) {
+            this.arguments?.getLong(nameKey, defaultValue as? Long ?: 0) as? T
+        } else {
+            this.arguments?.getBundle(bundleKey)?.getLong(nameKey, defaultValue as? Long ?: 0) as? T
+        }
+    }
+    LongArray::class -> {
+        if (bundleKey == null) {
+            (this.arguments?.getLongArray(nameKey) as? T) ?: defaultValue
+        } else {
+            (this.arguments?.getBundle(bundleKey)?.getLongArray(nameKey) as? T) ?: defaultValue
+        }
+    }
+    Float::class -> {
+        if (bundleKey == null) {
+            this.arguments?.getFloat(nameKey, defaultValue as? Float ?: 0.0f) as? T
+        } else {
+            this.arguments?.getBundle(bundleKey)
+                ?.getFloat(nameKey, defaultValue as? Float ?: 0.0f) as? T
+        }
+    }
+    FloatArray::class -> {
+        if (bundleKey == null) {
+            (this.arguments?.getFloatArray(nameKey) as? T) ?: defaultValue
+        } else {
+            (this.arguments?.getBundle(bundleKey)?.getFloatArray(nameKey) as? T) ?: defaultValue
+        }
+    }
+    Double::class -> {
+        if (bundleKey == null) {
+            this.arguments?.getDouble(nameKey, defaultValue as? Double ?: 0.0) as? T
+        } else {
+            this.arguments?.getBundle(bundleKey)
+                ?.getDouble(nameKey, defaultValue as? Double ?: 0.0) as? T
+        }
+    }
+    DoubleArray::class -> {
+        if (bundleKey == null) {
+            (this.arguments?.getDoubleArray(nameKey) as? T) ?: defaultValue
+        } else {
+            (this.arguments?.getBundle(bundleKey)?.getDoubleArray(nameKey) as? T) ?: defaultValue
+        }
+    }
+    String::class -> {
+        if (bundleKey == null) {
+            this.arguments?.getString(nameKey) as? T ?: defaultValue
+        } else {
+            this.arguments?.getBundle(bundleKey)
+                ?.getString(nameKey, defaultValue as? String ?: "") as? T
+        }
+    }
+    Array<String>::class -> {
+        if (bundleKey == null) {
+            (this.arguments?.getStringArray(nameKey) as? T) ?: defaultValue
+        } else {
+            (this.arguments?.getBundle(bundleKey)?.getStringArray(nameKey) as? T) ?: defaultValue
+        }
+    }
+    Parcelable::class -> {
+        if (bundleKey == null) {
+            (this.arguments?.getParcelable(nameKey) as? T) ?: defaultValue
+        } else {
+            (this.arguments?.getBundle(bundleKey)?.getParcelable(nameKey) as? T) ?: defaultValue
+        }
+    }
+    Array<Parcelable>::class -> {
+        if (bundleKey == null) {
+            (this.arguments?.getParcelableArray(nameKey) as? T) ?: defaultValue
+        } else {
+            (this.arguments?.getBundle(bundleKey)?.getParcelableArray(nameKey) as? T)
+                ?: defaultValue
+        }
+    }
+    Serializable::class -> {
+        if (bundleKey == null) {
+            (this.arguments?.getSerializable(nameKey) as? T) ?: defaultValue
+        } else {
+            (this.arguments?.getBundle(bundleKey)?.getSerializable(nameKey) as? T) ?: defaultValue
+        }
+    }
+    else -> null
 }
+
+//inline fun <reified T : Activity> Context.startActivityExtras(){
+//
+//}
+//
+//inline fun <reified T : Activity> Context.startActivityBundle(){
+//
+//}
+
+//inline fun <reified T : Activity> Context.startActivity(
+//    vararg pairs: Pair<String, Any?>,
+//    crossinline block: Intent.() -> Unit = {}
+//) =  this.startActivity<T>(pairs = pairs, block = block)
+
+//inline fun <reified T : Activity> Context.startActivity(
+//    vararg pairs: Pair<String, Any?>, crossinline block: Intent.() -> Unit = {}
+//) = this.startActivity(intentOf<T>(*pairs).apply(block))
+//
+//inline fun <reified T> Context.intentOf(vararg pairs: Pair<String, *>): Intent =
+//    intentOf<T>(bundleOf(*pairs))
+//
+//inline fun <reified T> Context.intentOf(bundle: Bundle): Intent =
+//    Intent(this, T::class.java).apply { putExtras(bundle) }
