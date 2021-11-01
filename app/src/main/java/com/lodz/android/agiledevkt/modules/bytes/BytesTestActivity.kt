@@ -31,7 +31,7 @@ class BytesTestActivity :BaseActivity(){
 
     override fun getViewBindingLayout(): View = mBinding.root
 
-    private val mTitle by intentExtrasString(MainActivity.EXTRA_TITLE_NAME, "")
+    private val mTitle by intentExtrasStringNoNull(MainActivity.EXTRA_TITLE_NAME, "")
 
     override fun findViews(savedInstanceState: Bundle?) {
         getTitleBarLayout().setTitleName(mTitle)

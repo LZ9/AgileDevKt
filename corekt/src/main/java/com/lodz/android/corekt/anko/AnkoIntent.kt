@@ -14,6 +14,7 @@ import android.os.Parcelable
 import android.provider.MediaStore
 import android.provider.Settings
 import androidx.core.content.FileProvider
+import androidx.fragment.app.Fragment
 import com.lodz.android.corekt.utils.FileUtils
 import java.io.File
 import java.io.Serializable
@@ -231,49 +232,171 @@ fun Activity.takePhoto(savePath: String, authority: String, requestCode: Int): B
     return true
 }
 
+/** 从intent中根据[nameKey]来获取传递过来的Int对象的值，默认值为[defaultValue]，若[bundleKey]不为空则从intent的Bundle中获取数据 */
 @JvmOverloads
-fun Activity.intentExtrasInt(name: String, defaultValue: Int = 0): Lazy<Int> = lazy {
-    return@lazy this.intent?.getIntExtra(name, defaultValue) ?: defaultValue
-}
-
-@JvmOverloads
-fun Activity.intentExtrasBoolean(name: String, defaultValue: Boolean = false): Lazy<Boolean> = lazy {
-    return@lazy this.intent?.getBooleanExtra(name, defaultValue) ?: defaultValue
-}
-
-@JvmOverloads
-fun Activity.intentExtrasLong(name: String, defaultValue: Long = 0): Lazy<Long> = lazy {
-    return@lazy this.intent?.getLongExtra(name, defaultValue) ?: defaultValue
-}
-
-@JvmOverloads
-fun Activity.intentExtrasDouble(name: String, defaultValue: Double = 0.0): Lazy<Double> = lazy {
-    return@lazy this.intent?.getDoubleExtra(name, defaultValue) ?: defaultValue
-}
-
-@JvmOverloads
-fun Activity.intentExtrasFloat(name: String, defaultValue: Float = 0.0f): Lazy<Float> = lazy {
-    return@lazy this.intent?.getFloatExtra(name, defaultValue) ?: defaultValue
-}
-
-fun Activity.intentExtrasString(name: String): Lazy<String?> = lazy {
-    return@lazy this.intent?.getStringExtra(name)
-}
-
-fun Activity.intentExtrasString(name: String, defaultValue: String): Lazy<String> = lazy {
-    return@lazy this.intent?.getStringExtra(name) ?: defaultValue
-}
-
-@JvmOverloads
-fun <T : Parcelable> Activity.intentExtrasParcelable(name: String, defaultValue: T? = null): Lazy<T?> = lazy {
-    return@lazy this.intent?.getParcelableExtra(name) ?: defaultValue
-}
-
-@JvmOverloads
-inline fun <reified T : Serializable> Activity.intentExtrasSerializable(name: String, defaultValue: T? = null): Lazy<T?> = lazy {
-    val data = this.intent?.getSerializableExtra(name)
-    if (data is T) {
-        return@lazy data
+fun Activity.intentExtrasInt(nameKey: String, defaultValue: Int = 0, bundleKey: String? = null): Lazy<Int> = lazy {
+    if (bundleKey == null){
+        return@lazy this.intent?.getIntExtra(nameKey, defaultValue) ?: defaultValue
     }
-    return@lazy defaultValue
+    return@lazy this.intent?.getBundleExtra(bundleKey)?.getInt(nameKey, defaultValue) ?: defaultValue
+}
+
+/** 从arguments中根据[nameKey]来获取传递过来的Int对象的值，默认值为[defaultValue]，若[bundleKey]不为空则从arguments的Bundle中获取数据 */
+@JvmOverloads
+fun Fragment.argumentsExtrasInt(nameKey: String, defaultValue: Int = 0, bundleKey: String? = null): Lazy<Int> = lazy {
+    if (bundleKey == null) {
+        return@lazy this.arguments?.getInt(nameKey, defaultValue) ?: defaultValue
+    }
+    return@lazy this.arguments?.getBundle(bundleKey)?.getInt(nameKey, defaultValue) ?: defaultValue
+}
+
+/** 从intent中根据[nameKey]来获取传递过来的Boolean对象的值，默认值为[defaultValue]，若[bundleKey]不为空则从intent的Bundle中获取数据 */
+@JvmOverloads
+fun Activity.intentExtrasBoolean(name: String, defaultValue: Boolean = false, bundleKey: String? = null): Lazy<Boolean> = lazy {
+    if (bundleKey == null) {
+        return@lazy this.intent?.getBooleanExtra(name, defaultValue) ?: defaultValue
+    }
+    return@lazy this.intent?.getBundleExtra(bundleKey)?.getBoolean(name, defaultValue) ?: defaultValue
+}
+
+/** 从arguments中根据[nameKey]来获取传递过来的Boolean对象的值，默认值为[defaultValue]，若[bundleKey]不为空则从arguments的Bundle中获取数据 */
+@JvmOverloads
+fun Fragment.argumentsExtrasBoolean(nameKey: String, defaultValue: Boolean = false, bundleKey: String? = null): Lazy<Boolean> = lazy {
+    if (bundleKey == null) {
+        return@lazy this.arguments?.getBoolean(nameKey, defaultValue) ?: defaultValue
+    }
+    return@lazy this.arguments?.getBundle(bundleKey)?.getBoolean(nameKey, defaultValue) ?: defaultValue
+}
+
+/** 从intent中根据[nameKey]来获取传递过来的Long对象的值，默认值为[defaultValue]，若[bundleKey]不为空则从intent的Bundle中获取数据 */
+@JvmOverloads
+fun Activity.intentExtrasLong(nameKey: String, defaultValue: Long = 0, bundleKey: String? = null): Lazy<Long> = lazy {
+    if (bundleKey == null) {
+        return@lazy this.intent?.getLongExtra(nameKey, defaultValue) ?: defaultValue
+    }
+    return@lazy this.intent?.getBundleExtra(bundleKey)?.getLong(nameKey, defaultValue) ?: defaultValue
+}
+
+/** 从arguments中根据[nameKey]来获取传递过来的Long对象的值，默认值为[defaultValue]，若[bundleKey]不为空则从arguments的Bundle中获取数据 */
+@JvmOverloads
+fun Fragment.argumentsExtrasLong(nameKey: String, defaultValue: Long = 0, bundleKey: String? = null): Lazy<Long> = lazy {
+    if (bundleKey == null) {
+        return@lazy this.arguments?.getLong(nameKey, defaultValue) ?: defaultValue
+    }
+    return@lazy this.arguments?.getBundle(bundleKey)?.getLong(nameKey, defaultValue) ?: defaultValue
+}
+
+/** 从intent中根据[nameKey]来获取传递过来的Double对象的值，默认值为[defaultValue]，若[bundleKey]不为空则从intent的Bundle中获取数据 */
+@JvmOverloads
+fun Activity.intentExtrasDouble(nameKey: String, defaultValue: Double = 0.0, bundleKey: String? = null): Lazy<Double> = lazy {
+    if (bundleKey == null) {
+        return@lazy this.intent?.getDoubleExtra(nameKey, defaultValue) ?: defaultValue
+    }
+    return@lazy this.intent?.getBundleExtra(bundleKey)?.getDouble(nameKey, defaultValue) ?: defaultValue
+}
+
+/** 从arguments中根据[nameKey]来获取传递过来的Double对象的值，默认值为[defaultValue]，若[bundleKey]不为空则从arguments的Bundle中获取数据 */
+@JvmOverloads
+fun Fragment.argumentsExtrasDouble(nameKey: String, defaultValue: Double = 0.0, bundleKey: String? = null): Lazy<Double> = lazy {
+    if (bundleKey == null) {
+        return@lazy this.arguments?.getDouble(nameKey, defaultValue) ?: defaultValue
+    }
+    return@lazy this.arguments?.getBundle(bundleKey)?.getDouble(nameKey, defaultValue) ?: defaultValue
+}
+
+/** 从intent中根据[nameKey]来获取传递过来的Float对象的值，默认值为[defaultValue]，若[bundleKey]不为空则从intent的Bundle中获取数据 */
+@JvmOverloads
+fun Activity.intentExtrasFloat(nameKey: String, defaultValue: Float = 0.0f, bundleKey: String? = null): Lazy<Float> = lazy {
+    if (bundleKey == null) {
+        return@lazy this.intent?.getFloatExtra(nameKey, defaultValue) ?: defaultValue
+    }
+    return@lazy this.intent?.getBundleExtra(bundleKey)?.getFloat(nameKey, defaultValue) ?: defaultValue
+}
+
+/** 从arguments中根据[nameKey]来获取传递过来的Float对象的值，默认值为[defaultValue]，若[bundleKey]不为空则从arguments的Bundle中获取数据 */
+@JvmOverloads
+fun Fragment.argumentsExtrasFloat(nameKey: String, defaultValue: Float = 0.0f, bundleKey: String? = null): Lazy<Float> = lazy {
+    if (bundleKey == null) {
+        return@lazy this.arguments?.getFloat(nameKey, defaultValue) ?: defaultValue
+    }
+    return@lazy this.arguments?.getBundle(bundleKey)?.getFloat(nameKey, defaultValue) ?: defaultValue
+}
+
+/** 从intent中根据[nameKey]来获取传递过来的String对象的值，若[bundleKey]不为空则从intent的Bundle中获取数据 */
+fun Activity.intentExtrasString(nameKey: String, bundleKey: String? = null): Lazy<String?> = lazy {
+    if (bundleKey == null) {
+        return@lazy this.intent?.getStringExtra(nameKey)
+    }
+    return@lazy this.intent?.getBundleExtra(bundleKey)?.getString(nameKey)
+}
+
+/** 从intent中根据[nameKey]来获取传递过来的Float对象的值，默认值为[defaultValue]，若[bundleKey]不为空则从intent的Bundle中获取数据 */
+fun Activity.intentExtrasStringNoNull(nameKey: String, defaultValue: String, bundleKey: String? = null): Lazy<String> = lazy {
+    if (bundleKey == null) {
+        return@lazy this.intent?.getStringExtra(nameKey) ?: defaultValue
+    }
+    return@lazy this.intent?.getBundleExtra(bundleKey)?.getString(nameKey, defaultValue) ?: defaultValue
+}
+
+/** 从arguments中根据[nameKey]来获取传递过来的Float对象的值，若[bundleKey]不为空则从arguments的Bundle中获取数据 */
+@JvmOverloads
+fun Fragment.argumentsExtrasString(nameKey: String, bundleKey: String? = null): Lazy<String?> = lazy {
+    if (bundleKey == null) {
+        return@lazy this.arguments?.getString(nameKey)
+    }
+    return@lazy this.arguments?.getBundle(bundleKey)?.getString(nameKey)
+}
+
+/** 从arguments中根据[nameKey]来获取传递过来的Float对象的值，默认值为[defaultValue]，若[bundleKey]不为空则从arguments的Bundle中获取数据 */
+@JvmOverloads
+fun Fragment.argumentsExtrasStringNoNull(nameKey: String, defaultValue: String, bundleKey: String? = null): Lazy<String> = lazy {
+    if (bundleKey == null) {
+        return@lazy this.arguments?.getString(nameKey, defaultValue) ?: defaultValue
+    }
+    return@lazy this.arguments?.getBundle(bundleKey)?.getString(nameKey, defaultValue) ?: defaultValue
+}
+
+/** 从intent中根据[nameKey]来获取传递过来的Parcelable对象的值，默认值为[defaultValue]，若[bundleKey]不为空则从intent的Bundle中获取数据 */
+@JvmOverloads
+fun <T : Parcelable> Activity.intentExtrasParcelable(nameKey: String, defaultValue: T? = null, bundleKey: String? = null): Lazy<T?> = lazy {
+    if (bundleKey == null) {
+        return@lazy this.intent?.getParcelableExtra(nameKey) ?: defaultValue
+    }
+    return@lazy this.intent?.getBundleExtra(bundleKey)?.getParcelable(nameKey) ?: defaultValue
+}
+
+/** 从arguments中根据[nameKey]来获取传递过来的Parcelable对象的值，默认值为[defaultValue]，若[bundleKey]不为空则从arguments的Bundle中获取数据 */
+@JvmOverloads
+fun <T : Parcelable> Fragment.argumentsExtrasParcelable(nameKey: String, defaultValue: T? = null, bundleKey: String? = null): Lazy<T?> = lazy {
+    if (bundleKey == null) {
+        return@lazy this.arguments?.getParcelable(nameKey) ?: defaultValue
+    }
+    return@lazy this.arguments?.getBundle(bundleKey)?.getParcelable(nameKey) ?: defaultValue
+}
+
+/** 从intent中根据[nameKey]来获取传递过来的Serializable对象的值，默认值为[defaultValue]，若[bundleKey]不为空则从intent的Bundle中获取数据 */
+@JvmOverloads
+inline fun <reified T : Serializable> Activity.intentExtrasSerializable(
+    nameKey: String,
+    defaultValue: T? = null,
+    bundleKey: String? = null
+): Lazy<T?> = lazy {
+    if (bundleKey == null) {
+        return@lazy this.intent?.getSerializableExtra(nameKey) as? T ?: defaultValue
+    }
+    return@lazy this.intent?.getBundleExtra(bundleKey)?.getSerializable(nameKey) as? T
+        ?: defaultValue
+}
+
+/** 从arguments中根据[nameKey]来获取传递过来的Serializable对象的值，默认值为[defaultValue]，若[bundleKey]不为空则从arguments的Bundle中获取数据 */
+@JvmOverloads
+inline fun <reified T : Serializable> Fragment.argumentsExtrasSerializable(
+    nameKey: String,
+    defaultValue: T? = null,
+    bundleKey: String? = null
+): Lazy<T?> = lazy {
+    if (bundleKey == null) {
+        return@lazy this.arguments?.getSerializable(nameKey) as? T ?: defaultValue
+    }
+    return@lazy this.arguments?.getBundle(bundleKey)?.getSerializable(nameKey) as? T ?: defaultValue
 }

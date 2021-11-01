@@ -20,6 +20,7 @@ import com.lodz.android.agiledevkt.modules.rv.popup.LayoutManagerPopupWindow
 import com.lodz.android.agiledevkt.modules.rv.popup.OrientationPopupWindow
 import com.lodz.android.corekt.anko.dp2px
 import com.lodz.android.corekt.anko.getColorCompat
+import com.lodz.android.corekt.anko.intentExtrasInt
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
@@ -73,7 +74,7 @@ class DecorationTestActivity : BaseActivity() {
     private lateinit var mAdapter: DecorationRvAdapter
 
     /** 装饰器类型 */
-    private var mDecorationType = DECORATION_TYPE_ROUND
+    private val mDecorationType by intentExtrasInt(EXTRA_DECORATION_TYPE, DECORATION_TYPE_ROUND)
     /** 当前布局 */
     @LayoutManagerPopupWindow.LayoutManagerType
     private var mLayoutManagerType = LayoutManagerPopupWindow.TYPE_LINEAR
@@ -82,11 +83,6 @@ class DecorationTestActivity : BaseActivity() {
 
     /** 列表数据 */
     private lateinit var mList: ArrayList<String>
-
-    override fun startCreate() {
-        super.startCreate()
-        mDecorationType = intent.getIntExtra(EXTRA_DECORATION_TYPE, DECORATION_TYPE_ROUND)
-    }
 
     override fun getViewBindingLayout(): View = mBinding.root
 
