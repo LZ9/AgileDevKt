@@ -35,6 +35,7 @@ import com.lodz.android.agiledevkt.modules.dialogfragment.DialogFragmentActivity
 import com.lodz.android.agiledevkt.modules.dimensions.DimensionsActivity
 import com.lodz.android.agiledevkt.modules.download.DownloadMarketActivity
 import com.lodz.android.agiledevkt.modules.drawer.DrawerTestActivity
+import com.lodz.android.agiledevkt.modules.extras.ExtrasTestActivity
 import com.lodz.android.agiledevkt.modules.fglifecycle.FragmentLifecycleActivity
 import com.lodz.android.agiledevkt.modules.file.FileTestActivity
 import com.lodz.android.agiledevkt.modules.format.NumFormatTestActivity
@@ -169,6 +170,7 @@ class MainActivity : BaseActivity() {
         MainBean("自定义键盘测试类", "Z", KeyboardTestActivity::class.java),
         MainBean("ViewBinding测试类", "V", ViewBindingTestActivity::class.java),
         MainBean("Bytes字节转换测试类", "B", BytesTestActivity::class.java),
+        MainBean("参数传递测试类", "C", ExtrasTestActivity::class.java),
     )
 
     private val mBinding: ActivityMainBinding by bindingLayout(ActivityMainBinding::inflate)

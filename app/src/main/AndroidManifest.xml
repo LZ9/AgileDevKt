@@ -983,6 +983,22 @@
 
         </activity>
 
+        <activity
+            android:name=".modules.extras.ExtrasTestActivity"
+            android:label="参数传递测试类"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
+
+        </activity>
+
+        <activity
+            android:name=".modules.extras.ExtrasToActivity"
+            android:label="参数传递给Activity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
+
+        </activity>
+
     </application>
 
 </manifest>

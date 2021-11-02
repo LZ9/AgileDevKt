@@ -801,4 +801,37 @@
     <string name="bytes_array_to_shortarray">ByteArray转ShortArray：</string>
     <string name="bytes_shortarray_to_array">ShortArray转ByteArray：</string>
 
+    <!-- 参数传递测试类 -->
+    <string name="extras_to_jump">参数传递跳转</string>
+    <string name="extras_to_activity">Activity参数接收</string>
+    <string name="extras_to_fragment">Fragment参数接收</string>
+    <string name="extras_to_int">Int参数：</string>
+    <string name="extras_to_short">Short参数：</string>
+    <string name="extras_to_byte">Byte参数：</string>
+    <string name="extras_to_char">Char参数：</string>
+    <string name="extras_to_boolean">Boolean参数：</string>
+    <string name="extras_to_long">Long参数：</string>
+    <string name="extras_to_float">Float参数：</string>
+    <string name="extras_to_double">Double参数：</string>
+    <string name="extras_to_string">String参数：</string>
+    <string name="extras_to_bundle">Bundle参数：</string>
+    <string name="extras_to_charsequence">CharSequence参数：</string>
+    <string name="extras_to_parcelablee">Parcelable参数：</string>
+    <string name="extras_to_intarray">IntArray参数：</string>
+    <string name="extras_to_shortarray">ShortArray参数：</string>
+    <string name="extras_to_bytearray">ByteArray参数：</string>
+    <string name="extras_to_chararray">CharArray参数：</string>
+    <string name="extras_to_booleanarray">BooleanArray参数：</string>
+    <string name="extras_to_longarray">LongArray参数：</string>
+    <string name="extras_to_floatarray">FloatArray参数：</string>
+    <string name="extras_to_doublearray">DoubleArray参数：</string>
+    <string name="extras_to_stringarray">StringArray参数：</string>
+    <string name="extras_to_parcelablearray">ParcelableArray参数：</string>
+    <string name="extras_to_charsequencearray">CharSequenceArray参数：</string>
+    <string name="extras_to_integerarraylist">IntegerArrayList参数：</string>
+    <string name="extras_to_stringarraylist">StringArrayList参数：</string>
+    <string name="extras_to_charsequencearraylist">CharSequenceArrayList参数：</string>
+    <string name="extras_to_parcelablearraylist">ParcelableArrayList参数：</string>
+    <string name="extras_to_serializable">Serializable参数：</string>
+
 </resources>
