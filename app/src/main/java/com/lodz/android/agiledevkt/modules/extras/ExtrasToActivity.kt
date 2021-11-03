@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.ParcelableBean
 import com.lodz.android.agiledevkt.bean.SerializableBean
@@ -12,6 +13,7 @@ import com.lodz.android.agiledevkt.databinding.ActivityExtrasResultBinding
 import com.lodz.android.corekt.anko.*
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
+import com.lodz.android.pandora.widget.vp2.SimpleTabAdapter
 
 /**
  * 参数传递给Activity
@@ -21,36 +23,36 @@ import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 class ExtrasToActivity : BaseActivity() {
 
     companion object {
-        private val DEFAULT_CS: CharSequence = "abc123"
+        internal val DEFAULT_CS: CharSequence = "abc123"
 
-        private const val EXTRA_INT = "extra_int"
-        private const val EXTRA_SHORT = "extra_short"
-        private const val EXTRA_BYTE = "extra_byte"
-        private const val EXTRA_CHAR = "extra_char"
-        private const val EXTRA_BOOLEAN = "extra_boolean"
-        private const val EXTRA_LONG = "extra_long"
-        private const val EXTRA_FLOAT = "extra_float"
-        private const val EXTRA_DOUBLE = "extra_double"
-        private const val EXTRA_STRING = "extra_string"
-        private const val EXTRA_BUNDLE = "extra_bundle"
-        private const val EXTRA_CHAR_SEQUENCE = "extra_char_sequence"
-        private const val EXTRA_PARCELABLEE = "extra_parcelablee"
-        private const val EXTRA_INT_ARRAY = "extra_int_array"
-        private const val EXTRA_SHORT_ARRAY = "extra_short_array"
-        private const val EXTRA_BYTE_ARRAY = "extra_byte_array"
-        private const val EXTRA_CHAR_ARRAY = "extra_char_array"
-        private const val EXTRA_BOOLEAN_ARRAY = "extra_boolean_array"
-        private const val EXTRA_LONG_ARRAY = "extra_long_array"
-        private const val EXTRA_FLOAT_ARRAY = "extra_float_array"
-        private const val EXTRA_DOUBLE_ARRAY = "extra_double_array"
-        private const val EXTRA_STRING_ARRAY = "extra_string_array"
-        private const val EXTRA_PARCELABLE_ARRAY = "extra_parcelable_array"
-        private const val EXTRA_CHAR_SEQUENCE_ARRAY = "extra_char_sequence_array"
-        private const val EXTRA_INT_LIST = "extra_int_list"
-        private const val EXTRA_STRING_LIST = "extra_string_list"
-        private const val EXTRA_CHAR_SEQUENCE_LIST = "extra_char_sequence_list"
-        private const val EXTRA_PARCELABLE_LIST = "extra_parcelable_list"
-        private const val EXTRA_SERIALIZABLE = "extra_serializable"
+        internal const val EXTRA_INT = "extra_int"
+        internal const val EXTRA_SHORT = "extra_short"
+        internal const val EXTRA_BYTE = "extra_byte"
+        internal const val EXTRA_CHAR = "extra_char"
+        internal const val EXTRA_BOOLEAN = "extra_boolean"
+        internal const val EXTRA_LONG = "extra_long"
+        internal const val EXTRA_FLOAT = "extra_float"
+        internal const val EXTRA_DOUBLE = "extra_double"
+        internal const val EXTRA_STRING = "extra_string"
+        internal const val EXTRA_BUNDLE = "extra_bundle"
+        internal const val EXTRA_CHAR_SEQUENCE = "extra_char_sequence"
+        internal const val EXTRA_PARCELABLEE = "extra_parcelablee"
+        internal const val EXTRA_INT_ARRAY = "extra_int_array"
+        internal const val EXTRA_SHORT_ARRAY = "extra_short_array"
+        internal const val EXTRA_BYTE_ARRAY = "extra_byte_array"
+        internal const val EXTRA_CHAR_ARRAY = "extra_char_array"
+        internal const val EXTRA_BOOLEAN_ARRAY = "extra_boolean_array"
+        internal const val EXTRA_LONG_ARRAY = "extra_long_array"
+        internal const val EXTRA_FLOAT_ARRAY = "extra_float_array"
+        internal const val EXTRA_DOUBLE_ARRAY = "extra_double_array"
+        internal const val EXTRA_STRING_ARRAY = "extra_string_array"
+        internal const val EXTRA_PARCELABLE_ARRAY = "extra_parcelable_array"
+        internal const val EXTRA_CHAR_SEQUENCE_ARRAY = "extra_char_sequence_array"
+        internal const val EXTRA_INT_LIST = "extra_int_list"
+        internal const val EXTRA_STRING_LIST = "extra_string_list"
+        internal const val EXTRA_CHAR_SEQUENCE_LIST = "extra_char_sequence_list"
+        internal const val EXTRA_PARCELABLE_LIST = "extra_parcelable_list"
+        internal const val EXTRA_SERIALIZABLE = "extra_serializable"
 
         fun start(context: Context){
             val intent = Intent(context, ExtrasToActivity::class.java)
@@ -119,36 +121,6 @@ class ExtrasToActivity : BaseActivity() {
     private val mParcelableListValue by intentListExtras<ParcelableBean>(EXTRA_PARCELABLE_LIST)
     private val mSerializableValue by intentSerializableExtras<SerializableBean>(EXTRA_SERIALIZABLE)
 
-
-    //    private val mIntValue by intentExtrasNoNull(EXTRA_INT, 455)
-    //    private val mShortValue by intentExtrasNoNull(EXTRA_SHORT, Short.MAX_VALUE)
-    //    private val mByteValue by intentExtrasNoNull(EXTRA_BYTE, Byte.MAX_VALUE)
-    //    private val mCharValue by intentExtrasNoNull(EXTRA_CHAR, Char.MAX_VALUE)
-    //    private val mBooleanValue by intentExtrasNoNull(EXTRA_BOOLEAN, false)
-    //    private val mLongValue by intentExtrasNoNull(EXTRA_LONG, 9876543210L)
-    //    private val mFloatValue by intentExtrasNoNull(EXTRA_FLOAT, 0.1f)
-    //    private val mDoubleValue by intentExtrasNoNull(EXTRA_DOUBLE, 0.2)
-    //    private val mStringValue by intentExtrasNoNull(EXTRA_STRING, "默认")
-    //    private val mBundleValue by intentExtrasNoNull(EXTRA_BUNDLE, bundleOf(EXTRA_INT to 11))
-    //    private val mCharSequenceValue by intentExtrasNoNull(EXTRA_CHAR_SEQUENCE, DEFAULT_CS)
-    //    private val mParcelableeValue by intentParcelableExtrasNoNull(EXTRA_PARCELABLEE, ParcelableBean("def"))
-    //    private val mIntArrayValue by intentExtrasNoNull(EXTRA_INT_ARRAY, intArrayOf(5, 3, 1))
-    //    private val mShortArrayValue by intentExtrasNoNull(EXTRA_SHORT_ARRAY, shortArrayOf(-5, -3, -1))
-    //    private val mByteArrayValue by intentExtrasNoNull(EXTRA_BYTE_ARRAY, byteArrayOf(Byte.MAX_VALUE, Byte.MAX_VALUE))
-    //    private val mCharArrayValue by intentExtrasNoNull(EXTRA_CHAR_ARRAY, charArrayOf(Char.MAX_VALUE, Char.MAX_VALUE))
-    //    private val mBooleanArrayValue by intentExtrasNoNull(EXTRA_BOOLEAN_ARRAY, booleanArrayOf(false, false, false))
-    //    private val mLongArrayValue by intentExtrasNoNull(EXTRA_LONG_ARRAY, longArrayOf(1L, 2L))
-    //    private val mFloatArrayValue by intentExtrasNoNull(EXTRA_FLOAT_ARRAY, floatArrayOf(1.1f, 1.2f))
-    //    private val mDoubleArrayValue by intentExtrasNoNull(EXTRA_DOUBLE_ARRAY, doubleArrayOf(11.1111111, 22.2222222))
-    //    private val mStringArrayValue by intentExtrasNoNull(EXTRA_STRING_ARRAY, arrayOf("******", "----"))
-    //    private val mParcelableArrayValue by intentParcelableExtrasNoNull(EXTRA_PARCELABLE_ARRAY, arrayOf(ParcelableBean("*-"), ParcelableBean("-*")))
-    //    private val mCharSequenceArrayValue by intentExtrasNoNull(EXTRA_CHAR_SEQUENCE_ARRAY, arrayOf(DEFAULT_CS, DEFAULT_CS))
-    //    private val mIntListValue by intentExtrasNoNull(EXTRA_INT_LIST, arrayListOf(6, 4, 2))
-    //    private val mStringListValue by intentExtrasNoNull(EXTRA_STRING_LIST, arrayListOf("def", "def"))
-    //    private val mCharsequenceListValue by intentExtrasNoNull(EXTRA_CHAR_SEQUENCE_LIST, arrayListOf(DEFAULT_CS, DEFAULT_CS))
-    //    private val mParcelableListValue by intentExtrasNoNull(EXTRA_PARCELABLE_LIST, arrayListOf(ParcelableBean("def"), ParcelableBean("def")))
-    //    private val mSerializableValue by intentSerializableExtrasNoNull(EXTRA_SERIALIZABLE, SerializableBean("def"))
-
     private val mBinding: ActivityExtrasResultBinding by bindingLayout(ActivityExtrasResultBinding::inflate)
 
     override fun getViewBindingLayout(): View = mBinding.root
@@ -156,6 +128,14 @@ class ExtrasToActivity : BaseActivity() {
     override fun findViews(savedInstanceState: Bundle?) {
         super.findViews(savedInstanceState)
         getTitleBarLayout().setTitleName(R.string.extras_to_boolean)
+        initViewPager()
+    }
+
+    private fun initViewPager() {
+        val list = ArrayList<Fragment>()
+        list.add(ExtrasToFragment.newInstance())
+        mBinding.viewPager.adapter = SimpleTabAdapter(this, list)
+        mBinding.viewPager.offscreenPageLimit = 1
     }
 
     override fun onClickBackBtn() {

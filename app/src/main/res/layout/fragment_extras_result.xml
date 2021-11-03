@@ -5,11 +5,192 @@
     android:orientation="vertical"
     android:padding="10dp">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/to_jump_btn"
-        android:layout_width="wrap_content"
+    <TextView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/extras_to_jump"
-        android:textColor="@color/white" />
+        android:text="@string/extras_to_fragment" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/int_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/extras_to_int" />
+
+            <TextView
+                android:id="@+id/short_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/extras_to_short" />
+
+            <TextView
+                android:id="@+id/byte_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/extras_to_byte" />
+
+            <TextView
+                android:id="@+id/char_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/extras_to_char" />
+
+            <TextView
+                android:id="@+id/boolean_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/extras_to_boolean" />
+
+            <TextView
+                android:id="@+id/long_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/extras_to_long" />
+
+            <TextView
+                android:id="@+id/float_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/extras_to_float" />
+
+            <TextView
+                android:id="@+id/double_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/extras_to_double" />
+
+            <TextView
+                android:id="@+id/string_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/extras_to_string" />
+
+            <TextView
+                android:id="@+id/bundle_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/extras_to_bundle" />
+
+            <TextView
+                android:id="@+id/char_sequence_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/extras_to_charsequence" />
+
+            <TextView
+                android:id="@+id/parcelablee_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/extras_to_parcelablee" />
+
+            <TextView
+                android:id="@+id/int_array_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/extras_to_intarray" />
+
+            <TextView
+                android:id="@+id/short_array_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/extras_to_shortarray" />
+
+            <TextView
+                android:id="@+id/byte_array_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/extras_to_bytearray" />
+
+            <TextView
+                android:id="@+id/char_array_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/extras_to_chararray" />
+
+            <TextView
+                android:id="@+id/boolean_array_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/extras_to_booleanarray" />
+
+            <TextView
+                android:id="@+id/long_array_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/extras_to_longarray" />
+
+            <TextView
+                android:id="@+id/float_array_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/extras_to_floatarray" />
+
+            <TextView
+                android:id="@+id/double_array_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/extras_to_doublearray" />
+
+            <TextView
+                android:id="@+id/string_array_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/extras_to_stringarray" />
+
+            <TextView
+                android:id="@+id/parcelable_array_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/extras_to_parcelablearray" />
+
+            <TextView
+                android:id="@+id/char_sequence_array_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/extras_to_charsequencearray" />
+
+            <TextView
+                android:id="@+id/int_list_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/extras_to_integerarraylist" />
+
+            <TextView
+                android:id="@+id/string_list_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/extras_to_stringarraylist" />
+
+            <TextView
+                android:id="@+id/charsequence_list_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/extras_to_charsequencearraylist" />
+
+            <TextView
+                android:id="@+id/parcelable_list_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/extras_to_parcelablearraylist" />
+
+            <TextView
+                android:id="@+id/serializable_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/extras_to_serializable" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>

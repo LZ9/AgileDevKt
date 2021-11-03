@@ -15,6 +15,7 @@ import android.os.Parcelable
 import android.provider.MediaStore
 import android.provider.Settings
 import androidx.core.content.FileProvider
+import androidx.fragment.app.Fragment
 import com.lodz.android.corekt.utils.FileUtils
 import java.io.File
 import java.io.Serializable
@@ -339,6 +340,110 @@ inline fun <reified T> Activity.getIntentExtras(nameKey: String, defaultValue: T
     else -> null
 }
 
+/** 从arguments中根据[nameKey]来获取传递过来的对象的值，默认值为[defaultValue] */
+inline fun <reified T> Fragment.argumentsExtrasNoNull(nameKey: String, defaultValue: T): Lazy<T> = lazy {
+    val value = getArgumentsExtras(nameKey, defaultValue)
+    if (value != null) {
+        return@lazy value
+    }
+    return@lazy defaultValue
+}
+
+/** 从arguments中根据[nameKey]来获取传递过来的ArrayList对象的值，默认值为[defaultValue] */
+inline fun <reified T> Fragment.argumentsExtrasNoNull(nameKey: String, defaultValue: ArrayList<T>): Lazy<ArrayList<T>> = lazy {
+    val value = getArgumentsExtras(nameKey, defaultValue)
+    if (value != null) {
+        return@lazy value
+    }
+    return@lazy defaultValue
+}
+
+/** 从arguments中根据[nameKey]来获取传递过来的Parcelable对象的值，默认值为[defaultValue] */
+inline fun <reified T : Parcelable> Fragment.argumentsParcelableExtrasNoNull(nameKey: String, defaultValue: T): Lazy<T> = lazy {
+    val value = getArgumentsExtras<Parcelable>(nameKey, defaultValue) as? T
+    if (value != null) {
+        return@lazy value
+    }
+    return@lazy defaultValue
+}
+
+/** 从arguments中根据[nameKey]来获取传递过来的Array<Parcelable>对象的值，默认值为[defaultValue] */
+fun Fragment.argumentsParcelableExtrasNoNull(nameKey: String, defaultValue: Array<Parcelable>): Lazy<Array<Parcelable>> = lazy {
+    val value = getArgumentsExtras(nameKey, defaultValue)
+    if (value != null) {
+        return@lazy value
+    }
+    return@lazy defaultValue
+}
+
+/** 从arguments中根据[nameKey]来获取传递过来的Serializable对象的值，默认值为[defaultValue] */
+inline fun <reified T : Serializable> Fragment.argumentsSerializableExtrasNoNull(nameKey: String, defaultValue: T): Lazy<T> = lazy {
+    val value = getArgumentsExtras<Serializable>(nameKey, defaultValue) as? T
+    if (value != null) {
+        return@lazy value
+    }
+    return@lazy defaultValue
+}
+
+/** 从arguments中根据[nameKey]来获取传递过来的对象的值 */
+inline fun <reified T> Fragment.argumentsExtras(nameKey: String): Lazy<T?> = lazy {
+    return@lazy getArgumentsExtras<T>(nameKey)
+}
+
+/** 从arguments中根据[nameKey]来获取传递过来的Parcelable对象的值 */
+inline fun <reified T : Parcelable> Fragment.argumentsParcelableExtras(nameKey: String): Lazy<T?> = lazy {
+    return@lazy getArgumentsExtras<Parcelable>(nameKey) as? T
+}
+
+/** 从arguments中根据[nameKey]来获取传递过来的Array<Parcelable>对象的值 */
+fun Fragment.argumentsParcelableArrayExtras(nameKey: String): Lazy<Array<Parcelable>?> = lazy {
+    return@lazy getArgumentsExtras<Array<Parcelable>>(nameKey)
+}
+
+/** 从arguments中根据[nameKey]来获取传递过来的Serializable对象的值 */
+inline fun <reified T : Serializable> Fragment.argumentsSerializableExtras(nameKey: String): Lazy<T?> = lazy {
+    return@lazy getArgumentsExtras<Serializable>(nameKey) as? T
+}
+
+/** 从arguments中根据[nameKey]来获取传递过来的ArrayList对象的值 */
+inline fun <reified T> Fragment.argumentsListExtras(nameKey: String): Lazy<ArrayList<T>?> = lazy {
+    return@lazy getArgumentsExtras<ArrayList<T>>(nameKey)
+}
+
+@JvmOverloads
+inline fun <reified T> Fragment.getArgumentsExtras(nameKey: String, defaultValue: T? = null): T? = when (T::class) {
+    Int::class -> this.arguments?.getInt(nameKey, defaultValue as? Int ?: 0) as? T
+    Short::class -> this.arguments?.getShort(nameKey, defaultValue as? Short ?: 0) as? T
+    Byte::class -> this.arguments?.getByte(nameKey, defaultValue as? Byte ?: 0) as? T
+    Char::class -> this.arguments?.getChar(nameKey, defaultValue as? Char ?: Char.MIN_VALUE) as? T
+    Boolean::class -> this.arguments?.getBoolean(nameKey, defaultValue as? Boolean ?: false) as? T
+    Long::class -> this.arguments?.getLong(nameKey, defaultValue as? Long ?: 0) as? T
+    Float::class -> this.arguments?.getFloat(nameKey, defaultValue as? Float ?: 0.0f) as? T
+    Double::class -> this.arguments?.getDouble(nameKey, defaultValue as? Double ?: 0.0) as? T
+    String::class -> (this.arguments?.getString(nameKey) as? T) ?: defaultValue
+
+    Bundle::class -> (this.arguments?.getBundle(nameKey) as? T) ?: defaultValue
+    CharSequence::class -> (this.arguments?.getCharSequence(nameKey) as? T) ?: defaultValue
+    Parcelable::class -> (this.arguments?.getParcelable(nameKey) as? T) ?: defaultValue
+
+    IntArray::class -> (this.arguments?.getIntArray(nameKey) as? T) ?: defaultValue
+    ShortArray::class -> (this.arguments?.getShortArray(nameKey) as? T) ?: defaultValue
+    ByteArray::class -> (this.arguments?.getByteArray(nameKey) as? T) ?: defaultValue
+    CharArray::class -> (this.arguments?.getCharArray(nameKey) as? T) ?: defaultValue
+    BooleanArray::class -> (this.arguments?.getBooleanArray(nameKey) as? T) ?: defaultValue
+    LongArray::class -> (this.arguments?.getLongArray(nameKey) as? T) ?: defaultValue
+    FloatArray::class -> (this.arguments?.getFloatArray(nameKey) as? T) ?: defaultValue
+    DoubleArray::class -> (this.arguments?.getDoubleArray(nameKey) as? T) ?: defaultValue
+
+    Array<String>::class -> (this.arguments?.getStringArray(nameKey) as? T) ?: defaultValue
+    Array<Parcelable>::class -> (this.arguments?.getParcelableArray(nameKey) as? T) ?: defaultValue
+    Array<CharSequence>::class -> (this.arguments?.getCharSequenceArray(nameKey) as? T) ?: defaultValue
+
+    ArrayList::class -> (this.arguments?.getStringArrayList(nameKey) as? T) ?: defaultValue
+
+    Serializable::class -> (this.arguments?.getSerializable(nameKey) as? T) ?: defaultValue
+    else -> null
+}
 
 
 
@@ -354,67 +459,6 @@ inline fun <reified T> Activity.getIntentExtras(nameKey: String, defaultValue: T
 
 
 
-
-
-
-
-
-
-///** 从arguments中根据[nameKey]来获取传递过来的对象的值，默认值为[defaultValue] */
-//inline fun <reified T> Fragment.argumentsExtrasNoNull(nameKey: String, defaultValue: T): Lazy<T> = lazy {
-//    val value = getArgumentsExtras(nameKey, defaultValue)
-//    if (value != null) {
-//        return@lazy value
-//    }
-//    return@lazy defaultValue
-//}
-//
-///** 从arguments中根据[nameKey]来获取传递过来的对象的值 */
-//inline fun <reified T> Fragment.argumentsExtras(nameKey: String): Lazy<T?> = lazy {
-//    return@lazy getArgumentsExtras<T>(nameKey, null)
-//}
-//
-//@JvmOverloads
-//inline fun <reified T> Fragment.getArgumentsExtras(nameKey: String, defaultValue: T? = null): T? = when (T::class) {
-//    Int::class -> this.arguments?.getInt(nameKey, defaultValue as? Int ?: 0) as? T
-//    Short::class -> this.arguments?.getShort(nameKey, defaultValue as? Short ?: 0) as? T
-//    Byte::class -> this.arguments?.getByte(nameKey, defaultValue as? Byte ?: 0) as? T
-//    Char::class -> this.arguments?.getChar(nameKey, defaultValue as? Char ?: Char.MIN_VALUE) as? T
-//    Boolean::class -> this.arguments?.getBoolean(nameKey, defaultValue as? Boolean ?: false) as? T
-//    Long::class -> this.arguments?.getLong(nameKey, defaultValue as? Long ?: 0) as? T
-//    Float::class -> this.arguments?.getFloat(nameKey, defaultValue as? Float ?: 0.0f) as? T
-//    Double::class -> this.arguments?.getDouble(nameKey, defaultValue as? Double ?: 0.0) as? T
-//    String::class -> this.arguments?.getString(nameKey, defaultValue as? String ?: "") as? T
-//
-//    Bundle::class -> (this.arguments?.getBundle(nameKey) as? T) ?: defaultValue
-//    CharSequence::class -> (this.arguments?.getCharSequence(nameKey) as? T) ?: defaultValue
-//    Parcelable::class -> (this.arguments?.getParcelable(nameKey) as? T) ?: defaultValue
-//
-//    IntArray::class -> (this.arguments?.getIntArray(nameKey) as? T) ?: defaultValue
-//    ShortArray::class -> (this.arguments?.getShortArray(nameKey) as? T) ?: defaultValue
-//    ByteArray::class -> (this.arguments?.getByteArray(nameKey) as? T) ?: defaultValue
-//    CharArray::class -> (this.arguments?.getCharArray(nameKey) as? T) ?: defaultValue
-//    BooleanArray::class -> (this.arguments?.getBooleanArray(nameKey) as? T) ?: defaultValue
-//    LongArray::class -> (this.arguments?.getLongArray(nameKey) as? T) ?: defaultValue
-//    FloatArray::class -> (this.arguments?.getFloatArray(nameKey) as? T) ?: defaultValue
-//    DoubleArray::class -> (this.arguments?.getDoubleArray(nameKey) as? T) ?: defaultValue
-//    Array<String>::class -> (this.arguments?.getStringArray(nameKey) as? T) ?: defaultValue
-//    Array<Parcelable>::class -> (this.arguments?.getParcelableArray(nameKey) as? T) ?: defaultValue
-//    Array<CharSequence>::class -> (this.arguments?.getCharSequenceArray(nameKey) as? T) ?: defaultValue
-//
-//    ArrayList::class -> {
-//        val componentType = T::class.typeParameters[0]
-//        when(componentType::class){
-//            Int::class -> (this.arguments?.getIntegerArrayList(nameKey) as? T) ?: defaultValue
-//            String::class -> (this.arguments?.getStringArrayList(nameKey) as? T) ?: defaultValue
-//            CharSequence::class -> (this.arguments?.getCharSequenceArrayList(nameKey) as? T) ?: defaultValue
-//            Parcelable::class -> (this.arguments?.getParcelableArrayList<Parcelable>(nameKey) as? T) ?: defaultValue
-//            else -> null
-//        }
-//    }
-//    Serializable::class -> (this.arguments?.getSerializable(nameKey) as? T) ?: defaultValue
-//    else -> null
-//}
 
 //inline fun <reified T : Activity> Context.startActivityExtras(
 //    vararg pairs: Pair<String, Any?>,
