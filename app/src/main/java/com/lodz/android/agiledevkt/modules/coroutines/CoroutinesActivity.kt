@@ -97,7 +97,7 @@ class CoroutinesActivity : BaseActivity() {
                 return@setOnClickListener
             }
             if (mType == TYPE_JOIN) {
-                runBlocking {
+                MainScope().runOnSuspendIO {
                     mJob = join()
                 }
                 return@setOnClickListener
