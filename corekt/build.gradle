@@ -10,7 +10,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 31
         versionCode 40
-        versionName "1.4.5"// 未上传
+        versionName "1.4.5"// 成功上传
     }
 
     kotlinOptions {

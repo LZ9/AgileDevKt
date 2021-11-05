@@ -1,5 +1,11 @@
 # core-kt库更新记录
 
+##### 2021/11/05
+1. AnkoIntent.kt增加Activity的Intent和Fragment的arguments的委托方法
+2. 文件帮助类增加读取文件内容方法和写入文件开头、结尾方法
+3. 更新依赖库版本
+4. 发布1.4.5版
+
 ##### 2021/10/28
 1. ACache增加其他常见类型的数据存取
 2. 适配android12
