@@ -153,5 +153,39 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/read_content_btn"
+            style="?android:attr/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:text="@string/file_read_content"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/write_content_start_btn"
+            style="?android:attr/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:text="@string/file_write_content_start"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/write_content_end_btn"
+            style="?android:attr/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:text="@string/file_write_content_end"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
 
 </LinearLayout>

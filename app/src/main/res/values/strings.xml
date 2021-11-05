@@ -31,6 +31,9 @@
     <string name="file_to_base64">文件转Base64</string>
     <string name="base64_to_file">Base64转文件</string>
     <string name="file_video_no_found">目录下未找到video.mp4</string>
+    <string name="file_read_content">读取文件内容</string>
+    <string name="file_write_content_end">写入文件结尾</string>
+    <string name="file_write_content_start">写入文件开头</string>
 
     <!-- 加密测试 -->
     <string name="security_hint">请输入加密内容</string>

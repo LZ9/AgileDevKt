@@ -287,6 +287,9 @@ object FileUtils {
             return null
         }
         val file: File = create(filePath) ?: return null
+        if (!file.exists()){
+            return null
+        }
         FileInputStream(file).use { fis: FileInputStream ->
             ByteArrayOutputStream().use { baos: ByteArrayOutputStream ->
                 val b = ByteArray(1024)
@@ -304,53 +307,108 @@ object FileUtils {
         }
     }
 
+    /** 文件路径[filePath]转String */
+    @JvmStatic
+    fun fileToString(filePath: String): String? {
+        val bytes: ByteArray = fileToByte(filePath) ?: return null
+        return String(bytes, 0, bytes.size)
+    }
+
+    /** 将[text]写入文件[file]的末尾 */
+    @JvmStatic
+    fun writeFileToEnd(file: File, text: String): Boolean {
+        if (!file.exists()) {
+            return false
+        }
+        RandomAccessFile(file, "rw").use {
+            it.seek(file.length())
+            it.write(text.toByteArray())
+            return true
+        }
+    }
+
+    /** 将[text]写入文件路径[filePath]的末尾 */
+    @JvmStatic
+    fun writeFileToEnd(filePath: String, text: String): Boolean {
+        if (filePath.isEmpty()) {
+            return false
+        }
+        val file: File = create(filePath) ?: return false
+        return writeFileToEnd(file, text)
+    }
+
+    /** 将[text]写入文件[file]的开头 */
+    @JvmStatic
+    fun writeFileToStart(file: File, text: String): Boolean {
+        if (!file.exists()) {
+            return false
+        }
+        val originalText = fileToString(file.absolutePath)
+        val resultText = text.append(originalText)
+        FileOutputStream(file).use { fos: FileOutputStream ->
+            fos.write(resultText.toByteArray())
+            return true
+        }
+    }
+
+    /** 将[text]写入文件路径[filePath]的开头 */
+    @JvmStatic
+    fun writeFileToStart(filePath: String, text: String): Boolean {
+        if (filePath.isEmpty()) {
+            return false
+        }
+        val file: File = create(filePath) ?: return false
+        return writeFileToStart(file, text)
+    }
+
     /** 将[bytes]数组保存为文件，文件保存路径[savePath]，文件名称[fileName] */
     @JvmStatic
-    fun byteToFile(bytes: ByteArray, savePath: String, fileName: String) {
+    fun byteToFile(bytes: ByteArray, savePath: String, fileName: String) :Boolean{
         if (bytes.isEmpty() || savePath.isEmpty() || fileName.isEmpty()) {
-            return
+            return false
         }
         var newFilePath = savePath
         if (!savePath.endsWith(File.separator)) {
             newFilePath += File.separator
         }
-        val directory: File = create(savePath) ?: return
+        val directory: File = create(savePath) ?: return false
         if (!directory.exists()) {
             directory.mkdirs()
         }
         if (!directory.isDirectory) {
-            return
+            return false
         }
-        val file: File = create(newFilePath + fileName) ?: return
+        val file: File = create(newFilePath + fileName) ?: return false
         FileOutputStream(file).use { fos: FileOutputStream ->
             BufferedOutputStream(fos).use { bos: BufferedOutputStream ->
                 bos.write(bytes)
             }
         }
+        return true
     }
 
     /** 将[bitmap]保存为图片文件，保存路径[savePath]，文件名[fileName]，后缀[suffix]例如png或者.jpg，保存质量[quality] */
     @JvmStatic
-    fun bitmapToPath(bitmap: Bitmap, savePath: String, fileName: String, suffix: String, @IntRange(from = 0, to = 100) quality: Int) {
+    fun bitmapToPath(bitmap: Bitmap, savePath: String, fileName: String, suffix: String, @IntRange(from = 0, to = 100) quality: Int): Boolean {
         if (savePath.isEmpty() || fileName.isEmpty() || suffix.isEmpty()) {
-            return
+            return false
         }
         var newFilePath = savePath
         if (!savePath.endsWith(File.separator)) {
             newFilePath += File.separator
         }
-        val directory: File = create(savePath) ?: return
+        val directory: File = create(savePath) ?: return false
         if (!directory.exists()) {
             directory.mkdirs()
         }
         if (!directory.isDirectory) {
-            return
+            return false
         }
         var newSuffix = suffix
         if (!suffix.startsWith(".")) {
             newSuffix = ".$suffix"
         }
-        val file: File = create(newFilePath + fileName + newSuffix) ?: return
+        val file: File = create(newFilePath + fileName + newSuffix) ?: return false
         if (file.exists()) {
             file.delete()
         }
@@ -361,6 +419,7 @@ object FileUtils {
         if (!bitmap.isRecycled) {
             bitmap.recycle()
         }
+        return true
     }
 
     /** 用上下文[context]，通过[uri]将文件复制到指定的目录[toPath]（一般是自己的沙盒目录），并指定文件名[fileName]（需要后缀指定文件类型） */
@@ -415,10 +474,13 @@ object FileUtils {
         ) ?: return Uri.EMPTY
         var uri: Uri? = null
         if (cursor.moveToFirst()) {
-            uri = ContentUris.withAppendedId(
-                mediaUri,
-                cursor.getLong(cursor.getColumnIndex(MediaStore.Images.Media._ID))
-            )
+            val id = cursor.getColumnIndex(MediaStore.Images.Media._ID)
+            if (id > 0){
+                uri = ContentUris.withAppendedId(
+                    mediaUri,
+                    cursor.getLong(id)
+                )
+            }
         }
         cursor.close()
         return uri ?: Uri.EMPTY

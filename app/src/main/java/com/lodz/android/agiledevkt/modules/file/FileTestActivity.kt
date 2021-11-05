@@ -10,9 +10,12 @@ import com.lodz.android.agiledevkt.databinding.ActivityFileTestBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.agiledevkt.utils.file.FileManager
 import com.lodz.android.corekt.anko.append
+import com.lodz.android.corekt.anko.then
 import com.lodz.android.corekt.anko.toastShort
+import com.lodz.android.corekt.utils.DateUtils
 import com.lodz.android.corekt.utils.FileUtils
 import com.lodz.android.pandora.base.activity.BaseActivity
+import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
 import com.lodz.android.pandora.rx.subscribe.observer.ProgressObserver
 import com.lodz.android.pandora.rx.utils.RxUtils
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
@@ -122,8 +125,8 @@ class FileTestActivity : BaseActivity() {
                 toastShort("转换失败")
                 return@setOnClickListener
             }
-            FileUtils.byteToFile(bytes, SAVE_PATH, "17283971234654.txt")
-            toastShort("转换完成")
+            val isSuccess = FileUtils.byteToFile(bytes, SAVE_PATH, "17283971234654.txt")
+            toastShort(isSuccess.then { "转换完成" } ?: "转换失败")
         }
 
         // bitmap转文件
@@ -133,6 +136,7 @@ class FileTestActivity : BaseActivity() {
             toastShort("保存完成")
         }
 
+        // 文件转Base64
         mBinding.fileToBase64Btn.setOnClickListener {
             val videoFile = File(FileManager.getContentFolderPath().append(VIDEO_FILE_NAME))
             if (!videoFile.exists()) {
@@ -141,7 +145,88 @@ class FileTestActivity : BaseActivity() {
             }
             fileToBase64(videoFile)
         }
+
+        // 读取文件内容
+        mBinding.readContentBtn.setOnClickListener {
+            Observable.just(NEW_FILE_PATH)
+                .map {
+                    FileUtils.fileToString(NEW_FILE_PATH) ?: "转换失败"
+                }
+                .compose(RxUtils.ioToMainObservable())
+                .subscribe(BaseObserver.action(next = {
+                    toastShort(it)
+                }))
+        }
+
+        // 将文本写入文件末尾
+        mBinding.writeContentEndBtn.setOnClickListener {
+            Observable.just(NEW_FILE_PATH)
+                .map {
+                    val file = File(it)
+                    if (!file.exists()){
+                        FileUtils.createNewFile(it)
+                    }
+                    return@map file
+                }
+                .map {
+                    val content = DateUtils.getCurrentFormatString(DateUtils.TYPE_2).append(" : ").append("测试").append("\n")
+                    FileUtils.writeFileToEnd(it, content)
+                    it
+                }
+                .map {
+                    FileUtils.fileToString(it.absolutePath) ?: "写入失败"
+                }
+                .compose(RxUtils.ioToMainObservable())
+                .subscribe(
+                    ProgressObserver.action(
+                        context = getContext(),
+                        msg = "写入中",
+                        cancelable = false,
+                        canceledOnTouchOutside = false,
+                        next = {
+                            toastShort(it)
+                        },
+                        error = { e, isNetwork ->
+                            toastShort("写入失败：${e.message}")
+                        })
+                )
+        }
+
+        // 将文本写入文件开头
+        mBinding.writeContentStartBtn.setOnClickListener {
+            Observable.just(NEW_FILE_PATH)
+                .map {
+                    val file = File(it)
+                    if (!file.exists()){
+                        FileUtils.createNewFile(it)
+                    }
+                    return@map file
+                }
+                .map {
+                    val content = DateUtils.getCurrentFormatString(DateUtils.TYPE_23).append(" : ").append("测试").append("\n")
+                    FileUtils.writeFileToStart(it, content)
+                    it
+                }
+                .map {
+                    FileUtils.fileToString(it.absolutePath) ?: "写入失败"
+                }
+                .compose(RxUtils.ioToMainObservable())
+                .subscribe(
+                    ProgressObserver.action(
+                        context = getContext(),
+                        msg = "写入中",
+                        cancelable = false,
+                        canceledOnTouchOutside = false,
+                        next = {
+                            toastShort(it)
+                        },
+                        error = { e, isNetwork ->
+                            toastShort("写入失败：${e.message}")
+                        })
+                )
+        }
     }
+
 
     /** 文件转base64 */
     private fun fileToBase64(file: File) {
