@@ -29,7 +29,7 @@
 如果你希望便捷的使用图片加载库来服务你的工程，你可以选择依赖[imageloader-kt](https://github.com/LZ9/AgileDevKt/blob/master/imageloaderkt/readme_imageloader.md)，
 它内部集成了Glide，通过简单的链式调用来降低你的学习梯度。
 ```
-    implementation 'ink.lodz:imageloader-kt:1.1.9'
+    implementation 'ink.lodz:imageloader-kt:1.2.0'
 ```
 
 ## 4、详细了解
