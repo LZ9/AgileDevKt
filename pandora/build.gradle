@@ -9,8 +9,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 31
-        versionCode 49
-        versionName "1.7.9"// 成功上传
+        versionCode 50
+        versionName "1.8.0"// 成功上传
     }
 
     viewBinding {
@@ -34,7 +34,7 @@ android {
 }
 
 dependencies {
-//    api 'ink.lodz:core-kt:1.4.4'
+//    api 'ink.lodz:core-kt:1.4.5'
     api project(':corekt')
 
     // RxJava
