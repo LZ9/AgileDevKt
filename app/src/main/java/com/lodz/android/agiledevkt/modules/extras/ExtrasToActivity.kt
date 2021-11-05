@@ -55,39 +55,41 @@ class ExtrasToActivity : BaseActivity() {
         internal const val EXTRA_SERIALIZABLE = "extra_serializable"
 
         fun start(context: Context){
-            val intent = Intent(context, ExtrasToActivity::class.java)
-            intent.putExtra(EXTRA_INT, 7)
-            intent.putExtra(EXTRA_SHORT, Short.MIN_VALUE)
-            intent.putExtra(EXTRA_BYTE, Byte.MIN_VALUE)
-            intent.putExtra(EXTRA_CHAR, Char.MAX_VALUE)
-            intent.putExtra(EXTRA_BOOLEAN, true)
-            intent.putExtra(EXTRA_LONG, 1234567890L)
-            intent.putExtra(EXTRA_FLOAT, 1.5f)
-            intent.putExtra(EXTRA_DOUBLE, 5.155564)
-            intent.putExtra(EXTRA_STRING, "测试")
-            intent.putExtra(EXTRA_BUNDLE, bundleOf(EXTRA_INT to 99))
-            intent.putExtra(EXTRA_CHAR_SEQUENCE, DEFAULT_CS)
-            intent.putExtra(EXTRA_PARCELABLEE, ParcelableBean("pb1"))
-            intent.putExtra(EXTRA_INT_ARRAY, intArrayOf(1, 3, 5))
-            intent.putExtra(EXTRA_SHORT_ARRAY, shortArrayOf(-1, -3, -5))
-            intent.putExtra(EXTRA_BYTE_ARRAY, byteArrayOf(Byte.MAX_VALUE, Byte.MIN_VALUE))
-            intent.putExtra(EXTRA_CHAR_ARRAY, charArrayOf(Char.MAX_VALUE, Char.MIN_VALUE))
-            intent.putExtra(EXTRA_BOOLEAN_ARRAY, booleanArrayOf(true, false, true))
-            intent.putExtra(EXTRA_LONG_ARRAY, longArrayOf(996L, 997L))
-            intent.putExtra(EXTRA_FLOAT_ARRAY, floatArrayOf(888.7f, 999.7f))
-            intent.putExtra(EXTRA_DOUBLE_ARRAY, doubleArrayOf(45.454545, 69.696969))
-            intent.putExtra(EXTRA_STRING_ARRAY, arrayOf("android10", "ios7"))
-            intent.putExtra(EXTRA_PARCELABLE_ARRAY, arrayOf(ParcelableBean("F1"), ParcelableBean("F2")))
             val cs1: CharSequence = "CCCC123"
             val cs2: CharSequence = "DDDD567"
-            intent.putExtra(EXTRA_CHAR_SEQUENCE_ARRAY, arrayOf(cs1, cs2))
-            intent.putIntegerArrayListExtra(EXTRA_INT_LIST, arrayListOf(2, 4, 6))
-            intent.putStringArrayListExtra(EXTRA_STRING_LIST, arrayListOf("up", "down"))
             val cs3: CharSequence = "home777"
             val cs4: CharSequence = "end666"
-            intent.putCharSequenceArrayListExtra(EXTRA_CHAR_SEQUENCE_LIST, arrayListOf(cs3, cs4))
-            intent.putParcelableArrayListExtra(EXTRA_PARCELABLE_LIST, arrayListOf(ParcelableBean("poo6"), ParcelableBean("pxx8")))
-            intent.putExtra(EXTRA_SERIALIZABLE, SerializableBean("9888iiiqwe"))
+            val intent = Intent(context, ExtrasToActivity::class.java)
+                .intentOf(
+                    EXTRA_INT to 7,
+                    EXTRA_SHORT to Short.MIN_VALUE,
+                    EXTRA_BYTE to Byte.MIN_VALUE,
+                    EXTRA_CHAR to Char.MAX_VALUE,
+                    EXTRA_BOOLEAN to true,
+                    EXTRA_LONG to 1234567890L,
+                    EXTRA_FLOAT to 1.5f,
+                    EXTRA_DOUBLE to 5.155564,
+                    EXTRA_STRING to "测试",
+                    EXTRA_BUNDLE to bundleOf(EXTRA_INT to 99),
+                    EXTRA_CHAR_SEQUENCE to DEFAULT_CS,
+                    EXTRA_PARCELABLEE to ParcelableBean("pb1"),
+                    EXTRA_INT_ARRAY to intArrayOf(1, 3, 5),
+                    EXTRA_SHORT_ARRAY to shortArrayOf(-1, -3, -5),
+                    EXTRA_BYTE_ARRAY to byteArrayOf(Byte.MAX_VALUE, Byte.MIN_VALUE),
+                    EXTRA_CHAR_ARRAY to charArrayOf(Char.MAX_VALUE, Char.MIN_VALUE),
+                    EXTRA_BOOLEAN_ARRAY to booleanArrayOf(true, false, true),
+                    EXTRA_LONG_ARRAY to longArrayOf(996L, 997L),
+                    EXTRA_FLOAT_ARRAY to floatArrayOf(888.7f, 999.7f),
+                    EXTRA_DOUBLE_ARRAY to doubleArrayOf(45.454545, 69.696969),
+                    EXTRA_STRING_ARRAY to arrayOf("android10", "ios7"),
+                    EXTRA_PARCELABLE_ARRAY to arrayOf(ParcelableBean("F1"), ParcelableBean("F2")),
+                    EXTRA_CHAR_SEQUENCE_ARRAY to arrayOf(cs1, cs2),
+                    EXTRA_INT_LIST to arrayListOf(2, 4, 6),
+                    EXTRA_STRING_LIST to arrayListOf("up", "down"),
+                    EXTRA_CHAR_SEQUENCE_LIST to arrayListOf(cs3, cs4),
+                    EXTRA_PARCELABLE_LIST to arrayListOf(ParcelableBean("poo6"), ParcelableBean("pxx8")),
+                    EXTRA_SERIALIZABLE to SerializableBean("9888iiiqwe")
+                )
             context.startActivity(intent)
         }
     }
@@ -188,5 +190,4 @@ class ExtrasToActivity : BaseActivity() {
         mBinding.parcelableListTv.text = getString(R.string.extras_to_parcelablearraylist).append(mParcelableListValue ?: "null")
         mBinding.serializableTv.text = getString(R.string.extras_to_serializable).append(mSerializableValue ?: "null")
     }
-
 }

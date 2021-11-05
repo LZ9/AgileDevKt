@@ -15,6 +15,7 @@ import android.os.Parcelable
 import android.provider.MediaStore
 import android.provider.Settings
 import androidx.core.content.FileProvider
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import com.lodz.android.corekt.utils.FileUtils
 import java.io.File
@@ -445,52 +446,4 @@ inline fun <reified T> Fragment.getArgumentsExtras(nameKey: String, defaultValue
     else -> null
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//inline fun <reified T : Activity> Context.startActivityExtras(
-//    vararg pairs: Pair<String, Any?>,
-//    block: Intent.() -> Unit
-//) {
-//
-//}
-//
-//inline fun <reified T : Activity> Context.startActivityBundle(
-//    bundleKey: String,
-//    vararg pairs: Pair<String, Any?>,
-//    block: Intent.() -> Unit
-//) {
-//    val intent = Intent(this, T::class.java)
-//    intent.putExtra(bundleKey, bundleOf(*pairs))
-//    intent.apply(block)
-//    this.startActivity(intent)
-//}
-
-
-
-//inline fun <reified T : Activity> Context.startActivity(
-//    vararg pairs: Pair<String, Any?>,
-//    crossinline block: Intent.() -> Unit = {}
-//) =  this.startActivity<T>(pairs = pairs, block = block)
-
-//inline fun <reified T : Activity> Context.startActivity(
-//    vararg pairs: Pair<String, Any?>, crossinline block: Intent.() -> Unit = {}
-//) = this.startActivity(intentOf<T>(*pairs).apply(block))
-//
-//inline fun <reified T> Context.intentOf(vararg pairs: Pair<String, *>): Intent =
-//    intentOf<T>(bundleOf(*pairs))
-//
-//inline fun <reified T> Context.intentOf(bundle: Bundle): Intent =
-//    Intent(this, T::class.java).apply { putExtras(bundle) }
+fun Intent.intentOf(vararg pairs: Pair<String, Any>): Intent = this.putExtras(bundleOf(*pairs))
