@@ -118,4 +118,66 @@ dependencies {
     // jsbridge
     implementation 'ink.lodz:jsbridge-kt:1.0.4'
 
+    implementation 'org.aspectj:aspectjrt:1.9.7'
+
+}
+
+import org.aspectj.bridge.IMessage
+import org.aspectj.bridge.MessageHandler
+import org.aspectj.tools.ajc.Main
+
+final def log = project.logger
+final def variants = project.android.applicationVariants
+variants.all { variant ->
+    variant.outputs.all { output ->
+        outputFileName = "AgileDevKt" + "_${variant.name}_V${variant.versionName}.apk"
+
+        def fullName = ""
+        output.name.tokenize('-').eachWithIndex { token, index ->
+            fullName = fullName + (index == 0 ? token : token.capitalize())
+        }
+
+        JavaCompile javaCompile = variant.javaCompileProvider.get()
+        javaCompile.doLast {
+            String[] javaArgs = ["-showWeaveInfo",
+                                 "-1.8",
+                                 "-inpath", javaCompile.destinationDir.toString(),
+                                 "-aspectpath", javaCompile.classpath.asPath,
+                                 "-d", javaCompile.destinationDir.toString(),
+                                 "-classpath", javaCompile.classpath.asPath,
+                                 "-bootclasspath", project.android.bootClasspath.join(File.pathSeparator)]
+            log.debug "ajc javaArgs: " + Arrays.toString(javaArgs)
+            String[] kotlinArgs = ["-showWeaveInfo",
+                                   "-1.8",
+                                   "-inpath", project.buildDir.path + "/tmp/kotlin-classes/" + fullName,
+                                   "-aspectpath", javaCompile.classpath.asPath,
+                                   "-d", project.buildDir.path + "/tmp/kotlin-classes/" + fullName,
+                                   "-classpath", javaCompile.classpath.asPath,
+                                   "-bootclasspath", project.android.bootClasspath.join(
+                    File.pathSeparator)]
+            log.debug "ajc kotlinArgs: " + Arrays.toString(kotlinArgs)
+
+            MessageHandler handler = new MessageHandler(true)
+            new Main().run(javaArgs, handler)
+            new Main().run(kotlinArgs, handler)
+            for (IMessage message : handler.getMessages(null, true)) {
+                switch (message.getKind()) {
+                    case IMessage.ABORT:
+                    case IMessage.ERROR:
+                    case IMessage.FAIL:
+                        log.error message.message, message.thrown
+                        break
+                    case IMessage.WARNING:
+                        log.warn message.message, message.thrown
+                        break
+                    case IMessage.INFO:
+                        log.info message.message, message.thrown
+                        break
+                    case IMessage.DEBUG:
+                        log.debug message.message, message.thrown
+                        break
+                }
+            }
+        }
+    }
 }

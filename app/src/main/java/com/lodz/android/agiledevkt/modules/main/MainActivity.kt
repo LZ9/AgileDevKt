@@ -15,6 +15,7 @@ import com.lodz.android.agiledevkt.databinding.ActivityMainBinding
 import com.lodz.android.agiledevkt.modules.acache.ACacheTestActivity
 import com.lodz.android.agiledevkt.modules.album.AlbumActivity
 import com.lodz.android.agiledevkt.modules.annotation.AnnotationTestActivity
+import com.lodz.android.agiledevkt.modules.aop.AopTestActivity
 import com.lodz.android.agiledevkt.modules.api.ApiTestActivity
 import com.lodz.android.agiledevkt.modules.array.ArrayTestActivity
 import com.lodz.android.agiledevkt.modules.bitmap.BitmapTestActivity
@@ -171,6 +172,7 @@ class MainActivity : BaseActivity() {
         MainBean("ViewBinding测试类", "V", ViewBindingTestActivity::class.java),
         MainBean("Bytes字节转换测试类", "B", BytesTestActivity::class.java),
         MainBean("参数传递测试类", "C", ExtrasTestActivity::class.java),
+        MainBean("切面编程测试类", "Q", AopTestActivity::class.java),
     )
 
     private val mBinding: ActivityMainBinding by bindingLayout(ActivityMainBinding::inflate)

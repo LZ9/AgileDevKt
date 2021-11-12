@@ -837,4 +837,11 @@
     <string name="extras_to_parcelablearraylist">ParcelableArrayList参数：</string>
     <string name="extras_to_serializable">Serializable参数：</string>
 
+    <!-- AOP切面编程 -->
+    <string name="aop_login_proxy">登录代理</string>
+    <string name="aop_fast_click">快速点击</string>
+    <string name="aop_login_status">当前是否登录：</string>
+    <string name="aop_login">登录</string>
+    <string name="aop_title_login">登录页</string>
+    <string name="aop_title_attention">关注页</string>
 </resources>
