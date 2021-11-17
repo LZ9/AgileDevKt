@@ -12,7 +12,7 @@ task androidSourcesJar(type: Jar) {
 ext {path=
     PUBLISH_GROUP_ID = 'ink.lodz'
     PUBLISH_ARTIFACT_ID = 'pandora'
-    PUBLISH_VERSION = '1.8.0'
+    PUBLISH_VERSION = '1.8.1'
 }
 
 ext["signing.keyId"] = ''
