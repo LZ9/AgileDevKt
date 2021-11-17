@@ -6,8 +6,5 @@ package com.lodz.android.agiledevkt.modules.aop.checklogin
  * @date 2021/11/11
  */
 object LoginHelper {
-
     var isLogin = false
-
-    fun isUserLogin(): Boolean = isLogin
 }

@@ -5,6 +5,14 @@
     android:orientation="vertical"
     android:padding="10dp">
 
+    <TextView
+        android:id="@+id/login_status_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/aop_login_status" />
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/login_proxy_btn"
         android:layout_width="wrap_content"

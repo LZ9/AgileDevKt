@@ -34,7 +34,7 @@ class CheckLoginAspect {
         val signature = joinPoint.signature as? MethodSignature
         val checkLogin = signature?.method?.getAnnotation(CheckLogin::class.java) ?: return joinPoint.proceed()
         val context = joinPoint.`this` as? Context ?: return joinPoint.proceed()
-        if (LoginHelper.isUserLogin()) {
+        if (LoginHelper.isLogin) {
             context.toastShort("已登录")
             return joinPoint.proceed()
         }

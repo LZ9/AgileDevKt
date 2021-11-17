@@ -49,7 +49,6 @@ class AopLoginActivity :BaseActivity(){
 
     override fun initData() {
         super.initData()
-        mBinding.loginStatusTv.text = getString(R.string.aop_login_status).append(LoginHelper.isUserLogin())
         showStatusCompleted()
     }
 }
