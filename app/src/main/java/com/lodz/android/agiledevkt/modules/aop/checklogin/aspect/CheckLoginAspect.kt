@@ -3,7 +3,7 @@ package com.lodz.android.agiledevkt.modules.aop.checklogin.aspect
 import android.content.Context
 import com.lodz.android.agiledevkt.modules.aop.checklogin.AopLoginActivity
 import com.lodz.android.agiledevkt.modules.aop.checklogin.LoginHelper
-import com.lodz.android.corekt.log.PrintLog
+import com.lodz.android.corekt.anko.toastShort
 import org.aspectj.lang.ProceedingJoinPoint
 import org.aspectj.lang.annotation.Around
 import org.aspectj.lang.annotation.Aspect
@@ -31,17 +31,14 @@ class CheckLoginAspect {
      */
     @Around("executionCheckLogin()")
     fun checkLogin(joinPoint: ProceedingJoinPoint): Any? {
-        PrintLog.d("testtag", "进入切点")
         val signature = joinPoint.signature as? MethodSignature
         val checkLogin = signature?.method?.getAnnotation(CheckLogin::class.java) ?: return joinPoint.proceed()
+        val context = joinPoint.`this` as? Context ?: return joinPoint.proceed()
         if (LoginHelper.isUserLogin()) {
-            PrintLog.i("testtag", "已经登录")
+            context.toastShort("已登录")
             return joinPoint.proceed()
         }
-        val context = joinPoint.`this` as? Context ?: return joinPoint.proceed()
-        PrintLog.e("testtag", "未登录，跳转登录")
+        context.toastShort("未登录，请先登录")
         return AopLoginActivity.start(context)
     }
-
-
 }

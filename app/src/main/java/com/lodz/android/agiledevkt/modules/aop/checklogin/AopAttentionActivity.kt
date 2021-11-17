@@ -38,12 +38,6 @@ class AopAttentionActivity :BaseActivity(){
         finish()
     }
 
-    override fun setListeners() {
-        super.setListeners()
-
-
-    }
-
     override fun initData() {
         super.initData()
         showStatusCompleted()
