@@ -17,7 +17,7 @@ import com.lodz.android.pandora.widget.rv.recycler.DataViewHolder
  * 图片九宫格适配器
  * Created by zhouL on 2018/12/25.
  */
-internal class NineGridAdapter(context: Context) : BaseRecyclerViewAdapter<PicInfo>(context) {
+open class NineGridAdapter(context: Context) : BaseRecyclerViewAdapter<PicInfo>(context) {
 
     /** 添加按钮 */
     private val VIEW_TYPE_ADD = 0
@@ -168,7 +168,7 @@ internal class NineGridAdapter(context: Context) : BaseRecyclerViewAdapter<PicIn
         }
     }
 
-    internal inner class NineGridAddViewHolder(itemView: View) : DataViewHolder(itemView)
+    inner class NineGridAddViewHolder(itemView: View) : DataViewHolder(itemView)
 
-    internal inner class NineGridViewHolder(itemView: View) : DataViewHolder(itemView)
+    inner class NineGridViewHolder(itemView: View) : DataViewHolder(itemView)
 }
