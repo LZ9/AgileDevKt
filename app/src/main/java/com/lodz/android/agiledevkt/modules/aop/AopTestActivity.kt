@@ -54,7 +54,7 @@ class AopTestActivity :BaseActivity(){
             mBinding.logTv.text = ""
         }
 
-        mBinding.fastClickBtn.setOnClickListener @FastClickLimit {
+        mBinding.fastClickBtn.setOnClickListener @FastClickLimit(2000) {
             addLog(DateUtils.getCurrentFormatString(DateUtils.TYPE_10).append("：FastClick"))
         }
     }

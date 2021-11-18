@@ -1,6 +1,5 @@
 package com.lodz.android.agiledevkt.modules.aop.fastclick
 
-import android.view.View
 import com.lodz.android.corekt.log.PrintLog
 import org.aspectj.lang.ProceedingJoinPoint
 import org.aspectj.lang.annotation.*
@@ -13,6 +12,8 @@ import org.aspectj.lang.reflect.MethodSignature
  */
 @Aspect
 class FastClickLimitAspect {
+
+    private var mCurrentTime: Long = 0
 
     /**
      *  Before	前置通知, 在目标执行之前执行通知
@@ -30,19 +31,12 @@ class FastClickLimitAspect {
             joinPoint.proceed()
             return
         }
-        PrintLog.i("testtag", "Limit")
-        val listener = joinPoint.`this` as? View.OnClickListener
-        if (listener == null) {
+        val time = System.currentTimeMillis()
+        if (time - mCurrentTime > fastClickLimit.duration){
+            mCurrentTime = time
             joinPoint.proceed()
-            return
         }
-        joinPoint.proceed()
-//        Observable.create<Int> { emitter ->
-//            emitter.doNext(1)
-//        }.throttleFirst(1, TimeUnit.SECONDS)
-//            .subscribe(BaseObserver.action(next = {
-//                joinPoint.proceed()
-//            }))
+        PrintLog.i("testtag", "time : $time")
     }
 
 

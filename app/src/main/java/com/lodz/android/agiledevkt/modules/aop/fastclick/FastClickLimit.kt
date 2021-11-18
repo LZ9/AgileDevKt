@@ -8,4 +8,5 @@ package com.lodz.android.agiledevkt.modules.aop.fastclick
  */
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
-annotation class FastClickLimit
+/** 快速点击限制，间隔时间[duration]，默认1000毫秒 */
+annotation class FastClickLimit(val duration: Long = 1000)
