@@ -1,6 +1,5 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 //apply from: 'publish.gradle'
 
 android {
@@ -9,8 +8,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 31
-        versionCode 51
-        versionName "1.8.1"// 成功上传
+        versionCode 52
+        versionName "1.8.2"// 未上传
     }
 
     viewBinding {
