@@ -9,8 +9,10 @@ import com.lodz.android.agiledevkt.databinding.ActivityAopTestBinding
 import com.lodz.android.agiledevkt.modules.aop.checklogin.AopAttentionActivity
 import com.lodz.android.agiledevkt.modules.aop.checklogin.LoginHelper
 import com.lodz.android.agiledevkt.modules.aop.checklogin.aspect.CheckLogin
+import com.lodz.android.agiledevkt.modules.aop.fastclick.FastClickLimit
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.corekt.anko.append
+import com.lodz.android.corekt.utils.DateUtils
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 
@@ -48,8 +50,12 @@ class AopTestActivity :BaseActivity(){
             goAttentionActivity()
         }
 
-        mBinding.fastClickBtn.setOnClickListener {
+        mBinding.cleanBtn.setOnClickListener {
+            mBinding.logTv.text = ""
+        }
 
+        mBinding.fastClickBtn.setOnClickListener @FastClickLimit {
+            addLog(DateUtils.getCurrentFormatString(DateUtils.TYPE_10).append("：FastClick"))
         }
     }
 
@@ -66,5 +72,12 @@ class AopTestActivity :BaseActivity(){
     override fun onResume() {
         super.onResume()
         mBinding.loginStatusTv.text = getString(R.string.aop_login_status).append(LoginHelper.isLogin)
+    }
+
+    private fun addLog(log: String) {
+        if (log.isEmpty()) {
+            return
+        }
+        mBinding.logTv.text = log.append("\n").append(mBinding.logTv.text)
     }
 }

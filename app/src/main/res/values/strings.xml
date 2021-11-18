@@ -844,4 +844,5 @@
     <string name="aop_login">登录</string>
     <string name="aop_title_login">登录页</string>
     <string name="aop_title_attention">关注页</string>
+    <string name="aop_clean">清空</string>
 </resources>
