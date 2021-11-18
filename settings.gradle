@@ -1,2 +1,1 @@
 include ':app', ':corekt', ':imageloaderkt', ':pandora'
-include ':aspectLib'
