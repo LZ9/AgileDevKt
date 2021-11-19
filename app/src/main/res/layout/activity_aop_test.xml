@@ -40,27 +40,38 @@
 
     </androidx.core.widget.NestedScrollView>
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/login_proxy_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/aop_login_proxy" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/fast_click_annotation_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/aop_fast_click_annotation" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/login_proxy_btn"
+            android:id="@+id/fast_click_object_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
             android:layout_weight="1"
-            android:text="@string/aop_login_proxy" />
+            android:text="@string/aop_fast_click_object" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/fast_click_btn"
+            android:id="@+id/fast_click_lambda_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_weight="1"
-            android:text="@string/aop_fast_click" />
+            android:text="@string/aop_fast_click_lambda" />
 
     </LinearLayout>
 

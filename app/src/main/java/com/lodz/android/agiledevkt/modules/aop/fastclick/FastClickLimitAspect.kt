@@ -1,6 +1,6 @@
 package com.lodz.android.agiledevkt.modules.aop.fastclick
 
-import com.lodz.android.corekt.log.PrintLog
+import android.view.View
 import org.aspectj.lang.ProceedingJoinPoint
 import org.aspectj.lang.annotation.*
 import org.aspectj.lang.reflect.MethodSignature
@@ -13,18 +13,21 @@ import org.aspectj.lang.reflect.MethodSignature
 @Aspect
 class FastClickLimitAspect {
 
-    private var mCurrentTime: Long = 0
+    companion object{
+        /** 默认点击间隔时间 */
+        const val DEFAULT_DURATION = 1000L
+    }
 
-    /**
-     *  Before	前置通知, 在目标执行之前执行通知
-     *   After	后置通知, 目标执行后执行通知
-     *   Around	环绕通知, 在目标执行中执行通知, 控制目标执行时机
-     *   AfterReturning	后置返回通知, 目标返回时执行通知
-     *   AfterThrowing	异常通知, 目标抛出异常时执行通知
-     */
-    @Around("execution(@com.lodz.android.agiledevkt.modules.aop.fastclick.FastClickLimit  * *(..))")
+    /** 上一次的记录时间 */
+    private var mLastTime: Long = 0
+
+    /** 注解的切点表达式 */
+    @Pointcut("execution(@com.lodz.android.agiledevkt.modules.aop.fastclick.FastClickLimit  * *(..))")
+    fun dealViewClickWithAnnotation(){}
+
+
+    @Around("dealViewClickWithAnnotation()")
     fun fastClickLimit(joinPoint: ProceedingJoinPoint) {
-        PrintLog.d("testtag", "fastClickLimit")
         val signature = joinPoint.signature as? MethodSignature
         val fastClickLimit = signature?.method?.getAnnotation(FastClickLimit::class.java)
         if (fastClickLimit == null) {
@@ -32,20 +35,53 @@ class FastClickLimitAspect {
             return
         }
         val time = System.currentTimeMillis()
-        if (time - mCurrentTime > fastClickLimit.duration){
-            mCurrentTime = time
+        if (time - mLastTime > fastClickLimit.duration){
+            mLastTime = time
             joinPoint.proceed()
         }
-        PrintLog.i("testtag", "time : $time")
     }
 
+    /** 匿名内部类的切点表达式 */
+    @Pointcut("execution(* android.view.View.OnClickListener.onClick(..))")
+    fun dealViewClickWithObject() {}
 
+    /** Lambda的切点表达式 */
+    @Pointcut("execution(* *..*lambda*(.., android.view.View))")
+    fun dealViewClickWithLambda() {}
 
-//    @Around("execution(* android.view.View.OnClickListener.onClick(..))")
-//    fun limitOnClickListener(joinPoint: ProceedingJoinPoint): Any? {
-//        PrintLog.i("testtag", "OnClickListener")
-//        return joinPoint.proceed()
-//    }
+    @Around("dealViewClickWithObject()||dealViewClickWithLambda()")
+    fun clickListenerLimit(joinPoint: ProceedingJoinPoint) {
+        val signature = joinPoint.signature as? MethodSignature
+        val fastClickLimit = signature?.method?.getAnnotation(FastClickLimit::class.java)
+        if (fastClickLimit != null) {//如果已经注解了FastClickLimit就跳过不处理
+            joinPoint.proceed()
+            return
+        }
+        val view = getClickView(joinPoint.args)
+        if (view == null) {
+            joinPoint.proceed()
+            return
+        }
+        val key = view.id
+        val currentTime: Long = view.getTag(key) as? Long ?: 0
+        val time = System.currentTimeMillis()
+        if (time - currentTime > DEFAULT_DURATION){
+            view.setTag(key, time)
+            joinPoint.proceed()
+        }
+    }
 
+    /** 获取参数[args]中的View对象 */
+    private fun getClickView(args: Array<Any>?): View? {
+        if (args.isNullOrEmpty()) {
+            return null
+        }
+        args.forEach {
+            if (it is View) {
+                return it
+            }
+        }
+        return null
+    }
 
 }

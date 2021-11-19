@@ -82,7 +82,7 @@ android {
 aspectjx {
     enabled true
     exclude 'androidx', 'com.google', 'com.squareup', 'com.alipay', 'com.taobao', 'org.apache',
-            'kotlinx', 'org.jetbrains', "module-info", 'versions.9'
+            'kotlinx', 'org.jetbrains', "module-info", 'versions.9', "com.lodz.android.pandora"
 }
 
 dependencies {
