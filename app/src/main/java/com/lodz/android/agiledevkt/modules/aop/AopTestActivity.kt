@@ -70,7 +70,7 @@ class AopTestActivity :BaseActivity(){
     }
 
     @CheckLogin
-    fun goAttentionActivity() {
+    private fun goAttentionActivity() {
         AopAttentionActivity.start(getContext())
     }
 
