@@ -33,9 +33,34 @@ class NotificationUtils private constructor(context: Context) {
         mNotificationManager.notify(id, notification)
     }
 
+    /** 发送标志为[id]的通知[notification] */
+    fun send(tag: String, id: Int, notification: Notification) {
+        mNotificationManager.notify(tag, id, notification)
+    }
+
     /** 发送随机id的通知[notification] */
     fun send(notification: Notification) {
         mNotificationManager.notify(getRandomId(), notification)
+    }
+
+    /** 发送随机id的通知[notification] */
+    fun send(tag: String, notification: Notification) {
+        mNotificationManager.notify(tag, getRandomId(), notification)
+    }
+
+    /** 取消编号为id的通知[id] */
+    fun cancel(id: Int) {
+        mNotificationManager.cancel(id)
+    }
+
+    /** 取消编号为id的通知[id] */
+    fun cancel(tag: String, id: Int) {
+        mNotificationManager.cancel(tag, id)
+    }
+
+    /** 取消所有通知 */
+    fun cancelAll() {
+        mNotificationManager.cancelAll()
     }
 
     /** 创建一个通知通道[channel] */
