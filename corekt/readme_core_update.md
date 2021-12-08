@@ -1,5 +1,10 @@
 # core-kt库更新记录
 
+##### 2021/12/08
+1. 更新依赖库版本
+2. NotificationUtils.kt增加取消通知方法
+3. 发布1.4.6版
+
 ##### 2021/11/05
 1. AnkoIntent.kt增加Activity的Intent和Fragment的arguments的委托方法
 2. 文件帮助类增加读取文件内容方法和写入文件开头、结尾方法
