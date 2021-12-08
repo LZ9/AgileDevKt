@@ -5,6 +5,7 @@ import android.net.Uri
 import android.view.View
 import android.widget.ImageView
 import androidx.annotation.IntRange
+import androidx.lifecycle.DefaultLifecycleObserver
 import com.lodz.android.corekt.album.PicInfo
 import com.lodz.android.pandora.photopicker.contract.OnImgLoader
 import com.lodz.android.pandora.photopicker.contract.picker.OnPhotoPickerListener
@@ -34,6 +35,12 @@ class PickerBuilder<V : View> {
     /** 设置图片选中回调[listener] */
     fun setOnPhotoPickerListener(listener: OnPhotoPickerListener): PickerBuilder<V> {
         pickerBean.photoPickerListener = listener
+        return this
+    }
+
+    /** 设置生命周期观察者[observer] */
+    fun setOnLifecycleObserver(observer: DefaultLifecycleObserver): PickerBuilder<V> {
+        pickerBean.lifecycleObserver = observer
         return this
     }
 

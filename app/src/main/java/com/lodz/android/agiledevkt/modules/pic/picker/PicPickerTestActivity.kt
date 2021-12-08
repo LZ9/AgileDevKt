@@ -7,6 +7,8 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.github.chrisbanes.photoview.PhotoView
 import com.lodz.android.agiledevkt.R
@@ -17,6 +19,7 @@ import com.lodz.android.corekt.album.PicInfo
 import com.lodz.android.corekt.anko.goAppDetailSetting
 import com.lodz.android.corekt.anko.isPermissionGranted
 import com.lodz.android.corekt.anko.toastShort
+import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.photopicker.contract.preview.PreviewController
@@ -122,6 +125,37 @@ class PicPickerTestActivity : BaseActivity() {
                         if (isScale && view is PhotoView) {
                             view.attacher.update()
                         }
+                    }
+                })
+                .setOnLifecycleObserver(object :DefaultLifecycleObserver{
+                    override fun onDestroy(owner: LifecycleOwner) {
+                        super.onDestroy(owner)
+                        PrintLog.e("testtag", "DefaultLifecycleObserver onDestroy")
+                    }
+
+                    override fun onCreate(owner: LifecycleOwner) {
+                        super.onCreate(owner)
+                        PrintLog.e("testtag", "DefaultLifecycleObserver onCreate")
+                    }
+
+                    override fun onPause(owner: LifecycleOwner) {
+                        super.onPause(owner)
+                        PrintLog.v("testtag", "DefaultLifecycleObserver onPause")
+                    }
+
+                    override fun onResume(owner: LifecycleOwner) {
+                        super.onResume(owner)
+                        PrintLog.v("testtag", "DefaultLifecycleObserver onResume")
+                    }
+
+                    override fun onStart(owner: LifecycleOwner) {
+                        super.onStart(owner)
+                        PrintLog.d("testtag", "DefaultLifecycleObserver onStart")
+                    }
+
+                    override fun onStop(owner: LifecycleOwner) {
+                        super.onStop(owner)
+                        PrintLog.d("testtag", "DefaultLifecycleObserver onStop")
                     }
                 })
                 .setOnPhotoPickerListener { photos ->

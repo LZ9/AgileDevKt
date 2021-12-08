@@ -1,6 +1,7 @@
 package com.lodz.android.pandora.photopicker.picker
 
 import android.view.View
+import androidx.lifecycle.DefaultLifecycleObserver
 import com.lodz.android.corekt.album.PicInfo
 import com.lodz.android.pandora.photopicker.contract.OnImgLoader
 import com.lodz.android.pandora.photopicker.contract.picker.OnPhotoPickerListener
@@ -34,11 +35,14 @@ internal class PickerBean<V : View> {
     var isPickAllPhoto = true
     /** 图片控件 */
     var imgView: AbsImageView<V, PicInfo>? = null
+    /** 生命周期接口 */
+    var lifecycleObserver: DefaultLifecycleObserver? = null
 
     fun clear() {
         sourceList = null
         imgLoader = null
         imgView = null
         photoPickerListener = null
+        lifecycleObserver = null
     }
 }

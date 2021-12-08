@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.*
 import android.graphics.drawable.Drawable
-import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
@@ -87,6 +86,7 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
 
     override fun findViews(savedInstanceState: Bundle?) {
         super.findViews(savedInstanceState)
+        mPdrPickerBean?.lifecycleObserver?.onCreate { lifecycle }
         val bean = mPdrPickerBean
         if (bean == null) {
             finish()
@@ -478,6 +478,7 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
     }
 
     override fun finish() {
+        mPdrPickerBean?.lifecycleObserver?.onDestroy { lifecycle }
         mPdrAdapter.release()
         mPdrPickerBean?.clear()
         mPdrPickerBean = null
@@ -485,4 +486,25 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
         sPickerBean = null
         super.finish()
     }
+
+    override fun onResume() {
+        super.onResume()
+        mPdrPickerBean?.lifecycleObserver?.onResume { lifecycle }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mPdrPickerBean?.lifecycleObserver?.onStart { lifecycle }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mPdrPickerBean?.lifecycleObserver?.onPause { lifecycle }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mPdrPickerBean?.lifecycleObserver?.onStop { lifecycle }
+    }
+
 }
