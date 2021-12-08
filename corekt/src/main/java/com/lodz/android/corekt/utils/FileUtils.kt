@@ -475,7 +475,7 @@ object FileUtils {
         var uri: Uri? = null
         if (cursor.moveToFirst()) {
             val id = cursor.getColumnIndex(MediaStore.Images.Media._ID)
-            if (id > 0){
+            if (id >= 0){
                 uri = ContentUris.withAppendedId(
                     mediaUri,
                     cursor.getLong(id)
