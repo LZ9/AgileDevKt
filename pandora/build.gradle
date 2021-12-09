@@ -33,7 +33,7 @@ android {
 }
 
 dependencies {
-//    api 'ink.lodz:core-kt:1.4.6'
+//    api 'ink.lodz:core-kt:1.4.7'
     api project(':corekt')
 
     // RxJava

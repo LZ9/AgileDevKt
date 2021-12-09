@@ -3,7 +3,8 @@
 ##### 2021/12/08
 1. 更新依赖库版本
 2. NotificationUtils.kt增加取消通知方法
-3. 发布1.4.6版
+3. 修复文件path转URI的BUG
+4. 发布1.4.7版
 
 ##### 2021/11/05
 1. AnkoIntent.kt增加Activity的Intent和Fragment的arguments的委托方法
