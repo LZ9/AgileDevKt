@@ -478,12 +478,7 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
     }
 
     override fun finish() {
-        mPdrPickerBean?.lifecycleObserver?.onDestroy { lifecycle }
-        mPdrAdapter.release()
-        mPdrPickerBean?.clear()
-        mPdrPickerBean = null
-        sPickerBean?.clear()
-        sPickerBean = null
+        release()
         super.finish()
     }
 
@@ -507,4 +502,18 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
         mPdrPickerBean?.lifecycleObserver?.onStop { lifecycle }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        release()
+    }
+
+    /** 释放资源 */
+    private fun release() {
+        mPdrPickerBean?.lifecycleObserver?.onDestroy { lifecycle }
+        mPdrAdapter.release()
+        mPdrPickerBean?.clear()
+        mPdrPickerBean = null
+        sPickerBean?.clear()
+        sPickerBean = null
+    }
 }
