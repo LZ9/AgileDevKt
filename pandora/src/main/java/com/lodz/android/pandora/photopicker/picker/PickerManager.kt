@@ -9,7 +9,10 @@ import com.lodz.android.corekt.anko.deduplication
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.corekt.utils.ToastUtils
 import com.lodz.android.pandora.R
+import com.lodz.android.pandora.event.PhotoPickerFinishEvent
+import com.lodz.android.pandora.event.PicturePreviewFinishEvent
 import com.lodz.android.pandora.photopicker.picker.pick.PhotoPickerActivity
+import org.greenrobot.eventbus.EventBus
 import java.io.File
 
 /**
@@ -25,26 +28,26 @@ class PickerManager<V : View> internal constructor(private val pickerBean: Picke
 
     /** 打开选择器，上下文[context]，Intent启动标记[flags] */
     @JvmOverloads
-    fun open(context: Context, flags: List<Int>? = null) {
+    fun open(context: Context, flags: List<Int>? = null): PickerManager<V> {
         if (pickerBean.imgLoader == null) {// 校验图片加载器
             context.toastShort(R.string.pandora_photo_loader_unset)
-            return
+            return this
         }
         if (pickerBean.imgView == null) {// 校验图片加载器
             ToastUtils.showShort(context, R.string.pandora_preview_img_unset)
-            return
+            return this
         }
         if (pickerBean.photoPickerListener == null) {// 校验图片选中回调监听
             context.toastShort(R.string.pandora_photo_selected_listener_unset)
-            return
+            return this
         }
         if (!pickerBean.isPickAllPhoto && pickerBean.sourceList.isNullOrEmpty()) {// 校验指定图片数据列表
             context.toastShort(R.string.pandora_photo_source_list_empty)
-            return
+            return this
         }
         if (pickerBean.isPickAllPhoto && !pickerBean.isNeedCamera && AlbumUtils.getAllImages(context).isEmpty()) {//未开启拍照时校验手机内是否有图片
             context.toastShort(R.string.pandora_photo_source_list_empty)
-            return
+            return this
         }
         if (pickerBean.maxCount < 1) {// 修正最大选择数
             pickerBean.maxCount = 1
@@ -67,8 +70,15 @@ class PickerManager<V : View> internal constructor(private val pickerBean: Picke
         //开启拍照功能 && 当前系统是7.0以上且没有配置FileProvider
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && pickerBean.isNeedCamera && pickerBean.authority.isEmpty()) {
             context.toastShort(R.string.pandora_photo_authority_empty)
-            return
+            return this
         }
         PhotoPickerActivity.start(context, pickerBean, flags)
+        return this
+    }
+
+    /** 手动关闭选择器 */
+    fun finishPickActivity(){
+        EventBus.getDefault().post(PicturePreviewFinishEvent())
+        EventBus.getDefault().post(PhotoPickerFinishEvent())
     }
 }

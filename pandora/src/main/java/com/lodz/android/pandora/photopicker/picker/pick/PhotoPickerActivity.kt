@@ -20,6 +20,7 @@ import com.lodz.android.corekt.utils.*
 import com.lodz.android.pandora.R
 import com.lodz.android.pandora.base.activity.AbsActivity
 import com.lodz.android.pandora.databinding.PandoraActivityPickerBinding
+import com.lodz.android.pandora.event.PhotoPickerFinishEvent
 import com.lodz.android.pandora.photopicker.picker.PickerBean
 import com.lodz.android.pandora.photopicker.picker.PickerItemBean
 import com.lodz.android.pandora.photopicker.picker.dialog.ImageFolderDialog
@@ -31,6 +32,8 @@ import com.lodz.android.pandora.rx.utils.RxUtils
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import io.reactivex.rxjava3.core.Observable
 import kotlinx.coroutines.MainScope
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 /**
  * 图片选择页面
@@ -516,4 +519,12 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
         sPickerBean?.clear()
         sPickerBean = null
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onPhotoPickerFinishEvent(event: PhotoPickerFinishEvent) {
+        if (!isFinishing) {
+            finish()
+        }
+    }
+
 }

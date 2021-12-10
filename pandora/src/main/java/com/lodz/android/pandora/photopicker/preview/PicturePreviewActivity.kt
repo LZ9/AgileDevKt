@@ -14,9 +14,12 @@ import com.lodz.android.corekt.anko.getSize
 import com.lodz.android.corekt.utils.StatusBarUtil
 import com.lodz.android.pandora.base.activity.AbsActivity
 import com.lodz.android.pandora.databinding.PandoraActivityPreviewBinding
+import com.lodz.android.pandora.event.PicturePreviewFinishEvent
 import com.lodz.android.pandora.photopicker.contract.preview.PreviewController
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.rv.snap.ViewPagerSnapHelper
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 /**
  * 图片预览页面
@@ -137,11 +140,27 @@ internal class PicturePreviewActivity<V : View, T : Any> : AbsActivity() {
     }
 
     override fun finish() {
+        release()
+        super.finish()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        release()
+    }
+
+    private fun release() {
         mPdrAdapter.release()
         mPdrPreviewBean?.clear()
         mPdrPreviewBean = null
         sPreviewBean?.clear()
         sPreviewBean = null
-        super.finish()
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onPhotoPickerFinishEvent(event: PicturePreviewFinishEvent) {
+        if (!isFinishing) {
+            finish()
+        }
     }
 }
