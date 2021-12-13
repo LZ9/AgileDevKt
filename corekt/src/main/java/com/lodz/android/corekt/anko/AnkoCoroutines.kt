@@ -10,6 +10,9 @@ import kotlinx.coroutines.*
  * @date 2019/5/15
  */
 
+@Suppress("FunctionName")
+fun IoScope(): CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+
 /** 主线程执行 */
 fun CoroutineScope.runOnMain(action: () -> Unit): Job = launch(Dispatchers.Main) { action() }
 

@@ -12,6 +12,9 @@ import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.system.measureTimeMillis
 
 /**
@@ -44,6 +47,8 @@ class CoroutinesActivity : BaseActivity() {
     private val TYPE_CHANNEL = 6
     /** 协程异步 */
     private val TYPE_ASYNC = 7
+    /** 基础flow */
+    private val TYPE_SIMPLE_FLOW = 8
 
     private val mBinding: ActivityCoroutinesBinding by bindingLayout(ActivityCoroutinesBinding::inflate)
 
@@ -77,6 +82,7 @@ class CoroutinesActivity : BaseActivity() {
                 R.id.timeout_rbtn -> TYPE_TIMEOUT
                 R.id.channel_rbtn -> TYPE_CHANNEL
                 R.id.async_rbtn -> TYPE_ASYNC
+                R.id.simple_flow_rbtn -> TYPE_SIMPLE_FLOW
                 else -> TYPE_NONE
             }
         }
@@ -118,7 +124,10 @@ class CoroutinesActivity : BaseActivity() {
                 mJob = async()
                 return@setOnClickListener
             }
-
+            if (mType == TYPE_SIMPLE_FLOW){
+                mJob = simpleFlow()
+                return@setOnClickListener
+            }
         }
 
         // 取消按钮
@@ -152,13 +161,14 @@ class CoroutinesActivity : BaseActivity() {
 
     /** 异步线程执行协程 */
     private fun io(): Job {
+        logResult(Thread.currentThread().name, "开始")
         val job = MainScope().launch(Dispatchers.IO) {
             logResult(Thread.currentThread().name, "开始执行协程")
             delay(1000L)
             logResult(Thread.currentThread().name, "完成")
             logResult(Thread.currentThread().name, "结束协程")
         }
-        logResult(Thread.currentThread().name, "开始")
+
         logResult(Thread.currentThread().name, "结束")
         return job
     }
@@ -166,10 +176,11 @@ class CoroutinesActivity : BaseActivity() {
     /** 等待协程执行，join阻塞主线程 */
     private suspend fun join(): Job {
         val job = MainScope().launch(Dispatchers.IO) {
-            logResult(Thread.currentThread().name, "开始执行协程")
+            delay(1000L)
+            logResult(Thread.currentThread().name, "开始子协程")
             delay(3000L)
-            logResult(Thread.currentThread().name, "完成")
-            logResult(Thread.currentThread().name, "结束协程")
+            logResult(Thread.currentThread().name, "结束子协程")
+            delay(1000L)
         }
         logResult(Thread.currentThread().name, "开始")
         job.join() // 等待直到子协程执行结束
@@ -280,6 +291,32 @@ class CoroutinesActivity : BaseActivity() {
         delay(delay)
         logResult(Thread.currentThread().name,"$num 延迟 $delay 结束")
         return num
+    }
+
+    private fun simpleFlow(): Job = CoroutineScope(EmptyCoroutineContext).launch {
+        logResult(Thread.currentThread().name,"simpleFlow")
+//        flow<Int> {
+//            logResult(Thread.currentThread().name,"flow")
+//        }
+        CoroutineScope(Dispatchers.Main).runOnIO {
+            logResult(Thread.currentThread().name,"CoroutineScope")
+        }
+
+        MainScope().launch {
+            logResult(Thread.currentThread().name,"MainScope")
+        }
+
+        IoScope().launch {
+            logResult(Thread.currentThread().name,"IoScope")
+        }
+    }
+
+    /** 简单的流，从1开始遍历数字[num]，延时[delay]毫秒 */
+    private fun simple(num: Int, delay: Long): Flow<Int> = flow {
+        for (i in 1..num) {
+            delay(delay)
+            emit(i)
+        }
     }
 
     private fun logResult(threadName: String, log: String) {

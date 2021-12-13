@@ -694,6 +694,7 @@
     <string name="coroutines_timeout">超时限制</string>
     <string name="coroutines_channel">协程通道</string>
     <string name="coroutines_async">协程异步</string>
+    <string name="coroutines_simple_flow">基础flow</string>
     <string name="coroutines_type_none_tips">您尚未选择协程执行类型</string>
 
     <!-- 单位转换测试 -->

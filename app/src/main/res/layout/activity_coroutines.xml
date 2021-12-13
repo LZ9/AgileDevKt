@@ -19,7 +19,7 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="200dp">
+        android:layout_height="350dp">
 
         <RadioGroup
             android:id="@+id/radio_group"
@@ -31,50 +31,49 @@
                 android:id="@+id/main_rbtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
                 android:text="@string/coroutines_main" />
 
             <RadioButton
                 android:id="@+id/io_rbtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
                 android:text="@string/coroutines_io" />
 
             <RadioButton
                 android:id="@+id/join_rbtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
                 android:text="@string/coroutines_join" />
 
             <RadioButton
                 android:id="@+id/repeat_rbtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
                 android:text="@string/coroutines_repeat" />
 
             <RadioButton
                 android:id="@+id/timeout_rbtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
                 android:text="@string/coroutines_timeout" />
 
             <RadioButton
                 android:id="@+id/channel_rbtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
                 android:text="@string/coroutines_channel" />
 
             <RadioButton
                 android:id="@+id/async_rbtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
                 android:text="@string/coroutines_async" />
+
+            <RadioButton
+                android:id="@+id/simple_flow_rbtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/coroutines_simple_flow" />
 
         </RadioGroup>
     </androidx.core.widget.NestedScrollView>
