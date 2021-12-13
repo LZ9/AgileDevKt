@@ -127,7 +127,7 @@ internal class TakePhotoActivity : AbsActivity() {
             handleConfirm()
             return
         }
-        MainScope().runOnMainDelay(300) {
+        runOnMainDelay(300) {
             handleCameraSuccess()
         }
     }

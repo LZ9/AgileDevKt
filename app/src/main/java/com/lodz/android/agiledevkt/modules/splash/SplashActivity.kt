@@ -68,7 +68,7 @@ class SplashActivity : AbsActivity() {
             finish()
             return
         }
-        MainScope().runOnMainDelay(1000) {
+        runOnMainDelay(1000) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {// 6.0以上的手机对权限进行动态申请
                 onRequestPermission()
             } else {

@@ -162,7 +162,7 @@ class ToastUtils private constructor(private val mContext: Context) {
             getToast()?.show()
             return
         }
-        MainScope().runOnMain {
+        runOnMain {
             getToast()?.show()//非主线程post到主线程显示
         }
     }

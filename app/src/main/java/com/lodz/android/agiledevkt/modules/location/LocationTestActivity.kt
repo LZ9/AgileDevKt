@@ -226,7 +226,7 @@ class LocationTestActivity : BaseActivity() {
     /** 打印信息[result] */
     private fun printResult(result: String) {
         mBinding.logTv.text = (mBinding.logTv.text.toString() + result + "\n")
-        MainScope().runOnMainDelay(100){
+        runOnMainDelay(100){
             mBinding.scrollView.fullScroll(ScrollView.FOCUS_DOWN)
         }
     }

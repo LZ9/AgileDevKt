@@ -185,7 +185,7 @@ class RxCompletableActivity : BaseActivity() {
             "${mBinding.resultTv.text}\n$text"
         }
         mBinding.resultTv.text = log
-        MainScope().runOnMainDelay(100) {
+        runOnMainDelay(100) {
             mBinding.scrollView.fullScroll(ScrollView.FOCUS_DOWN)
         }
     }

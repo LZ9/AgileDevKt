@@ -109,7 +109,7 @@ class RxFlowableActivity : BaseActivity() {
 
                         override fun onNext(str: String?) {
                             printLog(str ?: "")
-                            MainScope().runOnMainDelay(100) {
+                            runOnMainDelay(100) {
                                 mBpSubscription?.request(1)
                             }
                         }
@@ -287,7 +287,7 @@ class RxFlowableActivity : BaseActivity() {
             "${mBinding.resultTv.text}\n$text"
         }
         mBinding.resultTv.text = log
-        MainScope().runOnMainDelay(100) {
+        runOnMainDelay(100) {
             mBinding.scrollView.fullScroll(ScrollView.FOCUS_DOWN)
         }
     }

@@ -82,12 +82,12 @@ abstract class ProgressSingleObserver<T : Any> : RxSingleObserver<T>() {
 
     /** 显示加载框 */
     private fun showProgress() {
-        MainScope().runOnMainCatch({ mProgressDialog?.show() })
+        runOnMainCatch({ mProgressDialog?.show() })
     }
 
     /** 关闭加载框 */
     private fun dismissProgress() {
-        MainScope().runOnMainCatch({
+        runOnMainCatch({
             mProgressDialog?.dismiss()
             mProgressDialog = null
         })

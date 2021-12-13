@@ -14,15 +14,15 @@ import kotlinx.coroutines.*
 fun IoScope(): CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
 /** 主线程执行 */
-fun CoroutineScope.runOnMain(action: () -> Unit): Job = launch(Dispatchers.Main) { action() }
+fun runOnMain(action: () -> Unit): Job = MainScope().launch { action() }
 
 /** 主线程执行（ViewModel） */
 fun ViewModel.runOnMain(action: () -> Unit): Job = viewModelScope.launch(Dispatchers.Main) { action() }
 
 /** 主线程执行捕获异常 */
 @JvmOverloads
-fun CoroutineScope.runOnMainCatch(action: () -> Unit, error: (e: Exception) -> Unit = {}): Job =
-    launch(Dispatchers.Main) {
+fun runOnMainCatch(action: () -> Unit, error: (e: Exception) -> Unit = {}): Job =
+    MainScope().launch {
         try {
             action()
         } catch (e: Exception) {
@@ -44,8 +44,8 @@ fun ViewModel.runOnMainCatch(action: () -> Unit, error: (e: Exception) -> Unit =
     }
 
 /** 主线程延迟[timeMillis]毫秒执行 */
-fun CoroutineScope.runOnMainDelay(timeMillis: Long, action: () -> Unit): Job =
-    launch(Dispatchers.IO) {
+fun runOnMainDelay(timeMillis: Long, action: () -> Unit): Job =
+    IoScope().launch {
         delay(timeMillis)
         launch(Dispatchers.Main) {
             action()
@@ -62,15 +62,15 @@ fun ViewModel.runOnMainDelay(timeMillis: Long, action: () -> Unit): Job =
     }
 
 /** 异步线程执行 */
-fun CoroutineScope.runOnIO(actionIO: () -> Unit): Job = launch(Dispatchers.IO) { actionIO() }
+fun runOnIO(actionIO: () -> Unit): Job = IoScope().launch { actionIO() }
 
 /** 异步线程执行（ViewModel） */
 fun ViewModel.runOnIO(actionIO: () -> Unit): Job = viewModelScope.launch(Dispatchers.IO) { actionIO() }
 
 /** 异步线程执行捕获异常 */
 @JvmOverloads
-fun CoroutineScope.runOnIOCatch(actionIO: () -> Unit, error: (e: Exception) -> Unit = {}): Job =
-    launch(Dispatchers.IO) {
+fun runOnIOCatch(actionIO: () -> Unit, error: (e: Exception) -> Unit = {}): Job =
+    IoScope().launch {
         try {
             actionIO()
         } catch (e: Exception) {
@@ -92,18 +92,18 @@ fun ViewModel.runOnIOCatch(actionIO: () -> Unit, error: (e: Exception) -> Unit =
     }
 
 /** 异步线程执行挂起函数 */
-fun CoroutineScope.runOnSuspendIO(actionIO: suspend () -> Unit): Job = launch(Dispatchers.IO) { actionIO() }
+fun runOnSuspendIO(actionIO: suspend () -> Unit): Job = IoScope().launch { actionIO() }
 
 /** 异步线程执行挂起函数（ViewModel） */
 fun ViewModel.runOnSuspendIO(actionIO: suspend () -> Unit): Job = viewModelScope.launch(Dispatchers.IO) { actionIO() }
 
 /** 异步线程执行挂起函数捕获异常 */
 @JvmOverloads
-fun CoroutineScope.runOnSuspendIOCatch(
+fun runOnSuspendIOCatch(
     actionIO: suspend () -> Unit,
     error: (e: Exception) -> Unit = {}
 ): Job =
-    launch(Dispatchers.IO) {
+    IoScope().launch {
         try {
             actionIO()
         } catch (e: Exception) {
@@ -127,12 +127,12 @@ fun ViewModel.runOnSuspendIOCatch(
         }
     }
 
-suspend fun <T> CoroutineScope.awaitOrNull(action: () -> T?): T? =
+suspend fun <T> awaitOrNull(action: suspend () -> T?): T? =
     withContext(Dispatchers.IO) {
         action()
     }
 
-suspend fun <T> CoroutineScope.await(action: () -> T): T =
+suspend fun <T> await(action: suspend () -> T): T =
     withContext(Dispatchers.IO) {
         action()
     }

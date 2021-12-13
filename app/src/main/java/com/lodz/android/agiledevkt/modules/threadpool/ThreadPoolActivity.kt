@@ -114,10 +114,10 @@ class ThreadPoolActivity : BaseActivity() {
 
     /** 打印信息[result] */
     private fun printResult(result: String) {
-        MainScope().runOnMain {
+        runOnMain {
             mBinding.resultTv.text = (mBinding.resultTv.text.toString() + "\n" + result)
         }
-        MainScope().runOnMainDelay(100) {
+        runOnMainDelay(100) {
             mBinding.scrollView.fullScroll(ScrollView.FOCUS_DOWN)
         }
     }

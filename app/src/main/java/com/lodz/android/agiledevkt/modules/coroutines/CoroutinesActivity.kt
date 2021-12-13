@@ -103,7 +103,7 @@ class CoroutinesActivity : BaseActivity() {
                 return@setOnClickListener
             }
             if (mType == TYPE_JOIN) {
-                MainScope().runOnSuspendIO {
+                runOnSuspendIO {
                     mJob = join()
                 }
                 return@setOnClickListener
@@ -199,7 +199,7 @@ class CoroutinesActivity : BaseActivity() {
     }
 
     /** 超时限制 */
-    private fun timeout(): Job = MainScope().runOnSuspendIOCatch({
+    private fun timeout(): Job = runOnSuspendIOCatch({
         withTimeout(1500) {
             logResult(Thread.currentThread().name, "开始执行协程")
             repeat(12) { i ->
@@ -235,7 +235,7 @@ class CoroutinesActivity : BaseActivity() {
     }
 
     /** 协程异步 */
-    private fun async(): Job = MainScope().runOnIO {
+    private fun async(): Job = runOnIO {
         logResult(Thread.currentThread().name,"顺序执行开始")
         val time1 = measureTimeMillis {
             runBlocking {
@@ -298,7 +298,7 @@ class CoroutinesActivity : BaseActivity() {
 //        flow<Int> {
 //            logResult(Thread.currentThread().name,"flow")
 //        }
-        CoroutineScope(Dispatchers.Main).runOnIO {
+        CoroutineScope(Dispatchers.Main).launch {
             logResult(Thread.currentThread().name,"CoroutineScope")
         }
 
@@ -320,7 +320,7 @@ class CoroutinesActivity : BaseActivity() {
     }
 
     private fun logResult(threadName: String, log: String) {
-        MainScope().runOnMain {
+        runOnMain {
             mBinding.resultTv.text = StringBuilder(mBinding.resultTv.text).append("\n")
                 .append(threadName)
                 .append(" ---> ")

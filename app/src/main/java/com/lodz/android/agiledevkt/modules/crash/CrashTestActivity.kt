@@ -46,7 +46,7 @@ class CrashTestActivity : BaseActivity() {
         mBinding.crashBtn.setOnClickListener {
             mBinding.crashTips.visibility = View.VISIBLE
             mBinding.crashBtn.visibility = View.GONE
-            MainScope().runOnMainDelay(100){
+            runOnMainDelay(100){
                 val case: String? = null
                 case!!.toInt()
             }

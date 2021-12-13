@@ -462,7 +462,7 @@ internal class PhotoPickerActivity<V : View> : AbsActivity() {
         }
         // 拍照成功
         AlbumUtils.notifyScanImageCompat(getContext(), mPdrTempFilePath)
-        MainScope().runOnMainDelay(300){
+        runOnMainDelay(300){
             handleCameraSuccess()
         }
     }

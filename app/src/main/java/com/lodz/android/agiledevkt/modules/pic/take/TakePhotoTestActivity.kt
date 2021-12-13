@@ -76,7 +76,7 @@ class TakePhotoTestActivity : BaseActivity() {
                 .setCameraSavePath(FileManager.getCacheFolderPath())
                 .setAuthority("com.lodz.android.agiledevkt.fileprovider")
                 .setOnPhotoTakeListener { photo ->
-                    MainScope().runOnMainDelay(100) {//拍照后如果马上获取URI需要延迟一下，等待手机数据库更新一下
+                    runOnMainDelay(100) {//拍照后如果马上获取URI需要延迟一下，等待手机数据库更新一下
                         if (photo.isNotEmpty()) {
                             val picInfo = PicInfo(photo, filePathToUri(getContext(), photo))
                             mBinding.resultTv.text = "photo : $photo \n uri : ${picInfo.uri}"

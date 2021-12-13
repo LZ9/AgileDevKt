@@ -143,7 +143,7 @@ class CollectActivity : BaseActivity() {
                 return@setOnClickListener
             }
             toastShort(R.string.clt_success)
-            MainScope().runOnMainDelay(500) {
+            runOnMainDelay(500) {
                 toastShort("提交完成")
                 finish()
             }
