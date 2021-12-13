@@ -6,7 +6,7 @@ import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.api.ApiServiceImpl
 import com.lodz.android.pandora.mvvm.vm.AbsViewModel
 import com.lodz.android.pandora.rx.utils.RxUtils
-import com.lodz.android.pandora.utils.coroutines.runOnSuspendIOCatchPg
+import com.lodz.android.pandora.utils.coroutines.runOnSuspendIOPg
 
 /**
  * MVVM基础ViewModel
@@ -18,7 +18,7 @@ class MvvmTestAbsViewModel : AbsViewModel() {
     var mResultText = MutableLiveData<String>()
 
     fun getResult(context: Context, isSuccess: Boolean) {
-        runOnSuspendIOCatchPg(
+        runOnSuspendIOPg(
             context,
             context.getString(R.string.mvvm_demo_loading),
             cancelable = true,

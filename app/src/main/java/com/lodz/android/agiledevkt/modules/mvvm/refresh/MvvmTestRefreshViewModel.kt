@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.api.ApiServiceImpl
 import com.lodz.android.pandora.mvvm.vm.BaseRefreshViewModel
-import com.lodz.android.pandora.utils.coroutines.runOnSuspendIOCatchRes
+import com.lodz.android.pandora.utils.coroutines.runOnSuspendIORes
 
 /**
  * MVVM带基础状态控件和下拉刷新控件ViewModel
@@ -16,9 +16,9 @@ class MvvmTestRefreshViewModel :BaseRefreshViewModel(){
     var mResultText = MutableLiveData<String>()
 
     fun getResult(isSuccess: Boolean) {
-        runOnSuspendIOCatchRes(
+        runOnSuspendIORes(
             request = { ApiServiceImpl.getResult(isSuccess) },
-            actionIO = {
+            action = {
                 mResultText.value = it.data ?: ""
                 showStatusCompleted()
             },
@@ -28,9 +28,9 @@ class MvvmTestRefreshViewModel :BaseRefreshViewModel(){
     }
 
     fun getRefreshData(isSuccess: Boolean) {
-        runOnSuspendIOCatchRes(
+        runOnSuspendIORes(
             request = { ApiServiceImpl.getResult(isSuccess) },
-            actionIO = {
+            action = {
                 setSwipeRefreshFinish()
                 mResultText.value = it.data ?: ""
                 showStatusCompleted()

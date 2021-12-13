@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.api.ApiServiceImpl
 import com.lodz.android.pandora.mvvm.vm.BaseSandwichViewModel
-import com.lodz.android.pandora.utils.coroutines.runOnSuspendIOCatchRes
+import com.lodz.android.pandora.utils.coroutines.runOnSuspendIORes
 
 /**
  * MVVM带基础状态控件、中部刷新控件和顶部/底部扩展的ViewModel
@@ -16,9 +16,9 @@ class MvvmTestSandwichViewModel :BaseSandwichViewModel(){
     var mResultText = MutableLiveData<String>()
 
     fun getResult(isSuccess: Boolean) {
-        runOnSuspendIOCatchRes(
+        runOnSuspendIORes(
             request = { ApiServiceImpl.getResult(isSuccess) },
-            actionIO = {
+            action = {
                 mResultText.value = it.data ?: ""
                 showStatusCompleted()
             },
@@ -28,9 +28,9 @@ class MvvmTestSandwichViewModel :BaseSandwichViewModel(){
     }
 
     fun getRefreshData(isSuccess: Boolean) {
-        runOnSuspendIOCatchRes(
+        runOnSuspendIORes(
             request = { ApiServiceImpl.getResult(isSuccess) },
-            actionIO = {
+            action = {
                 setSwipeRefreshFinish()
                 mResultText.value = it.data ?: ""
                 showStatusCompleted()

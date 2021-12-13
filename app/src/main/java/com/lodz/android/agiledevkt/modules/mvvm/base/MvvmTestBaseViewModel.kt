@@ -3,7 +3,7 @@ package com.lodz.android.agiledevkt.modules.mvvm.base
 import androidx.lifecycle.MutableLiveData
 import com.lodz.android.agiledevkt.modules.api.ApiServiceImpl
 import com.lodz.android.pandora.mvvm.vm.BaseViewModel
-import com.lodz.android.pandora.utils.coroutines.runOnSuspendIOCatchRes
+import com.lodz.android.pandora.utils.coroutines.runOnSuspendIORes
 
 /**
  * MVVM带基础状态控件ViewModel
@@ -15,9 +15,9 @@ class MvvmTestBaseViewModel : BaseViewModel() {
     var mResultText = MutableLiveData<String>()
 
     fun getResult(isSuccess: Boolean) {
-        runOnSuspendIOCatchRes(
+        runOnSuspendIORes(
             request = { ApiServiceImpl.getResult(isSuccess) },
-            actionIO = {
+            action = {
                 mResultText.value = it.data ?: ""
                 showStatusCompleted()
             },

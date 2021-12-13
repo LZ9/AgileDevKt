@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.lodz.android.corekt.anko.IoScope
 import com.lodz.android.corekt.anko.getMetaData
 import com.lodz.android.corekt.anko.runOnMain
 import com.lodz.android.corekt.anko.runOnMainCatch
@@ -21,80 +22,80 @@ import kotlinx.coroutines.*
  */
 
 /** 网络接口使用的协程挂起方法，主要对接口进行判断处理 */
-fun <T> CoroutineScope.runOnSuspendIOCatchRes(
+fun <T> runOnSuspendIORes(
     request: suspend () -> T,
-    actionIO: (t: T) -> Unit,
+    action: (t: T) -> Unit,
     actionTokenUnauth: (t: T) -> Unit = {},
     error: (e: Exception, isNetwork: Boolean) -> Unit = { e, isNetwork -> }
-): Job = launch(Dispatchers.IO) {
+): Job = IoScope().launch {
     try {
         val res = request.invoke()
-        resHandle(actionIO, actionTokenUnauth, res)
+        resHandle(action, actionTokenUnauth, res)
     } catch (e: Exception) {
         errorHandle(e, error)
     }
 }
 
 /** 网络接口使用的协程挂起方法，主要对接口进行判断处理（ViewModel） */
-fun <T> ViewModel.runOnSuspendIOCatchRes(
+fun <T> ViewModel.runOnSuspendIORes(
     request: suspend () -> T,
-    actionIO: (t: T) -> Unit,
+    action: (t: T) -> Unit,
     actionTokenUnauth: (t: T) -> Unit = {},
     error: (e: Exception, isNetwork: Boolean) -> Unit = { e, isNetwork -> }
 ): Job = viewModelScope.launch(Dispatchers.IO) {
     try {
         val res = request.invoke()
-        resHandle(actionIO, actionTokenUnauth, res)
+        resHandle(action, actionTokenUnauth, res)
     } catch (e: Exception) {
         errorHandle(e, error)
     }
 }
 
 /** 网络接口使用的协程方法，主要对接口进行判断处理 */
-fun <T> CoroutineScope.runOnIOCatchRes(
+fun <T> runOnIORes(
     request: Deferred<T>,
-    actionIO: (t: T) -> Unit,
+    action: (t: T) -> Unit,
     actionTokenUnauth: (t: T) -> Unit = {},
     error: (e: Exception, isNetwork: Boolean) -> Unit = { e, isNetwork -> }
-): Job = launch(Dispatchers.IO) {
+): Job = IoScope().launch {
     try {
         val res = request.await()
-        resHandle(actionIO, actionTokenUnauth, res)
+        resHandle(action, actionTokenUnauth, res)
     } catch (e: Exception) {
         errorHandle(e, error)
     }
 }
 
 /** 网络接口使用的协程方法，主要对接口进行判断处理（ViewModel） */
-fun <T> ViewModel.runOnIOCatchRes(
+fun <T> ViewModel.runOnIORes(
     request: Deferred<T>,
-    actionIO: (t: T) -> Unit,
+    action: (t: T) -> Unit,
     actionTokenUnauth: (t: T) -> Unit = {},
     error: (e: Exception, isNetwork: Boolean) -> Unit = { e, isNetwork -> }
 ): Job = viewModelScope.launch(Dispatchers.IO) {
     try {
         val res = request.await()
-        resHandle(actionIO, actionTokenUnauth, res)
+        resHandle(action, actionTokenUnauth, res)
     } catch (e: Exception) {
         errorHandle(e, error)
     }
 }
 
 /** 带加载框的协程挂起方法 */
-fun <T> CoroutineScope.runOnSuspendIOCatchPg(
+fun <T> runOnSuspendIOPg(
     progressDialog: AlertDialog,
     request: suspend () -> T,
-    actionIO: (t: T) -> Unit,
+    action: (t: T) -> Unit,
     actionTokenUnauth: (t: T) -> Unit = {},
     error: (e: Exception, isNetwork: Boolean) -> Unit = { e, isNetwork -> },
     pgCancel: () -> Unit = {}
 ) {
     runOnMainCatch({ progressDialog.show() })
 
-    val job = launch(Dispatchers.IO) {
+    val job = IoScope().launch {
         try {
             val res = request.invoke()
-            resHandle(actionIO, actionTokenUnauth, res)
+            resHandle(action, actionTokenUnauth, res)
         } catch (e: Exception) {
             errorHandle(e, error)
         } finally {
@@ -112,10 +113,10 @@ fun <T> CoroutineScope.runOnSuspendIOCatchPg(
 }
 
 /** 带加载框的协程挂起方法（ViewModel） */
-fun <T> ViewModel.runOnSuspendIOCatchPg(
+fun <T> ViewModel.runOnSuspendIOPg(
     progressDialog: AlertDialog,
     request: suspend () -> T,
-    actionIO: (t: T) -> Unit,
+    action: (t: T) -> Unit,
     actionTokenUnauth: (t: T) -> Unit = {},
     error: (e: Exception, isNetwork: Boolean) -> Unit = { e, isNetwork -> },
     pgCancel: () -> Unit = {}
@@ -125,7 +126,7 @@ fun <T> ViewModel.runOnSuspendIOCatchPg(
     val job = viewModelScope.launch(Dispatchers.IO) {
         try {
             val res = request.invoke()
-            resHandle(actionIO, actionTokenUnauth, res)
+            resHandle(action, actionTokenUnauth, res)
         } catch (e: Exception) {
             errorHandle(e, error)
         } finally {
@@ -143,20 +144,20 @@ fun <T> ViewModel.runOnSuspendIOCatchPg(
 }
 
 /** 带加载框的协程方法 */
-fun <T> CoroutineScope.runOnIOCatchPg(
+fun <T> runOnIOPg(
     progressDialog: AlertDialog,
     request: Deferred<T>,
-    actionIO: (t: T) -> Unit,
+    action: (t: T) -> Unit,
     actionTokenUnauth: (t: T) -> Unit = {},
     error: (e: Exception, isNetwork: Boolean) -> Unit = { e, isNetwork -> },
     pgCancel: () -> Unit = {}
 ) {
     runOnMainCatch({ progressDialog.show() })
 
-    val job = launch(Dispatchers.IO) {
+    val job = IoScope().launch {
         try {
             val res = request.await()
-            resHandle(actionIO, actionTokenUnauth, res)
+            resHandle(action, actionTokenUnauth, res)
         } catch (e: Exception) {
             errorHandle(e, error)
         } finally {
@@ -174,10 +175,10 @@ fun <T> CoroutineScope.runOnIOCatchPg(
 }
 
 /** 带加载框的协程方法（ViewModel） */
-fun <T> ViewModel.runOnIOCatchPg(
+fun <T> ViewModel.runOnIOPg(
     progressDialog: AlertDialog,
     request: Deferred<T>,
-    actionIO: (t: T) -> Unit,
+    action: (t: T) -> Unit,
     actionTokenUnauth: (t: T) -> Unit = {},
     error: (e: Exception, isNetwork: Boolean) -> Unit = { e, isNetwork -> },
     pgCancel: () -> Unit = {}
@@ -187,7 +188,7 @@ fun <T> ViewModel.runOnIOCatchPg(
     val job = viewModelScope.launch(Dispatchers.IO) {
         try {
             val res = request.await()
-            resHandle(actionIO, actionTokenUnauth, res)
+            resHandle(action, actionTokenUnauth, res)
         } catch (e: Exception) {
             errorHandle(e, error)
         } finally {
@@ -205,13 +206,13 @@ fun <T> ViewModel.runOnIOCatchPg(
 }
 
 /** 带加载框的协程挂起方法 */
-fun <T> CoroutineScope.runOnSuspendIOCatchPg(
+fun <T> runOnSuspendIOPg(
     context: Context,
     msg: String = "正在加载，请稍候",
     cancelable: Boolean = true,
     canceledOnTouchOutside: Boolean = false,
     request: suspend () -> T,
-    actionIO: (t: T) -> Unit,
+    action: (t: T) -> Unit,
     actionTokenUnauth: (t: T) -> Unit = {},
     error: (e: Exception, isNetwork: Boolean) -> Unit = { e, isNetwork -> },
     pgCancel: () -> Unit = {}
@@ -224,10 +225,10 @@ fun <T> CoroutineScope.runOnSuspendIOCatchPg(
 
     runOnMainCatch({ progressDialog.show() })
 
-    val job = launch(Dispatchers.IO) {
+    val job = IoScope().launch {
         try {
             val res = request.invoke()
-            resHandle(actionIO, actionTokenUnauth, res)
+            resHandle(action, actionTokenUnauth, res)
         } catch (e: Exception) {
             errorHandle(e, error)
         } finally {
@@ -245,7 +246,7 @@ fun <T> CoroutineScope.runOnSuspendIOCatchPg(
 }
 
 /** 带加载框的协程挂起方法（ViewModel） */
-fun <T> ViewModel.runOnSuspendIOCatchPg(
+fun <T> ViewModel.runOnSuspendIOPg(
     context: Context,
     msg: String = "正在加载，请稍候",
     cancelable: Boolean = true,
@@ -285,7 +286,7 @@ fun <T> ViewModel.runOnSuspendIOCatchPg(
 }
 
 /** 带加载框的协程方法 */
-fun <T> CoroutineScope.runOnIOCatchPg(
+fun <T> runOnIOPg(
     context: Context,
     msg: String = "正在加载，请稍候",
     cancelable: Boolean = true,
@@ -304,7 +305,7 @@ fun <T> CoroutineScope.runOnIOCatchPg(
 
     runOnMainCatch({ progressDialog.show() })
 
-    val job = launch(Dispatchers.IO) {
+    val job = IoScope().launch {
         try {
             val res = request.await()
             resHandle(actionIO, actionTokenUnauth, res)
@@ -325,7 +326,7 @@ fun <T> CoroutineScope.runOnIOCatchPg(
 }
 
 /** 带加载框的协程方法（ViewModel） */
-fun <T> ViewModel.runOnIOCatchPg(
+fun <T> ViewModel.runOnIOPg(
     context: Context,
     msg: String = "正在加载，请稍候",
     cancelable: Boolean = true,
@@ -365,30 +366,23 @@ fun <T> ViewModel.runOnIOCatchPg(
 }
 
 /** 处理异步结果 */
-private fun <T> CoroutineScope.resHandle(
-    actionIO: (t: T) -> Unit,
-    actionTokenUnauth: (t: T) -> Unit,
-    res: T
-) {
+private fun <T> resHandle(action: (t: T) -> Unit, actionTokenUnauth: (t: T) -> Unit, res: T) {
     if (res is ResponseStatus) {
         if (res.isTokenUnauth()) {
             runOnMain { actionTokenUnauth(res) }
             return
         }
         if (res.isSuccess()) {
-            runOnMain { actionIO(res) }
+            runOnMain { action(res) }
             return
         }
         throw ExceptionFactory.createDataException(res)
     }
-    runOnMain { actionIO(res) }
+    runOnMain { action(res) }
 }
 
 /** 处理异常逻辑 */
-private fun CoroutineScope.errorHandle(
-    e: Exception,
-    error: (e: Exception, isNetwork: Boolean) -> Unit
-) {
+private fun errorHandle(e: Exception, error: (e: Exception, isNetwork: Boolean) -> Unit) {
     e.printStackTrace()
     printTagLog(e)
     if (e !is CancellationException) {
@@ -396,7 +390,7 @@ private fun CoroutineScope.errorHandle(
     }
 }
 
-/** 打印标签日志 */
+/** 根据配置标签打印异常[t]日志 */
 private fun printTagLog(t: Throwable) {
     val app = BaseApplication.get() ?: return
     val tag = app.getMetaData(BaseApplication.ERROR_TAG)
