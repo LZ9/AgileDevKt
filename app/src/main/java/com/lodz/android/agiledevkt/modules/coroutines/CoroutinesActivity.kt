@@ -12,9 +12,8 @@ import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlin.coroutines.EmptyCoroutineContext
+import kotlinx.coroutines.flow.*
+import kotlin.random.Random
 import kotlin.system.measureTimeMillis
 
 /**
@@ -49,6 +48,17 @@ class CoroutinesActivity : BaseActivity() {
     private val TYPE_ASYNC = 7
     /** 基础flow */
     private val TYPE_SIMPLE_FLOW = 8
+    /** flow的launchIn */
+    private val TYPE_FLOW_LAUNCH_IN = 9
+    /** flow的操作符 */
+    private val TYPE_FLOW_ACTION = 10
+    /** flow的buffer */
+    private val TYPE_FLOW_BUFFER= 11
+    /** flow聚合操作 */
+    private val TYPE_FLOW_ZIP= 12
+    /** flow的异常 */
+    private val TYPE_FLOW_THROWABLE= 13
+
 
     private val mBinding: ActivityCoroutinesBinding by bindingLayout(ActivityCoroutinesBinding::inflate)
 
@@ -83,6 +93,11 @@ class CoroutinesActivity : BaseActivity() {
                 R.id.channel_rbtn -> TYPE_CHANNEL
                 R.id.async_rbtn -> TYPE_ASYNC
                 R.id.simple_flow_rbtn -> TYPE_SIMPLE_FLOW
+                R.id.flow_launchin_rbtn -> TYPE_FLOW_LAUNCH_IN
+                R.id.flow_action_rbtn -> TYPE_FLOW_ACTION
+                R.id.flow_buffer_rbtn -> TYPE_FLOW_BUFFER
+                R.id.flow_zip_rbtn -> TYPE_FLOW_ZIP
+                R.id.flow_throwable_rbtn -> TYPE_FLOW_THROWABLE
                 else -> TYPE_NONE
             }
         }
@@ -94,39 +109,26 @@ class CoroutinesActivity : BaseActivity() {
                 return@setOnClickListener
             }
             cleanResult()
-            if (mType == TYPE_MAIN) {
-                mJob = main()
-                return@setOnClickListener
-            }
-            if (mType == TYPE_IO) {
-                mJob = io()
-                return@setOnClickListener
-            }
             if (mType == TYPE_JOIN) {
                 runOnSuspendIO {
                     mJob = join()
                 }
                 return@setOnClickListener
             }
-            if (mType == TYPE_REPEAT) {
-                mJob = repeat()
-                return@setOnClickListener
-            }
-            if (mType == TYPE_TIMEOUT) {
-                mJob = timeout()
-                return@setOnClickListener
-            }
-            if (mType == TYPE_CHANNEL) {
-                mJob = channel()
-                return@setOnClickListener
-            }
-            if (mType == TYPE_ASYNC) {
-                mJob = async()
-                return@setOnClickListener
-            }
-            if (mType == TYPE_SIMPLE_FLOW){
-                mJob = simpleFlow()
-                return@setOnClickListener
+            mJob = when (mType) {
+                TYPE_MAIN -> main()
+                TYPE_IO -> io()
+                TYPE_REPEAT -> repeat()
+                TYPE_TIMEOUT -> timeout()
+                TYPE_CHANNEL -> channel()
+                TYPE_ASYNC -> async()
+                TYPE_SIMPLE_FLOW -> simpleFlow()
+                TYPE_FLOW_LAUNCH_IN -> flowLaunchIn()
+                TYPE_FLOW_ACTION -> flowAction()
+                TYPE_FLOW_BUFFER -> flowBuffer()
+                TYPE_FLOW_ZIP -> flowZip()
+                TYPE_FLOW_THROWABLE -> flowThrowable()
+                else -> null
             }
         }
 
@@ -293,39 +295,146 @@ class CoroutinesActivity : BaseActivity() {
         return num
     }
 
-    private fun simpleFlow(): Job = CoroutineScope(EmptyCoroutineContext).launch {
-        logResult(Thread.currentThread().name,"simpleFlow")
-//        flow<Int> {
-//            logResult(Thread.currentThread().name,"flow")
-//        }
-        CoroutineScope(Dispatchers.Main).launch {
-            logResult(Thread.currentThread().name,"CoroutineScope")
-        }
+    /** 基础的流方法 */
+    private fun simpleFlow(): Job = MainScope().launch {
+        simple(5, 500)
+            .map {
+                val reslut = it + 1
+                logResult(Thread.currentThread().name,"+ map $reslut")
+                reslut
+            }
+            .flowOn(Dispatchers.IO)//上面的流在IO线程执行
+            .collect {
+                // 订阅在main还是io取决于最外面是什么线程
+                logResult(Thread.currentThread().name,"collect $it")
+            }
 
-        MainScope().launch {
-            logResult(Thread.currentThread().name,"MainScope")
-        }
+        // flow会在flowOn指定的线程中执行
+        flow { emit(getRandomNum()) }
+            .flowOn(Dispatchers.IO)
+            .collect { logResult(Thread.currentThread().name, "flow $it") }
 
-        IoScope().launch {
-            logResult(Thread.currentThread().name,"IoScope")
-        }
+        // flowOf会在当前线程执行，不受flowOn的限制
+        flowOf(getRandomNum())
+            .flowOn(Dispatchers.IO)
+            .collect { logResult(Thread.currentThread().name, "flowOf $it") }
+    }
+
+    private fun getRandomNum(): Int {
+        val i = Random.nextInt(10)
+        logResult(Thread.currentThread().name, "i $i")
+        return i
     }
 
     /** 简单的流，从1开始遍历数字[num]，延时[delay]毫秒 */
-    private fun simple(num: Int, delay: Long): Flow<Int> = flow {
+    private suspend fun simple(num: Int, delay: Long): Flow<Int> = flow {
         for (i in 1..num) {
             delay(delay)
+            logResult(Thread.currentThread().name,"simple emit $i , delay : $delay")
             emit(i)
         }
     }
 
+    /** 在同一个线程并发连个流操作 */
+    private fun flowLaunchIn(): Job = MainScope().launch {
+        simple(4, 400)
+            .flowOn(Dispatchers.IO)
+            .onEach { logResult(Thread.currentThread().name, "collect a $it") }
+            .launchIn(this)
+
+        simple(6, 1000)
+            .flowOn(Dispatchers.IO)
+            .onEach { logResult(Thread.currentThread().name, "collect b $it") }
+            .launchIn(this)
+    }
+
+    /** 流的操作符 */
+    private fun flowAction(): Job = MainScope().launch {
+        val list = (1..5).asFlow()
+            .map { it * 2 }
+            .toList()
+        logResult(Thread.currentThread().name, "flowToList : $list")
+        val sum = list.asFlow()
+            .take(list.size - 1)
+            .filter { it > 5 }
+            .reduce { accumulator, value -> accumulator + value }
+        logResult(Thread.currentThread().name, "sum : $sum")
+    }
+
+    /** Buffer操作符 */
+    private fun flowBuffer(): Job = IoScope().launch {
+
+        val time1 = measureTimeMillis {
+            simple(3, 100)
+                .collect {
+                    delay(300)
+                    logResult(Thread.currentThread().name, "collect : $it")
+                }
+        }
+        logResult(Thread.currentThread().name, "time : $time1")
+
+        logResult(Thread.currentThread().name, "-- 通过buffer将数据收集后再一起订阅 --")
+
+        val time2 = measureTimeMillis {
+            simple(3, 100)
+                .buffer()
+                .collect {
+                    delay(300)
+                    logResult(Thread.currentThread().name, "collect buffer : $it")
+                }
+        }
+        logResult(Thread.currentThread().name, "time buffer : $time2")
+    }
+
+    /** flow聚合操作 */
+    private fun flowZip(): Job = MainScope().launch {
+        val nums = (1..3).asFlow().onEach { delay(300) } //每300毫秒发射一条
+        val strs = flowOf("one", "two", "three").onEach { delay(400) } //每400毫秒发射一条
+
+        val time1 = measureTimeMillis {
+            nums.zip(strs) { a, b ->
+                "$a -> $b"
+            }.collect {
+                logResult(Thread.currentThread().name, "collect : $it")
+            }
+        }
+        logResult(Thread.currentThread().name, "time zip : $time1")
+
+        val time2 = measureTimeMillis {
+            nums.combine(strs) { a, b ->
+                "$a -> $b"
+            }.collect {
+                logResult(Thread.currentThread().name, "collect : $it")
+            }
+        }
+        logResult(Thread.currentThread().name, "time combine : $time2")
+    }
+
+    /** flow的异常 */
+    private fun flowThrowable(): Job = MainScope().launch {
+        simple(5, 200)
+            .map {
+                check(it <= 4){"$it is > 4"}
+                it
+            }
+            .catch { e ->
+                logResult(Thread.currentThread().name, "Exception : $e")
+            }
+            .collect {
+                logResult(Thread.currentThread().name, "collect : $it")
+            }
+    }
+
     private fun logResult(threadName: String, log: String) {
-        runOnMain {
-            mBinding.resultTv.text = StringBuilder(mBinding.resultTv.text).append("\n")
-                .append(threadName)
-                .append(" ---> ")
-                .append(log)
-                .toString()
+        synchronized(this) {
+            runOnMain {
+                val enter = if (mBinding.resultTv.text.isEmpty()) "" else "\n"
+                mBinding.resultTv.text = StringBuilder(mBinding.resultTv.text).append(enter)
+                    .append(threadName)
+                    .append(" ---> ")
+                    .append(log)
+                    .toString()
+            }
         }
     }
 

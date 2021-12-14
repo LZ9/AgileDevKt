@@ -75,6 +75,36 @@
                 android:layout_height="wrap_content"
                 android:text="@string/coroutines_simple_flow" />
 
+            <RadioButton
+                android:id="@+id/flow_launchin_rbtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/coroutines_flow_launchin" />
+
+            <RadioButton
+                android:id="@+id/flow_action_rbtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/coroutines_flow_action" />
+
+            <RadioButton
+                android:id="@+id/flow_buffer_rbtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/coroutines_flow_buffer" />
+
+            <RadioButton
+                android:id="@+id/flow_zip_rbtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/coroutines_flow_zip" />
+
+            <RadioButton
+                android:id="@+id/flow_throwable_rbtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/coroutines_flow_throwable" />
+
         </RadioGroup>
     </androidx.core.widget.NestedScrollView>
 
