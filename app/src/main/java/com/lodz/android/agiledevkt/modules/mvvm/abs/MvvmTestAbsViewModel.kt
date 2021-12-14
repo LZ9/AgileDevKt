@@ -3,7 +3,7 @@ package com.lodz.android.agiledevkt.modules.mvvm.abs
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.lodz.android.agiledevkt.R
-import com.lodz.android.agiledevkt.modules.api.ApiServiceImpl
+import com.lodz.android.agiledevkt.modules.api.coroutines.ApiModuleSuspend
 import com.lodz.android.pandora.mvvm.vm.AbsViewModel
 import com.lodz.android.pandora.rx.utils.RxUtils
 import com.lodz.android.pandora.utils.coroutines.runOnSuspendIOPg
@@ -22,7 +22,7 @@ class MvvmTestAbsViewModel : AbsViewModel() {
             context,
             context.getString(R.string.mvvm_demo_loading),
             cancelable = true,
-            request = { ApiServiceImpl.getResult(isSuccess) },
+            request = { ApiModuleSuspend.getResult(isSuccess) },
             actionIO = {
                 mResultText.value = it.data ?: ""
                 toastShort(it.msg)

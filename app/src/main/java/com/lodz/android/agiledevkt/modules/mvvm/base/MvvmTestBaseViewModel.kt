@@ -1,7 +1,7 @@
 package com.lodz.android.agiledevkt.modules.mvvm.base
 
 import androidx.lifecycle.MutableLiveData
-import com.lodz.android.agiledevkt.modules.api.ApiServiceImpl
+import com.lodz.android.agiledevkt.modules.api.coroutines.ApiModuleSuspend
 import com.lodz.android.pandora.mvvm.vm.BaseViewModel
 import com.lodz.android.pandora.utils.coroutines.runOnSuspendIORes
 
@@ -16,7 +16,7 @@ class MvvmTestBaseViewModel : BaseViewModel() {
 
     fun getResult(isSuccess: Boolean) {
         runOnSuspendIORes(
-            request = { ApiServiceImpl.getResult(isSuccess) },
+            request = { ApiModuleSuspend.getResult(isSuccess) },
             action = {
                 mResultText.value = it.data ?: ""
                 showStatusCompleted()

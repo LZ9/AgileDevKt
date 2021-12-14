@@ -2,7 +2,7 @@ package com.lodz.android.agiledevkt.modules.mvvm.refresh
 
 import androidx.lifecycle.MutableLiveData
 import com.lodz.android.agiledevkt.R
-import com.lodz.android.agiledevkt.modules.api.ApiServiceImpl
+import com.lodz.android.agiledevkt.modules.api.coroutines.ApiModuleSuspend
 import com.lodz.android.pandora.mvvm.vm.BaseRefreshViewModel
 import com.lodz.android.pandora.utils.coroutines.runOnSuspendIORes
 
@@ -17,7 +17,7 @@ class MvvmTestRefreshViewModel :BaseRefreshViewModel(){
 
     fun getResult(isSuccess: Boolean) {
         runOnSuspendIORes(
-            request = { ApiServiceImpl.getResult(isSuccess) },
+            request = { ApiModuleSuspend.getResult(isSuccess) },
             action = {
                 mResultText.value = it.data ?: ""
                 showStatusCompleted()
@@ -29,7 +29,7 @@ class MvvmTestRefreshViewModel :BaseRefreshViewModel(){
 
     fun getRefreshData(isSuccess: Boolean) {
         runOnSuspendIORes(
-            request = { ApiServiceImpl.getResult(isSuccess) },
+            request = { ApiModuleSuspend.getResult(isSuccess) },
             action = {
                 setSwipeRefreshFinish()
                 mResultText.value = it.data ?: ""

@@ -657,6 +657,8 @@
     <string name="clt_sport_type">运动类型：</string>
 
     <!-- 接口测试 -->
+    <string name="api_rx">RX请求</string>
+    <string name="api_coroutines">协程请求</string>
     <string name="api_loading">正在获取</string>
     <string name="api_fail">获取失败</string>
     <string name="api_mock">mock请求</string>
