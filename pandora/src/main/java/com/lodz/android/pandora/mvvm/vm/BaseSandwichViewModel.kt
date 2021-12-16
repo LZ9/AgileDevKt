@@ -17,25 +17,25 @@ open class BaseSandwichViewModel : AbsViewModel() {
     var isPdrRefreshEnabled = MutableLiveData<Boolean>()
 
     /** 显示无数据页面 */
-    protected fun showStatusNoData() { isPdrShowNoData.value = true }
+    protected fun showStatusNoData() { isPdrShowNoData.postValue(true) }
 
     /** 显示错误页面 */
     protected fun showStatusError() {
         showStatusError(null)
     }
     /** 显示错误页面 */
-    protected fun showStatusError(t: Throwable?) { isPdrShowError.value = Pair(true, t) }
+    protected fun showStatusError(t: Throwable?) { isPdrShowError.postValue(Pair(true, t)) }
 
     /** 显示加载页面 */
-    protected fun showStatusLoading() { isPdrShowLoading.value = true }
+    protected fun showStatusLoading() { isPdrShowLoading.postValue(true)}
 
     /** 显示内容页面 */
-    protected fun showStatusCompleted() { isPdrShowCompleted.value = true }
+    protected fun showStatusCompleted() { isPdrShowCompleted.postValue(true) }
 
     /** 设置刷新结束（隐藏刷新进度条） */
-    protected fun setSwipeRefreshFinish() { isPdrRefreshFinish.value = true }
+    protected fun setSwipeRefreshFinish() { isPdrRefreshFinish.postValue(true) }
 
     /** 设置刷新控件是否启用 */
-    protected fun setSwipeRefreshEnabled(enabled: Boolean) { isPdrRefreshEnabled.value = enabled }
+    protected fun setSwipeRefreshEnabled(enabled: Boolean) { isPdrRefreshEnabled.postValue(enabled) }
 
 }
