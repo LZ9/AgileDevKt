@@ -1,8 +1,14 @@
 package com.lodz.android.agiledevkt.modules.api.coroutines
 
+import com.alibaba.fastjson.JSON
+import com.alibaba.fastjson.TypeReference
 import com.lodz.android.agiledevkt.apiservice.ApiCoroutinesService
+import com.lodz.android.agiledevkt.bean.SpotBean
 import com.lodz.android.agiledevkt.bean.base.response.ResponseBean
+import com.lodz.android.corekt.utils.ReflectUtils
 import kotlinx.coroutines.*
+import okhttp3.RequestBody
+import java.net.SocketTimeoutException
 
 /**
  * 数据
@@ -11,35 +17,95 @@ import kotlinx.coroutines.*
  */
 object ApiModuleSuspend :ApiCoroutinesService{
 
+    /** 网络失败 */
+    const val NETWORK_FAIL = 1
+    /** 接口失败 */
+    const val API_FAIL = 2
+    /** 接口成功 */
+    const val API_SUCCESS = 3
 
-    override suspend fun getResult(isSuccess: Boolean): ResponseBean<String> =
-        withContext(Dispatchers.IO) {
-            delay(2000)
-            val responseBean = ResponseBean.createSuccess<String>()
-            responseBean.code = if (isSuccess) ResponseBean.SUCCESS else ResponseBean.FAIL
-            responseBean.msg = if (isSuccess) "success" else "faile"
-            responseBean.data = if (isSuccess) System.currentTimeMillis().toString() else ""
-            responseBean
+    override suspend fun login(account: String, password: String): ResponseBean<String> {
+        delay(2000)
+        val responseBean = ResponseBean.createSuccess<String>()
+        responseBean.msg = "success"
+        responseBean.data = "{\"id\":\"1\",\"loginName\":\"admin\"}"
+        return responseBean
+    }
+
+    override suspend fun postSpot(id: Int): ResponseBean<SpotBean> {
+        delay(2000)
+        if (id == NETWORK_FAIL) {
+            throw SocketTimeoutException()
         }
-    //    override suspend fun getResult(isSuccess: Boolean): ResponseBean<String> =
-    //        withContext(Dispatchers.IO) {
-    //            delay(2000)
-    //            val responseBean = ResponseBean.createSuccess<String>()
-    //            responseBean.code = if (isSuccess) ResponseBean.SUCCESS else ResponseBean.FAIL
-    //            responseBean.msg = if (isSuccess) "success" else "faile"
-    //            responseBean.data = if (isSuccess) System.currentTimeMillis().toString() else ""
-    //            responseBean
-    //        }
+        if (id == API_FAIL) {
+            val responseBean = ResponseBean.createFail<SpotBean>()
+            responseBean.msg = "fail"
+            return responseBean
+        }
+        val responseBean = ResponseBean.createSuccess<SpotBean>()
+        responseBean.msg = "success"
+        val spotBean = SpotBean()
+        spotBean.spotName = "环岛路"
+        spotBean.score = "10分"
+        responseBean.data = spotBean
+        return responseBean
+    }
 
-//    suspend fun requestResult(isSuccess: Boolean): String = withContext(Dispatchers.IO) {
-//        getResultText(isSuccess).await()
-//    }
-//
-//    fun getResultText(isSuccess: Boolean): Deferred<String> = GlobalScope.async {
-//        delay(2000)
-//        if (!isSuccess) {
-//            throw DataException("request fail")
-//        }
-//        return@async "result is ${System.currentTimeMillis()}"
-//    }
+    override suspend fun getSpot(id: Int): ResponseBean<SpotBean> {
+        delay(2000)
+        if (id == NETWORK_FAIL) {
+            throw SocketTimeoutException()
+        }
+        if (id == API_FAIL) {
+            val responseBean = ResponseBean.createFail<SpotBean>()
+            responseBean.msg = "fail"
+            return responseBean
+        }
+        val responseBean = ResponseBean.createSuccess<SpotBean>()
+        responseBean.msg = "success"
+        val spotBean = SpotBean()
+        spotBean.spotName = "鼓浪屿"
+        spotBean.score = "10分"
+        responseBean.data = spotBean
+        return responseBean
+    }
+
+    override suspend fun querySpot(requestBody: RequestBody): ResponseBean<List<SpotBean>> {
+        delay(2000)
+        val json = "{\"code\":200,\"msg\":\"success\",\"data\":[]}"
+        val responseBean = JSON.parseObject(json, object : TypeReference<ResponseBean<List<SpotBean>>>() {})
+        val list = ArrayList<SpotBean>()
+        val spotBean = SpotBean()
+        spotBean.spotName = getJsonByRequestBody(requestBody)
+        spotBean.score = "10分"
+        list.add(spotBean)
+        responseBean.data = list
+        return responseBean
+    }
+
+    /** 从RequestBody中获取请求参数 */
+    private fun getJsonByRequestBody(requestBody: RequestBody): String {
+        try {
+            val c = requestBody.javaClass
+            val list = ReflectUtils.getFieldName(c)
+            for (name in list) {
+                val any = ReflectUtils.getFieldValue(c, requestBody, name)
+                if (any is ByteArray) {
+                    return String(any)
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return ""
+    }
+
+    override suspend fun getResult(isSuccess: Boolean): ResponseBean<String> {
+        delay(2000)
+        val responseBean = ResponseBean.createSuccess<String>()
+        responseBean.code = if (isSuccess) ResponseBean.SUCCESS else ResponseBean.FAIL
+        responseBean.msg = if (isSuccess) "success" else "faile"
+        responseBean.data = if (isSuccess) System.currentTimeMillis().toString() else ""
+        return responseBean
+    }
 }

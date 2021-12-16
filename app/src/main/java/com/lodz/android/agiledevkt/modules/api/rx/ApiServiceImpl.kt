@@ -1,4 +1,4 @@
-package com.lodz.android.agiledevkt.modules.api
+package com.lodz.android.agiledevkt.modules.api.rx
 
 import com.alibaba.fastjson.JSON
 import com.alibaba.fastjson.TypeReference
@@ -10,9 +10,6 @@ import com.lodz.android.pandora.rx.utils.doComplete
 import com.lodz.android.pandora.rx.utils.doError
 import com.lodz.android.pandora.rx.utils.doNext
 import io.reactivex.rxjava3.core.Observable
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.withContext
 import okhttp3.RequestBody
 import java.net.SocketTimeoutException
 
@@ -27,7 +24,7 @@ object ApiServiceImpl : ApiService {
     const val NETWORK_FAIL = 1
     /** 接口失败 */
     const val API_FAIL = 2
-    /** 接口失败 */
+    /** 接口成功 */
     const val API_SUCCESS = 3
 
     override fun login(account: String, password: String): Observable<ResponseBean<String>> =

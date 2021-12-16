@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.lodz.android.agiledevkt.databinding.ActivityApiTestBinding
+import com.lodz.android.agiledevkt.modules.api.coroutines.ApiCoroutinesTestActivity
 import com.lodz.android.agiledevkt.modules.api.rx.ApiRxTestActivity
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.pandora.base.activity.BaseActivity
@@ -45,7 +46,7 @@ class ApiTestActivity : BaseActivity() {
         }
 
         mBinding.coroutinesBtn.setOnClickListener {
-
+            ApiCoroutinesTestActivity.start(getContext())
         }
     }
 

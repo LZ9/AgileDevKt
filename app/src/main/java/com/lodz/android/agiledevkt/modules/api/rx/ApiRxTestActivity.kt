@@ -10,7 +10,6 @@ import com.lodz.android.agiledevkt.bean.SpotBean
 import com.lodz.android.agiledevkt.bean.base.request.BaseRequestBean
 import com.lodz.android.agiledevkt.bean.base.response.ResponseBean
 import com.lodz.android.agiledevkt.databinding.ActivityApiRxTestBinding
-import com.lodz.android.agiledevkt.modules.api.ApiServiceImpl
 import com.lodz.android.agiledevkt.utils.api.ApiServiceManager
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.rx.subscribe.observer.ProgressObserver
