@@ -1,6 +1,8 @@
 package com.lodz.android.corekt.anko
 
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.*
 
@@ -19,6 +21,9 @@ fun runOnMain(action: () -> Unit): Job = MainScope().launch { action() }
 /** 主线程执行（ViewModel） */
 fun ViewModel.runOnMain(action: () -> Unit): Job = viewModelScope.launch(Dispatchers.Main) { action() }
 
+/** 主线程执行（AppCompatActivity） */
+fun AppCompatActivity.runOnMain(action: () -> Unit): Job = lifecycleScope.launch(Dispatchers.Main) { action() }
+
 /** 主线程执行捕获异常 */
 @JvmOverloads
 fun runOnMainCatch(action: () -> Unit, error: (e: Exception) -> Unit = {}): Job =
@@ -35,6 +40,18 @@ fun runOnMainCatch(action: () -> Unit, error: (e: Exception) -> Unit = {}): Job 
 @JvmOverloads
 fun ViewModel.runOnMainCatch(action: () -> Unit, error: (e: Exception) -> Unit = {}): Job =
     viewModelScope.launch(Dispatchers.Main) {
+        try {
+            action()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            error(e)
+        }
+    }
+
+/** 主线程执行捕获异常（AppCompatActivity） */
+@JvmOverloads
+fun AppCompatActivity.runOnMainCatch(action: () -> Unit, error: (e: Exception) -> Unit = {}): Job =
+    lifecycleScope.launch(Dispatchers.Main) {
         try {
             action()
         } catch (e: Exception) {
@@ -61,11 +78,23 @@ fun ViewModel.runOnMainDelay(timeMillis: Long, action: () -> Unit): Job =
         }
     }
 
+/** 主线程延迟[timeMillis]毫秒执行（AppCompatActivity） */
+fun AppCompatActivity.runOnMainDelay(timeMillis: Long, action: () -> Unit): Job =
+    lifecycleScope.launch(Dispatchers.IO) {
+        delay(timeMillis)
+        launch(Dispatchers.Main) {
+            action()
+        }
+    }
+
 /** 异步线程执行 */
 fun runOnIO(actionIO: () -> Unit): Job = IoScope().launch { actionIO() }
 
 /** 异步线程执行（ViewModel） */
 fun ViewModel.runOnIO(actionIO: () -> Unit): Job = viewModelScope.launch(Dispatchers.IO) { actionIO() }
+
+/** 异步线程执行（AppCompatActivity） */
+fun AppCompatActivity.runOnIO(actionIO: () -> Unit): Job = lifecycleScope.launch(Dispatchers.IO) { actionIO() }
 
 /** 异步线程执行捕获异常 */
 @JvmOverloads
@@ -91,11 +120,26 @@ fun ViewModel.runOnIOCatch(actionIO: () -> Unit, error: (e: Exception) -> Unit =
         }
     }
 
+/** 异步线程执行捕获异常（AppCompatActivity） */
+@JvmOverloads
+fun AppCompatActivity.runOnIOCatch(actionIO: () -> Unit, error: (e: Exception) -> Unit = {}): Job =
+    lifecycleScope.launch(Dispatchers.IO) {
+        try {
+            actionIO()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            runOnMain { error(e) }
+        }
+    }
+
 /** 异步线程执行挂起函数 */
 fun runOnSuspendIO(actionIO: suspend () -> Unit): Job = IoScope().launch { actionIO() }
 
 /** 异步线程执行挂起函数（ViewModel） */
 fun ViewModel.runOnSuspendIO(actionIO: suspend () -> Unit): Job = viewModelScope.launch(Dispatchers.IO) { actionIO() }
+
+/** 异步线程执行挂起函数（AppCompatActivity） */
+fun AppCompatActivity.runOnSuspendIO(actionIO: suspend () -> Unit): Job = lifecycleScope.launch(Dispatchers.IO) { actionIO() }
 
 /** 异步线程执行挂起函数捕获异常 */
 @JvmOverloads
@@ -119,6 +163,21 @@ fun ViewModel.runOnSuspendIOCatch(
     error: (e: Exception) -> Unit = {}
 ): Job =
     viewModelScope.launch(Dispatchers.IO) {
+        try {
+            actionIO()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            runOnMain { error(e) }
+        }
+    }
+
+/** 异步线程执行挂起函数捕获异常（ViewModel） */
+@JvmOverloads
+fun AppCompatActivity.runOnSuspendIOCatch(
+    actionIO: suspend () -> Unit,
+    error: (e: Exception) -> Unit = {}
+): Job =
+    lifecycleScope.launch(Dispatchers.IO) {
         try {
             actionIO()
         } catch (e: Exception) {

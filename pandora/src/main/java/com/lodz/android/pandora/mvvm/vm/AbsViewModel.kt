@@ -26,19 +26,19 @@ open class AbsViewModel : ViewModel(), LifecycleProvider<ActivityEvent> {
     var mPdrLifecycleSubject = BehaviorSubject.create<ActivityEvent>()
 
     /** 显示短提示，[msg]消息 */
-    protected fun toastShort(msg: String) { mPdrShortToastMsg.postValue(msg)}
+    protected fun toastShort(msg: String) { mPdrShortToastMsg.value = msg}
 
     /** 显示长提示，[msg]消息 */
-    protected fun toastLong(msg: String) { mPdrLongToastMsg.postValue(msg) }
+    protected fun toastLong(msg: String) { mPdrLongToastMsg.value = msg }
 
     /** 显示短提示，[id]文字资源id */
-    protected fun toastShort(@StringRes id: Int) { mPdrShortToastMsg.postValue(BaseApplication.get()?.getString(id) ?: "") }
+    protected fun toastShort(@StringRes id: Int) { mPdrShortToastMsg.value = BaseApplication.get()?.getString(id) ?: "" }
 
     /** 显示长提示，[id]文字资源id */
-    protected fun toastLong(@StringRes id: Int) { mPdrLongToastMsg.postValue(BaseApplication.get()?.getString(id) ?: "") }
+    protected fun toastLong(@StringRes id: Int) { mPdrLongToastMsg.value = BaseApplication.get()?.getString(id) ?: "" }
 
     /** 关闭Activity */
-    protected fun finish() { isPdrFinish.postValue(true) }
+    protected fun finish() { isPdrFinish.value = true }
 
     override fun lifecycle(): Observable<ActivityEvent> = mPdrLifecycleSubject.hide()
 
