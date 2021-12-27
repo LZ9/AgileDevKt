@@ -5,37 +5,37 @@
     android:orientation="vertical"
     android:padding="5dp">
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/normal_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/dialog_normal" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/center_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/dialog_center" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/left_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/dialog_left" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/right_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/dialog_right" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/bottom_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/dialog_bottom" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/top_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

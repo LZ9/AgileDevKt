@@ -205,21 +205,20 @@
 
         </FrameLayout>
 
-
         <com.lodz.android.pandora.widget.ninegrid.NineGridView
             android:id="@+id/show_only_nine_grid_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:addBtnDrawable="@drawable/ic_wallet"
             app:deleteDrawable="@drawable/ic_update"
+            app:dividerSpace="1dp"
             app:isNeedAddBtn="false"
             app:isNeedDrag="false"
             app:isNeedDragVibrate="false"
             app:isShowDeleteBtn="false"
             app:itemHigh="100dp"
             app:maxPic="8"
-            app:spanCount="4"
-            app:dividerSpace="1dp">
+            app:spanCount="4">
 
         </com.lodz.android.pandora.widget.ninegrid.NineGridView>
 

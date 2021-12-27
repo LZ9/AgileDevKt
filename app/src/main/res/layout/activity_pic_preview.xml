@@ -6,10 +6,10 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:padding="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="5dp">
 
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/scale_switch"

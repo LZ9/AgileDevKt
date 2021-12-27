@@ -61,7 +61,7 @@
             android:textSize="12sp"
             tools:targetApi="o" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/transformation_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

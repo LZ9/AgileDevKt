@@ -15,7 +15,7 @@
             android:layout_marginEnd="3dp"
             android:orientation="horizontal">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/custom_notification_btn"
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="0dp"
@@ -24,7 +24,7 @@
                 android:padding="1dp"
                 android:text="@string/glide_custom_notify" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/sys_notification_btn"
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="0dp"

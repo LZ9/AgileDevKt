@@ -79,6 +79,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
         android:clickable="true"
+        android:contentDescription="@string/app_img_name"
         android:focusable="true"
         app:backgroundTint="@color/color_ea413c"
         app:elevation="4dp"

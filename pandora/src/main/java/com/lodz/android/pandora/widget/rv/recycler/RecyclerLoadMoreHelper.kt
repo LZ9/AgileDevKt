@@ -1,9 +1,12 @@
 package com.lodz.android.pandora.widget.rv.recycler
 
+import android.annotation.SuppressLint
+
 /**
  * RecyclerView加载更多帮助类
  * Created by zhouL on 2018/11/21.
  */
+@SuppressLint("NotifyDataSetChanged")
 class RecyclerLoadMoreHelper<T>(val mPdrAdapter: BaseLoadMoreRVAdapter<T>) {
 
     /** 监听器 */

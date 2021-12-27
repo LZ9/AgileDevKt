@@ -12,7 +12,7 @@
         android:orientation="horizontal"
         android:padding="10dp">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/dialog_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -23,7 +23,7 @@
             android:textSize="12sp"
             tools:ignore="ButtonStyle" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/popup_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

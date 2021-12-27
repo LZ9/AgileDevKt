@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/aes_init_btn"
             style="?android:attr/button"
             android:layout_width="wrap_content"
@@ -48,7 +48,7 @@
             android:textSize="11sp"
             tools:ignore="SmallSp" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/aes_encrypt_btn"
             style="?android:attr/button"
             android:layout_width="wrap_content"
@@ -58,7 +58,7 @@
             android:textSize="11sp"
             tools:ignore="SmallSp" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/aes_decrypt_btn"
             style="?android:attr/button"
             android:layout_width="wrap_content"
@@ -75,7 +75,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/rsa_init_btn"
             style="?android:attr/button"
             android:layout_width="wrap_content"
@@ -84,7 +84,7 @@
             android:textSize="11sp"
             tools:ignore="SmallSp" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/rsa_encrypt_btn"
             style="?android:attr/button"
             android:layout_width="wrap_content"
@@ -94,7 +94,7 @@
             android:textSize="11sp"
             tools:ignore="SmallSp" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/rsa_decrypt_btn"
             style="?android:attr/button"
             android:layout_width="wrap_content"
@@ -111,7 +111,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/md5_btn"
             style="?android:attr/button"
             android:layout_width="wrap_content"
@@ -120,7 +120,7 @@
             android:textSize="11sp"
             tools:ignore="SmallSp" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/sha1_btn"
             style="?android:attr/button"
             android:layout_width="wrap_content"
@@ -130,7 +130,7 @@
             android:textSize="11sp"
             tools:ignore="SmallSp" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/clean_btn"
             style="?android:attr/button"
             android:layout_width="wrap_content"

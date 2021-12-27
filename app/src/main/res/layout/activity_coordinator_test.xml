@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/translation_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -12,7 +12,7 @@
         android:text="@string/coordinator_translation"
         android:textAllCaps="false" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/status_bar_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

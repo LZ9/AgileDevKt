@@ -4,56 +4,56 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/base_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"
         android:text="@string/notify_base" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/intent_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"
         android:text="@string/notify_intent" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/progress_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"
         android:text="@string/notify_progress" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/single_txt_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"
         android:text="@string/notify_single_txt" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/multi_txt_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"
         android:text="@string/notify_multi_txt" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/large_img_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"
         android:text="@string/notify_large_img" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/custom_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"
         android:text="@string/notify_custom" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/msg_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

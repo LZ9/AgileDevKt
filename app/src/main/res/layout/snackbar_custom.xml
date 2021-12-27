@@ -10,7 +10,7 @@
         android:scaleType="centerCrop"
         android:src="@drawable/bg_pokemon" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/detail_btn"
         android:layout_width="70dp"
         android:layout_height="wrap_content"

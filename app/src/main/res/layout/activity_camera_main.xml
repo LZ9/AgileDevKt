@@ -23,7 +23,7 @@
         android:layout_marginTop="5dp"
         android:orientation="horizontal">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/take_btn"
             style="@style/Widget.MaterialComponents.Button"
             android:layout_width="0dp"
@@ -32,7 +32,7 @@
             android:layout_weight="1"
             android:text="@string/camera_main_take" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/video_btn"
             style="@style/Widget.MaterialComponents.Button"
             android:layout_width="0dp"

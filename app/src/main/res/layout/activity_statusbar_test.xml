@@ -34,7 +34,7 @@
             tools:text="0" />
     </LinearLayout>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/test_img_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -42,7 +42,7 @@
         android:text="@string/status_bar_test_img"
         android:textAllCaps="false" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/test_drawer_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
         android:text="@string/status_bar_test_drawer"
         android:textAllCaps="false" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/test_coordinator_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

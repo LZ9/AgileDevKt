@@ -74,7 +74,7 @@
 
     </LinearLayout>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/status_btn"
         style="@style/Widget.AppCompat.Button"
         android:layout_width="wrap_content"

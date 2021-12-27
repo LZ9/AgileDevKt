@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/start_btn"
             style="@style/Widget.AppCompat.Button"
             android:layout_width="0dp"
@@ -17,7 +17,7 @@
             android:layout_weight="1"
             android:text="@string/thread_pool_start" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/close_btn"
             style="@style/Widget.AppCompat.Button"
             android:layout_width="0dp"
@@ -26,7 +26,7 @@
             android:layout_weight="1"
             android:text="@string/thread_pool_close" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/clear_btn"
             style="@style/Widget.AppCompat.Button"
             android:layout_width="0dp"
@@ -36,7 +36,6 @@
             android:text="@string/thread_pool_clear" />
 
     </LinearLayout>
-
 
     <ScrollView
         android:id="@+id/scroll_view"
