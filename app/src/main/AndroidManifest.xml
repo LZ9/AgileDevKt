@@ -896,6 +896,15 @@
         </activity>
 
         <activity
+            android:name=".modules.mvvm.loadmore.MvvmTestLoadMoreActivity"
+            android:label="MVVM加载更多测试类"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
+
+        </activity>
+
+
+        <activity
             android:name=".modules.mvvm.MvvmFragmentActivity"
             android:label="Fragment控件状态测试类"
             android:screenOrientation="portrait"

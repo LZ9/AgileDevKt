@@ -8,6 +8,7 @@ import com.lodz.android.agiledevkt.databinding.ActivityMvvmDemoBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.agiledevkt.modules.mvvm.abs.MvvmTestAbsActivity
 import com.lodz.android.agiledevkt.modules.mvvm.base.MvvmTestBaseActivity
+import com.lodz.android.agiledevkt.modules.mvvm.loadmore.MvvmTestLoadMoreActivity
 import com.lodz.android.agiledevkt.modules.mvvm.refresh.MvvmTestRefreshActivity
 import com.lodz.android.agiledevkt.modules.mvvm.sandwich.MvvmTestSandwichActivity
 import com.lodz.android.pandora.base.activity.BaseActivity
@@ -66,6 +67,11 @@ class MvvmDemoActivity : BaseActivity() {
         // Fragment用例
         mBinding.fragmentBtn.setOnClickListener {
             MvvmFragmentActivity.start(getContext())
+        }
+
+        // 加载更多
+        mBinding.loadmoreBtn.setOnClickListener {
+            MvvmTestLoadMoreActivity.start(getContext())
         }
     }
 

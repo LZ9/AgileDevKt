@@ -427,6 +427,7 @@
     <string name="mvvm_demo_request_fail_data">获取失败数据</string>
     <string name="mvvm_demo_base_title">带基础状态控件</string>
     <string name="mvvm_demo_refresh_title">带下拉刷新控件</string>
+    <string name="mvvm_demo_loadmore_title">加载更多</string>
     <string name="mvvm_demo_fragment_title">MVVM的Fragment测试</string>
     <string name="mvvm_demo_sandwich_title">带扩展和下拉刷新控件</string>
     <string name="mvvm_demo_loading">加载中…</string>
