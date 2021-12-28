@@ -56,7 +56,7 @@ class MvvmTestLoadMoreActivity : BaseRefreshVmActivity<MvvmTestLoadMoreViewModel
     }
 
     override fun onDataRefresh() {
-
+        getViewModel().getDataList(PageBean.DEFAULT_START_PAGE_NUM)
     }
 
     override fun onClickBackBtn() {
@@ -72,6 +72,7 @@ class MvvmTestLoadMoreActivity : BaseRefreshVmActivity<MvvmTestLoadMoreViewModel
             val pageBean = it.second
             val list = pageBean.data
             if (isFirst){
+                setSwipeRefreshFinish()
                 if (list == null){
                     showStatusNoData()
                     return@observe
