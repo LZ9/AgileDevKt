@@ -1,6 +1,5 @@
 package com.lodz.android.pandora.mvvm.base.activity
 
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.lodz.android.corekt.anko.toastLong
 import com.lodz.android.corekt.anko.toastShort
@@ -24,23 +23,25 @@ abstract class AbsVmActivity<VM : AbsViewModel> : AbsActivity() {
     override fun setListeners() {
         super.setListeners()
 
-        getViewModel().isPdrFinish.observe(this, Observer { value ->
-            if (value) { finish() }
-        })
-
-        getViewModel().mPdrShortToastMsg.observe(this, Observer { value ->
-            if (value.isNullOrEmpty()) {
-                return@Observer
+        getViewModel().isPdrFinish.observe(this) {
+            if (it) {
+                finish()
             }
-            toastShort(value)
-        })
+        }
 
-        getViewModel().mPdrLongToastMsg.observe(this, Observer { value ->
-            if (value.isNullOrEmpty()) {
-                return@Observer
+        getViewModel().mPdrShortToastMsg.observe(this) {
+            if (it.isNullOrEmpty()) {
+                return@observe
             }
-            toastLong(value)
-        })
+            toastShort(it)
+        }
+
+        getViewModel().mPdrLongToastMsg.observe(this) {
+            if (it.isNullOrEmpty()) {
+                return@observe
+            }
+            toastLong(it)
+        }
     }
 
     override fun startCreate() {

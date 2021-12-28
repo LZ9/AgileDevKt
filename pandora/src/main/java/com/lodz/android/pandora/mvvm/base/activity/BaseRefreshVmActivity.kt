@@ -1,6 +1,5 @@
 package com.lodz.android.pandora.mvvm.base.activity
 
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.lodz.android.corekt.anko.toastLong
 import com.lodz.android.corekt.anko.toastShort
@@ -14,7 +13,7 @@ import com.lodz.android.pandora.mvvm.vm.BaseRefreshViewModel
  */
 abstract class BaseRefreshVmActivity<VM : BaseRefreshViewModel> : BaseRefreshActivity() {
 
-    private val mPdrViewModel by lazy { ViewModelProvider(this).get(createViewModel()) }
+    private val mPdrViewModel by lazy { ViewModelProvider(this)[createViewModel()] }
 
     fun getViewModel(): VM = mPdrViewModel
 
@@ -23,50 +22,66 @@ abstract class BaseRefreshVmActivity<VM : BaseRefreshViewModel> : BaseRefreshAct
     override fun setListeners() {
         super.setListeners()
 
-        getViewModel().isPdrFinish.observe(this, Observer { value ->
-            if (value) { finish() }
-        })
-
-        getViewModel().mPdrShortToastMsg.observe(this, Observer { value ->
-            if (value.isNullOrEmpty()) {
-                return@Observer
+        getViewModel().isPdrFinish.observe(this) {
+            if (it) {
+                finish()
             }
-            toastShort(value)
-        })
+        }
 
-        getViewModel().mPdrLongToastMsg.observe(this, Observer { value ->
-            if (value.isNullOrEmpty()) {
-                return@Observer
+        getViewModel().mPdrShortToastMsg.observe(this) {
+            if (it.isNullOrEmpty()) {
+                return@observe
             }
-            toastLong(value)
-        })
+            toastShort(it)
+        }
 
-        getViewModel().isPdrShowNoData.observe(this, Observer { value ->
-            if (value) { showStatusNoData() }
-        })
+        getViewModel().mPdrLongToastMsg.observe(this) {
+            if (it.isNullOrEmpty()) {
+                return@observe
+            }
+            toastLong(it)
+        }
 
-        getViewModel().isPdrShowError.observe(this, Observer { value ->
-            if (value.first) { showStatusError(value.second) }
-        })
+        getViewModel().isPdrShowNoData.observe(this) {
+            if (it) {
+                showStatusNoData()
+            }
+        }
 
-        getViewModel().isPdrShowLoading.observe(this, Observer { value ->
-            if (value) { showStatusLoading() }
-        })
+        getViewModel().isPdrShowError.observe(this) {
+            if (it.first) {
+                showStatusError(it.second)
+            }
+        }
 
-        getViewModel().isPdrShowCompleted.observe(this, Observer { value ->
-            if (value) { showStatusCompleted() }
-        })
+        getViewModel().isPdrShowLoading.observe(this) {
+            if (it) {
+                showStatusLoading()
+            }
+        }
 
-        getViewModel().isPdrShowTitleBar.observe(this, Observer { value ->
-            if (value) { showTitleBar() } else { goneTitleBar() }
-        })
+        getViewModel().isPdrShowCompleted.observe(this) {
+            if (it) {
+                showStatusCompleted()
+            }
+        }
 
-        getViewModel().isPdrRefreshEnabled.observe(this, Observer { value ->
-            setSwipeRefreshEnabled(value)
-        })
+        getViewModel().isPdrShowTitleBar.observe(this) {
+            if (it) {
+                showTitleBar()
+            } else {
+                goneTitleBar()
+            }
+        }
 
-        getViewModel().isPdrRefreshFinish.observe(this, Observer { value ->
-            if (value){ setSwipeRefreshFinish() }
-        })
+        getViewModel().isPdrRefreshEnabled.observe(this) {
+            setSwipeRefreshEnabled(it)
+        }
+
+        getViewModel().isPdrRefreshFinish.observe(this) {
+            if (it) {
+                setSwipeRefreshFinish()
+            }
+        }
     }
 }
