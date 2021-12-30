@@ -67,10 +67,6 @@ class ApiCoroutinesTestActivity : BaseVmActivity<ApiCoroutinesViewModel>() {
             getViewModel().requestMock(getContext())
         }
 
-        getViewModel().mResponseResult.observe(this) {
-            mBinding.resultTv.text = it ?: ""
-        }
-
         mBinding.postBtn.setOnClickListener {
             getViewModel().requestPostSpot(getContext(), mRequestType)
         }
@@ -82,6 +78,14 @@ class ApiCoroutinesTestActivity : BaseVmActivity<ApiCoroutinesViewModel>() {
         mBinding.customBtn.setOnClickListener {
             getViewModel().requestCustom(getContext())
         }
+    }
+
+    override fun setViewModelObserves() {
+        super.setViewModelObserves()
+        getViewModel().mResponseResult.observe(this) {
+            mBinding.resultTv.text = it ?: ""
+        }
+
     }
 
     override fun initData() {

@@ -42,7 +42,10 @@ abstract class AbsVmActivity<VM : AbsViewModel> : AbsActivity() {
             }
             toastLong(it)
         }
+        setViewModelObserves()
     }
+
+    protected open fun setViewModelObserves() {}
 
     override fun startCreate() {
         super.startCreate()

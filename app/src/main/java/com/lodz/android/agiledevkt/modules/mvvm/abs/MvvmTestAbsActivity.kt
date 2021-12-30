@@ -38,7 +38,10 @@ class MvvmTestAbsActivity : AbsVmActivity<MvvmTestAbsViewModel>() {
         mBinding.getFailReusltBtn.setOnClickListener {
             getViewModel().getResult(getContext(), false)
         }
+    }
 
+    override fun setViewModelObserves() {
+        super.setViewModelObserves()
         getViewModel().mResultText.observe(this) { value ->
             mBinding.resultTv.text = value
         }

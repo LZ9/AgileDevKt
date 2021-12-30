@@ -74,5 +74,9 @@ abstract class BaseVmActivity<VM : BaseViewModel> : BaseActivity() {
                 goneTitleBar()
             }
         }
+
+        setViewModelObserves()
     }
+
+    protected open fun setViewModelObserves() {}
 }

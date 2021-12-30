@@ -83,5 +83,9 @@ abstract class BaseRefreshVmActivity<VM : BaseRefreshViewModel> : BaseRefreshAct
                 setSwipeRefreshFinish()
             }
         }
+
+        setViewModelObserves()
     }
+
+    protected open fun setViewModelObserves() {}
 }

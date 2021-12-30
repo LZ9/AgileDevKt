@@ -75,5 +75,9 @@ abstract class BaseSandwichVmActivity<VM : BaseSandwichViewModel> : BaseSandwich
                 setSwipeRefreshFinish()
             }
         }
+
+        setViewModelObserves()
     }
+
+    protected open fun setViewModelObserves() {}
 }

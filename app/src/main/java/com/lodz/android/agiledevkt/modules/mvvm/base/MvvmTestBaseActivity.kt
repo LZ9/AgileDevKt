@@ -59,7 +59,10 @@ class MvvmTestBaseActivity : BaseVmActivity<MvvmTestBaseViewModel>() {
             showStatusLoading()
             getViewModel().getResult(false)
         }
+    }
 
+    override fun setViewModelObserves() {
+        super.setViewModelObserves()
         getViewModel().mResultText.observe(this) { value ->
             mBinding.resultTv.text = value
         }

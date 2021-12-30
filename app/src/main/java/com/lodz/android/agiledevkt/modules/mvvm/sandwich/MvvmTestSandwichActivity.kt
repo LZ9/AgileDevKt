@@ -76,7 +76,10 @@ class MvvmTestSandwichActivity : BaseSandwichVmActivity<MvvmTestSandwichViewMode
             showStatusLoading()
             getViewModel().getResult(false)
         }
+    }
 
+    override fun setViewModelObserves() {
+        super.setViewModelObserves()
         getViewModel().mResultText.observe(this) { value ->
             mContentBinding.resultTv.text = value
         }

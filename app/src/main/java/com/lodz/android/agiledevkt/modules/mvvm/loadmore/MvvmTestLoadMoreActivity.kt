@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.base.response.PageBean
 import com.lodz.android.agiledevkt.databinding.ActivityMvvmLoadmoreBinding
+import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.pandora.mvvm.base.activity.BaseRefreshVmActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.rv.recycler.RecyclerLoadMoreHelper
@@ -56,7 +57,7 @@ class MvvmTestLoadMoreActivity : BaseRefreshVmActivity<MvvmTestLoadMoreViewModel
     }
 
     override fun onDataRefresh() {
-        getViewModel().getDataList(PageBean.DEFAULT_START_PAGE_NUM)
+        getViewModel().requestDataList(PageBean.DEFAULT_START_PAGE_NUM)
     }
 
     override fun onClickBackBtn() {
@@ -66,7 +67,24 @@ class MvvmTestLoadMoreActivity : BaseRefreshVmActivity<MvvmTestLoadMoreViewModel
 
     override fun setListeners() {
         super.setListeners()
+        mLoadMoreHelper.setListener(object : RecyclerLoadMoreHelper.Listener {
+            override fun onLoadMore(currentPage: Int, nextPage: Int, size: Int, position: Int) {
+                getViewModel().requestDataList(nextPage)
+            }
 
+            override fun onClickLoadFail(reloadPage: Int, size: Int) {
+                getViewModel().requestDataList(reloadPage)
+
+            }
+        })
+
+        mAdapter.setOnItemClickListener { viewHolder, item, position ->
+            getViewModel().requestDetail(getContext(), item)
+        }
+    }
+
+    override fun setViewModelObserves() {
+        super.setViewModelObserves()
         getViewModel().mDataList.observe(this) {
             val isFirst = it.first
             val pageBean = it.second
@@ -90,21 +108,14 @@ class MvvmTestLoadMoreActivity : BaseRefreshVmActivity<MvvmTestLoadMoreViewModel
             mLoadMoreHelper.loadMoreSuccess(datas)
         }
 
-        mLoadMoreHelper.setListener(object : RecyclerLoadMoreHelper.Listener {
-            override fun onLoadMore(currentPage: Int, nextPage: Int, size: Int, position: Int) {
-                getViewModel().getDataList(nextPage)
-            }
-
-            override fun onClickLoadFail(reloadPage: Int, size: Int) {
-                getViewModel().getDataList(reloadPage)
-
-            }
-        })
+        getViewModel().mDetailInfo.observe(this){
+            toastShort(it)
+        }
     }
 
     override fun initData() {
         super.initData()
         showStatusLoading()
-        getViewModel().getDataList(PageBean.DEFAULT_START_PAGE_NUM)
+        getViewModel().requestDataList(PageBean.DEFAULT_START_PAGE_NUM)
     }
 }
