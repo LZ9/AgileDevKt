@@ -84,8 +84,8 @@ abstract class BaseRefreshVmActivity<VM : BaseRefreshViewModel> : BaseRefreshAct
             }
         }
 
-        setViewModelObserves()
+        getViewModel().setViewModelObserves()
     }
 
-    protected open fun setViewModelObserves() {}
+    protected open fun VM.setViewModelObserves(){}
 }

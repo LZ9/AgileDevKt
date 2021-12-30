@@ -80,12 +80,10 @@ class ApiCoroutinesTestActivity : BaseVmActivity<ApiCoroutinesViewModel>() {
         }
     }
 
-    override fun setViewModelObserves() {
-        super.setViewModelObserves()
-        getViewModel().mResponseResult.observe(this) {
+    override fun ApiCoroutinesViewModel.setViewModelObserves() {
+        mResponseResult.observe(getLifecycleOwner()) {
             mBinding.resultTv.text = it ?: ""
         }
-
     }
 
     override fun initData() {

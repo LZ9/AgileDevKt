@@ -6,6 +6,7 @@ import android.view.View
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleOwner
 import com.lodz.android.corekt.utils.ReflectUtils
 import com.lodz.android.pandora.base.application.BaseApplication
 import com.lodz.android.pandora.base.fragment.IFragmentBackPressed
@@ -66,6 +67,8 @@ abstract class AbsActivity : RxAppCompatActivity() {
     protected open fun initData() {}
 
     protected open fun endCreate() {}
+
+    protected open fun getLifecycleOwner(): LifecycleOwner = this
 
     protected open fun getContext(): Context = this
 

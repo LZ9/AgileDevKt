@@ -83,9 +83,8 @@ class MvvmTestLoadMoreActivity : BaseRefreshVmActivity<MvvmTestLoadMoreViewModel
         }
     }
 
-    override fun setViewModelObserves() {
-        super.setViewModelObserves()
-        getViewModel().mDataList.observe(this) {
+    override fun MvvmTestLoadMoreViewModel.setViewModelObserves() {
+        mDataList.observe(getLifecycleOwner()) {
             val isFirst = it.first
             val pageBean = it.second
             val list = pageBean.data
@@ -108,7 +107,7 @@ class MvvmTestLoadMoreActivity : BaseRefreshVmActivity<MvvmTestLoadMoreViewModel
             mLoadMoreHelper.loadMoreSuccess(datas)
         }
 
-        getViewModel().mDetailInfo.observe(this){
+        mDetailInfo.observe(getLifecycleOwner()){
             toastShort(it)
         }
     }

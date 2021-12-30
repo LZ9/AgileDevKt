@@ -75,8 +75,8 @@ abstract class BaseVmActivity<VM : BaseViewModel> : BaseActivity() {
             }
         }
 
-        setViewModelObserves()
+        getViewModel().setViewModelObserves()
     }
 
-    protected open fun setViewModelObserves() {}
+    protected open fun VM.setViewModelObserves(){}
 }

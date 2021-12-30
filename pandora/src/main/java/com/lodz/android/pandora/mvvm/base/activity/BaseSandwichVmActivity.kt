@@ -76,8 +76,8 @@ abstract class BaseSandwichVmActivity<VM : BaseSandwichViewModel> : BaseSandwich
             }
         }
 
-        setViewModelObserves()
+        getViewModel().setViewModelObserves()
     }
 
-    protected open fun setViewModelObserves() {}
+    protected open fun VM.setViewModelObserves(){}
 }
