@@ -7,8 +7,11 @@ package com.lodz.android.agiledevkt.bean
  */
 class SpotBean {
 
-    var spotName: String = ""
+    var name: String = ""
 
     var score: String = ""
 
+    override fun toString(): String {
+        return "SpotBean(name='$name', score='$score')"
+    }
 }

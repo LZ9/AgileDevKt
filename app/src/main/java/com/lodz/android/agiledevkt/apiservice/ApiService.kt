@@ -1,5 +1,6 @@
 package com.lodz.android.agiledevkt.apiservice
 
+import com.lodz.android.agiledevkt.bean.MockBean
 import com.lodz.android.agiledevkt.bean.SpotBean
 import com.lodz.android.agiledevkt.bean.base.response.ResponseBean
 import io.reactivex.rxjava3.core.Observable
@@ -16,7 +17,7 @@ interface ApiService {
     /** 登录接口 */
     @FormUrlEncoded
     @POST("systemApi/login")
-    fun login(@Field("account") account: String, @Field("password") password: String): Observable<ResponseBean<String>>
+    fun login(@Field("account") account: String, @Field("password") password: String): Observable<ResponseBean<MockBean<SpotBean>>>
 
     /** post方式获取景点数据 */
     @FormUrlEncoded

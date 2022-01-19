@@ -48,7 +48,7 @@ class ApiCoroutinesViewModel :BaseViewModel(){
             actionIO = {
                 val data = it.data
                 if (data != null){
-                    mResponseResult.value = "spotName : ${data.spotName} ; score : ${data.score}"
+                    mResponseResult.value = "spotName : ${data.name} ; score : ${data.score}"
                 }
             }, error = { e, isNetwork ->
                 mResponseResult.value = RxUtils.getExceptionTips(e, isNetwork, context.getString(R.string.api_fail))
@@ -66,7 +66,7 @@ class ApiCoroutinesViewModel :BaseViewModel(){
             actionIO = {
                 val data = it.data
                 if (data != null){
-                    mResponseResult.value = "spotName : ${data.spotName} ; score : ${data.score}"
+                    mResponseResult.value = "spotName : ${data.name} ; score : ${data.score}"
                 }
             }, error = { e, isNetwork ->
                 mResponseResult.value = RxUtils.getExceptionTips(e, isNetwork, context.getString(R.string.api_fail))
@@ -75,7 +75,7 @@ class ApiCoroutinesViewModel :BaseViewModel(){
 
     fun requestCustom(context: Context) {
         val bean = SpotBean()
-        bean.spotName = "植物园"
+        bean.name = "植物园"
         runOnSuspendIOPg(
             context,
             context.getString(R.string.mvvm_demo_loading),
@@ -86,7 +86,7 @@ class ApiCoroutinesViewModel :BaseViewModel(){
             actionIO = {
                 val data = it.data
                 if (data != null){
-                    mResponseResult.value = "spotName : ${data[0].spotName} ; score : ${data[0].score}"
+                    mResponseResult.value = "spotName : ${data[0].name} ; score : ${data[0].score}"
                 }
             }, error = { e, isNetwork ->
                 mResponseResult.value = RxUtils.getExceptionTips(e, isNetwork, context.getString(R.string.api_fail))

@@ -45,7 +45,7 @@ object ApiModuleSuspend :ApiCoroutinesService{
         val responseBean = ResponseBean.createSuccess<SpotBean>()
         responseBean.msg = "success"
         val spotBean = SpotBean()
-        spotBean.spotName = "环岛路"
+        spotBean.name = "环岛路"
         spotBean.score = "10分"
         responseBean.data = spotBean
         return responseBean
@@ -64,7 +64,7 @@ object ApiModuleSuspend :ApiCoroutinesService{
         val responseBean = ResponseBean.createSuccess<SpotBean>()
         responseBean.msg = "success"
         val spotBean = SpotBean()
-        spotBean.spotName = "鼓浪屿"
+        spotBean.name = "鼓浪屿"
         spotBean.score = "10分"
         responseBean.data = spotBean
         return responseBean
@@ -76,7 +76,7 @@ object ApiModuleSuspend :ApiCoroutinesService{
         val responseBean = JSON.parseObject(json, object : TypeReference<ResponseBean<List<SpotBean>>>() {})
         val list = ArrayList<SpotBean>()
         val spotBean = SpotBean()
-        spotBean.spotName = getJsonByRequestBody(requestBody)
+        spotBean.name = getJsonByRequestBody(requestBody)
         spotBean.score = "10分"
         list.add(spotBean)
         responseBean.data = list

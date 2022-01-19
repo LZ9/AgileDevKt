@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.apiservice.ApiService
+import com.lodz.android.agiledevkt.bean.MockBean
 import com.lodz.android.agiledevkt.bean.SpotBean
 import com.lodz.android.agiledevkt.bean.base.request.BaseRequestBean
 import com.lodz.android.agiledevkt.bean.base.response.ResponseBean
@@ -73,11 +74,11 @@ class ApiRxTestActivity : BaseActivity() {
                 .login("admin", "1234")
                 .compose(bindDestroyEvent())
                 .compose(RxUtils.ioToMainObservable())
-                .subscribe(object : ProgressObserver<ResponseBean<String>>(){
-                    override fun onPgNext(any: ResponseBean<String>) {
+                .subscribe(object : ProgressObserver<ResponseBean<MockBean<SpotBean>>>(){
+                    override fun onPgNext(any: ResponseBean<MockBean<SpotBean>>) {
                         val data = any.data
-                        if (!data.isNullOrEmpty()){
-                            mBinding.resultTv.text = data
+                        if (data != null){
+                            mBinding.resultTv.text = data.toString()
                         }
                     }
 
@@ -95,7 +96,7 @@ class ApiRxTestActivity : BaseActivity() {
                     override fun onPgNext(any: ResponseBean<SpotBean>) {
                         val data = any.data
                         if (data != null){
-                            mBinding.resultTv.text = java.lang.StringBuilder("spotName : ${data.spotName} ; score : ${data.score}")
+                            mBinding.resultTv.text = java.lang.StringBuilder("spotName : ${data.name} ; score : ${data.score}")
                         }
                     }
 
@@ -113,7 +114,7 @@ class ApiRxTestActivity : BaseActivity() {
                     override fun onPgNext(any: ResponseBean<SpotBean>) {
                         val data = any.data
                         if (data != null){
-                            mBinding.resultTv.text = java.lang.StringBuilder("spotName : ${data.spotName} ; score : ${data.score}")
+                            mBinding.resultTv.text = java.lang.StringBuilder("spotName : ${data.name} ; score : ${data.score}")
                         }
                     }
 
@@ -125,7 +126,7 @@ class ApiRxTestActivity : BaseActivity() {
 
         mBinding.customBtn.setOnClickListener {
             val bean = SpotBean()
-            bean.spotName = "植物园"
+            bean.name = "植物园"
             ApiServiceImpl.querySpot(BaseRequestBean.createRequestBody(bean))
                 .compose(RxUtils.ioToMainObservable())
                 .compose(bindDestroyEvent())
@@ -133,7 +134,7 @@ class ApiRxTestActivity : BaseActivity() {
                     override fun onPgNext(any: ResponseBean<List<SpotBean>>) {
                         val data = any.data
                         if (data != null){
-                            mBinding.resultTv.text = StringBuilder("spotName : ${data[0].spotName} ; score : ${data[0].score}")
+                            mBinding.resultTv.text = StringBuilder("spotName : ${data[0].name} ; score : ${data[0].score}")
                         }
                     }
 

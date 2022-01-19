@@ -3,6 +3,7 @@ package com.lodz.android.agiledevkt.modules.api.rx
 import com.alibaba.fastjson.JSON
 import com.alibaba.fastjson.TypeReference
 import com.lodz.android.agiledevkt.apiservice.ApiService
+import com.lodz.android.agiledevkt.bean.MockBean
 import com.lodz.android.agiledevkt.bean.SpotBean
 import com.lodz.android.agiledevkt.bean.base.response.ResponseBean
 import com.lodz.android.corekt.utils.ReflectUtils
@@ -27,13 +28,16 @@ object ApiServiceImpl : ApiService {
     /** 接口成功 */
     const val API_SUCCESS = 3
 
-    override fun login(account: String, password: String): Observable<ResponseBean<String>> =
+    override fun login(account: String, password: String): Observable<ResponseBean<MockBean<SpotBean>>> =
         Observable.create { emitter ->
             try {
                 Thread.sleep(2000)
-                val responseBean = ResponseBean.createSuccess<String>()
+                val responseBean = ResponseBean.createSuccess<MockBean<SpotBean>>()
                 responseBean.msg = "success"
-                responseBean.data = "{\"id\":\"1\",\"loginName\":\"admin\"}"
+                val bean = MockBean<SpotBean>()
+                bean.name = "admin"
+                bean.id = 1
+                responseBean.data = bean
                 emitter.doNext(responseBean)
                 emitter.doComplete()
             } catch (e: Exception) {
@@ -59,7 +63,7 @@ object ApiServiceImpl : ApiService {
                 val responseBean = ResponseBean.createSuccess<SpotBean>()
                 responseBean.msg = "success"
                 val spotBean = SpotBean()
-                spotBean.spotName = "环岛路"
+                spotBean.name = "环岛路"
                 spotBean.score = "10分"
                 responseBean.data = spotBean
                 emitter.doNext(responseBean)
@@ -87,7 +91,7 @@ object ApiServiceImpl : ApiService {
                 val responseBean = ResponseBean.createSuccess<SpotBean>()
                 responseBean.msg = "success"
                 val spotBean = SpotBean()
-                spotBean.spotName = "鼓浪屿"
+                spotBean.name = "鼓浪屿"
                 spotBean.score = "10分"
                 responseBean.data = spotBean
                 emitter.doNext(responseBean)
@@ -106,7 +110,7 @@ object ApiServiceImpl : ApiService {
                 val responseBean = JSON.parseObject(json, object : TypeReference<ResponseBean<List<SpotBean>>>() {})
                 val list = ArrayList<SpotBean>()
                 val spotBean = SpotBean()
-                spotBean.spotName = getJsonByRequestBody(requestBody)
+                spotBean.name = getJsonByRequestBody(requestBody)
                 spotBean.score = "10分"
                 list.add(spotBean)
                 responseBean.data = list
