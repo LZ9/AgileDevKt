@@ -21,52 +21,55 @@ abstract class BaseRefreshVmActivity<VM : BaseRefreshViewModel> : BaseRefreshAct
 
     override fun setListeners() {
         super.setListeners()
+        setViewModelObserves(getViewModel())
+    }
 
-        getViewModel().isPdrFinish.observe(this) {
+    protected open fun setViewModelObserves(viewModel: VM) {
+        viewModel.isPdrFinish.observe(this) {
             if (it) {
                 finish()
             }
         }
 
-        getViewModel().mPdrShortToastMsg.observe(this) {
+        viewModel.mPdrShortToastMsg.observe(this) {
             if (it.isNullOrEmpty()) {
                 return@observe
             }
             toastShort(it)
         }
 
-        getViewModel().mPdrLongToastMsg.observe(this) {
+        viewModel.mPdrLongToastMsg.observe(this) {
             if (it.isNullOrEmpty()) {
                 return@observe
             }
             toastLong(it)
         }
 
-        getViewModel().isPdrShowNoData.observe(this) {
+        viewModel.isPdrShowNoData.observe(this) {
             if (it) {
                 showStatusNoData()
             }
         }
 
-        getViewModel().isPdrShowError.observe(this) {
+        viewModel.isPdrShowError.observe(this) {
             if (it.first) {
                 showStatusError(it.second)
             }
         }
 
-        getViewModel().isPdrShowLoading.observe(this) {
+        viewModel.isPdrShowLoading.observe(this) {
             if (it) {
                 showStatusLoading()
             }
         }
 
-        getViewModel().isPdrShowCompleted.observe(this) {
+        viewModel.isPdrShowCompleted.observe(this) {
             if (it) {
                 showStatusCompleted()
             }
         }
 
-        getViewModel().isPdrShowTitleBar.observe(this) {
+        viewModel.isPdrShowTitleBar.observe(this) {
             if (it) {
                 showTitleBar()
             } else {
@@ -74,18 +77,14 @@ abstract class BaseRefreshVmActivity<VM : BaseRefreshViewModel> : BaseRefreshAct
             }
         }
 
-        getViewModel().isPdrRefreshEnabled.observe(this) {
+        viewModel.isPdrRefreshEnabled.observe(this) {
             setSwipeRefreshEnabled(it)
         }
 
-        getViewModel().isPdrRefreshFinish.observe(this) {
+        viewModel.isPdrRefreshFinish.observe(this) {
             if (it) {
                 setSwipeRefreshFinish()
             }
         }
-
-        getViewModel().setViewModelObserves()
     }
-
-    protected open fun VM.setViewModelObserves(){}
 }

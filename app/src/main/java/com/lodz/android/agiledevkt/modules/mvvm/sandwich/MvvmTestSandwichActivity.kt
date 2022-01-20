@@ -78,8 +78,9 @@ class MvvmTestSandwichActivity : BaseSandwichVmActivity<MvvmTestSandwichViewMode
         }
     }
 
-    override fun MvvmTestSandwichViewModel.setViewModelObserves() {
-        mResultText.observe(getLifecycleOwner()) {
+    override fun setViewModelObserves(viewModel: MvvmTestSandwichViewModel) {
+        super.setViewModelObserves(viewModel)
+        viewModel.mResultText.observe(getLifecycleOwner()) {
             mContentBinding.resultTv.text = it
         }
     }

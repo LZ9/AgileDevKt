@@ -66,11 +66,11 @@ class MvvmTestRefreshActivity : BaseRefreshVmActivity<MvvmTestRefreshViewModel>(
         }
     }
 
-    override fun MvvmTestRefreshViewModel.setViewModelObserves() {
-        mResultText.observe(getLifecycleOwner()) { value ->
+    override fun setViewModelObserves(viewModel: MvvmTestRefreshViewModel) {
+        super.setViewModelObserves(viewModel)
+        viewModel.mResultText.observe(getLifecycleOwner()) { value ->
             mBinding.resultTv.text = value
         }
-
     }
 
     override fun initData() {

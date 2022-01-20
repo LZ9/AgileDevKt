@@ -61,11 +61,11 @@ class MvvmTestBaseActivity : BaseVmActivity<MvvmTestBaseViewModel>() {
         }
     }
 
-    override fun MvvmTestBaseViewModel.setViewModelObserves() {
-        mResultText.observe(getLifecycleOwner()) {
+    override fun setViewModelObserves(viewModel: MvvmTestBaseViewModel) {
+        super.setViewModelObserves(viewModel)
+        viewModel.mResultText.observe(this) {
             mBinding.resultTv.text = it
         }
-
     }
 
     override fun initData() {

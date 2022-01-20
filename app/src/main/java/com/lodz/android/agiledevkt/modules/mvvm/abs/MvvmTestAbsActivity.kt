@@ -40,8 +40,9 @@ class MvvmTestAbsActivity : AbsVmActivity<MvvmTestAbsViewModel>() {
         }
     }
 
-    override fun MvvmTestAbsViewModel.setViewModelObserves() {
-        mResultText.observe(getLifecycleOwner()){
+    override fun setViewModelObserves(viewModel: MvvmTestAbsViewModel) {
+        super.setViewModelObserves(viewModel)
+        viewModel.mResultText.observe(this) {
             mBinding.resultTv.text = it
         }
     }

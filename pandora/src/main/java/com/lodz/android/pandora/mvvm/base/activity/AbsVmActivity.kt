@@ -22,30 +22,30 @@ abstract class AbsVmActivity<VM : AbsViewModel> : AbsActivity() {
 
     override fun setListeners() {
         super.setListeners()
+        setViewModelObserves(getViewModel())
+    }
 
-        getViewModel().isPdrFinish.observe(this) {
+    protected open fun setViewModelObserves(viewModel: VM) {
+        viewModel.isPdrFinish.observe(getLifecycleOwner()) {
             if (it) {
                 finish()
             }
         }
 
-        getViewModel().mPdrShortToastMsg.observe(this) {
+        viewModel.mPdrShortToastMsg.observe(getLifecycleOwner()) {
             if (it.isNullOrEmpty()) {
                 return@observe
             }
             toastShort(it)
         }
 
-        getViewModel().mPdrLongToastMsg.observe(this) {
+        viewModel.mPdrLongToastMsg.observe(getLifecycleOwner()) {
             if (it.isNullOrEmpty()) {
                 return@observe
             }
             toastLong(it)
         }
-        getViewModel().setViewModelObserves()
     }
-
-    protected open fun VM.setViewModelObserves(){}
 
     override fun startCreate() {
         super.startCreate()
