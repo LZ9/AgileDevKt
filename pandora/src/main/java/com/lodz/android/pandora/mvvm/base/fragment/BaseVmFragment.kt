@@ -2,7 +2,6 @@ package com.lodz.android.pandora.mvvm.base.fragment
 
 import android.view.View
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.lodz.android.corekt.anko.toastLong
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.pandora.base.fragment.BaseFragment
@@ -13,18 +12,16 @@ import com.lodz.android.pandora.mvvm.vm.BaseViewModel
  * @author zhouL
  * @date 2019/12/6
  */
-abstract class BaseVmFragment<VM : BaseViewModel> : BaseFragment() {
+abstract class BaseVmFragment : BaseFragment() {
 
-
-    private val mPdrViewModel by lazy { ViewModelProvider(this).get(createViewModel()) }
-
-    fun getViewModel(): VM = mPdrViewModel
-
-    abstract fun createViewModel(): Class<VM>
+    abstract fun getViewModel(): BaseViewModel
 
     override fun setListeners(view: View) {
         super.setListeners(view)
+        setViewModelObserves()
+    }
 
+    protected open fun setViewModelObserves() {
         getViewModel().mPdrShortToastMsg.observe(this, Observer { value ->
             if (value.isNullOrEmpty()) {
                 return@Observer
@@ -59,5 +56,4 @@ abstract class BaseVmFragment<VM : BaseViewModel> : BaseFragment() {
             if (value) { showTitleBar() } else { goneTitleBar() }
         })
     }
-
 }

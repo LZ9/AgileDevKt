@@ -7,14 +7,16 @@ import android.view.View
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.databinding.ActivityApiCoroutinesTestBinding
 import com.lodz.android.pandora.mvvm.base.activity.BaseVmActivity
+import com.lodz.android.pandora.mvvm.vm.BaseViewModel
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
+import com.lodz.android.pandora.utils.viewmodel.bindViewModel
 
 /**
  * 协程模式的接口请求
  * @author zhouL
  * @date 2021/12/14
  */
-class ApiCoroutinesTestActivity : BaseVmActivity<ApiCoroutinesViewModel>() {
+class ApiCoroutinesTestActivity : BaseVmActivity() {
 
     companion object {
         fun start(context: Context) {
@@ -23,12 +25,14 @@ class ApiCoroutinesTestActivity : BaseVmActivity<ApiCoroutinesViewModel>() {
         }
     }
 
-    private val mBinding: ActivityApiCoroutinesTestBinding by bindingLayout(ActivityApiCoroutinesTestBinding::inflate)
-
     /** 请求类型 */
     private var mRequestType = ApiModuleSuspend.API_SUCCESS
 
-    override fun createViewModel(): Class<ApiCoroutinesViewModel> = ApiCoroutinesViewModel::class.java
+    private val mViewModel by bindViewModel { ApiCoroutinesViewModel() }
+
+    override fun getViewModel(): BaseViewModel = mViewModel
+
+    private val mBinding: ActivityApiCoroutinesTestBinding by bindingLayout(ActivityApiCoroutinesTestBinding::inflate)
 
     override fun getViewBindingLayout(): View = mBinding.root
 
@@ -64,25 +68,25 @@ class ApiCoroutinesTestActivity : BaseVmActivity<ApiCoroutinesViewModel>() {
         }
 
         mBinding.mockBtn.setOnClickListener {
-            getViewModel().requestMock(getContext())
+            mViewModel.requestMock(getContext())
         }
 
         mBinding.postBtn.setOnClickListener {
-            getViewModel().requestPostSpot(getContext(), mRequestType)
+            mViewModel.requestPostSpot(getContext(), mRequestType)
         }
 
         mBinding.getBtn.setOnClickListener {
-            getViewModel().requestGetSpot(getContext(), mRequestType)
+            mViewModel.requestGetSpot(getContext(), mRequestType)
         }
 
         mBinding.customBtn.setOnClickListener {
-            getViewModel().requestCustom(getContext())
+            mViewModel.requestCustom(getContext())
         }
     }
 
-    override fun setViewModelObserves(viewModel: ApiCoroutinesViewModel) {
-        super.setViewModelObserves(viewModel)
-        viewModel.mResponseResult.observe(this) {
+    override fun setViewModelObserves() {
+        super.setViewModelObserves()
+        mViewModel.mResponseResult.observe(this) {
             mBinding.resultTv.text = it ?: ""
         }
     }

@@ -2,17 +2,14 @@ package com.lodz.android.agiledevkt.modules.mvvm.sandwich
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import android.widget.TextView
 import androidx.lifecycle.Observer
-import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.databinding.ActivityMvvmTestBinding
 import com.lodz.android.agiledevkt.databinding.ViewMvvmTestBottomBinding
 import com.lodz.android.agiledevkt.databinding.ViewMvvmTestTopBinding
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.pandora.mvvm.base.fragment.BaseSandwichVmFragment
+import com.lodz.android.pandora.mvvm.vm.BaseSandwichViewModel
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
-import com.lodz.android.pandora.widget.base.TitleBarLayout
+import com.lodz.android.pandora.utils.viewmodel.bindViewModel
 import kotlin.random.Random
 
 /**
@@ -20,13 +17,15 @@ import kotlin.random.Random
  * @author zhouL
  * @date 2019/12/9
  */
-class MvvmTestSandwichFragment : BaseSandwichVmFragment<MvvmTestSandwichViewModel>() {
+class MvvmTestSandwichFragment : BaseSandwichVmFragment() {
 
     companion object {
         fun newInstance(): MvvmTestSandwichFragment = MvvmTestSandwichFragment()
     }
 
-    override fun createViewModel(): Class<MvvmTestSandwichViewModel> = MvvmTestSandwichViewModel::class.java
+    private val mViewModel by bindViewModel { MvvmTestSandwichViewModel() }
+
+    override fun getViewModel(): BaseSandwichViewModel = mViewModel
 
     /** 内容布局 */
     private val mContentBinding: ActivityMvvmTestBinding by bindingLayout(ActivityMvvmTestBinding::inflate)
@@ -49,13 +48,13 @@ class MvvmTestSandwichFragment : BaseSandwichVmFragment<MvvmTestSandwichViewMode
 
     override fun onDataRefresh() {
         super.onDataRefresh()
-        getViewModel().getRefreshData(Random.nextInt(9) % 2 == 0)
+        mViewModel.getRefreshData(Random.nextInt(9) % 2 == 0)
     }
 
     override fun onClickReload() {
         super.onClickReload()
         showStatusLoading()
-        getViewModel().getResult(true)
+        mViewModel.getResult(true)
     }
 
     override fun setListeners(view: View) {
@@ -64,16 +63,19 @@ class MvvmTestSandwichFragment : BaseSandwichVmFragment<MvvmTestSandwichViewMode
         // 获取成功数据按钮
         mContentBinding.getSuccessReusltBtn.setOnClickListener {
             showStatusLoading()
-            getViewModel().getResult(true)
+            mViewModel.getResult(true)
         }
 
         // 获取失败数据按钮
         mContentBinding.getFailReusltBtn.setOnClickListener {
             showStatusLoading()
-            getViewModel().getResult(false)
+            mViewModel.getResult(false)
         }
+    }
 
-        getViewModel().mResultText.observe(this, Observer { value ->
+    override fun setViewModelObserves() {
+        super.setViewModelObserves()
+        mViewModel.mResultText.observe(this, Observer { value ->
             mContentBinding.resultTv.text = value
         })
     }

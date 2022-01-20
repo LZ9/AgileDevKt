@@ -7,7 +7,9 @@ import android.view.View
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.databinding.ActivityMvvmTestBinding
 import com.lodz.android.pandora.mvvm.base.activity.BaseRefreshVmActivity
+import com.lodz.android.pandora.mvvm.vm.BaseRefreshViewModel
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
+import com.lodz.android.pandora.utils.viewmodel.bindViewModel
 import kotlin.random.Random
 
 /**
@@ -15,7 +17,7 @@ import kotlin.random.Random
  * @author zhouL
  * @date 2019/12/5
  */
-class MvvmTestRefreshActivity : BaseRefreshVmActivity<MvvmTestRefreshViewModel>() {
+class MvvmTestRefreshActivity : BaseRefreshVmActivity() {
 
     companion object {
         fun start(context: Context){
@@ -24,7 +26,9 @@ class MvvmTestRefreshActivity : BaseRefreshVmActivity<MvvmTestRefreshViewModel>(
         }
     }
 
-    override fun createViewModel(): Class<MvvmTestRefreshViewModel> = MvvmTestRefreshViewModel::class.java
+    private val mViewModel by bindViewModel { MvvmTestRefreshViewModel() }
+
+    override fun getViewModel(): BaseRefreshViewModel = mViewModel
 
     private val mBinding: ActivityMvvmTestBinding by bindingLayout(ActivityMvvmTestBinding::inflate)
 
@@ -36,13 +40,13 @@ class MvvmTestRefreshActivity : BaseRefreshVmActivity<MvvmTestRefreshViewModel>(
     }
 
     override fun onDataRefresh() {
-        getViewModel().getRefreshData(Random.nextInt(9) % 2 == 0)
+        mViewModel.getRefreshData(Random.nextInt(9) % 2 == 0)
     }
 
     override fun onClickReload() {
         super.onClickReload()
         showStatusLoading()
-        getViewModel().getResult(true)
+        mViewModel.getResult(true)
     }
 
     override fun onClickBackBtn() {
@@ -56,19 +60,19 @@ class MvvmTestRefreshActivity : BaseRefreshVmActivity<MvvmTestRefreshViewModel>(
         // 获取成功数据按钮
         mBinding.getSuccessReusltBtn.setOnClickListener {
             showStatusLoading()
-            getViewModel().getResult(true)
+            mViewModel.getResult(true)
         }
 
         // 获取失败数据按钮
         mBinding.getFailReusltBtn.setOnClickListener {
             showStatusLoading()
-            getViewModel().getResult(false)
+            mViewModel.getResult(false)
         }
     }
 
-    override fun setViewModelObserves(viewModel: MvvmTestRefreshViewModel) {
-        super.setViewModelObserves(viewModel)
-        viewModel.mResultText.observe(getLifecycleOwner()) { value ->
+    override fun setViewModelObserves() {
+        super.setViewModelObserves()
+        mViewModel.mResultText.observe(getLifecycleOwner()) { value ->
             mBinding.resultTv.text = value
         }
     }
@@ -76,6 +80,6 @@ class MvvmTestRefreshActivity : BaseRefreshVmActivity<MvvmTestRefreshViewModel>(
     override fun initData() {
         super.initData()
         showStatusLoading()
-        getViewModel().getResult(true)
+        mViewModel.getResult(true)
     }
 }

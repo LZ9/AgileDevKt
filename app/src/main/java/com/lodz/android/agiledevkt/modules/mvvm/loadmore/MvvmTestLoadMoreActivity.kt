@@ -11,7 +11,9 @@ import com.lodz.android.agiledevkt.bean.base.response.PageBean
 import com.lodz.android.agiledevkt.databinding.ActivityMvvmLoadmoreBinding
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.pandora.mvvm.base.activity.BaseRefreshVmActivity
+import com.lodz.android.pandora.mvvm.vm.BaseRefreshViewModel
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
+import com.lodz.android.pandora.utils.viewmodel.bindViewModel
 import com.lodz.android.pandora.widget.rv.recycler.RecyclerLoadMoreHelper
 
 /**
@@ -19,7 +21,7 @@ import com.lodz.android.pandora.widget.rv.recycler.RecyclerLoadMoreHelper
  * @author zhouL
  * @date 2019/12/5
  */
-class MvvmTestLoadMoreActivity : BaseRefreshVmActivity<MvvmTestLoadMoreViewModel>() {
+class MvvmTestLoadMoreActivity : BaseRefreshVmActivity() {
 
     companion object {
         fun start(context: Context){
@@ -28,16 +30,18 @@ class MvvmTestLoadMoreActivity : BaseRefreshVmActivity<MvvmTestLoadMoreViewModel
         }
     }
 
-    /** 适配器 */
-    private lateinit var mAdapter: LoadMoreListAdapter
-    /** 加载更多帮助类 */
-    private lateinit var mLoadMoreHelper: RecyclerLoadMoreHelper<String>
+    private val mViewModel by bindViewModel { MvvmTestLoadMoreViewModel() }
 
-    override fun createViewModel(): Class<MvvmTestLoadMoreViewModel> = MvvmTestLoadMoreViewModel::class.java
+    override fun getViewModel(): BaseRefreshViewModel = mViewModel
 
     private val mBinding: ActivityMvvmLoadmoreBinding by bindingLayout(ActivityMvvmLoadmoreBinding::inflate)
 
     override fun getViewBindingLayout(): View = mBinding.root
+
+    /** 适配器 */
+    private lateinit var mAdapter: LoadMoreListAdapter
+    /** 加载更多帮助类 */
+    private lateinit var mLoadMoreHelper: RecyclerLoadMoreHelper<String>
 
     override fun findViews(savedInstanceState: Bundle?) {
         super.findViews(savedInstanceState)
@@ -57,7 +61,7 @@ class MvvmTestLoadMoreActivity : BaseRefreshVmActivity<MvvmTestLoadMoreViewModel
     }
 
     override fun onDataRefresh() {
-        getViewModel().requestDataList(PageBean.DEFAULT_START_PAGE_NUM)
+        mViewModel.requestDataList(PageBean.DEFAULT_START_PAGE_NUM)
     }
 
     override fun onClickBackBtn() {
@@ -69,23 +73,23 @@ class MvvmTestLoadMoreActivity : BaseRefreshVmActivity<MvvmTestLoadMoreViewModel
         super.setListeners()
         mLoadMoreHelper.setListener(object : RecyclerLoadMoreHelper.Listener {
             override fun onLoadMore(currentPage: Int, nextPage: Int, size: Int, position: Int) {
-                getViewModel().requestDataList(nextPage)
+                mViewModel.requestDataList(nextPage)
             }
 
             override fun onClickLoadFail(reloadPage: Int, size: Int) {
-                getViewModel().requestDataList(reloadPage)
+                mViewModel.requestDataList(reloadPage)
 
             }
         })
 
         mAdapter.setOnItemClickListener { viewHolder, item, position ->
-            getViewModel().requestDetail(getContext(), item)
+            mViewModel.requestDetail(getContext(), item)
         }
     }
 
-    override fun setViewModelObserves(viewModel: MvvmTestLoadMoreViewModel) {
-        super.setViewModelObserves(viewModel)
-        viewModel.mDataList.observe(getLifecycleOwner()) {
+    override fun setViewModelObserves() {
+        super.setViewModelObserves()
+        mViewModel.mDataList.observe(getLifecycleOwner()) {
             val isFirst = it.first
             val pageBean = it.second
             val list = pageBean.data
@@ -108,7 +112,7 @@ class MvvmTestLoadMoreActivity : BaseRefreshVmActivity<MvvmTestLoadMoreViewModel
             mLoadMoreHelper.loadMoreSuccess(datas)
         }
 
-        viewModel.mDetailInfo.observe(getLifecycleOwner()){
+        mViewModel.mDetailInfo.observe(getLifecycleOwner()){
             toastShort(it)
         }
 
@@ -117,6 +121,6 @@ class MvvmTestLoadMoreActivity : BaseRefreshVmActivity<MvvmTestLoadMoreViewModel
     override fun initData() {
         super.initData()
         showStatusLoading()
-        getViewModel().requestDataList(PageBean.DEFAULT_START_PAGE_NUM)
+        mViewModel.requestDataList(PageBean.DEFAULT_START_PAGE_NUM)
     }
 }

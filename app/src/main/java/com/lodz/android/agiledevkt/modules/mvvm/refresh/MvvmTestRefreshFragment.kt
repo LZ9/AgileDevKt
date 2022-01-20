@@ -3,7 +3,9 @@ package com.lodz.android.agiledevkt.modules.mvvm.refresh
 import android.view.View
 import com.lodz.android.agiledevkt.databinding.ActivityMvvmTestBinding
 import com.lodz.android.pandora.mvvm.base.fragment.BaseRefreshVmFragment
+import com.lodz.android.pandora.mvvm.vm.BaseRefreshViewModel
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
+import com.lodz.android.pandora.utils.viewmodel.bindViewModel
 import kotlin.random.Random
 
 /**
@@ -11,26 +13,28 @@ import kotlin.random.Random
  * @author zhouL
  * @date 2019/12/9
  */
-class MvvmTestRefreshFragment : BaseRefreshVmFragment<MvvmTestRefreshViewModel>() {
+class MvvmTestRefreshFragment : BaseRefreshVmFragment() {
 
     companion object {
         fun newInstance(): MvvmTestRefreshFragment = MvvmTestRefreshFragment()
     }
 
-    override fun createViewModel(): Class<MvvmTestRefreshViewModel> = MvvmTestRefreshViewModel::class.java
+    private val mViewModel by bindViewModel { MvvmTestRefreshViewModel() }
+
+    override fun getViewModel(): BaseRefreshViewModel = mViewModel
 
     private val mBinding: ActivityMvvmTestBinding by bindingLayout(ActivityMvvmTestBinding::inflate)
 
     override fun getViewBindingLayout(): View = mBinding.root
 
     override fun onDataRefresh() {
-        getViewModel().getRefreshData(Random.nextInt(9) % 2 == 0)
+        mViewModel.getRefreshData(Random.nextInt(9) % 2 == 0)
     }
 
     override fun onClickReload() {
         super.onClickReload()
         showStatusLoading()
-        getViewModel().getResult(true)
+        mViewModel.getResult(true)
     }
 
     override fun setListeners(view: View) {
@@ -38,16 +42,19 @@ class MvvmTestRefreshFragment : BaseRefreshVmFragment<MvvmTestRefreshViewModel>(
         //获取成功数据按钮
         mBinding.getSuccessReusltBtn.setOnClickListener {
             showStatusLoading()
-            getViewModel().getResult(true)
+            mViewModel.getResult(true)
         }
 
         // 获取失败数据按钮
         mBinding.getFailReusltBtn.setOnClickListener {
             showStatusLoading()
-            getViewModel().getResult(false)
+            mViewModel.getResult(false)
         }
+    }
 
-        getViewModel().mResultText.observe(this) { value ->
+    override fun setViewModelObserves() {
+        super.setViewModelObserves()
+        mViewModel.mResultText.observe(this) { value ->
             mBinding.resultTv.text = value
         }
     }
@@ -55,6 +62,6 @@ class MvvmTestRefreshFragment : BaseRefreshVmFragment<MvvmTestRefreshViewModel>(
     override fun initData(view: View) {
         super.initData(view)
         showStatusLoading()
-        getViewModel().getResult(true)
+        mViewModel.getResult(true)
     }
 }

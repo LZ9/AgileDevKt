@@ -1,6 +1,5 @@
 package com.lodz.android.pandora.mvvm.base.activity
 
-import androidx.lifecycle.ViewModelProvider
 import com.lodz.android.corekt.anko.toastLong
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.pandora.base.activity.AbsActivity
@@ -12,34 +11,30 @@ import com.trello.rxlifecycle4.android.ActivityEvent
  * @author zhouL
  * @date 2019/11/29
  */
-abstract class AbsVmActivity<VM : AbsViewModel> : AbsActivity() {
+abstract class AbsVmActivity : AbsActivity() {
 
-    private val mPdrViewModel by lazy { ViewModelProvider(this)[createViewModel()] }
-
-    fun getViewModel(): VM = mPdrViewModel
-
-    abstract fun createViewModel(): Class<VM>
+    abstract fun getViewModel(): AbsViewModel
 
     override fun setListeners() {
         super.setListeners()
-        setViewModelObserves(getViewModel())
+        setViewModelObserves()
     }
 
-    protected open fun setViewModelObserves(viewModel: VM) {
-        viewModel.isPdrFinish.observe(getLifecycleOwner()) {
+    protected open fun setViewModelObserves() {
+        getViewModel().isPdrFinish.observe(getLifecycleOwner()) {
             if (it) {
                 finish()
             }
         }
 
-        viewModel.mPdrShortToastMsg.observe(getLifecycleOwner()) {
+        getViewModel().mPdrShortToastMsg.observe(getLifecycleOwner()) {
             if (it.isNullOrEmpty()) {
                 return@observe
             }
             toastShort(it)
         }
 
-        viewModel.mPdrLongToastMsg.observe(getLifecycleOwner()) {
+        getViewModel().mPdrLongToastMsg.observe(getLifecycleOwner()) {
             if (it.isNullOrEmpty()) {
                 return@observe
             }

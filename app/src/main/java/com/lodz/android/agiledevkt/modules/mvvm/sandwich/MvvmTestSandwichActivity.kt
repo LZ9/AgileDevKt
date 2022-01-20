@@ -9,7 +9,9 @@ import com.lodz.android.agiledevkt.databinding.ActivityMvvmTestBinding
 import com.lodz.android.agiledevkt.databinding.ViewMvvmTestBottomBinding
 import com.lodz.android.agiledevkt.databinding.ViewMvvmTestTopBinding
 import com.lodz.android.pandora.mvvm.base.activity.BaseSandwichVmActivity
+import com.lodz.android.pandora.mvvm.vm.BaseSandwichViewModel
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
+import com.lodz.android.pandora.utils.viewmodel.bindViewModel
 import kotlin.random.Random
 
 /**
@@ -17,7 +19,7 @@ import kotlin.random.Random
  * @author zhouL
  * @date 2019/12/6
  */
-class MvvmTestSandwichActivity : BaseSandwichVmActivity<MvvmTestSandwichViewModel>() {
+class MvvmTestSandwichActivity : BaseSandwichVmActivity() {
 
     companion object {
         fun start(context: Context){
@@ -26,7 +28,9 @@ class MvvmTestSandwichActivity : BaseSandwichVmActivity<MvvmTestSandwichViewMode
         }
     }
 
-    override fun createViewModel(): Class<MvvmTestSandwichViewModel> = MvvmTestSandwichViewModel::class.java
+    private val mViewModel by bindViewModel { MvvmTestSandwichViewModel() }
+
+    override fun getViewModel(): BaseSandwichViewModel = mViewModel
 
     /** 内容布局 */
     private val mContentBinding: ActivityMvvmTestBinding by bindingLayout(ActivityMvvmTestBinding::inflate)
@@ -49,14 +53,15 @@ class MvvmTestSandwichActivity : BaseSandwichVmActivity<MvvmTestSandwichViewMode
 
     override fun onDataRefresh() {
         super.onDataRefresh()
-        getViewModel().getRefreshData(Random.nextInt(9) % 2 == 0)
+        mViewModel.getRefreshData(Random.nextInt(9) % 2 == 0)
     }
 
     override fun onClickReload() {
         super.onClickReload()
         showStatusLoading()
-        getViewModel().getResult(true)
+        mViewModel.getResult(true)
     }
+
 
     override fun setListeners() {
         super.setListeners()
@@ -68,19 +73,19 @@ class MvvmTestSandwichActivity : BaseSandwichVmActivity<MvvmTestSandwichViewMode
         // 获取成功数据按钮
         mContentBinding.getSuccessReusltBtn.setOnClickListener {
             showStatusLoading()
-            getViewModel().getResult(true)
+            mViewModel.getResult(true)
         }
 
         // 获取失败数据按钮
         mContentBinding.getFailReusltBtn.setOnClickListener {
             showStatusLoading()
-            getViewModel().getResult(false)
+            mViewModel.getResult(false)
         }
     }
 
-    override fun setViewModelObserves(viewModel: MvvmTestSandwichViewModel) {
-        super.setViewModelObserves(viewModel)
-        viewModel.mResultText.observe(getLifecycleOwner()) {
+    override fun setViewModelObserves() {
+        super.setViewModelObserves()
+        mViewModel.mResultText.observe(getLifecycleOwner()) {
             mContentBinding.resultTv.text = it
         }
     }
