@@ -111,7 +111,7 @@ dependencies {
     implementation files('libs/wheelview-4.1.0.aar')
 
     //添加RxDownload4的所有依赖
-    implementation "com.github.ssseasonnn:RxDownload:1.1.3"
+    implementation "com.github.ssseasonnn:RxDownload:1.1.4"
 
     // okio
     implementation 'com.squareup.okio:okio:3.0.0'
