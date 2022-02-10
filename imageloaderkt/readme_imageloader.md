@@ -15,9 +15,9 @@
     dependencies {
         implementation 'androidx.annotation:annotation:1.3.0'
 
-        api 'com.github.bumptech.glide:glide:4.12.0'
-        kapt 'com.github.bumptech.glide:compiler:4.12.0'
-        implementation "com.github.bumptech.glide:okhttp3-integration:4.12.0"
+        api 'com.github.bumptech.glide:glide:4.13.0'
+        kapt 'com.github.bumptech.glide:compiler:4.13.0'
+        implementation "com.github.bumptech.glide:okhttp3-integration:4.13.0"
         api 'jp.wasabeef:glide-transformations:4.3.0'
     }
 ```

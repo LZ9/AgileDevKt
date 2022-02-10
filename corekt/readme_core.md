@@ -16,22 +16,23 @@
 该库引用了下方这些support库，如果您的app有重复引用可以选择去掉顶层引用或者保证版本一致
 ```
     dependencies {
-        api 'androidx.appcompat:appcompat:1.4.0'
-        api 'com.google.android.material:material:1.4.0'
+        api 'androidx.appcompat:appcompat:1.4.1'
+        api 'com.google.android.material:material:1.5.0'
         api 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
         api 'androidx.recyclerview:recyclerview:1.2.1'
         api 'androidx.cardview:cardview:1.0.0'
         api "androidx.viewpager2:viewpager2:1.0.0"
         api 'androidx.annotation:annotation:1.3.0'
-        api 'androidx.constraintlayout:constraintlayout:2.1.2'
+        api 'androidx.constraintlayout:constraintlayout:2.1.3'
         api 'androidx.multidex:multidex:2.0.1'
         api 'androidx.core:core-ktx:1.7.0'
         api 'androidx.activity:activity-ktx:1.4.0'
-        api 'androidx.fragment:fragment-ktx:1.4.0'
-        api 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+        api 'androidx.fragment:fragment-ktx:1.4.1'
         api 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0'
+        api 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.0'
+        api 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.0'
         api 'androidx.startup:startup-runtime:1.1.0'
-        api 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2'
+        api 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0'
     }
 ```
 
