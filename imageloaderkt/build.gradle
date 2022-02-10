@@ -10,8 +10,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 32
-        versionCode 21
-        versionName "1.2.0"// 成功上传
+        versionCode 22
+        versionName "1.2.1"// 成功上传
     }
 
     buildTypes {
