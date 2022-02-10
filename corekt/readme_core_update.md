@@ -1,5 +1,12 @@
 # core-kt库更新记录
 
+##### 2022/02/10
+1. 更新依赖库版本
+2. 升级工程
+3. 优化AnkoCoroutines.kt里的方法
+4. AnkoString.kt增加ping方法
+5. 发布1.4.8版
+
 ##### 2021/12/08
 1. 更新依赖库版本
 2. NotificationUtils.kt增加取消通知方法
