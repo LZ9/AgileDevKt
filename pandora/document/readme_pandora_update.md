@@ -1,5 +1,13 @@
 # Pandora更新记录
 
+##### 2022/02/10
+1. 更新依赖库
+2. 升级工程
+3. 优化AnkoCoroutinesRes.kt方法
+4. 修改ViewModel基类使用方式
+5. 新增ParamViewModelFactory.kt，支持创建构造函数携带参数的ViewModel类
+6. 发布1.8.6版
+
 ##### 2021/12/10
 1. 更新依赖库
 2. 图片选择器加上生命周期回调
