@@ -9,7 +9,7 @@ buildscript {
 //        maven { url 'https://maven.aliyun.com/repository/public' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.4'
+        classpath 'com.android.tools.build:gradle:7.1.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10"
         classpath "org.jetbrains.dokka:dokka-gradle-plugin:1.4.10.2"
         classpath "io.insert-koin:koin-gradle-plugin:3.0.1-beta-2"
