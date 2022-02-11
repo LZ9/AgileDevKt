@@ -17,7 +17,7 @@ class MvvmTestRefreshViewModel :BaseRefreshViewModel(){
 
     fun getResult(isSuccess: Boolean) {
         runOnSuspendIORes(
-            request = { ApiModuleSuspend.getResult(isSuccess) }) {
+            { ApiModuleSuspend.getResult(isSuccess) }) {
             onSuccess {
                 mResultText.value = it.data ?: ""
                 showStatusCompleted()
@@ -30,7 +30,7 @@ class MvvmTestRefreshViewModel :BaseRefreshViewModel(){
 
     fun getRefreshData(isSuccess: Boolean) {
         runOnSuspendIORes(
-            request = { ApiModuleSuspend.getResult(isSuccess) }) {
+            { ApiModuleSuspend.getResult(isSuccess) }) {
             onSuccess {
                 setSwipeRefreshFinish()
                 mResultText.value = it.data ?: ""

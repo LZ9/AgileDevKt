@@ -11,7 +11,6 @@ import com.lodz.android.agiledevkt.utils.crash.CrashManager
 import com.lodz.android.corekt.anko.runOnMainDelay
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
-import kotlinx.coroutines.MainScope
 
 /**
  * 崩溃测试类

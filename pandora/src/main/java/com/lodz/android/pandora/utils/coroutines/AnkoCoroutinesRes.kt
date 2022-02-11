@@ -31,9 +31,9 @@ fun <T> runOnSuspendIORes(
     val listener = ApiAction<T>().also(action)
     try {
         val res = request.invoke()
-        resHandle(res, listener)
+        resHandle(this, res, listener)
     } catch (e: Exception) {
-        errorHandle(e, listener)
+        errorHandle(this, e, listener)
     }
 }
 
@@ -45,9 +45,9 @@ fun <T> ViewModel.runOnSuspendIORes(
     val listener = ApiAction<T>().also(action)
     try {
         val res = request.invoke()
-        resHandle(res, listener)
+        resHandle(this, res, listener)
     } catch (e: Exception) {
-        errorHandle(e, listener)
+        errorHandle(this, e, listener)
     }
 }
 
@@ -59,9 +59,9 @@ fun <T> runOnIORes(
     val listener = ApiAction<T>().also(action)
     try {
         val res = request.await()
-        resHandle(res, listener)
+        resHandle(this, res, listener)
     } catch (e: Exception) {
-        errorHandle(e, listener)
+        errorHandle(this, e, listener)
     }
 }
 
@@ -73,9 +73,9 @@ fun <T> ViewModel.runOnIORes(
     val listener = ApiAction<T>().also(action)
     try {
         val res = request.await()
-        resHandle(res, listener)
+        resHandle(this, res, listener)
     } catch (e: Exception) {
-        errorHandle(e, listener)
+        errorHandle(this, e, listener)
     }
 }
 
@@ -87,12 +87,13 @@ fun <T> runOnSuspendIOPg(
 ) {
     val listener = ApiPgAction<T>().also(action)
     runOnMainCatch({ progressDialog.show() })
+
     val job = IoScope().launch {
         try {
             val res = request.invoke()
-            resHandle(res, listener)
+            resHandle(this, res, listener)
         } catch (e: Exception) {
-            errorHandle(e, listener)
+            errorHandle(this, e, listener)
         } finally {
             runOnMainCatch({ progressDialog.dismiss() })
         }
@@ -119,9 +120,9 @@ fun <T> ViewModel.runOnSuspendIOPg(
     val job = viewModelScope.launch(Dispatchers.IO) {
         try {
             val res = request.invoke()
-            resHandle(res, listener)
+            resHandle(this, res, listener)
         } catch (e: Exception) {
-            errorHandle(e, listener)
+            errorHandle(this, e, listener)
         } finally {
             runOnMainCatch({ progressDialog.dismiss() })
         }
@@ -148,9 +149,9 @@ fun <T> runOnIOPg(
     val job = IoScope().launch {
         try {
             val res = request.await()
-            resHandle(res, listener)
+            resHandle(this, res, listener)
         } catch (e: Exception) {
-            errorHandle(e, listener)
+            errorHandle(this, e, listener)
         } finally {
             runOnMainCatch({ progressDialog.dismiss() })
         }
@@ -177,9 +178,9 @@ fun <T> ViewModel.runOnIOPg(
     val job = viewModelScope.launch(Dispatchers.IO) {
         try {
             val res = request.await()
-            resHandle(res, listener)
+            resHandle(this, res, listener)
         } catch (e: Exception) {
-            errorHandle(e, listener)
+            errorHandle(this, e, listener)
         } finally {
             runOnMainCatch({ progressDialog.dismiss() })
         }
@@ -215,9 +216,9 @@ fun <T> runOnSuspendIOPg(
     val job = IoScope().launch {
         try {
             val res = request.invoke()
-            resHandle(res, listener)
+            resHandle(this, res, listener)
         } catch (e: Exception) {
-            errorHandle(e, listener)
+            errorHandle(this, e, listener)
         } finally {
             runOnMainCatch({ progressDialog.dismiss() })
         }
@@ -253,9 +254,9 @@ fun <T> ViewModel.runOnSuspendIOPg(
     val job = viewModelScope.launch(Dispatchers.IO) {
         try {
             val res = request.invoke()
-            resHandle(res, listener)
+            resHandle(this, res, listener)
         } catch (e: Exception) {
-            errorHandle(e, listener)
+            errorHandle(this, e, listener)
         } finally {
             runOnMainCatch({ progressDialog.dismiss() })
         }
@@ -291,9 +292,9 @@ fun <T> runOnIOPg(
     val job = IoScope().launch {
         try {
             val res = request.await()
-            resHandle(res, listener)
+            resHandle(this, res, listener)
         } catch (e: Exception) {
-            errorHandle(e, listener)
+            errorHandle(this, e, listener)
         } finally {
             runOnMainCatch({ progressDialog.dismiss() })
         }
@@ -329,9 +330,9 @@ fun <T> ViewModel.runOnIOPg(
     val job = viewModelScope.launch(Dispatchers.IO) {
         try {
             val res = request.await()
-            resHandle(res, listener)
+            resHandle(this, res, listener)
         } catch (e: Exception) {
-            errorHandle(e, listener)
+            errorHandle(this, e, listener)
         } finally {
             runOnMainCatch({ progressDialog.dismiss() })
         }
@@ -347,27 +348,27 @@ fun <T> ViewModel.runOnIOPg(
 }
 
 /** 处理异步结果 */
-private fun <T> resHandle(res: T, action: ApiAction<T>) {
+private fun <T> resHandle(scope: CoroutineScope, res: T, action: ApiAction<T>) {
     if (res is ResponseStatus) {
         if (res.isTokenUnauth()) {
-            runOnMain { action.mTokenUnauthAction?.invoke(res) }
+            runOnMain(scope){ action.mTokenUnauthAction?.invoke(res) }
             return
         }
         if (res.isSuccess()) {
-            runOnMain { action.mSuccessAction?.invoke(res) }
+            runOnMain(scope) { action.mSuccessAction?.invoke(res) }
             return
         }
         throw ExceptionFactory.createDataException(res)
     }
-    runOnMain { action.mSuccessAction?.invoke(res) }
+    runOnMain(scope) { action.mSuccessAction?.invoke(res) }
 }
 
 /** 处理异常逻辑 */
-private fun <T> errorHandle(e: Exception, action: ApiAction<T>) {
+private fun <T> errorHandle(scope: CoroutineScope, e: Exception, action: ApiAction<T>) {
     e.printStackTrace()
     printErrorLog(e)
     if (e !is CancellationException) {
-        runOnMain { action.mErrorAction?.invoke(e, ExceptionFactory.isNetworkError(e)) }
+        runOnMain(scope) { action.mErrorAction?.invoke(e, ExceptionFactory.isNetworkError(e)) }
     }
 }
 
