@@ -60,11 +60,13 @@ class MvvmTestLoadMoreViewModel :BaseRefreshViewModel(){
             request = {
                 delay(1000)
                 id.append(" : ").append(DateUtils.getCurrentFormatString(DateUtils.TYPE_10))
-            },
-            actionIO = {
+            }) {
+            onSuccess {
                 mDetailInfo.value = it
-            }, error = { e, isNetwork ->
+            }
+            onError { e, isNetwork ->
                 toastShort(e.toString())
-            })
+            }
+        }
     }
 }

@@ -18,23 +18,25 @@ import com.lodz.android.pandora.utils.coroutines.runOnSuspendIOPg
  */
 class ApiCoroutinesViewModel :BaseViewModel(){
 
-
     var mResponseResult = MutableLiveData<String>()
 
     fun requestMock(context: Context) {
+
         runOnSuspendIOPg(
             context,
             context.getString(R.string.mvvm_demo_loading),
             cancelable = true,
             request = {
                 ApiServiceManager.get().create(ApiCoroutinesService::class.java).login("admin", "1234")
-            },
-            actionIO = {
+            }) {
+            onSuccess {
                 mResponseResult.value = it.data ?: ""
-            }, error = { e, isNetwork ->
-                val msg = RxUtils.getExceptionTips(e, isNetwork, "加载失败")
-                mResponseResult.value = RxUtils.getExceptionTips(e, isNetwork, context.getString(R.string.api_fail))
-            })
+            }
+            onError { e, isNetwork ->
+                val msg = RxUtils.getExceptionTips(e, isNetwork, context.getString(R.string.api_fail))
+                mResponseResult.value = RxUtils.getExceptionTips(e, isNetwork, msg)
+            }
+        }
     }
 
     fun requestPostSpot(context: Context, id: Int) {
@@ -44,15 +46,17 @@ class ApiCoroutinesViewModel :BaseViewModel(){
             cancelable = true,
             request = {
                 ApiModuleSuspend.postSpot(id)
-            },
-            actionIO = {
+            }) {
+            onSuccess {
                 val data = it.data
-                if (data != null){
+                if (data != null) {
                     mResponseResult.value = "spotName : ${data.name} ; score : ${data.score}"
                 }
-            }, error = { e, isNetwork ->
+            }
+            onError { e, isNetwork ->
                 mResponseResult.value = RxUtils.getExceptionTips(e, isNetwork, context.getString(R.string.api_fail))
-            })
+            }
+        }
     }
 
     fun requestGetSpot(context: Context, id: Int) {
@@ -62,15 +66,17 @@ class ApiCoroutinesViewModel :BaseViewModel(){
             cancelable = true,
             request = {
                 ApiModuleSuspend.getSpot(id)
-            },
-            actionIO = {
+            }) {
+            onSuccess {
                 val data = it.data
-                if (data != null){
+                if (data != null) {
                     mResponseResult.value = "spotName : ${data.name} ; score : ${data.score}"
                 }
-            }, error = { e, isNetwork ->
+            }
+            onError { e, isNetwork ->
                 mResponseResult.value = RxUtils.getExceptionTips(e, isNetwork, context.getString(R.string.api_fail))
-            })
+            }
+        }
     }
 
     fun requestCustom(context: Context) {
@@ -82,15 +88,17 @@ class ApiCoroutinesViewModel :BaseViewModel(){
             cancelable = true,
             request = {
                 ApiModuleSuspend.querySpot(BaseRequestBean.createRequestBody(bean))
-            },
-            actionIO = {
+            }) {
+            onSuccess {
                 val data = it.data
-                if (data != null){
+                if (data != null) {
                     mResponseResult.value = "spotName : ${data[0].name} ; score : ${data[0].score}"
                 }
-            }, error = { e, isNetwork ->
+            }
+            onError { e, isNetwork ->
                 mResponseResult.value = RxUtils.getExceptionTips(e, isNetwork, context.getString(R.string.api_fail))
-            })
+            }
+        }
     }
 
 }

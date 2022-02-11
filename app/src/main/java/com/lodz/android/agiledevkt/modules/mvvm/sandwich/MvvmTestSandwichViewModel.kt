@@ -17,27 +17,29 @@ class MvvmTestSandwichViewModel :BaseSandwichViewModel(){
 
     fun getResult(isSuccess: Boolean) {
         runOnSuspendIORes(
-            request = { ApiModuleSuspend.getResult(isSuccess) },
-            action = {
+            request = { ApiModuleSuspend.getResult(isSuccess) }) {
+            onSuccess {
                 mResultText.value = it.data ?: ""
                 showStatusCompleted()
-            },
-            error = { e, isNetwork ->
+            }
+            onError { e, isNetwork ->
                 showStatusError(e)
-            })
+            }
+        }
     }
 
     fun getRefreshData(isSuccess: Boolean) {
         runOnSuspendIORes(
-            request = { ApiModuleSuspend.getResult(isSuccess) },
-            action = {
+            request = { ApiModuleSuspend.getResult(isSuccess) }) {
+            onSuccess {
                 setSwipeRefreshFinish()
                 mResultText.value = it.data ?: ""
                 showStatusCompleted()
-            },
-            error = { e, isNetwork ->
+            }
+            onError { e, isNetwork ->
                 setSwipeRefreshFinish()
                 toastShort(R.string.mvvm_demo_refresh_data_fail)
-            })
+            }
+        }
     }
 }

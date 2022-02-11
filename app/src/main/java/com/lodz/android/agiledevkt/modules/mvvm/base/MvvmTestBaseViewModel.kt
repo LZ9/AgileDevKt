@@ -15,14 +15,15 @@ class MvvmTestBaseViewModel : BaseViewModel() {
     var mResultText = MutableLiveData<String>()
 
     fun getResult(isSuccess: Boolean) {
-        runOnSuspendIORes(
-            request = { ApiModuleSuspend.getResult(isSuccess) },
-            action = {
+        runOnSuspendIORes({ApiModuleSuspend.getResult(isSuccess)}){
+            onSuccess {
                 mResultText.value = it.data ?: ""
                 showStatusCompleted()
-            },
-            error = { e, isNetwork ->
+            }
+
+            onError { e, isNetwork ->
                 showStatusError(e)
-            })
+            }
+        }
     }
 }

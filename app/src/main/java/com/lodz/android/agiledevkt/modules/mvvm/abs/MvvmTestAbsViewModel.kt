@@ -22,14 +22,16 @@ class MvvmTestAbsViewModel : AbsViewModel() {
             context,
             context.getString(R.string.mvvm_demo_loading),
             cancelable = true,
-            request = { ApiModuleSuspend.getResult(isSuccess) },
-            actionIO = {
+            request = { ApiModuleSuspend.getResult(isSuccess) }) {
+            onSuccess {
                 mResultText.value = it.data ?: ""
                 toastShort(it.msg)
-            }, error = { e, isNetwork ->
+            }
+            onError { e, isNetwork ->
                 val msg = RxUtils.getExceptionTips(e, isNetwork, "加载失败")
                 mResultText.value = msg
                 toastShort(msg)
-            })
+            }
+        }
     }
 }
