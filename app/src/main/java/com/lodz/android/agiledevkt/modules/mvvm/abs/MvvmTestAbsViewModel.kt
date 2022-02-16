@@ -6,7 +6,7 @@ import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.api.coroutines.ApiModuleSuspend
 import com.lodz.android.pandora.mvvm.vm.AbsViewModel
 import com.lodz.android.pandora.rx.utils.RxUtils
-import com.lodz.android.pandora.utils.coroutines.runOnSuspendIOPg
+import com.lodz.android.pandora.utils.coroutines.CoroutinesWrapper
 
 /**
  * MVVM基础ViewModel
@@ -18,20 +18,18 @@ class MvvmTestAbsViewModel : AbsViewModel() {
     var mResultText = MutableLiveData<String>()
 
     fun getResult(context: Context, isSuccess: Boolean) {
-        runOnSuspendIOPg(
-            context,
-            context.getString(R.string.mvvm_demo_loading),
-            cancelable = true,
-            request = { ApiModuleSuspend.getResult(isSuccess) }) {
-            onSuccess {
-                mResultText.value = it.data ?: ""
-                toastShort(it.msg)
+        CoroutinesWrapper.create(this)
+            .request { ApiModuleSuspend.getResult(isSuccess) }
+            .actionPg(context, context.getString(R.string.mvvm_demo_loading), true){
+                onSuccess {
+                    mResultText.value = it.data ?: ""
+                    toastShort(it.msg)
+                }
+                onError { e, isNetwork ->
+                    val msg = RxUtils.getExceptionTips(e, isNetwork, "加载失败")
+                    mResultText.value = msg
+                    toastShort(msg)
+                }
             }
-            onError { e, isNetwork ->
-                val msg = RxUtils.getExceptionTips(e, isNetwork, "加载失败")
-                mResultText.value = msg
-                toastShort(msg)
-            }
-        }
     }
 }

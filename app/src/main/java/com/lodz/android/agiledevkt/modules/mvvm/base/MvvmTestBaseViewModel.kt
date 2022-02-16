@@ -3,7 +3,7 @@ package com.lodz.android.agiledevkt.modules.mvvm.base
 import androidx.lifecycle.MutableLiveData
 import com.lodz.android.agiledevkt.modules.api.coroutines.ApiModuleSuspend
 import com.lodz.android.pandora.mvvm.vm.BaseViewModel
-import com.lodz.android.pandora.utils.coroutines.runOnSuspendIORes
+import com.lodz.android.pandora.utils.coroutines.CoroutinesWrapper
 
 /**
  * MVVM带基础状态控件ViewModel
@@ -15,15 +15,17 @@ class MvvmTestBaseViewModel : BaseViewModel() {
     var mResultText = MutableLiveData<String>()
 
     fun getResult(isSuccess: Boolean) {
-        runOnSuspendIORes({ApiModuleSuspend.getResult(isSuccess)}){
-            onSuccess {
-                mResultText.value = it.data ?: ""
-                showStatusCompleted()
-            }
+        CoroutinesWrapper.create(this)
+            .request { ApiModuleSuspend.getResult(isSuccess) }
+            .action {
+                onSuccess {
+                    mResultText.value = it.data ?: ""
+                    showStatusCompleted()
+                }
 
-            onError { e, isNetwork ->
-                showStatusError(e)
+                onError { e, isNetwork ->
+                    showStatusError(e)
+                }
             }
-        }
     }
 }

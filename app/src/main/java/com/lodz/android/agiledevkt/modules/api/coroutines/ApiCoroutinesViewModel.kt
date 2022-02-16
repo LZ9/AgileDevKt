@@ -9,7 +9,7 @@ import com.lodz.android.agiledevkt.bean.base.request.BaseRequestBean
 import com.lodz.android.agiledevkt.utils.api.ApiServiceManager
 import com.lodz.android.pandora.mvvm.vm.BaseViewModel
 import com.lodz.android.pandora.rx.utils.RxUtils
-import com.lodz.android.pandora.utils.coroutines.runOnSuspendIOPg
+import com.lodz.android.pandora.utils.coroutines.CoroutinesWrapper
 
 /**
  * 协程模式的ViewModel
@@ -21,84 +21,67 @@ class ApiCoroutinesViewModel :BaseViewModel(){
     var mResponseResult = MutableLiveData<String>()
 
     fun requestMock(context: Context) {
+        CoroutinesWrapper.create(this)
+            .request { ApiServiceManager.get().create(ApiCoroutinesService::class.java).login("admin", "1234") }
+            .actionPg(context, context.getString(R.string.mvvm_demo_loading), true) {
+                onSuccess { mResponseResult.value = it.data ?: "" }
 
-        runOnSuspendIOPg(
-            context,
-            context.getString(R.string.mvvm_demo_loading),
-            cancelable = true,
-            request = {
-                ApiServiceManager.get().create(ApiCoroutinesService::class.java).login("admin", "1234")
-            }) {
-            onSuccess {
-                mResponseResult.value = it.data ?: ""
+                onError { e, isNetwork ->
+                    val msg = RxUtils.getExceptionTips(e, isNetwork, context.getString(R.string.api_fail))
+                    mResponseResult.value = RxUtils.getExceptionTips(e, isNetwork, msg)
+                }
             }
-            onError { e, isNetwork ->
-                val msg = RxUtils.getExceptionTips(e, isNetwork, context.getString(R.string.api_fail))
-                mResponseResult.value = RxUtils.getExceptionTips(e, isNetwork, msg)
-            }
-        }
     }
 
     fun requestPostSpot(context: Context, id: Int) {
-        runOnSuspendIOPg(
-            context,
-            context.getString(R.string.mvvm_demo_loading),
-            cancelable = true,
-            request = {
-                ApiModuleSuspend.postSpot(id)
-            }) {
-            onSuccess {
-                val data = it.data
-                if (data != null) {
-                    mResponseResult.value = "spotName : ${data.name} ; score : ${data.score}"
+        CoroutinesWrapper.create(this)
+            .request { ApiModuleSuspend.postSpot(id) }
+            .actionPg(context, context.getString(R.string.mvvm_demo_loading), true){
+                onSuccess {
+                    val data = it.data
+                    if (data != null) {
+                        mResponseResult.value = "spotName : ${data.name} ; score : ${data.score}"
+                    }
+                }
+
+                onError { e, isNetwork ->
+                    mResponseResult.value = RxUtils.getExceptionTips(e, isNetwork, context.getString(R.string.api_fail))
                 }
             }
-            onError { e, isNetwork ->
-                mResponseResult.value = RxUtils.getExceptionTips(e, isNetwork, context.getString(R.string.api_fail))
-            }
-        }
     }
 
     fun requestGetSpot(context: Context, id: Int) {
-        runOnSuspendIOPg(
-            context,
-            context.getString(R.string.mvvm_demo_loading),
-            cancelable = true,
-            request = {
-                ApiModuleSuspend.getSpot(id)
-            }) {
-            onSuccess {
-                val data = it.data
-                if (data != null) {
-                    mResponseResult.value = "spotName : ${data.name} ; score : ${data.score}"
+        CoroutinesWrapper.create(this)
+            .request { ApiModuleSuspend.getSpot(id) }
+            .actionPg(context, context.getString(R.string.mvvm_demo_loading), true){
+                onSuccess {
+                    val data = it.data
+                    if (data != null) {
+                        mResponseResult.value = "spotName : ${data.name} ; score : ${data.score}"
+                    }
+                }
+                onError { e, isNetwork ->
+                    mResponseResult.value = RxUtils.getExceptionTips(e, isNetwork, context.getString(R.string.api_fail))
                 }
             }
-            onError { e, isNetwork ->
-                mResponseResult.value = RxUtils.getExceptionTips(e, isNetwork, context.getString(R.string.api_fail))
-            }
-        }
     }
 
     fun requestCustom(context: Context) {
         val bean = SpotBean()
         bean.name = "植物园"
-        runOnSuspendIOPg(
-            context,
-            context.getString(R.string.mvvm_demo_loading),
-            cancelable = true,
-            request = {
-                ApiModuleSuspend.querySpot(BaseRequestBean.createRequestBody(bean))
-            }) {
-            onSuccess {
-                val data = it.data
-                if (data != null) {
-                    mResponseResult.value = "spotName : ${data[0].name} ; score : ${data[0].score}"
+        CoroutinesWrapper.create(this)
+            .request { ApiModuleSuspend.querySpot(BaseRequestBean.createRequestBody(bean)) }
+            .actionPg(context, context.getString(R.string.mvvm_demo_loading), true){
+                onSuccess {
+                    val data = it.data
+                    if (data != null) {
+                        mResponseResult.value = "spotName : ${data[0].name} ; score : ${data[0].score}"
+                    }
+                }
+                onError { e, isNetwork ->
+                    mResponseResult.value = RxUtils.getExceptionTips(e, isNetwork, context.getString(R.string.api_fail))
                 }
             }
-            onError { e, isNetwork ->
-                mResponseResult.value = RxUtils.getExceptionTips(e, isNetwork, context.getString(R.string.api_fail))
-            }
-        }
     }
 
 }

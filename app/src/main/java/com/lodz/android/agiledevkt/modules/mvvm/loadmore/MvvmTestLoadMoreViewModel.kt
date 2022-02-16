@@ -8,7 +8,7 @@ import com.lodz.android.corekt.anko.IoScope
 import com.lodz.android.corekt.anko.append
 import com.lodz.android.corekt.utils.DateUtils
 import com.lodz.android.pandora.mvvm.vm.BaseRefreshViewModel
-import com.lodz.android.pandora.utils.coroutines.runOnSuspendIOPg
+import com.lodz.android.pandora.utils.coroutines.CoroutinesWrapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -53,20 +53,15 @@ class MvvmTestLoadMoreViewModel :BaseRefreshViewModel(){
     }
 
     fun requestDetail(context: Context, id: String) {
-        runOnSuspendIOPg(
-            context,
-            context.getString(R.string.mvvm_demo_loading),
-            cancelable = true,
-            request = {
+        CoroutinesWrapper.create(this)
+            .request {
                 delay(1000)
                 id.append(" : ").append(DateUtils.getCurrentFormatString(DateUtils.TYPE_10))
-            }) {
-            onSuccess {
-                mDetailInfo.value = it
             }
-            onError { e, isNetwork ->
-                toastShort(e.toString())
+            .actionPg(context, context.getString(R.string.mvvm_demo_loading), true){
+                onSuccess { mDetailInfo.value = it }
+
+                onError { e, isNetwork -> toastShort(e.toString()) }
             }
-        }
     }
 }
