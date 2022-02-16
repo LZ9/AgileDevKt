@@ -9,6 +9,7 @@ open class ApiPgAction<T> : ApiAction<T>() {
 
     var mPgCancelAction: (() -> Unit)? = null
 
+    /** 取消加载框 */
     fun onPgCancel(action: () -> Unit) {
         mPgCancelAction = action
     }

@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lodz.android.corekt.anko.IoScope
 import com.lodz.android.corekt.anko.getMetaData
-import com.lodz.android.corekt.anko.runOnMain
 import com.lodz.android.corekt.anko.runOnMainCatch
 import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.pandora.base.application.BaseApplication
@@ -29,6 +28,7 @@ fun <T> runOnSuspendIORes(
     action: ApiAction<T>.() -> Unit
 ): Job = IoScope().launch {
     val listener = ApiAction<T>().also(action)
+    launch(Dispatchers.Main) { listener.mStartAction?.invoke() }
     try {
         val res = request.invoke()
         resHandle(this, res, listener)
@@ -43,6 +43,7 @@ fun <T> ViewModel.runOnSuspendIORes(
     action: ApiAction<T>.() -> Unit
 ): Job = viewModelScope.launch(Dispatchers.IO) {
     val listener = ApiAction<T>().also(action)
+    launch(Dispatchers.Main) { listener.mStartAction?.invoke() }
     try {
         val res = request.invoke()
         resHandle(this, res, listener)
@@ -57,6 +58,7 @@ fun <T> runOnIORes(
     action: ApiAction<T>.() -> Unit
 ): Job = IoScope().launch {
     val listener = ApiAction<T>().also(action)
+    launch(Dispatchers.Main) { listener.mStartAction?.invoke() }
     try {
         val res = request.await()
         resHandle(this, res, listener)
@@ -71,6 +73,7 @@ fun <T> ViewModel.runOnIORes(
     action: ApiAction<T>.() -> Unit
 ): Job = viewModelScope.launch(Dispatchers.IO) {
     val listener = ApiAction<T>().also(action)
+    launch(Dispatchers.Main) { listener.mStartAction?.invoke() }
     try {
         val res = request.await()
         resHandle(this, res, listener)
@@ -89,6 +92,7 @@ fun <T> runOnSuspendIOPg(
     runOnMainCatch({ progressDialog.show() })
 
     val job = IoScope().launch {
+        launch(Dispatchers.Main) { listener.mStartAction?.invoke() }
         try {
             val res = request.invoke()
             resHandle(this, res, listener)
@@ -118,6 +122,7 @@ fun <T> ViewModel.runOnSuspendIOPg(
     runOnMainCatch({ progressDialog.show() })
 
     val job = viewModelScope.launch(Dispatchers.IO) {
+        launch(Dispatchers.Main) { listener.mStartAction?.invoke() }
         try {
             val res = request.invoke()
             resHandle(this, res, listener)
@@ -147,6 +152,7 @@ fun <T> runOnIOPg(
     runOnMainCatch({ progressDialog.show() })
 
     val job = IoScope().launch {
+        launch(Dispatchers.Main) { listener.mStartAction?.invoke() }
         try {
             val res = request.await()
             resHandle(this, res, listener)
@@ -176,6 +182,7 @@ fun <T> ViewModel.runOnIOPg(
     runOnMainCatch({ progressDialog.show() })
 
     val job = viewModelScope.launch(Dispatchers.IO) {
+        launch(Dispatchers.Main) { listener.mStartAction?.invoke() }
         try {
             val res = request.await()
             resHandle(this, res, listener)
@@ -214,6 +221,7 @@ fun <T> runOnSuspendIOPg(
     runOnMainCatch({ progressDialog.show() })
 
     val job = IoScope().launch {
+        launch(Dispatchers.Main) { listener.mStartAction?.invoke() }
         try {
             val res = request.invoke()
             resHandle(this, res, listener)
@@ -252,6 +260,7 @@ fun <T> ViewModel.runOnSuspendIOPg(
     runOnMainCatch({ progressDialog.show() })
 
     val job = viewModelScope.launch(Dispatchers.IO) {
+        launch(Dispatchers.Main) { listener.mStartAction?.invoke() }
         try {
             val res = request.invoke()
             resHandle(this, res, listener)
@@ -290,6 +299,7 @@ fun <T> runOnIOPg(
     runOnMainCatch({ progressDialog.show() })
 
     val job = IoScope().launch {
+        launch(Dispatchers.Main) { listener.mStartAction?.invoke() }
         try {
             val res = request.await()
             resHandle(this, res, listener)
@@ -328,6 +338,7 @@ fun <T> ViewModel.runOnIOPg(
     runOnMainCatch({ progressDialog.show() })
 
     val job = viewModelScope.launch(Dispatchers.IO) {
+        launch(Dispatchers.Main) { listener.mStartAction?.invoke() }
         try {
             val res = request.await()
             resHandle(this, res, listener)
@@ -349,18 +360,23 @@ fun <T> ViewModel.runOnIOPg(
 
 /** 处理异步结果 */
 private fun <T> resHandle(scope: CoroutineScope, res: T, action: ApiAction<T>) {
-    if (res is ResponseStatus) {
-        if (res.isTokenUnauth()) {
-            runOnMain(scope){ action.mTokenUnauthAction?.invoke(res) }
-            return
+    scope.launch(Dispatchers.Main) {
+        if (res is ResponseStatus) {
+            if (res.isTokenUnauth()) {
+                action.mTokenUnauthAction?.invoke(res)
+                return@launch
+            }
+            if (res.isSuccess()) {
+                action.mSuccessAction?.invoke(res)
+                action.mCompleteAction?.invoke()
+                return@launch
+            }
+            errorHandle(scope, ExceptionFactory.createDataException(res), action)
+            return@launch
         }
-        if (res.isSuccess()) {
-            runOnMain(scope) { action.mSuccessAction?.invoke(res) }
-            return
-        }
-        throw ExceptionFactory.createDataException(res)
+        action.mSuccessAction?.invoke(res)
+        action.mCompleteAction?.invoke()
     }
-    runOnMain(scope) { action.mSuccessAction?.invoke(res) }
 }
 
 /** 处理异常逻辑 */
@@ -368,7 +384,7 @@ private fun <T> errorHandle(scope: CoroutineScope, e: Exception, action: ApiActi
     e.printStackTrace()
     printErrorLog(e)
     if (e !is CancellationException) {
-        runOnMain(scope) { action.mErrorAction?.invoke(e, ExceptionFactory.isNetworkError(e)) }
+        scope.launch(Dispatchers.Main) { action.mErrorAction?.invoke(e, ExceptionFactory.isNetworkError(e)) }
     }
 }
 
