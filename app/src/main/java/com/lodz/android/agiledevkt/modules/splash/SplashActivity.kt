@@ -1,6 +1,7 @@
 package com.lodz.android.agiledevkt.modules.splash
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.os.Build
 import android.os.Bundle
@@ -21,6 +22,7 @@ import permissions.dispatcher.ktx.constructPermissionsRequest
  * 启动页
  * Created by zhouL on 2018/6/20.
  */
+@SuppressLint("CustomSplashScreen")
 class SplashActivity : AbsActivity() {
 
     private val mBinding: ActivitySplashBinding by bindingLayout(ActivitySplashBinding::inflate)

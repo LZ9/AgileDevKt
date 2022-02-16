@@ -5,14 +5,17 @@
         <item name="colorPrimary">@color/color_00a0e9</item>
         <item name="colorPrimaryDark">@color/color_00a0e9</item>
         <item name="colorAccent">@color/color_00a0e9</item>
+        <item name="android:windowSplashScreenBackground" tools:targetApi="s">@color/color_00a0e9</item>
+        <item name="android:windowSplashScreenAnimatedIcon" tools:targetApi="s">@drawable/bg_old_trafford</item>
+        <item name="android:windowSplashScreenAnimationDuration" tools:targetApi="s">1000</item>
+        <item name="android:windowSplashScreenBrandingImage" tools:targetApi="s">@drawable/ic_regret</item>
     </style>
 
     <!-- 启动页主题 -->
     <style name="AppTheme.Splash" parent="AppTheme">
         <item name="android:windowBackground">@color/color_00a0e9</item>
-        <item name="android:windowTranslucentStatus" tools:ignore="NewApi">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
     </style>
-
 
     <style name="TextAppearance.TabText" parent="Base.TextAppearance.AppCompat">
         <item name="android:textSize">14sp</item>
