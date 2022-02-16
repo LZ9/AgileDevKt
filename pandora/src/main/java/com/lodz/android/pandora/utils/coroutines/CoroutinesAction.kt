@@ -2,9 +2,6 @@ package com.lodz.android.pandora.utils.coroutines
 
 import android.content.Context
 import androidx.appcompat.app.AlertDialog
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.lodz.android.corekt.anko.IoScope
 import com.lodz.android.corekt.anko.getMetaData
 import com.lodz.android.corekt.anko.runOnMainCatch
 import com.lodz.android.corekt.log.PrintLog
@@ -22,28 +19,18 @@ import kotlinx.coroutines.*
  * @date 2022/2/16
  */
 class CoroutinesAction<T>(
-    private val mViewModel: ViewModel? = null,
+    private val mScope: CoroutineScope,
     private val mRequestFun: (suspend () -> T)? = null,
     private val mRequestDeferred: Deferred<T>? = null
 ) {
 
     /** 执行协程操作[action] */
     fun action(action: ApiAction<T>.() -> Unit): Job {
-        if (mViewModel != null) {
-            if (mRequestFun != null) {
-                return execute(mViewModel.viewModelScope, action) { mRequestFun.invoke() }
-            }
-            if (mRequestDeferred != null) {
-                return execute(mViewModel.viewModelScope, action) { mRequestDeferred.await() }
-            }
-            throw NullPointerException("request parameter is null")
-        }
-
         if (mRequestFun != null) {
-            return execute(IoScope(), action) { mRequestFun.invoke() }
+            return execute(mScope, action) { mRequestFun.invoke() }
         }
         if (mRequestDeferred != null) {
-            return execute(IoScope(), action) { mRequestDeferred.await() }
+            return execute(mScope, action) { mRequestDeferred.await() }
         }
         throw NullPointerException("request parameter is null")
     }
@@ -65,21 +52,11 @@ class CoroutinesAction<T>(
 
     /** 执行带加载框[progressDialog]的协程操作[action] */
     fun actionPg(progressDialog: AlertDialog, action: ApiPgAction<T>.() -> Unit): Job {
-        if (mViewModel != null) {
-            if (mRequestFun != null) {
-                return execute(mViewModel.viewModelScope, progressDialog, action) { mRequestFun.invoke() }
-            }
-            if (mRequestDeferred != null) {
-                return execute(mViewModel.viewModelScope, progressDialog, action) { mRequestDeferred.await() }
-            }
-            throw NullPointerException("request parameter is null")
-        }
-
         if (mRequestFun != null) {
-            return execute(IoScope(), progressDialog, action) { mRequestFun.invoke() }
+            return execute(mScope, progressDialog, action) { mRequestFun.invoke() }
         }
         if (mRequestDeferred != null) {
-            return execute(IoScope(), progressDialog, action) { mRequestDeferred.await() }
+            return execute(mScope, progressDialog, action) { mRequestDeferred.await() }
         }
         throw NullPointerException("request parameter is null")
     }
