@@ -5,10 +5,10 @@
         <item name="colorPrimary">@color/color_00a0e9</item>
         <item name="colorPrimaryDark">@color/color_00a0e9</item>
         <item name="colorAccent">@color/color_00a0e9</item>
-        <item name="android:windowSplashScreenBackground" tools:targetApi="s">@color/color_00a0e9</item>
-        <item name="android:windowSplashScreenAnimatedIcon" tools:targetApi="s">@drawable/bg_old_trafford</item>
+        <item name="android:windowSplashScreenBackground" tools:targetApi="s">@color/white</item>
+        <item name="android:windowSplashScreenAnimatedIcon" tools:targetApi="s">@drawable/ic_logo</item>
         <item name="android:windowSplashScreenAnimationDuration" tools:targetApi="s">1000</item>
-        <item name="android:windowSplashScreenBrandingImage" tools:targetApi="s">@drawable/ic_regret</item>
+        <item name="android:windowSplashScreenBrandingImage" tools:targetApi="s">@drawable/ic_brand</item>
     </style>
 
     <!-- 启动页主题 -->
