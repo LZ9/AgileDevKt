@@ -32,7 +32,7 @@
         api 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.1'
         api 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1'
         api 'androidx.startup:startup-runtime:1.1.1'
-        api 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0'
+        api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0'
     }
 ```
 
