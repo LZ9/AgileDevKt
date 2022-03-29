@@ -856,4 +856,8 @@
     <string name="aop_title_login">登录页</string>
     <string name="aop_title_attention">关注页</string>
     <string name="aop_clean">清空</string>
+
+    <!-- ActivityResultContract -->
+    <string name="arc_pick_contact">获取通讯录信息</string>
+    <string name="arc_clean">清空</string>
 </resources>

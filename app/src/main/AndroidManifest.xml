@@ -28,6 +28,8 @@
     <uses-permission android:name="android.permission.GET_TASKS" />
 
     <!-- ********************* 需要申请（只要同组有一个授权整组的权限都可以使用） ********************* -->
+    <!-- 通讯录 -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
     <!-- 相机 -->
     <uses-permission android:name="android.permission.CAMERA" />
     <!--允许读取手机信息权限-->
@@ -1047,6 +1049,15 @@
             tools:ignore="LockedOrientationActivity">
 
         </activity>
+
+        <activity
+            android:name=".modules.result.ResultContractsCaseActivity"
+            android:label="ActivityResultContracts的用例"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
+
+        </activity>
+
     </application>
 
 </manifest>

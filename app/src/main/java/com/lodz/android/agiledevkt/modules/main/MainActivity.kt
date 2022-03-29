@@ -54,6 +54,7 @@ import com.lodz.android.agiledevkt.modules.notification.NotificationActivity
 import com.lodz.android.agiledevkt.modules.pic.PicActivity
 import com.lodz.android.agiledevkt.modules.progressdialog.ProgressDialogActivity
 import com.lodz.android.agiledevkt.modules.reflect.ReflectActivity
+import com.lodz.android.agiledevkt.modules.result.ResultContractsCaseActivity
 import com.lodz.android.agiledevkt.modules.rv.anim.AnimRvActivity
 import com.lodz.android.agiledevkt.modules.rv.binder.BinderRvActivity
 import com.lodz.android.agiledevkt.modules.rv.decoration.DecorationRvActivity
@@ -173,6 +174,7 @@ class MainActivity : BaseActivity() {
         MainBean("Bytes字节转换测试类", "B", BytesTestActivity::class.java),
         MainBean("参数传递测试类", "C", ExtrasTestActivity::class.java),
         MainBean("切面编程测试类", "Q", AopTestActivity::class.java),
+        MainBean("ActivityResultContracts用例", "A", ResultContractsCaseActivity::class.java)
     )
 
     private val mBinding: ActivityMainBinding by bindingLayout(ActivityMainBinding::inflate)
