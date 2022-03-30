@@ -860,4 +860,15 @@
     <!-- ActivityResultContract -->
     <string name="arc_pick_contact">获取通讯录信息</string>
     <string name="arc_clean">清空</string>
+
+
+    <!-- 通讯录 -->
+    <string name="contact_pick_all">获取所有通讯录信息</string>
+    <string name="contact_name">姓名：</string>
+    <string name="contact_company">公司：</string>
+    <string name="contact_title">职位：</string>
+    <string name="contact_phone">手机：</string>
+    <string name="contact_email">邮箱：</string>
+    <string name="contact_note">备注：</string>
+
 </resources>

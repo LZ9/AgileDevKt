@@ -16,7 +16,6 @@ import com.lodz.android.corekt.utils.NotificationUtils
 import com.lodz.android.corekt.utils.SharedPreferencesUtils
 import com.lodz.android.imageloaderkt.ImageloaderManager
 import com.lodz.android.pandora.utils.acache.ACacheUtils
-import io.reactivex.plugins.RxJavaPlugins
 import java.util.ArrayList
 
 /**

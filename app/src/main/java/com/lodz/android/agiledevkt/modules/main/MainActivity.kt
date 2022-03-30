@@ -27,6 +27,7 @@ import com.lodz.android.agiledevkt.modules.cardview.CardViewActivity
 import com.lodz.android.agiledevkt.modules.collect.CollectActivity
 import com.lodz.android.agiledevkt.modules.color.ColorAlphaTestActivity
 import com.lodz.android.agiledevkt.modules.config.ConfigLayoutActivity
+import com.lodz.android.agiledevkt.modules.contact.ContactTestActivity
 import com.lodz.android.agiledevkt.modules.coordinator.CoordinatorTestActivity
 import com.lodz.android.agiledevkt.modules.coroutines.CoroutinesActivity
 import com.lodz.android.agiledevkt.modules.crash.CrashTestActivity
@@ -174,7 +175,8 @@ class MainActivity : BaseActivity() {
         MainBean("Bytes字节转换测试类", "B", BytesTestActivity::class.java),
         MainBean("参数传递测试类", "C", ExtrasTestActivity::class.java),
         MainBean("切面编程测试类", "Q", AopTestActivity::class.java),
-        MainBean("ActivityResultContracts用例", "A", ResultContractsCaseActivity::class.java)
+        MainBean("ActivityResultContracts用例", "A", ResultContractsCaseActivity::class.java),
+        MainBean("通讯录测试类", "T", ContactTestActivity::class.java)
     )
 
     private val mBinding: ActivityMainBinding by bindingLayout(ActivityMainBinding::inflate)
