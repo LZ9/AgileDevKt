@@ -1,5 +1,6 @@
 package com.lodz.android.imageloaderkt.contract
 
+import android.graphics.Bitmap
 import android.net.Uri
 import android.util.Base64
 import androidx.annotation.DrawableRes
@@ -30,7 +31,10 @@ interface ResourceContract {
     /** 加载Base64图片[base64] */
     fun loadBase64(base64: String, flags: Int = Base64.NO_WRAP): ImageLoaderContract
 
-    /** 在家比特数组[bytes] */
+    /** 加载比特数组[bytes] */
     fun loadBytes(bytes: ByteArray): ImageLoaderContract
+
+    /** 加载[bitmap] */
+    fun loadBitmap(bitmap: Bitmap): ImageLoaderContract
 
 }

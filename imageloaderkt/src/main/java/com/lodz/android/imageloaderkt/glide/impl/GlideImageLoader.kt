@@ -359,8 +359,8 @@ internal class GlideImageLoader internal constructor(
         // 设置磁盘缓存
         if (bean.isVideo) {//显示视频的第一帧需要设置为NONE
             this.diskCacheStrategy(DiskCacheStrategy.NONE)
-        } else if (bean.path is File || bean.path is Int || bean.path is ByteArray) {
-            this.diskCacheStrategy(DiskCacheStrategy.NONE)// 资源文件、本地手机存储的文件和byte数组不需要进行磁盘缓存
+        } else if (bean.path is File || bean.path is Int || bean.path is ByteArray || bean.path is Bitmap) {
+            this.diskCacheStrategy(DiskCacheStrategy.NONE)// 资源文件、本地手机存储的文件、byte数组和Bitmap不需要进行磁盘缓存
         } else {// 其他情况根据自定义缓存策略设置
             this.diskCacheStrategy(bean.diskCacheStrategy)
         }

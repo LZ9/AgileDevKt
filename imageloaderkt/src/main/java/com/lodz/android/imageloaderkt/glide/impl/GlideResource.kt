@@ -2,6 +2,7 @@ package com.lodz.android.imageloaderkt.glide.impl
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.Bitmap
 import android.net.Uri
 import android.util.Base64
 import android.view.View
@@ -125,6 +126,11 @@ internal class GlideResource private constructor() : ResourceContract {
 
     override fun loadBytes(bytes: ByteArray): ImageLoaderContract {
         mGlideBuilderBean.path = bytes
+        return GlideImageLoader(mGlideBuilderBean, mRequestManager)
+    }
+
+    override fun loadBitmap(bitmap: Bitmap): ImageLoaderContract {
+        mGlideBuilderBean.path = bitmap
         return GlideImageLoader(mGlideBuilderBean, mRequestManager)
     }
 }
