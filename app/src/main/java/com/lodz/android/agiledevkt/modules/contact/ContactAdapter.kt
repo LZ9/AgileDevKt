@@ -22,6 +22,11 @@ import com.lodz.android.pandora.widget.rv.recycler.DataVBViewHolder
  */
 class ContactAdapter(context: Context) :BaseRecyclerViewAdapter<ContactsInfoBean>(context){
 
+    /** 点击删除监听器 */
+    private var mOnDeleteClickListener: ((viewHolder: RecyclerView.ViewHolder, item: ContactsInfoBean) -> Unit)? = null
+    /** 点击更新备注监听器 */
+    private var mOnUpdateNoteClickListener: ((viewHolder: RecyclerView.ViewHolder, item: ContactsInfoBean) -> Unit)? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
         DataVBViewHolder(getViewBindingLayout(RvItemContactBinding::inflate, parent))
 
@@ -57,6 +62,13 @@ class ContactAdapter(context: Context) :BaseRecyclerViewAdapter<ContactsInfoBean
             }
             emailTv.text = context.getString(R.string.contact_email).append(email)
             noteTv.text = context.getString(R.string.contact_note).append(bean.note)
+
+            deleteBtn.setOnClickListener {
+                mOnDeleteClickListener?.invoke(holder, bean)
+            }
+            updateNoteBtn.setOnClickListener {
+                mOnUpdateNoteClickListener?.invoke(holder, bean)
+            }
         }
     }
 
@@ -66,5 +78,15 @@ class ContactAdapter(context: Context) :BaseRecyclerViewAdapter<ContactsInfoBean
         } else {
             img.loadUrl("")
         }
+    }
+
+    /** 设置点击删除监听器 */
+    fun setOnDeleteClickListener(listener: (viewHolder: RecyclerView.ViewHolder, item: ContactsInfoBean) -> Unit) {
+        mOnDeleteClickListener = listener
+    }
+
+    /** 点击更新备注监听器 */
+    fun setOnUpdateNoteClickListener(listener: (viewHolder: RecyclerView.ViewHolder, item: ContactsInfoBean) -> Unit) {
+        mOnUpdateNoteClickListener = listener
     }
 }

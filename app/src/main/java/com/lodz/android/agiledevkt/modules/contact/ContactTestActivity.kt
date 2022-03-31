@@ -1,11 +1,13 @@
 package com.lodz.android.agiledevkt.modules.contact
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +17,8 @@ import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.corekt.anko.goAppDetailSetting
 import com.lodz.android.corekt.anko.isPermissionGranted
 import com.lodz.android.corekt.anko.toastShort
+import com.lodz.android.corekt.contacts.ContactsInfoBean
+import com.lodz.android.corekt.contacts.deleteContact
 import com.lodz.android.pandora.mvvm.base.activity.BaseVmActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.utils.viewmodel.bindViewModel
@@ -26,6 +30,7 @@ import permissions.dispatcher.ktx.constructPermissionsRequest
  * @author zhouL
  * @date 2022/3/30
  */
+@SuppressLint("NotifyDataSetChanged")
 class ContactTestActivity : BaseVmActivity() {
 
     companion object {
@@ -93,14 +98,48 @@ class ContactTestActivity : BaseVmActivity() {
         mViewModel.getAllContactData(getContext())
     }
 
+    override fun setListeners() {
+        super.setListeners()
+
+        mBinding.addContactBtn.setOnClickListener {
+            mViewModel.addContactData(getContext())
+        }
+
+        mAdapter.setOnDeleteClickListener { viewHolder, item ->
+            showDeleteDialog(item)
+        }
+
+        mAdapter.setOnUpdateNoteClickListener { viewHolder, item ->
+
+        }
+    }
+
+    /** 显示删除弹框 */
+    private fun showDeleteDialog(bean: ContactsInfoBean) {
+        AlertDialog.Builder(getContext())
+            .setMessage(R.string.contact_delete_confirm)
+            .setPositiveButton(R.string.contact_delete_ok) { dif, witch ->
+                deleteContact(bean.rawContactId)
+                dif.dismiss()
+                mViewModel.getAllContactData(getContext())
+            }
+            .setNegativeButton(R.string.contact_delete_ok) { dif, witch ->
+                dif.dismiss()
+            }
+            .create()
+            .show()
+    }
+
     override fun setViewModelObserves() {
         super.setViewModelObserves()
         mViewModel.mContactList.observe(getLifecycleOwner()){
             mAdapter.setData(it)
+            mAdapter.notifyDataSetChanged()
         }
     }
 
     private fun init() {
+        showStatusCompleted()
         mViewModel.getAllContactData(getContext())
     }
 

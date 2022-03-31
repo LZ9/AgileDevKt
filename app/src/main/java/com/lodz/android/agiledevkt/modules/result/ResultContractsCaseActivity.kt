@@ -16,7 +16,7 @@ import com.lodz.android.corekt.anko.append
 import com.lodz.android.corekt.anko.goAppDetailSetting
 import com.lodz.android.corekt.anko.isPermissionGranted
 import com.lodz.android.corekt.anko.toastShort
-import com.lodz.android.corekt.contacts.getAllContactData
+import com.lodz.android.corekt.contacts.getContactData
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import permissions.dispatcher.PermissionRequest
@@ -129,7 +129,7 @@ class ResultContractsCaseActivity : BaseActivity() {
     }
 
     private fun showContactDetail(uri: Uri) {
-        val list = getAllContactData(uri)
+        val list = getContactData(uri)
         addResultLog(JSON.toJSONString(list))
     }
 }

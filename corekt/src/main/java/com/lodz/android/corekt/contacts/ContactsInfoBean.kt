@@ -8,6 +8,11 @@ import android.graphics.Bitmap
  * @date 2022/3/29
  */
 class ContactsInfoBean {
+
+    var contactId = ""
+
+    var rawContactId = ""
+
     /** 头像字节数组 */
     var avatarArray: ByteArray? = null
 
@@ -23,7 +28,7 @@ class ContactsInfoBean {
     /** 职位 */
     var title = ""
 
-    /** 邮政 */
+    /** 单位 */
     var postal = ""
 
     /** 手机列表 */
