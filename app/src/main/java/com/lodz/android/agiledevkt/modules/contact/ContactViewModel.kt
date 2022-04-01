@@ -6,8 +6,9 @@ import android.graphics.BitmapFactory
 import androidx.lifecycle.MutableLiveData
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.corekt.anko.append
-import com.lodz.android.corekt.contacts.ContactsInfoBean
-import com.lodz.android.corekt.contacts.ContactsPhoneBean
+import com.lodz.android.corekt.contacts.bean.ContactsEmailBean
+import com.lodz.android.corekt.contacts.bean.ContactsInfoBean
+import com.lodz.android.corekt.contacts.bean.ContactsPhoneBean
 import com.lodz.android.corekt.contacts.getContactData
 import com.lodz.android.corekt.contacts.insertContactData
 import com.lodz.android.corekt.utils.DateUtils
@@ -65,7 +66,6 @@ class ContactViewModel : BaseViewModel() {
         val bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.ic_logo)
         val stream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
-        bean.avatarBitmap = bitmap
         bean.avatarArray = stream.toByteArray()
 
         val index = Random.nextInt(999) + 1
@@ -73,7 +73,6 @@ class ContactViewModel : BaseViewModel() {
         bean.name = textArray[index % textArray.size].append("某")
         bean.company = "嘉里顿集团"
         bean.title = "董事长"
-        bean.postal = "嘉里顿"
 
         var phone = "13".append((System.currentTimeMillis() % 9))
         if (phone.length < 11){
@@ -86,7 +85,9 @@ class ContactViewModel : BaseViewModel() {
         phoneBean.normalizedNumber = "+86".append(phone)
         bean.phoneList.add(phoneBean)
 
-        bean.emailList.add(bean.name.hashCode().toString().subSequence(0, 5).append("@qq.com"))
+        val emailBean = ContactsEmailBean()
+        emailBean.address = bean.name.hashCode().toString().subSequence(0, 5).append("@qq.com")
+        bean.emailList.add(emailBean)
         bean.note = DateUtils.getCurrentFormatString(DateUtils.TYPE_23)
         return bean
     }

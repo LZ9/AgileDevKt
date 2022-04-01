@@ -18,14 +18,21 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="10dp"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/name_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="姓名：张三" />
+            tools:text="姓名：张三（zhangsan）" />
+
+        <TextView
+            android:id="@+id/nickName_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            tools:text="昵称：老王" />
 
         <TextView
             android:id="@+id/company_tv"
@@ -35,11 +42,11 @@
             tools:text="公司：XXX公司" />
 
         <TextView
-            android:id="@+id/title_tv"
+            android:id="@+id/postal_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            tools:text="职位：职员" />
+            tools:text="地址：成华大道15号（住宅）" />
 
         <TextView
             android:id="@+id/phone_tv"
@@ -61,6 +68,34 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             tools:text="备注：无" />
+
+        <TextView
+            android:id="@+id/website_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            tools:text="网站：https://www.baidu.com" />
+
+        <TextView
+            android:id="@+id/im_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            tools:text="即时通讯：156487(QQ)" />
+
+        <TextView
+            android:id="@+id/relation_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            tools:text="关系：华强(大哥)" />
+
+        <TextView
+            android:id="@+id/event_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            tools:text="事件：1985-08-15(生日)" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -87,3 +122,28 @@
     </LinearLayout>
 
 </LinearLayout>
+
+    <!--
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /** 群组ID列表 */
+        var groupRowIdList: ArrayList<String> = arrayListOf()
+
+
+
+
+
+    -->

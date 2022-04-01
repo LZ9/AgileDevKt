@@ -1,22 +1,21 @@
 package com.lodz.android.agiledevkt.modules.contact
 
 import android.content.Context
-import android.graphics.Bitmap
+import android.provider.ContactsContract
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.imageview.ShapeableImageView
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.databinding.RvItemContactBinding
 import com.lodz.android.corekt.anko.append
-import com.lodz.android.corekt.contacts.ContactsInfoBean
-import com.lodz.android.corekt.utils.StringUtils
-import com.lodz.android.imageloaderkt.glide.anko.loadBitmap
+import com.lodz.android.corekt.contacts.bean.ContactsInfoBean
+import com.lodz.android.imageloaderkt.glide.anko.loadBytes
 import com.lodz.android.imageloaderkt.glide.anko.loadUrl
 import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
 import com.lodz.android.pandora.widget.rv.recycler.DataVBViewHolder
 
 /**
- *
+ * 通讯录适配器
  * @author zhouL
  * @date 2022/3/30
  */
@@ -40,28 +39,86 @@ class ContactAdapter(context: Context) :BaseRecyclerViewAdapter<ContactsInfoBean
 
     private fun showItem(holder: DataVBViewHolder, bean: ContactsInfoBean) {
         holder.getVB<RvItemContactBinding>().apply {
-            showImg(avatarImg, bean.avatarBitmap)
+
+            showImg(avatarImg, bean.avatarArray)
+
             nameTv.text = context.getString(R.string.contact_name).append(bean.name)
-            val company = if (bean.company.isNotEmpty()) {
-                bean.company
-            } else if (bean.postal.isNotEmpty()) {
-                bean.postal
-            } else {
-                ""
+            if (bean.phonetic.isNotEmpty()){
+                nameTv.text = nameTv.text.append("(").append(bean.phonetic).append(")")
             }
-            companyTv.text = context.getString(R.string.contact_company).append(company)
-            titleTv.text = context.getString(R.string.contact_title).append(bean.title)
-            var phone = ""
-            for (phoneBean in bean.phoneList) {
-                phone = phone.append("\n").append(phoneBean.number).append("(").append(phoneBean.from).append(")")
+
+            nickNameTv.text = context.getString(R.string.contact_nickname).append(bean.nickName)
+
+            companyTv.text = context.getString(R.string.contact_company).append(bean.company)
+            if (bean.title.isNotEmpty()){
+                companyTv.text = companyTv.text.append("(").append(bean.title).append(")")
             }
-            phoneTv.text = context.getString(R.string.contact_phone).append(phone)
-            var email = StringUtils.getStringBySeparator(bean.emailList,"\n")
-            if (email.isNotEmpty()){
-                email = "\n".append(email)
+
+            var postalStr = context.getString(R.string.contact_postal)
+            for (item in bean.postalList) {
+                val label = if (item.type == ContactsContract.CommonDataKinds.StructuredPostal.TYPE_CUSTOM.toString()) {
+                    item.label
+                } else {
+                    context.getString(ContactsContract.CommonDataKinds.StructuredPostal.getTypeLabelResource(item.type.toInt()))
+                }
+                postalStr = postalStr.append(item.address).append("(").append(label).append(")").append(" | ")
             }
-            emailTv.text = context.getString(R.string.contact_email).append(email)
+            postalTv.text = postalStr
+
+            var phoneStr = context.getString(R.string.contact_phone)
+            for (item in bean.phoneList) {
+                val label = if (item.type == ContactsContract.CommonDataKinds.Phone.TYPE_CUSTOM.toString()) {
+                    item.label
+                } else {
+                    context.getString(ContactsContract.CommonDataKinds.Phone.getTypeLabelResource(item.type.toInt()))
+                }
+                phoneStr = phoneStr.append(label).append(" - ").append(item.number).append("(").append(item.from).append(")").append(" | ")
+            }
+            phoneTv.text = phoneStr
+
+            var emailStr = context.getString(R.string.contact_email)
+            for (item in bean.emailList) {
+                val label = if (item.type == ContactsContract.CommonDataKinds.Email.TYPE_CUSTOM.toString()) {
+                    item.label
+                } else {
+                    context.getString(ContactsContract.CommonDataKinds.Email.getTypeLabelResource(item.type.toInt()))
+                }
+                emailStr = emailStr.append(item.address).append("(").append(label).append(")").append(" | ")
+            }
+            emailTv.text = emailStr
+
             noteTv.text = context.getString(R.string.contact_note).append(bean.note)
+
+            websiteTv.text = context.getString(R.string.contact_website).append(bean.website)
+
+            var imStr = context.getString(R.string.contact_im)
+            for (item in bean.imList) {
+                val label = if (item.protocol == ContactsContract.CommonDataKinds.Im.PROTOCOL_CUSTOM.toString()) {
+                    item.customProtocolName
+                } else {
+                    context.getString(ContactsContract.CommonDataKinds.Im.getProtocolLabelResource(item.protocol.toInt()))
+                }
+                imStr = imStr.append(item.account).append("(").append(label).append(")").append(" | ")
+            }
+            imTv.text = imStr
+
+            var relationStr = context.getString(R.string.contact_relation)
+            for (item in bean.relationList) {
+                val label = if (item.type == ContactsContract.CommonDataKinds.Relation.TYPE_CUSTOM.toString()) {
+                    item.label
+                } else {
+                    context.getString(ContactsContract.CommonDataKinds.Relation.getTypeLabelResource(item.type.toInt()))
+                }
+                relationStr = relationStr.append(item.name).append("(").append(label).append(")").append(" | ")
+            }
+            relationTv.text = relationStr
+
+            var eventStr = context.getString(R.string.contact_event)
+            for (item in bean.eventList) {
+                val label =  context.getString(ContactsContract.CommonDataKinds.Event.getTypeResource(item.type.toInt()))
+                eventStr = eventStr.append(item.date).append("(").append(label).append(")").append(" | ")
+            }
+            eventTv.text = eventStr
 
             deleteBtn.setOnClickListener {
                 mOnDeleteClickListener?.invoke(holder, bean)
@@ -72,9 +129,9 @@ class ContactAdapter(context: Context) :BaseRecyclerViewAdapter<ContactsInfoBean
         }
     }
 
-    private fun showImg(img: ShapeableImageView, bitmap: Bitmap?) {
+    private fun showImg(img: ShapeableImageView, bitmap: ByteArray?) {
         if (bitmap != null) {
-            img.loadBitmap(bitmap)
+            img.loadBytes(bitmap)
         } else {
             img.loadUrl("")
         }
