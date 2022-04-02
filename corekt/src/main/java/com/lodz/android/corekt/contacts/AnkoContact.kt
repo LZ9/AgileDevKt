@@ -201,215 +201,277 @@ fun Context.deleteContact(rawContactId: String = "") {
     }
 }
 
-/** 新增通讯录信息数据[contactsInfoBean] */
-fun Context.insertContactData(contactsInfoBean: ContactsInfoBean) {
+fun Context.updateContactData(rawContactId: String, bean: ContactsInfoBean) {
+//    contentResolver.update()
+
+
+    // ContentValues values = new ContentValues();
+    //     values.put(Phone.NUMBER, NewNumber);
+    //     values.put(Phone.TYPE, Phone.TYPE_MOBILE);
+    //
+    //     String Where = ContactsContract.Data.RAW_CONTACT_ID + " = ? AND " + ContactsContract.Data.MIMETYPE + " = ?";
+    //        String[] WhereParams = new String[]{rawRawContactId, Phone.CONTENT_ITEM_TYPE, };
+    //
+    //     getContentResolver().update(ContactsContract.Data.CONTENT_URI, values, Where, WhereParams);
+}
+
+
+/** 新增通讯录信息数据[bean] */
+fun Context.insertContactData(bean: ContactsInfoBean) {
     val values = ContentValues()
     val uri = contentResolver.insert(ContactsContract.RawContacts.CONTENT_URI, values) ?: return
-    val rawContactId = ContentUris.parseId(uri)
+    val rawContactId = ContentUris.parseId(uri).toString()
 
-    if (contactsInfoBean.name.isNotEmpty() || contactsInfoBean.givenName.isNotEmpty()){//插入姓名
-        values.clear()
-        values.put(ContactsContract.Data.RAW_CONTACT_ID, rawContactId)
-        values.put(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE)
-        values.put(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME, contactsInfoBean.name.ifEmpty { contactsInfoBean.givenName })
-        values.put(ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME, contactsInfoBean.givenName.ifEmpty { contactsInfoBean.name })
-        if (contactsInfoBean.phonetic.isNotEmpty()){
-            values.put(ContactsContract.CommonDataKinds.StructuredName.PHONETIC_FAMILY_NAME, contactsInfoBean.phonetic)
-        }
-        values.put(
-            ContactsContract.CommonDataKinds.StructuredName.FULL_NAME_STYLE,
-            contactsInfoBean.fullNameStyle.ifEmpty { ContactsContract.FullNameStyle.CJK.toString() }
-        )
-        values.put(
-            ContactsContract.CommonDataKinds.StructuredName.PHONETIC_NAME_STYLE,
-            contactsInfoBean.phoneticNameStyle.ifEmpty { ContactsContract.PhoneticNameStyle.PINYIN.toString() }
-        )
-        contentResolver.insert(ContactsContract.Data.CONTENT_URI, values)
+    if (bean.name.isNotEmpty() || bean.givenName.isNotEmpty()){//插入姓名
+        contentResolver.insert(ContactsContract.Data.CONTENT_URI, assembleStructuredName(rawContactId, bean))
     }
 
-    if (contactsInfoBean.company.isNotEmpty() || contactsInfoBean.title.isNotEmpty()){//插入公司和职员
-        values.clear()
-        values.put(ContactsContract.Data.RAW_CONTACT_ID, rawContactId)
-        values.put(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Organization.CONTENT_ITEM_TYPE)
-        if (contactsInfoBean.company.isNotEmpty()){
-            values.put(ContactsContract.CommonDataKinds.Organization.COMPANY, contactsInfoBean.company)
-        }
-        if (contactsInfoBean.title.isNotEmpty()){
-            values.put(ContactsContract.CommonDataKinds.Organization.TITLE, contactsInfoBean.title)
-        }
-        contentResolver.insert(ContactsContract.Data.CONTENT_URI, values)
+    if (bean.company.isNotEmpty() || bean.title.isNotEmpty()){//插入公司和职员
+        contentResolver.insert(ContactsContract.Data.CONTENT_URI, assembleOrganization(rawContactId, bean))
     }
 
-    if (contactsInfoBean.postalList.isNotEmpty()){//插入地址
-        for (item in contactsInfoBean.postalList) {
+    if (bean.postalList.isNotEmpty()){//插入地址
+        for (item in bean.postalList) {
             if (item.address.isEmpty() && item.street.isEmpty()){
                 continue
             }
-            values.clear()
-            values.put(ContactsContract.Data.RAW_CONTACT_ID, rawContactId)
-            values.put(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_ITEM_TYPE)
-            values.put(ContactsContract.CommonDataKinds.StructuredPostal.FORMATTED_ADDRESS, item.address.ifEmpty { item.street })
-            values.put(ContactsContract.CommonDataKinds.StructuredPostal.STREET, item.street.ifEmpty { item.address })
-            val type = when {
-                item.label.isNotEmpty() -> ContactsContract.CommonDataKinds.StructuredPostal.TYPE_CUSTOM.toString()
-                item.type.isNotEmpty() -> item.type
-                else -> ContactsContract.CommonDataKinds.StructuredPostal.TYPE_HOME.toString()
-            }
-            values.put(ContactsContract.CommonDataKinds.StructuredPostal.TYPE, type)
-            if (item.label.isNotEmpty()){
-                values.put(ContactsContract.CommonDataKinds.StructuredPostal.LABEL, item.label)
-            }
-            contentResolver.insert(ContactsContract.Data.CONTENT_URI, values)
+            contentResolver.insert(ContactsContract.Data.CONTENT_URI, assembleStructuredPostal(rawContactId, item))
         }
     }
 
-    if (contactsInfoBean.note.isNotEmpty()){//插入备注
-        values.clear()
-        values.put(ContactsContract.Data.RAW_CONTACT_ID, rawContactId)
-        values.put(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Note.CONTENT_ITEM_TYPE)
-        values.put(ContactsContract.CommonDataKinds.Note.NOTE, contactsInfoBean.note)
-        contentResolver.insert(ContactsContract.Data.CONTENT_URI, values)
+    if (bean.note.isNotEmpty()){//插入备注
+        contentResolver.insert(ContactsContract.Data.CONTENT_URI, assembleNote(rawContactId, bean))
     }
 
-    if (contactsInfoBean.avatarArray != null){//插入头像
-        values.clear()
-        values.put(ContactsContract.Data.RAW_CONTACT_ID, rawContactId)
-        values.put(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Photo.CONTENT_ITEM_TYPE)
-        values.put(ContactsContract.CommonDataKinds.Photo.PHOTO, contactsInfoBean.avatarArray)
-        contentResolver.insert(ContactsContract.Data.CONTENT_URI, values)
+    if (bean.avatarArray != null){//插入头像
+        contentResolver.insert(ContactsContract.Data.CONTENT_URI, assemblePhoto(rawContactId, bean))
     }
 
-    if (contactsInfoBean.emailList.isNotEmpty()){//插入邮箱
-        for (item in contactsInfoBean.emailList) {
-            values.clear()
-            values.put(ContactsContract.Data.RAW_CONTACT_ID, rawContactId)
-            values.put(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE)
-            values.put(ContactsContract.CommonDataKinds.Email.ADDRESS, item.address)
-            val type = when {
-                item.label.isNotEmpty() -> ContactsContract.CommonDataKinds.Email.TYPE_CUSTOM.toString()
-                item.type.isNotEmpty() -> item.type
-                else -> ContactsContract.CommonDataKinds.Email.TYPE_HOME.toString()
-            }
-            values.put(ContactsContract.CommonDataKinds.Email.TYPE, type)
-            if (item.label.isNotEmpty()) {
-                values.put(ContactsContract.CommonDataKinds.Email.LABEL, item.label)
-            }
-            contentResolver.insert(ContactsContract.Data.CONTENT_URI, values)
+    if (bean.emailList.isNotEmpty()){//插入邮箱
+        for (item in bean.emailList) {
+            contentResolver.insert(ContactsContract.Data.CONTENT_URI, assembleEmail(rawContactId, item))
         }
     }
 
-    if (contactsInfoBean.phoneList.isNotEmpty()){//插入手机
-        for (item in contactsInfoBean.phoneList) {
-            values.clear()
-            values.put(ContactsContract.Data.RAW_CONTACT_ID, rawContactId)
-            values.put(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE)
-            values.put(ContactsContract.CommonDataKinds.Phone.NUMBER, item.number)
-            val normalizedNumber = when {
-                item.normalizedNumber.isNotEmpty() -> item.normalizedNumber
-                item.number.isNotEmpty() -> "+86".append(item.number.trim())
-                else -> ""
-            }
-            if (normalizedNumber.isNotEmpty()){
-                values.put(ContactsContract.CommonDataKinds.Phone.NORMALIZED_NUMBER, normalizedNumber)
-            }
-            if (item.from.isNotEmpty()){
-                values.put(ContactsContract.CommonDataKinds.Phone.DATA6, item.from)
-            }
-            val type = when {
-                item.label.isNotEmpty() -> ContactsContract.CommonDataKinds.Phone.TYPE_CUSTOM.toString()
-                item.type.isNotEmpty() -> item.type
-                else -> ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE.toString()
-            }
-            values.put(ContactsContract.CommonDataKinds.Phone.TYPE, type)
-            if (item.label.isNotEmpty()) {
-                values.put(ContactsContract.CommonDataKinds.Phone.LABEL, item.label)
-            }
-            contentResolver.insert(ContactsContract.Data.CONTENT_URI, values)
+    if (bean.phoneList.isNotEmpty()){//插入手机
+        for (item in bean.phoneList) {
+            contentResolver.insert(ContactsContract.Data.CONTENT_URI, assemblePhone(rawContactId, item))
         }
     }
 
-    if (contactsInfoBean.website.isNotEmpty()){//插入网站
-        values.clear()
-        values.put(ContactsContract.Data.RAW_CONTACT_ID, rawContactId)
-        values.put(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Website.CONTENT_ITEM_TYPE)
-        values.put(ContactsContract.CommonDataKinds.Website.URL, contactsInfoBean.website)
-        values.put(
-            ContactsContract.CommonDataKinds.Website.TYPE,
-            contactsInfoBean.websiteType.ifEmpty { ContactsContract.CommonDataKinds.Website.TYPE_OTHER.toString() }
-        )
-        contentResolver.insert(ContactsContract.Data.CONTENT_URI, values)
+    if (bean.website.isNotEmpty()){//插入网站
+        contentResolver.insert(ContactsContract.Data.CONTENT_URI, assembleWebsite(rawContactId, bean))
     }
 
-    if (contactsInfoBean.imList.isNotEmpty()){//插入及时通讯
-        for (item in contactsInfoBean.imList) {
-            values.clear()
-            values.put(ContactsContract.Data.RAW_CONTACT_ID, rawContactId)
-            values.put(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Im.CONTENT_ITEM_TYPE)
-            values.put(ContactsContract.CommonDataKinds.Im.DATA, item.account)
-            values.put(
-                ContactsContract.CommonDataKinds.Im.TYPE,
-                item.type.ifEmpty { ContactsContract.CommonDataKinds.Im.TYPE_OTHER.toString() }
-            )
-            val protocol = when {
-                item.customProtocolName.isNotEmpty() -> ContactsContract.CommonDataKinds.Im.PROTOCOL_CUSTOM.toString()
-                item.protocol.isNotEmpty() -> item.protocol
-                else -> ContactsContract.CommonDataKinds.Im.PROTOCOL_AIM.toString()
-            }
-            values.put(ContactsContract.CommonDataKinds.Im.PROTOCOL, protocol)
-            if (item.customProtocolName.isNotEmpty()) {
-                values.put(ContactsContract.CommonDataKinds.Im.CUSTOM_PROTOCOL, item.customProtocolName)
-            }
-            contentResolver.insert(ContactsContract.Data.CONTENT_URI, values)
+    if (bean.imList.isNotEmpty()){//插入及时通讯
+        for (item in bean.imList) {
+            contentResolver.insert(ContactsContract.Data.CONTENT_URI, assembleIm(rawContactId, item))
         }
     }
 
-    if (contactsInfoBean.relationList.isNotEmpty()){//插入关系
-        for (item in contactsInfoBean.relationList) {
-            values.clear()
-            values.put(ContactsContract.Data.RAW_CONTACT_ID, rawContactId)
-            values.put(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Relation.CONTENT_ITEM_TYPE)
-            values.put(ContactsContract.CommonDataKinds.Relation.NAME, item.name)
-            val type = when {
-                item.label.isNotEmpty() -> ContactsContract.CommonDataKinds.Relation.TYPE_CUSTOM.toString()
-                item.type.isNotEmpty() -> item.type
-                else -> ContactsContract.CommonDataKinds.Relation.TYPE_ASSISTANT.toString()
-            }
-            values.put(ContactsContract.CommonDataKinds.Relation.TYPE, type)
-            if (item.label.isNotEmpty()) {
-                values.put(ContactsContract.CommonDataKinds.Relation.LABEL, item.label)
-            }
-            contentResolver.insert(ContactsContract.Data.CONTENT_URI, values)
+    if (bean.relationList.isNotEmpty()){//插入关系
+        for (item in bean.relationList) {
+            contentResolver.insert(ContactsContract.Data.CONTENT_URI, assembleRelation(rawContactId, item))
         }
     }
 
-    if (contactsInfoBean.groupRowIdList.isNotEmpty()){//插入群组ID
-        for (rawId in contactsInfoBean.groupRowIdList) {
-            values.clear()
-            values.put(ContactsContract.Data.RAW_CONTACT_ID, rawContactId)
-            values.put(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.GroupMembership.CONTENT_ITEM_TYPE)
-            values.put(ContactsContract.CommonDataKinds.GroupMembership.GROUP_ROW_ID, rawId)
-            contentResolver.insert(ContactsContract.Data.CONTENT_URI, values)
+    if (bean.groupRowIdList.isNotEmpty()){//插入群组ID
+        for (rawId in bean.groupRowIdList) {
+            contentResolver.insert(ContactsContract.Data.CONTENT_URI, assembleGroupMembership(rawContactId, rawId))
         }
     }
 
-    if (contactsInfoBean.nickName.isNotEmpty()){//插入昵称
-        values.clear()
-        values.put(ContactsContract.Data.RAW_CONTACT_ID, rawContactId)
-        values.put(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Nickname.CONTENT_ITEM_TYPE)
-        values.put(ContactsContract.CommonDataKinds.Nickname.NAME, contactsInfoBean.nickName)
-        contentResolver.insert(ContactsContract.Data.CONTENT_URI, values)
+    if (bean.nickName.isNotEmpty()){//插入昵称
+        contentResolver.insert(ContactsContract.Data.CONTENT_URI, assembleNickname(rawContactId, bean))
     }
 
-    if (contactsInfoBean.eventList.isNotEmpty()){//插入事件
-        for (item in contactsInfoBean.eventList) {
-            values.clear()
-            values.put(ContactsContract.Data.RAW_CONTACT_ID, rawContactId)
-            values.put(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Event.CONTENT_ITEM_TYPE)
-            values.put(ContactsContract.CommonDataKinds.Event.START_DATE, item.date)
-            values.put(ContactsContract.CommonDataKinds.Event.TYPE, item.type.ifEmpty { ContactsContract.CommonDataKinds.Event.TYPE_OTHER.toString() })
-            contentResolver.insert(ContactsContract.Data.CONTENT_URI, values)
+    if (bean.eventList.isNotEmpty()){//插入事件
+        for (item in bean.eventList) {
+            contentResolver.insert(ContactsContract.Data.CONTENT_URI, assembleEvent(rawContactId, item))
         }
     }
+}
+
+/** 组装基础数据 */
+private fun assembleBase(rawContactId: String, mimeType: String): ContentValues {
+    val values = ContentValues()
+    values.put(ContactsContract.Data.RAW_CONTACT_ID, rawContactId)
+    values.put(ContactsContract.Data.MIMETYPE, mimeType)
+    return values
+}
+
+/** 组装姓名相关数据 */
+private fun assembleStructuredName(rawContactId: String, bean: ContactsInfoBean): ContentValues {
+    val values = assembleBase(rawContactId, ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE)
+    values.put(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME, bean.name.ifEmpty { bean.givenName })
+    values.put(ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME, bean.givenName.ifEmpty { bean.name })
+    if (bean.phonetic.isNotEmpty()){
+        values.put(ContactsContract.CommonDataKinds.StructuredName.PHONETIC_FAMILY_NAME, bean.phonetic)
+    }
+    values.put(
+        ContactsContract.CommonDataKinds.StructuredName.FULL_NAME_STYLE,
+        bean.fullNameStyle.ifEmpty { ContactsContract.FullNameStyle.CJK.toString() }
+    )
+    values.put(
+        ContactsContract.CommonDataKinds.StructuredName.PHONETIC_NAME_STYLE,
+        bean.phoneticNameStyle.ifEmpty { ContactsContract.PhoneticNameStyle.PINYIN.toString() }
+    )
+    return values
+}
+
+/** 组装公司组织相关数据 */
+private fun assembleOrganization(rawContactId: String, bean: ContactsInfoBean): ContentValues {
+    val values = assembleBase(rawContactId, ContactsContract.CommonDataKinds.Organization.CONTENT_ITEM_TYPE)
+    if (bean.company.isNotEmpty()){
+        values.put(ContactsContract.CommonDataKinds.Organization.COMPANY, bean.company)
+    }
+    if (bean.title.isNotEmpty()){
+        values.put(ContactsContract.CommonDataKinds.Organization.TITLE, bean.title)
+    }
+    return values
+}
+
+/** 组装地址相关数据 */
+private fun assembleStructuredPostal(rawContactId: String, bean: ContactsPostalBean): ContentValues {
+    val values = assembleBase(rawContactId, ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_ITEM_TYPE)
+    values.put(ContactsContract.CommonDataKinds.StructuredPostal.FORMATTED_ADDRESS, bean.address.ifEmpty { bean.street })
+    values.put(ContactsContract.CommonDataKinds.StructuredPostal.STREET, bean.street.ifEmpty { bean.address })
+    val type = when {
+        bean.label.isNotEmpty() -> ContactsContract.CommonDataKinds.StructuredPostal.TYPE_CUSTOM.toString()
+        bean.type.isNotEmpty() -> bean.type
+        else -> ContactsContract.CommonDataKinds.StructuredPostal.TYPE_HOME.toString()
+    }
+    values.put(ContactsContract.CommonDataKinds.StructuredPostal.TYPE, type)
+    if (bean.label.isNotEmpty()){
+        values.put(ContactsContract.CommonDataKinds.StructuredPostal.LABEL, bean.label)
+    }
+    return values
+}
+
+/** 组装备注相关数据 */
+private fun assembleNote(rawContactId: String, bean: ContactsInfoBean): ContentValues {
+    val values = assembleBase(rawContactId, ContactsContract.CommonDataKinds.Note.CONTENT_ITEM_TYPE)
+    values.put(ContactsContract.CommonDataKinds.Note.NOTE, bean.note)
+    return values
+}
+
+/** 组装头像相关数据 */
+private fun assemblePhoto(rawContactId: String, bean: ContactsInfoBean): ContentValues {
+    val values = assembleBase(rawContactId, ContactsContract.CommonDataKinds.Photo.CONTENT_ITEM_TYPE)
+    values.put(ContactsContract.CommonDataKinds.Photo.PHOTO, bean.avatarArray)
+    return values
+}
+
+/** 组装邮箱相关数据 */
+private fun assembleEmail(rawContactId: String, bean: ContactsEmailBean): ContentValues {
+    val values = assembleBase(rawContactId, ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE)
+    values.put(ContactsContract.CommonDataKinds.Email.ADDRESS, bean.address)
+    val type = when {
+        bean.label.isNotEmpty() -> ContactsContract.CommonDataKinds.Email.TYPE_CUSTOM.toString()
+        bean.type.isNotEmpty() -> bean.type
+        else -> ContactsContract.CommonDataKinds.Email.TYPE_HOME.toString()
+    }
+    values.put(ContactsContract.CommonDataKinds.Email.TYPE, type)
+    if (bean.label.isNotEmpty()) {
+        values.put(ContactsContract.CommonDataKinds.Email.LABEL, bean.label)
+    }
+    return values
+}
+
+/** 组装手机相关数据 */
+private fun assemblePhone(rawContactId: String, bean: ContactsPhoneBean): ContentValues {
+    val values = assembleBase(rawContactId, ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE)
+    values.put(ContactsContract.CommonDataKinds.Phone.NUMBER, bean.number)
+    val normalizedNumber = when {
+        bean.normalizedNumber.isNotEmpty() -> bean.normalizedNumber
+        bean.number.isNotEmpty() -> "+86".append(bean.number.trim())
+        else -> ""
+    }
+    if (normalizedNumber.isNotEmpty()){
+        values.put(ContactsContract.CommonDataKinds.Phone.NORMALIZED_NUMBER, normalizedNumber)
+    }
+    if (bean.from.isNotEmpty()){
+        values.put(ContactsContract.CommonDataKinds.Phone.DATA6, bean.from)
+    }
+    val type = when {
+        bean.label.isNotEmpty() -> ContactsContract.CommonDataKinds.Phone.TYPE_CUSTOM.toString()
+        bean.type.isNotEmpty() -> bean.type
+        else -> ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE.toString()
+    }
+    values.put(ContactsContract.CommonDataKinds.Phone.TYPE, type)
+    if (bean.label.isNotEmpty()) {
+        values.put(ContactsContract.CommonDataKinds.Phone.LABEL, bean.label)
+    }
+    return values
+}
+
+/** 组装网站相关数据 */
+private fun assembleWebsite(rawContactId: String, bean: ContactsInfoBean): ContentValues {
+    val values = assembleBase(rawContactId, ContactsContract.CommonDataKinds.Website.CONTENT_ITEM_TYPE)
+    values.put(ContactsContract.CommonDataKinds.Website.URL, bean.website)
+    values.put(
+        ContactsContract.CommonDataKinds.Website.TYPE,
+        bean.websiteType.ifEmpty { ContactsContract.CommonDataKinds.Website.TYPE_OTHER.toString() }
+    )
+    return values
+}
+
+/** 组装即时通讯相关数据 */
+private fun assembleIm(rawContactId: String, bean: ContactsImBean): ContentValues {
+    val values = assembleBase(rawContactId, ContactsContract.CommonDataKinds.Im.CONTENT_ITEM_TYPE)
+    values.put(ContactsContract.CommonDataKinds.Im.DATA, bean.account)
+    values.put(
+        ContactsContract.CommonDataKinds.Im.TYPE,
+        bean.type.ifEmpty { ContactsContract.CommonDataKinds.Im.TYPE_OTHER.toString() }
+    )
+    val protocol = when {
+        bean.customProtocolName.isNotEmpty() -> ContactsContract.CommonDataKinds.Im.PROTOCOL_CUSTOM.toString()
+        bean.protocol.isNotEmpty() -> bean.protocol
+        else -> ContactsContract.CommonDataKinds.Im.PROTOCOL_AIM.toString()
+    }
+    values.put(ContactsContract.CommonDataKinds.Im.PROTOCOL, protocol)
+    if (bean.customProtocolName.isNotEmpty()) {
+        values.put(ContactsContract.CommonDataKinds.Im.CUSTOM_PROTOCOL, bean.customProtocolName)
+    }
+    return values
+}
+
+/** 组装关系相关数据 */
+private fun assembleRelation(rawContactId: String, bean: ContactsRelationBean): ContentValues {
+    val values = assembleBase(rawContactId, ContactsContract.CommonDataKinds.Relation.CONTENT_ITEM_TYPE)
+    values.put(ContactsContract.CommonDataKinds.Relation.NAME, bean.name)
+    val type = when {
+        bean.label.isNotEmpty() -> ContactsContract.CommonDataKinds.Relation.TYPE_CUSTOM.toString()
+        bean.type.isNotEmpty() -> bean.type
+        else -> ContactsContract.CommonDataKinds.Relation.TYPE_ASSISTANT.toString()
+    }
+    values.put(ContactsContract.CommonDataKinds.Relation.TYPE, type)
+    if (bean.label.isNotEmpty()) {
+        values.put(ContactsContract.CommonDataKinds.Relation.LABEL, bean.label)
+    }
+    return values
+}
+
+/** 组装群组ID相关数据 */
+private fun assembleGroupMembership(rawContactId: String, groupId: String): ContentValues {
+    val values = assembleBase(rawContactId, ContactsContract.CommonDataKinds.GroupMembership.CONTENT_ITEM_TYPE)
+    values.put(ContactsContract.CommonDataKinds.GroupMembership.GROUP_ROW_ID, groupId)
+    return values
+}
+
+/** 组装昵称相关数据 */
+private fun assembleNickname(rawContactId: String, bean: ContactsInfoBean): ContentValues {
+    val values = assembleBase(rawContactId, ContactsContract.CommonDataKinds.Nickname.CONTENT_ITEM_TYPE)
+    values.put(ContactsContract.CommonDataKinds.Nickname.NAME, bean.nickName)
+    return values
+}
+
+/** 组装事件相关数据 */
+private fun assembleEvent(rawContactId: String, bean: ContactsEventBean): ContentValues {
+    val values = assembleBase(rawContactId, ContactsContract.CommonDataKinds.Event.CONTENT_ITEM_TYPE)
+    values.put(ContactsContract.CommonDataKinds.Event.START_DATE, bean.date)
+    values.put(ContactsContract.CommonDataKinds.Event.TYPE, bean.type.ifEmpty { ContactsContract.CommonDataKinds.Event.TYPE_OTHER.toString() })
+    return values
 }
 
 
