@@ -10,6 +10,7 @@ import com.lodz.android.corekt.anko.append
 import com.lodz.android.corekt.contacts.bean.*
 import com.lodz.android.corekt.contacts.getContactData
 import com.lodz.android.corekt.contacts.insertContactData
+import com.lodz.android.corekt.contacts.updateContactData
 import com.lodz.android.corekt.utils.DateUtils
 import com.lodz.android.pandora.mvvm.vm.BaseViewModel
 import com.lodz.android.pandora.utils.coroutines.CoroutinesWrapper
@@ -32,6 +33,24 @@ class ContactViewModel : BaseViewModel() {
             .actionPg(context) {
                 onSuccess {
                     mContactList.value = it
+                }
+                onError { e, isNetwork ->
+                    toastShort(e.toString())
+                }
+            }
+    }
+
+    /** 更新通讯录数据 */
+    fun updateContactData(context: Context, bean: ContactsInfoBean) {
+        CoroutinesWrapper.create(this)
+            .request {
+                context.updateContactData(bean)
+                bean
+            }
+            .actionPg(context) {
+                onSuccess {
+                    toastShort("更新成功：${it.name}")
+                    getAllContactData(context)
                 }
                 onError { e, isNetwork ->
                     toastShort(e.toString())
