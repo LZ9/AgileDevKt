@@ -7,6 +7,9 @@ package com.lodz.android.corekt.contacts.bean
  */
 class ContactsRelationBean {
 
+    /** 数据编号 */
+    var dataId = ""
+
     /** 名称 */
     var name = ""
 

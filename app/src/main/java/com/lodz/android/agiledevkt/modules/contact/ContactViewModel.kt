@@ -8,11 +8,8 @@ import androidx.lifecycle.MutableLiveData
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.corekt.anko.append
 import com.lodz.android.corekt.anko.toChinese
+import com.lodz.android.corekt.contacts.*
 import com.lodz.android.corekt.contacts.bean.*
-import com.lodz.android.corekt.contacts.deleteContact
-import com.lodz.android.corekt.contacts.getContactData
-import com.lodz.android.corekt.contacts.insertContactData
-import com.lodz.android.corekt.contacts.updateContactData
 import com.lodz.android.corekt.utils.DateUtils
 import com.lodz.android.pandora.mvvm.vm.BaseViewModel
 import com.lodz.android.pandora.utils.coroutines.CoroutinesWrapper

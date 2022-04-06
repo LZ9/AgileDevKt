@@ -7,6 +7,9 @@ package com.lodz.android.corekt.contacts.bean
  */
 class ContactsImBean {
 
+    /** 数据编号 */
+    var dataId = ""
+
     /** 账号 */
     var account = ""
 

@@ -107,9 +107,11 @@ fun Context.getDataByRawContactId(
     bean.rawContactId = rawContactId
     if (dataCursor.moveToFirst()) {
         do {
+            val dataId = dataCursor.getString(dataCursor.getColumnIndex(ContactsContract.Data._ID))
             val mimeType = dataCursor.getString(dataCursor.getColumnIndex(ContactsContract.Data.MIMETYPE))
             if (mimeType == ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE) {
                 val item = ContactsPhoneBean()
+                item.dataId = dataId
                 item.number = dataCursor.getString(dataCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)) ?: ""
                 item.normalizedNumber = dataCursor.getString(dataCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NORMALIZED_NUMBER)) ?: ""
                 item.from = dataCursor.getString(dataCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DATA6)) ?: ""
@@ -123,6 +125,7 @@ fun Context.getDataByRawContactId(
             }
             if (mimeType == ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_ITEM_TYPE) {
                 val item = ContactsPostalBean()
+                item.dataId = dataId
                 item.address = dataCursor.getString(dataCursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.FORMATTED_ADDRESS)) ?: ""
                 item.type = dataCursor.getString(dataCursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.TYPE)) ?: ""
                 item.street = dataCursor.getString(dataCursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.STREET)) ?: ""
@@ -131,6 +134,7 @@ fun Context.getDataByRawContactId(
             }
             if (mimeType == ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE) {
                 val item = ContactsEmailBean()
+                item.dataId = dataId
                 item.address = dataCursor.getString(dataCursor.getColumnIndex(ContactsContract.CommonDataKinds.Email.ADDRESS)) ?: ""
                 item.type = dataCursor.getString(dataCursor.getColumnIndex(ContactsContract.CommonDataKinds.Email.TYPE)) ?: ""
                 item.label = dataCursor.getString(dataCursor.getColumnIndex(ContactsContract.CommonDataKinds.Email.LABEL)) ?: ""
@@ -155,6 +159,7 @@ fun Context.getDataByRawContactId(
             }
             if (mimeType == ContactsContract.CommonDataKinds.Im.CONTENT_ITEM_TYPE) {
                 val item = ContactsImBean()
+                item.dataId = dataId
                 item.account = dataCursor.getString(dataCursor.getColumnIndex(ContactsContract.CommonDataKinds.Im.DATA)) ?: ""
                 item.type = dataCursor.getString(dataCursor.getColumnIndex(ContactsContract.CommonDataKinds.Im.TYPE)) ?: ""
                 item.protocol = dataCursor.getString(dataCursor.getColumnIndex(ContactsContract.CommonDataKinds.Im.PROTOCOL)) ?: ""
@@ -163,6 +168,7 @@ fun Context.getDataByRawContactId(
             }
             if (mimeType == ContactsContract.CommonDataKinds.Relation.CONTENT_ITEM_TYPE) {
                 val item = ContactsRelationBean()
+                item.dataId = dataId
                 item.name = dataCursor.getString(dataCursor.getColumnIndex(ContactsContract.CommonDataKinds.Relation.NAME)) ?: ""
                 item.type = dataCursor.getString(dataCursor.getColumnIndex(ContactsContract.CommonDataKinds.Relation.TYPE)) ?: ""
                 item.label = dataCursor.getString(dataCursor.getColumnIndex(ContactsContract.CommonDataKinds.Relation.LABEL)) ?: ""
@@ -176,6 +182,7 @@ fun Context.getDataByRawContactId(
             }
             if (mimeType == ContactsContract.CommonDataKinds.Event.CONTENT_ITEM_TYPE) {
                 val item = ContactsEventBean()
+                item.dataId = dataId
                 item.date = dataCursor.getString(dataCursor.getColumnIndex(ContactsContract.CommonDataKinds.Event.START_DATE)) ?: ""
                 item.type = dataCursor.getString(dataCursor.getColumnIndex(ContactsContract.CommonDataKinds.Event.TYPE)) ?: ""
                 bean.eventList.add(item)
@@ -209,29 +216,29 @@ fun Context.updateContactData(bean: ContactsInfoBean) {
     updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE, assembleStructuredName(bean.rawContactId, bean))
     updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.Organization.CONTENT_ITEM_TYPE, assembleOrganization(bean.rawContactId, bean))
     for (item in bean.postalList) {
-        updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_ITEM_TYPE, assembleStructuredPostal(bean.rawContactId, item))
+        updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_ITEM_TYPE, assembleStructuredPostal(bean.rawContactId, item), item.dataId)
     }
     updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.Note.CONTENT_ITEM_TYPE, assembleNote(bean.rawContactId, bean))
     updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.Photo.CONTENT_ITEM_TYPE, assemblePhoto(bean.rawContactId, bean))
     for (item in bean.emailList) {
-        updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE, assembleEmail(bean.rawContactId, item))
+        updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE, assembleEmail(bean.rawContactId, item), item.dataId)
     }
     for (item in bean.phoneList) {
-        updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE, assemblePhone(bean.rawContactId, item))
+        updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE, assemblePhone(bean.rawContactId, item), item.dataId)
     }
     updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.Website.CONTENT_ITEM_TYPE, assembleWebsite(bean.rawContactId, bean))
     for (item in bean.imList) {
-        updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.Im.CONTENT_ITEM_TYPE, assembleIm(bean.rawContactId, item))
+        updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.Im.CONTENT_ITEM_TYPE, assembleIm(bean.rawContactId, item), item.dataId)
     }
     for (item in bean.relationList) {
-        updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.Relation.CONTENT_ITEM_TYPE, assembleRelation(bean.rawContactId, item))
+        updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.Relation.CONTENT_ITEM_TYPE, assembleRelation(bean.rawContactId, item), item.dataId)
     }
     for (rawId in bean.groupRowIdList) {
         updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.GroupMembership.CONTENT_ITEM_TYPE, assembleGroupMembership(bean.rawContactId, rawId))
     }
     updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.Nickname.CONTENT_ITEM_TYPE, assembleNickname(bean.rawContactId, bean))
     for (item in bean.eventList) {
-        updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.Event.CONTENT_ITEM_TYPE, assembleEvent(bean.rawContactId, item))
+        updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.Event.CONTENT_ITEM_TYPE, assembleEvent(bean.rawContactId, item), item.dataId)
     }
 }
 
@@ -252,7 +259,11 @@ fun Context.updateContactStructuredName(
     bean.phonetic = phonetic
     bean.fullNameStyle = fullNameStyle.toString()
     bean.phoneticNameStyle = phoneticNameStyle.toString()
-    updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE, assembleStructuredName(bean.rawContactId, bean))
+    updateContactExecute(
+        rawContactId,
+        mimeType = ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE,
+        values = assembleStructuredName(rawContactId, bean)
+    )
 }
 
 /** 更新通讯录的组织相关数据 */
@@ -262,17 +273,34 @@ fun Context.updateContactOrganization(rawContactId: String, company: String, tit
     bean.rawContactId = rawContactId
     bean.company = company
     bean.title = title
-    updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.Organization.CONTENT_ITEM_TYPE, assembleOrganization(bean.rawContactId, bean))
+    updateContactExecute(
+        rawContactId,
+        mimeType = ContactsContract.CommonDataKinds.Organization.CONTENT_ITEM_TYPE,
+        values = assembleOrganization(rawContactId, bean)
+    )
 }
 
-/** 更新通讯录的组织相关数据 */
+/** 更新通讯录的地址相关数据 */
 @JvmOverloads
-fun Context.updateContactStructuredPostal(rawContactId: String, company: String, title: String = "") {
-    val bean = ContactsInfoBean()
-
-    for (item in bean.postalList) {
-        updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_ITEM_TYPE, assembleStructuredPostal(bean.rawContactId, item))
+fun Context.updateContactStructuredPostal(
+    rawContactId: String,
+    dataId: String,
+    address: String,
+    street: String = "",
+    type: Int = ContactsContract.CommonDataKinds.StructuredPostal.TYPE_HOME,
+    label: String = ""
+) {
+    val bean = ContactsPostalBean()
+    bean.dataId = dataId
+    bean.address = address
+    bean.street = street.ifEmpty { bean.address }
+    bean.type = if (label.isNotEmpty()) {
+        ContactsContract.CommonDataKinds.StructuredPostal.TYPE_CUSTOM.toString()
+    } else {
+        type.toString()
     }
+    bean.label = label
+    updateContactExecute(rawContactId, ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_ITEM_TYPE, assembleStructuredPostal(rawContactId, bean), dataId)
 }
 
 
@@ -305,14 +333,24 @@ fun Context.updateContactStructuredPostal(rawContactId: String, company: String,
 //    }
 
 
-/** 新增通讯录信息数据[bean] */
-private fun Context.updateContactExecute(rawContactId: String, mimeType: String, values: ContentValues) {
-    contentResolver.update(
-        ContactsContract.Data.CONTENT_URI,
-        values,
-        ContactsContract.Data.RAW_CONTACT_ID + "= ? AND " + ContactsContract.Data.MIMETYPE + "= ?",
+/** 执行更新通讯录函数 */
+private fun Context.updateContactExecute(
+    rawContactId: String,
+    mimeType: String,
+    values: ContentValues,
+    dataId: String = ""
+) {
+    val where = if (dataId.isEmpty()){
+        ContactsContract.Data.RAW_CONTACT_ID + "= ? AND " + ContactsContract.Data.MIMETYPE + "= ?"
+    } else {
+        ContactsContract.Data.RAW_CONTACT_ID + "= ? AND " + ContactsContract.Data._ID + "= ? AND " + ContactsContract.Data.MIMETYPE + "= ?"
+    }
+    val selectionArgs = if (dataId.isEmpty()) {
         arrayOf(rawContactId, mimeType)
-    )
+    } else {
+        arrayOf(rawContactId, dataId, mimeType)
+    }
+    contentResolver.update(ContactsContract.Data.CONTENT_URI, values, where, selectionArgs)
 }
 
 /** 新增通讯录信息数据[bean] */
@@ -435,13 +473,12 @@ private fun assembleStructuredPostal(rawContactId: String, bean: ContactsPostalB
     val values = assembleBase(rawContactId, ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_ITEM_TYPE)
     values.put(ContactsContract.CommonDataKinds.StructuredPostal.FORMATTED_ADDRESS, bean.address.ifEmpty { bean.street })
     values.put(ContactsContract.CommonDataKinds.StructuredPostal.STREET, bean.street.ifEmpty { bean.address })
-    val type = when {
-        bean.label.isNotEmpty() -> ContactsContract.CommonDataKinds.StructuredPostal.TYPE_CUSTOM.toString()
-        bean.type.isNotEmpty() -> bean.type
-        else -> ContactsContract.CommonDataKinds.StructuredPostal.TYPE_HOME.toString()
+    val type = bean.type.ifEmpty { ContactsContract.CommonDataKinds.StructuredPostal.TYPE_HOME.toString() }
+    if (type != ContactsContract.CommonDataKinds.StructuredPostal.TYPE_CUSTOM.toString()){
+        bean.label = ""
     }
     values.put(ContactsContract.CommonDataKinds.StructuredPostal.TYPE, type)
-    if (bean.label.isNotEmpty()){
+    if (bean.label.isNotEmpty()) {
         values.put(ContactsContract.CommonDataKinds.StructuredPostal.LABEL, bean.label)
     }
     return values
@@ -465,10 +502,9 @@ private fun assemblePhoto(rawContactId: String, bean: ContactsInfoBean): Content
 private fun assembleEmail(rawContactId: String, bean: ContactsEmailBean): ContentValues {
     val values = assembleBase(rawContactId, ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE)
     values.put(ContactsContract.CommonDataKinds.Email.ADDRESS, bean.address)
-    val type = when {
-        bean.label.isNotEmpty() -> ContactsContract.CommonDataKinds.Email.TYPE_CUSTOM.toString()
-        bean.type.isNotEmpty() -> bean.type
-        else -> ContactsContract.CommonDataKinds.Email.TYPE_HOME.toString()
+    val type = bean.type.ifEmpty { ContactsContract.CommonDataKinds.Email.TYPE_HOME.toString() }
+    if (type != ContactsContract.CommonDataKinds.Email.TYPE_CUSTOM.toString()){
+        bean.label = ""
     }
     values.put(ContactsContract.CommonDataKinds.Email.TYPE, type)
     if (bean.label.isNotEmpty()) {
@@ -492,16 +528,16 @@ private fun assemblePhone(rawContactId: String, bean: ContactsPhoneBean): Conten
     if (bean.from.isNotEmpty()){
         values.put(ContactsContract.CommonDataKinds.Phone.DATA6, bean.from)
     }
-    val type = when {
-        bean.label.isNotEmpty() -> ContactsContract.CommonDataKinds.Phone.TYPE_CUSTOM.toString()
-        bean.type.isNotEmpty() -> bean.type
-        else -> ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE.toString()
+    val type = bean.type.ifEmpty { ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE.toString() }
+    if (type != ContactsContract.CommonDataKinds.Phone.TYPE_CUSTOM.toString()){
+        bean.label = ""
     }
     values.put(ContactsContract.CommonDataKinds.Phone.TYPE, type)
     if (bean.label.isNotEmpty()) {
         values.put(ContactsContract.CommonDataKinds.Phone.LABEL, bean.label)
     }
     return values
+
 }
 
 /** 组装网站相关数据 */
@@ -523,10 +559,10 @@ private fun assembleIm(rawContactId: String, bean: ContactsImBean): ContentValue
         ContactsContract.CommonDataKinds.Im.TYPE,
         bean.type.ifEmpty { ContactsContract.CommonDataKinds.Im.TYPE_OTHER.toString() }
     )
-    val protocol = when {
-        bean.customProtocolName.isNotEmpty() -> ContactsContract.CommonDataKinds.Im.PROTOCOL_CUSTOM.toString()
-        bean.protocol.isNotEmpty() -> bean.protocol
-        else -> ContactsContract.CommonDataKinds.Im.PROTOCOL_AIM.toString()
+
+    val protocol = bean.protocol.ifEmpty { ContactsContract.CommonDataKinds.Im.PROTOCOL_AIM.toString() }
+    if (protocol != ContactsContract.CommonDataKinds.Im.PROTOCOL_CUSTOM.toString()){
+        bean.customProtocolName = ""
     }
     values.put(ContactsContract.CommonDataKinds.Im.PROTOCOL, protocol)
     if (bean.customProtocolName.isNotEmpty()) {
@@ -539,10 +575,9 @@ private fun assembleIm(rawContactId: String, bean: ContactsImBean): ContentValue
 private fun assembleRelation(rawContactId: String, bean: ContactsRelationBean): ContentValues {
     val values = assembleBase(rawContactId, ContactsContract.CommonDataKinds.Relation.CONTENT_ITEM_TYPE)
     values.put(ContactsContract.CommonDataKinds.Relation.NAME, bean.name)
-    val type = when {
-        bean.label.isNotEmpty() -> ContactsContract.CommonDataKinds.Relation.TYPE_CUSTOM.toString()
-        bean.type.isNotEmpty() -> bean.type
-        else -> ContactsContract.CommonDataKinds.Relation.TYPE_ASSISTANT.toString()
+    val type = bean.type.ifEmpty { ContactsContract.CommonDataKinds.Relation.TYPE_ASSISTANT.toString() }
+    if (type != ContactsContract.CommonDataKinds.Relation.TYPE_CUSTOM.toString()) {
+        bean.label = ""
     }
     values.put(ContactsContract.CommonDataKinds.Relation.TYPE, type)
     if (bean.label.isNotEmpty()) {

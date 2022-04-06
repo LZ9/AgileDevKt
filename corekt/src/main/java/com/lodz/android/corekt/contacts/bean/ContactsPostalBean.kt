@@ -7,6 +7,9 @@ package com.lodz.android.corekt.contacts.bean
  */
 class ContactsPostalBean {
 
+    /** 数据编号 */
+    var dataId = ""
+
     /** 地址名称 */
     var address = ""
 

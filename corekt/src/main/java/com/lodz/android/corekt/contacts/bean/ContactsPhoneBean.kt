@@ -6,6 +6,10 @@ package com.lodz.android.corekt.contacts.bean
  * @date 2022/3/29
  */
 class ContactsPhoneBean {
+
+    /** 数据编号 */
+    var dataId = ""
+
     /** 手机号 */
     var number = ""
 

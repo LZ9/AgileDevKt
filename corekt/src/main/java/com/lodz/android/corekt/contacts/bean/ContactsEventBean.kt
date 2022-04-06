@@ -7,6 +7,9 @@ package com.lodz.android.corekt.contacts.bean
  */
 class ContactsEventBean {
 
+    /** 数据编号 */
+    var dataId = ""
+
     /** 日期(yyyy-MM-dd) */
     var date = ""
 
