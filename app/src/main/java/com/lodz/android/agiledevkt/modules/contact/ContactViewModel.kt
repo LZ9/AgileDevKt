@@ -7,7 +7,9 @@ import android.provider.ContactsContract
 import androidx.lifecycle.MutableLiveData
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.corekt.anko.append
+import com.lodz.android.corekt.anko.toChinese
 import com.lodz.android.corekt.contacts.bean.*
+import com.lodz.android.corekt.contacts.deleteContact
 import com.lodz.android.corekt.contacts.getContactData
 import com.lodz.android.corekt.contacts.insertContactData
 import com.lodz.android.corekt.contacts.updateContactData
@@ -15,6 +17,8 @@ import com.lodz.android.corekt.utils.DateUtils
 import com.lodz.android.pandora.mvvm.vm.BaseViewModel
 import com.lodz.android.pandora.utils.coroutines.CoroutinesWrapper
 import java.io.ByteArrayOutputStream
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.random.Random
 
 /**
@@ -50,6 +54,24 @@ class ContactViewModel : BaseViewModel() {
             .actionPg(context) {
                 onSuccess {
                     toastShort("更新成功：${it.name}")
+                    getAllContactData(context)
+                }
+                onError { e, isNetwork ->
+                    toastShort(e.toString())
+                }
+            }
+    }
+
+    /** 删除通讯录数据 */
+    fun deleteContact(context: Context, bean: ContactsInfoBean) {
+        CoroutinesWrapper.create(this)
+            .request {
+                context.deleteContact(bean.rawContactId)
+                bean
+            }
+            .actionPg(context) {
+                onSuccess {
+                    toastShort("删除成功：${it.name}")
                     getAllContactData(context)
                 }
                 onError { e, isNetwork ->
@@ -110,39 +132,55 @@ class ContactViewModel : BaseViewModel() {
                 phone = phone.append(i)
             }
         }
-        val phoneBean = ContactsPhoneBean()
-        phoneBean.number = phone
-        phoneBean.normalizedNumber = "+86".append(phone)
-        phoneBean.type = ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE.toString()
-        bean.phoneList.add(phoneBean)
 
-        val emailBean = ContactsEmailBean()
-        emailBean.address = bean.name.hashCode().toString().subSequence(0, 5).append("@qq.com")
-        emailBean.type = ContactsContract.CommonDataKinds.Email.TYPE_HOME.toString()
-        bean.emailList.add(emailBean)
+        val count = 3
 
-        val postalBean = ContactsPostalBean()
-        postalBean.address = "成化大道10号"
-        postalBean.street = postalBean.address
-        postalBean.type = ContactsContract.CommonDataKinds.StructuredPostal.TYPE_CUSTOM.toString()
-        postalBean.label = "学校"
-        bean.postalList.add(postalBean)
+        for (i in 0 until count) {
+            val phoneBean = ContactsPhoneBean()
+            phoneBean.number = (phone.toLong() + i).toString()
+            phoneBean.normalizedNumber = "+86".append(phone)
+            phoneBean.type = ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE.toString()
+            bean.phoneList.add(phoneBean)
+        }
 
-        val imBean = ContactsImBean()
-        imBean.account = bean.nickName.hashCode().toString().subSequence(0, 5).toString()
-        imBean.type = ContactsContract.CommonDataKinds.Im.TYPE_HOME.toString()
-        imBean.protocol = ContactsContract.CommonDataKinds.Im.PROTOCOL_QQ.toString()
-        bean.imList.add(imBean)
+        for (i in 0 until count) {
+            val emailBean = ContactsEmailBean()
+            emailBean.address = (bean.name.hashCode() + i * 1000).toString().subSequence(0, 5).append("@qq.com")
+            emailBean.type = ContactsContract.CommonDataKinds.Email.TYPE_HOME.toString()
+            bean.emailList.add(emailBean)
+        }
 
-        val relationBean = ContactsRelationBean()
-        relationBean.name = "张三"
-        relationBean.type = ContactsContract.CommonDataKinds.Relation.TYPE_PARTNER.toString()
-        bean.relationList.add(relationBean)
+        for (i in 0 until count) {
+            val postalBean = ContactsPostalBean()
+            postalBean.address = "成华大道1${i}号"
+            postalBean.street = postalBean.address
+            postalBean.type = ContactsContract.CommonDataKinds.StructuredPostal.TYPE_CUSTOM.toString()
+            postalBean.label = "学校"
+            bean.postalList.add(postalBean)
+        }
 
-        val eventBean = ContactsEventBean()
-        eventBean.date = DateUtils.getCurrentFormatString(DateUtils.TYPE_6)
-        eventBean.type = ContactsContract.CommonDataKinds.Event.TYPE_ANNIVERSARY.toString()
-        bean.eventList.add(eventBean)
+        for (i in 0 until count) {
+            val imBean = ContactsImBean()
+            imBean.account = (bean.nickName.hashCode() + i * 1000).toString().subSequence(0, 5).toString()
+            imBean.type = ContactsContract.CommonDataKinds.Im.TYPE_HOME.toString()
+            imBean.protocol = ContactsContract.CommonDataKinds.Im.PROTOCOL_QQ.toString()
+            bean.imList.add(imBean)
+        }
+
+        for (i in 0 until count) {
+            val relationBean = ContactsRelationBean()
+            relationBean.name = "张".append(i.toChinese())
+            relationBean.type = ContactsContract.CommonDataKinds.Relation.TYPE_PARTNER.toString()
+            bean.relationList.add(relationBean)
+        }
+
+        for (i in 0 until count) {
+            val eventBean = ContactsEventBean()
+            eventBean.date = DateUtils.getFormatString(DateUtils.TYPE_6, Date(System.currentTimeMillis() + i * 99999999999))
+            eventBean.type = ContactsContract.CommonDataKinds.Event.TYPE_ANNIVERSARY.toString()
+            bean.eventList.add(eventBean)
+        }
         return bean
     }
+
 }

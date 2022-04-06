@@ -122,9 +122,8 @@ class ContactTestActivity : BaseVmActivity() {
         AlertDialog.Builder(getContext())
             .setMessage(R.string.contact_delete_confirm)
             .setPositiveButton(R.string.contact_delete_ok) { dif, witch ->
-                deleteContact(bean.rawContactId)
                 dif.dismiss()
-                mViewModel.getAllContactData(getContext())
+                mViewModel.deleteContact(getContext(), bean)
             }
             .setNegativeButton(R.string.contact_delete_ok) { dif, witch ->
                 dif.dismiss()

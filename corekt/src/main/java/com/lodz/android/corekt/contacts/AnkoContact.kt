@@ -201,7 +201,7 @@ fun Context.deleteContact(rawContactId: String = "") {
     }
 }
 
-/** 更新通讯录数据 */
+/** 全量更新通讯录数据 */
 fun Context.updateContactData(bean: ContactsInfoBean) {
     if (bean.rawContactId.isEmpty()){
         return
@@ -234,6 +234,76 @@ fun Context.updateContactData(bean: ContactsInfoBean) {
         updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.Event.CONTENT_ITEM_TYPE, assembleEvent(bean.rawContactId, item))
     }
 }
+
+/** 更新通讯录的姓名相关数据 */
+@JvmOverloads
+fun Context.updateContactStructuredName(
+    rawContactId: String,
+    name: String,
+    givenName: String = "",
+    phonetic: String = "",
+    fullNameStyle: Int = ContactsContract.FullNameStyle.CJK,
+    phoneticNameStyle: Int = ContactsContract.PhoneticNameStyle.PINYIN
+) {
+    val bean = ContactsInfoBean()
+    bean.rawContactId = rawContactId
+    bean.name = name
+    bean.givenName = givenName.ifEmpty { name }
+    bean.phonetic = phonetic
+    bean.fullNameStyle = fullNameStyle.toString()
+    bean.phoneticNameStyle = phoneticNameStyle.toString()
+    updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE, assembleStructuredName(bean.rawContactId, bean))
+}
+
+/** 更新通讯录的组织相关数据 */
+@JvmOverloads
+fun Context.updateContactOrganization(rawContactId: String, company: String, title: String = "") {
+    val bean = ContactsInfoBean()
+    bean.rawContactId = rawContactId
+    bean.company = company
+    bean.title = title
+    updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.Organization.CONTENT_ITEM_TYPE, assembleOrganization(bean.rawContactId, bean))
+}
+
+/** 更新通讯录的组织相关数据 */
+@JvmOverloads
+fun Context.updateContactStructuredPostal(rawContactId: String, company: String, title: String = "") {
+    val bean = ContactsInfoBean()
+
+    for (item in bean.postalList) {
+        updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_ITEM_TYPE, assembleStructuredPostal(bean.rawContactId, item))
+    }
+}
+
+
+
+
+//
+//
+//
+//    updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.Note.CONTENT_ITEM_TYPE, assembleNote(bean.rawContactId, bean))
+//    updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.Photo.CONTENT_ITEM_TYPE, assemblePhoto(bean.rawContactId, bean))
+//    for (item in bean.emailList) {
+//        updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE, assembleEmail(bean.rawContactId, item))
+//    }
+//    for (item in bean.phoneList) {
+//        updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE, assemblePhone(bean.rawContactId, item))
+//    }
+//    updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.Website.CONTENT_ITEM_TYPE, assembleWebsite(bean.rawContactId, bean))
+//    for (item in bean.imList) {
+//        updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.Im.CONTENT_ITEM_TYPE, assembleIm(bean.rawContactId, item))
+//    }
+//    for (item in bean.relationList) {
+//        updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.Relation.CONTENT_ITEM_TYPE, assembleRelation(bean.rawContactId, item))
+//    }
+//    for (rawId in bean.groupRowIdList) {
+//        updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.GroupMembership.CONTENT_ITEM_TYPE, assembleGroupMembership(bean.rawContactId, rawId))
+//    }
+//    updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.Nickname.CONTENT_ITEM_TYPE, assembleNickname(bean.rawContactId, bean))
+//    for (item in bean.eventList) {
+//        updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.Event.CONTENT_ITEM_TYPE, assembleEvent(bean.rawContactId, item))
+//    }
+
 
 /** 新增通讯录信息数据[bean] */
 private fun Context.updateContactExecute(rawContactId: String, mimeType: String, values: ContentValues) {
