@@ -8,6 +8,7 @@ import android.net.Uri
 import android.provider.ContactsContract
 import com.lodz.android.corekt.anko.append
 import com.lodz.android.corekt.contacts.bean.*
+import com.lodz.android.corekt.contacts.bean.data.*
 
 /**
  * 通讯录帮助类
@@ -120,8 +121,9 @@ fun Context.getDataByRawContactId(
                 bean.phoneList.add(item)
             }
             if (mimeType == ContactsContract.CommonDataKinds.Organization.CONTENT_ITEM_TYPE) {
-                bean.company = dataCursor.getString(dataCursor.getColumnIndex(ContactsContract.CommonDataKinds.Organization.COMPANY)) ?: ""
-                bean.title = dataCursor.getString(dataCursor.getColumnIndex(ContactsContract.CommonDataKinds.Organization.TITLE)) ?: ""
+                bean.organizationBean.dataId = dataId
+                bean.organizationBean.company = dataCursor.getString(dataCursor.getColumnIndex(ContactsContract.CommonDataKinds.Organization.COMPANY)) ?: ""
+                bean.organizationBean.title = dataCursor.getString(dataCursor.getColumnIndex(ContactsContract.CommonDataKinds.Organization.TITLE)) ?: ""
             }
             if (mimeType == ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_ITEM_TYPE) {
                 val item = ContactsPostalBean()
@@ -141,21 +143,27 @@ fun Context.getDataByRawContactId(
                 bean.emailList.add(item)
             }
             if (mimeType == ContactsContract.CommonDataKinds.Note.CONTENT_ITEM_TYPE) {
-                bean.note = dataCursor.getString(dataCursor.getColumnIndex(ContactsContract.CommonDataKinds.Note.NOTE)) ?: ""
+                bean.noteBean.dataId = dataId
+                bean.noteBean.note = dataCursor.getString(dataCursor.getColumnIndex(ContactsContract.CommonDataKinds.Note.NOTE)) ?: ""
             }
             if (mimeType == ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE) {
-                bean.name = dataCursor.getString(dataCursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME)) ?: ""
-                bean.givenName = dataCursor.getString(dataCursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME)) ?: ""
-                bean.phonetic = dataCursor.getString(dataCursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.PHONETIC_FAMILY_NAME)) ?: ""
-                bean.fullNameStyle = dataCursor.getString(dataCursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.FULL_NAME_STYLE)) ?: ""
-                bean.phoneticNameStyle = dataCursor.getString(dataCursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.PHONETIC_NAME_STYLE)) ?: ""
+                bean.nameBean.dataId = dataId
+                bean.nameBean.name = dataCursor.getString(dataCursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME)) ?: ""
+                bean.nameBean.givenName = dataCursor.getString(dataCursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME)) ?: ""
+                bean.nameBean.phonetic = dataCursor.getString(dataCursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.PHONETIC_FAMILY_NAME)) ?: ""
+                bean.nameBean.fullNameStyle = dataCursor.getString(dataCursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.FULL_NAME_STYLE)) ?: ""
+                bean.nameBean.phoneticNameStyle = dataCursor.getString(dataCursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.PHONETIC_NAME_STYLE)) ?: ""
             }
             if (mimeType == ContactsContract.CommonDataKinds.Photo.CONTENT_ITEM_TYPE) {
-                bean.avatarArray = dataCursor.getBlob(dataCursor.getColumnIndex(ContactsContract.CommonDataKinds.Photo.PHOTO))
+                bean.photoBean.dataId = dataId
+                bean.photoBean.photoArray = dataCursor.getBlob(dataCursor.getColumnIndex(ContactsContract.CommonDataKinds.Photo.PHOTO))
             }
             if (mimeType == ContactsContract.CommonDataKinds.Website.CONTENT_ITEM_TYPE) {
-                bean.website = dataCursor.getString(dataCursor.getColumnIndex(ContactsContract.CommonDataKinds.Website.URL)) ?: ""
-                bean.websiteType = dataCursor.getString(dataCursor.getColumnIndex(ContactsContract.CommonDataKinds.Website.TYPE)) ?: ""
+                val item = ContactsWebsiteBean()
+                item.dataId = dataId
+                item.website = dataCursor.getString(dataCursor.getColumnIndex(ContactsContract.CommonDataKinds.Website.URL)) ?: ""
+                item.websiteType = dataCursor.getString(dataCursor.getColumnIndex(ContactsContract.CommonDataKinds.Website.TYPE)) ?: ""
+                bean.websiteList.add(item)
             }
             if (mimeType == ContactsContract.CommonDataKinds.Im.CONTENT_ITEM_TYPE) {
                 val item = ContactsImBean()
@@ -175,10 +183,14 @@ fun Context.getDataByRawContactId(
                 bean.relationList.add(item)
             }
             if (mimeType == ContactsContract.CommonDataKinds.GroupMembership.CONTENT_ITEM_TYPE) {
-                bean.groupRowIdList.add(dataCursor.getString(dataCursor.getColumnIndex(ContactsContract.CommonDataKinds.GroupMembership.GROUP_ROW_ID)) ?: "")
+                val item = ContactsGroupMembershipBean()
+                item.dataId = dataId
+                item.groupRowId = dataCursor.getString(dataCursor.getColumnIndex(ContactsContract.CommonDataKinds.GroupMembership.GROUP_ROW_ID)) ?: ""
+                bean.groupList.add(item)
             }
             if (mimeType == ContactsContract.CommonDataKinds.Nickname.CONTENT_ITEM_TYPE) {
-                bean.nickName = dataCursor.getString(dataCursor.getColumnIndex(ContactsContract.CommonDataKinds.Nickname.NAME)) ?: ""
+                bean.nicknameBean.dataId = dataId
+                bean.nicknameBean.nickname = dataCursor.getString(dataCursor.getColumnIndex(ContactsContract.CommonDataKinds.Nickname.NAME)) ?: ""
             }
             if (mimeType == ContactsContract.CommonDataKinds.Event.CONTENT_ITEM_TYPE) {
                 val item = ContactsEventBean()
@@ -213,30 +225,32 @@ fun Context.updateContactData(bean: ContactsInfoBean) {
     if (bean.rawContactId.isEmpty()){
         return
     }
-    updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE, assembleStructuredName(bean.rawContactId, bean))
-    updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.Organization.CONTENT_ITEM_TYPE, assembleOrganization(bean.rawContactId, bean))
+    updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE, assembleStructuredName(bean.rawContactId, bean.nameBean))
+    updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.Organization.CONTENT_ITEM_TYPE, assembleOrganization(bean.rawContactId, bean.organizationBean))
     for (item in bean.postalList) {
         updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_ITEM_TYPE, assembleStructuredPostal(bean.rawContactId, item), item.dataId)
     }
-    updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.Note.CONTENT_ITEM_TYPE, assembleNote(bean.rawContactId, bean))
-    updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.Photo.CONTENT_ITEM_TYPE, assemblePhoto(bean.rawContactId, bean))
+    updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.Note.CONTENT_ITEM_TYPE, assembleNote(bean.rawContactId, bean.noteBean))
+    updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.Photo.CONTENT_ITEM_TYPE, assemblePhoto(bean.rawContactId, bean.photoBean))
     for (item in bean.emailList) {
         updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE, assembleEmail(bean.rawContactId, item), item.dataId)
     }
     for (item in bean.phoneList) {
         updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE, assemblePhone(bean.rawContactId, item), item.dataId)
     }
-    updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.Website.CONTENT_ITEM_TYPE, assembleWebsite(bean.rawContactId, bean))
+    for (item in bean.websiteList) {
+        updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.Website.CONTENT_ITEM_TYPE, assembleWebsite(bean.rawContactId, item))
+    }
     for (item in bean.imList) {
         updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.Im.CONTENT_ITEM_TYPE, assembleIm(bean.rawContactId, item), item.dataId)
     }
     for (item in bean.relationList) {
         updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.Relation.CONTENT_ITEM_TYPE, assembleRelation(bean.rawContactId, item), item.dataId)
     }
-    for (rawId in bean.groupRowIdList) {
+    for (rawId in bean.groupList) {
         updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.GroupMembership.CONTENT_ITEM_TYPE, assembleGroupMembership(bean.rawContactId, rawId))
     }
-    updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.Nickname.CONTENT_ITEM_TYPE, assembleNickname(bean.rawContactId, bean))
+    updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.Nickname.CONTENT_ITEM_TYPE, assembleNickname(bean.rawContactId, bean.nicknameBean))
     for (item in bean.eventList) {
         updateContactExecute(bean.rawContactId, ContactsContract.CommonDataKinds.Event.CONTENT_ITEM_TYPE, assembleEvent(bean.rawContactId, item), item.dataId)
     }
@@ -246,14 +260,15 @@ fun Context.updateContactData(bean: ContactsInfoBean) {
 @JvmOverloads
 fun Context.updateContactStructuredName(
     rawContactId: String,
+    dataId: String = "",
     name: String,
     givenName: String = "",
     phonetic: String = "",
     fullNameStyle: Int = ContactsContract.FullNameStyle.CJK,
     phoneticNameStyle: Int = ContactsContract.PhoneticNameStyle.PINYIN
 ) {
-    val bean = ContactsInfoBean()
-    bean.rawContactId = rawContactId
+    val bean = ContactsNameBean()
+    bean.dataId = dataId
     bean.name = name
     bean.givenName = givenName.ifEmpty { name }
     bean.phonetic = phonetic
@@ -261,7 +276,7 @@ fun Context.updateContactStructuredName(
     bean.phoneticNameStyle = phoneticNameStyle.toString()
     updateContactExecute(
         rawContactId,
-        mimeType = ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE,
+        mimeType = bean.getMimeType(),
         values = assembleStructuredName(rawContactId, bean)
     )
 }
@@ -269,8 +284,7 @@ fun Context.updateContactStructuredName(
 /** 更新通讯录的组织相关数据 */
 @JvmOverloads
 fun Context.updateContactOrganization(rawContactId: String, company: String, title: String = "") {
-    val bean = ContactsInfoBean()
-    bean.rawContactId = rawContactId
+    val bean = ContactsOrganizationBean()
     bean.company = company
     bean.title = title
     updateContactExecute(
@@ -359,12 +373,12 @@ fun Context.insertContactData(bean: ContactsInfoBean) {
     val uri = contentResolver.insert(ContactsContract.RawContacts.CONTENT_URI, values) ?: return
     val rawContactId = ContentUris.parseId(uri).toString()
 
-    if (bean.name.isNotEmpty() || bean.givenName.isNotEmpty()){//插入姓名
-        contentResolver.insert(ContactsContract.Data.CONTENT_URI, assembleStructuredName(rawContactId, bean))
+    if (bean.nameBean.name.isNotEmpty() || bean.nameBean.givenName.isNotEmpty()){//插入姓名
+        contentResolver.insert(ContactsContract.Data.CONTENT_URI, assembleStructuredName(rawContactId, bean.nameBean))
     }
 
-    if (bean.company.isNotEmpty() || bean.title.isNotEmpty()){//插入公司和职员
-        contentResolver.insert(ContactsContract.Data.CONTENT_URI, assembleOrganization(rawContactId, bean))
+    if (bean.organizationBean.company.isNotEmpty() || bean.organizationBean.title.isNotEmpty()){//插入公司和职员
+        contentResolver.insert(ContactsContract.Data.CONTENT_URI, assembleOrganization(rawContactId, bean.organizationBean))
     }
 
     if (bean.postalList.isNotEmpty()){//插入地址
@@ -376,12 +390,12 @@ fun Context.insertContactData(bean: ContactsInfoBean) {
         }
     }
 
-    if (bean.note.isNotEmpty()){//插入备注
-        contentResolver.insert(ContactsContract.Data.CONTENT_URI, assembleNote(rawContactId, bean))
+    if (bean.noteBean.note.isNotEmpty()){//插入备注
+        contentResolver.insert(ContactsContract.Data.CONTENT_URI, assembleNote(rawContactId, bean.noteBean))
     }
 
-    if (bean.avatarArray != null){//插入头像
-        contentResolver.insert(ContactsContract.Data.CONTENT_URI, assemblePhoto(rawContactId, bean))
+    if (bean.photoBean.photoArray != null){//插入头像
+        contentResolver.insert(ContactsContract.Data.CONTENT_URI, assemblePhoto(rawContactId, bean.photoBean))
     }
 
     if (bean.emailList.isNotEmpty()){//插入邮箱
@@ -396,8 +410,10 @@ fun Context.insertContactData(bean: ContactsInfoBean) {
         }
     }
 
-    if (bean.website.isNotEmpty()){//插入网站
-        contentResolver.insert(ContactsContract.Data.CONTENT_URI, assembleWebsite(rawContactId, bean))
+    if (bean.websiteList.isNotEmpty()){//插入网站
+        for (item in bean.websiteList) {
+            contentResolver.insert(ContactsContract.Data.CONTENT_URI, assembleWebsite(rawContactId, item))
+        }
     }
 
     if (bean.imList.isNotEmpty()){//插入及时通讯
@@ -412,14 +428,14 @@ fun Context.insertContactData(bean: ContactsInfoBean) {
         }
     }
 
-    if (bean.groupRowIdList.isNotEmpty()){//插入群组ID
-        for (rawId in bean.groupRowIdList) {
-            contentResolver.insert(ContactsContract.Data.CONTENT_URI, assembleGroupMembership(rawContactId, rawId))
+    if (bean.groupList.isNotEmpty()){//插入群组ID
+        for (item in bean.groupList) {
+            contentResolver.insert(ContactsContract.Data.CONTENT_URI, assembleGroupMembership(rawContactId, item))
         }
     }
 
-    if (bean.nickName.isNotEmpty()){//插入昵称
-        contentResolver.insert(ContactsContract.Data.CONTENT_URI, assembleNickname(rawContactId, bean))
+    if (bean.nicknameBean.nickname.isNotEmpty()){//插入昵称
+        contentResolver.insert(ContactsContract.Data.CONTENT_URI, assembleNickname(rawContactId, bean.nicknameBean))
     }
 
     if (bean.eventList.isNotEmpty()){//插入事件
@@ -438,7 +454,7 @@ private fun assembleBase(rawContactId: String, mimeType: String): ContentValues 
 }
 
 /** 组装姓名相关数据 */
-private fun assembleStructuredName(rawContactId: String, bean: ContactsInfoBean): ContentValues {
+private fun assembleStructuredName(rawContactId: String, bean: ContactsNameBean): ContentValues {
     val values = assembleBase(rawContactId, ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE)
     values.put(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME, bean.name.ifEmpty { bean.givenName })
     values.put(ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME, bean.givenName.ifEmpty { bean.name })
@@ -457,7 +473,7 @@ private fun assembleStructuredName(rawContactId: String, bean: ContactsInfoBean)
 }
 
 /** 组装公司组织相关数据 */
-private fun assembleOrganization(rawContactId: String, bean: ContactsInfoBean): ContentValues {
+private fun assembleOrganization(rawContactId: String, bean: ContactsOrganizationBean): ContentValues {
     val values = assembleBase(rawContactId, ContactsContract.CommonDataKinds.Organization.CONTENT_ITEM_TYPE)
     if (bean.company.isNotEmpty()){
         values.put(ContactsContract.CommonDataKinds.Organization.COMPANY, bean.company)
@@ -485,16 +501,16 @@ private fun assembleStructuredPostal(rawContactId: String, bean: ContactsPostalB
 }
 
 /** 组装备注相关数据 */
-private fun assembleNote(rawContactId: String, bean: ContactsInfoBean): ContentValues {
+private fun assembleNote(rawContactId: String, bean: ContactsNoteBean): ContentValues {
     val values = assembleBase(rawContactId, ContactsContract.CommonDataKinds.Note.CONTENT_ITEM_TYPE)
     values.put(ContactsContract.CommonDataKinds.Note.NOTE, bean.note)
     return values
 }
 
 /** 组装头像相关数据 */
-private fun assemblePhoto(rawContactId: String, bean: ContactsInfoBean): ContentValues {
+private fun assemblePhoto(rawContactId: String, bean: ContactsPhotoBean): ContentValues {
     val values = assembleBase(rawContactId, ContactsContract.CommonDataKinds.Photo.CONTENT_ITEM_TYPE)
-    values.put(ContactsContract.CommonDataKinds.Photo.PHOTO, bean.avatarArray)
+    values.put(ContactsContract.CommonDataKinds.Photo.PHOTO, bean.photoArray)
     return values
 }
 
@@ -541,7 +557,7 @@ private fun assemblePhone(rawContactId: String, bean: ContactsPhoneBean): Conten
 }
 
 /** 组装网站相关数据 */
-private fun assembleWebsite(rawContactId: String, bean: ContactsInfoBean): ContentValues {
+private fun assembleWebsite(rawContactId: String, bean: ContactsWebsiteBean): ContentValues {
     val values = assembleBase(rawContactId, ContactsContract.CommonDataKinds.Website.CONTENT_ITEM_TYPE)
     values.put(ContactsContract.CommonDataKinds.Website.URL, bean.website)
     values.put(
@@ -587,16 +603,16 @@ private fun assembleRelation(rawContactId: String, bean: ContactsRelationBean): 
 }
 
 /** 组装群组ID相关数据 */
-private fun assembleGroupMembership(rawContactId: String, groupId: String): ContentValues {
+private fun assembleGroupMembership(rawContactId: String, groupBean: ContactsGroupMembershipBean): ContentValues {
     val values = assembleBase(rawContactId, ContactsContract.CommonDataKinds.GroupMembership.CONTENT_ITEM_TYPE)
-    values.put(ContactsContract.CommonDataKinds.GroupMembership.GROUP_ROW_ID, groupId)
+    values.put(ContactsContract.CommonDataKinds.GroupMembership.GROUP_ROW_ID, groupBean.groupRowId)
     return values
 }
 
 /** 组装昵称相关数据 */
-private fun assembleNickname(rawContactId: String, bean: ContactsInfoBean): ContentValues {
+private fun assembleNickname(rawContactId: String, bean: ContactsNicknameBean): ContentValues {
     val values = assembleBase(rawContactId, ContactsContract.CommonDataKinds.Nickname.CONTENT_ITEM_TYPE)
-    values.put(ContactsContract.CommonDataKinds.Nickname.NAME, bean.nickName)
+    values.put(ContactsContract.CommonDataKinds.Nickname.NAME, bean.nickname)
     return values
 }
 

@@ -1,5 +1,7 @@
 package com.lodz.android.corekt.contacts.bean
 
+import com.lodz.android.corekt.contacts.bean.data.*
+
 /**
  * 通讯录信息数据
  * @author zhouL
@@ -11,29 +13,14 @@ class ContactsInfoBean {
 
     var rawContactId = ""
 
-    /** 头像字节数组 */
-    var avatarArray: ByteArray? = null
+    /** 图片 */
+    var photoBean: ContactsPhotoBean = ContactsPhotoBean()
 
     /** 姓名 */
-    var name = ""
+    var nameBean: ContactsNameBean = ContactsNameBean()
 
-    /** 别名（通常和name一样） */
-    var givenName = ""
-
-    /** 拼音 */
-    var phonetic = ""
-
-    /** 全名风格（通常是ContactsContract.FullNameStyle.CJK） */
-    var fullNameStyle = ""
-
-    /** 拼音风格（通常是ContactsContract.PhoneticNameStyle.PINYIN） */
-    var phoneticNameStyle = ""
-
-    /** 公司 */
-    var company = ""
-
-    /** 职位 */
-    var title = ""
+    /** 组织 */
+    var organizationBean: ContactsOrganizationBean = ContactsOrganizationBean()
 
     /** 地址列表 */
     var postalList: ArrayList<ContactsPostalBean> = arrayListOf()
@@ -45,13 +32,10 @@ class ContactsInfoBean {
     var emailList: ArrayList<ContactsEmailBean> = arrayListOf()
 
     /** 备注 */
-    var note = ""
+    var noteBean: ContactsNoteBean = ContactsNoteBean()
 
-    /** 网站 */
-    var website = ""
-
-    /** 网站类型（ContactsContract.CommonDataKinds.Website.TYPE_OTHER） */
-    var websiteType = ""
+    /** 网站列表 */
+    var websiteList: ArrayList<ContactsWebsiteBean> = arrayListOf()
 
     /** 即时通讯列表 */
     var imList: ArrayList<ContactsImBean> = arrayListOf()
@@ -59,11 +43,11 @@ class ContactsInfoBean {
     /** 关系列表 */
     var relationList: ArrayList<ContactsRelationBean> = arrayListOf()
 
-    /** 群组ID列表 */
-    var groupRowIdList: ArrayList<String> = arrayListOf()
+    /** 群组列表 */
+    var groupList: ArrayList<ContactsGroupMembershipBean> = arrayListOf()
 
     /** 昵称 */
-    var nickName = ""
+    var nicknameBean: ContactsNicknameBean = ContactsNicknameBean()
 
     /** 事件列表 */
     var eventList: ArrayList<ContactsEventBean> = arrayListOf()

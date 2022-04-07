@@ -18,7 +18,6 @@ import com.lodz.android.corekt.anko.goAppDetailSetting
 import com.lodz.android.corekt.anko.isPermissionGranted
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.corekt.contacts.bean.ContactsInfoBean
-import com.lodz.android.corekt.contacts.deleteContact
 import com.lodz.android.corekt.utils.DateUtils
 import com.lodz.android.pandora.mvvm.base.activity.BaseVmActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
@@ -111,8 +110,8 @@ class ContactTestActivity : BaseVmActivity() {
         }
 
         mAdapter.setOnUpdateNoteClickListener { viewHolder, item ->
-            item.title = "股东"
-            item.note = DateUtils.getCurrentFormatString(DateUtils.TYPE_10)
+            item.organizationBean.title = "股东"
+            item.noteBean.note = DateUtils.getCurrentFormatString(DateUtils.TYPE_10)
             mViewModel.updateContactData(getContext(), item)
         }
     }

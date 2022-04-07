@@ -40,18 +40,18 @@ class ContactAdapter(context: Context) :BaseRecyclerViewAdapter<ContactsInfoBean
     private fun showItem(holder: DataVBViewHolder, bean: ContactsInfoBean) {
         holder.getVB<RvItemContactBinding>().apply {
 
-            showImg(avatarImg, bean.avatarArray)
+            showImg(avatarImg, bean.photoBean.photoArray)
 
-            nameTv.text = context.getString(R.string.contact_name).append(bean.name)
-            if (bean.phonetic.isNotEmpty()){
-                nameTv.text = nameTv.text.append("(").append(bean.phonetic).append(")")
+            nameTv.text = context.getString(R.string.contact_name).append(bean.nameBean.name)
+            if (bean.nameBean.phonetic.isNotEmpty()){
+                nameTv.text = nameTv.text.append("(").append(bean.nameBean.phonetic).append(")")
             }
 
-            nickNameTv.text = context.getString(R.string.contact_nickname).append(bean.nickName)
+            nickNameTv.text = context.getString(R.string.contact_nickname).append(bean.nicknameBean.nickname)
 
-            companyTv.text = context.getString(R.string.contact_company).append(bean.company)
-            if (bean.title.isNotEmpty()){
-                companyTv.text = companyTv.text.append("(").append(bean.title).append(")")
+            companyTv.text = context.getString(R.string.contact_company).append(bean.organizationBean.company)
+            if (bean.organizationBean.title.isNotEmpty()){
+                companyTv.text = companyTv.text.append("(").append(bean.organizationBean.title).append(")")
             }
 
             var postalStr = context.getString(R.string.contact_postal)
@@ -87,9 +87,13 @@ class ContactAdapter(context: Context) :BaseRecyclerViewAdapter<ContactsInfoBean
             }
             emailTv.text = emailStr
 
-            noteTv.text = context.getString(R.string.contact_note).append(bean.note)
+            noteTv.text = context.getString(R.string.contact_note).append(bean.noteBean.note)
 
-            websiteTv.text = context.getString(R.string.contact_website).append(bean.website)
+            var websiteStr = context.getString(R.string.contact_website)
+            for (item in bean.websiteList) {
+                websiteStr = websiteStr.append(item.website).append(" | ")
+            }
+            websiteTv.text = websiteStr
 
             var imStr = context.getString(R.string.contact_im)
             for (item in bean.imList) {

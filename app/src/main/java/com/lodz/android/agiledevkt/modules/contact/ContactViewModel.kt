@@ -10,6 +10,7 @@ import com.lodz.android.corekt.anko.append
 import com.lodz.android.corekt.anko.toChinese
 import com.lodz.android.corekt.contacts.*
 import com.lodz.android.corekt.contacts.bean.*
+import com.lodz.android.corekt.contacts.bean.data.*
 import com.lodz.android.corekt.utils.DateUtils
 import com.lodz.android.pandora.mvvm.vm.BaseViewModel
 import com.lodz.android.pandora.utils.coroutines.CoroutinesWrapper
@@ -50,7 +51,7 @@ class ContactViewModel : BaseViewModel() {
             }
             .actionPg(context) {
                 onSuccess {
-                    toastShort("更新成功：${it.name}")
+                    toastShort("更新成功：${it.nameBean.name}")
                     getAllContactData(context)
                 }
                 onError { e, isNetwork ->
@@ -68,7 +69,7 @@ class ContactViewModel : BaseViewModel() {
             }
             .actionPg(context) {
                 onSuccess {
-                    toastShort("删除成功：${it.name}")
+                    toastShort("删除成功：${it.nameBean.name}")
                     getAllContactData(context)
                 }
                 onError { e, isNetwork ->
@@ -87,7 +88,7 @@ class ContactViewModel : BaseViewModel() {
             }
             .actionPg(context) {
                 onSuccess {
-                    toastShort("创建成功：${it.name}")
+                    toastShort("创建成功：${it.nameBean.name}")
                     getAllContactData(context)
                 }
                 onError { e, isNetwork ->
@@ -103,25 +104,23 @@ class ContactViewModel : BaseViewModel() {
         val bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.ic_logo)
         val stream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
-        bean.avatarArray = stream.toByteArray()
+        bean.photoBean.photoArray = stream.toByteArray()
 
         val index = Random.nextInt(999) + 1
         val textArray = arrayOf("赵", "钱", "孙", "李", "周", "吴", "郑", "王", "冯", "陈", "褚", "卫", "蒋", "沈", "韩", "杨")
 
-        bean.name = textArray[index % textArray.size].append("某")
-        bean.givenName = bean.name
-        bean.phonetic = ""
-        bean.fullNameStyle = ContactsContract.FullNameStyle.CJK.toString()
-        bean.phoneticNameStyle = ContactsContract.PhoneticNameStyle.PINYIN.toString()
+        bean.nameBean.name = textArray[index % textArray.size].append("某")
+        bean.nameBean.givenName = bean.nameBean.name
+        bean.nameBean.phonetic = ""
+        bean.nameBean.fullNameStyle = ContactsContract.FullNameStyle.CJK.toString()
+        bean.nameBean.phoneticNameStyle = ContactsContract.PhoneticNameStyle.PINYIN.toString()
 
-        bean.company = "嘉里顿集团"
-        bean.title = "董事长"
-        bean.nickName = "老".append(textArray[index % textArray.size])
+        bean.organizationBean.company = "嘉里顿集团"
+        bean.organizationBean.title = "董事长"
+        bean.nicknameBean.nickname = "老".append(textArray[index % textArray.size])
 
-        bean.website = "https://www.baidu.com/"
-        bean.websiteType = ContactsContract.CommonDataKinds.Website.TYPE_BLOG.toString()
 
-        bean.note = DateUtils.getCurrentFormatString(DateUtils.TYPE_23)
+        bean.noteBean.note = DateUtils.getCurrentFormatString(DateUtils.TYPE_23)
 
         var phone = "13".append((System.currentTimeMillis() % 9))
         if (phone.length < 11){
@@ -142,7 +141,7 @@ class ContactViewModel : BaseViewModel() {
 
         for (i in 0 until count) {
             val emailBean = ContactsEmailBean()
-            emailBean.address = (bean.name.hashCode() + i * 1000).toString().subSequence(0, 5).append("@qq.com")
+            emailBean.address = (bean.nameBean.name.hashCode() + i * 1000).toString().subSequence(0, 5).append("@qq.com")
             emailBean.type = ContactsContract.CommonDataKinds.Email.TYPE_HOME.toString()
             bean.emailList.add(emailBean)
         }
@@ -158,7 +157,7 @@ class ContactViewModel : BaseViewModel() {
 
         for (i in 0 until count) {
             val imBean = ContactsImBean()
-            imBean.account = (bean.nickName.hashCode() + i * 1000).toString().subSequence(0, 5).toString()
+            imBean.account = (bean.nicknameBean.nickname.hashCode() + i * 1000).toString().subSequence(0, 5).toString()
             imBean.type = ContactsContract.CommonDataKinds.Im.TYPE_HOME.toString()
             imBean.protocol = ContactsContract.CommonDataKinds.Im.PROTOCOL_QQ.toString()
             bean.imList.add(imBean)
@@ -176,6 +175,13 @@ class ContactViewModel : BaseViewModel() {
             eventBean.date = DateUtils.getFormatString(DateUtils.TYPE_6, Date(System.currentTimeMillis() + i * 99999999999))
             eventBean.type = ContactsContract.CommonDataKinds.Event.TYPE_ANNIVERSARY.toString()
             bean.eventList.add(eventBean)
+        }
+
+        for (i in 0 until count) {
+            val websiteBean = ContactsWebsiteBean()
+            websiteBean.website = "https://www.baidu.com/".append(i)
+            websiteBean.websiteType = ContactsContract.CommonDataKinds.Website.TYPE_BLOG.toString()
+            bean.websiteList.add(websiteBean)
         }
         return bean
     }
