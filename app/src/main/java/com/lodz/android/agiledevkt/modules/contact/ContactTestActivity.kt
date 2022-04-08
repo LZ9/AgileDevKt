@@ -110,9 +110,8 @@ class ContactTestActivity : BaseVmActivity() {
         }
 
         mAdapter.setOnUpdateNoteClickListener { viewHolder, item ->
-            item.organizationBean.title = "股东"
-            item.noteBean.note = DateUtils.getCurrentFormatString(DateUtils.TYPE_10)
-            mViewModel.updateContactData(getContext(), item)
+            item.noteBean.note = "测试"
+            mViewModel.updateContactData(getContext(), item.noteBean)
         }
     }
 

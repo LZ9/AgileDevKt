@@ -42,16 +42,16 @@ class ContactViewModel : BaseViewModel() {
             }
     }
 
-    /** 更新通讯录数据 */
-    fun updateContactData(context: Context, bean: ContactsInfoBean) {
+    /** 更新通讯录备注数据 */
+    fun updateContactData(context: Context, bean: ContactsNoteBean) {
         CoroutinesWrapper.create(this)
             .request {
-                context.updateContactData(bean)
+                context.updateContactNote(bean)
                 bean
             }
             .actionPg(context) {
                 onSuccess {
-                    toastShort("更新成功：${it.nameBean.name}")
+                    toastShort("备注改为：${it.note}")
                     getAllContactData(context)
                 }
                 onError { e, isNetwork ->
