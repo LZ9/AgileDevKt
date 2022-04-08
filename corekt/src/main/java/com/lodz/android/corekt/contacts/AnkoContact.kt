@@ -233,7 +233,7 @@ fun Context.deleteContact(rawContactId: String = "") {
 }
 
 /** 全量更新通讯录数据 */
-fun Context.updateContactData(bean: ContactsInfoBean) {
+fun Context.updateContactAllData(bean: ContactsInfoBean) {
     updateContactStructuredName(bean.nameBean)
     updateContactOrganization(bean.organizationBean)
     for (item in bean.postalList) {
