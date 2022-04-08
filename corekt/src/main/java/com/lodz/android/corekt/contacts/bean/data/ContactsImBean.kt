@@ -4,7 +4,7 @@ import android.provider.ContactsContract
 import com.lodz.android.corekt.contacts.bean.BaseContactsDataBean
 
 /**
- * 通讯录及时通讯数据
+ * 通讯录即时通讯数据
  * @author zhouL
  * @date 2022/3/29
  */

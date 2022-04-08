@@ -7,6 +7,9 @@ package com.lodz.android.corekt.contacts.bean
  */
 abstract class BaseContactsDataBean {
 
+    /** raw外键id */
+    var rawContactId = ""
+
     /** 数据编号 */
     var dataId = ""
 
