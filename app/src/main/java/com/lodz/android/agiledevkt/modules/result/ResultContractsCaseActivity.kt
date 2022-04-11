@@ -1,9 +1,9 @@
 package com.lodz.android.agiledevkt.modules.result
 
 import android.Manifest
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -65,6 +65,11 @@ class ResultContractsCaseActivity : BaseActivity() {
             cleanLog()
             mPickContractsResult.launch(null)
         }
+
+        mBinding.jumpSecondBtn.setOnClickListener {
+            cleanLog()
+            mSecondActivityResult.launch(Intent(getContext(), SecondActivity::class.java))
+        }
     }
 
     override fun initData() {
@@ -85,18 +90,24 @@ class ResultContractsCaseActivity : BaseActivity() {
             addResultLog("取消通讯录选择或者获取结果为空")
             return@registerForActivityResult
         }
-        showContactDetail(it)
-    }
-
-    private fun showContactDetail(uri: Uri) {
-        val list = getContactData(uri)
+        val list = getContactData(it)
         if (list.size == 0){
             addResultLog("未查询到通讯录数据")
-            return
+            return@registerForActivityResult
         }
         val bean = list[0]
         addResultLog("获取通讯录成功，姓名：${bean.nameBean.name}")
     }
+
+    val mSecondActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+        if (it.resultCode == Activity.RESULT_OK){
+            val str = it.data?.getStringExtra(Activity.RESULT_OK.toString()) ?: "未获取传递数据"
+            addResultLog(str)
+            return@registerForActivityResult
+        }
+        addResultLog("未获取传递数据")
+    }
+
 
     /** 清空日志 */
     private fun cleanLog() {

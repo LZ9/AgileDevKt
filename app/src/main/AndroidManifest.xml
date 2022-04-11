@@ -1068,6 +1068,15 @@
 
         </activity>
 
+        <activity
+            android:name=".modules.result.SecondActivity"
+            android:label="跳转第二个Activity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
+
+        </activity>
+
+
     </application>
 
 </manifest>
