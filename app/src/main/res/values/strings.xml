@@ -877,6 +877,7 @@
     <string name="contact_event">事件：</string>
     <string name="contact_relation">关系：</string>
     <string name="contact_delete_confirm">确定删除</string>
+    <string name="contact_delete_all_confirm">这把梭哈不能回头！！</string>
     <string name="contact_delete_ok">确定</string>
     <string name="contact_delete_cancel">取消</string>
     <string name="contact_delete">删除</string>

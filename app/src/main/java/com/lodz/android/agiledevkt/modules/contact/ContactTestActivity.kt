@@ -100,6 +100,10 @@ class ContactTestActivity : BaseVmActivity() {
     override fun setListeners() {
         super.setListeners()
 
+        mBinding.deleteAllContactBtn.setOnClickListener {
+            showDeleteAllDialog()
+        }
+
         mBinding.addContactBtn.setOnClickListener {
             mViewModel.addContactData(getContext())
         }
@@ -114,6 +118,21 @@ class ContactTestActivity : BaseVmActivity() {
         }
     }
 
+    /** 显示删除所有通讯录弹框 */
+    private fun showDeleteAllDialog() {
+        AlertDialog.Builder(getContext())
+            .setMessage(R.string.contact_delete_all_confirm)
+            .setPositiveButton(R.string.contact_delete_ok) { dif, witch ->
+                dif.dismiss()
+                mViewModel.deleteAllContact(getContext())
+            }
+            .setNegativeButton(R.string.contact_delete_cancel) { dif, witch ->
+                dif.dismiss()
+            }
+            .create()
+            .show()
+    }
+
     /** 显示删除弹框 */
     private fun showDeleteDialog(bean: ContactsInfoBean) {
         AlertDialog.Builder(getContext())
@@ -122,7 +141,7 @@ class ContactTestActivity : BaseVmActivity() {
                 dif.dismiss()
                 mViewModel.deleteContact(getContext(), bean)
             }
-            .setNegativeButton(R.string.contact_delete_ok) { dif, witch ->
+            .setNegativeButton(R.string.contact_delete_cancel) { dif, witch ->
                 dif.dismiss()
             }
             .create()

@@ -61,6 +61,23 @@ class ContactViewModel : BaseViewModel() {
     }
 
     /** 删除通讯录数据 */
+    fun deleteAllContact(context: Context) {
+        CoroutinesWrapper.create(this)
+            .request {
+                context.deleteAllContact()
+            }
+            .actionPg(context) {
+                onSuccess {
+                    toastShort("全部删除成功")
+                    getAllContactData(context)
+                }
+                onError { e, isNetwork ->
+                    toastShort(e.toString())
+                }
+            }
+    }
+
+    /** 删除通讯录数据 */
     fun deleteContact(context: Context, bean: ContactsInfoBean) {
         CoroutinesWrapper.create(this)
             .request {

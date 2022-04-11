@@ -20,7 +20,7 @@
             android:text="@string/contact_add" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/clean_contact_btn"
+            android:id="@+id/delete_all_contact_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
