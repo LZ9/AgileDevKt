@@ -17,25 +17,7 @@ import com.lodz.android.corekt.contacts.bean.data.*
  */
 
 
-/** 获取路径为[uri]的通讯录数据（不传获取全部） */
-@SuppressLint("Range")
-@JvmOverloads
-fun Context.getContactData(uri: Uri = ContactsContract.Contacts.CONTENT_URI): ArrayList<ContactsInfoBean> {
-    val list = ArrayList<ContactsInfoBean>()
-    val contactIdList = getContactId(uri)
-    for (contactId in contactIdList) {
-        val rawContactIdList = getRawContactId(contactId)
-        for (rawContactId in rawContactIdList) {
-            val bean = getDataByRawContactId(contactId, rawContactId)
-            if (bean != null) {
-                list.add(bean)
-            }
-        }
-    }
-    return list
-}
-
-/** 查询联系人Contacts表得到所有ContactsID */
+/** 查询联系人Contacts表得到路径为[uri]的ContactsID（不传获取全部） */
 @SuppressLint("Range")
 @JvmOverloads
 fun Context.getContactId(uri: Uri = ContactsContract.Contacts.CONTENT_URI): ArrayList<String> {
@@ -54,10 +36,10 @@ fun Context.getContactId(uri: Uri = ContactsContract.Contacts.CONTENT_URI): Arra
     return list
 }
 
-/** 查询联系人RawContacts表根据[contactId]获取RawContactsID */
+/** 查询联系人RawContacts表根据[contactId]和路径[uri]获取RawContactsID（uri默认查询全部） */
 @SuppressLint("Range")
 @JvmOverloads
-fun Context.getRawContactId(contactId: String, uri: Uri = ContactsContract.RawContacts.CONTENT_URI): ArrayList<String> {
+fun Context.getContactRawId(contactId: String, uri: Uri = ContactsContract.RawContacts.CONTENT_URI): ArrayList<String> {
     val list = ArrayList<String>()
     contentResolver.query(
         uri,
@@ -73,13 +55,31 @@ fun Context.getRawContactId(contactId: String, uri: Uri = ContactsContract.RawCo
     return list
 }
 
+/** 获取路径为[uri]的通讯录数据（不传获取全部） */
+@SuppressLint("Range")
+@JvmOverloads
+fun Context.getContactData(uri: Uri = ContactsContract.Contacts.CONTENT_URI): ArrayList<ContactsInfoBean> {
+    val list = ArrayList<ContactsInfoBean>()
+    val idList = getContactId(uri)
+    for (contactId in idList) {
+        val rawIdList = getContactRawId(contactId)
+        for (rawContactId in rawIdList) {
+            val bean = getContactDataByRawId(contactId, rawContactId)
+            if (bean != null) {
+                list.add(bean)
+            }
+        }
+    }
+    return list
+}
+
 /** 查询联系人Data表根据[contactId]获取该联系人的各数据 */
 @SuppressLint("Range")
-fun Context.getDataByContactId(contactId: String): ArrayList<ContactsInfoBean> {
+fun Context.getContactData(contactId: String): ArrayList<ContactsInfoBean> {
     val list = ArrayList<ContactsInfoBean>()
-    val idList = getRawContactId(contactId)
-    for (rawContactId in idList) {
-        val bean = getDataByRawContactId(contactId, rawContactId)
+    val rawIdList = getContactRawId(contactId)
+    for (rawContactId in rawIdList) {
+        val bean = getContactDataByRawId(contactId, rawContactId)
         if (bean != null){
             list.add(bean)
         }
@@ -88,15 +88,13 @@ fun Context.getDataByContactId(contactId: String): ArrayList<ContactsInfoBean> {
 }
 
 
-/** 查询联系人Data表根据[rawContactId]获取该联系人的各数据 */
+/** 查询联系人Data表根据[contactId]和[rawContactId]获取该联系人的各数据 */
 @SuppressLint("Range")
-@JvmOverloads
-fun Context.getDataByRawContactId(
+fun Context.getContactDataByRawId(
     contactId: String,
-    rawContactId: String,
-    uri: Uri = ContactsContract.Data.CONTENT_URI
+    rawContactId: String
 ): ContactsInfoBean? = contentResolver.query(
-    uri,
+    ContactsContract.Data.CONTENT_URI,
     null,
     ContactsContract.Data.RAW_CONTACT_ID + "=" + rawContactId,
     null,
@@ -216,17 +214,19 @@ fun Context.getDataByRawContactId(
     return@use bean
 }
 
-/** 删除[rawContactId]对应的通讯录数据（不传参数删除全部） */
-@JvmOverloads
-fun Context.deleteContact(rawContactId: String = "") {
+/** 删除全部通讯录数据 */
+fun Context.deleteAllContact() = deleteContact("")
+
+/** 删除[rawContactId]对应的通讯录数据（传空字符串删除全部） */
+fun Context.deleteContact(rawContactId: String) {
     if (rawContactId.isNotEmpty()){
         contentResolver.delete(ContactsContract.RawContacts.CONTENT_URI, ContactsContract.RawContacts._ID + "=" + rawContactId, null)
         return
     }
-    val contactIdList = getContactId()
-    for (contactId in contactIdList) {
-        val rawContactIdList = getRawContactId(contactId)
-        for (rawId in rawContactIdList) {
+    val idList = getContactId()
+    for (contactId in idList) {
+        val rawIdList = getContactRawId(contactId)
+        for (rawId in rawIdList) {
             contentResolver.delete(ContactsContract.RawContacts.CONTENT_URI, ContactsContract.RawContacts._ID + "=" + rawId, null)
         }
     }
@@ -263,19 +263,6 @@ fun Context.updateContactAllData(bean: ContactsInfoBean) {
     for (item in bean.eventList) {
         updateContactEvent(item)
     }
-}
-
-/** 更新通讯录数据 */
-private fun <T : BaseContactsDataBean> Context.updateContactIfNotEmpty(t: T, block: (T) -> ContentValues) {
-    if (t.rawContactId.isEmpty() || t.dataId.isEmpty()) {
-        return
-    }
-    contentResolver.update(
-        ContactsContract.Data.CONTENT_URI,
-        block(t),
-        ContactsContract.Data.RAW_CONTACT_ID + "= ? AND " + ContactsContract.Data._ID + "= ? AND " + ContactsContract.Data.MIMETYPE + "= ?",
-        arrayOf(t.rawContactId, t.dataId, t.getMimeType())
-    )
 }
 
 /** 更新通讯录姓名相关数据 */
@@ -408,6 +395,19 @@ fun Context.insertContactData(bean: ContactsInfoBean) {
     }
 }
 
+/** 更新通讯录数据 */
+private fun <T : BaseContactsDataBean> Context.updateContactIfNotEmpty(t: T, block: (T) -> ContentValues) {
+    if (t.rawContactId.isEmpty() || t.dataId.isEmpty()) {
+        return
+    }
+    contentResolver.update(
+        ContactsContract.Data.CONTENT_URI,
+        block(t),
+        ContactsContract.Data.RAW_CONTACT_ID + "= ? AND " + ContactsContract.Data._ID + "= ? AND " + ContactsContract.Data.MIMETYPE + "= ?",
+        arrayOf(t.rawContactId, t.dataId, t.getMimeType())
+    )
+}
+
 /** 组装基础数据 */
 private fun assembleBase(bean: BaseContactsDataBean): ContentValues {
     val values = ContentValues()
@@ -516,7 +516,6 @@ private fun assemblePhone(bean: ContactsPhoneBean): ContentValues {
         values.put(ContactsContract.CommonDataKinds.Phone.LABEL, bean.label)
     }
     return values
-
 }
 
 /** 组装网站相关数据 */
