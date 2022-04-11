@@ -866,6 +866,8 @@
     <string name="arc_input_hint">请输入</string>
     <string name="arc_test_result">传递</string>
     <string name="arc_take_picture">系统拍照</string>
+    <string name="arc_take_picture_preview">拍摄预览图</string>
+    <string name="arc_open_document_tree">选择一个文件目录</string>
 
 
     <!-- 通讯录 -->

@@ -86,7 +86,7 @@ class ResultContractsCaseActivity : BaseActivity() {
 
         mBinding.takePictureBtn.setOnClickListener {
             reset()
-            mUri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            mPictureUri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 val file = File(DateUtils.getCurrentFormatString(DateUtils.TYPE_3).append(".jpg"))
                 val values = ContentValues()
                 values.put(MediaStore.MediaColumns.DISPLAY_NAME, file.name)
@@ -102,7 +102,17 @@ class ResultContractsCaseActivity : BaseActivity() {
                     File(FileManager.getContentFolderPath().append(DateUtils.getCurrentFormatString(DateUtils.TYPE_3)).append(".jpg"))
                 )
             }
-            mTakePictureResult.launch(mUri)
+            mTakePictureResult.launch(mPictureUri)
+        }
+
+        mBinding.takePicturePreviewBtn.setOnClickListener {
+            reset()
+            mTakePicturePreviewResult.launch(null)
+        }
+
+        mBinding.openDocumentTreeBtn.setOnClickListener {
+            reset()
+            mOpenDocumentTreeResult.launch(null)
         }
     }
 
@@ -144,11 +154,11 @@ class ResultContractsCaseActivity : BaseActivity() {
         addResultLog("未获取传递数据")
     }
 
-    private var mUri: Uri? = null
+    private var mPictureUri: Uri? = null
 
     /** 拍照回调 */
     val mTakePictureResult = registerForActivityResult(ActivityResultContracts.TakePicture()) {
-        val uri = mUri
+        val uri = mPictureUri
         if (!it || uri == null) {
             addResultLog("取消拍照")
             return@registerForActivityResult
@@ -158,9 +168,30 @@ class ResultContractsCaseActivity : BaseActivity() {
         addResultLog(uri.toString())
     }
 
+    /** 拍预览图回调 */
+    val mTakePicturePreviewResult = registerForActivityResult(ActivityResultContracts.TakePicturePreview()) {
+        if (it == null){
+            addResultLog("取消拍照")
+            return@registerForActivityResult
+        }
+        mBinding.resultImg.visibility = View.VISIBLE
+        ImageLoader.create(this).loadBitmap(it).into(mBinding.resultImg)
+    }
+
+
+    /** 选择一个文件目录回调 */
+    val mOpenDocumentTreeResult = registerForActivityResult(ActivityResultContracts.OpenDocumentTree()) {
+        if (it == null){
+            addResultLog("取消选择")
+            return@registerForActivityResult
+        }
+        addResultLog("选择目录路径：${it}")
+    }
+
+
     /** 重置 */
     private fun reset() {
-        mUri = null
+        mPictureUri = null
         mBinding.resultTv.text = ""
         mBinding.resultImg.visibility = View.GONE
     }
@@ -180,10 +211,25 @@ class ResultContractsCaseActivity : BaseActivity() {
         )
     }
 
+    private val hasCameraPermissions by lazy {
+        constructPermissionsRequest(
+            Manifest.permission.CAMERA,// 拍照
+            onShowRationale = ::onShowRationaleBeforeRequest,
+            onPermissionDenied = ::onDenied,
+            onNeverAskAgain = ::onNeverAskAgain,
+            requiresPermission = ::onRequestPermission
+        )
+    }
+
+
     /** 权限申请成功 */
     private fun onRequestPermission() {
         if (!isPermissionGranted(Manifest.permission.READ_CONTACTS)) {
             hasContactsPermissions.launch()
+            return
+        }
+        if (!isPermissionGranted(Manifest.permission.CAMERA)) {
+            hasCameraPermissions.launch()
             return
         }
         init()
