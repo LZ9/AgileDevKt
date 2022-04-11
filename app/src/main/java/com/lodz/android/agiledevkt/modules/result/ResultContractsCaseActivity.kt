@@ -2,24 +2,33 @@ package com.lodz.android.agiledevkt.modules.result
 
 import android.Manifest
 import android.app.Activity
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.FileProvider
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.databinding.ActivityResultContractsCaseBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
+import com.lodz.android.agiledevkt.utils.file.FileManager
 import com.lodz.android.corekt.anko.append
 import com.lodz.android.corekt.anko.goAppDetailSetting
 import com.lodz.android.corekt.anko.isPermissionGranted
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.corekt.contacts.getContactData
+import com.lodz.android.corekt.utils.DateUtils
+import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import permissions.dispatcher.PermissionRequest
 import permissions.dispatcher.ktx.constructPermissionsRequest
+import java.io.File
 
 /**
  * ActivityResultContracts的用例
@@ -58,17 +67,42 @@ class ResultContractsCaseActivity : BaseActivity() {
         super.setListeners()
 
         mBinding.cleanBtn.setOnClickListener {
-            cleanLog()
+            reset()
+        }
+
+        mBinding.jumpActivityBtn.setOnClickListener {
+            reset()
+            mTestActivityResult.launch(Intent(getContext(), TestResultActivity::class.java))
+        }
+
+        mBinding.jumpFragmentBtn.setOnClickListener {
+            toastShort("开发中")
         }
 
         mBinding.pickContactBtn.setOnClickListener {
-            cleanLog()
+            reset()
             mPickContractsResult.launch(null)
         }
 
-        mBinding.jumpSecondBtn.setOnClickListener {
-            cleanLog()
-            mSecondActivityResult.launch(Intent(getContext(), SecondActivity::class.java))
+        mBinding.takePictureBtn.setOnClickListener {
+            reset()
+            mUri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                val file = File(DateUtils.getCurrentFormatString(DateUtils.TYPE_3).append(".jpg"))
+                val values = ContentValues()
+                values.put(MediaStore.MediaColumns.DISPLAY_NAME, file.name)
+                values.put(MediaStore.Images.Media.DESCRIPTION, "This is an image")
+                values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpg")
+                values.put(MediaStore.Images.Media.TITLE, file.name)
+                values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DCIM)
+                contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+            } else {
+                FileProvider.getUriForFile(
+                    getContext(),
+                    "com.lodz.android.agiledevkt.fileprovider",
+                    File(FileManager.getContentFolderPath().append(DateUtils.getCurrentFormatString(DateUtils.TYPE_3)).append(".jpg"))
+                )
+            }
+            mTakePictureResult.launch(mUri)
         }
     }
 
@@ -85,13 +119,14 @@ class ResultContractsCaseActivity : BaseActivity() {
         showStatusCompleted()
     }
 
+    /** 选择通讯录回调 */
     val mPickContractsResult = registerForActivityResult(ActivityResultContracts.PickContact()) {
-        if (it == null){
+        if (it == null) {
             addResultLog("取消通讯录选择或者获取结果为空")
             return@registerForActivityResult
         }
         val list = getContactData(it)
-        if (list.size == 0){
+        if (list.size == 0) {
             addResultLog("未查询到通讯录数据")
             return@registerForActivityResult
         }
@@ -99,7 +134,8 @@ class ResultContractsCaseActivity : BaseActivity() {
         addResultLog("获取通讯录成功，姓名：${bean.nameBean.name}")
     }
 
-    val mSecondActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+    /** Activity传递回调 */
+    val mTestActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
         if (it.resultCode == Activity.RESULT_OK){
             val str = it.data?.getStringExtra(Activity.RESULT_OK.toString()) ?: "未获取传递数据"
             addResultLog(str)
@@ -108,10 +144,25 @@ class ResultContractsCaseActivity : BaseActivity() {
         addResultLog("未获取传递数据")
     }
 
+    private var mUri: Uri? = null
 
-    /** 清空日志 */
-    private fun cleanLog() {
+    /** 拍照回调 */
+    val mTakePictureResult = registerForActivityResult(ActivityResultContracts.TakePicture()) {
+        val uri = mUri
+        if (!it || uri == null) {
+            addResultLog("取消拍照")
+            return@registerForActivityResult
+        }
+        mBinding.resultImg.visibility = View.VISIBLE
+        ImageLoader.create(this).loadUri(uri).into(mBinding.resultImg)
+        addResultLog(uri.toString())
+    }
+
+    /** 重置 */
+    private fun reset() {
+        mUri = null
         mBinding.resultTv.text = ""
+        mBinding.resultImg.visibility = View.GONE
     }
 
     /** 添加日志 */

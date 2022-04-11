@@ -1069,7 +1069,7 @@
         </activity>
 
         <activity
-            android:name=".modules.result.SecondActivity"
+            android:name=".modules.result.TestResultActivity"
             android:label="跳转第二个Activity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity">

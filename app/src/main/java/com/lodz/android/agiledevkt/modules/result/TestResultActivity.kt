@@ -6,31 +6,31 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.lodz.android.agiledevkt.R
-import com.lodz.android.agiledevkt.databinding.ActivitySecondBinding
+import com.lodz.android.agiledevkt.databinding.ActivityTestResultBinding
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 
 /**
- * 跳转第二个Activity
+ * 测试Activity
  * @author zhouL
  * @date 2022/4/11
  */
-class SecondActivity : BaseActivity() {
+class TestResultActivity : BaseActivity() {
 
     companion object {
         fun start(context: Context) {
-            val intent = Intent(context, SecondActivity::class.java)
+            val intent = Intent(context, TestResultActivity::class.java)
             context.startActivity(intent)
         }
     }
 
-    private val mBinding: ActivitySecondBinding by bindingLayout(ActivitySecondBinding::inflate)
+    private val mBinding: ActivityTestResultBinding by bindingLayout(ActivityTestResultBinding::inflate)
 
     override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
-        getTitleBarLayout().setTitleName(R.string.arc_test_second_title)
+        getTitleBarLayout().setTitleName(R.string.arc_test_activity_title)
     }
 
     override fun onClickBackBtn() {

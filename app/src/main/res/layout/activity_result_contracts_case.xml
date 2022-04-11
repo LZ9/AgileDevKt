@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -8,11 +9,27 @@
         android:layout_width="match_parent"
         android:layout_height="300dp">
 
-        <TextView
-            android:id="@+id/result_tv"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="10dp" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:id="@+id/result_img"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_gravity="center_horizontal"
+                android:contentDescription="@string/app_img_name"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/result_tv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="10dp" />
+
+        </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
 
@@ -21,30 +38,59 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:text="@string/arc_clean" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/jump_activity_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:layout_weight="1"
+            android:text="@string/arc_jump_test_activity"
+            android:textAllCaps="false" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/jump_fragment_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_weight="1"
+            android:text="@string/arc_jump_test_fragment"
+            android:textAllCaps="false" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:orientation="horizontal">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/pick_contact_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
             android:layout_marginEnd="5dp"
             android:layout_weight="1"
             android:text="@string/arc_pick_contact" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/jump_second_btn"
+            android:id="@+id/take_picture_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            android:layout_marginEnd="10dp"
             android:layout_weight="1"
-            android:text="@string/arc_jump_test_second" />
+            android:text="@string/arc_take_picture" />
 
     </LinearLayout>
 
