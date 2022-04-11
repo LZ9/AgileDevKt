@@ -144,7 +144,7 @@ class AlbumActivity : BaseActivity() {
                 mBinding.resultTv.text = result
             } catch (e: RecoverableSecurityException) {
                 e.printStackTrace()
-                mDeleteImgResult.launch(IntentSenderRequest.Builder(e.getUserAction().getActionIntent().intentSender).build())
+                mDeleteImgResult.launch(IntentSenderRequest.Builder(e.userAction.actionIntent.intentSender).build())
             }
             return
         }

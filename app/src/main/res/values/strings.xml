@@ -867,8 +867,20 @@
     <string name="arc_test_result">传递</string>
     <string name="arc_take_picture">系统拍照</string>
     <string name="arc_take_picture_preview">拍摄预览图</string>
-    <string name="arc_open_document_tree">选择一个文件目录</string>
-
+    <string name="arc_open_document_tree">选择文件目录路径</string>
+    <string name="arc_get_content">单类型选择单文件</string>
+    <string name="arc_content_title">选择要获取的文件内容类型</string>
+    <string name="arc_mime_type_audio">音频</string>
+    <string name="arc_mime_type_video">视频</string>
+    <string name="arc_mime_type_image">图片</string>
+    <string name="arc_mime_type_text">文本</string>
+    <string name="arc_mime_type_document">文件</string>
+    <string name="arc_mime_type_all">全部</string>
+    <string name="arc_open_document">多类型选择单文件</string>
+    <string name="arc_submit">提交</string>
+    <string name="arc_selected_hint">请选择</string>
+    <string name="arc_get_multiple_contents">单类型选择多文件</string>
+    <string name="arc_open_multiple_documents">多类型选择多文件</string>
 
     <!-- 通讯录 -->
     <string name="contact_add">随机新增通讯录</string>

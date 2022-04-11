@@ -114,6 +114,50 @@ class ResultContractsCaseActivity : BaseActivity() {
             reset()
             mOpenDocumentTreeResult.launch(null)
         }
+
+        mBinding.getContentBtn.setOnClickListener {
+            reset()
+            showMimeTypeDialog(false) {
+                if (it.isNotEmpty()){
+                    mGetContentResult.launch(it[0])
+                }
+            }
+        }
+
+        mBinding.openDocumentBtn.setOnClickListener {
+            reset()
+            showMimeTypeDialog(true) {
+                mOpenDocumentResult.launch(it)
+            }
+        }
+
+        mBinding.getMultipleContentsBtn.setOnClickListener {
+            reset()
+            showMimeTypeDialog(false) {
+                if (it.isNotEmpty()){
+                    mGetMultipleContentsResult.launch(it[0])
+                }
+            }
+        }
+
+        mBinding.openMultipleDocumentsBtn.setOnClickListener {
+            reset()
+            showMimeTypeDialog(true) {
+                mOpenMultipleDocumentsResult.launch(it)
+            }
+        }
+
+    }
+
+    /** 显示文件类型弹框 */
+    private fun showMimeTypeDialog(isSelected: Boolean, block: (Array<String>) -> Unit) {
+        val dialog = MimeTypeDialog(getContext(), isSelected)
+        dialog.setOnSelectedListener { dif, mineType ->
+            addResultLog("文件类型：${mineType.contentToString()}")
+            dif.dismiss()
+            block(mineType)
+        }
+        dialog.show()
     }
 
     override fun initData() {
@@ -179,7 +223,7 @@ class ResultContractsCaseActivity : BaseActivity() {
     }
 
 
-    /** 选择一个文件目录回调 */
+    /** 选择文件目录路径回调 */
     val mOpenDocumentTreeResult = registerForActivityResult(ActivityResultContracts.OpenDocumentTree()) {
         if (it == null){
             addResultLog("取消选择")
@@ -188,6 +232,41 @@ class ResultContractsCaseActivity : BaseActivity() {
         addResultLog("选择目录路径：${it}")
     }
 
+    /** 单类型选择单文件回调 */
+    val mGetContentResult = registerForActivityResult(ActivityResultContracts.GetContent()) {
+        if (it == null){
+            addResultLog("取消选择")
+            return@registerForActivityResult
+        }
+        addResultLog("选择文件路径：${it}")
+    }
+
+    /** 多类型选择单文件回调 */
+    val mOpenDocumentResult = registerForActivityResult(ActivityResultContracts.OpenDocument()) {
+        if (it == null){
+            addResultLog("取消选择")
+            return@registerForActivityResult
+        }
+        addResultLog("选择文件路径：${it}")
+    }
+
+    /** 单类型选择多文件回调 */
+    val mGetMultipleContentsResult = registerForActivityResult(ActivityResultContracts.GetMultipleContents()) {
+        if (it == null){
+            addResultLog("取消选择")
+            return@registerForActivityResult
+        }
+        addResultLog("选择文件路径：${it}")
+    }
+
+    /** 多类型选择多文件回调 */
+    val mOpenMultipleDocumentsResult = registerForActivityResult(ActivityResultContracts.OpenMultipleDocuments()) {
+        if (it == null){
+            addResultLog("取消选择")
+            return@registerForActivityResult
+        }
+        addResultLog("选择文件路径：${it}")
+    }
 
     /** 重置 */
     private fun reset() {

@@ -1,7 +1,7 @@
 <resources>
 
     <!-- 接口加载框 -->
-    <style name="ProgressStyle" parent="Theme.AppCompat.Dialog">
+    <style name="ProgressStyle" parent="Theme.MaterialComponents.Dialog">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowFrame">@android:color/transparent</item>
@@ -9,7 +9,7 @@
         <item name="android:backgroundDimEnabled">false</item>
     </style>
 
-    <style name="BaseDialog" parent="Theme.AppCompat.Light.Dialog">
+    <style name="BaseDialog" parent="Theme.MaterialComponents.Light.Dialog">
         <!--无边框-->
         <item name="android:windowFrame">@null</item>
         <!--提示框是否是浮动的-->
@@ -36,7 +36,7 @@
     </style>
 
     <!-- 透明bottomSheetStyle -->
-    <style name="TransparentBottomSheetStyle" parent="Theme.Design.Light.BottomSheetDialog">
+    <style name="TransparentBottomSheetStyle" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/SheetStyle</item>
     </style>
 

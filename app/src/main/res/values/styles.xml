@@ -32,4 +32,11 @@
         <item name="cornerSize">26dp</item>
     </style>
 
+    <!-- 基础主题 -->
+    <style name="AppDialogTheme" parent="BaseDialog">
+        <item name="colorPrimary">@color/color_00a0e9</item>
+        <item name="colorPrimaryDark">@color/color_00a0e9</item>
+        <item name="colorAccent">@color/color_00a0e9</item>
+    </style>
+
 </resources>
