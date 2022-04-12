@@ -18,7 +18,6 @@ import com.lodz.android.corekt.contacts.bean.data.*
 
 
 /** 查询联系人Contacts表得到路径为[uri]的ContactsID（不传获取全部） */
-@SuppressLint("Range")
 @JvmOverloads
 fun Context.getContactId(uri: Uri = ContactsContract.Contacts.CONTENT_URI): ArrayList<String> {
     val list = ArrayList<String>()
@@ -30,14 +29,16 @@ fun Context.getContactId(uri: Uri = ContactsContract.Contacts.CONTENT_URI): Arra
         null
     )?.use { contactsCursor ->
         while (contactsCursor.moveToNext()) {
-            list.add(contactsCursor.getString(contactsCursor.getColumnIndex(ContactsContract.Contacts._ID)))
+            val index = contactsCursor.getColumnIndex(ContactsContract.Contacts._ID)
+            if (index > -1) {
+                list.add(contactsCursor.getString(index))
+            }
         }
     }
     return list
 }
 
 /** 查询联系人RawContacts表根据[contactId]和路径[uri]获取RawContactsID（uri默认查询全部） */
-@SuppressLint("Range")
 @JvmOverloads
 fun Context.getContactRawId(contactId: String, uri: Uri = ContactsContract.RawContacts.CONTENT_URI): ArrayList<String> {
     val list = ArrayList<String>()
@@ -49,14 +50,16 @@ fun Context.getContactRawId(contactId: String, uri: Uri = ContactsContract.RawCo
         null
     )?.use { rawCursor ->
         while (rawCursor.moveToNext()) {
-            list.add(rawCursor.getString(rawCursor.getColumnIndex(ContactsContract.RawContacts._ID)))
+            val index = rawCursor.getColumnIndex(ContactsContract.RawContacts._ID)
+            if (index > -1){
+                list.add(rawCursor.getString(index))
+            }
         }
     }
     return list
 }
 
 /** 获取路径为[uri]的通讯录数据（不传获取全部） */
-@SuppressLint("Range")
 @JvmOverloads
 fun Context.getContactData(uri: Uri = ContactsContract.Contacts.CONTENT_URI): ArrayList<ContactsInfoBean> {
     val list = ArrayList<ContactsInfoBean>()
@@ -74,7 +77,6 @@ fun Context.getContactData(uri: Uri = ContactsContract.Contacts.CONTENT_URI): Ar
 }
 
 /** 查询联系人Data表根据[contactId]获取该联系人的各数据 */
-@SuppressLint("Range")
 fun Context.getContactData(contactId: String): ArrayList<ContactsInfoBean> {
     val list = ArrayList<ContactsInfoBean>()
     val rawIdList = getContactRawId(contactId)

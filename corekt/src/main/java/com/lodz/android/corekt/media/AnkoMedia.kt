@@ -1,11 +1,11 @@
 package com.lodz.android.corekt.media
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
-import android.provider.DocumentsContract
 import android.provider.MediaStore
+import androidx.core.content.FileProvider
 import androidx.documentfile.provider.DocumentFile
+import java.io.File
 
 /**
  * 媒体文件工具类
@@ -14,26 +14,52 @@ import androidx.documentfile.provider.DocumentFile
  */
 
 /**  */
-@SuppressLint("Range")
-fun Context.getMediaInfo(uri: Uri): MediaInfoBean? {
-    val isDocumentUri = DocumentsContract.isDocumentUri(this, uri)
-    if (!isDocumentUri) {
-        return null
-    }
+fun Context.getMediaInfo(uri: Uri): MediaInfoBean {
     val bean = MediaInfoBean()
     bean.file = DocumentFile.fromSingleUri(this, uri)
     contentResolver.query(uri, null, null, null, null).use {
         it?.let {
             while (it.moveToNext()) {
-                bean.documentId = it.getString(it.getColumnIndex("document_id")) ?: ""
-                bean.mimeType = it.getString(it.getColumnIndex(MediaStore.MediaColumns.MIME_TYPE)) ?: ""
-                bean.displayName = it.getString(it.getColumnIndex(MediaStore.MediaColumns.DISPLAY_NAME)) ?: ""
-                bean.summary = it.getString(it.getColumnIndex("summary")) ?: ""
-                bean.lastModified = it.getLong(it.getColumnIndex("last_modified"))
-                bean.flags = it.getString(it.getColumnIndex("flags")) ?: ""
-                bean.size = it.getLong(it.getColumnIndex(MediaStore.MediaColumns.SIZE))
+                val documentIdIndex = it.getColumnIndex("document_id")
+                if (documentIdIndex > -1) {
+                    bean.documentId = it.getString(documentIdIndex) ?: ""
+                }
+
+                val mimeTypeIndex = it.getColumnIndex(MediaStore.MediaColumns.MIME_TYPE)
+                if (mimeTypeIndex > -1) {
+                    bean.mimeType = it.getString(mimeTypeIndex) ?: ""
+                }
+
+                val displayNameIndex = it.getColumnIndex(MediaStore.MediaColumns.DISPLAY_NAME)
+                if (displayNameIndex > -1) {
+                    bean.displayName = it.getString(displayNameIndex) ?: ""
+                }
+
+                val summaryIndex = it.getColumnIndex("summary")
+                if (summaryIndex > -1) {
+                    bean.summary = it.getString(summaryIndex) ?: ""
+                }
+
+                val lastModifiedIndex = it.getColumnIndex("last_modified")
+                if (lastModifiedIndex > -1) {
+                    bean.lastModified = it.getLong(lastModifiedIndex)
+                }
+
+                val flagsIndex = it.getColumnIndex("flags")
+                if (flagsIndex > -1) {
+                    bean.flags = it.getString(flagsIndex) ?: ""
+                }
+
+                val sizeIndex = it.getColumnIndex(MediaStore.MediaColumns.SIZE)
+                if (sizeIndex > -1) {
+                    bean.size = it.getLong(sizeIndex)
+                }
             }
         }
     }
     return bean
 }
+
+fun Context.getMediaInfo(file: File, authority: String): MediaInfoBean = getMediaInfo(FileProvider.getUriForFile(this, authority, file, file.name))
+
+

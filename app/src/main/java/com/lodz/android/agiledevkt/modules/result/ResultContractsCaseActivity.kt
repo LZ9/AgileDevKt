@@ -86,7 +86,7 @@ class ResultContractsCaseActivity : BaseActivity() {
 
         mBinding.takePictureBtn.setOnClickListener {
             reset()
-            mPictureUri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            mUri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 val file = File(DateUtils.getCurrentFormatString(DateUtils.TYPE_3).append(".jpg"))
                 val values = ContentValues()
                 values.put(MediaStore.MediaColumns.DISPLAY_NAME, file.name)
@@ -102,7 +102,7 @@ class ResultContractsCaseActivity : BaseActivity() {
                     File(FileManager.getContentFolderPath().append(DateUtils.getCurrentFormatString(DateUtils.TYPE_3)).append(".jpg"))
                 )
             }
-            mTakePictureResult.launch(mPictureUri)
+            mTakePictureResult.launch(mUri)
         }
 
         mBinding.takePicturePreviewBtn.setOnClickListener {
@@ -147,6 +147,14 @@ class ResultContractsCaseActivity : BaseActivity() {
             }
         }
 
+        mBinding.captureVideoBtn.setOnClickListener {
+            reset()
+            val path = FileManager.getContentFolderPath().append("${DateUtils.getCurrentFormatString(DateUtils.TYPE_3)}.mp4")
+            addResultLog("视频存储路径：$path")
+            val file = File(path)
+            mUri = FileProvider.getUriForFile(getContext(), "com.lodz.android.agiledevkt.fileprovider", file, file.name)
+            mCaptureVideoResult.launch(mUri)
+        }
     }
 
     /** 显示文件类型弹框 */
@@ -198,11 +206,11 @@ class ResultContractsCaseActivity : BaseActivity() {
         addResultLog("未获取传递数据")
     }
 
-    private var mPictureUri: Uri? = null
+    private var mUri: Uri? = null
 
     /** 拍照回调 */
     val mTakePictureResult = registerForActivityResult(ActivityResultContracts.TakePicture()) {
-        val uri = mPictureUri
+        val uri = mUri
         if (!it || uri == null) {
             addResultLog("取消拍照")
             return@registerForActivityResult
@@ -230,7 +238,7 @@ class ResultContractsCaseActivity : BaseActivity() {
             return@registerForActivityResult
         }
         addResultLog("选择目录路径：${it}")
-        addResultLog("路径名：${getUriName(it)}")
+        addResultLog("路径名：${DocumentFile.fromTreeUri(getContext(), it)?.name}")
     }
 
     /** 单类型选择单文件回调 */
@@ -277,14 +285,22 @@ class ResultContractsCaseActivity : BaseActivity() {
         }
     }
 
-    /** 多类型选择多文件回调 */
+    /** 拍摄视频回调 */
     val mCaptureVideoResult = registerForActivityResult(ActivityResultContracts.CaptureVideo()) {
-
+        val uri = mUri
+        if (!it || uri == null) {
+            addResultLog("取消拍摄")
+            return@registerForActivityResult
+        }
+        mBinding.resultImg.visibility = View.VISIBLE
+        ImageLoader.create(this).loadUri(uri).into(mBinding.resultImg)
+        addResultLog("选择文件路径：${uri}")
+        addResultLog("文件名：${getUriName(uri)}")
     }
 
     /** 重置 */
     private fun reset() {
-        mPictureUri = null
+        mUri = null
         mBinding.resultTv.text = ""
         mBinding.resultImg.visibility = View.GONE
     }
@@ -347,11 +363,7 @@ class ResultContractsCaseActivity : BaseActivity() {
 
     /** 获取Uri的文件名称 */
     private fun getUriName(uri: Uri): String {
-        if (!DocumentFile.isDocumentUri(getContext(), uri)) {
-            val documentFile = DocumentFile.fromTreeUri(getContext(), uri)
-            return documentFile?.name ?: "获取失败"
-        }
         val bean = getMediaInfo(uri)
-        return bean?.displayName ?: "获取失败"
+        return bean.displayName.ifEmpty { "获取失败" }
     }
 }

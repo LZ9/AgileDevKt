@@ -881,6 +881,7 @@
     <string name="arc_selected_hint">请选择</string>
     <string name="arc_get_multiple_contents">单类型选择多文件</string>
     <string name="arc_open_multiple_documents">多类型选择多文件</string>
+    <string name="arc_capture_video">拍摄视频</string>
 
     <!-- 通讯录 -->
     <string name="contact_add">随机新增通讯录</string>
