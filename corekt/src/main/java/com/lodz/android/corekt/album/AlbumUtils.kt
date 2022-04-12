@@ -1,5 +1,6 @@
 package com.lodz.android.corekt.album
 
+import android.annotation.SuppressLint
 import android.content.ContentUris
 import android.content.ContentValues
 import android.content.Context
@@ -24,6 +25,7 @@ import java.util.*
 object AlbumUtils {
 
     /** 获取相册中所有图片路径列表 */
+    @SuppressLint("Range")
     @JvmStatic
     fun getAllImages(context: Context): List<PicInfo> {
         val imageList = LinkedList<PicInfo>()

@@ -101,9 +101,9 @@ object FileUtils {
     @JvmStatic
     fun getSuffix(fileName: String): String {
         var subffix = ""
-        val startCharindex = fileName.lastIndexOf('.')
-        if (startCharindex != -1) {//存在后缀
-            subffix = fileName.substring(startCharindex)
+        val startCharIndex = fileName.lastIndexOf('.')
+        if (startCharIndex != -1) {//存在后缀
+            subffix = fileName.substring(startCharIndex)
         }
         return subffix
     }

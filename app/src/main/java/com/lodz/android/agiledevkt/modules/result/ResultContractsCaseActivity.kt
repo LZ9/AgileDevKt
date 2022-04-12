@@ -2,9 +2,7 @@ package com.lodz.android.agiledevkt.modules.result
 
 import android.Manifest
 import android.app.Activity
-import android.content.ContentValues
-import android.content.Context
-import android.content.Intent
+import android.content.*
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -13,6 +11,7 @@ import android.provider.MediaStore
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
+import androidx.documentfile.provider.DocumentFile
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.databinding.ActivityResultContractsCaseBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
@@ -22,6 +21,7 @@ import com.lodz.android.corekt.anko.goAppDetailSetting
 import com.lodz.android.corekt.anko.isPermissionGranted
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.corekt.contacts.getContactData
+import com.lodz.android.corekt.media.getMediaInfo
 import com.lodz.android.corekt.utils.DateUtils
 import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.base.activity.BaseActivity
@@ -230,6 +230,7 @@ class ResultContractsCaseActivity : BaseActivity() {
             return@registerForActivityResult
         }
         addResultLog("选择目录路径：${it}")
+        addResultLog("路径名：${getUriName(it)}")
     }
 
     /** 单类型选择单文件回调 */
@@ -239,6 +240,7 @@ class ResultContractsCaseActivity : BaseActivity() {
             return@registerForActivityResult
         }
         addResultLog("选择文件路径：${it}")
+        addResultLog("文件名：${getUriName(it)}")
     }
 
     /** 多类型选择单文件回调 */
@@ -248,6 +250,7 @@ class ResultContractsCaseActivity : BaseActivity() {
             return@registerForActivityResult
         }
         addResultLog("选择文件路径：${it}")
+        addResultLog("文件名：${getUriName(it)}")
     }
 
     /** 单类型选择多文件回调 */
@@ -257,6 +260,9 @@ class ResultContractsCaseActivity : BaseActivity() {
             return@registerForActivityResult
         }
         addResultLog("选择文件路径：${it}")
+        for (uri in it) {
+            addResultLog("文件名：${getUriName(uri)}")
+        }
     }
 
     /** 多类型选择多文件回调 */
@@ -266,6 +272,14 @@ class ResultContractsCaseActivity : BaseActivity() {
             return@registerForActivityResult
         }
         addResultLog("选择文件路径：${it}")
+        for (uri in it) {
+            addResultLog("文件名：${getUriName(uri)}")
+        }
+    }
+
+    /** 多类型选择多文件回调 */
+    val mCaptureVideoResult = registerForActivityResult(ActivityResultContracts.CaptureVideo()) {
+
     }
 
     /** 重置 */
@@ -329,5 +343,15 @@ class ResultContractsCaseActivity : BaseActivity() {
         toastShort(R.string.splash_check_permission_tips)
         goAppDetailSetting()
         showStatusError()
+    }
+
+    /** 获取Uri的文件名称 */
+    private fun getUriName(uri: Uri): String {
+        if (!DocumentFile.isDocumentUri(getContext(), uri)) {
+            val documentFile = DocumentFile.fromTreeUri(getContext(), uri)
+            return documentFile?.name ?: "获取失败"
+        }
+        val bean = getMediaInfo(uri)
+        return bean?.displayName ?: "获取失败"
     }
 }
