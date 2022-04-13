@@ -7,6 +7,7 @@ import android.net.NetworkInfo
 import android.provider.Settings
 import android.telephony.TelephonyManager
 import androidx.annotation.RequiresPermission
+import androidx.core.telephony.TelephonyManagerCompat
 import com.lodz.android.corekt.utils.ReflectUtils
 
 /**
@@ -27,6 +28,16 @@ fun Context.getApnName(): String {
 
 /** 获取手机的IMSI1 */
 fun Context.getIMSI1(): String = getOperatorBySlot("getSubscriberId", 0)
+
+/** 获取永久SIM标识符 */
+fun Context.getSubscriptionId(): String {
+    val manager = getSystemService(Context.TELEPHONY_SERVICE)
+    if (manager is TelephonyManager) {
+
+        return TelephonyManagerCompat.getSubscriptionId(manager).toString()
+    }
+    return ""
+}
 
 /** Sim卡1是否可用 */
 fun Context.isSim1Ready(): Boolean {
