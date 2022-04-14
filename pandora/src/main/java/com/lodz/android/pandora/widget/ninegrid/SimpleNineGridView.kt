@@ -6,9 +6,9 @@ import android.view.View
 import android.widget.ImageView
 import com.lodz.android.corekt.album.PicInfo
 import com.lodz.android.corekt.anko.toArrayList
-import com.lodz.android.pandora.photopicker.picker.PickerManager
-import com.lodz.android.pandora.photopicker.picker.PickerUIConfig
-import com.lodz.android.pandora.photopicker.preview.PreviewManager
+import com.lodz.android.pandora.picker.photo.PickerManager
+import com.lodz.android.pandora.picker.photo.PickerUIConfig
+import com.lodz.android.pandora.picker.preview.PreviewManager
 
 
 /**

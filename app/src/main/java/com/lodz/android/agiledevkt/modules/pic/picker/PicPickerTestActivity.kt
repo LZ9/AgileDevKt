@@ -22,10 +22,10 @@ import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.base.activity.BaseActivity
-import com.lodz.android.pandora.photopicker.contract.preview.PreviewController
-import com.lodz.android.pandora.photopicker.picker.PickerManager
-import com.lodz.android.pandora.photopicker.picker.PickerUIConfig
-import com.lodz.android.pandora.photopicker.preview.AbsImageView
+import com.lodz.android.pandora.picker.contract.preview.PreviewController
+import com.lodz.android.pandora.picker.photo.PickerManager
+import com.lodz.android.pandora.picker.photo.PickerUIConfig
+import com.lodz.android.pandora.picker.preview.AbsImageView
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import permissions.dispatcher.*
 import permissions.dispatcher.ktx.constructPermissionsRequest

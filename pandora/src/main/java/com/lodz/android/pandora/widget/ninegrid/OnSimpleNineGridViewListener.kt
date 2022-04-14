@@ -4,7 +4,7 @@ import android.content.Context
 import android.view.View
 import android.widget.ImageView
 import com.lodz.android.corekt.album.PicInfo
-import com.lodz.android.pandora.photopicker.preview.AbsImageView
+import com.lodz.android.pandora.picker.preview.AbsImageView
 
 /**
  * 简单实现的九宫格接口

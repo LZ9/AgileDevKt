@@ -17,9 +17,8 @@ import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.corekt.utils.FileUtils.filePathToUri
 import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.base.activity.BaseActivity
-import com.lodz.android.pandora.photopicker.take.TakePhotoManager
+import com.lodz.android.pandora.picker.take.TakePhotoManager
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
-import kotlinx.coroutines.MainScope
 import permissions.dispatcher.*
 import permissions.dispatcher.ktx.constructPermissionsRequest
 

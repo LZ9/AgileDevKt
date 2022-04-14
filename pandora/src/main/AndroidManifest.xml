@@ -3,19 +3,19 @@
 
     <application>
         <activity
-            android:name=".photopicker.preview.PicturePreviewActivity"
+            android:name=".picker.preview.PicturePreviewActivity"
             android:screenOrientation="portrait">
 
         </activity>
 
         <activity
-            android:name=".photopicker.picker.pick.PhotoPickerActivity"
+            android:name=".picker.photo.pick.PhotoPickerActivity"
             android:screenOrientation="portrait">
 
         </activity>
 
         <activity
-            android:name=".photopicker.take.TakePhotoActivity"
+            android:name=".picker.take.TakePhotoActivity"
             android:screenOrientation="portrait">
 
         </activity>

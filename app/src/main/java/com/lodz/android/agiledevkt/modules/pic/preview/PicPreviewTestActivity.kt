@@ -21,12 +21,11 @@ import com.lodz.android.corekt.anko.runOnMain
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.base.activity.BaseActivity
-import com.lodz.android.pandora.photopicker.contract.preview.PreviewController
-import com.lodz.android.pandora.photopicker.preview.AbsImageView
-import com.lodz.android.pandora.photopicker.preview.PreviewManager
+import com.lodz.android.pandora.picker.contract.preview.PreviewController
+import com.lodz.android.pandora.picker.preview.AbsImageView
+import com.lodz.android.pandora.picker.preview.PreviewManager
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.custom.LongImageView
-import kotlinx.coroutines.MainScope
 import java.io.File
 
 /**
