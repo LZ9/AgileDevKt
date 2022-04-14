@@ -15,7 +15,7 @@ class FastClickLimitAspect {
 
     companion object{
         /** 默认点击间隔时间 */
-        const val DEFAULT_DURATION = 1000L
+        const val DEFAULT_DURATION = 500L
     }
 
     /** 上一次的记录时间 */
