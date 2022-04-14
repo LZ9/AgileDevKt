@@ -75,10 +75,6 @@ class ResultContractsCaseActivity : BaseActivity() {
             mTestActivityResult.launch(Intent(getContext(), TestResultActivity::class.java))
         }
 
-        mBinding.jumpFragmentBtn.setOnClickListener {
-            toastShort("开发中")
-        }
-
         mBinding.pickContactBtn.setOnClickListener {
             reset()
             mPickContractsResult.launch(null)

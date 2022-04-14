@@ -5,11 +5,14 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.Fragment
+import com.google.android.material.tabs.TabLayoutMediator
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.databinding.ActivityTestResultBinding
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
+import com.lodz.android.pandora.widget.vp2.SimpleTabAdapter
 
 /**
  * 测试Activity
@@ -31,6 +34,20 @@ class TestResultActivity : BaseActivity() {
 
     override fun findViews(savedInstanceState: Bundle?) {
         getTitleBarLayout().setTitleName(R.string.arc_test_activity_title)
+        initViewPager()
+    }
+
+    private fun initViewPager() {
+        val list = ArrayList<Fragment>()
+         val tabList = arrayListOf("测试1", "测试2")
+        list.add(TestResultAFragment.newInstance(tabList[0]))
+        list.add(TestResultBFragment.newInstance(tabList[1]))
+        mBinding.viewPager.adapter = SimpleTabAdapter(this, list)
+        mBinding.viewPager.offscreenPageLimit = tabList.size
+        mBinding.viewPager.setCurrentItem(0, true)
+        TabLayoutMediator(mBinding.tabLayout, mBinding.viewPager) { tab, position ->
+            tab.text = tabList[position]
+        }.attach()
     }
 
     override fun onClickBackBtn() {
