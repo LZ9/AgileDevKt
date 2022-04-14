@@ -10,7 +10,6 @@ import android.view.Surface
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import android.widget.Toast
-import com.lodz.android.corekt.log.PrintLog
 
 /**
  * 相机帮助类
@@ -18,6 +17,10 @@ import com.lodz.android.corekt.log.PrintLog
  * @date 2021/1/13
  */
 open class CameraHelper @JvmOverloads constructor(activity: Activity, surfaceView: SurfaceView, cameraFacing: Int = Camera.CameraInfo.CAMERA_FACING_BACK) {
+
+    companion object {
+        const val LOG_TAG = "CameraHelper"
+    }
 
     /** Camera对象 */
     protected var mCamera: Camera? = null
@@ -142,7 +145,7 @@ open class CameraHelper @JvmOverloads constructor(activity: Activity, surfaceVie
         mCamera?.startFaceDetection()
         mCamera?.setFaceDetectionListener { faces, _ ->
             mListener?.onFaceDetect(transForm(faces))
-            Log.d("testtag","检测到 ${faces.size} 张人脸")
+            Log.d(LOG_TAG,"检测到 ${faces.size} 张人脸")
         }
     }
 
@@ -151,7 +154,7 @@ open class CameraHelper @JvmOverloads constructor(activity: Activity, surfaceVie
         var autoFocus = false
         val listFocusMode = mParameters.supportedFocusModes
         for (mode in listFocusMode) {
-            Log.d("testtag","相机支持的对焦模式： $mode")
+            Log.d(LOG_TAG,"相机支持的对焦模式： $mode")
             if (mode == focusMode){
                 autoFocus = true
             }
@@ -182,11 +185,11 @@ open class CameraHelper @JvmOverloads constructor(activity: Activity, surfaceVie
     /** 获取与指定宽高相等或最接近的尺寸 */
     private fun getBestSize(width: Int, height: Int, sizeList: List<Camera.Size>): Camera.Size? {
         val targetRatio = height.toDouble() / width //传入的高宽比
-        PrintLog.v("testtag","目标尺寸 ：$height * $width ，   高宽比  $targetRatio")
+        Log.v(LOG_TAG,"目标尺寸 ：$height * $width ，   高宽比  $targetRatio")
         val suitableList = ArrayList<Camera.Size>()
         for (size in sizeList) {
             val sizeRatio = size.width.toDouble() / size.height
-            PrintLog.i("testtag","系统支持的尺寸 : ${size.width} * ${size.height} ,    比例$sizeRatio")
+            Log.i(LOG_TAG,"系统支持的尺寸 : ${size.width} * ${size.height} ,    比例$sizeRatio")
             if (targetRatio <= sizeRatio){
                 suitableList.add(size)
             }
@@ -195,7 +198,7 @@ open class CameraHelper @JvmOverloads constructor(activity: Activity, surfaceVie
             return null
         }
         if (suitableList.size == 1){
-            Log.d("testtag","最优尺寸 ：${suitableList[0].height} * ${suitableList[0].width}")
+            Log.d(LOG_TAG,"最优尺寸 ：${suitableList[0].height} * ${suitableList[0].width}")
             return suitableList[0]
         }
         var bestSize: Camera.Size = suitableList[0]
@@ -204,7 +207,7 @@ open class CameraHelper @JvmOverloads constructor(activity: Activity, surfaceVie
                 bestSize = it
             }
         }
-        Log.d("testtag","最优尺寸 ：${bestSize.width} * ${bestSize.height}")
+        Log.d(LOG_TAG,"最优尺寸 ：${bestSize.width} * ${bestSize.height}")
         return bestSize
     }
 
@@ -228,8 +231,8 @@ open class CameraHelper @JvmOverloads constructor(activity: Activity, surfaceVie
         } else {
             mDisplayOrientation = (info.orientation - screenDegree + 360) % 360
         }
-        Log.d("testtag","屏幕的旋转角度 : $rotation")
-        Log.d("testtag","setDisplayOrientation(result) : $mDisplayOrientation")
+        Log.d(LOG_TAG,"屏幕的旋转角度 : $rotation")
+        Log.d(LOG_TAG,"setDisplayOrientation(result) : $mDisplayOrientation")
         return mDisplayOrientation
     }
 

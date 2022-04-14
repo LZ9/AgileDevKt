@@ -23,6 +23,11 @@ class MediaRecorderHelper(
     private var savePath: String,
     private var fileName: String
 ) {
+
+    companion object {
+        const val LOG_TAG = "MediaRecorderHelper"
+    }
+
     var mMediaRecorder: MediaRecorder? = null
     var isRunning = false
 
@@ -61,8 +66,8 @@ class MediaRecorderHelper(
                 it.prepare()
                 it.start()
                 isRunning = true
-                Log.d("testtag", "开始录制视频")
-                Log.d("testtag", "视频保存路径：$path")
+                Log.d(LOG_TAG, "开始录制视频")
+                Log.d(LOG_TAG, "视频保存路径：$path")
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -72,7 +77,7 @@ class MediaRecorderHelper(
     fun stopRecord() {
         mMediaRecorder?.stop()
         isRunning = false
-        Log.d("testtag", "停止录制视频")
+        Log.d(LOG_TAG, "停止录制视频")
         Toast.makeText(mContext, "视频保存路径：$filePath", Toast.LENGTH_LONG).show()
     }
 
