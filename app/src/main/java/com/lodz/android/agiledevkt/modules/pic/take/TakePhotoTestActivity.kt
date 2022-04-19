@@ -5,16 +5,14 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.view.View
+import com.lodz.android.agiledevkt.BuildConfig
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.databinding.ActivityTakePhotoTestBinding
-import com.lodz.android.agiledevkt.utils.file.FileManager
-import com.lodz.android.corekt.album.PicInfo
 import com.lodz.android.corekt.anko.goAppDetailSetting
 import com.lodz.android.corekt.anko.isPermissionGranted
-import com.lodz.android.corekt.anko.runOnMainDelay
 import com.lodz.android.corekt.anko.toastShort
-import com.lodz.android.corekt.utils.FileUtils.filePathToUri
 import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.picker.take.TakePhotoManager
@@ -69,27 +67,22 @@ class TakePhotoTestActivity : BaseActivity() {
         super.setListeners()
         // 立即返回路径按钮
         mBinding.immediatelyBtn.setOnClickListener {
-            mBinding.resultTv.text = ""
+            reset()
             TakePhotoManager.create()
                 .setImmediately(true)
-                .setCameraSavePath(FileManager.getCacheFolderPath())
-                .setAuthority("com.lodz.android.agiledevkt.fileprovider")
-                .setOnPhotoTakeListener { photo ->
-                    runOnMainDelay(100) {//拍照后如果马上获取URI需要延迟一下，等待手机数据库更新一下
-                        if (photo.isNotEmpty()) {
-                            val picInfo = PicInfo(photo, filePathToUri(getContext(), photo))
-                            mBinding.resultTv.text = "photo : $photo \n uri : ${picInfo.uri}"
-                            ImageLoader.create(getContext())
-                                .loadFilePath(photo)
-                                .setCenterInside()
-                                .into(mBinding.pathImg)
-
-                            ImageLoader.create(getContext())
-                                .loadUri(picInfo.uri)
-                                .setCenterInside()
-                                .into(mBinding.uriImg)
-                        }
+                .setPublicDirectoryName(Environment.DIRECTORY_DCIM)
+                .setAuthority(BuildConfig.FILE_AUTHORITY)
+                .setOnPhotoTakeListener { file ->
+                    if (file == null){
+                        mBinding.resultTv.text = "取消拍照"
+                        return@setOnPhotoTakeListener
                     }
+                    mBinding.resultTv.text = "name : ${file.name} \n uri : ${file.uri}"
+                    mBinding.uriImg.visibility = View.VISIBLE
+                    ImageLoader.create(getContext())
+                        .loadUri(file.uri)
+                        .setCenterInside()
+                        .into(mBinding.uriImg)
                 }
                 .build()
                 .take(getContext())
@@ -97,25 +90,36 @@ class TakePhotoTestActivity : BaseActivity() {
 
         // 拍照后确认按钮
         mBinding.confirmPhotoBtn.setOnClickListener {
-            mBinding.resultTv.text = ""
+            reset()
             TakePhotoManager.create()
-                .setStatusBarColor(R.color.black)
-                .setNavigationBarColor(R.color.black)
-                .setPreviewBgColor(R.color.black)
+                .setStatusBarColor(getContext(), R.color.black)
+                .setNavigationBarColor(getContext(), R.color.black)
+                .setPreviewBgColor(getContext(), R.color.black)
                 .setImmediately(false)
-                .setCameraSavePath(FileManager.getCacheFolderPath())
-                .setAuthority("com.lodz.android.agiledevkt.fileprovider")
+                .setAuthority(BuildConfig.FILE_AUTHORITY)
                 .setOnImgLoader { context, source, imageView ->
-                    ImageLoader.create(context).loadFilePath(source).setFitCenter().into(imageView)
+                    ImageLoader.create(context).loadUri(source.uri).setFitCenter().into(imageView)
                 }
-                .setOnPhotoTakeListener { photo ->
-                    if (photo.isNotEmpty()) {
-                        mBinding.resultTv.text = photo
+                .setOnPhotoTakeListener { file ->
+                    if (file == null){
+                        mBinding.resultTv.text = "取消拍照"
+                        return@setOnPhotoTakeListener
                     }
+                    mBinding.resultTv.text = "name : ${file.name} \n uri : ${file.uri}"
+                    mBinding.uriImg.visibility = View.VISIBLE
+                    ImageLoader.create(getContext())
+                        .loadUri(file.uri)
+                        .setCenterInside()
+                        .into(mBinding.uriImg)
                 }
                 .build()
                 .take(getContext())
         }
+    }
+
+    private fun reset(){
+        mBinding.resultTv.text = ""
+        mBinding.uriImg.visibility = View.GONE
     }
 
     override fun initData() {

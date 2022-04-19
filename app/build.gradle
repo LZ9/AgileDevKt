@@ -34,10 +34,11 @@ android {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 
-    //日志开关
     def LOG_DEBUG = "LOG_DEBUG"
+    def FILE_AUTHORITY = "FILE_AUTHORITY"
     defaultConfig {
         buildConfigField "boolean", LOG_DEBUG, "true"
+        buildConfigField "String", FILE_AUTHORITY, "\"com.lodz.android.agiledevkt.fileprovider\""
     }
 
     // 程序在编译的时候会检查lint，有任何错误提示会停止build，我们可以关闭这个开关
@@ -53,6 +54,7 @@ android {
             zipAlignEnabled false // 是否支持zip
             debuggable true // 是否支持调试
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            manifestPlaceholders = [FILE_AUTHORITY: defaultConfig.getBuildConfigFields().get("FILE_AUTHORITY").value.replace("\"", "")]
         }
 
         release {
@@ -62,6 +64,7 @@ android {
             debuggable false // 是否支持调试
             jniDebuggable false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            manifestPlaceholders = [FILE_AUTHORITY: defaultConfig.getBuildConfigFields().get("FILE_AUTHORITY").value.replace("\"", "")]
         }
     }
 

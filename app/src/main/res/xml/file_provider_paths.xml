@@ -15,23 +15,38 @@
         name="app_provider_path_A10"
         path="Android/data/com.lodz.android.agiledevkt" />
 
-    <!--默认地址-->
+    <!--DCIM目录-->
     <external-path
         name="dcim_provider_path"
         path="DCIM" />
 
-    <!--默认地址-->
+    <!--Pictures目录-->
     <external-path
         name="pictures_provider_path"
         path="Pictures" />
 
-    <!--默认地址-->
+    <!--Download目录-->
     <external-path
         name="download_provider_path"
         path="Download" />
 
-    <!--默认地址-->
+    <!--Documents目录-->
     <external-path
         name="documents_provider_path"
         path="Documents" />
+
+    <!--Movies目录-->
+    <external-path
+        name="movies_provider_path"
+        path="Movies" />
+
+    <!--Music目录-->
+    <external-path
+        name="music_provider_path"
+        path="Music" />
+
+    <!--Recordings目录-->
+    <external-path
+        name="recordings_provider_path"
+        path="Recordings" />
 </paths>

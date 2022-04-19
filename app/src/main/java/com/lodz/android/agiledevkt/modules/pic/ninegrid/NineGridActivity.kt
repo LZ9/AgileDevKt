@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.github.chrisbanes.photoview.PhotoView
+import com.lodz.android.agiledevkt.BuildConfig
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.config.Constant
 import com.lodz.android.agiledevkt.databinding.ActivityNineGridBinding
@@ -233,7 +234,7 @@ class NineGridActivity : BaseActivity() {
     }
 
     private fun init() {
-        mBinding.pickerNineGridView.config(FileManager.getCacheFolderPath(), "com.lodz.android.agiledevkt.fileprovider")
+        mBinding.pickerNineGridView.config(FileManager.getCacheFolderPath(), BuildConfig.FILE_AUTHORITY)
         mBinding.showOnlyNineGridView.setStrData(Constant.IMG_URLS.toArrayList())
         showStatusCompleted()
     }

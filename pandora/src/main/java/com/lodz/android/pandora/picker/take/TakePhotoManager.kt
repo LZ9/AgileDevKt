@@ -29,16 +29,10 @@ class TakePhotoManager internal constructor(private val takeBean: TakeBean) {
             context.toastShort(R.string.pandora_photo_take_listener_unset)
             return
         }
-        if (takeBean.cameraSavePath.isEmpty()) {// 校验拍照保存地址
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                takeBean.cameraSavePath = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)?.absolutePath ?: ""
-            }
-            if (takeBean.cameraSavePath.isEmpty()){
-                takeBean.cameraSavePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).absolutePath
-            }
-        }
-        if (!takeBean.cameraSavePath.endsWith(File.separator)) {//补全地址
-            takeBean.cameraSavePath += File.separator
+        val path = Environment.getExternalStoragePublicDirectory(takeBean.publicDirectoryName)?.absolutePath ?: ""
+        if (path.isEmpty()) {// 校验公共目录路径
+            context.toastShort(R.string.pandora_picker_public_directory_empty)
+            return
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && takeBean.authority.isEmpty()) {//当前系统是7.0以上且没有配置FileProvider
             context.toastShort(R.string.pandora_photo_authority_empty)

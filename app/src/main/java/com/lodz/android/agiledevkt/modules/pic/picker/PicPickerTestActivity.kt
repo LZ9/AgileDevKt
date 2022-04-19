@@ -11,6 +11,7 @@ import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.github.chrisbanes.photoview.PhotoView
+import com.lodz.android.agiledevkt.BuildConfig
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.config.Constant
 import com.lodz.android.agiledevkt.databinding.ActivityPicPickerBinding
@@ -89,7 +90,7 @@ class PicPickerTestActivity : BaseActivity() {
                 .setNeedItemPreview(mBinding.itemPreviewSwitch.isChecked)
                 .setPickerUIConfig(mConfig)
                 .setCameraSavePath(FileManager.getCacheFolderPath())
-                .setAuthority("com.lodz.android.agiledevkt.fileprovider")
+                .setAuthority(BuildConfig.FILE_AUTHORITY)
                 .setImgLoader { context, source, imageView ->
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                         ImageLoader.create(context).loadUri(source.uri).setCenterCrop().into(imageView)

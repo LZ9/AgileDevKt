@@ -12,6 +12,7 @@ import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import androidx.documentfile.provider.DocumentFile
+import com.lodz.android.agiledevkt.BuildConfig
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.databinding.ActivityResultContractsCaseBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
@@ -94,7 +95,7 @@ class ResultContractsCaseActivity : BaseActivity() {
             } else {
                 FileProvider.getUriForFile(
                     getContext(),
-                    "com.lodz.android.agiledevkt.fileprovider",
+                    BuildConfig.FILE_AUTHORITY,
                     File(FileManager.getContentFolderPath().append(DateUtils.getCurrentFormatString(DateUtils.TYPE_3)).append(".jpg"))
                 )
             }
@@ -148,7 +149,7 @@ class ResultContractsCaseActivity : BaseActivity() {
             val path = FileManager.getContentFolderPath().append("${DateUtils.getCurrentFormatString(DateUtils.TYPE_3)}.mp4")
             addResultLog("视频存储路径：$path")
             val file = File(path)
-            mUri = FileProvider.getUriForFile(getContext(), "com.lodz.android.agiledevkt.fileprovider", file, file.name)
+            mUri = FileProvider.getUriForFile(getContext(), BuildConfig.FILE_AUTHORITY, file, file.name)
             mCaptureVideoResult.launch(mUri)
         }
     }

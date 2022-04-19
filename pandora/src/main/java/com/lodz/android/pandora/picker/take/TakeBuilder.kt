@@ -1,8 +1,10 @@
 package com.lodz.android.pandora.picker.take
 
 import android.content.Context
-import android.widget.ImageView
+import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
+import androidx.documentfile.provider.DocumentFile
+import com.lodz.android.corekt.anko.getColorCompat
 import com.lodz.android.pandora.picker.contract.OnImgLoader
 import com.lodz.android.pandora.picker.contract.take.OnPhotoTakeListener
 
@@ -16,16 +18,10 @@ class TakeBuilder {
     private val takeBean = TakeBean()
 
     /** 设置预览图图加载器[imgLoader] */
-    fun setOnImgLoader(imgLoader: OnImgLoader<String>?): TakeBuilder {
+    fun setOnImgLoader(imgLoader: OnImgLoader<DocumentFile>?): TakeBuilder {
         takeBean.imgLoader = imgLoader
         return this
     }
-
-    /** 设置预览图图加载器[imgLoader] */
-    fun setOnImgLoader(imgLoader: (context: Context, source: String, imageView: ImageView) -> Unit): TakeBuilder =
-        setOnImgLoader(OnImgLoader<String> { context, source, imageView ->
-            imgLoader.invoke(context, source, imageView)
-        })
 
     /** 拍照回调[listener] */
     fun setOnPhotoTakeListener(listener: OnPhotoTakeListener?): TakeBuilder {
@@ -33,9 +29,11 @@ class TakeBuilder {
         return this
     }
 
-    /** 设置拍照保存地址[savePath] */
-    fun setCameraSavePath(savePath: String): TakeBuilder {
-        takeBean.cameraSavePath = savePath
+    /** 设置公共目录名称[directoryName]，默认值 Environment.DIRECTORY_PICTURES */
+    fun setPublicDirectoryName(directoryName: String): TakeBuilder {
+        if (directoryName.isNotEmpty()){
+            takeBean.publicDirectoryName = directoryName
+        }
         return this
     }
 
@@ -52,28 +50,31 @@ class TakeBuilder {
     }
 
     /** 设置顶部状态栏颜色[color] */
-    fun setStatusBarColor(@ColorRes color: Int): TakeBuilder {
-        if (color != 0) {
-            takeBean.statusBarColor = color
-        }
+    fun setStatusBarColor(@ColorInt color: Int): TakeBuilder {
+        takeBean.statusBarColor = color
+        return this
+    }
+
+    /** 设置顶部状态栏颜色[color] */
+    fun setStatusBarColor(context: Context, @ColorRes color: Int): TakeBuilder = setStatusBarColor(context.getColorCompat(color))
+
+    /** 设置底部导航栏颜色[color] */
+    fun setNavigationBarColor(@ColorInt color: Int): TakeBuilder {
+        takeBean.navigationBarColor = color
         return this
     }
 
     /** 设置底部导航栏颜色[color] */
-    fun setNavigationBarColor(@ColorRes color: Int): TakeBuilder {
-        if (color != 0) {
-            takeBean.navigationBarColor = color
-        }
+    fun setNavigationBarColor(context: Context, @ColorRes color: Int): TakeBuilder = setNavigationBarColor(context.getColorCompat(color))
+
+    /** 设置预览页背景色[color] */
+    fun setPreviewBgColor(@ColorInt color: Int): TakeBuilder {
+        takeBean.previewBgColor = color
         return this
     }
 
     /** 设置预览页背景色[color] */
-    fun setPreviewBgColor(@ColorRes color: Int): TakeBuilder {
-        if (color != 0) {
-            takeBean.previewBgColor = color
-        }
-        return this
-    }
+    fun setPreviewBgColor(context: Context, @ColorRes color: Int): TakeBuilder = setPreviewBgColor(context.getColorCompat(color))
 
     /** 完成构建（选择手机里的全部图片） */
     fun build(): TakePhotoManager {

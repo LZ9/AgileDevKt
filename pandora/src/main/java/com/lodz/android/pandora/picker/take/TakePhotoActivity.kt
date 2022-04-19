@@ -1,19 +1,24 @@
 package com.lodz.android.pandora.picker.take
 
-import android.app.Activity
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
+import android.os.Build
+import android.os.Environment
 import android.provider.MediaStore
 import android.view.View
-import com.lodz.android.corekt.album.AlbumUtils
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.FileProvider
+import androidx.documentfile.provider.DocumentFile
 import com.lodz.android.corekt.anko.*
 import com.lodz.android.corekt.utils.DateUtils
-import com.lodz.android.corekt.utils.FileUtils
 import com.lodz.android.corekt.utils.StatusBarUtil
 import com.lodz.android.pandora.R
 import com.lodz.android.pandora.base.activity.AbsActivity
 import com.lodz.android.pandora.databinding.PandoraActivityTakePhotoBinding
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
+import java.io.File
 
 /**
  * 拍照页面
@@ -25,7 +30,7 @@ internal class TakePhotoActivity : AbsActivity() {
         private var sTakeBean: TakeBean? = null
 
         internal fun start(context: Context, takeBean: TakeBean, flags: List<Int>?) {
-            synchronized(this) {
+            synchronized(TakeBean::class.java) {
                 if (sTakeBean != null) {
                     return
                 }
@@ -39,20 +44,13 @@ internal class TakePhotoActivity : AbsActivity() {
         }
     }
 
-    /** 照相请求码 */
-    private val REQUEST_CAMERA = 777
-
     private val mBinding: PandoraActivityTakePhotoBinding by bindingLayout(PandoraActivityTakePhotoBinding::inflate)
 
     /** 拍照数据 */
-    private var mPdrTakeBean: TakeBean? = null
-    /** 临时文件路径 */
-    private var mPdrTempFilePath = ""
+    private val mPdrTakeBean by lazy { sTakeBean }
 
-    override fun startCreate() {
-        super.startCreate()
-        mPdrTakeBean = sTakeBean
-    }
+    /** 图片的地址 */
+    private var mUri: Uri? = null
 
     override fun getAbsViewBindingLayout(): View = mBinding.root
 
@@ -77,86 +75,93 @@ internal class TakePhotoActivity : AbsActivity() {
 
     override fun initData() {
         super.initData()
-        val bean = mPdrTakeBean ?: return
-        mBinding.pdrRootLayout.setBackgroundColor(getColorCompat(bean.previewBgColor))
-        //设置状态栏和导航栏颜色
-        StatusBarUtil.setColor(window, getColorCompat(bean.statusBarColor))
-        StatusBarUtil.setNavigationBarColor(window, getColorCompat(bean.navigationBarColor))
+        val bean = mPdrTakeBean
+        if (bean == null){
+            finish()
+            return
+        }
+        //设置颜色
+        mBinding.pdrRootLayout.setBackgroundColor(bean.previewBgColor)
+        StatusBarUtil.setColor(window, bean.statusBarColor)
+        StatusBarUtil.setNavigationBarColor(window, bean.navigationBarColor)
         takeCameraPhoto(bean)
     }
 
     /** 拍照 */
     private fun takeCameraPhoto(bean: TakeBean) {
-        if (!FileUtils.isFileExists(bean.cameraSavePath) && !FileUtils.createFolder(bean.cameraSavePath)) {// 文件夹不存在且创建文件夹失败
-            toastShort(R.string.pandora_photo_folder_fail)
+        // 获取公共路径目录
+        var rootPath = Environment.getExternalStoragePublicDirectory(bean.publicDirectoryName)?.absolutePath ?: ""
+        if (!rootPath.endsWith(File.separator)) {//补全地址
+            rootPath += File.separator
+        }
+        val file = File("${rootPath}P_${DateUtils.getCurrentFormatString(DateUtils.TYPE_4)}.jpg")
+        mUri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            val values = ContentValues()
+            values.put(MediaStore.MediaColumns.DISPLAY_NAME, file.name)
+            values.put(MediaStore.Images.Media.DESCRIPTION, "This is an image")
+            values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpg")
+            values.put(MediaStore.Images.Media.TITLE, file.name)
+            values.put(MediaStore.MediaColumns.RELATIVE_PATH, bean.publicDirectoryName)
+            contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+        } else {
+            FileProvider.getUriForFile(getContext(), bean.authority, file)
+        }
+        if (mUri == null){//校验Uri路径是否获取成功
+            toastShort(R.string.pandora_picker_uri_null)
+            finish()
             return
         }
-        mPdrTempFilePath = "${bean.cameraSavePath}P_${DateUtils.getCurrentFormatString(DateUtils.TYPE_4)}.jpg"
-        if (!FileUtils.createNewFile(mPdrTempFilePath)) {
-            toastShort(R.string.pandora_photo_temp_file_fail)
-            return
-        }
-        if (Intent(MediaStore.ACTION_IMAGE_CAPTURE).resolveActivity(packageManager) == null) {
-            toastShort(R.string.pandora_no_camera)
-            return
-        }
-        if (!takePhoto(mPdrTempFilePath, bean.authority, REQUEST_CAMERA)) {
-            toastShort(R.string.pandora_photo_temp_file_fail)
-        }
+        mTakePictureResult.launch(mUri)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode != REQUEST_CAMERA) {//不是拍照请求码
-            return
+    /** 拍照回调 */
+    val mTakePictureResult = registerForActivityResult(ActivityResultContracts.TakePicture()) {
+        val uri = mUri
+        if (!it || uri == null) {
+            handleCameraCancel()
+            return@registerForActivityResult
         }
         val bean = mPdrTakeBean
         if (bean == null) {//数据为空
             handleCameraCancel()
-            return
+            return@registerForActivityResult
         }
-        if (resultCode != Activity.RESULT_OK) {//拍照不成功
-            handleCameraCancel()
-            return
-        }
-        // 拍照成功
-        AlbumUtils.notifyScanImageCompat(getContext(), mPdrTempFilePath)// 更新相册
-        if (bean.isImmediately) {
+        if (bean.isImmediately) {//立即返回
             handleConfirm()
-            return
+            return@registerForActivityResult
         }
-        runOnMainDelay(300) {
-            handleCameraSuccess()
-        }
+        showPhoto(DocumentFile.fromSingleUri(getContext(), uri))
     }
 
     /** 处理确认照片 */
     private fun handleConfirm() {
-        mPdrTakeBean?.photoTakeListener?.onTake(mPdrTempFilePath)
+        val uri = mUri
+        val file = if (uri != null) DocumentFile.fromSingleUri(getContext(), uri) else null
+        mPdrTakeBean?.photoTakeListener?.onTake(file)
         finish()
     }
 
     /** 处理拍照取消 */
     private fun handleCameraCancel() {
-        if (mPdrTempFilePath.isNotEmpty()) {
-            FileUtils.delFile(mPdrTempFilePath)// 删除临时文件
+        val uri = mUri
+        if (uri != null) {
+            contentResolver.delete(uri, null, null)
         }
-        mPdrTakeBean?.photoTakeListener?.onTake("")
+        mPdrTakeBean?.photoTakeListener?.onTake(null)
         finish()
     }
 
-    /** 处理拍照成功 */
-    private fun handleCameraSuccess() {
-        mPdrTakeBean?.imgLoader?.displayImg(getContext(), mPdrTempFilePath, mBinding.pdrPhotoImg)
+    /** 显示照片 */
+    private fun showPhoto(file: DocumentFile?) {
+        if (file != null){
+            mPdrTakeBean?.imgLoader?.displayImg(getContext(), file, mBinding.pdrPhotoImg)
+        }
     }
 
     override fun finish() {
         mPdrTakeBean?.clear()
-        mPdrTakeBean = null
         sTakeBean?.clear()
         sTakeBean = null
-        mPdrTempFilePath = ""
         super.finish()
     }
-
 }

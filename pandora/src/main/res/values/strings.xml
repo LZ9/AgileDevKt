@@ -14,6 +14,8 @@
     <string name="pandora_load_fail_tips">加载失败，请点击重试</string>
 
     <!-- 图片预览/选择 -->
+    <string name="pandora_picker_public_directory_empty">设置公共目录路径失败</string>
+    <string name="pandora_picker_uri_null">照片路径Uri获取失败</string>
     <string name="pandora_photo_loader_unset">您尚未设置图片加载器</string>
     <string name="pandora_preview_img_unset">您尚未设置图片预览控件</string>
     <string name="pandora_preview_loader_unset">您尚未设置图片预览器</string>
