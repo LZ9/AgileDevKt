@@ -567,6 +567,8 @@
     <!-- 拍照 -->
     <string name="take_photo_immediately">拍照后直接获取路径</string>
     <string name="take_photo_confirm">拍照后确认</string>
+    <string name="take_photo_uri_img">uri路径图片</string>
+    <string name="take_photo_base64_img">uri转base64图片</string>
 
     <!-- 九宫格 -->
     <string name="nine_grid_get_pic">获取图片路径</string>

@@ -10,9 +10,7 @@ import android.view.View
 import com.lodz.android.agiledevkt.BuildConfig
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.databinding.ActivityTakePhotoTestBinding
-import com.lodz.android.corekt.anko.goAppDetailSetting
-import com.lodz.android.corekt.anko.isPermissionGranted
-import com.lodz.android.corekt.anko.toastShort
+import com.lodz.android.corekt.anko.*
 import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.picker.take.TakePhotoManager
@@ -77,12 +75,19 @@ class TakePhotoTestActivity : BaseActivity() {
                         mBinding.resultTv.text = "取消拍照"
                         return@setOnPhotoTakeListener
                     }
-                    mBinding.resultTv.text = "name : ${file.name} \n uri : ${file.uri}"
-                    mBinding.uriImg.visibility = View.VISIBLE
+                    val log = "name : ".append(file.name).append("\n").append("uri : ").append(file.uri)
+                    mBinding.resultTv.text = log
+
+                    mBinding.imgLayout.visibility = View.VISIBLE
                     ImageLoader.create(getContext())
                         .loadUri(file.uri)
                         .setCenterInside()
                         .into(mBinding.uriImg)
+
+                    ImageLoader.create(getContext())
+                        .loadBase64(file.uri.toBase64(getContext()))
+                        .setCenterInside()
+                        .into(mBinding.base64Img)
                 }
                 .build()
                 .take(getContext())
@@ -105,12 +110,19 @@ class TakePhotoTestActivity : BaseActivity() {
                         mBinding.resultTv.text = "取消拍照"
                         return@setOnPhotoTakeListener
                     }
-                    mBinding.resultTv.text = "name : ${file.name} \n uri : ${file.uri}"
-                    mBinding.uriImg.visibility = View.VISIBLE
+                    val log = "name : ".append(file.name).append("\n").append("uri : ").append(file.uri)
+                    mBinding.resultTv.text = log
+
+                    mBinding.imgLayout.visibility = View.VISIBLE
                     ImageLoader.create(getContext())
                         .loadUri(file.uri)
                         .setCenterInside()
                         .into(mBinding.uriImg)
+
+                    ImageLoader.create(getContext())
+                        .loadBase64(file.uri.toBase64(getContext()))
+                        .setCenterInside()
+                        .into(mBinding.base64Img)
                 }
                 .build()
                 .take(getContext())
@@ -119,7 +131,7 @@ class TakePhotoTestActivity : BaseActivity() {
 
     private fun reset(){
         mBinding.resultTv.text = ""
-        mBinding.uriImg.visibility = View.GONE
+        mBinding.imgLayout.visibility = View.GONE
     }
 
     override fun initData() {
@@ -158,6 +170,7 @@ class TakePhotoTestActivity : BaseActivity() {
     }
 
     private fun init() {
+        reset()
         showStatusCompleted()
     }
 }
