@@ -7,6 +7,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.view.View
+import androidx.documentfile.provider.DocumentFile
 import com.lodz.android.agiledevkt.BuildConfig
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.databinding.ActivityTakePhotoTestBinding
@@ -75,8 +76,7 @@ class TakePhotoTestActivity : BaseActivity() {
                         mBinding.resultTv.text = "取消拍照"
                         return@setOnPhotoTakeListener
                     }
-                    val log = "name : ".append(file.name).append("\n").append("uri : ").append(file.uri)
-                    mBinding.resultTv.text = log
+                    mBinding.resultTv.text = getLog(file)
 
                     mBinding.imgLayout.visibility = View.VISIBLE
                     ImageLoader.create(getContext())
@@ -110,8 +110,7 @@ class TakePhotoTestActivity : BaseActivity() {
                         mBinding.resultTv.text = "取消拍照"
                         return@setOnPhotoTakeListener
                     }
-                    val log = "name : ".append(file.name).append("\n").append("uri : ").append(file.uri)
-                    mBinding.resultTv.text = log
+                    mBinding.resultTv.text = getLog(file)
 
                     mBinding.imgLayout.visibility = View.VISIBLE
                     ImageLoader.create(getContext())
@@ -128,6 +127,12 @@ class TakePhotoTestActivity : BaseActivity() {
                 .take(getContext())
         }
     }
+
+    /** 生成日志 */
+    private fun getLog(file: DocumentFile): String =
+        "name : ".append(file.name).append("\n")
+            .append("uri : ").append(file.uri).append("\n")
+            .append("MimeType : ").append(file.type)
 
     private fun reset(){
         mBinding.resultTv.text = ""
