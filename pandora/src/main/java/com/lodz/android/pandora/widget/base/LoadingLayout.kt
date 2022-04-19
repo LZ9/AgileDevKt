@@ -115,8 +115,6 @@ class LoadingLayout : LinearLayout {
             mPdrLoadingProgressBar.indeterminateDrawable = drawable
         } else if (mPdrConfig.indeterminateDrawable != 0) {
             mPdrLoadingProgressBar.indeterminateDrawable = getDrawableCompat(mPdrConfig.indeterminateDrawable)
-        } else if(!useSysDefDrawable){
-            mPdrLoadingProgressBar.indeterminateDrawable = getDrawableCompat(R.drawable.pandora_anims_loading)
         }
 
         // 设置ProgressBar宽高

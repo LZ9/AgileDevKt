@@ -28,7 +28,7 @@ class LoadingLayoutConfig {
     @DrawableRes
     var indeterminateDrawable = 0
     /** 使用系统默认加载资源 */
-    var useSysDefDrawable = false
+    var useSysDefDrawable = true
     /** 页面方向布局 */
     var orientation = LinearLayout.VERTICAL
         set(value) {
