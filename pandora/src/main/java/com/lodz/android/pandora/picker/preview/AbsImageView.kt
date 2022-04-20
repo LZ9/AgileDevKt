@@ -21,7 +21,7 @@ abstract class AbsImageView<V : View, T>(private val isScale: Boolean) {
     open fun onClickImpl(viewHolder: RecyclerView.ViewHolder, view: V, source: T, position: Int, controller: PreviewController) {}
 
     /** 长按回调，[view]图片控件，[source]数据，[position]位置，[controller]控制器 */
-    open fun onLongClickImpl(viewHolder: RecyclerView.ViewHolder, view: V, source: T, position: Int, controller: PreviewController) {}
+    open fun onLongClickImpl(viewHolder: RecyclerView.ViewHolder, view: V, source: T, position: Int, controller: PreviewController):Boolean = false
 
     /** 加载图片，[source]数据，[view]图片控件 */
     abstract fun onDisplayImg(context: Context, source: T, view: V)

@@ -1,13 +1,13 @@
 package com.lodz.android.pandora.picker.preview
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.View
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.lodz.android.corekt.anko.getColorCompat
 import com.lodz.android.corekt.anko.getSize
 import com.lodz.android.corekt.utils.StatusBarUtil
@@ -16,7 +16,6 @@ import com.lodz.android.pandora.databinding.PandoraActivityPreviewBinding
 import com.lodz.android.pandora.event.PicturePreviewFinishEvent
 import com.lodz.android.pandora.picker.contract.preview.PreviewController
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
-import com.lodz.android.pandora.widget.rv.snap.ViewPagerSnapHelper
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
@@ -29,7 +28,7 @@ internal class PicturePreviewActivity<V : View, T : Any> : AbsActivity() {
     companion object {
         private var sPreviewBean: PreviewBean<*, *>? = null
         internal fun <V : View, T : Any> start(context: Context, previewBean: PreviewBean<V, T>, flags: List<Int>?) {
-            synchronized(this) {
+            synchronized(PreviewBean::class.java) {
                 if (sPreviewBean != null) {
                     return
                 }
@@ -46,20 +45,12 @@ internal class PicturePreviewActivity<V : View, T : Any> : AbsActivity() {
     private val mBinding: PandoraActivityPreviewBinding by bindingLayout(PandoraActivityPreviewBinding::inflate)
 
     /** 预览控制器 */
-    private lateinit var mPdrPreviewController: PreviewController
+    private  val mPdrPreviewController by lazy { PreviewControllerImpl(this) }
     /** 预览数据 */
-    private var mPdrPreviewBean: PreviewBean<V, T>? = null
+    @Suppress("UNCHECKED_CAST")
+    private val mPdrPreviewBean: PreviewBean<V, T>? by lazy { sPreviewBean as PreviewBean<V, T> }
     /** 适配器 */
     private lateinit var mPdrAdapter: PicturePagerAdapter<V, T>
-    /** 滑动帮助类 */
-    private lateinit var mPdrSnapHelper: ViewPagerSnapHelper
-
-    @Suppress("UNCHECKED_CAST")
-    override fun startCreate() {
-        super.startCreate()
-        mPdrPreviewBean = sPreviewBean as PreviewBean<V, T>
-        mPdrPreviewController = PreviewControllerImpl(this)
-    }
 
     override fun getAbsViewBindingLayout(): View = mBinding.root
 
@@ -75,28 +66,28 @@ internal class PicturePreviewActivity<V : View, T : Any> : AbsActivity() {
             finish()
             return
         }
-        initRecyclerView(bean, view)
+        initViewPager(view, bean.pageTransformer)
     }
 
-    /** 初始化RV */
-    private fun initRecyclerView(bean: PreviewBean<V, T>, view: AbsImageView<V, T>) {
-        val layoutManager = LinearLayoutManager(getContext())
-        layoutManager.orientation = RecyclerView.HORIZONTAL
+    private fun initViewPager(view: AbsImageView<V, T>, pageTransformer: ViewPager2.PageTransformer?) {
         mPdrAdapter = PicturePagerAdapter(getContext(), view, mPdrPreviewController)
-        mBinding.pdrPreviewRv.layoutManager = layoutManager
-        mBinding.pdrPreviewRv.setHasFixedSize(true)
-        mBinding.pdrPreviewRv.adapter = mPdrAdapter
-        mPdrSnapHelper = ViewPagerSnapHelper(bean.showPosition)
-        mPdrSnapHelper.attachToRecyclerView(mBinding.pdrPreviewRv)
+        mBinding.pdrPreviewVp2.adapter = mPdrAdapter
+        mBinding.pdrPreviewVp2.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+        mBinding.pdrPreviewVp2.isUserInputEnabled = true
+        mBinding.pdrPreviewVp2.setPageTransformer(pageTransformer)
     }
 
     override fun setListeners() {
         super.setListeners()
-        mPdrSnapHelper.setOnPageChangeListener { position ->
-            setPagerNum(position)
-        }
+        mBinding.pdrPreviewVp2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                setPagerNum(position)
+            }
+        })
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun initData() {
         super.initData()
         val bean = mPdrPreviewBean
@@ -122,7 +113,7 @@ internal class PicturePreviewActivity<V : View, T : Any> : AbsActivity() {
 
         mPdrAdapter.setData(list.toMutableList())
         mPdrAdapter.notifyDataSetChanged()
-        mBinding.pdrPreviewRv.scrollToPosition(bean.showPosition)
+        mBinding.pdrPreviewVp2.currentItem = bean.showPosition
     }
 
     /** 设置页码[position] */
@@ -151,7 +142,6 @@ internal class PicturePreviewActivity<V : View, T : Any> : AbsActivity() {
     private fun release() {
         mPdrAdapter.release()
         mPdrPreviewBean?.clear()
-        mPdrPreviewBean = null
         sPreviewBean?.clear()
         sPreviewBean = null
     }

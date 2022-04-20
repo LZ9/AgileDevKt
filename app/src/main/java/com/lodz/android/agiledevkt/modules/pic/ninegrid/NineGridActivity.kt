@@ -153,12 +153,9 @@ class NineGridActivity : BaseActivity() {
                     }
                 }
 
-                override fun onClickImpl(viewHolder: RecyclerView.ViewHolder, view: ImageView, item: PicInfo, position: Int, controller: PreviewController) {
-                    super.onClickImpl(viewHolder, view, item, position, controller)
-                    view.setOnClickListener {
-                        if (mBinding.clickClosePreviewSwitch.isChecked) {
-                            controller.close()
-                        }
+                override fun onClickImpl(viewHolder: RecyclerView.ViewHolder, view: ImageView, source: PicInfo, position: Int, controller: PreviewController) {
+                    if (mBinding.clickClosePreviewSwitch.isChecked) {
+                        controller.close()
                     }
                 }
 

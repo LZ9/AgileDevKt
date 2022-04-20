@@ -12,12 +12,11 @@ import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
  * 图片翻页适配器
  * Created by zhouL on 2018/12/17.
  */
-internal class PicturePagerAdapter<V : View, T : Any>(context: Context, view: AbsImageView<V, T>, controller: PreviewController) : BaseRecyclerViewAdapter<T>(context) {
-
-    /** 图片控件 */
-    private val mView: AbsImageView<V, T> = view
-    /** 图片加载器 */
-    private var mController: PreviewController = controller
+internal class PicturePagerAdapter<V : View, T : Any>(
+    context: Context,
+    private val mView: AbsImageView<V, T>, // 图片控件
+    private val mController: PreviewController // 控制器
+) : BaseRecyclerViewAdapter<T>(context) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val frameLayout = FrameLayout(parent.context)
@@ -47,9 +46,14 @@ internal class PicturePagerAdapter<V : View, T : Any>(context: Context, view: Ab
             // 图片加载
             mView.onDisplayImg(context, item, holder.photoImg as V)
             // 点击事件
-            mView.onClickImpl(holder, holder.photoImg, item, position, mController)
+            holder.photoImg.setOnClickListener {
+                mView.onClickImpl(holder, holder.photoImg, item, position, mController)
+            }
             // 长按事件
-            mView.onLongClickImpl(holder, holder.photoImg, item, position, mController)
+            holder.photoImg.setOnLongClickListener {
+                mView.onLongClickImpl(holder, holder.photoImg, item, position, mController)
+            }
+
         }
     }
 

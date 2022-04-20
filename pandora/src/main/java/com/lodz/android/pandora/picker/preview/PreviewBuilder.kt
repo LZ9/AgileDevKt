@@ -3,6 +3,7 @@ package com.lodz.android.pandora.picker.preview
 import android.view.View
 import androidx.annotation.ColorRes
 import androidx.annotation.IntRange
+import androidx.viewpager2.widget.ViewPager2
 
 /**
  * 图片预览构建器
@@ -57,6 +58,12 @@ class PreviewBuilder<V : View, T : Any> {
     /** 设置图片控件[view] */
     fun setImageView(view: AbsImageView<V, T>): PreviewBuilder<V, T> {
         previewBean.imgView = view
+        return this
+    }
+
+    /** 设置VP2的动画[pageTransformer] */
+    fun setPageTransformer(pageTransformer: ViewPager2.PageTransformer?): PreviewBuilder<V, T> {
+        previewBean.pageTransformer = pageTransformer
         return this
     }
 

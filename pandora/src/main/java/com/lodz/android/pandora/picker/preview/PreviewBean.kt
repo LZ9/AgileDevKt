@@ -2,6 +2,7 @@ package com.lodz.android.pandora.picker.preview
 
 import android.view.View
 import androidx.annotation.ColorRes
+import androidx.viewpager2.widget.ViewPager2
 
 /**
  * 预览数据
@@ -31,6 +32,8 @@ internal class PreviewBean<V : View, T : Any> {
     var isShowPagerText = true
     /** 图片控件 */
     var imgView: AbsImageView<V, T>? = null
+    /** VP2的动画 */
+    var pageTransformer: ViewPager2.PageTransformer? = null
 
     fun clear() {
         sourceList = null
