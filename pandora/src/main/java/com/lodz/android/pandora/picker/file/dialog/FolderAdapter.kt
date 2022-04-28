@@ -1,4 +1,4 @@
-package com.lodz.android.pandora.picker.photo.dialog
+package com.lodz.android.pandora.picker.file.dialog
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -15,7 +15,7 @@ import com.lodz.android.corekt.anko.dp2pxRF
 import com.lodz.android.corekt.anko.getColorCompat
 import com.lodz.android.pandora.R
 import com.lodz.android.pandora.picker.contract.OnImgLoader
-import com.lodz.android.pandora.picker.photo.PickerUIConfig
+import com.lodz.android.pandora.picker.file.PickerUIConfig
 import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
 import com.lodz.android.pandora.widget.rv.recycler.DataViewHolder
 
@@ -23,7 +23,7 @@ import com.lodz.android.pandora.widget.rv.recycler.DataViewHolder
  * 图片文件夹列表适配器
  * Created by zhouL on 2018/12/18.
  */
-internal class ImageFolderAdapter(context: Context) : BaseRecyclerViewAdapter<ImageFolderItemBean>(context) {
+internal class FolderAdapter(context: Context) : BaseRecyclerViewAdapter<FolderItemBean>(context) {
 
     /** 图片加载器 */
     private var mPdrImgLoader: OnImgLoader<PicInfo>? = null
@@ -54,7 +54,7 @@ internal class ImageFolderAdapter(context: Context) : BaseRecyclerViewAdapter<Im
         showItem(holder, bean)
     }
 
-    private fun showItem(holder: DataViewHolder, bean: ImageFolderItemBean) {
+    private fun showItem(holder: DataViewHolder, bean: FolderItemBean) {
         val imageFolder = bean.imageFolder ?: return
 
         // 封面图

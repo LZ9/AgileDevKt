@@ -7,8 +7,7 @@ import android.view.View
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.databinding.ActivityStrTestBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
-import com.lodz.android.corekt.anko.append
-import com.lodz.android.corekt.utils.StringUtils
+import com.lodz.android.corekt.anko.*
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 
@@ -52,16 +51,16 @@ class StrTestActivity : BaseActivity() {
         super.initData()
         mBinding.originalTv.text = getString(R.string.str_original).append(mOriginalStr)// 原始字符
 
-        mEncodeStr = StringUtils.encodeUtf8(mOriginalStr)
+        mEncodeStr = mOriginalStr.encodeUtf8()
         mBinding.encodeTv.text = getString(R.string.str_encode).append(mEncodeStr)// UTF-8编码
-        mBinding.decodeTv.text = getString(R.string.str_decode).append(StringUtils.decodeUtf8(mEncodeStr))// UTF-8解码
+        mBinding.decodeTv.text = getString(R.string.str_decode).append(mEncodeStr.decodeUtf8())// UTF-8解码
 
         mBinding.originalListStrTv.text = getString(R.string.str_original).append(mOriginalSeparatorStr)
         mBinding.separatorToListTv.text = getString(R.string.str_separator_to_list)
-            .append(StringUtils.getListBySeparator(mOriginalSeparatorStr, ","))// 分隔符字符串转数组
+            .append(mOriginalSeparatorStr.getListBySeparator(","))// 分隔符字符串转数组
         mBinding.originalListTv.text = getString(R.string.str_original_list).append(mOriginalList)
         mBinding.listToSeparatorTv.text = getString(R.string.str_list_to_separator)
-            .append(StringUtils.getStringBySeparator(mOriginalList, "/"))// 数组转分隔符字符串
+            .append(mOriginalList.getStringBySeparator("/"))// 数组转分隔符字符串
         showStatusCompleted()
     }
 }

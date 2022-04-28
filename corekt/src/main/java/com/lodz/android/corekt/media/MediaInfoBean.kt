@@ -1,7 +1,7 @@
 package com.lodz.android.corekt.media
 
 import androidx.documentfile.provider.DocumentFile
-import com.lodz.android.corekt.utils.FileUtils
+import com.lodz.android.corekt.file.getFileSuffix
 import java.util.*
 
 /**
@@ -39,6 +39,6 @@ class MediaInfoBean {
     fun getLastModifiedDate(): Date = Date(lastModified)
 
     /** 获取文件后缀 */
-    fun getSuffix(): String = FileUtils.getSuffix(displayName)
+    fun getSuffix(): String = displayName.getFileSuffix()
 
 }

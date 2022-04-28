@@ -26,7 +26,7 @@ class TakePhotoManager internal constructor(private val takeBean: TakeBean) {
             return
         }
         if (takeBean.photoTakeListener == null) {// 校验图片选中回调监听
-            context.toastShort(R.string.pandora_photo_take_listener_unset)
+            context.toastShort(R.string.pandora_picker_take_listener_unset)
             return
         }
         val path = Environment.getExternalStoragePublicDirectory(takeBean.publicDirectoryName)?.absolutePath ?: ""
@@ -35,7 +35,7 @@ class TakePhotoManager internal constructor(private val takeBean: TakeBean) {
             return
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && takeBean.authority.isEmpty()) {//当前系统是7.0以上且没有配置FileProvider
-            context.toastShort(R.string.pandora_photo_authority_empty)
+            context.toastShort(R.string.pandora_picker_authority_empty)
             return
         }
         TakePhotoActivity.start(context, takeBean, flags)

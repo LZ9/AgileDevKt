@@ -9,8 +9,8 @@ import android.view.View
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.databinding.ActivityRxUtilsTestBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
-import com.lodz.android.corekt.album.AlbumUtils
 import com.lodz.android.corekt.anko.*
+import com.lodz.android.corekt.media.getMediaImages
 import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
@@ -95,7 +95,7 @@ class RxUtilsTestActivity : BaseActivity() {
         mBinding.pathToBase64Btn.setOnClickListener {
             Observable.just("")
                 .map {
-                    val list = AlbumUtils.getAllImages(getContext())
+                    val list = getContext().getMediaImages()
                     if (list.isEmpty()){
                         throw NullPointerException(getString(R.string.rx_utils_pic_empty))
                     }
@@ -108,12 +108,12 @@ class RxUtilsTestActivity : BaseActivity() {
                     printResult("图片路径：$it")
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                         ImageLoader.create(getContext())
-                            .loadUri(it.uri)
+                            .loadUri(it.documentFile.uri)
                             .setCenterInside()
                             .into(mBinding.pathImg)
                     } else {
                         ImageLoader.create(getContext())
-                            .loadFilePath(it.path)
+                            .loadFilePath(it.file.absolutePath)
                             .setCenterInside()
                             .into(mBinding.pathImg)
                     }
@@ -122,9 +122,9 @@ class RxUtilsTestActivity : BaseActivity() {
                 .observeOn(Schedulers.io())
                 .flatMap {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                        RxUtils.decodeUriToBase64(getContext(), it.uri, getScreenWidth() / 8, getScreenHeight() / 8)
+                        RxUtils.decodeUriToBase64(getContext(), it.documentFile.uri, getScreenWidth() / 8, getScreenHeight() / 8)
                     } else {
-                        RxUtils.decodePathToBase64(it.path, getScreenWidth() / 8, getScreenHeight() / 8)
+                        RxUtils.decodePathToBase64(it.file.absolutePath, getScreenWidth() / 8, getScreenHeight() / 8)
                     }
                 }
                 .observeOn(AndroidSchedulers.mainThread())
@@ -152,7 +152,7 @@ class RxUtilsTestActivity : BaseActivity() {
         mBinding.pathsToBase64Btn.setOnClickListener {
             Observable.just("")
                 .map {
-                    val list = AlbumUtils.getAllImages(getContext())
+                    val list = getContext().getMediaImages()
                     if (list.isEmpty()){
                         throw NullPointerException(getString(R.string.rx_utils_pic_empty))
                     }
@@ -169,12 +169,12 @@ class RxUtilsTestActivity : BaseActivity() {
                     printResult("图片路径：$it")
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                         ImageLoader.create(getContext())
-                            .loadUri(it[0].uri)
+                            .loadUri(it[0].documentFile.uri)
                             .setCenterInside()
                             .into(mBinding.pathImg)
                     } else {
                         ImageLoader.create(getContext())
-                            .loadFilePath(it[0].path)
+                            .loadFilePath(it[0].file.absolutePath)
                             .setCenterInside()
                             .into(mBinding.pathImg)
                     }
@@ -185,8 +185,8 @@ class RxUtilsTestActivity : BaseActivity() {
                     val uris = ArrayList<Uri>()
                     val paths = ArrayList<String>()
                     for (info in it) {
-                        uris.add(info.uri)
-                        paths.add(info.path)
+                        uris.add(info.documentFile.uri)
+                        paths.add(info.file.absolutePath)
                     }
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                         RxUtils.decodeUriToBase64(getContext(), uris, getScreenWidth() / 8, getScreenHeight() / 8)

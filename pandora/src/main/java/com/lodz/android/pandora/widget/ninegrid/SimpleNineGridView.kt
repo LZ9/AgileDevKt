@@ -5,9 +5,8 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.ImageView
 import com.lodz.android.corekt.album.PicInfo
-import com.lodz.android.corekt.anko.toArrayList
-import com.lodz.android.pandora.picker.photo.PickerManager
-import com.lodz.android.pandora.picker.photo.PickerUIConfig
+import com.lodz.android.pandora.picker.file.PickerManager
+import com.lodz.android.pandora.picker.file.PickerUIConfig
 import com.lodz.android.pandora.picker.preview.PreviewManager
 
 
@@ -39,22 +38,22 @@ class SimpleNineGridView<V : View> : NineGridView {
         setListener(object : OnNineGridViewListener {
             override fun onAddPic(addCount: Int) {
                 val listener = mPdrListener ?: return
-                PickerManager.create<V>()
-                        .setImgLoader { context, source, imageView ->
-                            mPdrListener?.onDisplayPickerImg(context, source, imageView)
-                        }
-                        .setImageView(listener.createImageView())
-                        .setOnPhotoPickerListener { photos ->
-                            addDatas(photos.toArrayList())
-                        }
-                        .setMaxCount(addCount)
-                        .setNeedCamera(isPdrNeedCamera)
-                        .setNeedItemPreview(isPdrNeedItemPreview)
-                        .setPickerUIConfig(mPdrConfig)
-                        .setCameraSavePath(mPdrCameraSavePath)
-                        .setAuthority(mPdrAuthority)
-                        .build()
-                        .open(context)
+//                PickerManager.create<V>()
+//                        .setImgLoader { context, source, imageView ->
+//                            mPdrListener?.onDisplayPickerImg(context, source, imageView)
+//                        }
+//                        .setImageView(listener.createImageView())
+//                        .setOnPhotoPickerListener { photos ->
+//                            addDatas(photos.toArrayList())
+//                        }
+//                        .setMaxCount(addCount)
+//                        .setNeedCamera(isPdrNeedCamera)
+//                        .setNeedItemPreview(isPdrNeedItemPreview)
+//                        .setPickerUIConfig(mPdrConfig)
+//                        .setCameraSavePath(mPdrCameraSavePath)
+//                        .setAuthority(mPdrAuthority)
+//                        .build()
+//                        .open(context)
             }
 
             override fun onDisplayImg(context: Context, data: PicInfo, imageView: ImageView) {
@@ -67,17 +66,17 @@ class SimpleNineGridView<V : View> : NineGridView {
 
             override fun onClickPic(data: PicInfo, position: Int) {
                 val listener = mPdrListener ?: return
-                PreviewManager.create<V, PicInfo>()
-                        .setPosition(position)
-                        .setBackgroundColor(android.R.color.black)
-                        .setStatusBarColor(android.R.color.black)
-                        .setNavigationBarColor(android.R.color.black)
-                        .setPagerTextColor(android.R.color.white)
-                        .setPagerTextSize(14)
-                        .setShowPagerText(true)
-                        .setImageView(listener.createImageView())
-                        .build(getPicData())
-                        .open(context)
+//                PreviewManager.create<V, PicInfo>()
+//                        .setPosition(position)
+//                        .setBackgroundColor(android.R.color.black)
+//                        .setStatusBarColor(android.R.color.black)
+//                        .setNavigationBarColor(android.R.color.black)
+//                        .setPagerTextColor(android.R.color.white)
+//                        .setPagerTextSize(14)
+//                        .setShowPagerText(true)
+//                        .setImageView(listener.createImageView())
+//                        .build(getPicData())
+//                        .open(context)
             }
         })
     }

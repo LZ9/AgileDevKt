@@ -97,17 +97,6 @@ object FileUtils {
         }
     }
 
-    /** 获取文件名[fileName]的后缀 */
-    @JvmStatic
-    fun getSuffix(fileName: String): String {
-        var subffix = ""
-        val startCharIndex = fileName.lastIndexOf('.')
-        if (startCharIndex != -1) {//存在后缀
-            subffix = fileName.substring(startCharIndex)
-        }
-        return subffix
-    }
-
     /** 在路径[filePath]下创建文件夹 */
     @JvmStatic
     fun createFolder(filePath: String): Boolean {
@@ -484,37 +473,6 @@ object FileUtils {
         }
         cursor.close()
         return uri ?: Uri.EMPTY
-    }
-
-    /** 把[path]文件转Base64，转码类型[flags]默认Base64.NO_WRAP */
-    @JvmStatic
-    @JvmOverloads
-    fun fileToBase64(context: Context, uri: Uri, toPath: String, fileName: String, flags: Int = Base64.NO_WRAP): String {
-        val isSuccess = copyFileFromUri(context, uri, toPath, fileName)
-        if (!isSuccess) {
-            return ""
-        }
-        val newToPath = if (toPath.endsWith(File.separator)) toPath else toPath.append(File.separator)
-        return fileToBase64(newToPath.append(fileName), flags)
-    }
-
-    /** 把[path]文件转Base64，转码类型[flags]默认Base64.NO_WRAP */
-    @JvmStatic
-    @JvmOverloads
-    fun fileToBase64(path: String, flags: Int = Base64.NO_WRAP): String = fileToBase64(File(path), flags)
-
-    /** 把[file]文件转Base64，转码类型[flags]默认Base64.NO_WRAP */
-    @JvmStatic
-    @JvmOverloads
-    fun fileToBase64(file: File, flags: Int = Base64.NO_WRAP): String {
-        if (!file.exists()) {
-            return ""
-        }
-        FileInputStream(file).use {
-            val bytes = ByteArray(it.available())
-            val length = it.read(bytes)
-            return Base64.encodeToString(bytes, 0, length, flags) ?: ""
-        }
     }
 
     /** 把[base64]转文件，文件路径[toPath]，保存文件名[fileName]，转码类型[flags]默认Base64.NO_WRAP */

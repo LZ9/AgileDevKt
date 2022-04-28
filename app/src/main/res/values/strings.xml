@@ -518,16 +518,19 @@
     <string name="bottom_sheets_pikachu_look">Look</string>
     <string name="bottom_sheets_pikachu_specialized">Specialized</string>
 
-    <!-- 系统相册 -->
-    <string name="album_all_pic_path">获取相册所有图片路径</string>
-    <string name="album_all_img_folders">获取所有图片文件夹</string>
-    <string name="album_list_img_folders">获取图片列表包含的所有图片文件夹</string>
-    <string name="album_total_img_folder">获取总图片的文件夹</string>
-    <string name="album_img_folder">获取指定文件目录下的图片文件夹</string>
-    <string name="album_list_for_img_folder">获取指定图片文件夹里的图片路径列表</string>
-    <string name="album_delete_img">随机删除图片</string>
-    <string name="album_count">总数：</string>
-    <string name="album_no_pic">暂无图片</string>
+    <!-- 文件选择 -->
+    <string name="phone_file_get_all_file">获取指定文件后缀数据</string>
+    <string name="phone_file_get_all_image">获取图片数据</string>
+    <string name="phone_file_get_all_audio">获取音频数据</string>
+    <string name="phone_file_get_all_video">获取视频数据</string>
+    <string name="phone_file_group_folder">列表数据分组文件夹</string>
+    <string name="phone_file_delete_img">随机删除列表内图片</string>
+    <string name="phone_file_count">总数：</string>
+    <string name="phone_file_no_file">未查询到文件</string>
+    <string name="phone_file_input_hint">文件后缀（用,隔开），不传查询全部</string>
+    <string name="phone_file_transform_success">转换成功</string>
+    <string name="phone_file_transform_fail">转换失败</string>
+    <string name="phone_file_no_imag">列表中没有图片</string>
 
     <!-- 图片测试 -->
     <string name="pic_picker">图片选择器</string>

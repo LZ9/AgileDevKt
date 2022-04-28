@@ -126,6 +126,16 @@ object BitmapUtils {
         return null
     }
 
+    /** 把图片路径[uri]转为Bitmap */
+    @JvmStatic
+    fun uriToBitmap(context: Context, uri: Uri): Bitmap? {
+        context.contentResolver.openFileDescriptor(uri, "r")?.use {
+            return BitmapFactory.decodeFileDescriptor(it.fileDescriptor)
+        }
+        return null
+    }
+
+
     /** 设置图片的缩放比例 */
     private fun setInSampleSize(opts: BitmapFactory.Options, widthPx: Int, heightPx: Int): Int {
         val pictureHeight = opts.outHeight//图片高度

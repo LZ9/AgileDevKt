@@ -7,7 +7,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
-import android.provider.MediaStore
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
@@ -22,7 +21,7 @@ import com.lodz.android.corekt.anko.goAppDetailSetting
 import com.lodz.android.corekt.anko.isPermissionGranted
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.corekt.contacts.getContactData
-import com.lodz.android.corekt.media.getMediaInfo
+import com.lodz.android.corekt.media.*
 import com.lodz.android.corekt.utils.DateUtils
 import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.base.activity.BaseActivity
@@ -83,23 +82,12 @@ class ResultContractsCaseActivity : BaseActivity() {
 
         mBinding.takePictureBtn.setOnClickListener {
             reset()
-            mUri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                val file = File(DateUtils.getCurrentFormatString(DateUtils.TYPE_3).append(".jpg"))
-                val values = ContentValues()
-                values.put(MediaStore.MediaColumns.DISPLAY_NAME, file.name)
-                values.put(MediaStore.Images.Media.DESCRIPTION, "This is an image")
-                values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpg")
-                values.put(MediaStore.Images.Media.TITLE, file.name)
-                values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DCIM)
-                contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
-            } else {
-                FileProvider.getUriForFile(
-                    getContext(),
-                    BuildConfig.FILE_AUTHORITY,
-                    File(FileManager.getContentFolderPath().append(DateUtils.getCurrentFormatString(DateUtils.TYPE_3)).append(".jpg"))
-                )
-            }
-            mTakePictureResult.launch(mUri)
+            mPair = insertImageForPair(
+                DateUtils.getCurrentFormatString(DateUtils.TYPE_3).append(".jpg"),
+                BuildConfig.FILE_AUTHORITY,
+                Environment.DIRECTORY_DCIM
+            )
+            mTakePictureResult.launch(mPair?.first)
         }
 
         mBinding.takePicturePreviewBtn.setOnClickListener {
@@ -149,8 +137,8 @@ class ResultContractsCaseActivity : BaseActivity() {
             val path = FileManager.getContentFolderPath().append("${DateUtils.getCurrentFormatString(DateUtils.TYPE_3)}.mp4")
             addResultLog("视频存储路径：$path")
             val file = File(path)
-            mUri = FileProvider.getUriForFile(getContext(), BuildConfig.FILE_AUTHORITY, file, file.name)
-            mCaptureVideoResult.launch(mUri)
+            mPair = insertVideoForPair(file.name, BuildConfig.FILE_AUTHORITY)
+            mCaptureVideoResult.launch(mPair?.first)
         }
     }
 
@@ -203,15 +191,16 @@ class ResultContractsCaseActivity : BaseActivity() {
         addResultLog("未获取传递数据")
     }
 
-    private var mUri: Uri? = null
+    private var mPair: Pair<Uri, File>? = null
 
     /** 拍照回调 */
     val mTakePictureResult = registerForActivityResult(ActivityResultContracts.TakePicture()) {
-        val uri = mUri
+        val uri = mPair?.first
         if (!it || uri == null) {
             addResultLog("取消拍照")
             return@registerForActivityResult
         }
+        mPair?.second?.notifyScanImage(getContext())
         mBinding.resultImg.visibility = View.VISIBLE
         ImageLoader.create(this).loadUri(uri).into(mBinding.resultImg)
         addResultLog(uri.toString())
@@ -284,11 +273,12 @@ class ResultContractsCaseActivity : BaseActivity() {
 
     /** 拍摄视频回调 */
     val mCaptureVideoResult = registerForActivityResult(ActivityResultContracts.CaptureVideo()) {
-        val uri = mUri
+        val uri = mPair?.first
         if (!it || uri == null) {
             addResultLog("取消拍摄")
             return@registerForActivityResult
         }
+        mPair?.second?.notifyScanVideo(getContext())
         mBinding.resultImg.visibility = View.VISIBLE
         ImageLoader.create(this).loadUri(uri).into(mBinding.resultImg)
         addResultLog("选择文件路径：${uri}")
@@ -297,7 +287,7 @@ class ResultContractsCaseActivity : BaseActivity() {
 
     /** 重置 */
     private fun reset() {
-        mUri = null
+        mPair = null
         mBinding.resultTv.text = ""
         mBinding.resultImg.visibility = View.GONE
     }
@@ -360,7 +350,7 @@ class ResultContractsCaseActivity : BaseActivity() {
 
     /** 获取Uri的文件名称 */
     private fun getUriName(uri: Uri): String {
-        val bean = getMediaInfo(uri)
-        return bean.displayName.ifEmpty { "获取失败" }
+        val file = DocumentFile.fromSingleUri(getContext(), uri)
+        return file?.name ?: "获取失败"
     }
 }

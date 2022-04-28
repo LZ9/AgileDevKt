@@ -13,7 +13,7 @@ import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.MainBean
 import com.lodz.android.agiledevkt.databinding.ActivityMainBinding
 import com.lodz.android.agiledevkt.modules.acache.ACacheTestActivity
-import com.lodz.android.agiledevkt.modules.album.AlbumActivity
+import com.lodz.android.agiledevkt.modules.phonefile.PhoneFileActivity
 import com.lodz.android.agiledevkt.modules.annotation.AnnotationTestActivity
 import com.lodz.android.agiledevkt.modules.aop.AopTestActivity
 import com.lodz.android.agiledevkt.modules.api.ApiTestActivity
@@ -144,7 +144,7 @@ class MainActivity : BaseActivity() {
         MainBean("RecyclerBinder测试类", "R", BinderRvActivity::class.java),
         MainBean("BottomSheets测试类", "B", BottomSheetsActivity::class.java),
         MainBean("图片测试类", "T", PicActivity::class.java),
-        MainBean("系统相册测试类", "X", AlbumActivity::class.java),
+        MainBean("手机文件测试类", "S", PhoneFileActivity::class.java),
         MainBean("加载框测试类", "J", ProgressDialogActivity::class.java),
         MainBean("Rx帮助类测试", "R", RxUtilsTestActivity::class.java),
         MainBean("RxObservable订阅测试", "R", RxObservableActivity::class.java),

@@ -1,9 +1,12 @@
 package com.lodz.android.pandora.picker.preview
 
+import android.content.Context
 import android.view.View
+import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.IntRange
 import androidx.viewpager2.widget.ViewPager2
+import com.lodz.android.corekt.anko.getColorCompat
 
 /**
  * 图片预览构建器
@@ -20,28 +23,44 @@ class PreviewBuilder<V : View, T : Any> {
     }
 
     /** 设置背景色[color] */
-    fun setBackgroundColor(@ColorRes color: Int): PreviewBuilder<V, T> {
+    fun setBackgroundColor(@ColorInt color: Int): PreviewBuilder<V, T> {
         previewBean.backgroundColor = color
         return this
     }
 
+    /** 设置背景色[color] */
+    fun setBackgroundColor(context: Context, @ColorRes color: Int): PreviewBuilder<V, T> =
+        setBackgroundColor(context.getColorCompat(color))
+
     /** 设置顶部状态栏颜色[color] */
-    fun setStatusBarColor(@ColorRes color: Int): PreviewBuilder<V, T> {
+    fun setStatusBarColor(@ColorInt color: Int): PreviewBuilder<V, T> {
         previewBean.statusBarColor = color
         return this
     }
 
+    /** 设置顶部状态栏颜色[color] */
+    fun setStatusBarColor(context: Context, @ColorRes color: Int): PreviewBuilder<V, T> =
+        setStatusBarColor(context.getColorCompat(color))
+
     /** 设置底部导航栏颜色[color] */
-    fun setNavigationBarColor(@ColorRes color: Int): PreviewBuilder<V, T> {
+    fun setNavigationBarColor(@ColorInt color: Int): PreviewBuilder<V, T> {
         previewBean.navigationBarColor = color
         return this
     }
 
+    /** 设置底部导航栏颜色[color] */
+    fun setNavigationBarColor(context: Context, @ColorRes color: Int): PreviewBuilder<V, T> =
+        setNavigationBarColor(context.getColorCompat(color))
+
     /** 设置页码文字颜色[color] */
-    fun setPagerTextColor(@ColorRes color: Int): PreviewBuilder<V, T> {
+    fun setPagerTextColor(@ColorInt color: Int): PreviewBuilder<V, T> {
         previewBean.pagerTextColor = color
         return this
     }
+
+    /** 设置页码文字颜色[color] */
+    fun setPagerTextColor(context: Context, @ColorRes color: Int): PreviewBuilder<V, T> =
+        setPagerTextColor(context.getColorCompat(color))
 
     /** 设置页码文字大小[sp] */
     fun setPagerTextSize(sp: Int): PreviewBuilder<V, T> {

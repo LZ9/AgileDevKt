@@ -9,7 +9,7 @@
         </activity>
 
         <activity
-            android:name=".picker.photo.pick.PhotoPickerActivity"
+            android:name=".picker.file.pick.FilePickerActivity"
             android:screenOrientation="portrait">
 
         </activity>

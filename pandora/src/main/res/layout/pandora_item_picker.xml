@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -12,6 +13,42 @@
         android:layout_gravity="center"
         android:contentDescription="@string/pandora_app_img_name"
         android:scaleType="center" />
+
+    <LinearLayout
+        android:id="@+id/bottom_info_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@drawable/pandora_bg_000000_ffffff_gradient"
+        android:orientation="horizontal"
+        android:paddingStart="3dp"
+        android:paddingEnd="3dp">
+
+        <TextView
+            android:id="@+id/file_name_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="middle"
+            android:gravity="start"
+            android:singleLine="true"
+            android:textColor="#ffffff"
+            android:textSize="12sp"
+            tools:text="P293102938jsd.jpg" />
+
+        <TextView
+            android:id="@+id/file_size_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:ellipsize="middle"
+            android:gravity="end"
+            android:singleLine="true"
+            android:textColor="#ffffff"
+            android:textSize="12sp"
+            tools:text="00:05" />
+
+    </LinearLayout>
 
     <View
         android:id="@+id/pdr_mask_view"

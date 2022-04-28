@@ -6,14 +6,14 @@ import android.graphics.BitmapFactory
 import android.graphics.RectF
 import android.hardware.Camera
 import android.os.Bundle
+import android.os.Environment
 import android.view.View
 import android.view.WindowManager
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.event.TakePhotoEvent
 import com.lodz.android.agiledevkt.databinding.ActivityCameraTakeBinding
-import com.lodz.android.agiledevkt.utils.file.FileManager
-import com.lodz.android.corekt.album.AlbumUtils
 import com.lodz.android.corekt.anko.*
+import com.lodz.android.corekt.media.insertImageByPath
 import com.lodz.android.corekt.utils.BitmapUtils
 import com.lodz.android.corekt.utils.DateUtils
 import com.lodz.android.corekt.utils.FileUtils
@@ -102,9 +102,13 @@ class CameraTakeActivity : AbsActivity() {
         }
         Observable.just(data)
             .map {
-                val path = FileManager.getCacheFolderPath().append("Photo_").append(DateUtils.getCurrentFormatString(DateUtils.TYPE_3)).append(".jpg")
-                FileUtils.createNewFile(path)
+                val rootPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)?.absolutePath ?: ""
+                if (rootPath.isEmpty()){
+                    return@map ""
+                }
+                val path = rootPath.append(File.separator).append("Photo_").append(DateUtils.getCurrentFormatString(DateUtils.TYPE_3)).append(".jpg")
                 val file = File(path)
+                FileUtils.createNewFile(path)
                 val rawBitmap = BitmapFactory.decodeByteArray(it, 0, it.size)
                 val resultBitmap = if (mCameraHelper?.getCameraFacing() == Camera.CameraInfo.CAMERA_FACING_FRONT){
                     // 手机前置摄像头要镜像并旋转270度
@@ -114,7 +118,7 @@ class CameraTakeActivity : AbsActivity() {
                     BitmapUtils.rotateBitmap(rawBitmap, 90f)
                 }
                 file.sink().buffer().write(BitmapUtils.bitmapToByte(resultBitmap)).close()
-                AlbumUtils.notifyScanImageCompat(getContext(), path)
+                insertImageByPath(file.name, Environment.DIRECTORY_DCIM)
                 return@map path
             }
             .compose(RxUtils.ioToMainObservable())

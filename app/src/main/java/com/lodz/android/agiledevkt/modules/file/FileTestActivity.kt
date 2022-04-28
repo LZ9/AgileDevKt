@@ -12,6 +12,7 @@ import com.lodz.android.agiledevkt.utils.file.FileManager
 import com.lodz.android.corekt.anko.append
 import com.lodz.android.corekt.anko.then
 import com.lodz.android.corekt.anko.toastShort
+import com.lodz.android.corekt.file.toBase64
 import com.lodz.android.corekt.utils.DateUtils
 import com.lodz.android.corekt.utils.FileUtils
 import com.lodz.android.pandora.base.activity.BaseActivity
@@ -232,7 +233,7 @@ class FileTestActivity : BaseActivity() {
     private fun fileToBase64(file: File) {
         Observable.just(file)
             .map {
-                FileUtils.fileToBase64(it)
+                it.toBase64()
             }
             .map {
                 if (it.isEmpty()){

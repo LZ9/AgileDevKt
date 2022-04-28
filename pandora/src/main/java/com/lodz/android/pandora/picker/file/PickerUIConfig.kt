@@ -1,4 +1,4 @@
-package com.lodz.android.pandora.picker.photo
+package com.lodz.android.pandora.picker.file
 
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes

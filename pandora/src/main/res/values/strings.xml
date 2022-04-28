@@ -16,27 +16,29 @@
     <!-- 图片预览/选择 -->
     <string name="pandora_picker_public_directory_empty">设置公共目录路径失败</string>
     <string name="pandora_picker_uri_null">照片路径Uri获取失败</string>
-    <string name="pandora_photo_loader_unset">您尚未设置图片加载器</string>
+    <string name="pandora_picker_loader_unset">您尚未设置图片加载器</string>
     <string name="pandora_preview_img_unset">您尚未设置图片预览控件</string>
     <string name="pandora_preview_loader_unset">您尚未设置图片预览器</string>
     <string name="pandora_preview_source_list_empty">图片数据为空</string>
-    <string name="pandora_photo_source_list_empty">您没有可以选择的图片</string>
-    <string name="pandora_photo_selected_listener_unset">您尚未设置图片选中监听器</string>
+    <string name="pandora_picker_source_list_empty">您没有可以选择的数据</string>
+    <string name="pandora_picker_mime_type_empty">您尚未设置手机数据过滤类型</string>
+    <string name="pandora_picker_selected_listener_unset">您尚未设置文件选中监听器</string>
     <string name="pandora_picker_folder_loading">正在读取图片文件夹</string>
-    <string name="pandora_picker_title">图片选择</string>
+    <string name="pandora_picker_title">文件选择</string>
     <string name="pandora_picker_confirm">确定</string>
     <string name="pandora_picker_confirm_num">确定(%1$s/%2$s)</string>
     <string name="pandora_picker_preview">预览</string>
     <string name="pandora_picker_preview_num">预览(%s)</string>
-    <string name="pandora_picker_all_photo">所有图片</string>
-    <string name="pandora_picker_custom_photo">指定图片</string>
-    <string name="pandora_picker_photo_count_tips">您最多可以选择%s张图片</string>
+    <string name="pandora_picker_all_file">所有文件</string>
+    <string name="pandora_picker_custom_file">指定文件</string>
+    <string name="pandora_picker_photo_count_tips">您最多可以选择%s个文件</string>
     <string name="pandora_picker_folder_num">%s张</string>
     <string name="pandora_no_camera">没有系统相机</string>
-    <string name="pandora_photo_temp_file_fail">文件创建失败</string>
-    <string name="pandora_photo_folder_fail">文件夹创建失败</string>
-    <string name="pandora_photo_authority_empty">您尚未配置FileProvider</string>
-    <string name="pandora_photo_take_listener_unset">您尚未设置拍照回调监听器</string>
+    <string name="pandora_picker_temp_file_fail">文件创建失败</string>
+    <string name="pandora_picker_folder_fail">文件夹创建失败</string>
+    <string name="pandora_picker_authority_empty">您尚未配置FileProvider</string>
+    <string name="pandora_picker_take_listener_unset">您尚未设置拍照回调监听器</string>
+    <string name="pandora_picker_preview_photo_only">仅提供图片预览</string>
 
     <!-- 搜索标题栏 -->
     <string name="pandora_search_title_hint">请输入查询关键字</string>

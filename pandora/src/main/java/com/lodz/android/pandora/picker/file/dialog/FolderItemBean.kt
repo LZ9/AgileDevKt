@@ -1,4 +1,4 @@
-package com.lodz.android.pandora.picker.photo.dialog
+package com.lodz.android.pandora.picker.file.dialog
 
 import com.lodz.android.corekt.album.ImageFolder
 
@@ -6,7 +6,7 @@ import com.lodz.android.corekt.album.ImageFolder
  * 图片文件夹列表数据
  * Created by zhouL on 2018/12/18.
  */
-class ImageFolderItemBean {
+class FolderItemBean {
 
     /** 图片文件夹 */
     var imageFolder: ImageFolder? = null

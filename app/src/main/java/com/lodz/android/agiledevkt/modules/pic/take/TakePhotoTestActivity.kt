@@ -12,6 +12,7 @@ import com.lodz.android.agiledevkt.BuildConfig
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.databinding.ActivityTakePhotoTestBinding
 import com.lodz.android.corekt.anko.*
+import com.lodz.android.corekt.file.toBase64
 import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.picker.take.TakePhotoManager

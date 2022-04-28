@@ -1,17 +1,14 @@
 package com.lodz.android.pandora.picker.take
 
-import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
-import android.os.Environment
-import android.provider.MediaStore
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.FileProvider
 import androidx.documentfile.provider.DocumentFile
 import com.lodz.android.corekt.anko.*
+import com.lodz.android.corekt.media.insertImageForPair
+import com.lodz.android.corekt.media.notifyScanImage
 import com.lodz.android.corekt.utils.DateUtils
 import com.lodz.android.corekt.utils.StatusBarUtil
 import com.lodz.android.pandora.R
@@ -50,7 +47,7 @@ internal class TakePhotoActivity : AbsActivity() {
     private val mPdrTakeBean by lazy { sTakeBean }
 
     /** 图片的地址 */
-    private var mUri: Uri? = null
+    private var mPair: Pair<Uri, File>? = null
 
     override fun getAbsViewBindingLayout(): View = mBinding.root
 
@@ -89,34 +86,22 @@ internal class TakePhotoActivity : AbsActivity() {
 
     /** 拍照 */
     private fun takeCameraPhoto(bean: TakeBean) {
-        // 获取公共路径目录
-        var rootPath = Environment.getExternalStoragePublicDirectory(bean.publicDirectoryName)?.absolutePath ?: ""
-        if (!rootPath.endsWith(File.separator)) {//补全地址
-            rootPath += File.separator
-        }
-        val file = File("${rootPath}P_${DateUtils.getCurrentFormatString(DateUtils.TYPE_4)}.jpg")
-        mUri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            val values = ContentValues()
-            values.put(MediaStore.MediaColumns.DISPLAY_NAME, file.name)
-            values.put(MediaStore.Images.Media.DESCRIPTION, "This is an image")
-            values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpg")
-            values.put(MediaStore.Images.Media.TITLE, file.name)
-            values.put(MediaStore.MediaColumns.RELATIVE_PATH, bean.publicDirectoryName)
-            contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
-        } else {
-            FileProvider.getUriForFile(getContext(), bean.authority, file)
-        }
-        if (mUri == null){//校验Uri路径是否获取成功
+        mPair = insertImageForPair(
+            "P_${DateUtils.getCurrentFormatString(DateUtils.TYPE_4)}.jpg",
+            bean.authority,
+            bean.publicDirectoryName
+        )
+        if (mPair?.first == null){//校验Uri路径是否获取成功
             toastShort(R.string.pandora_picker_uri_null)
             finish()
             return
         }
-        mTakePictureResult.launch(mUri)
+        mTakePictureResult.launch(mPair?.first)
     }
 
     /** 拍照回调 */
     val mTakePictureResult = registerForActivityResult(ActivityResultContracts.TakePicture()) {
-        val uri = mUri
+        val uri = mPair?.first
         if (!it || uri == null) {
             handleCameraCancel()
             return@registerForActivityResult
@@ -126,6 +111,7 @@ internal class TakePhotoActivity : AbsActivity() {
             handleCameraCancel()
             return@registerForActivityResult
         }
+        mPair?.second?.notifyScanImage(getContext())
         if (bean.isImmediately) {//立即返回
             handleConfirm()
             return@registerForActivityResult
@@ -135,7 +121,7 @@ internal class TakePhotoActivity : AbsActivity() {
 
     /** 处理确认照片 */
     private fun handleConfirm() {
-        val uri = mUri
+        val uri = mPair?.first
         val file = if (uri != null) DocumentFile.fromSingleUri(getContext(), uri) else null
         mPdrTakeBean?.photoTakeListener?.onTake(file)
         finish()
@@ -143,7 +129,7 @@ internal class TakePhotoActivity : AbsActivity() {
 
     /** 处理拍照取消 */
     private fun handleCameraCancel() {
-        val uri = mUri
+        val uri = mPair?.first
         if (uri != null) {
             contentResolver.delete(uri, null, null)
         }

@@ -102,13 +102,13 @@ internal class PicturePreviewActivity<V : View, T : Any> : AbsActivity() {
         }
 
         // 设置背景控件颜色
-        mBinding.pdrRootView.setBackgroundColor(getColorCompat(bean.backgroundColor))
-        StatusBarUtil.setColor(window, getColorCompat(bean.statusBarColor))
-        StatusBarUtil.setNavigationBarColor(window, getColorCompat(bean.navigationBarColor))
+        mBinding.pdrRootView.setBackgroundColor(bean.backgroundColor)
+        StatusBarUtil.setColor(window, bean.statusBarColor)
+        StatusBarUtil.setNavigationBarColor(window, bean.navigationBarColor)
         setPagerNum(bean.showPosition)
         // 配置页码提示
         mBinding.pdrPagerTv.visibility = if (bean.isShowPagerText) View.VISIBLE else View.GONE
-        mBinding.pdrPagerTv.setTextColor(getColorCompat(bean.pagerTextColor))
+        mBinding.pdrPagerTv.setTextColor(bean.pagerTextColor)
         mBinding.pdrPagerTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, bean.pagerTextSize.toFloat())
 
         mPdrAdapter.setData(list.toMutableList())

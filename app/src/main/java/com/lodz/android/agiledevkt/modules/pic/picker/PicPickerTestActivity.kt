@@ -24,8 +24,8 @@ import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.picker.contract.preview.PreviewController
-import com.lodz.android.pandora.picker.photo.PickerManager
-import com.lodz.android.pandora.picker.photo.PickerUIConfig
+import com.lodz.android.pandora.picker.file.PickerManager
+import com.lodz.android.pandora.picker.file.PickerUIConfig
 import com.lodz.android.pandora.picker.preview.AbsImageView
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import permissions.dispatcher.*
@@ -84,131 +84,133 @@ class PicPickerTestActivity : BaseActivity() {
 
         // 挑选手机相册
         mBinding.pickPhoneBtn.setOnClickListener {
-            PickerManager.create<ImageView>()
-                .setMaxCount(mMaxCount)
-                .setNeedCamera(mBinding.showCameraSwitch.isChecked)
-                .setNeedItemPreview(mBinding.itemPreviewSwitch.isChecked)
-                .setPickerUIConfig(mConfig)
-                .setCameraSavePath(FileManager.getCacheFolderPath())
-                .setAuthority(BuildConfig.FILE_AUTHORITY)
-                .setImgLoader { context, source, imageView ->
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                        ImageLoader.create(context).loadUri(source.uri).setCenterCrop().into(imageView)
-                    } else {
-                        ImageLoader.create(context).loadFilePath(source.path).setCenterCrop().into(imageView)
-                    }
-                }
-                .setImageView(object : AbsImageView<ImageView, PicInfo>(mBinding.scaleSwitch.isChecked) {
-                    override fun onCreateView(context: Context, isScale: Boolean): ImageView {
-                        val img = if (isScale) PhotoView(context) else ImageView(context)
-                        img.scaleType = ImageView.ScaleType.CENTER_INSIDE
-                        return img
-                    }
 
-                    override fun onDisplayImg(context: Context, source: PicInfo, view: ImageView) {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                            ImageLoader.create(context).loadUri(source.uri).setFitCenter().into(view)
-                        } else {
-                            ImageLoader.create(context).loadFilePath(source.path).setFitCenter().into(view)
-                        }
-                    }
-                    override fun onClickImpl(viewHolder: RecyclerView.ViewHolder, view: ImageView, source: PicInfo, position: Int, controller: PreviewController) {
-                        if (mBinding.clickClosePreviewSwitch.isChecked) {
-                            controller.close()
-                        }
-                    }
 
-                    override fun onViewDetached(view: ImageView, isScale: Boolean) {
-                        super.onViewDetached(view, isScale)
-                        if (isScale && view is PhotoView) {
-                            view.attacher.update()
-                        }
-                    }
-                })
-                .setOnLifecycleObserver(object :DefaultLifecycleObserver{
-                    override fun onDestroy(owner: LifecycleOwner) {
-                        super.onDestroy(owner)
-                        PrintLog.e("testtag", "DefaultLifecycleObserver onDestroy")
-                    }
-
-                    override fun onCreate(owner: LifecycleOwner) {
-                        super.onCreate(owner)
-                        PrintLog.e("testtag", "DefaultLifecycleObserver onCreate")
-                    }
-
-                    override fun onPause(owner: LifecycleOwner) {
-                        super.onPause(owner)
-                        PrintLog.v("testtag", "DefaultLifecycleObserver onPause")
-                    }
-
-                    override fun onResume(owner: LifecycleOwner) {
-                        super.onResume(owner)
-                        PrintLog.v("testtag", "DefaultLifecycleObserver onResume")
-                    }
-
-                    override fun onStart(owner: LifecycleOwner) {
-                        super.onStart(owner)
-                        PrintLog.d("testtag", "DefaultLifecycleObserver onStart")
-                    }
-
-                    override fun onStop(owner: LifecycleOwner) {
-                        super.onStop(owner)
-                        PrintLog.d("testtag", "DefaultLifecycleObserver onStop")
-                    }
-                })
-                .setOnPhotoPickerListener { photos ->
-                    var str = ""
-                    for (path in photos) {
-                        str += "$path\n\n"
-                    }
-                    mBinding.resultTv.text = str
-                }
-                .build()
-                .open(getContext())
+//            PickerManager.create<ImageView>()
+//                .setMaxCount(mMaxCount)
+//                .setNeedCamera(mBinding.showCameraSwitch.isChecked)
+//                .setNeedItemPreview(mBinding.itemPreviewSwitch.isChecked)
+//                .setPickerUIConfig(mConfig)
+//                .setCameraSavePath(FileManager.getCacheFolderPath())
+//                .setAuthority(BuildConfig.FILE_AUTHORITY)
+//                .setImgLoader { context, source, imageView ->
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+//                        ImageLoader.create(context).loadUri(source.uri).setCenterCrop().into(imageView)
+//                    } else {
+//                        ImageLoader.create(context).loadFilePath(source.path).setCenterCrop().into(imageView)
+//                    }
+//                }
+//                .setImageView(object : AbsImageView<ImageView, PicInfo>(mBinding.scaleSwitch.isChecked) {
+//                    override fun onCreateView(context: Context, isScale: Boolean): ImageView {
+//                        val img = if (isScale) PhotoView(context) else ImageView(context)
+//                        img.scaleType = ImageView.ScaleType.CENTER_INSIDE
+//                        return img
+//                    }
+//
+//                    override fun onDisplayImg(context: Context, source: PicInfo, view: ImageView) {
+//                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+//                            ImageLoader.create(context).loadUri(source.uri).setFitCenter().into(view)
+//                        } else {
+//                            ImageLoader.create(context).loadFilePath(source.path).setFitCenter().into(view)
+//                        }
+//                    }
+//                    override fun onClickImpl(viewHolder: RecyclerView.ViewHolder, view: ImageView, source: PicInfo, position: Int, controller: PreviewController) {
+//                        if (mBinding.clickClosePreviewSwitch.isChecked) {
+//                            controller.close()
+//                        }
+//                    }
+//
+//                    override fun onViewDetached(view: ImageView, isScale: Boolean) {
+//                        super.onViewDetached(view, isScale)
+//                        if (isScale && view is PhotoView) {
+//                            view.attacher.update()
+//                        }
+//                    }
+//                })
+//                .setOnLifecycleObserver(object :DefaultLifecycleObserver{
+//                    override fun onDestroy(owner: LifecycleOwner) {
+//                        super.onDestroy(owner)
+//                        PrintLog.e("testtag", "DefaultLifecycleObserver onDestroy")
+//                    }
+//
+//                    override fun onCreate(owner: LifecycleOwner) {
+//                        super.onCreate(owner)
+//                        PrintLog.e("testtag", "DefaultLifecycleObserver onCreate")
+//                    }
+//
+//                    override fun onPause(owner: LifecycleOwner) {
+//                        super.onPause(owner)
+//                        PrintLog.v("testtag", "DefaultLifecycleObserver onPause")
+//                    }
+//
+//                    override fun onResume(owner: LifecycleOwner) {
+//                        super.onResume(owner)
+//                        PrintLog.v("testtag", "DefaultLifecycleObserver onResume")
+//                    }
+//
+//                    override fun onStart(owner: LifecycleOwner) {
+//                        super.onStart(owner)
+//                        PrintLog.d("testtag", "DefaultLifecycleObserver onStart")
+//                    }
+//
+//                    override fun onStop(owner: LifecycleOwner) {
+//                        super.onStop(owner)
+//                        PrintLog.d("testtag", "DefaultLifecycleObserver onStop")
+//                    }
+//                })
+//                .setOnPhotoPickerListener { photos ->
+//                    var str = ""
+//                    for (path in photos) {
+//                        str += "$path\n\n"
+//                    }
+//                    mBinding.resultTv.text = str
+//                }
+//                .build()
+//                .open(getContext())
         }
 
         // 挑选指定图片
         mBinding.pickCustomBtn.setOnClickListener {
-            PickerManager.create<ImageView>()
-                .setMaxCount(mMaxCount)
-                .setNeedItemPreview(mBinding.itemPreviewSwitch.isChecked)
-                .setPickerUIConfig(mConfig)
-                .setImgLoader { context, source, imageView ->
-                    ImageLoader.create(context).loadUrl(source.path).setCenterCrop().into(imageView)
-                }
-                .setImageView(object : AbsImageView<ImageView, PicInfo>(mBinding.scaleSwitch.isChecked) {
-                    override fun onCreateView(context: Context, isScale: Boolean): ImageView {
-                        val img = if (isScale) PhotoView(context) else ImageView(context)
-                        img.scaleType = ImageView.ScaleType.CENTER_INSIDE
-                        return img
-                    }
-
-                    override fun onDisplayImg(context: Context, source: PicInfo, view: ImageView) {
-                        ImageLoader.create(context).loadUrl(source.path).setFitCenter().into(view)
-                    }
-
-                    override fun onClickImpl(viewHolder: RecyclerView.ViewHolder, view: ImageView, source: PicInfo, position: Int, controller: PreviewController) {
-                        if (mBinding.clickClosePreviewSwitch.isChecked) {
-                            controller.close()
-                        }
-                    }
-
-                    override fun onViewDetached(view: ImageView, isScale: Boolean) {
-                        super.onViewDetached(view, isScale)
-                        if (isScale && view is PhotoView) {
-                            view.attacher.update()
-                        }
-                    }
-                })
-                .setOnPhotoPickerListener { photos ->
-                    var str = ""
-                    for (path in photos) {
-                        str += "$path\n\n"
-                    }
-                    mBinding.resultTv.text = str
-                }
-                .build(Constant.IMG_URLS)
-                .open(getContext())
+//            PickerManager.create<ImageView>()
+//                .setMaxCount(mMaxCount)
+//                .setNeedItemPreview(mBinding.itemPreviewSwitch.isChecked)
+//                .setPickerUIConfig(mConfig)
+//                .setImgLoader { context, source, imageView ->
+//                    ImageLoader.create(context).loadUrl(source.path).setCenterCrop().into(imageView)
+//                }
+//                .setImageView(object : AbsImageView<ImageView, PicInfo>(mBinding.scaleSwitch.isChecked) {
+//                    override fun onCreateView(context: Context, isScale: Boolean): ImageView {
+//                        val img = if (isScale) PhotoView(context) else ImageView(context)
+//                        img.scaleType = ImageView.ScaleType.CENTER_INSIDE
+//                        return img
+//                    }
+//
+//                    override fun onDisplayImg(context: Context, source: PicInfo, view: ImageView) {
+//                        ImageLoader.create(context).loadUrl(source.path).setFitCenter().into(view)
+//                    }
+//
+//                    override fun onClickImpl(viewHolder: RecyclerView.ViewHolder, view: ImageView, source: PicInfo, position: Int, controller: PreviewController) {
+//                        if (mBinding.clickClosePreviewSwitch.isChecked) {
+//                            controller.close()
+//                        }
+//                    }
+//
+//                    override fun onViewDetached(view: ImageView, isScale: Boolean) {
+//                        super.onViewDetached(view, isScale)
+//                        if (isScale && view is PhotoView) {
+//                            view.attacher.update()
+//                        }
+//                    }
+//                })
+//                .setOnPhotoPickerListener { photos ->
+//                    var str = ""
+//                    for (path in photos) {
+//                        str += "$path\n\n"
+//                    }
+//                    mBinding.resultTv.text = str
+//                }
+//                .build(Constant.IMG_URLS)
+//                .open(getContext())
         }
 
         // 加数量
