@@ -23,6 +23,7 @@
     <string name="pandora_picker_source_list_empty">您没有可以选择的数据</string>
     <string name="pandora_picker_mime_type_empty">您尚未设置手机数据过滤类型</string>
     <string name="pandora_picker_selected_listener_unset">您尚未设置文件选中监听器</string>
+    <string name="pandora_picker_suffix_unset">您未传入文件后缀</string>
     <string name="pandora_picker_folder_loading">正在读取图片文件夹</string>
     <string name="pandora_picker_title">文件选择</string>
     <string name="pandora_picker_confirm">确定</string>
