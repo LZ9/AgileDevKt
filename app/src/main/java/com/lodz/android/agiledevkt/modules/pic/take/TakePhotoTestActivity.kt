@@ -104,7 +104,9 @@ class TakePhotoTestActivity : BaseActivity() {
                 .setImmediately(false)
                 .setAuthority(BuildConfig.FILE_AUTHORITY)
                 .setOnImgLoader { context, source, imageView ->
-                    ImageLoader.create(context).loadUri(source.uri).setFitCenter().into(imageView)
+                    if (source != null){
+                        ImageLoader.create(context).loadUri(source.uri).setFitCenter().into(imageView)
+                    }
                 }
                 .setOnPhotoTakeListener { file ->
                     if (file == null){

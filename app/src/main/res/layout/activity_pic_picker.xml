@@ -12,25 +12,90 @@
         android:orientation="horizontal">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/pick_phone_btn"
+            android:id="@+id/picker_custom_res_btn"
             style="?android:attr/buttonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
             android:layout_weight="1"
-            android:text="@string/picker_phone_pic"
-            android:textColor="@color/white" />
+            android:text="@string/picker_custom_res"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/pick_custom_btn"
+            android:id="@+id/picker_custom_url_btn"
             style="?android:attr/buttonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
             android:layout_weight="1"
-            android:text="@string/picker_custom_pic"
-            android:textColor="@color/white" />
+            android:text="@string/picker_custom_url"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/picker_custom_file_btn"
+            style="?android:attr/buttonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/picker_custom_file"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/picker_phone_album_btn"
+            style="?android:attr/buttonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/picker_phone_album"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/picker_phone_any_btn"
+            style="?android:attr/buttonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/picker_phone_any"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/picker_phone_media_btn"
+            style="?android:attr/buttonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/picker_phone_media"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/picker_phone_office_btn"
+        style="?android:attr/buttonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/picker_phone_office"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="12sp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -89,7 +154,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/scale_switch"
@@ -105,6 +170,13 @@
             android:checked="true"
             android:text="@string/picker_show_camera" />
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/click_close_preview_switch"
             android:layout_width="wrap_content"
@@ -118,6 +190,7 @@
             android:layout_height="wrap_content"
             android:checked="true"
             android:text="@string/picker_item_preview" />
+
     </LinearLayout>
 
     <RadioGroup
@@ -156,11 +229,19 @@
             android:text="@string/picker_style_three" />
     </RadioGroup>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/picker_result"
+        android:textColor="@color/color_00a0e9"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:padding="5dp">
+        android:padding="10dp">
 
         <TextView
             android:id="@+id/result_tv"

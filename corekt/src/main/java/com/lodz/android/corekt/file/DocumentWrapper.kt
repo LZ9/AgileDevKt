@@ -8,4 +8,9 @@ import java.io.File
  * @author zhouL
  * @date 2022/4/24
  */
-class DocumentWrapper(val file: File, val documentFile: DocumentFile, val duration: Long)
+class DocumentWrapper(
+    val file: File,
+    val documentFile: DocumentFile,
+    val duration: Long, //音视频时长
+    val sizeFormat: String //格式化文件大小
+)

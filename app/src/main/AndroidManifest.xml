@@ -647,7 +647,7 @@
 
         <activity
             android:name=".modules.pic.PicActivity"
-            android:label="图片测试类"
+            android:label="文件选择测试类"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity">
 

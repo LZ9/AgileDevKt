@@ -11,10 +11,7 @@ import android.provider.MediaStore
 import androidx.core.content.FileProvider
 import androidx.documentfile.provider.DocumentFile
 import com.lodz.android.corekt.anko.append
-import com.lodz.android.corekt.file.DocumentWrapper
-import com.lodz.android.corekt.file.getDirName
-import com.lodz.android.corekt.file.getDirPath
-import com.lodz.android.corekt.file.getFileSuffix
+import com.lodz.android.corekt.file.*
 import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
@@ -220,7 +217,7 @@ fun Context.getAllFiles(vararg suffix: String): List<DocumentWrapper> {
                 continue
             }
             val document = DocumentFile.fromSingleUri(this, ContentUris.withAppendedId(uri, id)) ?: continue
-            val wrapper = DocumentWrapper(file, document, duration)
+            val wrapper = DocumentWrapper(file, document, duration, file.length().formatFileSize())
             if (array.isEmpty()) {//后缀数组为空查询全部
                 list.add(wrapper)
                 continue
@@ -273,7 +270,7 @@ fun Context.getMediaData(uri: Uri): List<DocumentWrapper> {
                 continue
             }
             val document = DocumentFile.fromSingleUri(this, ContentUris.withAppendedId(uri, id)) ?: continue
-            val wrapper = DocumentWrapper(file, document, duration)
+            val wrapper = DocumentWrapper(file, document, duration, file.length().formatFileSize())
             list.add(wrapper)
         }
     }
@@ -466,6 +463,26 @@ fun Context.getTotalFolder(vararg suffix: String): DocumentFolder {
     val folder = DocumentFolder()
     folder.dirName = "全部"
     folder.addDocument(getAllFiles(*suffix))
+    return folder
+}
+
+/** 获取手机所有文件的目录 */
+fun List<DocumentWrapper>.getAllFileFolder(): List<DocumentFolder> {
+    val folders = LinkedList<DocumentFolder>()
+    val totalFolder = getTotalFolder()
+    if (totalFolder.fileList.isEmpty()) {
+        return folders
+    }
+    folders.add(totalFolder)
+    folders.addAll(totalFolder.fileList.groupByFolder())
+    return folders
+}
+
+/** 获取总文件夹 */
+fun List<DocumentWrapper>.getTotalFolder(): DocumentFolder {
+    val folder = DocumentFolder()
+    folder.dirName = "全部"
+    folder.addDocument(this)
     return folder
 }
 

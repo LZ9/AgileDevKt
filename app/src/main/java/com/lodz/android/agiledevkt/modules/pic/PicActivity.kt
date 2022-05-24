@@ -12,7 +12,7 @@ import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 
 /**
- * 图片测试类
+ * 文件选择测试类
  * Created by zhouL on 2018/12/13.
  */
 class PicActivity : BaseActivity() {
@@ -28,7 +28,7 @@ class PicActivity : BaseActivity() {
 
     override fun setListeners() {
         super.setListeners()
-        // 图片选择按钮
+        // 文件选择按钮
         mBinding.pickBtn.setOnClickListener {
             PicPickerTestActivity.start(getContext())
         }

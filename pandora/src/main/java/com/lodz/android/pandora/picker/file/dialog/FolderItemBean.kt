@@ -1,6 +1,6 @@
 package com.lodz.android.pandora.picker.file.dialog
 
-import com.lodz.android.corekt.album.ImageFolder
+import com.lodz.android.corekt.media.DocumentFolder
 
 /**
  * 图片文件夹列表数据
@@ -9,7 +9,7 @@ import com.lodz.android.corekt.album.ImageFolder
 class FolderItemBean {
 
     /** 图片文件夹 */
-    var imageFolder: ImageFolder? = null
+    var documentFolder: DocumentFolder? = null
     /** 是否选择 */
     var isSelected = false
 }

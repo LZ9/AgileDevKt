@@ -1,4 +1,4 @@
-package com.lodz.android.pandora.picker.file.pick
+package com.lodz.android.pandora.picker.file.pick.any
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -10,25 +10,24 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.ColorRes
-import androidx.documentfile.provider.DocumentFile
 import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.corekt.anko.dp2pxRF
-import com.lodz.android.corekt.file.formatFileSize
 import com.lodz.android.corekt.anko.getColorCompat
 import com.lodz.android.corekt.anko.getScreenWidth
+import com.lodz.android.corekt.file.DocumentWrapper
+import com.lodz.android.corekt.file.formatVideoDuration
 import com.lodz.android.pandora.R
 import com.lodz.android.pandora.picker.contract.OnImgLoader
-import com.lodz.android.pandora.picker.file.PickerManager
 import com.lodz.android.pandora.picker.file.PickerUIConfig
+import com.lodz.android.pandora.picker.file.pick.DataWrapper
 import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
 import com.lodz.android.pandora.widget.rv.recycler.DataViewHolder
-import java.io.File
 
 /**
  * 照片选择适配器
  * Created by zhouL on 2018/12/20.
  */
-internal class FilePickerAdapter<T : Any>(
+internal class AnyPickerAdapter<T : Any>(
     context: Context,
     imgLoader: OnImgLoader<T>?,
     isNeedCamera: Boolean,
@@ -75,20 +74,20 @@ internal class FilePickerAdapter<T : Any>(
         }
 
     override fun onBind(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is FilePickerAdapter<*>.PickerCameraViewHolder) {
+        if (holder is PickerCameraViewHolder) {
             showCameraItem(holder)
             return
         }
 
         val bean = getItem(if (isPdrNeedCamera) position - 1 else position)
-        if (bean == null || holder !is FilePickerAdapter<*>.PickerViewHolder) {
+        if (bean == null || holder !is PickerViewHolder) {
             return
         }
         showItem(holder, bean, position)
     }
 
     /** 显示拍照item */
-    private fun showCameraItem(holder: FilePickerAdapter<*>.PickerCameraViewHolder) {
+    private fun showCameraItem(holder: PickerCameraViewHolder) {
         setItemViewHeight(holder.itemView, context.getScreenWidth() / 3)
         holder.itemView.setBackgroundColor(context.getColorCompat(mPdrConfig.getCameraBgColor()))
         // 拍照按钮
@@ -102,7 +101,7 @@ internal class FilePickerAdapter<T : Any>(
     }
 
     /** 显示图片item */
-    private fun showItem(holder: FilePickerAdapter<*>.PickerViewHolder, bean: DataWrapper<T>, position: Int) {
+    private fun showItem(holder: PickerViewHolder, bean: DataWrapper<T>, position: Int) {
         setItemViewHeight(holder.itemView, context.getScreenWidth() / 3)
         holder.itemView.setBackgroundColor(context.getColorCompat(mPdrConfig.getItemBgColor()))
         // 选中图标
@@ -121,77 +120,14 @@ internal class FilePickerAdapter<T : Any>(
 
         val imageView = holder.withView<ImageView>(R.id.pdr_photo_img)
         val data = bean.data
-        if (data is DocumentFile){
-            showWithDocumentFile(holder, imageView, data, data)
-            return
-        }
-        if (data is File){
-            showWithDocumentFile(holder, imageView, data, DocumentFile.fromFile(data))
-            return
-        }
-        if (data is Int){
-            holder.withView<ViewGroup>(R.id.bottom_info_layout).visibility = View.GONE
-            imageView.setImageResource(data)
-            return
-        }
-        holder.withView<ViewGroup>(R.id.bottom_info_layout).visibility = View.GONE
-        mPdrImgLoader?.displayImg(context, data, imageView)
-    }
-
-    /** 显示DocumentFile类型的页面 */
-    private fun showWithDocumentFile(
-        holder: FilePickerAdapter<*>.PickerViewHolder,
-        imageView: ImageView,
-        data: T,
-        file: DocumentFile
-    ) {
-        val picResId = getPicResIdByMimeType(file.type)
-        if (picResId == 0) {
-            mPdrImgLoader?.displayImg(context, data, imageView)
+        val layout = holder.withView<ViewGroup>(R.id.bottom_info_layout)
+        if (data is DocumentWrapper && data.duration > 0) {
+            holder.withView<TextView>(R.id.duration_tv).text = data.duration.formatVideoDuration()
+            layout.visibility = View.VISIBLE
         } else {
-            imageView.setImageResource(picResId)
+            layout.visibility = View.GONE
         }
-        holder.withView<ViewGroup>(R.id.bottom_info_layout).visibility = View.VISIBLE
-        holder.withView<TextView>(R.id.file_name_tv).text = file.name ?: ""
-        holder.withView<TextView>(R.id.file_size_tv).text = file.length().formatFileSize()
-    }
-
-    /** 根据MimeType来获取图片资源id */
-    private fun getPicResIdByMimeType(mimeType: String?): Int {
-//        if (mimeType.isNullOrEmpty()){
-//            return 0
-//        }
-//        if (mimeType.startsWith("image/") || mimeType.startsWith("video/")) {
-//            return 0
-//        }
-//        if (mimeType.startsWith("audio/")) {
-//            return R.drawable.pandora_ic_audio
-//        }
-//        if (mimeType.startsWith("text/")) {
-//            return R.drawable.pandora_ic_text
-//        }
-//        if (mimeType == PickerManager.MIME_TYPE_APPLICATION_XLS || mimeType == PickerManager.MIME_TYPE_APPLICATION_XLSX) {
-//            return R.drawable.pandora_ic_excel
-//        }
-//        if (mimeType == PickerManager.MIME_TYPE_APPLICATION_DOC || mimeType == PickerManager.MIME_TYPE_APPLICATION_DOCX) {
-//            return R.drawable.pandora_ic_word
-//        }
-//        if (mimeType == PickerManager.MIME_TYPE_APPLICATION_PPT || mimeType == PickerManager.MIME_TYPE_APPLICATION_PPTX) {
-//            return R.drawable.pandora_ic_ppt
-//        }
-//        if (mimeType == PickerManager.MIME_TYPE_APPLICATION_PDF) {
-//            return R.drawable.pandora_ic_pdf
-//        }
-//        if (mimeType == PickerManager.MIME_TYPE_APPLICATION_APK) {
-//            return R.drawable.pandora_ic_apk
-//        }
-//        if (mimeType == PickerManager.MIME_TYPE_APPLICATION_ZIP ||
-//            mimeType == PickerManager.MIME_TYPE_APPLICATION_RAR ||
-//            mimeType == PickerManager.MIME_TYPE_APPLICATION_7Z
-//        ) {
-//            return R.drawable.pandora_ic_zip
-//        }
-        return R.drawable.pandora_ic_file
+        mPdrImgLoader?.displayImg(context, data, imageView)
     }
 
     /** 获取未选中的背景图，颜色[color] */
@@ -233,6 +169,7 @@ internal class FilePickerAdapter<T : Any>(
     /** 释放资源 */
     fun release() {
         mPdrImgLoader = null
+        mPdrListener = null
     }
 
     override fun setItemClick(holder: RecyclerView.ViewHolder, position: Int) {
@@ -249,11 +186,13 @@ internal class FilePickerAdapter<T : Any>(
     }
 
     interface Listener<T> {
-        fun  onSelected(bean: DataWrapper<T>, position: Int)
+
+        fun onSelected(bean: DataWrapper<T>, position: Int)
+
         fun onClickCamera()
     }
 
-    private inner class PickerCameraViewHolder(itemView: View) : DataViewHolder(itemView)
+    private class PickerCameraViewHolder(itemView: View) : DataViewHolder(itemView)
 
-    private inner class PickerViewHolder(itemView: View) : DataViewHolder(itemView)
+    private class PickerViewHolder(itemView: View) : DataViewHolder(itemView)
 }

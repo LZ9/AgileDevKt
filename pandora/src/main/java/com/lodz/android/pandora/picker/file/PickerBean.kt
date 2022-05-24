@@ -11,7 +11,7 @@ import com.lodz.android.pandora.picker.preview.AbsImageView
  * 选择数据
  * Created by zhouL on 2018/12/18.
  */
-class PickerBean<V : View, T : Any> {
+class PickerBean<V : View, T : Any>(val pickType: Int) {
 
     /** 资源列表 */
     var sourceList: List<T>? = null
@@ -31,14 +31,12 @@ class PickerBean<V : View, T : Any> {
     var pickerUIConfig = PickerUIConfig.createDefault()
     /** 7.0的FileProvider名字 */
     var authority = ""
-    /** 是否挑选手机的文件，false挑选指定文件 */
-    var isPickPhoneDocument= true
     /** 图片控件 */
     var imgView: AbsImageView<V, T>? = null
     /** 生命周期接口 */
     var lifecycleObserver: DefaultLifecycleObserver? = null
-    /** 文件类型 */
-    var mimeTypeArray: Array<out String> = arrayOf()
+    /** 文件后缀类型 */
+    var suffixArray: Array<out String> = arrayOf()
 
     fun clear() {
         sourceList = null

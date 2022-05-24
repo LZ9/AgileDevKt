@@ -32,7 +32,7 @@
     <string name="pandora_picker_preview_num">预览(%s)</string>
     <string name="pandora_picker_all_file">所有文件</string>
     <string name="pandora_picker_custom_file">指定文件</string>
-    <string name="pandora_picker_photo_count_tips">您最多可以选择%s个文件</string>
+    <string name="pandora_picker_max_count_tips">您最多可以选择%s个文件</string>
     <string name="pandora_picker_folder_num">%s张</string>
     <string name="pandora_no_camera">没有系统相机</string>
     <string name="pandora_picker_temp_file_fail">文件创建失败</string>

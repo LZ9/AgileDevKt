@@ -5,8 +5,8 @@ import android.content.DialogInterface
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.lodz.android.corekt.album.PicInfo
 import com.lodz.android.corekt.anko.bindView
+import com.lodz.android.corekt.file.DocumentWrapper
 import com.lodz.android.pandora.R
 import com.lodz.android.pandora.picker.contract.OnImgLoader
 import com.lodz.android.pandora.picker.file.PickerUIConfig
@@ -26,7 +26,7 @@ class FolderDialog(context: Context) : BaseTopDialog(context) {
     /** 监听器 */
     private var mPdrListener: ((dialog: DialogInterface, bean: FolderItemBean) -> Unit)? = null
     /** 图片加载器 */
-    private var mPdrImgLoader: OnImgLoader<PicInfo>? = null
+    private var mPdrImgLoader: OnImgLoader<DocumentWrapper>? = null
     /** 图片文件夹列表 */
     private var mPdrList: List<FolderItemBean>? = null
     /** UI配置 */
@@ -49,7 +49,7 @@ class FolderDialog(context: Context) : BaseTopDialog(context) {
     }
 
     /** 设置图片加载器[imgLoader] */
-    fun setOnImgLoader(imgLoader: OnImgLoader<PicInfo>?) {
+    fun setOnImgLoader(imgLoader: OnImgLoader<DocumentWrapper>?) {
         mPdrImgLoader = imgLoader
     }
 

@@ -11,8 +11,7 @@
         android:id="@+id/pdr_top_layout"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:elevation="8dp"
-        tool:targetApi="lollipop">
+        android:elevation="8dp">
 
         <ImageView
             android:id="@+id/pdr_back_btn"

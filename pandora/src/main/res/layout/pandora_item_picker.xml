@@ -20,29 +20,21 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="@drawable/pandora_bg_000000_ffffff_gradient"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingStart="3dp"
-        android:paddingEnd="3dp">
+        android:padding="3dp">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:contentDescription="@string/pandora_app_img_name"
+            android:src="@drawable/pandora_ic_play" />
 
         <TextView
-            android:id="@+id/file_name_tv"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ellipsize="middle"
-            android:gravity="start"
-            android:singleLine="true"
-            android:textColor="#ffffff"
-            android:textSize="12sp"
-            tools:text="P293102938jsd.jpg" />
-
-        <TextView
-            android:id="@+id/file_size_tv"
+            android:id="@+id/duration_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            android:ellipsize="middle"
-            android:gravity="end"
             android:singleLine="true"
             android:textColor="#ffffff"
             android:textSize="12sp"

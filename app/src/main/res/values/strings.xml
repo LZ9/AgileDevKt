@@ -533,7 +533,7 @@
     <string name="phone_file_no_imag">列表中没有图片</string>
 
     <!-- 图片测试 -->
-    <string name="pic_picker">图片选择器</string>
+    <string name="pic_picker">文件选择器</string>
     <string name="pic_preview">图片预览器</string>
     <string name="pic_take_photo">拍照</string>
     <string name="pic_nine_grid">九宫格</string>
@@ -555,17 +555,23 @@
     <string name="preview_only_scale">该控件支持缩放</string>
 
     <!-- 图片选择器 -->
-    <string name="picker_phone_pic">挑选手机相册</string>
-    <string name="picker_custom_pic">挑选指定图片</string>
-    <string name="picker_max_count">最大可选图片数：</string>
-    <string name="picker_preview_scale">预览缩放图片</string>
+    <string name="picker_phone_album">挑选手机相册</string>
+    <string name="picker_phone_office">挑选手机里的Word/Excel/PPT/PDF/APK</string>
+    <string name="picker_phone_any">挑选手机里任意文件</string>
+    <string name="picker_phone_media">挑选手机音频和视频</string>
+    <string name="picker_custom_res">挑选指定资源图片</string>
+    <string name="picker_custom_url">挑选指定网络图片</string>
+    <string name="picker_custom_file">挑选指定文件</string>
+    <string name="picker_max_count">最大可选数：</string>
     <string name="picker_show_camera">显示拍照</string>
     <string name="picker_item_preview">单张预览</string>
+    <string name="picker_preview_scale">预览时缩放图片</string>
     <string name="picker_click_close_preview">点击关闭预览</string>
     <string name="picker_style_default">默认风格</string>
     <string name="picker_style_one">风格一</string>
     <string name="picker_style_two">风格二</string>
     <string name="picker_style_three">风格三</string>
+    <string name="picker_result">挑选内容：</string>
 
     <!-- 拍照 -->
     <string name="take_photo_immediately">拍照后直接获取路径</string>

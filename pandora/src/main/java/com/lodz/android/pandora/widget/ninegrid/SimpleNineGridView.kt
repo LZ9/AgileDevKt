@@ -5,9 +5,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.ImageView
 import com.lodz.android.corekt.album.PicInfo
-import com.lodz.android.pandora.picker.file.PickerManager
 import com.lodz.android.pandora.picker.file.PickerUIConfig
-import com.lodz.android.pandora.picker.preview.PreviewManager
 
 
 /**

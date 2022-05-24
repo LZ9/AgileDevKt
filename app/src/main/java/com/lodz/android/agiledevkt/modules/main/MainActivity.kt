@@ -143,7 +143,7 @@ class MainActivity : BaseActivity() {
         MainBean("RV装饰器测试", "R", DecorationRvActivity::class.java),
         MainBean("RecyclerBinder测试类", "R", BinderRvActivity::class.java),
         MainBean("BottomSheets测试类", "B", BottomSheetsActivity::class.java),
-        MainBean("图片测试类", "T", PicActivity::class.java),
+        MainBean("文件选择测试类", "W", PicActivity::class.java),
         MainBean("手机文件测试类", "S", PhoneFileActivity::class.java),
         MainBean("加载框测试类", "J", ProgressDialogActivity::class.java),
         MainBean("Rx帮助类测试", "R", RxUtilsTestActivity::class.java),

@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.view.View
 import android.widget.ImageView
 import androidx.lifecycle.DefaultLifecycleObserver
@@ -13,13 +14,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.github.chrisbanes.photoview.PhotoView
 import com.lodz.android.agiledevkt.BuildConfig
 import com.lodz.android.agiledevkt.R
-import com.lodz.android.agiledevkt.config.Constant
 import com.lodz.android.agiledevkt.databinding.ActivityPicPickerBinding
-import com.lodz.android.agiledevkt.utils.file.FileManager
-import com.lodz.android.corekt.album.PicInfo
 import com.lodz.android.corekt.anko.goAppDetailSetting
 import com.lodz.android.corekt.anko.isPermissionGranted
 import com.lodz.android.corekt.anko.toastShort
+import com.lodz.android.corekt.file.DocumentWrapper
 import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.base.activity.BaseActivity
@@ -32,7 +31,7 @@ import permissions.dispatcher.*
 import permissions.dispatcher.ktx.constructPermissionsRequest
 
 /**
- * 图片选择测试类
+ * 文件选择测试类
  * Created by zhouL on 2018/12/21.
  */
 class PicPickerTestActivity : BaseActivity() {
@@ -82,8 +81,122 @@ class PicPickerTestActivity : BaseActivity() {
     override fun setListeners() {
         super.setListeners()
 
+        // 挑选指定资源图片
+        mBinding.pickerCustomResBtn.setOnClickListener {
+
+
+        }
+
+        // 挑选指定网络图片
+        mBinding.pickerCustomUrlBtn.setOnClickListener {
+
+
+        }
+
+        // 挑选指定文件
+        mBinding.pickerCustomFileBtn.setOnClickListener {
+
+
+        }
+
         // 挑选手机相册
-        mBinding.pickPhoneBtn.setOnClickListener {
+        mBinding.pickerPhoneAlbumBtn.setOnClickListener {
+            PickerManager.pickPhoneAlbum<ImageView>()
+                .setMaxCount(mMaxCount)
+                .setNeedCamera(mBinding.showCameraSwitch.isChecked)
+                .setNeedPreview(mBinding.itemPreviewSwitch.isChecked)
+                .setPickerUIConfig(mConfig)
+                .setNeedCamera(true, Environment.DIRECTORY_DCIM)
+                .setAuthority(BuildConfig.FILE_AUTHORITY)
+                .setImgLoader { context, source, imageView ->
+                    if (source != null) {
+                        ImageLoader.create(context).loadUri(source.documentFile.uri).setCenterCrop().into(imageView)
+                    }
+                }
+                .setImageView(object : AbsImageView<ImageView, DocumentWrapper>(mBinding.scaleSwitch.isChecked) {
+                    override fun onCreateView(context: Context, isScale: Boolean): ImageView {
+                        val img = if (isScale) PhotoView(context) else ImageView(context)
+                        img.scaleType = ImageView.ScaleType.CENTER_INSIDE
+                        return img
+                    }
+
+                    override fun onDisplayImg(context: Context, source: DocumentWrapper, view: ImageView) {
+                        ImageLoader.create(context).loadUri(source.documentFile.uri).setFitCenter().into(view)
+                    }
+                    override fun onClickImpl(viewHolder: RecyclerView.ViewHolder, view: ImageView, source: DocumentWrapper, position: Int, controller: PreviewController) {
+                        if (mBinding.clickClosePreviewSwitch.isChecked) {
+                            controller.close()
+                        }
+                    }
+
+                    override fun onViewDetached(view: ImageView, isScale: Boolean) {
+                        super.onViewDetached(view, isScale)
+                        if (isScale && view is PhotoView) {
+                            view.attacher.update()
+                        }
+                    }
+                })
+                .setOnLifecycleObserver(object : DefaultLifecycleObserver {
+                    override fun onDestroy(owner: LifecycleOwner) {
+                        super.onDestroy(owner)
+                        PrintLog.e("testtag", "DefaultLifecycleObserver onDestroy")
+                    }
+
+                    override fun onCreate(owner: LifecycleOwner) {
+                        super.onCreate(owner)
+                        PrintLog.e("testtag", "DefaultLifecycleObserver onCreate")
+                    }
+
+                    override fun onPause(owner: LifecycleOwner) {
+                        super.onPause(owner)
+                        PrintLog.v("testtag", "DefaultLifecycleObserver onPause")
+                    }
+
+                    override fun onResume(owner: LifecycleOwner) {
+                        super.onResume(owner)
+                        PrintLog.v("testtag", "DefaultLifecycleObserver onResume")
+                    }
+
+                    override fun onStart(owner: LifecycleOwner) {
+                        super.onStart(owner)
+                        PrintLog.d("testtag", "DefaultLifecycleObserver onStart")
+                    }
+
+                    override fun onStop(owner: LifecycleOwner) {
+                        super.onStop(owner)
+                        PrintLog.d("testtag", "DefaultLifecycleObserver onStop")
+                    }
+                })
+                .setOnFilePickerListener{
+                    var str = ""
+                    for (dw in it) {
+                        str += "${dw.documentFile.name}\n\n"
+                    }
+                    mBinding.resultTv.text = str
+                }
+                .open(getContext())
+        }
+
+        // 挑选手机里任意文件
+        mBinding.pickerPhoneAnyBtn.setOnClickListener {
+
+
+        }
+
+        // 挑选手机里的Word/Excel/PPT/PDF/APK
+        mBinding.pickerPhoneOfficeBtn.setOnClickListener {
+
+
+        }
+
+        // 挑选手机音频和视频
+        mBinding.pickerPhoneMediaBtn.setOnClickListener {
+
+
+        }
+
+        // 挑选手机相册
+//        mBinding.pickerPhoneAlbumBtn.setOnClickListener {
 
 
 //            PickerManager.create<ImageView>()
@@ -167,10 +280,10 @@ class PicPickerTestActivity : BaseActivity() {
 //                }
 //                .build()
 //                .open(getContext())
-        }
+//        }
 
-        // 挑选指定图片
-        mBinding.pickCustomBtn.setOnClickListener {
+//         挑选指定图片
+//        mBinding.pickerCustomResBtn.setOnClickListener {
 //            PickerManager.create<ImageView>()
 //                .setMaxCount(mMaxCount)
 //                .setNeedItemPreview(mBinding.itemPreviewSwitch.isChecked)
@@ -211,7 +324,7 @@ class PicPickerTestActivity : BaseActivity() {
 //                }
 //                .build(Constant.IMG_URLS)
 //                .open(getContext())
-        }
+//        }
 
         // 加数量
         mBinding.plusBtn.setOnClickListener {
