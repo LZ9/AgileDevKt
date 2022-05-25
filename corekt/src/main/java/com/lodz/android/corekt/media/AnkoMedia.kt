@@ -11,6 +11,7 @@ import android.provider.MediaStore
 import androidx.core.content.FileProvider
 import androidx.documentfile.provider.DocumentFile
 import com.lodz.android.corekt.anko.append
+import com.lodz.android.corekt.anko.deduplication
 import com.lodz.android.corekt.file.*
 import java.io.File
 import java.util.*
@@ -86,94 +87,193 @@ object AnkoMedia {
     /** 判断[mimeType]是不是图片 */
     fun isImage(mimeType: String?): Boolean = (mimeType != null && mimeType.startsWith(MIME_TYPE_IMAGE_START))
 
+    /** 自定义图片后缀 */
+    var sCustomImageSuffixList = arrayListOf<String>()
+
     /** 判断后缀[suffix]是不是图片 */
     fun isImageSuffix(suffix: String): Boolean {
         val suffixLower = suffix.lowercase()
-        return (suffixLower == ".gif" || suffixLower == ".jpg" || suffixLower == ".png" || suffixLower == ".webp" || suffixLower == ".bmp")
+        val list = assembleSuffix(sCustomImageSuffixList, arrayListOf(".gif", ".jpg", ".png", ".webp", ".bmp"))
+        for (s in list) {
+            if (suffixLower == s) {
+                return true
+            }
+        }
+        return false
     }
 
     /** 判断[mimeType]是不是视频 */
     fun isVideo(mimeType: String?): Boolean = (mimeType != null && mimeType.startsWith(MIME_TYPE_VIDEO_START))
 
+    /** 自定义视频后缀 */
+    var sCustomVideoSuffixList = arrayListOf<String>()
+
     /** 判断后缀[suffix]是不是视频 */
     fun isVideoSuffix(suffix: String): Boolean {
         val suffixLower = suffix.lowercase()
-        return (suffixLower == ".mp4" || suffixLower == ".avi" || suffixLower == ".flv" || suffixLower == ".swf" || suffixLower == ".rm" ||
-                suffixLower == ".ram" || suffixLower == ".rmvb" || suffixLower == ".wmv" || suffixLower == ".mpg" || suffixLower == ".mpeg" ||
-                suffixLower == ".swf")
+        val list = assembleSuffix(sCustomVideoSuffixList,
+            arrayListOf(".mp4", ".avi", ".flv", ".swf", ".rm", ".ram", ".rmvb", ".wmv", ".mpg", ".mpeg"))
+        for (s in list) {
+            if (suffixLower == s) {
+                return true
+            }
+        }
+        return false
     }
 
     /** 判断[mimeType]是不是音频 */
     fun isAudio(mimeType: String?): Boolean = (mimeType != null && mimeType.startsWith(MIME_TYPE_AUDIO_START))
 
+    /** 自定义音频后缀 */
+    var sCustomAudioSuffixList = arrayListOf<String>()
+
     /** 判断后缀[suffix]是不是音频 */
     fun isAudioSuffix(suffix: String): Boolean {
         val suffixLower = suffix.lowercase()
-        return (suffixLower == ".mp3" || suffixLower == ".wav" || suffixLower == ".flac" || suffixLower == ".wma" || suffixLower == ".pcm"
-                || suffixLower == ".aac" || suffixLower == ".ra")
+        val list = assembleSuffix(sCustomAudioSuffixList, arrayListOf(".mp3", ".wav", ".flac", ".wma", ".pcm", ".aac", ".ra"))
+        for (s in list) {
+            if (suffixLower == s) {
+                return true
+            }
+        }
+        return false
     }
 
     /** 判断[mimeType]是不是文本文件 */
     fun isText(mimeType: String?): Boolean = (mimeType != null && mimeType.startsWith(MIME_TYPE_TEXT_START))
 
+    /** 自定义文本后缀 */
+    var sCustomTextSuffixList = arrayListOf<String>()
+
     /** 判断后缀[suffix]是不是文本文件 */
     fun isTextSuffix(suffix: String): Boolean {
         val suffixLower = suffix.lowercase()
-        return (suffixLower == ".txt" || suffixLower == ".log")
+        val list = assembleSuffix(sCustomTextSuffixList, arrayListOf(".txt", ".log"))
+        for (s in list) {
+            if (suffixLower == s) {
+                return true
+            }
+        }
+        return false
     }
 
     /** 判断[mimeType]是不是Excel文件 */
     fun isExcel(mimeType: String?): Boolean = (mimeType != null && (mimeType == MIME_TYPE_APPLICATION_XLS || mimeType == MIME_TYPE_APPLICATION_XLSX))
 
+    /** 自定义Excel后缀 */
+    var sCustomExcelSuffixList = arrayListOf<String>()
+
     /** 判断后缀[suffix]是不是Excel文件 */
     fun isExcelSuffix(suffix: String): Boolean {
         val suffixLower = suffix.lowercase()
-        return (suffixLower == ".xls" || suffixLower == ".xlsx")
+        val list = assembleSuffix(sCustomExcelSuffixList, arrayListOf(".xls", ".xlsx"))
+        for (s in list) {
+            if (suffixLower == s) {
+                return true
+            }
+        }
+        return false
     }
 
     /** 判断[mimeType]是不是Word文件 */
     fun isWord(mimeType: String?): Boolean = (mimeType != null && (mimeType == MIME_TYPE_APPLICATION_DOC || mimeType == MIME_TYPE_APPLICATION_DOCX))
 
+    /** 自定义Word后缀 */
+    var sCustomWordSuffixList = arrayListOf<String>()
+
     /** 判断后缀[suffix]是不是Word文件 */
     fun isWordSuffix(suffix: String): Boolean {
         val suffixLower = suffix.lowercase()
-        return (suffixLower == ".doc" || suffixLower == ".docx")
+        val list = assembleSuffix(sCustomWordSuffixList, arrayListOf(".doc", ".docx"))
+        for (s in list) {
+            if (suffixLower == s) {
+                return true
+            }
+        }
+        return false
     }
 
     /** 判断[mimeType]是不是PPT文件 */
     fun isPPT(mimeType: String?): Boolean = (mimeType != null && (mimeType == MIME_TYPE_APPLICATION_PPT || mimeType == MIME_TYPE_APPLICATION_PPTX))
 
+    /** 自定义PPT后缀 */
+    var sCustomPPTSuffixList = arrayListOf<String>()
+
     /** 判断后缀[suffix]是不是PPT文件 */
     fun isPPTSuffix(suffix: String): Boolean {
         val suffixLower = suffix.lowercase()
-        return (suffixLower == ".ppt" || suffixLower == ".pptx")
+        val list = assembleSuffix(sCustomPPTSuffixList, arrayListOf(".ppt", ".pptx"))
+        for (s in list) {
+            if (suffixLower == s) {
+                return true
+            }
+        }
+        return false
     }
 
     /** 判断[mimeType]是不是pdf文件 */
     fun isPdf(mimeType: String?): Boolean = (mimeType != null && mimeType == MIME_TYPE_APPLICATION_PDF)
 
+    /** 自定义pdf后缀 */
+    var sCustomPdfSuffixList = arrayListOf<String>()
+
     /** 判断后缀[suffix]是不是pdf文件 */
     fun isPdfSuffix(suffix: String): Boolean {
         val suffixLower = suffix.lowercase()
-        return suffixLower == ".pdf"
+        val list = assembleSuffix(sCustomPdfSuffixList, arrayListOf(".pdf"))
+        for (s in list) {
+            if (suffixLower == s) {
+                return true
+            }
+        }
+        return false
     }
 
     /** 判断[mimeType]是不是apk文件 */
     fun isApk(mimeType: String?): Boolean = (mimeType != null && mimeType == MIME_TYPE_APPLICATION_APK)
 
+    /** 自定义apk后缀 */
+    var sCustomApkSuffixList = arrayListOf<String>()
+
     /** 判断后缀[suffix]是不是apk文件 */
     fun isApkSuffix(suffix: String): Boolean {
         val suffixLower = suffix.lowercase()
-        return suffixLower == ".apk"
+        val list = assembleSuffix(sCustomApkSuffixList, arrayListOf(".apk"))
+        for (s in list) {
+            if (suffixLower == s) {
+                return true
+            }
+        }
+        return false
     }
 
     /** 判断[mimeType]是不是zip文件 */
     fun isZip(mimeType: String?): Boolean = (mimeType != null && (mimeType == MIME_TYPE_APPLICATION_ZIP || mimeType == MIME_TYPE_APPLICATION_RAR || mimeType == MIME_TYPE_APPLICATION_7Z))
 
-    /** 判断后缀[suffix]是不是Word文件 */
+    /** 自定义zip后缀 */
+    var sCustomZipSuffixList = arrayListOf<String>()
+
+    /** 判断后缀[suffix]是不是zip文件 */
     fun isZipSuffix(suffix: String): Boolean {
         val suffixLower = suffix.lowercase()
-        return (suffixLower == ".zip" || suffixLower == ".rar" || suffixLower == ".7z")
+        val list = assembleSuffix(sCustomZipSuffixList, arrayListOf(".zip", ".rar", ".7z"))
+        for (s in list) {
+            if (suffixLower == s) {
+                return true
+            }
+        }
+        return false
+    }
+
+    /** 组装自定义后缀和默认后缀 */
+    private fun assembleSuffix(customSuffixList: ArrayList<String>, defaultSuffixList: ArrayList<String>): List<String> {
+        if (customSuffixList.isEmpty()) {
+            return defaultSuffixList
+        }
+        for (suffix in customSuffixList) {
+            defaultSuffixList.add(suffix.lowercase())
+        }
+        return defaultSuffixList.deduplication().toList()
     }
 }
 
