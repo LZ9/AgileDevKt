@@ -10,5 +10,5 @@ import android.widget.ImageView
 fun interface OnImgLoader<in T : Any> {
 
     /** 展示图片，上下文[context]，数据[source]，控件[imageView] */
-    fun displayImg(context: Context, source: T?, imageView: ImageView)
+    fun displayImg(context: Context, source: T, imageView: ImageView)
 }

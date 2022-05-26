@@ -158,9 +158,26 @@ internal class PhonePickerActivity<V : View> : AnyPickerActivity<V, DocumentWrap
                 PickerManager.PICK_PHONE_AUDIO -> getMediaAudios()
                 PickerManager.PICK_PHONE_VIDEO -> getMediaVideos()
                 PickerManager.PICK_PHONE_SUFFIX -> getAllFiles(*bean.suffixArray)
+                PickerManager.PICK_PHONE_ASSEMBLE -> getAssembleData(bean.phoneAssemble)
                 else -> arrayListOf()
             }
         )
         return transformDataWrapper(mPdrPhoneDataList)
+    }
+
+    /** 组装数据 */
+    private fun getAssembleData(types: IntArray): List<DocumentWrapper> {
+        val list = ArrayList<DocumentWrapper>()
+        for (t in types) {
+            list.addAll(
+                when (t) {
+                    PickerManager.PICK_PHONE_ALBUM -> getMediaImages()
+                    PickerManager.PICK_PHONE_AUDIO -> getMediaAudios()
+                    PickerManager.PICK_PHONE_VIDEO -> getMediaVideos()
+                    else -> arrayListOf()
+                }
+            )
+        }
+        return list
     }
 }

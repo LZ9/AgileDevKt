@@ -56,9 +56,14 @@ internal class FolderAdapter(context: Context) : BaseRecyclerViewAdapter<FolderI
 
     private fun showItem(holder: DataViewHolder, bean: FolderItemBean) {
         val imageFolder = bean.documentFolder ?: return
-
+        val img = holder.withView<ImageView>(R.id.pdr_cover_img)
+        val cover = imageFolder.coverDocument
         // 封面图
-        mPdrImgLoader?.displayImg(context, imageFolder.coverDocument, holder.withView(R.id.pdr_cover_img))
+        if (cover == null) {
+            img.setImageResource(R.drawable.pandora_ic_folder)
+        } else {
+            mPdrImgLoader?.displayImg(context, cover, img)
+        }
         // 文件夹名称
         holder.withView<TextView>(R.id.pdr_floder_name_tv).text = imageFolder.dirName
         // 文件夹张数

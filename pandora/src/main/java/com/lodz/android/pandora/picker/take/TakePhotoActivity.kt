@@ -139,7 +139,9 @@ internal class TakePhotoActivity : AbsActivity() {
 
     /** 显示照片 */
     private fun showPhoto(file: DocumentFile?) {
-        mPdrTakeBean?.imgLoader?.displayImg(getContext(), file, mBinding.pdrPhotoImg)
+        if (file != null){
+            mPdrTakeBean?.imgLoader?.displayImg(getContext(), file, mBinding.pdrPhotoImg)
+        }
     }
 
     override fun finish() {

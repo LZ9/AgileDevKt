@@ -84,24 +84,21 @@ class PicPickerTestActivity : BaseActivity() {
         // 挑选指定资源图片
         mBinding.pickerCustomResBtn.setOnClickListener {
 
-
         }
 
         // 挑选指定网络图片
         mBinding.pickerCustomUrlBtn.setOnClickListener {
-
 
         }
 
         // 挑选指定文件
         mBinding.pickerCustomFileBtn.setOnClickListener {
 
-
         }
 
         // 挑选手机相册
         mBinding.pickerPhoneAlbumBtn.setOnClickListener {
-            PickerManager.pickPhoneAlbum<ImageView>()
+            PickerManager.pickPhoneAssemble<ImageView>()
                 .setMaxCount(mMaxCount)
                 .setNeedCamera(mBinding.showCameraSwitch.isChecked)
                 .setNeedPreview(mBinding.itemPreviewSwitch.isChecked)
@@ -109,9 +106,7 @@ class PicPickerTestActivity : BaseActivity() {
                 .setNeedCamera(true, Environment.DIRECTORY_DCIM)
                 .setAuthority(BuildConfig.FILE_AUTHORITY)
                 .setImgLoader { context, source, imageView ->
-                    if (source != null) {
-                        ImageLoader.create(context).loadUri(source.documentFile.uri).setCenterCrop().into(imageView)
-                    }
+                    ImageLoader.create(context).loadUri(source.documentFile.uri).setCenterCrop().into(imageView)
                 }
                 .setImageView(object : AbsImageView<ImageView, DocumentWrapper>(mBinding.scaleSwitch.isChecked) {
                     override fun onCreateView(context: Context, isScale: Boolean): ImageView {

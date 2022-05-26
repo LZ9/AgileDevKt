@@ -37,6 +37,9 @@ class PickerBean<V : View, T : Any>(val pickType: Int) {
     var lifecycleObserver: DefaultLifecycleObserver? = null
     /** 文件后缀类型 */
     var suffixArray: Array<out String> = arrayOf()
+    /** 文件后缀类型 */
+    var phoneAssemble: IntArray = intArrayOf()
+
 
     fun clear() {
         sourceList = null
