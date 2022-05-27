@@ -1,6 +1,5 @@
 package com.lodz.android.corekt.anko
 
-import android.app.Activity
 import android.content.Context
 import android.view.View
 import android.view.Window

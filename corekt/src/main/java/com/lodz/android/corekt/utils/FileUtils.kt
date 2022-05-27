@@ -70,7 +70,7 @@ object FileUtils {
         }
         val parentPath = file.parent ?: return false
         val newFile = create(parentPath + File.separator + replaceName)
-        return if (newFile != null) file.renameTo(newFile) else  false
+        return newFile != null && file.renameTo(newFile)
     }
 
     /** 删除指定路径[filePath]下以后缀[suffix]结尾的文件，例如：.apk、.png等等 */
@@ -91,7 +91,7 @@ object FileUtils {
         }
 
         for (childFile in files) {
-            if (childFile.name.toLowerCase(Locale.getDefault()).endsWith(replaceSuffix.toLowerCase(Locale.getDefault()))) {
+            if (childFile.name.lowercase().endsWith(replaceSuffix.lowercase())) {
                 childFile.delete()
             }
         }
