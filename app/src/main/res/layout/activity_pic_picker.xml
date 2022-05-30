@@ -66,16 +66,6 @@
         android:orientation="horizontal">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/picker_phone_any_btn"
-            style="?android:attr/buttonStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/picker_phone_any"
-            android:textColor="@color/white"
-            android:textSize="12sp" />
-
-        <com.google.android.material.button.MaterialButton
             android:id="@+id/picker_phone_media_btn"
             style="?android:attr/buttonStyle"
             android:layout_width="0dp"

@@ -20,8 +20,9 @@ import com.lodz.android.agiledevkt.databinding.ActivityPhoneFileBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.corekt.anko.*
 import com.lodz.android.corekt.file.DocumentWrapper
-import com.lodz.android.corekt.media.AnkoMedia
 import com.lodz.android.corekt.media.deleteFile
+import com.lodz.android.corekt.media.isImageMimeType
+import com.lodz.android.corekt.media.isImageSuffix
 import com.lodz.android.pandora.mvvm.base.activity.BaseVmActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.utils.viewmodel.bindViewModel
@@ -78,7 +79,7 @@ class PhoneFileActivity : BaseVmActivity() {
         }
 
         mAdapter.setOnItemLongClickListener { viewHolder, item, position ->
-            if (AnkoMedia.isImage(item.documentFile.type) || AnkoMedia.isImageSuffix(item.file.absolutePath)){
+            if (item.documentFile.type.isImageMimeType() || item.file.absolutePath.isImageSuffix()){
                 getViewModel().transformBitmap(getContext(), item)
             }
         }
@@ -160,7 +161,7 @@ class PhoneFileActivity : BaseVmActivity() {
     private fun getRandomDocumentWrapper(list: List<DocumentWrapper>): DocumentWrapper? {
         val photoList = ArrayList<DocumentWrapper>()
         for (wrapper in list) {
-            if (AnkoMedia.isImage(wrapper.documentFile.type) || AnkoMedia.isImageSuffix(wrapper.file.absolutePath)){
+            if (wrapper.documentFile.type.isImageMimeType() || wrapper.file.absolutePath.isImageSuffix()){
                 photoList.add(wrapper)
             }
         }

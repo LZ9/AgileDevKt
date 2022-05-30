@@ -7,7 +7,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.lodz.android.agiledevkt.databinding.RvItemPhoneFileBinding
 import com.lodz.android.corekt.anko.append
 import com.lodz.android.corekt.file.*
-import com.lodz.android.corekt.media.AnkoMedia
+import com.lodz.android.corekt.media.isImageMimeType
+import com.lodz.android.corekt.media.isVideoMimeType
 import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.utils.media.MediaUtils
 import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
@@ -43,7 +44,7 @@ class PhoneFileAdapter(context: Context) : BaseRecyclerViewAdapter<DocumentWrapp
 
             val resId = MediaUtils.getIconBySuffix(document.file.name.getFileSuffix())
             val mimeType = document.documentFile.type
-            if (AnkoMedia.isImage(mimeType) || AnkoMedia.isVideo(mimeType)){
+            if (mimeType.isImageMimeType() || mimeType.isVideoMimeType()){
                 ImageLoader.create(context).loadUri(document.documentFile.uri).setCenterCrop()
                     .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC).into(fileImg)
                 return

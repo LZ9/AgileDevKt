@@ -98,7 +98,7 @@ class PicPickerTestActivity : BaseActivity() {
 
         // 挑选手机相册
         mBinding.pickerPhoneAlbumBtn.setOnClickListener {
-            PickerManager.pickPhoneAssemble<ImageView>()
+            PickerManager.pickPhoneAlbum<ImageView>()
                 .setMaxCount(mMaxCount)
                 .setNeedCamera(mBinding.showCameraSwitch.isChecked)
                 .setNeedPreview(mBinding.itemPreviewSwitch.isChecked)
@@ -106,7 +106,12 @@ class PicPickerTestActivity : BaseActivity() {
                 .setNeedCamera(true, Environment.DIRECTORY_DCIM)
                 .setAuthority(BuildConfig.FILE_AUTHORITY)
                 .setImgLoader { context, source, imageView ->
-                    ImageLoader.create(context).loadUri(source.documentFile.uri).setCenterCrop().into(imageView)
+                    ImageLoader.create(context)
+                        .loadUri(source.documentFile.uri)
+                        .setPlaceholder(R.drawable.pandora_ic_img)
+                        .setError(R.drawable.pandora_ic_img)
+                        .setCenterCrop()
+                        .into(imageView)
                 }
                 .setImageView(object : AbsImageView<ImageView, DocumentWrapper>(mBinding.scaleSwitch.isChecked) {
                     override fun onCreateView(context: Context, isScale: Boolean): ImageView {
@@ -116,7 +121,12 @@ class PicPickerTestActivity : BaseActivity() {
                     }
 
                     override fun onDisplayImg(context: Context, source: DocumentWrapper, view: ImageView) {
-                        ImageLoader.create(context).loadUri(source.documentFile.uri).setFitCenter().into(view)
+                        ImageLoader.create(context)
+                            .loadUri(source.documentFile.uri)
+                            .setPlaceholder(R.drawable.pandora_ic_img)
+                            .setError(R.drawable.pandora_ic_img)
+                            .setFitCenter()
+                            .into(view)
                     }
                     override fun onClickImpl(viewHolder: RecyclerView.ViewHolder, view: ImageView, source: DocumentWrapper, position: Int, controller: PreviewController) {
                         if (mBinding.clickClosePreviewSwitch.isChecked) {
@@ -131,37 +141,7 @@ class PicPickerTestActivity : BaseActivity() {
                         }
                     }
                 })
-                .setOnLifecycleObserver(object : DefaultLifecycleObserver {
-                    override fun onDestroy(owner: LifecycleOwner) {
-                        super.onDestroy(owner)
-                        PrintLog.e("testtag", "DefaultLifecycleObserver onDestroy")
-                    }
-
-                    override fun onCreate(owner: LifecycleOwner) {
-                        super.onCreate(owner)
-                        PrintLog.e("testtag", "DefaultLifecycleObserver onCreate")
-                    }
-
-                    override fun onPause(owner: LifecycleOwner) {
-                        super.onPause(owner)
-                        PrintLog.v("testtag", "DefaultLifecycleObserver onPause")
-                    }
-
-                    override fun onResume(owner: LifecycleOwner) {
-                        super.onResume(owner)
-                        PrintLog.v("testtag", "DefaultLifecycleObserver onResume")
-                    }
-
-                    override fun onStart(owner: LifecycleOwner) {
-                        super.onStart(owner)
-                        PrintLog.d("testtag", "DefaultLifecycleObserver onStart")
-                    }
-
-                    override fun onStop(owner: LifecycleOwner) {
-                        super.onStop(owner)
-                        PrintLog.d("testtag", "DefaultLifecycleObserver onStop")
-                    }
-                })
+                .setOnLifecycleObserver(mLifecycleObserver)
                 .setOnFilePickerListener{
                     var str = ""
                     for (dw in it) {
@@ -172,9 +152,59 @@ class PicPickerTestActivity : BaseActivity() {
                 .open(getContext())
         }
 
-        // 挑选手机里任意文件
-        mBinding.pickerPhoneAnyBtn.setOnClickListener {
+        // 挑选手机相册、音频和视频
+        mBinding.pickerPhoneMediaBtn.setOnClickListener {
+            PickerManager.pickPhoneAssemble<ImageView>(PickerManager.PICK_PHONE_ALBUM, PickerManager.PICK_PHONE_VIDEO, PickerManager.PICK_PHONE_AUDIO)
+                .setMaxCount(mMaxCount)
+                .setNeedCamera(mBinding.showCameraSwitch.isChecked)
+                .setNeedPreview(mBinding.itemPreviewSwitch.isChecked)
+                .setPickerUIConfig(mConfig)
+                .setNeedCamera(true, Environment.DIRECTORY_DCIM)
+                .setAuthority(BuildConfig.FILE_AUTHORITY)
+                .setImgLoader { context, source, imageView ->
+                    ImageLoader.create(context)
+                        .loadUri(source.documentFile.uri)
+                        .setPlaceholder(R.drawable.pandora_ic_file)
+                        .setError(R.drawable.pandora_ic_audio)
+                        .setCenterCrop()
+                        .into(imageView)
+                }
+                .setImageView(object : AbsImageView<ImageView, DocumentWrapper>(mBinding.scaleSwitch.isChecked) {
+                    override fun onCreateView(context: Context, isScale: Boolean): ImageView {
+                        val img = if (isScale) PhotoView(context) else ImageView(context)
+                        img.scaleType = ImageView.ScaleType.CENTER_INSIDE
+                        return img
+                    }
 
+                    override fun onDisplayImg(context: Context, source: DocumentWrapper, view: ImageView) {
+                        ImageLoader.create(context)
+                            .loadUri(source.documentFile.uri)
+                            .setPlaceholder(R.drawable.pandora_ic_file)
+                            .setError(R.drawable.pandora_ic_audio)
+                            .setFitCenter()
+                            .into(view)
+                    }
+                    override fun onClickImpl(viewHolder: RecyclerView.ViewHolder, view: ImageView, source: DocumentWrapper, position: Int, controller: PreviewController) {
+                        if (mBinding.clickClosePreviewSwitch.isChecked) {
+                            controller.close()
+                        }
+                    }
+
+                    override fun onViewDetached(view: ImageView, isScale: Boolean) {
+                        super.onViewDetached(view, isScale)
+                        if (isScale && view is PhotoView) {
+                            view.attacher.update()
+                        }
+                    }
+                })
+                .setOnFilePickerListener{
+                    var str = ""
+                    for (dw in it) {
+                        str += "${dw.documentFile.name}\n\n"
+                    }
+                    mBinding.resultTv.text = str
+                }
+                .open(getContext())
 
         }
 
@@ -184,11 +214,7 @@ class PicPickerTestActivity : BaseActivity() {
 
         }
 
-        // 挑选手机音频和视频
-        mBinding.pickerPhoneMediaBtn.setOnClickListener {
 
-
-        }
 
         // 挑选手机相册
 //        mBinding.pickerPhoneAlbumBtn.setOnClickListener {
@@ -477,5 +503,37 @@ class PicPickerTestActivity : BaseActivity() {
     private fun init() {
         mBinding.maxTv.text = mMaxCount.toString()
         showStatusCompleted()
+    }
+
+    private val mLifecycleObserver = object : DefaultLifecycleObserver {
+        override fun onDestroy(owner: LifecycleOwner) {
+            super.onDestroy(owner)
+            PrintLog.e("testtag", "DefaultLifecycleObserver onDestroy")
+        }
+
+        override fun onCreate(owner: LifecycleOwner) {
+            super.onCreate(owner)
+            PrintLog.e("testtag", "DefaultLifecycleObserver onCreate")
+        }
+
+        override fun onPause(owner: LifecycleOwner) {
+            super.onPause(owner)
+            PrintLog.v("testtag", "DefaultLifecycleObserver onPause")
+        }
+
+        override fun onResume(owner: LifecycleOwner) {
+            super.onResume(owner)
+            PrintLog.v("testtag", "DefaultLifecycleObserver onResume")
+        }
+
+        override fun onStart(owner: LifecycleOwner) {
+            super.onStart(owner)
+            PrintLog.d("testtag", "DefaultLifecycleObserver onStart")
+        }
+
+        override fun onStop(owner: LifecycleOwner) {
+            super.onStop(owner)
+            PrintLog.d("testtag", "DefaultLifecycleObserver onStop")
+        }
     }
 }

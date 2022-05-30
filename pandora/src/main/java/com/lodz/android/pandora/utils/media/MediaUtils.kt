@@ -1,6 +1,6 @@
 package com.lodz.android.pandora.utils.media
 
-import com.lodz.android.corekt.media.AnkoMedia
+import com.lodz.android.corekt.media.*
 import com.lodz.android.pandora.R
 
 /**
@@ -12,34 +12,34 @@ object MediaUtils {
 
     /** 根据[mimeType]获取默认图标的资源id */
     fun getIconByMimeType(mimeType: String?): Int {
-        if (AnkoMedia.isImage(mimeType)){
+        if (mimeType.isImageMimeType()){
             return R.drawable.pandora_ic_img
         }
-        if (AnkoMedia.isVideo(mimeType)){
+        if (mimeType.isVideoMimeType()){
             return R.drawable.pandora_ic_video
         }
-        if (AnkoMedia.isAudio(mimeType)){
+        if (mimeType.isAudioMimeType()){
             return R.drawable.pandora_ic_audio
         }
-        if (AnkoMedia.isText(mimeType)){
+        if (mimeType.isTextMimeType()){
             return R.drawable.pandora_ic_text
         }
-        if (AnkoMedia.isExcel(mimeType)){
+        if (mimeType.isExcelMimeType()){
             return R.drawable.pandora_ic_excel
         }
-        if (AnkoMedia.isWord(mimeType)){
+        if (mimeType.isWordMimeType()){
             return R.drawable.pandora_ic_word
         }
-        if (AnkoMedia.isPPT(mimeType)){
+        if (mimeType.isPptMimeType()){
             return R.drawable.pandora_ic_ppt
         }
-        if (AnkoMedia.isPdf(mimeType)){
+        if (mimeType.isPdfMimeType()){
             return R.drawable.pandora_ic_pdf
         }
-        if (AnkoMedia.isApk(mimeType)){
+        if (mimeType.isApkMimeType()){
             return R.drawable.pandora_ic_apk
         }
-        if (AnkoMedia.isZip(mimeType)) {
+        if (mimeType.isZipMimeType()) {
             return R.drawable.pandora_ic_zip
         }
         return R.drawable.pandora_ic_file
@@ -47,34 +47,34 @@ object MediaUtils {
 
     /** 根据文件名后缀[suffix]获取默认图标的资源id */
     fun getIconBySuffix(suffix: String): Int {
-        if (AnkoMedia.isImageSuffix(suffix)){
+        if (suffix.isImageSuffix()){
             return R.drawable.pandora_ic_img
         }
-        if (AnkoMedia.isVideoSuffix(suffix)) {
+        if (suffix.isVideoSuffix()) {
             return R.drawable.pandora_ic_video
         }
-        if (AnkoMedia.isAudioSuffix(suffix)) {
+        if (suffix.isAudioSuffix()) {
             return R.drawable.pandora_ic_audio
         }
-        if (AnkoMedia.isTextSuffix(suffix)) {
+        if (suffix.isTextSuffix()) {
             return R.drawable.pandora_ic_text
         }
-        if (AnkoMedia.isExcelSuffix(suffix)) {
+        if (suffix.isExcelSuffix()) {
             return R.drawable.pandora_ic_excel
         }
-        if (AnkoMedia.isWordSuffix(suffix)) {
+        if (suffix.isWordSuffix()) {
             return R.drawable.pandora_ic_word
         }
-        if (AnkoMedia.isPPTSuffix(suffix)) {
+        if (suffix.isPptSuffix()) {
             return R.drawable.pandora_ic_ppt
         }
-        if (AnkoMedia.isPdfSuffix(suffix)) {
+        if (suffix.isPdfSuffix()) {
             return R.drawable.pandora_ic_pdf
         }
-        if (AnkoMedia.isApkSuffix(suffix)) {
+        if (suffix.isApkSuffix()) {
             return R.drawable.pandora_ic_apk
         }
-        if (AnkoMedia.isZipSuffix(suffix)) {
+        if (suffix.isZipSuffix()) {
             return R.drawable.pandora_ic_zip
         }
         return R.drawable.pandora_ic_file
