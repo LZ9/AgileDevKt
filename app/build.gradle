@@ -3,7 +3,6 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'koin'
-apply plugin: 'android-aspectjx'
 
 android {
     compileSdkVersion 32
@@ -80,12 +79,6 @@ android {
             outputFileName = newName
         }
     }
-}
-
-aspectjx {
-    enabled true
-    exclude 'androidx', 'com.google', 'com.squareup', 'com.alipay', 'com.taobao', 'org.apache',
-            'kotlinx', 'org.jetbrains', "module-info", 'versions.9', "com.lodz.android.pandora"
 }
 
 dependencies {
