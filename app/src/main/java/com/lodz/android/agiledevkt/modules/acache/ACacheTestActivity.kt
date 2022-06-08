@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.databinding.ActivityAcacheTestBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.corekt.anko.toastShort
@@ -53,7 +54,7 @@ class ACacheTestActivity : BaseActivity() {
         // 缓存无时间限制
         mBinding.foreverBtn.setOnClickListener {
             if (!isCanSave()) {
-                toastShort("请输入缓存内容")
+                toastShort(R.string.acache_hint)
                 return@setOnClickListener
             }
             ACacheUtils.get().create().put(CACHE_KEY, mBinding.contentEdit.text.toString())
@@ -62,7 +63,7 @@ class ACacheTestActivity : BaseActivity() {
         // 缓存5秒
         mBinding.secondBtn.setOnClickListener {
             if (!isCanSave()) {
-                toastShort("请输入缓存内容")
+                toastShort(R.string.acache_hint)
                 return@setOnClickListener
             }
             ACacheUtils.get().create().put(CACHE_KEY, mBinding.contentEdit.text.toString(), 5)
@@ -71,7 +72,7 @@ class ACacheTestActivity : BaseActivity() {
         // 缓存1天
         mBinding.dayBtn.setOnClickListener {
             if (!isCanSave()) {
-                toastShort("请输入缓存内容")
+                toastShort(R.string.acache_hint)
                 return@setOnClickListener
             }
             ACacheUtils.get().create().put(CACHE_KEY, mBinding.contentEdit.text.toString(), 1 * ACache.TIME_DAY)

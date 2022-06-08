@@ -50,12 +50,12 @@ class BytesTestActivity :BaseActivity(){
                 toastShort(R.string.bytes_input_num)
                 return@setOnJumpClickListener
             }
-            val num = numStr.toInt()
-            intByteArrayTransform(num)
-            arrayBufferTransform(num)
-            byteArrayBaseTransform(num)
-            shortArrayByteArray(num)
             try {
+                val num = numStr.toInt()
+                intByteArrayTransform(num)
+                arrayBufferTransform(num)
+                byteArrayBaseTransform(num)
+                shortArrayByteArray(num)
             } catch (e: Exception) {
                 e.printStackTrace()
                 toastShort(R.string.bytes_num_no_int)

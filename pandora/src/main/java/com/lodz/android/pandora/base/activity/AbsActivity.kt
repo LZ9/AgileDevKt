@@ -105,11 +105,9 @@ abstract class AbsActivity : RxAppCompatActivity() {
         // fragment底下没有子fragment或子fragment没有消费事件 则判断自己
         if (fragment.userVisibleHint && fragment.isVisible && fragment is IFragmentBackPressed) {
             val parentFragment: Fragment? = fragment.parentFragment
-            if (parentFragment != null) {
+            if (parentFragment != null && !parentFragment.userVisibleHint) {
                 // 如果子fragment的父fragment没有显示，则不询问该fragment的返回事件（避免受预先初始化却没有展示到前端的fragment的影响）
-                if (!parentFragment.userVisibleHint) {
-                    return false
-                }
+                return false
             }
             if (fragment is LazyFragment) {
                 val lazyFragment: LazyFragment = fragment

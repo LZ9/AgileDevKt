@@ -16,7 +16,6 @@ import com.lodz.android.corekt.utils.DateUtils
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.collect.radio.Radioable
-import kotlinx.coroutines.MainScope
 import java.util.*
 import kotlin.collections.ArrayList
 

@@ -22,7 +22,6 @@ import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
 import com.lodz.android.pandora.rx.utils.RxUtils
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import io.reactivex.rxjava3.core.Observable
-import kotlinx.coroutines.MainScope
 import java.io.File
 import java.util.concurrent.TimeUnit
 
@@ -225,7 +224,7 @@ class BitmapTestActivity : BaseActivity() {
                 BitmapUtils.bitmapToBase64(bitmap, 10)
             }
             .map { base64 ->
-                BitmapUtils.base64ToBitmap(base64) ?: throw KotlinNullPointerException("bitmap is null")
+                BitmapUtils.base64ToBitmap(base64) ?: throw KotlinNullPointerException("base64 to bitmap is null")
             }
             .compose(RxUtils.ioToMainObservable())
             .subscribe(
@@ -243,12 +242,11 @@ class BitmapTestActivity : BaseActivity() {
     private fun showDrawableAndBitmap() {
         Observable.just(R.drawable.ic_regret)
             .map { id ->
-                getDrawableCompat(id)
+                getDrawableCompat(id) ?: throw KotlinNullPointerException("Drawable is null")
             }
             .map { drawable ->
                 mBinding.drawableImg.setImageDrawable(drawable)
-                drawable ?: throw KotlinNullPointerException("drawable is null")
-                BitmapUtils.drawableToBitmap(drawable, 331, 162) ?: throw KotlinNullPointerException("bitmap is null")
+                BitmapUtils.drawableToBitmap(drawable, 331, 162) ?: throw KotlinNullPointerException("drawable to bitmap is null")
             }
             .compose(RxUtils.ioToMainObservable())
             .subscribe(
@@ -267,7 +265,7 @@ class BitmapTestActivity : BaseActivity() {
         Observable.just(mBinding.viewImg)
             .delay(500, TimeUnit.MILLISECONDS)
             .map { view ->
-                BitmapUtils.viewToBitmap(view) ?: throw KotlinNullPointerException("bitmap is null")
+                BitmapUtils.viewToBitmap(view) ?: throw KotlinNullPointerException("view to bitmap is null")
             }
             .compose(RxUtils.ioToMainObservable())
             .subscribe(

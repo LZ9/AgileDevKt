@@ -44,6 +44,10 @@ class ArrayTestActivity : BaseActivity() {
     private val NUM_GROUP = arrayOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
     private val STR_GROUP = arrayOf("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z")
 
+    private val mNumIntStr = "---数字Int---\n"
+    private val mNumLongStr = "\n---数字Long---\n"
+    private val mStr = "\n---字符---\n"
+
     private val mBinding: ActivityArrayTestBinding by bindingLayout(ActivityArrayTestBinding::inflate)
 
     override fun getViewBindingLayout(): View = mBinding.root
@@ -62,13 +66,13 @@ class ArrayTestActivity : BaseActivity() {
 
         // 去重
         mBinding.deduplicationBtn.setOnClickListener {
-            val result = "---数字Int---\n" +
+            val result = mNumIntStr +
                     getString(R.string.array_toarray, NUM_ARRAY.deduplication().contentToString()) + "\n" +
                     getString(R.string.array_tolist, NUM_LIST.deduplication().toString()) + "\n" +
-                    "\n---数字Long---\n" +
+                    mNumLongStr +
                     getString(R.string.array_toarray, NUM_ARRAY_LONG.deduplication().contentToString()) + "\n" +
                     getString(R.string.array_tolist, NUM_LIST_LONG.deduplication().toString()) + "\n" +
-                    "\n---字符---\n" +
+                    mStr +
                     getString(R.string.array_toarray, STR_ARRAY.deduplication().contentToString()) + "\n" +
                     getString(R.string.array_tolist, STR_LIST.deduplication().toString())
             mBinding.resultTv.text = result
@@ -76,17 +80,17 @@ class ArrayTestActivity : BaseActivity() {
 
         // 获取长度
         mBinding.getSizeBtn.setOnClickListener {
-            val result = "---数字Int---\n" +
+            val result = mNumIntStr +
                     getString(R.string.array_toarray, NUM_ARRAY.getSize().toString()) + "\n" +
                     getString(R.string.array_toarray_null, NUM_ARRAY_NULL.getSize().toString()) + "\n" +
                     getString(R.string.array_tolist, NUM_LIST.getSize().toString()) + "\n" +
                     getString(R.string.array_tolist_null, NUM_LIST_NULL.getSize().toString()) + "\n" +
-                    "\n---数字Long---\n" +
+                    mNumLongStr +
                     getString(R.string.array_toarray, NUM_ARRAY_LONG.getSize().toString()) + "\n" +
                     getString(R.string.array_toarray_null, NUM_ARRAY_LONG_NULL.getSize().toString()) + "\n" +
                     getString(R.string.array_tolist, NUM_LIST_LONG.getSize().toString()) + "\n" +
                     getString(R.string.array_tolist_null, NUM_LIST_LONG_NULL.getSize().toString()) + "\n" +
-                    "\n---字符---\n" +
+                    mStr +
                     getString(R.string.array_toarray, STR_ARRAY.getSize().toString()) + "\n" +
                     getString(R.string.array_toarray_null, STR_ARRAY_NULL.getSize().toString()) + "\n" +
                     getString(R.string.array_tolist, STR_LIST.getSize().toString()) + "\n" +
@@ -96,13 +100,13 @@ class ArrayTestActivity : BaseActivity() {
 
         // 默认排序
         mBinding.defaultSortBtn.setOnClickListener {
-            val result = "---数字Int---\n" +
+            val result = mNumIntStr +
                     getString(R.string.array_toarray, NUM_ARRAY.sortedArray().contentToString()) + "\n" +
                     getString(R.string.array_tolist, NUM_LIST.sorted().toString()) + "\n" +
-                    "\n---数字Long---\n" +
+                    mNumLongStr +
                     getString(R.string.array_toarray, NUM_ARRAY_LONG.sortedArray().contentToString()) + "\n" +
                     getString(R.string.array_tolist, NUM_LIST_LONG.sorted().toString()) + "\n" +
-                    "\n---字符---\n" +
+                    mStr +
                     getString(R.string.array_toarray, STR_ARRAY.sortedArray().contentToString()) + "\n" +
                     getString(R.string.array_tolist, STR_LIST.sorted().toString())
             mBinding.resultTv.text = result
@@ -110,13 +114,13 @@ class ArrayTestActivity : BaseActivity() {
 
         // 取最大值
         mBinding.getMaxBtn.setOnClickListener {
-            val result = "---数字Int---\n" +
+            val result = mNumIntStr +
                     getString(R.string.array_toarray, NUM_ARRAY.maxOrNull()?.toString()) + "\n" +
                     getString(R.string.array_tolist, NUM_LIST.maxOrNull()?.toString()) + "\n" +
-                    "\n---数字Long---\n" +
+                    mNumLongStr +
                     getString(R.string.array_toarray, NUM_ARRAY_LONG.maxOrNull()?.toString()) + "\n" +
                     getString(R.string.array_tolist, NUM_LIST_LONG.maxOrNull()?.toString()) + "\n" +
-                    "\n---字符---\n" +
+                    mStr +
                     getString(R.string.array_toarray, STR_ARRAY.maxOrNull()?.toString()) + "\n" +
                     getString(R.string.array_tolist, STR_LIST.maxOrNull()?.toString())
             mBinding.resultTv.text = result
@@ -124,13 +128,13 @@ class ArrayTestActivity : BaseActivity() {
 
         // 取最小值
         mBinding.getMinBtn.setOnClickListener {
-            val result = "---数字Int---\n" +
+            val result = mNumIntStr +
                     getString(R.string.array_toarray, NUM_ARRAY.minOrNull()?.toString()) + "\n" +
                     getString(R.string.array_tolist, NUM_LIST.minOrNull()?.toString()) + "\n" +
-                    "\n---数字Long---\n" +
+                    mNumLongStr +
                     getString(R.string.array_toarray, NUM_ARRAY_LONG.minOrNull()?.toString()) + "\n" +
                     getString(R.string.array_tolist, NUM_LIST_LONG.minOrNull()?.toString()) + "\n" +
-                    "\n---字符---\n" +
+                    mStr +
                     getString(R.string.array_toarray, STR_ARRAY.minOrNull()?.toString()) + "\n" +
                     getString(R.string.array_tolist, STR_LIST.minOrNull()?.toString())
             mBinding.resultTv.text = result

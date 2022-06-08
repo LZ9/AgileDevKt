@@ -17,7 +17,7 @@ class NationBean : Groupable {
     /** 拼音首字母缩写 */
     var pinYin = ""
 
-    override fun getSortStr(): String = code.toUpperCase(Locale.getDefault())
+    override fun getSortStr(): String = code.uppercase()
 
     /** 获取标题 */
     fun getTitle(): String = "$code-$name"

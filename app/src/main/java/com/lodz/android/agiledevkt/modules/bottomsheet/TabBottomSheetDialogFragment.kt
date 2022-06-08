@@ -68,7 +68,7 @@ class TabBottomSheetDialogFragment : BaseBottomSheetDialogFragment() {
 
         override fun getCount(): Int = tabs.size
 
-        override fun getPageTitle(position: Int): CharSequence? = context.getString(tabs[position])
+        override fun getPageTitle(position: Int): CharSequence = context.getString(tabs[position])
 
     }
 }
