@@ -21,7 +21,6 @@ import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.CompletableObserver
 import io.reactivex.rxjava3.disposables.Disposable
-import kotlinx.coroutines.MainScope
 
 /**
  * RxCompletable订阅测试

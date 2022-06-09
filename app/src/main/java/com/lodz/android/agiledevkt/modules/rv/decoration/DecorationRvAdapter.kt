@@ -1,7 +1,6 @@
 package com.lodz.android.agiledevkt.modules.rv.decoration
 
 import android.content.Context
-import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView

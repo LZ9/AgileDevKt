@@ -1,7 +1,6 @@
 package com.lodz.android.agiledevkt.modules.dialog
 
 import android.content.Context
-import android.os.Build
 import android.view.View
 import com.lodz.android.agiledevkt.databinding.DialogBottomBinding
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout

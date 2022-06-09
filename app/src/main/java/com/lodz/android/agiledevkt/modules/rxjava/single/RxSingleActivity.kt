@@ -22,7 +22,6 @@ import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.core.SingleObserver
 import io.reactivex.rxjava3.disposables.Disposable
-import kotlinx.coroutines.MainScope
 
 /**
  * RxSingle订阅测试

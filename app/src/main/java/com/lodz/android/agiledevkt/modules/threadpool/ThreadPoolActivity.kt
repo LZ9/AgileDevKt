@@ -12,7 +12,6 @@ import com.lodz.android.corekt.anko.runOnMainDelay
 import com.lodz.android.corekt.threadpool.ThreadPoolManager
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
-import kotlinx.coroutines.MainScope
 import java.util.concurrent.ThreadPoolExecutor
 import java.util.concurrent.TimeUnit
 

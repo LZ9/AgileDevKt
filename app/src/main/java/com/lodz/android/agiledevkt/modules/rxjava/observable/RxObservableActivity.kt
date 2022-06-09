@@ -22,7 +22,6 @@ import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.Disposable
-import kotlinx.coroutines.MainScope
 
 /**
  * RxObservable订阅测试
@@ -110,7 +109,7 @@ class RxObservableActivity : BaseActivity() {
                     .subscribe(RxObserver.action({
                         printLog("onRxNext : ${it.data}")
                     }, { e, isNetwork ->
-                        printLog("onRxError message : ${RxUtils.getExceptionTips(e, isNetwork, "create fail")}")
+                        printLog("onRxError message : ${RxUtils.getExceptionTips(e, isNetwork, "create rx fail")}")
                     }))
         }
 
@@ -127,7 +126,7 @@ class RxObservableActivity : BaseActivity() {
                         canceledOnTouchOutside = mBinding.canceledOutsideSwitch.isChecked,
                         next = { printLog("onPgNext num : ${it.data}") },
                         error = { e, isNetwork ->
-                            printLog("onPgError message : ${RxUtils.getExceptionTips(e, isNetwork,"create fail")}")
+                            printLog("onPgError message : ${RxUtils.getExceptionTips(e, isNetwork,"create progress fail")}")
                         })
                 )
         }
@@ -148,7 +147,7 @@ class RxObservableActivity : BaseActivity() {
                 return@create
             }
             if (mBinding.failSwitch.isChecked) {
-                emitter.doError(RuntimeException("create fail"))
+                emitter.doError(RuntimeException("create observable fail"))
                 return@create
             }
             try {

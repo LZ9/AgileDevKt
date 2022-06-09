@@ -24,7 +24,6 @@ import com.lodz.android.pandora.rx.utils.doNext
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
-import kotlinx.coroutines.MainScope
 import org.reactivestreams.Subscriber
 import org.reactivestreams.Subscription
 import java.io.BufferedReader

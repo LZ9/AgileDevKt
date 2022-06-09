@@ -6,10 +6,10 @@ import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.base.response.PageBean
 import com.lodz.android.corekt.anko.IoScope
 import com.lodz.android.corekt.anko.append
+import com.lodz.android.corekt.anko.runOnMain
 import com.lodz.android.corekt.utils.DateUtils
 import com.lodz.android.pandora.mvvm.vm.BaseRefreshViewModel
 import com.lodz.android.pandora.utils.coroutines.CoroutinesWrapper
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.ArrayList
@@ -32,7 +32,7 @@ class MvvmTestLoadMoreViewModel :BaseRefreshViewModel(){
                 val pageBean = PageBean<ArrayList<String>>()
                 pageBean.data = null
                 pageBean.pageNum = page
-                launch(Dispatchers.Main) {
+                runOnMain {
                     mDataList.value = Pair(page == PageBean.DEFAULT_START_PAGE_NUM, pageBean)
                 }
                 return@launch
@@ -46,7 +46,7 @@ class MvvmTestLoadMoreViewModel :BaseRefreshViewModel(){
             val pageBean = PageBean<ArrayList<String>>()
             pageBean.data = list
             pageBean.pageNum = page
-            launch(Dispatchers.Main) {
+            runOnMain {
                 mDataList.value = Pair(page == PageBean.DEFAULT_START_PAGE_NUM, pageBean)
             }
         }

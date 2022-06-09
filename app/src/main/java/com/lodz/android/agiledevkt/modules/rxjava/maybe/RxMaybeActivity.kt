@@ -23,7 +23,6 @@ import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.MaybeObserver
 import io.reactivex.rxjava3.disposables.Disposable
-import kotlinx.coroutines.MainScope
 
 /**
  * RxMaybe订阅测试
@@ -38,6 +37,8 @@ class RxMaybeActivity : BaseActivity() {
             context.startActivity(intent)
         }
     }
+
+    private val mDataEmptyStr = "data empty"
 
     private val mBinding: ActivityRxMaybeBinding by bindingLayout(ActivityRxMaybeBinding::inflate)
 
@@ -62,7 +63,7 @@ class RxMaybeActivity : BaseActivity() {
 
             Maybe.create<String> { emitter ->
                 if (mBinding.failSwitch.isChecked) {
-                    emitter.doError(NullPointerException("data empty"))
+                    emitter.doError(NullPointerException(mDataEmptyStr))
                 } else {
                     emitter.doSuccess("data")
                 }
@@ -99,7 +100,7 @@ class RxMaybeActivity : BaseActivity() {
                     if (data.isNotEmpty()) {
                         emitter.doSuccess(data)
                     } else {
-                        emitter.doError(NullPointerException("data empty"))
+                        emitter.doError(NullPointerException(mDataEmptyStr))
                     }
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -124,7 +125,7 @@ class RxMaybeActivity : BaseActivity() {
                     if (data.isNotEmpty()) {
                         emitter.doComplete()
                     } else {
-                        emitter.doError(NullPointerException("data empty"))
+                        emitter.doError(NullPointerException(mDataEmptyStr))
                     }
                 } catch (e: Exception) {
                     e.printStackTrace()

@@ -14,7 +14,6 @@ import com.lodz.android.corekt.anko.*
 import com.lodz.android.corekt.utils.StatusBarUtil
 import com.lodz.android.pandora.base.activity.AbsActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
-import kotlinx.coroutines.MainScope
 import permissions.dispatcher.*
 import permissions.dispatcher.ktx.constructPermissionsRequest
 

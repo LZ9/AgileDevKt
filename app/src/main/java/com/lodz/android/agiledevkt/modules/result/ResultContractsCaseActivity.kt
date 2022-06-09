@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.os.Environment
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.FileProvider
 import androidx.documentfile.provider.DocumentFile
 import com.lodz.android.agiledevkt.BuildConfig
 import com.lodz.android.agiledevkt.R

@@ -25,6 +25,8 @@ class ReflectActivity : BaseActivity() {
         }
     }
 
+    private val mDividerStr = "\n--------------\n"
+
     private val mBinding: ActivityReflectBinding by bindingLayout(ActivityReflectBinding::inflate)
 
     override fun getViewBindingLayout(): View = mBinding.root
@@ -112,7 +114,7 @@ class ReflectActivity : BaseActivity() {
             return
         }
         val list = if (mBinding.typeSwitch.isChecked) ReflectUtils.getFieldName<ReflectBean>() else ReflectUtils.getFieldName(c)
-        val sb = StringBuilder(c.simpleName).append("\n--------------\n")
+        val sb = StringBuilder(c.simpleName).append(mDividerStr)
         for (funName in list) {
             sb.append(funName).append("\n\n")
         }
@@ -127,7 +129,7 @@ class ReflectActivity : BaseActivity() {
             return
         }
         val list = if (mBinding.typeSwitch.isChecked) ReflectUtils.getMethodName<ReflectBean>() else ReflectUtils.getMethodName(c)
-        val sb = StringBuilder(c.simpleName).append("\n--------------\n")
+        val sb = StringBuilder(c.simpleName).append(mDividerStr)
         for (funName in list) {
             sb.append(funName).append("\n\n")
         }
@@ -146,7 +148,7 @@ class ReflectActivity : BaseActivity() {
             mBinding.msgTv.setText(R.string.reflect_unfind_no_param_constructor)
             return
         }
-        val sb = StringBuilder(c.simpleName).append("\n--------------\n")
+        val sb = StringBuilder(c.simpleName).append(mDividerStr)
         val nameList = if (mBinding.typeSwitch.isChecked) ReflectUtils.getFieldName<ReflectBean>() else ReflectUtils.getFieldName(c)
         for (name in nameList) {
             val value = if (mBinding.typeSwitch.isChecked) ReflectUtils.getFieldValue<ReflectBean>(name) else ReflectUtils.getFieldValue(c, constructor, name)
@@ -169,7 +171,7 @@ class ReflectActivity : BaseActivity() {
             mBinding.msgTv.setText(R.string.reflect_unfind_no_param_constructor)
             return
         }
-        val sb = StringBuilder(c.simpleName).append("\n--------------\n")
+        val sb = StringBuilder(c.simpleName).append(mDividerStr)
         val methodList = if (mBinding.typeSwitch.isChecked) ReflectUtils.getMethodName<ReflectBean>() else ReflectUtils.getMethodName(c)
         for (methodName in methodList) {
             val result = ReflectUtils.executeFunction(c, constructor, methodName)
@@ -196,7 +198,7 @@ class ReflectActivity : BaseActivity() {
             mBinding.msgTv.setText(R.string.reflect_unfind_no_param_constructor)
             return
         }
-        val sb = StringBuilder(c.simpleName).append("\n--------------\n")
+        val sb = StringBuilder(c.simpleName).append(mDividerStr)
         val value = if (mBinding.typeSwitch.isChecked) ReflectUtils.getFieldValue<ReflectBean>("age") else ReflectUtils.getFieldValue(c, constructor, "age")
         if (value != null) {
             sb.append("age").append(" : ").append(value.toString()).append("\n\n")
@@ -224,7 +226,7 @@ class ReflectActivity : BaseActivity() {
             mBinding.msgTv.setText(R.string.reflect_unfind_no_param_constructor)
             return
         }
-        val sb = StringBuilder(c.simpleName).append("\n--------------\n")
+        val sb = StringBuilder(c.simpleName).append(mDividerStr)
         val valueOld = if (mBinding.typeSwitch.isChecked) {
             ReflectUtils.getFieldValue<ReflectBean>(constructor, "nationality")
         } else {

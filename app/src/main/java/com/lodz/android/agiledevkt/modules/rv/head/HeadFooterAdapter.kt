@@ -110,7 +110,7 @@ class HeadFooterAdapter(context: Context) : BaseHeaderFooterRVAdapter<String, St
 
     private fun resizeHeaderAndFooter(view: View) {
         setItemViewWidth(view, if (mOrientation == RecyclerView.VERTICAL) context.getScreenWidth() else context.dp2px(200))
-        setItemViewHeight(view, if (mOrientation == RecyclerView.VERTICAL) context.dp2px(200) else context.dp2px(200))
+        setItemViewHeight(view, context.dp2px(200))
     }
 
     private class HeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
