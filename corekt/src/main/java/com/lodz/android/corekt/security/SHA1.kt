@@ -27,7 +27,7 @@ object SHA1 {
                 }
                 hexString.append(shaHex)
             }
-            return hexString.toString().toUpperCase(Locale.getDefault())
+            return hexString.toString().uppercase()
         } catch (e: Exception) {
             e.printStackTrace()
         }

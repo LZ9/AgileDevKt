@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.lodz.android.corekt.anko.runOnMain
-import kotlinx.coroutines.MainScope
 
 /**
  * Toast帮助类

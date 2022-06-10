@@ -51,7 +51,7 @@ object MD5 {
                 strs[k++] = HEX_DIGITS[b.toInt().ushr(4) and 0xf] // 取字节中高 4 位的数字转换,
                 strs[k++] = HEX_DIGITS[b.toInt() and 0xf]// 取字节中低 4 位的数字转换
             }
-            return String(strs).toUpperCase(Locale.getDefault())
+            return String(strs).uppercase()
         } catch (e: Exception) {
             e.printStackTrace()
         }
