@@ -3,7 +3,6 @@ package com.lodz.android.pandora.widget.dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.graphics.drawable.Drawable
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.LayoutRes

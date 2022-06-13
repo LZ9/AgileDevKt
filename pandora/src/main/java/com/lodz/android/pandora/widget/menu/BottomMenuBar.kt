@@ -50,10 +50,6 @@ class BottomMenuBar : LinearLayout {
         orientation = LinearLayout.HORIZONTAL
     }
 
-    private fun findViews() {
-        orientation = LinearLayout.HORIZONTAL
-    }
-
     /** 设置菜单配置[configs] */
     @SuppressLint("InflateParams")
     fun setMenuConfigs(configs: List<MenuConfig>) {

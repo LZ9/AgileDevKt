@@ -19,7 +19,7 @@ object RSA {
     /** 非对称加密密钥算法 */
     private const val KEY_ALGORITHM = "RSA"
     /** 加密模式 */
-    private const val CIPHER_ALGORITHM = "RSA/ECB/PKCS1Padding"
+    private const val CIPHER_ALGORITHM = "RSA/ECB/OAEPWITHSHA-256ANDMGF1PADDING"
 
     /** 获取公钥的KEY */
     private const val PUBLIC_KEY = "RSAPublicKey"
@@ -27,7 +27,7 @@ object RSA {
     private const val PRIVATE_KEY = "RSAPrivateKey"
 
     /** RSA密钥长度 默认1024位， 密钥长度必须是64的倍数， 范围在512至65536位之间。 */
-    private const val KEY_SIZE = 512
+    private const val KEY_SIZE = 2048
     /** RSA最大加密明文大小 */
     private const val MAX_ENCRYPT_BLOCK = KEY_SIZE / 8 - 11
     /** RSA最大解密密文大小 */

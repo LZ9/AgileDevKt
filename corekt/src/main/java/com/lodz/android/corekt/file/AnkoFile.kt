@@ -1,7 +1,6 @@
 package com.lodz.android.corekt.file
 
 import android.content.Context
-import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
 import android.net.Uri
 import android.util.Base64
@@ -9,7 +8,6 @@ import androidx.core.content.FileProvider
 import java.io.File
 import java.io.FileInputStream
 import java.text.DecimalFormat
-import kotlin.math.ceil
 import kotlin.math.log10
 import kotlin.math.pow
 import kotlin.math.round
