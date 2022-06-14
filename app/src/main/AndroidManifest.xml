@@ -1062,6 +1062,14 @@
 
         </activity>
 
+        <activity
+            android:name=".modules.json.JsonTestActivity"
+            android:label="Json测试类"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
+
+        </activity>
+
 
     </application>
 

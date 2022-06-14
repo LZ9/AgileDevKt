@@ -13,12 +13,19 @@ open class ResponseBean<T> : ResponseStatus {
         const val FAIL = 500
 
         @JvmStatic
-        fun <T> createFail(): ResponseBean<T> = ResponseBean()
+        fun <T> createFail(msg: String = ""): ResponseBean<T> {
+            val responseBean = ResponseBean<T>()
+            responseBean.code = FAIL
+            responseBean.msg = msg
+            return responseBean
+        }
 
         @JvmStatic
-        fun <T> createSuccess(): ResponseBean<T> {
+        fun <T> createSuccess(msg: String = "", data: T? = null): ResponseBean<T> {
             val responseBean = ResponseBean<T>()
             responseBean.code = SUCCESS
+            responseBean.msg = msg
+            responseBean.data = data
             return responseBean
         }
     }

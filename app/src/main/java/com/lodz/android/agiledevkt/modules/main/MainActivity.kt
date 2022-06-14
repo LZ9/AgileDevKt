@@ -44,6 +44,7 @@ import com.lodz.android.agiledevkt.modules.hole.HoleTestActivity
 import com.lodz.android.agiledevkt.modules.idcard.IdcardTestActivity
 import com.lodz.android.agiledevkt.modules.image.GlideActivity
 import com.lodz.android.agiledevkt.modules.info.InfoTestActivity
+import com.lodz.android.agiledevkt.modules.json.JsonTestActivity
 import com.lodz.android.agiledevkt.modules.keyboard.KeyboardTestActivity
 import com.lodz.android.agiledevkt.modules.location.LocationTestActivity
 import com.lodz.android.agiledevkt.modules.menubar.MenuBarTestActivity
@@ -174,7 +175,8 @@ class MainActivity : BaseActivity() {
         MainBean("Bytes字节转换测试类", "B", BytesTestActivity::class.java),
         MainBean("参数传递测试类", "C", ExtrasTestActivity::class.java),
         MainBean("ActivityResultContracts用例", "A", ResultContractsCaseActivity::class.java),
-        MainBean("通讯录测试类", "T", ContactTestActivity::class.java)
+        MainBean("通讯录测试类", "T", ContactTestActivity::class.java),
+        MainBean("Json测试类", "J", JsonTestActivity::class.java)
     )
 
     private val mBinding: ActivityMainBinding by bindingLayout(ActivityMainBinding::inflate)
