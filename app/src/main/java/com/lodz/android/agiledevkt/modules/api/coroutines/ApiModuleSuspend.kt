@@ -1,11 +1,11 @@
 package com.lodz.android.agiledevkt.modules.api.coroutines
 
-import com.alibaba.fastjson.JSON
-import com.alibaba.fastjson.TypeReference
 import com.lodz.android.agiledevkt.apiservice.ApiCoroutinesService
+import com.lodz.android.agiledevkt.bean.MockBean
 import com.lodz.android.agiledevkt.bean.SpotBean
 import com.lodz.android.agiledevkt.bean.base.response.ResponseBean
 import com.lodz.android.corekt.utils.ReflectUtils
+import com.lodz.android.pandora.utils.jackson.parseObject
 import kotlinx.coroutines.*
 import okhttp3.RequestBody
 import java.net.SocketTimeoutException
@@ -24,11 +24,11 @@ object ApiModuleSuspend :ApiCoroutinesService{
     /** 接口成功 */
     const val API_SUCCESS = 3
 
-    override suspend fun login(account: String, password: String): ResponseBean<String> {
+    override suspend fun login(account: String, password: String): ResponseBean<MockBean<SpotBean>> {
         delay(2000)
-        val responseBean = ResponseBean.createSuccess<String>()
+        val responseBean = ResponseBean.createSuccess<MockBean<SpotBean>>()
         responseBean.msg = "success"
-        responseBean.data = "{\"id\":\"1\",\"loginName\":\"admin\"}"
+        responseBean.data = "{\"id\":\"1\",\"loginName\":\"admin\"}".parseObject()
         return responseBean
     }
 
@@ -73,7 +73,7 @@ object ApiModuleSuspend :ApiCoroutinesService{
     override suspend fun querySpot(requestBody: RequestBody): ResponseBean<List<SpotBean>> {
         delay(2000)
         val json = "{\"code\":200,\"msg\":\"success\",\"data\":[]}"
-        val responseBean = JSON.parseObject(json, object : TypeReference<ResponseBean<List<SpotBean>>>() {})
+        val responseBean = json.parseObject<ResponseBean<List<SpotBean>>>()
         val list = ArrayList<SpotBean>()
         val spotBean = SpotBean()
         spotBean.name = getJsonByRequestBody(requestBody)

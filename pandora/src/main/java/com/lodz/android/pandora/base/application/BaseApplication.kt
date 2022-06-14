@@ -2,6 +2,8 @@ package com.lodz.android.pandora.base.application
 
 import android.app.Application
 import android.os.Bundle
+import com.fasterxml.jackson.databind.DeserializationFeature
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.lodz.android.pandora.base.application.config.BaseLayoutConfig
 import com.lodz.android.pandora.event.ActivityFinishEvent
 import org.greenrobot.eventbus.EventBus
@@ -24,12 +26,21 @@ abstract class BaseApplication : Application() {
     /** 保存回收前数据的Bundle */
     private var mPdrRestoreMap = HashMap<String, Bundle?>()
 
+    private val mObjectMapper = ObjectMapper()
+
     final override fun onCreate() {
         super.onCreate()
         sInstance = this
         mPdrBaseLayoutConfig = BaseLayoutConfig()
+        configJackson(mObjectMapper)
         onStartCreate()
     }
+
+    protected open fun configJackson(objectMapper: ObjectMapper) {
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+    }
+
+    fun getJacksonObjectMapper() = mObjectMapper
 
     /** 获取基础控件配置 */
     fun getBaseLayoutConfig(): BaseLayoutConfig = mPdrBaseLayoutConfig

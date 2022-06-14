@@ -24,7 +24,7 @@ class ApiCoroutinesViewModel :BaseViewModel(){
         CoroutinesWrapper.create(this)
             .request { ApiServiceManager.get().create(ApiCoroutinesService::class.java).login("admin", "1234") }
             .actionPg(context, context.getString(R.string.mvvm_demo_loading), true) {
-                onSuccess { mResponseResult.value = it.data ?: "" }
+                onSuccess { mResponseResult.value = it.data.toString()}
 
                 onError { e, isNetwork ->
                     val msg = RxUtils.getExceptionTips(e, isNetwork, context.getString(R.string.api_fail))

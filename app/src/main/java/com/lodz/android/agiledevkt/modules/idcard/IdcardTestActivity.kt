@@ -5,7 +5,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.alibaba.fastjson.JSON
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.SearchRecomBean
 import com.lodz.android.agiledevkt.databinding.ActivityIdCardTestBinding
@@ -14,6 +13,8 @@ import com.lodz.android.corekt.utils.DateUtils
 import com.lodz.android.corekt.utils.IdCardUtils
 import com.lodz.android.pandora.base.activity.AbsActivity
 import com.lodz.android.pandora.utils.acache.ACacheUtils
+import com.lodz.android.pandora.utils.jackson.parseObject
+import com.lodz.android.pandora.utils.jackson.toJsonString
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.search.OnSearchRecomdListener
 import com.lodz.android.pandora.widget.search.RecomdData
@@ -101,7 +102,7 @@ class IdcardTestActivity : AbsActivity() {
     private fun getCacheList(text: String): MutableList<SearchRecomBean> {
         val list = ArrayList<SearchRecomBean>()
         val json = ACacheUtils.get().create().getAsString(CACHE_KEY)
-        val cacheList = if (json.isEmpty()) ArrayList<SearchRecomBean>() else JSON.parseArray(json, SearchRecomBean::class.java).toArrayList()
+        val cacheList = if (json.isEmpty()) ArrayList() else json.parseObject<List<SearchRecomBean>>()
         if (text.isEmpty()) {
             return list
         }
@@ -115,7 +116,7 @@ class IdcardTestActivity : AbsActivity() {
 
     private fun putCache(text: String) {
         val json = ACacheUtils.get().create().getAsString(CACHE_KEY)
-        val list = if (json.isEmpty()) ArrayList<SearchRecomBean>() else JSON.parseArray(json, SearchRecomBean::class.java).toArrayList()
+        val list = if (json.isEmpty()) ArrayList() else json.parseObject<List<SearchRecomBean>>().toArrayList()
         var hasCache = false
         for (bean in list) {
             if (bean.getTitleText() == text) {
@@ -144,6 +145,6 @@ class IdcardTestActivity : AbsActivity() {
             }
             list.add(bean)
         }
-        ACacheUtils.get().create().put(CACHE_KEY, JSON.toJSONString(list))
+        ACacheUtils.get().create().put(CACHE_KEY, list.toJsonString())
     }
 }

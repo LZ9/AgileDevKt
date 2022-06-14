@@ -1,5 +1,6 @@
 package com.lodz.android.agiledevkt.apiservice
 
+import com.lodz.android.agiledevkt.bean.MockBean
 import com.lodz.android.agiledevkt.bean.SpotBean
 import com.lodz.android.agiledevkt.bean.base.response.ResponseBean
 import okhttp3.RequestBody
@@ -15,7 +16,7 @@ interface ApiCoroutinesService {
     /** 登录接口 */
     @FormUrlEncoded
     @POST("systemApi/login")
-    suspend fun login(@Field("account") account: String, @Field("password") password: String): ResponseBean<String>
+    suspend fun login(@Field("account") account: String, @Field("password") password: String): ResponseBean<MockBean<SpotBean>>
 
     /** post方式获取景点数据 */
     @FormUrlEncoded

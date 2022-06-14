@@ -1,7 +1,5 @@
 package com.lodz.android.agiledevkt.modules.api.rx
 
-import com.alibaba.fastjson.JSON
-import com.alibaba.fastjson.TypeReference
 import com.lodz.android.agiledevkt.apiservice.ApiService
 import com.lodz.android.agiledevkt.bean.MockBean
 import com.lodz.android.agiledevkt.bean.SpotBean
@@ -10,6 +8,7 @@ import com.lodz.android.corekt.utils.ReflectUtils
 import com.lodz.android.pandora.rx.utils.doComplete
 import com.lodz.android.pandora.rx.utils.doError
 import com.lodz.android.pandora.rx.utils.doNext
+import com.lodz.android.pandora.utils.jackson.parseObject
 import io.reactivex.rxjava3.core.Observable
 import okhttp3.RequestBody
 import java.net.SocketTimeoutException
@@ -107,7 +106,7 @@ object ApiServiceImpl : ApiService {
             try {
                 Thread.sleep(2000)
                 val json = "{\"code\":200,\"msg\":\"success\",\"data\":[]}"
-                val responseBean = JSON.parseObject(json, object : TypeReference<ResponseBean<List<SpotBean>>>() {})
+                val responseBean = json.parseObject<ResponseBean<List<SpotBean>>>()
                 val list = ArrayList<SpotBean>()
                 val spotBean = SpotBean()
                 spotBean.name = getJsonByRequestBody(requestBody)
