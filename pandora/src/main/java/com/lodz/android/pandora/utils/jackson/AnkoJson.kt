@@ -11,7 +11,7 @@ import com.lodz.android.pandora.base.application.BaseApplication
  */
 
 /** 把Json字符串转为对象 */
-inline fun <reified T> String.parseObject(
+inline fun <reified T> String.parseJsonObject(
     mapper: ObjectMapper = BaseApplication.get()?.getJacksonObjectMapper() ?: ObjectMapper()
 ): T = mapper.readValue(this, object : TypeReference<T>() {})
 

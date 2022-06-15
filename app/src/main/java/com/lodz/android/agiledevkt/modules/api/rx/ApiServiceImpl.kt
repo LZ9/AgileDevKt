@@ -8,7 +8,7 @@ import com.lodz.android.corekt.utils.ReflectUtils
 import com.lodz.android.pandora.rx.utils.doComplete
 import com.lodz.android.pandora.rx.utils.doError
 import com.lodz.android.pandora.rx.utils.doNext
-import com.lodz.android.pandora.utils.jackson.parseObject
+import com.lodz.android.pandora.utils.jackson.parseJsonObject
 import io.reactivex.rxjava3.core.Observable
 import okhttp3.RequestBody
 import java.net.SocketTimeoutException
@@ -106,7 +106,7 @@ object ApiServiceImpl : ApiService {
             try {
                 Thread.sleep(2000)
                 val json = "{\"code\":200,\"msg\":\"success\",\"data\":[]}"
-                val responseBean = json.parseObject<ResponseBean<List<SpotBean>>>()
+                val responseBean = json.parseJsonObject<ResponseBean<List<SpotBean>>>()
                 val list = ArrayList<SpotBean>()
                 val spotBean = SpotBean()
                 spotBean.name = getJsonByRequestBody(requestBody)

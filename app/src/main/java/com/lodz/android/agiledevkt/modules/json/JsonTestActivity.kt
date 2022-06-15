@@ -12,7 +12,7 @@ import com.lodz.android.corekt.anko.append
 import com.lodz.android.corekt.anko.intentExtrasNoNull
 import com.lodz.android.corekt.anko.then
 import com.lodz.android.pandora.base.activity.BaseActivity
-import com.lodz.android.pandora.utils.jackson.parseObject
+import com.lodz.android.pandora.utils.jackson.parseJsonObject
 import com.lodz.android.pandora.utils.jackson.toJsonString
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 
@@ -71,18 +71,18 @@ class JsonTestActivity :BaseActivity(){
 
         mBinding.jsonToObjBtn.setOnClickListener {
             cleanResult()
-            val spotBean = mDefObjJson.parseObject<SpotBean>()
+            val spotBean = mDefObjJson.parseJsonObject<SpotBean>()
             addLog("SpotBean : ${spotBean.name} , ${spotBean.score}")
 
-            val list = mDefListJson.parseObject<List<SpotBean>>()
+            val list = mDefListJson.parseJsonObject<List<SpotBean>>()
             addLog("List<SpotBean> : ${list[0].name} , ${list[0].score} ; ${list[1].name} , ${list[1].score}")
 
-            val responseBean = mDefObjListJson.parseObject<ResponseBean<List<SpotBean>>>()
+            val responseBean = mDefObjListJson.parseJsonObject<ResponseBean<List<SpotBean>>>()
             addLog("ResponseBean<List<SpotBean>> : ${responseBean.code} , ${responseBean.msg} ; " +
                     "${responseBean.data?.get(0)?.name} , ${responseBean.data?.get(0)?.score} ; " +
                     "${responseBean.data?.get(1)?.name} , ${responseBean.data?.get(1)?.score}")
 
-            val resMockBean = mDefTypeRefJson.parseObject<ResponseBean<MockBean<SpotBean>>>()
+            val resMockBean = mDefTypeRefJson.parseJsonObject<ResponseBean<MockBean<SpotBean>>>()
             addLog("ResponseBean<MockBean<SpotBean>> : ${resMockBean.code} , ${responseBean.msg} ; " +
                     "${resMockBean.data?.id} , ${resMockBean.data?.loginName} ; " +
                     "${resMockBean.data?.roles?.get(0)?.name} , ${resMockBean.data?.roles?.get(0)?.score} ; " +

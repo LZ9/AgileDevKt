@@ -88,6 +88,7 @@ class DownloadMarketAdapter(context : Context) :BaseRecyclerViewAdapter<AppInfoB
                 is Failed -> {// 下载失败
                     showFailed(holder, bean, status)
                 }
+                else -> {}
             }
         }
     }

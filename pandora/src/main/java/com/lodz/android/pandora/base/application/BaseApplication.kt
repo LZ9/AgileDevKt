@@ -36,7 +36,9 @@ abstract class BaseApplication : Application() {
         onStartCreate()
     }
 
+    /** 配置Jackson */
     protected open fun configJackson(objectMapper: ObjectMapper) {
+        // 忽略对象中未映射的属性
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
     }
 
