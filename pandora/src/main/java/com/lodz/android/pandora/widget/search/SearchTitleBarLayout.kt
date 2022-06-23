@@ -13,7 +13,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.*
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.corekt.anko.*
 import com.lodz.android.pandora.R
@@ -21,6 +20,8 @@ import com.lodz.android.pandora.base.application.BaseApplication
 import com.lodz.android.pandora.base.application.config.TitleBarLayoutConfig
 import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
 import com.lodz.android.pandora.rx.utils.RxUtils
+import com.lodz.android.pandora.widget.rv.anko.linear
+import com.lodz.android.pandora.widget.rv.anko.setup
 import java.util.concurrent.TimeUnit
 
 /**
@@ -280,13 +281,9 @@ class SearchTitleBarLayout : FrameLayout {
     }
 
     private fun initRecyclerView() {
-        mPdrAdapter = RecomdListAdapter(context)
-        val layoutManager = LinearLayoutManager(context)
-        layoutManager.orientation = RecyclerView.VERTICAL
-        mPdrRecyclerView.layoutManager = layoutManager
-        mPdrAdapter.onAttachedToRecyclerView(mPdrRecyclerView)// 如果使用网格布局请设置此方法
-        mPdrRecyclerView.setHasFixedSize(true)
-        mPdrRecyclerView.adapter = mPdrAdapter
+        mPdrAdapter = mPdrRecyclerView
+            .linear()
+            .setup(RecomdListAdapter(context))
     }
 
     /** 设置监听器 */

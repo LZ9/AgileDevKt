@@ -20,6 +20,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.corekt.anko.*
 import com.lodz.android.pandora.R
+import com.lodz.android.pandora.widget.rv.anko.layoutM
+import com.lodz.android.pandora.widget.rv.anko.setup
 
 /**
  * 采集页单选组
@@ -201,13 +203,13 @@ class CltRadioGroup : FrameLayout {
     }
 
     private fun initRecyclerView() {
-        mPdrLayoutManager = GridLayoutManager(context, mPdrSpanCount)
-        mPdrLayoutManager.orientation = RecyclerView.VERTICAL
-        mPdrAdapter = RadioGroupAdapter(context)
-        mPdrRadioRv.layoutManager = mPdrLayoutManager
-        mPdrRadioRv.setHasFixedSize(true)
         mPdrRadioRv.isNestedScrollingEnabled = false
-        mPdrRadioRv.adapter = mPdrAdapter
+        mPdrLayoutManager = GridLayoutManager(context, mPdrSpanCount, RecyclerView.VERTICAL, false)
+        mPdrAdapter = mPdrRadioRv.let {
+            it.isNestedScrollingEnabled = false
+            it.layoutM(mPdrLayoutManager)
+            it.setup(RadioGroupAdapter(context))
+        }
     }
 
     private fun setListeners() {

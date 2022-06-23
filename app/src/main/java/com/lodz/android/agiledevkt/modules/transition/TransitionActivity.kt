@@ -5,14 +5,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.core.util.Pair
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.TransitionBean
 import com.lodz.android.agiledevkt.databinding.ActivityTransitionBinding
+import com.lodz.android.agiledevkt.databinding.RvItemTransitionBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
+import com.lodz.android.pandora.widget.rv.anko.linear
+import com.lodz.android.pandora.widget.rv.anko.setupVB
 
 /**
  * 共享元素动画
@@ -62,9 +63,6 @@ class TransitionActivity : BaseActivity() {
 
     private val mBinding: ActivityTransitionBinding by bindingLayout(ActivityTransitionBinding::inflate)
 
-    /** 适配器 */
-    private lateinit var mAdapter: TransitionAdapter
-
     override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
@@ -73,12 +71,22 @@ class TransitionActivity : BaseActivity() {
     }
 
     private fun initRecyclerView() {
-        val layoutManager = LinearLayoutManager(getContext())
-        layoutManager.orientation = RecyclerView.VERTICAL
-        mAdapter = TransitionAdapter(getContext())
-        mBinding.recyclerView.layoutManager = layoutManager
-        mBinding.recyclerView.setHasFixedSize(true)
-        mBinding.recyclerView.adapter = mAdapter
+        mBinding.recyclerView
+            .linear()
+            .setupVB<TransitionBean, RvItemTransitionBinding>(RvItemTransitionBinding::inflate) { vb, holder, position ->
+                val bean = getItem(position) ?: return@setupVB
+                vb.img.setImageResource(bean.imgRes)
+                vb.titleTv.text = bean.title
+            }.apply {
+                setOnItemClickListener { viewHolder, item, position ->
+                    viewHolder.getVB<RvItemTransitionBinding>().apply {
+                        val sharedElements = ArrayList<Pair<View, String>>()//创建共享元素列表
+                        sharedElements.add(Pair.create(img, TransitionActivity.IMG))
+                        sharedElements.add(Pair.create(titleTv, TransitionActivity.TITLE))
+                        ElementActivity.start(this@TransitionActivity, item.imgRes, item.title, sharedElements)
+                    }
+                }
+            }.setData(getData())
     }
 
     override fun onClickBackBtn() {
@@ -86,19 +94,8 @@ class TransitionActivity : BaseActivity() {
         finish()
     }
 
-    override fun setListeners() {
-        super.setListeners()
-        mAdapter.setOnClickListener { img, tv, item, position ->
-            val sharedElements = ArrayList<Pair<View, String>>()//创建共享元素列表
-            sharedElements.add(Pair.create(img, TransitionActivity.IMG))
-            sharedElements.add(Pair.create(tv, TransitionActivity.TITLE))
-            ElementActivity.start(this, item.imgRes, item.title, sharedElements)
-        }
-    }
-
     override fun initData() {
         super.initData()
-        mAdapter.setData(getData())
         showStatusCompleted()
     }
 

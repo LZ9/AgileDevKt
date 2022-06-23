@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.corekt.album.PicInfo
 import com.lodz.android.corekt.anko.*
 import com.lodz.android.pandora.R
+import com.lodz.android.pandora.widget.rv.anko.layoutM
+import com.lodz.android.pandora.widget.rv.anko.setup
 import com.lodz.android.pandora.widget.rv.decoration.GridItemDecoration
 import java.util.*
 import kotlin.collections.ArrayList
@@ -164,12 +166,11 @@ open class NineGridView : FrameLayout {
     }
 
     private fun initRecyclerView() {
-        mPdrGridLayoutManager = GridLayoutManager(context, DEFAULT_SPAN_COUNT)
-        mPdrGridLayoutManager.orientation = RecyclerView.VERTICAL
-        mPdrAdapter = NineGridAdapter(context)
-        mPdrRecyclerView.layoutManager = mPdrGridLayoutManager
-        mPdrRecyclerView.setHasFixedSize(true)
-        mPdrRecyclerView.adapter = mPdrAdapter
+        mPdrGridLayoutManager = GridLayoutManager(context, DEFAULT_SPAN_COUNT, RecyclerView.VERTICAL, false)
+        mPdrAdapter = mPdrRecyclerView.let {
+            it.layoutM(mPdrGridLayoutManager)
+            it.setup(NineGridAdapter(context))
+        }
         val itemTouchHelper = ItemTouchHelper(mPdrItemTouchHelperCallback)
         itemTouchHelper.attachToRecyclerView(mPdrRecyclerView)
     }

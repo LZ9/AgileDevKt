@@ -5,8 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import android.widget.TextView
 import com.google.android.material.appbar.AppBarLayout
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.databinding.ActivityCoorStatusBarTestBinding
@@ -19,7 +18,9 @@ import com.lodz.android.corekt.utils.StatusBarUtil
 import com.lodz.android.pandora.base.activity.AbsActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.contract.OnAppBarStateChangeListener
-import java.util.*
+import com.lodz.android.pandora.widget.rv.anko.linear
+import com.lodz.android.pandora.widget.rv.anko.setupData
+import kotlin.collections.ArrayList
 
 /**
  * 带CoordinatorLayout的状态栏测试类
@@ -37,9 +38,6 @@ class CoorStatusBarTestActivity : AbsActivity() {
 
     private val mBinding: ActivityCoorStatusBarTestBinding by bindingLayout(ActivityCoorStatusBarTestBinding::inflate)
 
-    /** 列表适配器 */
-    private lateinit var mAdapter: CoordinatorDataAdapter
-
     override fun getAbsViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
@@ -49,12 +47,13 @@ class CoorStatusBarTestActivity : AbsActivity() {
     }
 
     private fun initRecyclerView() {
-        val layoutManager = LinearLayoutManager(getContext())
-        layoutManager.orientation = RecyclerView.VERTICAL
-        mAdapter = CoordinatorDataAdapter(getContext())
-        mBinding.recyclerView.layoutManager = layoutManager
-        mBinding.recyclerView.setHasFixedSize(true)
-        mBinding.recyclerView.adapter = mAdapter
+        mBinding.recyclerView
+            .linear()
+            .setupData<String>(R.layout.rv_item_coordinator) { holder, position ->
+                val data = getItem(position)
+                holder.withView<TextView>(R.id.data_tv).text = data
+            }
+            .setData(getListData())
     }
 
     override fun setListeners() {
@@ -109,17 +108,11 @@ class CoorStatusBarTestActivity : AbsActivity() {
         })
     }
 
-    override fun initData() {
-        super.initData()
-        initListData()
-    }
-
-    private fun initListData() {
+    private fun getListData(): ArrayList<String> {
         val list = ArrayList<String>()
         for (i in 1..50) {
             list.add(i.toString())
         }
-        mAdapter.setData(list)
-        mAdapter.notifyDataSetChanged()
+        return list
     }
 }

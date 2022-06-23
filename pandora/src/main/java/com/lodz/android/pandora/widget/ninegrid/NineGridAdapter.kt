@@ -8,16 +8,15 @@ import android.widget.ImageView
 import androidx.annotation.IntRange
 import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.corekt.album.PicInfo
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.pandora.R
-import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
-import com.lodz.android.pandora.widget.rv.recycler.DataViewHolder
+import com.lodz.android.pandora.widget.rv.recycler.base.BaseRvAdapter
+import com.lodz.android.pandora.widget.rv.recycler.vh.DataViewHolder
 
 /**
  * 图片九宫格适配器
  * Created by zhouL on 2018/12/25.
  */
-open class NineGridAdapter(context: Context) : BaseRecyclerViewAdapter<PicInfo>(context) {
+open class NineGridAdapter(context: Context) : BaseRvAdapter<PicInfo>(context) {
 
     /** 添加按钮 */
     private val VIEW_TYPE_ADD = 0

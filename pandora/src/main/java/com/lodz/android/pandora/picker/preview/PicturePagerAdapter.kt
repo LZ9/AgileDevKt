@@ -5,8 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.lodz.android.pandora.picker.contract.preview.PreviewController
-import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
+import com.lodz.android.pandora.widget.rv.recycler.base.BaseRvAdapter
 
 /**
  * 图片翻页适配器
@@ -15,8 +14,7 @@ import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
 internal class PicturePagerAdapter<V : View, T : Any>(
     context: Context,
     private val mView: AbsImageView<V, T>, // 图片控件
-    private val mController: PreviewController // 控制器
-) : BaseRecyclerViewAdapter<T>(context) {
+) : BaseRvAdapter<T>(context) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val frameLayout = FrameLayout(parent.context)
@@ -47,11 +45,11 @@ internal class PicturePagerAdapter<V : View, T : Any>(
             mView.onDisplayImg(context, item, holder.photoImg as V)
             // 点击事件
             holder.photoImg.setOnClickListener {
-                mView.onClickImpl(holder, holder.photoImg, item, position, mController)
+                mView.onClickImpl(holder, holder.photoImg, item, position)
             }
             // 长按事件
             holder.photoImg.setOnLongClickListener {
-                mView.onLongClickImpl(holder, holder.photoImg, item, position, mController)
+                mView.onLongClickImpl(holder, holder.photoImg, item, position)
             }
 
         }

@@ -1,7 +1,7 @@
 package com.lodz.android.pandora.picker.file.builder
 
 import android.content.Context
-import android.view.View
+import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.corekt.file.DocumentWrapper
 import com.lodz.android.pandora.picker.file.PickerBean
 import com.lodz.android.pandora.picker.file.pick.phone.PhonePickerActivity
@@ -11,7 +11,7 @@ import com.lodz.android.pandora.picker.file.pick.phone.PhonePickerActivity
  * @author zhouL
  * @date 2022/5/11
  */
-class DocumentPickerBuilder<V : View>(val pickerBean: PickerBean<V, DocumentWrapper>) : PickerBuilder<V, DocumentWrapper>(pickerBean){
+class DocumentPickerBuilder<VH : RecyclerView.ViewHolder>(val pickerBean: PickerBean<DocumentWrapper, VH>) : PickerBuilder<DocumentWrapper, VH>(pickerBean){
 
     override fun startActivity(context: Context, flags: List<Int>?) {
         PhonePickerActivity.start(context, pickerBean, flags)

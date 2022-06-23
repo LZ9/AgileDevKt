@@ -5,12 +5,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.lodz.android.pandora.widget.rv.recycler.base.BaseRvAdapter
 
 /**
  * 带Header和Footer的RecyclerView
  * Created by zhouL on 2018/11/21.
  */
-abstract class BaseHeaderFooterRVAdapter<H, T, F>(context: Context) : BaseRecyclerViewAdapter<T>(context) {
+abstract class BaseHeaderFooterRvAdapter<H, T, F>(context: Context) : BaseRvAdapter<T>(context) {
 
     companion object {
         /** 头部 */

@@ -25,6 +25,8 @@ import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.base.TitleBarLayout
+import com.lodz.android.pandora.widget.rv.anko.layoutM
+import com.lodz.android.pandora.widget.rv.anko.setup
 import com.lodz.android.pandora.widget.rv.decoration.*
 
 /**
@@ -93,14 +95,14 @@ class DecorationTestActivity : BaseActivity() {
 
     /** 初始化RV */
     private fun initRecyclerView() {
-        mAdapter = DecorationRvAdapter(getContext())
-        mBinding.recyclerView.layoutManager = getLayoutManager()
-        mAdapter.onAttachedToRecyclerView(mBinding.recyclerView)// 如果使用网格布局请设置此方法
-        mAdapter.setLayoutManagerType(mLayoutManagerType)
-        mAdapter.setOrientation(mOrientation)
-        mBinding.recyclerView.addItemDecoration(getItemDecoration(mDecorationType))
-        mBinding.recyclerView.setHasFixedSize(true)
-        mBinding.recyclerView.adapter = mAdapter
+        mAdapter = mBinding.recyclerView.let {
+            it.layoutM(getLayoutManager())
+            it.addItemDecoration(getItemDecoration(mDecorationType))
+            it.setup(DecorationRvAdapter(getContext()))
+        }.apply {
+            this.setLayoutManagerType(mLayoutManagerType)
+            this.setOrientation(mOrientation)
+        }
     }
 
     /** 初始化标题栏 */

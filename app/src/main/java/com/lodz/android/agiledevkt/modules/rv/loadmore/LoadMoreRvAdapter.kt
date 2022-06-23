@@ -8,14 +8,14 @@ import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.rv.popup.LayoutManagerPopupWindow
 import com.lodz.android.corekt.anko.dp2px
 import com.lodz.android.corekt.anko.getScreenWidth
-import com.lodz.android.pandora.widget.rv.recycler.DataViewHolder
-import com.lodz.android.pandora.widget.rv.recycler.SimpleLoadMoreRVAdapter
+import com.lodz.android.pandora.widget.rv.recycler.vh.DataViewHolder
+import com.lodz.android.pandora.widget.rv.recycler.loadmore.vh.SimpleLoadMoreRvAdapter
 
 /**
  * 加载更多适配器
  * Created by zhouL on 2018/11/27.
  */
-class LoadMoreRvAdapter(context: Context) : SimpleLoadMoreRVAdapter<String>(context) {
+class LoadMoreRvAdapter(context: Context) : SimpleLoadMoreRvAdapter<String>(context) {
 
     private var mOnClickDeleteListener: ((position: Int) -> Unit)? = null
 

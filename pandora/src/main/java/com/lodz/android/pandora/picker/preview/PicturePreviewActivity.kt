@@ -1,21 +1,20 @@
 package com.lodz.android.pandora.picker.preview
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.View
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
-import com.lodz.android.corekt.anko.getColorCompat
 import com.lodz.android.corekt.anko.getSize
 import com.lodz.android.corekt.utils.StatusBarUtil
 import com.lodz.android.pandora.base.activity.AbsActivity
 import com.lodz.android.pandora.databinding.PandoraActivityPreviewBinding
 import com.lodz.android.pandora.event.PicturePreviewFinishEvent
-import com.lodz.android.pandora.picker.contract.preview.PreviewController
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
+import com.lodz.android.pandora.widget.rv.recycler.base.AbsRvAdapter
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
@@ -23,11 +22,11 @@ import org.greenrobot.eventbus.ThreadMode
  * 图片预览页面
  * Created by zhouL on 2018/12/13.
  */
-internal class PicturePreviewActivity<V : View, T : Any> : AbsActivity() {
+internal class PicturePreviewActivity<T : Any, VH : RecyclerView.ViewHolder> : AbsActivity() {
 
     companion object {
         private var sPreviewBean: PreviewBean<*, *>? = null
-        internal fun <V : View, T : Any> start(context: Context, previewBean: PreviewBean<V, T>, flags: List<Int>?) {
+        internal fun <T : Any, VH : RecyclerView.ViewHolder> start(context: Context, previewBean: PreviewBean<T, VH>, flags: List<Int>?) {
             synchronized(PreviewBean::class.java) {
                 if (sPreviewBean != null) {
                     return
@@ -44,13 +43,11 @@ internal class PicturePreviewActivity<V : View, T : Any> : AbsActivity() {
 
     private val mBinding: PandoraActivityPreviewBinding by bindingLayout(PandoraActivityPreviewBinding::inflate)
 
-    /** 预览控制器 */
-    private  val mPdrPreviewController by lazy { PreviewControllerImpl(this) }
     /** 预览数据 */
     @Suppress("UNCHECKED_CAST")
-    private val mPdrPreviewBean: PreviewBean<V, T>? by lazy { sPreviewBean as PreviewBean<V, T> }
+    private val mPdrPreviewBean: PreviewBean<T, VH>? by lazy { sPreviewBean as PreviewBean<T, VH> }
     /** 适配器 */
-    private lateinit var mPdrAdapter: PicturePagerAdapter<V, T>
+    private lateinit var mPdrAdapter: AbsRvAdapter<T, VH>
 
     override fun getAbsViewBindingLayout(): View = mBinding.root
 
@@ -61,16 +58,16 @@ internal class PicturePreviewActivity<V : View, T : Any> : AbsActivity() {
             finish()
             return
         }
-        val view = bean.imgView
-        if (view == null) {
+        val adapter = bean.adapter
+        if (adapter == null) {
             finish()
             return
         }
-        initViewPager(view, bean.pageTransformer)
+        initViewPager(adapter, bean.pageTransformer)
     }
 
-    private fun initViewPager(view: AbsImageView<V, T>, pageTransformer: ViewPager2.PageTransformer?) {
-        mPdrAdapter = PicturePagerAdapter(getContext(), view, mPdrPreviewController)
+    private fun initViewPager(adapter: AbsRvAdapter<T, VH>, pageTransformer: ViewPager2.PageTransformer?) {
+        mPdrAdapter = adapter
         mBinding.pdrPreviewVp2.adapter = mPdrAdapter
         mBinding.pdrPreviewVp2.orientation = ViewPager2.ORIENTATION_HORIZONTAL
         mBinding.pdrPreviewVp2.isUserInputEnabled = true
@@ -123,12 +120,6 @@ internal class PicturePreviewActivity<V : View, T : Any> : AbsActivity() {
         }
     }
 
-    private class PreviewControllerImpl(val activity: Activity) : PreviewController {
-        override fun close() {
-            activity.finish()
-        }
-    }
-
     override fun finish() {
         release()
         super.finish()
@@ -140,7 +131,6 @@ internal class PicturePreviewActivity<V : View, T : Any> : AbsActivity() {
     }
 
     private fun release() {
-        mPdrAdapter.release()
         mPdrPreviewBean?.clear()
         sPreviewBean?.clear()
         sPreviewBean = null

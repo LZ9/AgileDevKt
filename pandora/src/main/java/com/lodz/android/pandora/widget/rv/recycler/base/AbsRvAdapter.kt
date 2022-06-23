@@ -1,4 +1,4 @@
-package com.lodz.android.pandora.widget.rv.recycler
+package com.lodz.android.pandora.widget.rv.recycler.base
 
 import android.animation.Animator
 import android.content.Context
@@ -18,7 +18,7 @@ import com.lodz.android.pandora.widget.rv.animation.*
  * RecyclerView基类适配器
  * Created by zhouL on 2018/6/28.
  */
-abstract class BaseRecyclerViewAdapter<T>(protected val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+abstract class AbsRvAdapter<T, VH : RecyclerView.ViewHolder>(protected val context: Context) : RecyclerView.Adapter<VH>() {
 
     companion object {
         /** 淡入 */
@@ -40,9 +40,9 @@ abstract class BaseRecyclerViewAdapter<T>(protected val context: Context) : Recy
     /** 数据列表 */
     private var mPdrData: MutableList<T>? = null
     /** item点击 */
-    protected var mPdrOnItemClickListener: ((viewHolder: RecyclerView.ViewHolder, item: T, position: Int) -> Unit)? = null
+    protected var mPdrOnItemClickListener: ((viewHolder: VH, item: T, position: Int) -> Unit)? = null
     /** item长按 */
-    protected var mPdrOnItemLongClickListener: ((viewHolder: RecyclerView.ViewHolder, item: T, position: Int) -> Unit)? = null
+    protected var mPdrOnItemLongClickListener: ((viewHolder: VH, item: T, position: Int) -> Unit)? = null
 
     /** 动画加速器 */
     private val mPdrInterpolator = LinearInterpolator()
@@ -72,17 +72,17 @@ abstract class BaseRecyclerViewAdapter<T>(protected val context: Context) : Recy
         return null
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: VH, position: Int) {
         setItemClick(holder, position)
         setItemLongClick(holder, position)
         onBind(holder, position)
     }
 
     /** 绑定数据 */
-    abstract fun onBind(holder: RecyclerView.ViewHolder, position: Int)
+    abstract fun onBind(holder: VH, position: Int)
 
     /** 设置点击事件 */
-    protected open fun setItemClick(holder: RecyclerView.ViewHolder, position: Int) {
+    protected open fun setItemClick(holder: VH, position: Int) {
         holder.itemView.setOnClickListener {
             val item = getItem(position)
             if (position >= 0 && item != null) {
@@ -92,7 +92,7 @@ abstract class BaseRecyclerViewAdapter<T>(protected val context: Context) : Recy
     }
 
     /** 设置长按事件 */
-    protected open fun setItemLongClick(holder: RecyclerView.ViewHolder, position: Int) {
+    protected open fun setItemLongClick(holder: VH, position: Int) {
         holder.itemView.setOnLongClickListener {
             val item = getItem(position)
             if (position >= 0 && item != null) {
@@ -102,13 +102,13 @@ abstract class BaseRecyclerViewAdapter<T>(protected val context: Context) : Recy
         }
     }
 
-    override fun onViewAttachedToWindow(holder: RecyclerView.ViewHolder) {
+    override fun onViewAttachedToWindow(holder: VH) {
         super.onViewAttachedToWindow(holder)
         addAnimation(holder)
     }
 
     /** 添加item加载动画 */
-    private fun addAnimation(holder: RecyclerView.ViewHolder) {
+    private fun addAnimation(holder: VH) {
         val data = mPdrData
         if (data != null && data.size > 0 && data.size < mPdrLastPosition) {//重新设置了数据
             mPdrLastPosition = mPdrCustomStarPosition
@@ -225,12 +225,12 @@ abstract class BaseRecyclerViewAdapter<T>(protected val context: Context) : Recy
     }
 
     /** 设置点击事件监听器 */
-    fun setOnItemClickListener(listener: (viewHolder: RecyclerView.ViewHolder, item: T, position: Int) -> Unit) {
+    fun setOnItemClickListener(listener: (viewHolder: VH, item: T, position: Int) -> Unit) {
         mPdrOnItemClickListener = listener
     }
 
     /** 设置长按事件监听器 */
-    fun setOnItemLongClickListener(listener: (viewHolder: RecyclerView.ViewHolder, item: T, position: Int) -> Unit) {
+    fun setOnItemLongClickListener(listener: (viewHolder: VH, item: T, position: Int) -> Unit) {
         mPdrOnItemLongClickListener = listener
     }
 

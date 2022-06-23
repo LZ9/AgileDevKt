@@ -3,7 +3,6 @@ package com.lodz.android.pandora.picker.file.dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.view.View
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.file.DocumentWrapper
@@ -11,6 +10,8 @@ import com.lodz.android.pandora.R
 import com.lodz.android.pandora.picker.contract.OnImgLoader
 import com.lodz.android.pandora.picker.file.PickerUIConfig
 import com.lodz.android.pandora.widget.dialog.BaseTopDialog
+import com.lodz.android.pandora.widget.rv.anko.linear
+import com.lodz.android.pandora.widget.rv.anko.setup
 
 /**
  * 图片文件弹框
@@ -40,12 +41,9 @@ class FolderDialog(context: Context) : BaseTopDialog(context) {
     }
 
     private fun initRecyclerView() {
-        val layoutManager = LinearLayoutManager(context)
-        layoutManager.orientation = RecyclerView.VERTICAL
-        mPdrAdapter = FolderAdapter(context)
-        mPdrRecyclerView.layoutManager = layoutManager
-        mPdrRecyclerView.setHasFixedSize(true)
-        mPdrRecyclerView.adapter = mPdrAdapter
+        mPdrAdapter = mPdrRecyclerView
+            .linear()
+            .setup(FolderAdapter(context))
     }
 
     /** 设置图片加载器[imgLoader] */

@@ -9,8 +9,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.databinding.ActivityContactTestBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
@@ -21,6 +19,8 @@ import com.lodz.android.corekt.contacts.bean.ContactsInfoBean
 import com.lodz.android.pandora.mvvm.base.activity.BaseVmActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.utils.viewmodel.bindViewModel
+import com.lodz.android.pandora.widget.rv.anko.linear
+import com.lodz.android.pandora.widget.rv.anko.setup
 import permissions.dispatcher.PermissionRequest
 import permissions.dispatcher.ktx.constructPermissionsRequest
 
@@ -76,14 +76,11 @@ class ContactTestActivity : BaseVmActivity() {
     }
 
     private fun initRecyclerView() {
-        mAdapter = ContactAdapter(getContext())
-        val layoutManager = LinearLayoutManager(getContext())
-        layoutManager.orientation = RecyclerView.VERTICAL
-        mBinding.contactRv.layoutManager = layoutManager
-        mAdapter.onAttachedToRecyclerView(mBinding.contactRv)// 如果使用网格布局请设置此方法
-        mBinding.contactRv.setHasFixedSize(true)
-        mBinding.contactRv.addItemDecoration(DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL))
-        mBinding.contactRv.adapter = mAdapter
+        mAdapter = mBinding.contactRv.let {
+            it.linear()
+            it.addItemDecoration(DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL))
+            it.setup(ContactAdapter(getContext()))
+        }
     }
 
     override fun onClickBackBtn() {

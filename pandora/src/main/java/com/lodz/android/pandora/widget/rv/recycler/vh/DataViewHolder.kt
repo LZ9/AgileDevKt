@@ -1,4 +1,4 @@
-package com.lodz.android.pandora.widget.rv.recycler
+package com.lodz.android.pandora.widget.rv.recycler.vh
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

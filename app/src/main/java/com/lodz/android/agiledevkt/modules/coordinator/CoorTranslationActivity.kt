@@ -5,8 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import android.widget.TextView
 import com.google.android.material.appbar.AppBarLayout
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.databinding.ActivityCoorTranslationBinding
@@ -17,6 +16,8 @@ import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.base.activity.AbsActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.contract.OnAppBarStateChangeListener
+import com.lodz.android.pandora.widget.rv.anko.linear
+import com.lodz.android.pandora.widget.rv.anko.setupData
 import java.util.*
 
 /**
@@ -37,8 +38,6 @@ class CoorTranslationActivity : AbsActivity() {
 
     private val mBinding: ActivityCoorTranslationBinding by bindingLayout(ActivityCoorTranslationBinding::inflate)
 
-    private lateinit var mAdapter: CoordinatorDataAdapter
-
     /** 标题栏中心Y坐标 */
     private var mToolbarCenterY: Float = 0f
     /** 头像中心Y坐标 */
@@ -57,12 +56,14 @@ class CoorTranslationActivity : AbsActivity() {
     }
 
     private fun initRecyclerView() {
-        val layoutManager = LinearLayoutManager(getContext())
-        layoutManager.orientation = RecyclerView.VERTICAL
-        mAdapter = CoordinatorDataAdapter(getContext())
-        mBinding.recyclerView.layoutManager = layoutManager
-        mBinding.recyclerView.setHasFixedSize(true)
-        mBinding.recyclerView.adapter = mAdapter
+        mBinding.recyclerView
+            .linear()
+            .setupData<String>(R.layout.rv_item_coordinator){holder, position ->
+                val data = getItem(position)
+                holder.withView<TextView>(R.id.data_tv).text = data
+
+            }
+            .setData(getListData())
     }
 
     override fun setListeners() {
@@ -103,16 +104,14 @@ class CoorTranslationActivity : AbsActivity() {
         super.initData()
         showHeadImg(mBinding.headImg)
         mBinding.userNameTv.setText(R.string.coordinator_user_name)
-        initListData()
     }
 
-    private fun initListData() {
+    private fun getListData(): ArrayList<String> {
         val list = ArrayList<String>()
         for (i in 1..50) {
             list.add(i.toString())
         }
-        mAdapter.setData(list)
-        mAdapter.notifyDataSetChanged()
+        return list
     }
 
     /** 显示头像 */

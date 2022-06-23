@@ -1,16 +1,16 @@
 package com.lodz.android.pandora.picker.preview
 
 import android.graphics.Color
-import android.view.View
 import androidx.annotation.ColorInt
-import androidx.annotation.ColorRes
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.lodz.android.pandora.widget.rv.recycler.base.AbsRvAdapter
 
 /**
  * 预览数据
  * Created by zhouL on 2018/12/13.
  */
-internal class PreviewBean<V : View, T : Any> {
+internal class PreviewBean<T : Any, VH : RecyclerView.ViewHolder> {
 
     /** 资源列表 */
     var sourceList: List<T>? = null
@@ -32,13 +32,13 @@ internal class PreviewBean<V : View, T : Any> {
     var pagerTextSize = 16
     /** 是否显示页码文字 */
     var isShowPagerText = true
-    /** 图片控件 */
-    var imgView: AbsImageView<V, T>? = null
+    /** 适配器 */
+    var adapter: AbsRvAdapter<T, VH>? = null
     /** VP2的动画 */
     var pageTransformer: ViewPager2.PageTransformer? = null
 
     fun clear() {
         sourceList = null
-        imgView = null
+        adapter = null
     }
 }

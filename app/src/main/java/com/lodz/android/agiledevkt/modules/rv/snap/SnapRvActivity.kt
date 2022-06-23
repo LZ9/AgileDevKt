@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.NationBean
@@ -13,6 +12,8 @@ import com.lodz.android.agiledevkt.databinding.ActivitySnapBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
+import com.lodz.android.pandora.widget.rv.anko.linear
+import com.lodz.android.pandora.widget.rv.anko.setup
 import com.lodz.android.pandora.widget.rv.snap.TabPagerSnapHelper
 import com.lodz.android.pandora.widget.rv.snap.ViewPagerSnapHelper
 
@@ -70,34 +71,25 @@ class SnapRvActivity : BaseActivity() {
     }
 
     private fun initTabRecyclerView() {
-        val layoutManager = LinearLayoutManager(getContext())
-        layoutManager.orientation = RecyclerView.HORIZONTAL
-        val adapter = SnapAdapter(getContext())
-        mBinding.tabRv.layoutManager = layoutManager
-        mBinding.tabRv.setHasFixedSize(true)
-        mBinding.tabRv.adapter = adapter
+        mBinding.tabRv
+            .linear(RecyclerView.HORIZONTAL)
+            .setup(SnapAdapter(getContext()))
+            .setData(getNationList())
         val snapHelper = TabPagerSnapHelper(0)
         snapHelper.attachToRecyclerView(mBinding.tabRv)
         snapHelper.setupWithTabLayout(mBinding.tabLayout)
-
-        adapter.setData(getNationList())
-        adapter.notifyDataSetChanged()
     }
 
     private fun initPager() {
-        val layoutManager = LinearLayoutManager(getContext())
-        layoutManager.orientation = RecyclerView.HORIZONTAL
-        val adapter = SnapAdapter(getContext())
-        mBinding.pagerRv.layoutManager = layoutManager
-        mBinding.pagerRv.setHasFixedSize(true)
-        mBinding.pagerRv.adapter = adapter
+        mBinding.pagerRv
+            .linear(RecyclerView.HORIZONTAL)
+            .setup(SnapAdapter(getContext()))
+            .setData(getNationList())
         val snapHelper = ViewPagerSnapHelper(0)
         snapHelper.attachToRecyclerView(mBinding.pagerRv)
         snapHelper.setOnPageChangeListener { position ->
             mBinding.pageTv.text = getString(R.string.rvsnap_page, (position + 1).toString())
         }
-        adapter.setData(getNationList())
-        adapter.notifyDataSetChanged()
         mBinding.pageTv.text = getString(R.string.rvsnap_page, "1")
     }
 

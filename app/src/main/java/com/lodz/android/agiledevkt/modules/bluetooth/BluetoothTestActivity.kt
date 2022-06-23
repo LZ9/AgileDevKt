@@ -8,10 +8,9 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.databinding.ActivityBluetoothTestBinding
+import com.lodz.android.agiledevkt.databinding.RvItemBleDeviceBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.agiledevkt.modules.splash.CheckDialog
 import com.lodz.android.corekt.anko.goAppDetailSetting
@@ -23,6 +22,9 @@ import com.lodz.android.corekt.ble.BleSimpleHelper
 import com.lodz.android.corekt.ble.BleStateListener
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
+import com.lodz.android.pandora.widget.rv.anko.linear
+import com.lodz.android.pandora.widget.rv.anko.setupVB
+import com.lodz.android.pandora.widget.rv.recycler.base.BaseVbRvAdapter
 import permissions.dispatcher.PermissionRequest
 import permissions.dispatcher.ktx.LocationPermission
 import permissions.dispatcher.ktx.constructLocationPermissionRequest
@@ -54,7 +56,7 @@ class BluetoothTestActivity : BaseActivity() {
     }
 
     /** 蓝牙设备适配器 */
-    private lateinit var mAdapter: BleDeviceAdapter
+    private lateinit var mAdapter: BaseVbRvAdapter<BluetoothDevice>
 
     /** 蓝牙设备列表 */
     private val mDeviceList = ArrayList<BluetoothDevice>()
@@ -67,12 +69,13 @@ class BluetoothTestActivity : BaseActivity() {
     }
 
     private fun initRecyclerView() {
-        val layoutManager = LinearLayoutManager(getContext())
-        layoutManager.orientation = RecyclerView.VERTICAL
-        mAdapter = BleDeviceAdapter(getContext())
-        mBinding.recyclerView.layoutManager = layoutManager
-        mBinding.recyclerView.setHasFixedSize(true)
-        mBinding.recyclerView.adapter = mAdapter
+        mAdapter = mBinding.recyclerView
+            .linear()
+            .setupVB(RvItemBleDeviceBinding::inflate) { vb, holder, position ->
+                val device = getItem(position)
+                vb.nameTv.text = device?.name ?: ""
+                vb.addressTv.text = device?.address ?: ""
+            }
     }
 
     override fun onClickBackBtn() {

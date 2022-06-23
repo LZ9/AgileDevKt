@@ -24,13 +24,6 @@
             android:checked="true"
             android:text="@string/preview_show_pager" />
 
-
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/click_close_switch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/preview_click_close" />
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

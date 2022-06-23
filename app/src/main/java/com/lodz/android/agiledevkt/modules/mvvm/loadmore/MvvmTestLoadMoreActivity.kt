@@ -4,17 +4,17 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.base.response.PageBean
 import com.lodz.android.agiledevkt.databinding.ActivityMvvmLoadmoreBinding
+import com.lodz.android.agiledevkt.databinding.RvItemMainBinding
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.pandora.mvvm.base.activity.BaseRefreshVmActivity
 import com.lodz.android.pandora.mvvm.vm.BaseRefreshViewModel
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.utils.viewmodel.bindViewModel
-import com.lodz.android.pandora.widget.rv.recycler.RecyclerLoadMoreHelper
+import com.lodz.android.pandora.widget.rv.anko.*
+import com.lodz.android.pandora.widget.rv.recycler.loadmore.vb.SimpleLoadMoreVbRvAdapter
 
 /**
  * MVVM加载更多测试类
@@ -39,9 +39,7 @@ class MvvmTestLoadMoreActivity : BaseRefreshVmActivity() {
     override fun getViewBindingLayout(): View = mBinding.root
 
     /** 适配器 */
-    private lateinit var mAdapter: LoadMoreListAdapter
-    /** 加载更多帮助类 */
-    private lateinit var mLoadMoreHelper: RecyclerLoadMoreHelper<String>
+    private lateinit var mAdapter: SimpleLoadMoreVbRvAdapter<String>
 
     override fun findViews(savedInstanceState: Bundle?) {
         super.findViews(savedInstanceState)
@@ -50,14 +48,19 @@ class MvvmTestLoadMoreActivity : BaseRefreshVmActivity() {
     }
 
     private fun initRecyclerView() {
-        mAdapter = LoadMoreListAdapter(getContext())
-        val layoutManager = LinearLayoutManager(getContext())
-        layoutManager.orientation = RecyclerView.VERTICAL
-        mBinding.recyclerView.layoutManager = layoutManager
-        mAdapter.onAttachedToRecyclerView(mBinding.recyclerView)// 如果使用网格布局请设置此方法
-        mBinding.recyclerView.setHasFixedSize(true)
-        mBinding.recyclerView.adapter = mAdapter
-        mLoadMoreHelper = RecyclerLoadMoreHelper(mAdapter)
+        mAdapter = mBinding.recyclerView.linear()
+            .loadMoreVB<String, RvItemMainBinding>(RvItemMainBinding::inflate) { vb, holder, position ->
+                val str = getItem(position)
+                vb.name.text = str
+            }
+            .loadMoreListener(
+                onLoadMore = { currentPage, nextPage, size, position ->
+                    mViewModel.requestDataList(nextPage)
+                },
+                onClickLoadFail = { reloadPage, size ->
+                    mViewModel.requestDataList(reloadPage)
+                }
+            )
     }
 
     override fun onDataRefresh() {
@@ -71,17 +74,6 @@ class MvvmTestLoadMoreActivity : BaseRefreshVmActivity() {
 
     override fun setListeners() {
         super.setListeners()
-        mLoadMoreHelper.setListener(object : RecyclerLoadMoreHelper.Listener {
-            override fun onLoadMore(currentPage: Int, nextPage: Int, size: Int, position: Int) {
-                mViewModel.requestDataList(nextPage)
-            }
-
-            override fun onClickLoadFail(reloadPage: Int, size: Int) {
-                mViewModel.requestDataList(reloadPage)
-
-            }
-        })
-
         mAdapter.setOnItemClickListener { viewHolder, item, position ->
             mViewModel.requestDetail(getContext(), item)
         }
@@ -99,17 +91,17 @@ class MvvmTestLoadMoreActivity : BaseRefreshVmActivity() {
                     showStatusNoData()
                     return@observe
                 }
-                mLoadMoreHelper.config(list, pageBean.total, pageBean.pageSize, true, 1)
+                mAdapter.loadMoreStart(list, pageBean.total, pageBean.pageSize, true, 1)
                 showStatusCompleted()
                 return@observe
             }
             if (list == null){
-                mLoadMoreHelper.loadComplete()
+                mAdapter.loadComplete()
                 return@observe
             }
             val datas = mAdapter.getData()?.toMutableList() ?: ArrayList()
             datas.addAll(list)
-            mLoadMoreHelper.loadMoreSuccess(datas)
+            mAdapter.loadMoreSuccess(datas)
         }
 
         mViewModel.mDetailInfo.observe(getLifecycleOwner()){

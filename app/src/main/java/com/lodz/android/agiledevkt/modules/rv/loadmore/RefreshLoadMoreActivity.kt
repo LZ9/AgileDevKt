@@ -17,7 +17,7 @@ import com.lodz.android.pandora.base.activity.BaseRefreshActivity
 import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
 import com.lodz.android.pandora.rx.utils.RxUtils
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
-import com.lodz.android.pandora.widget.rv.recycler.RecyclerLoadMoreHelper
+import com.lodz.android.pandora.widget.rv.anko.*
 import com.trello.rxlifecycle4.android.ActivityEvent
 
 /**
@@ -44,8 +44,6 @@ class RefreshLoadMoreActivity : BaseRefreshActivity() {
 
     /** 适配器 */
     private lateinit var mAdapter: LoadMoreRvAdapter
-    /** 加载更多帮助类 */
-    private lateinit var mLoadMoreHelper: RecyclerLoadMoreHelper<String>
     /** 数据列表 */
     private var mList: MutableList<String> = ArrayList()
     /** 是否加载失败 */
@@ -63,13 +61,39 @@ class RefreshLoadMoreActivity : BaseRefreshActivity() {
     }
 
     private fun initRecyclerView() {
-        mAdapter = LoadMoreRvAdapter(getContext())
-        mBinding.recyclerView.layoutManager = getLayoutManager()
-        mAdapter.onAttachedToRecyclerView(mBinding.recyclerView)// 如果使用网格布局请设置此方法
-        mAdapter.setLayoutManagerType(mLayoutManagerType)
-        mBinding.recyclerView.setHasFixedSize(true)
-        mBinding.recyclerView.adapter = mAdapter
-        mLoadMoreHelper = RecyclerLoadMoreHelper(mAdapter)
+        mAdapter = mBinding.recyclerView
+            .layoutM(getLayoutManager())
+            .loadMore(LoadMoreRvAdapter(getContext()))
+            .apply {
+                setLayoutManagerType(mLayoutManagerType)
+            }.loadMoreListener(
+                onLoadMore = {currentPage, nextPage, size, position ->
+                    DataModule.get().requestData(nextPage)
+                        .compose(RxUtils.ioToMainObservable())
+                        .compose(bindUntilEvent(ActivityEvent.DESTROY))
+                        .subscribe(BaseObserver.action({
+                            if (isLoadFail) {
+                                mAdapter.loadMoreFail()
+                                return@action
+                            }
+                            mList.addAll(it)
+                            mAdapter.loadMoreSuccess(mList)
+                        }))
+                },
+                onClickLoadFail = {reloadPage, size ->
+                    DataModule.get().requestData(reloadPage)
+                        .compose(RxUtils.ioToMainObservable())
+                        .compose(bindUntilEvent(ActivityEvent.DESTROY))
+                        .subscribe(BaseObserver.action({
+                            if (isLoadFail) {
+                                mAdapter.loadMoreFail()
+                                return@action
+                            }
+                            mList.addAll(it)
+                            mAdapter.loadMoreSuccess(mList)
+                        }))
+                }
+            )
     }
 
     /** 获取RV布局 */
@@ -105,7 +129,7 @@ class RefreshLoadMoreActivity : BaseRefreshActivity() {
                     }
                     mList.clear()
                     mList.addAll(any)
-                    mLoadMoreHelper.config(mList, MAX_SIZE, PAGE_SIZE, true, LOAD_MORE_INDEX)
+                    mAdapter.loadMoreStart(mList, MAX_SIZE, PAGE_SIZE, true, LOAD_MORE_INDEX)
                     showStatusCompleted()
                 }
 
@@ -117,45 +141,6 @@ class RefreshLoadMoreActivity : BaseRefreshActivity() {
 
     override fun setListeners() {
         super.setListeners()
-        mLoadMoreHelper.setListener(object : RecyclerLoadMoreHelper.Listener {
-            override fun onLoadMore(currentPage: Int, nextPage: Int, size: Int, position: Int) {
-                DataModule.get().requestData(nextPage)
-                    .compose(RxUtils.ioToMainObservable())
-                    .compose(bindUntilEvent(ActivityEvent.DESTROY))
-                    .subscribe(object : BaseObserver<List<String>>() {
-                        override fun onBaseNext(any: List<String>) {
-                            if (isLoadFail) {
-                                mLoadMoreHelper.loadMoreFail()
-                                return
-                            }
-                            mList.addAll(any)
-                            mLoadMoreHelper.loadMoreSuccess(mList)
-                        }
-
-                        override fun onBaseError(e: Throwable) {
-                        }
-                    })
-            }
-
-            override fun onClickLoadFail(reloadPage: Int, size: Int) {
-                DataModule.get().requestData(reloadPage)
-                    .compose(RxUtils.ioToMainObservable())
-                    .compose(bindUntilEvent(ActivityEvent.DESTROY))
-                    .subscribe(object : BaseObserver<List<String>>() {
-                        override fun onBaseNext(any: List<String>) {
-                            if (isLoadFail) {
-                                mLoadMoreHelper.loadMoreFail()
-                                return
-                            }
-                            mList.addAll(any)
-                            mLoadMoreHelper.loadMoreSuccess(mList)
-                        }
-
-                        override fun onBaseError(e: Throwable) {
-                        }
-                    })
-            }
-        })
 
         mAdapter.setOnItemClickListener { viewHolder, item, position ->
             toastShort(item)
@@ -166,7 +151,7 @@ class RefreshLoadMoreActivity : BaseRefreshActivity() {
         }
 
         mAdapter.setOnClickDeleteListener { position ->
-            mLoadMoreHelper.hideItem(position)
+            mAdapter.hideItemNotify(position)
         }
 
         mAdapter.setOnAllItemHideListener {
@@ -197,7 +182,7 @@ class RefreshLoadMoreActivity : BaseRefreshActivity() {
                 override fun onBaseNext(any: List<String>) {
                     mList.clear()
                     mList.addAll(any)
-                    mLoadMoreHelper.config(mList, MAX_SIZE, PAGE_SIZE, true, LOAD_MORE_INDEX)
+                    mAdapter.loadMoreStart(mList, MAX_SIZE, PAGE_SIZE, true, LOAD_MORE_INDEX)
                     showStatusCompleted()
                 }
 

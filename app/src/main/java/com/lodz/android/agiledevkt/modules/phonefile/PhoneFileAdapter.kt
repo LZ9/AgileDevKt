@@ -11,15 +11,15 @@ import com.lodz.android.corekt.media.isImageMimeType
 import com.lodz.android.corekt.media.isVideoMimeType
 import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.utils.media.MediaUtils
-import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
-import com.lodz.android.pandora.widget.rv.recycler.DataVBViewHolder
+import com.lodz.android.pandora.widget.rv.recycler.base.BaseRvAdapter
+import com.lodz.android.pandora.widget.rv.recycler.vh.DataVBViewHolder
 
 /**
  * 手机文件适配器
  * @author zhouL
  * @date 2022/4/22
  */
-class PhoneFileAdapter(context: Context) : BaseRecyclerViewAdapter<DocumentWrapper>(context) {
+class PhoneFileAdapter(context: Context) : BaseRvAdapter<DocumentWrapper>(context) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
         DataVBViewHolder(getViewBindingLayout(RvItemPhoneFileBinding::inflate, parent))

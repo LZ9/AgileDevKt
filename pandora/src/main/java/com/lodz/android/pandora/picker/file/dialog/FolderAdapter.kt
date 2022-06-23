@@ -16,14 +16,14 @@ import com.lodz.android.corekt.file.DocumentWrapper
 import com.lodz.android.pandora.R
 import com.lodz.android.pandora.picker.contract.OnImgLoader
 import com.lodz.android.pandora.picker.file.PickerUIConfig
-import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
-import com.lodz.android.pandora.widget.rv.recycler.DataViewHolder
+import com.lodz.android.pandora.widget.rv.recycler.base.BaseRvAdapter
+import com.lodz.android.pandora.widget.rv.recycler.vh.DataViewHolder
 
 /**
  * 图片文件夹列表适配器
  * Created by zhouL on 2018/12/18.
  */
-internal class FolderAdapter(context: Context) : BaseRecyclerViewAdapter<FolderItemBean>(context) {
+internal class FolderAdapter(context: Context) : BaseRvAdapter<FolderItemBean>(context) {
 
     /** 图片加载器 */
     private var mPdrImgLoader: OnImgLoader<DocumentWrapper>? = null

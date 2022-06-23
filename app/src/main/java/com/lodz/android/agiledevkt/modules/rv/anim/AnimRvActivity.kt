@@ -9,8 +9,6 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.StringRes
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.databinding.ActivityAnimRvBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
@@ -19,7 +17,9 @@ import com.lodz.android.corekt.utils.DateUtils
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.base.TitleBarLayout
-import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
+import com.lodz.android.pandora.widget.rv.anko.linear
+import com.lodz.android.pandora.widget.rv.anko.setup
+import com.lodz.android.pandora.widget.rv.recycler.base.AbsRvAdapter
 
 /**
  * RV动画测试
@@ -38,7 +38,7 @@ class AnimRvActivity : BaseActivity() {
     private lateinit var mAdapter: AnimRvAdapter
 
     /** 当前动画类型 */
-    private var mAnimType = BaseRecyclerViewAdapter.SCALE_IN
+    private var mAnimType = AbsRvAdapter.SCALE_IN
 
     private val mBinding: ActivityAnimRvBinding by bindingLayout(ActivityAnimRvBinding::inflate)
 
@@ -57,15 +57,11 @@ class AnimRvActivity : BaseActivity() {
     }
 
     private fun initRecyclerView() {
-        val layoutManager = LinearLayoutManager(getContext())
-        layoutManager.orientation = RecyclerView.VERTICAL
         mAdapter = AnimRvAdapter(getContext())
         mAdapter.setOpenItemAnim(true)//开启动画
         mAdapter.setItemAnimStartPosition(7)//设置动画起始位置
         mAdapter.setAnimationType(mAnimType)//设置动画类型
-        mBinding.recyclerView.layoutManager = layoutManager
-        mBinding.recyclerView.setHasFixedSize(true)
-        mBinding.recyclerView.adapter = mAdapter
+        mAdapter = mBinding.recyclerView.linear().setup(mAdapter)
     }
 
     override fun onClickBackBtn() {

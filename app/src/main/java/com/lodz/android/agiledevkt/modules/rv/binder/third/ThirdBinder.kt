@@ -8,7 +8,7 @@ import com.lodz.android.agiledevkt.databinding.RvBinderThirdBinding
 import com.lodz.android.corekt.anko.getSize
 import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.widget.rv.binder.RecyclerBinder
-import com.lodz.android.pandora.widget.rv.recycler.DataVBViewHolder
+import com.lodz.android.pandora.widget.rv.recycler.vh.DataVBViewHolder
 
 /**
  * Created by zhouL on 2018/12/11.

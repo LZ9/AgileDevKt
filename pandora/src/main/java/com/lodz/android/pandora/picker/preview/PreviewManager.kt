@@ -1,7 +1,7 @@
 package com.lodz.android.pandora.picker.preview
 
 import android.content.Context
-import android.view.View
+import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.corekt.anko.getSize
 import com.lodz.android.corekt.utils.ToastUtils
 import com.lodz.android.pandora.R
@@ -10,17 +10,17 @@ import com.lodz.android.pandora.R
  * 图片预览管理类
  * Created by zhouL on 2018/12/13.
  */
-class PreviewManager<V : View, T : Any> internal constructor(private val previewBean: PreviewBean<V, T>) {
+class PreviewManager<T : Any, VH : RecyclerView.ViewHolder> internal constructor(private val previewBean: PreviewBean<T, VH>) {
     companion object {
         @JvmStatic
-        fun <V : View, T : Any> create(): PreviewBuilder<V, T> = PreviewBuilder()
+        fun <T : Any, VH : RecyclerView.ViewHolder> create(): PreviewBuilder<T, VH> = PreviewBuilder()
     }
 
     /** 打开预览器，上下文[context]，Intent启动标记[flags]  */
     @JvmOverloads
     fun open(context: Context, flags: List<Int>? = null) {
-        if (previewBean.imgView == null) {// 校验图片加载器
-            ToastUtils.showShort(context, R.string.pandora_preview_img_unset)
+        if (previewBean.adapter == null) {// 校验图片加载器
+            ToastUtils.showShort(context, R.string.pandora_preview_adapter_unset)
             return
         }
         if (previewBean.sourceList.isNullOrEmpty()) {// 校验数据列表

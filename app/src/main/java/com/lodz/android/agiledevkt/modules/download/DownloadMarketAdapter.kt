@@ -15,8 +15,8 @@ import com.lodz.android.corekt.anko.getColorCompat
 import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.corekt.utils.FileUtils
 import com.lodz.android.imageloaderkt.ImageLoader
-import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
-import com.lodz.android.pandora.widget.rv.recycler.DataViewHolder
+import com.lodz.android.pandora.widget.rv.recycler.base.BaseRvAdapter
+import com.lodz.android.pandora.widget.rv.recycler.vh.DataViewHolder
 import zlc.season.rxdownload4.manager.*
 
 /**
@@ -24,7 +24,7 @@ import zlc.season.rxdownload4.manager.*
  * @author zhouL
  * @date 2020/6/14
  */
-class DownloadMarketAdapter(context : Context) :BaseRecyclerViewAdapter<AppInfoBean>(context){
+class DownloadMarketAdapter(context : Context) : BaseRvAdapter<AppInfoBean>(context){
 
     private var mListener: OnDownloadListener? = null
 

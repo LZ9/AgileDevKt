@@ -1,7 +1,7 @@
 package com.lodz.android.pandora.picker.file.builder
 
 import android.content.Context
-import android.view.View
+import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.pandora.picker.file.PickerBean
 
 /**
@@ -9,7 +9,7 @@ import com.lodz.android.pandora.picker.file.PickerBean
  * @author zhouL
  * @date 2022/5/11
  */
-class ResIdPickerBuilder<V : View>(val pickerBean: PickerBean<V, Int>) : PickerBuilder<V, Int>(pickerBean){
+class ResIdPickerBuilder<VH : RecyclerView.ViewHolder>(val pickerBean: PickerBean<Int, VH>) : PickerBuilder<Int, VH>(pickerBean){
 
 
     override fun startActivity(context: Context, flags: List<Int>?) {

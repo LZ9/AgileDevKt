@@ -17,6 +17,8 @@ import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
+import com.lodz.android.pandora.widget.rv.anko.layoutM
+import com.lodz.android.pandora.widget.rv.anko.setup
 import com.lodz.android.pandora.widget.rv.drag.RecyclerViewDragHelper
 
 /**
@@ -54,13 +56,13 @@ class DragRvActivity : BaseActivity() {
     }
 
     private fun initRecyclerView() {
-        mAdapter = DragRvAdapter(getContext())
-        mBinding.recyclerView.layoutManager = getLayoutManager()
-        mAdapter.onAttachedToRecyclerView(mBinding.recyclerView)// 如果使用网格布局请设置此方法
-        mAdapter.setLayoutManagerType(mLayoutManagerType)
-        mAdapter.setOrientation(mOrientation)
-        mBinding.recyclerView.setHasFixedSize(true)
-        mBinding.recyclerView.adapter = mAdapter
+        mAdapter = mBinding.recyclerView
+            .layoutM(getLayoutManager())
+            .setup(DragRvAdapter(getContext()))
+            .apply {
+                setLayoutManagerType(mLayoutManagerType)
+                setOrientation(mOrientation)
+            }
         mRecyclerViewDragHelper = RecyclerViewDragHelper(getContext())
         mRecyclerViewDragHelper.setUseDrag(true)// 设置是否允许拖拽
             .setLongPressDragEnabled(true)// 是否启用长按拖拽效果

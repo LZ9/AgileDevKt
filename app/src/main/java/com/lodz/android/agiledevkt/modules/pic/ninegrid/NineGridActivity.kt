@@ -7,7 +7,6 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
-import androidx.recyclerview.widget.RecyclerView
 import com.github.chrisbanes.photoview.PhotoView
 import com.lodz.android.agiledevkt.BuildConfig
 import com.lodz.android.agiledevkt.R
@@ -18,7 +17,6 @@ import com.lodz.android.corekt.album.PicInfo
 import com.lodz.android.corekt.anko.*
 import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.base.activity.BaseActivity
-import com.lodz.android.pandora.picker.contract.preview.PreviewController
 import com.lodz.android.pandora.picker.preview.AbsImageView
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.ninegrid.OnNineGridViewListener
@@ -150,12 +148,6 @@ class NineGridActivity : BaseActivity() {
                         ImageLoader.create(context).loadUri(source.uri).setFitCenter().into(view)
                     } else {
                         ImageLoader.create(context).loadFilePath(source.path).setFitCenter().into(view)
-                    }
-                }
-
-                override fun onClickImpl(viewHolder: RecyclerView.ViewHolder, view: ImageView, source: PicInfo, position: Int, controller: PreviewController) {
-                    if (mBinding.clickClosePreviewSwitch.isChecked) {
-                        controller.close()
                     }
                 }
 

@@ -13,8 +13,6 @@ import android.view.View
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.databinding.ActivityPhoneFileBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
@@ -26,6 +24,8 @@ import com.lodz.android.corekt.media.isImageSuffix
 import com.lodz.android.pandora.mvvm.base.activity.BaseVmActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.utils.viewmodel.bindViewModel
+import com.lodz.android.pandora.widget.rv.anko.linear
+import com.lodz.android.pandora.widget.rv.anko.setup
 import kotlin.random.Random
 
 /**
@@ -56,13 +56,20 @@ class PhoneFileActivity : BaseVmActivity() {
 
     /** 初始化RecyclerView */
     private fun initRecyclerView() {
-        val layoutManager = LinearLayoutManager(getContext())
-        layoutManager.orientation = RecyclerView.VERTICAL
-        mAdapter = PhoneFileAdapter(getContext())
-        mBinding.fileRv.layoutManager = layoutManager
-        mBinding.fileRv.addItemDecoration(DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL))
-        mBinding.fileRv.setHasFixedSize(true)
-        mBinding.fileRv.adapter = mAdapter
+        mAdapter = mBinding.fileRv.let {
+            it.linear()
+            it.addItemDecoration(DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL))
+            it.setup(PhoneFileAdapter(getContext()))
+        }.apply {
+            setOnItemClickListener { viewHolder, item, position ->
+                getViewModel().transformBase64(getContext(), item)
+            }
+            setOnItemLongClickListener { viewHolder, item, position ->
+                if (item.documentFile.type.isImageMimeType() || item.file.absolutePath.isImageSuffix()){
+                    getViewModel().transformBitmap(getContext(), item)
+                }
+            }
+        }
     }
 
     override fun onClickBackBtn() {
@@ -72,18 +79,6 @@ class PhoneFileActivity : BaseVmActivity() {
 
     override fun setListeners() {
         super.setListeners()
-
-        // 点击列表
-        mAdapter.setOnItemClickListener { viewHolder, item, position ->
-            getViewModel().transformBase64(getContext(), item)
-        }
-
-        mAdapter.setOnItemLongClickListener { viewHolder, item, position ->
-            if (item.documentFile.type.isImageMimeType() || item.file.absolutePath.isImageSuffix()){
-                getViewModel().transformBitmap(getContext(), item)
-            }
-        }
-
         // 获取相册所有图片路径
         mBinding.allFilePickBtn.setOnClickListener {
             val suffix = mBinding.suffixEdit.text.toString()

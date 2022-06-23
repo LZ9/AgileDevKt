@@ -86,6 +86,8 @@ import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.base.TitleBarLayout
 import com.lodz.android.pandora.widget.index.IndexBar
+import com.lodz.android.pandora.widget.rv.anko.linear
+import com.lodz.android.pandora.widget.rv.anko.setup
 import com.lodz.android.pandora.widget.rv.decoration.StickyItemDecoration
 
 class MainActivity : BaseActivity() {
@@ -207,13 +209,17 @@ class MainActivity : BaseActivity() {
 
     /** 初始化RV */
     private fun initRecyclerView() {
-        val layoutManager = LinearLayoutManager(getContext())
-        layoutManager.orientation = RecyclerView.VERTICAL
-        mAdapter = MainAdapter(getContext())
-        mBinding.recyclerView.layoutManager = layoutManager
-        mBinding.recyclerView.addItemDecoration(getItemDecoration())
-        mBinding.recyclerView.setHasFixedSize(true)
-        mBinding.recyclerView.adapter = mAdapter
+        mAdapter = mBinding.recyclerView.let {
+            it.linear()
+            it.addItemDecoration(getItemDecoration())
+            it.setup(MainAdapter(getContext()))
+        }.apply {
+            setOnItemClickListener { holder, item, position ->
+                val intent = Intent(getContext(), item.getCls())
+                intent.putExtra(EXTRA_TITLE_NAME, item.getTitleName())
+                startActivity(intent)
+            }
+        }
     }
 
     private fun getItemDecoration(): RecyclerView.ItemDecoration =
@@ -236,12 +242,6 @@ class MainActivity : BaseActivity() {
 
     override fun setListeners() {
         super.setListeners()
-        mAdapter.setOnItemClickListener { holder, item, position ->
-            val intent = Intent(getContext(), item.getCls())
-            intent.putExtra(EXTRA_TITLE_NAME, item.getTitleName())
-            startActivity(intent)
-        }
-
         // 索引栏
         mBinding.indexBar.setOnIndexListener(object : IndexBar.OnIndexListener {
             override fun onStart(position: Int, indexText: String) {

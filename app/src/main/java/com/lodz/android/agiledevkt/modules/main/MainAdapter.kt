@@ -8,15 +8,15 @@ import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.MainBean
 import com.lodz.android.corekt.anko.append
 import com.lodz.android.corekt.anko.getColorCompat
-import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
-import com.lodz.android.pandora.widget.rv.recycler.DataViewHolder
+import com.lodz.android.pandora.widget.rv.recycler.base.BaseRvAdapter
+import com.lodz.android.pandora.widget.rv.recycler.vh.DataViewHolder
 import java.util.*
 
 /**
  * 主页的列表
  * Created by zhouL on 2018/6/28.
  */
-class MainAdapter(context: Context) : BaseRecyclerViewAdapter<MainBean>(context) {
+class MainAdapter(context: Context) : BaseRvAdapter<MainBean>(context) {
 
     private val COLORS = arrayOf(R.color.color_00a0e9, R.color.color_ea8380, R.color.color_ea413c, R.color.color_303f9f,
             R.color.color_ff4081, R.color.color_d28928, R.color.color_464646)

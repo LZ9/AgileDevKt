@@ -7,11 +7,9 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.view.View
-import android.widget.ImageView
+import android.widget.FrameLayout
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
-import androidx.recyclerview.widget.RecyclerView
-import com.github.chrisbanes.photoview.PhotoView
 import com.lodz.android.agiledevkt.BuildConfig
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.databinding.ActivityPicPickerBinding
@@ -22,10 +20,10 @@ import com.lodz.android.corekt.file.DocumentWrapper
 import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.base.activity.BaseActivity
-import com.lodz.android.pandora.picker.contract.preview.PreviewController
 import com.lodz.android.pandora.picker.file.PickerManager
 import com.lodz.android.pandora.picker.file.PickerUIConfig
-import com.lodz.android.pandora.picker.preview.AbsImageView
+import com.lodz.android.pandora.picker.preview.adapter.ImageViewHolder
+import com.lodz.android.pandora.picker.preview.adapter.SimplePreviewAdapter
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import permissions.dispatcher.*
 import permissions.dispatcher.ktx.constructPermissionsRequest
@@ -98,7 +96,7 @@ class PicPickerTestActivity : BaseActivity() {
 
         // 挑选手机相册
         mBinding.pickerPhoneAlbumBtn.setOnClickListener {
-            PickerManager.pickPhoneAlbum<ImageView>()
+            PickerManager.pickPhoneAlbum<ImageViewHolder>()
                 .setMaxCount(mMaxCount)
                 .setNeedCamera(mBinding.showCameraSwitch.isChecked)
                 .setNeedPreview(mBinding.itemPreviewSwitch.isChecked)
@@ -113,33 +111,18 @@ class PicPickerTestActivity : BaseActivity() {
                         .setCenterCrop()
                         .into(imageView)
                 }
-                .setImageView(object : AbsImageView<ImageView, DocumentWrapper>(mBinding.scaleSwitch.isChecked) {
-                    override fun onCreateView(context: Context, isScale: Boolean): ImageView {
-                        val img = if (isScale) PhotoView(context) else ImageView(context)
-                        img.scaleType = ImageView.ScaleType.CENTER_INSIDE
-                        return img
-                    }
+                .setPreviewAdapter(object : SimplePreviewAdapter<DocumentWrapper, ImageViewHolder>(getContext()){
+                    override fun getViewHolder(frameLayout: FrameLayout): ImageViewHolder = ImageViewHolder(context, frameLayout)
 
-                    override fun onDisplayImg(context: Context, source: DocumentWrapper, view: ImageView) {
+                    override fun onDisplayImg(context: Context, source: DocumentWrapper, holder: ImageViewHolder) {
                         ImageLoader.create(context)
                             .loadUri(source.documentFile.uri)
                             .setPlaceholder(R.drawable.pandora_ic_img)
                             .setError(R.drawable.pandora_ic_img)
                             .setFitCenter()
-                            .into(view)
-                    }
-                    override fun onClickImpl(viewHolder: RecyclerView.ViewHolder, view: ImageView, source: DocumentWrapper, position: Int, controller: PreviewController) {
-                        if (mBinding.clickClosePreviewSwitch.isChecked) {
-                            controller.close()
-                        }
+                            .into(holder.imageView)
                     }
 
-                    override fun onViewDetached(view: ImageView, isScale: Boolean) {
-                        super.onViewDetached(view, isScale)
-                        if (isScale && view is PhotoView) {
-                            view.attacher.update()
-                        }
-                    }
                 })
                 .setOnLifecycleObserver(mLifecycleObserver)
                 .setOnFilePickerListener{
@@ -154,57 +137,30 @@ class PicPickerTestActivity : BaseActivity() {
 
         // 挑选手机相册、音频和视频
         mBinding.pickerPhoneMediaBtn.setOnClickListener {
-            PickerManager.pickPhoneAssemble<ImageView>(PickerManager.PICK_PHONE_ALBUM, PickerManager.PICK_PHONE_VIDEO, PickerManager.PICK_PHONE_AUDIO)
-                .setMaxCount(mMaxCount)
-                .setNeedCamera(mBinding.showCameraSwitch.isChecked)
-                .setNeedPreview(mBinding.itemPreviewSwitch.isChecked)
-                .setPickerUIConfig(mConfig)
-                .setNeedCamera(true, Environment.DIRECTORY_DCIM)
-                .setAuthority(BuildConfig.FILE_AUTHORITY)
-                .setImgLoader { context, source, imageView ->
-                    ImageLoader.create(context)
-                        .loadUri(source.documentFile.uri)
-                        .setPlaceholder(R.drawable.pandora_ic_file)
-                        .setError(R.drawable.pandora_ic_audio)
-                        .setCenterCrop()
-                        .into(imageView)
-                }
-                .setImageView(object : AbsImageView<ImageView, DocumentWrapper>(mBinding.scaleSwitch.isChecked) {
-                    override fun onCreateView(context: Context, isScale: Boolean): ImageView {
-                        val img = if (isScale) PhotoView(context) else ImageView(context)
-                        img.scaleType = ImageView.ScaleType.CENTER_INSIDE
-                        return img
-                    }
-
-                    override fun onDisplayImg(context: Context, source: DocumentWrapper, view: ImageView) {
-                        ImageLoader.create(context)
-                            .loadUri(source.documentFile.uri)
-                            .setPlaceholder(R.drawable.pandora_ic_file)
-                            .setError(R.drawable.pandora_ic_audio)
-                            .setFitCenter()
-                            .into(view)
-                    }
-                    override fun onClickImpl(viewHolder: RecyclerView.ViewHolder, view: ImageView, source: DocumentWrapper, position: Int, controller: PreviewController) {
-                        if (mBinding.clickClosePreviewSwitch.isChecked) {
-                            controller.close()
-                        }
-                    }
-
-                    override fun onViewDetached(view: ImageView, isScale: Boolean) {
-                        super.onViewDetached(view, isScale)
-                        if (isScale && view is PhotoView) {
-                            view.attacher.update()
-                        }
-                    }
-                })
-                .setOnFilePickerListener{
-                    var str = ""
-                    for (dw in it) {
-                        str += "${dw.documentFile.name}\n\n"
-                    }
-                    mBinding.resultTv.text = str
-                }
-                .open(getContext())
+//            PickerManager.pickPhoneAssemble<MediaView>(PickerManager.PICK_PHONE_ALBUM, PickerManager.PICK_PHONE_VIDEO, PickerManager.PICK_PHONE_AUDIO)
+//                .setMaxCount(mMaxCount)
+//                .setNeedCamera(mBinding.showCameraSwitch.isChecked)
+//                .setNeedPreview(mBinding.itemPreviewSwitch.isChecked)
+//                .setPickerUIConfig(mConfig)
+//                .setNeedCamera(true, Environment.DIRECTORY_DCIM)
+//                .setAuthority(BuildConfig.FILE_AUTHORITY)
+//                .setImgLoader { context, source, imageView ->
+//                    ImageLoader.create(context)
+//                        .loadUri(source.documentFile.uri)
+//                        .setPlaceholder(R.drawable.pandora_ic_file)
+//                        .setError(R.drawable.pandora_ic_audio)
+//                        .setCenterCrop()
+//                        .into(imageView)
+//                }
+//                .setPreviewImageView(MediaViewImpl(getContext(), mBinding.scaleSwitch.isChecked, mBinding.clickClosePreviewSwitch.isChecked))
+//                .setOnFilePickerListener{
+//                    var str = ""
+//                    for (dw in it) {
+//                        str += "${dw.documentFile.name}\n\n"
+//                    }
+//                    mBinding.resultTv.text = str
+//                }
+//                .open(getContext())
 
         }
 

@@ -5,15 +5,17 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.databinding.ActivityCardViewBinding
+import com.lodz.android.agiledevkt.databinding.RvItemCardViewBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.corekt.anko.getColorCompat
+import com.lodz.android.corekt.utils.DateUtils
 import com.lodz.android.corekt.utils.SnackbarUtils
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
+import com.lodz.android.pandora.widget.rv.anko.linear
+import com.lodz.android.pandora.widget.rv.anko.setupVB
 
 /**
  * CardView测试类
@@ -31,8 +33,6 @@ class CardViewActivity : BaseActivity() {
 
     private val mBinding: ActivityCardViewBinding by bindingLayout(ActivityCardViewBinding::inflate)
 
-    private lateinit var mAdapter: CardViewAdapter
-
     override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
@@ -41,13 +41,27 @@ class CardViewActivity : BaseActivity() {
     }
 
     private fun initRecyclerView() {
-        mAdapter = CardViewAdapter(getContext())
-        val layoutManager = LinearLayoutManager(getContext())
-        layoutManager.orientation = RecyclerView.VERTICAL
-        mBinding.recyclerView.layoutManager = layoutManager
-        mAdapter.onAttachedToRecyclerView(mBinding.recyclerView)// 如果使用网格布局请设置此方法
-        mBinding.recyclerView.setHasFixedSize(true)
-        mBinding.recyclerView.adapter = mAdapter
+         mBinding.recyclerView
+             .linear()
+             .setupVB<String, RvItemCardViewBinding>(RvItemCardViewBinding::inflate) { vb, holder, position ->
+                 val str = getItem(position) ?: return@setupVB
+                 vb.titleTv.text = str
+                 var content = str
+                 for (i in 0..str.length) {
+                     content += str
+                 }
+                 vb.contentTv.text = content
+                 vb.dateTv.text = DateUtils.getCurrentFormatString(DateUtils.TYPE_2)
+             }.apply {
+                 this.setOnItemClickListener{viewHolder, item, position ->
+                     SnackbarUtils.createShort(mBinding.recyclerView, item)
+                         .setBackgroundColor(getColorCompat(R.color.color_00a0e9))
+                         .setTextColor(Color.WHITE)
+                         .show()
+                 }
+             }
+             .setData(arrayListOf("欧冠最佳进球新", "37岁姚笛近照曝光", "5G商用牌照将发布", "纳达尔横扫锦织圭新", "章莹颖失踪案开庭"
+                 , "优衣库联名遭疯抢", "文言文写钢铁侠传", "校长表白毕业生", "世界环境日新", "内马尔或将被起诉"))
     }
 
     override fun onClickBackBtn() {
@@ -55,20 +69,8 @@ class CardViewActivity : BaseActivity() {
         finish()
     }
 
-    override fun setListeners() {
-        super.setListeners()
-        mAdapter.setOnItemClickListener { viewHolder, item, position ->
-            SnackbarUtils.createShort(mBinding.recyclerView, item)
-                    .setBackgroundColor(getColorCompat(R.color.color_00a0e9))
-                    .setTextColor(Color.WHITE)
-                    .show()
-        }
-    }
-
     override fun initData() {
         super.initData()
-        mAdapter.setData(arrayListOf("欧冠最佳进球新", "37岁姚笛近照曝光", "5G商用牌照将发布", "纳达尔横扫锦织圭新", "章莹颖失踪案开庭"
-                , "优衣库联名遭疯抢", "文言文写钢铁侠传", "校长表白毕业生", "世界环境日新", "内马尔或将被起诉"))
         showStatusCompleted()
     }
 }

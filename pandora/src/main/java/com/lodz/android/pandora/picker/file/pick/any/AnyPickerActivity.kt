@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewTreeObserver
 import androidx.annotation.ColorRes
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.corekt.anko.*
 import com.lodz.android.corekt.utils.BitmapUtils
@@ -24,6 +23,8 @@ import com.lodz.android.pandora.picker.file.pick.DataWrapper
 import com.lodz.android.pandora.picker.preview.PreviewManager
 import com.lodz.android.pandora.utils.coroutines.CoroutinesWrapper
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
+import com.lodz.android.pandora.widget.rv.anko.grid
+import com.lodz.android.pandora.widget.rv.anko.setup
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
@@ -32,12 +33,12 @@ import org.greenrobot.eventbus.ThreadMode
  * Created by zhouL on 2018/12/20.
  */
 @SuppressLint("NotifyDataSetChanged")
-internal open class AnyPickerActivity<V : View, T : Any> : AbsActivity() {
+internal open class AnyPickerActivity<T : Any, VH : RecyclerView.ViewHolder> : AbsActivity() {
 
     companion object {
         var sPickerBean: PickerBean<*, *>? = null
 
-        internal fun <V : View, T : Any> start(context: Context, pickerBean: PickerBean<V, T>, flags: List<Int>?) {
+        internal fun <T : Any, VH : RecyclerView.ViewHolder> start(context: Context, pickerBean: PickerBean<T, VH>, flags: List<Int>?) {
             synchronized(PickerBean::class.java) {
                 if (sPickerBean != null) {
                     return
@@ -61,7 +62,7 @@ internal open class AnyPickerActivity<V : View, T : Any> : AbsActivity() {
 
     /** 选择器数据 */
     @Suppress("UNCHECKED_CAST")
-    private val mPdrPickerBean: PickerBean<V, T>? by lazy { sPickerBean as PickerBean<V, T> }
+    private val mPdrPickerBean: PickerBean<T, VH>? by lazy { sPickerBean as PickerBean<T, VH> }
 
     /** 当前文件数据 */
     private val mPdrDataList = ArrayList<DataWrapper<T>>()
@@ -106,13 +107,11 @@ internal open class AnyPickerActivity<V : View, T : Any> : AbsActivity() {
     }
 
     /** 初始化RecyclerView */
-    private fun initRecyclerView(bean: PickerBean<V, T>) {
-        val layoutManager = GridLayoutManager(getContext(), 3)
-        layoutManager.orientation = RecyclerView.VERTICAL
+    private fun initRecyclerView(bean: PickerBean<T, VH>) {
         mPdrAdapter = AnyPickerAdapter(getContext(), bean.imgLoader, bean.isNeedCamera, bean.pickerUIConfig)
-        mBinding.pdrPickerPhototRv.layoutManager = layoutManager
-        mBinding.pdrPickerPhototRv.setHasFixedSize(true)
-        mBinding.pdrPickerPhototRv.adapter = mPdrAdapter
+        mPdrAdapter = mBinding.pdrPickerPhototRv
+            .grid(3)
+            .setup(mPdrAdapter)
     }
 
     override fun onPressBack(): Boolean {
@@ -224,13 +223,13 @@ internal open class AnyPickerActivity<V : View, T : Any> : AbsActivity() {
     }
 
     /** 点击文件夹按钮 */
-    protected open fun onClickFolderBtn(bean: PickerBean<V, T>) {}
+    protected open fun onClickFolderBtn(bean: PickerBean<T, VH>) {}
 
     /** 图片预览器 */
     protected fun previewPic(list: List<T>, isShowPage: Boolean) {
         val bean = mPdrPickerBean ?: return
-        val view = bean.imgView ?: return
-        PreviewManager.create<V, T>()
+        val adapter = bean.adapter ?: return
+        PreviewManager.create<T, VH>()
             .setPosition(0)
             .setPagerTextSize(14)
             .setShowPagerText(isShowPage)
@@ -238,7 +237,7 @@ internal open class AnyPickerActivity<V : View, T : Any> : AbsActivity() {
             .setStatusBarColor(getContext(), bean.pickerUIConfig.getStatusBarColor())
             .setNavigationBarColor(getContext(), bean.pickerUIConfig.getNavigationBarColor())
             .setPagerTextColor(getContext(), bean.pickerUIConfig.getMainTextColor())
-            .setImageView(view)
+            .setAdapter(adapter)
             .build(list)
             .open(getContext())
     }
@@ -253,7 +252,7 @@ internal open class AnyPickerActivity<V : View, T : Any> : AbsActivity() {
         loadData(bean, mBinding)
     }
 
-    protected open fun loadData(bean: PickerBean<V, T>, binding: PandoraActivityPickerBinding) {
+    protected open fun loadData(bean: PickerBean<T, VH>, binding: PandoraActivityPickerBinding) {
         binding.pdrFolderBtn.isEnabled = false
         binding.pdrFolderNameTv.setText(R.string.pandora_picker_custom_file)
         binding.pdrMoreImg.visibility = View.GONE
@@ -335,7 +334,7 @@ internal open class AnyPickerActivity<V : View, T : Any> : AbsActivity() {
     }
 
     /** 绘制确定按钮 */
-    private fun drawConfirmBtn(bean: PickerBean<V, T>) {
+    private fun drawConfirmBtn(bean: PickerBean<T, VH>) {
         mBinding.pdrConfirmBtn.viewTreeObserver.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
             override fun onPreDraw(): Boolean {
                 mBinding.pdrConfirmBtn.viewTreeObserver.removeOnPreDrawListener(this)
@@ -366,7 +365,7 @@ internal open class AnyPickerActivity<V : View, T : Any> : AbsActivity() {
     }
 
     /** 拍照 */
-    protected open fun takeCameraPhoto(bean: PickerBean<V, T>) {}
+    protected open fun takeCameraPhoto(bean: PickerBean<T, VH>) {}
 
     override fun finish() {
         release()

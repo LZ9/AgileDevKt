@@ -10,13 +10,13 @@ import com.lodz.android.agiledevkt.modules.rv.popup.LayoutManagerPopupWindow
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.dp2px
 import com.lodz.android.corekt.anko.getScreenWidth
-import com.lodz.android.pandora.widget.rv.recycler.BaseHeaderFooterRVAdapter
+import com.lodz.android.pandora.widget.rv.recycler.BaseHeaderFooterRvAdapter
 
 /**
  * 带头/底部的适配器
  * Created by zhouL on 2018/11/27.
  */
-class HeadFooterAdapter(context: Context) : BaseHeaderFooterRVAdapter<String, String, String>(context) {
+class HeadFooterAdapter(context: Context) : BaseHeaderFooterRvAdapter<String, String, String>(context) {
 
     /** 当前布局 */
     @LayoutManagerPopupWindow.LayoutManagerType

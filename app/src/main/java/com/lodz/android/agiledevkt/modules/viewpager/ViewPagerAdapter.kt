@@ -6,15 +6,15 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.corekt.anko.getColorCompat
-import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
-import com.lodz.android.pandora.widget.rv.recycler.DataViewHolder
+import com.lodz.android.pandora.widget.rv.recycler.base.BaseRvAdapter
+import com.lodz.android.pandora.widget.rv.recycler.vh.DataViewHolder
 
 /**
  * ViewPager2适配器
  * @author zhouL
  * @date 2019/12/30
  */
-class ViewPagerAdapter(context: Context) : BaseRecyclerViewAdapter<Pair<String, Int>>(context) {
+class ViewPagerAdapter(context: Context) : BaseRvAdapter<Pair<String, Int>>(context) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
             DataViewHolder(getLayoutView(parent, R.layout.rv_item_view_page))

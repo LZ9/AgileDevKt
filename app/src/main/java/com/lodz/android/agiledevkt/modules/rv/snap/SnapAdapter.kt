@@ -8,14 +8,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.NationBean
 import com.lodz.android.imageloaderkt.ImageLoader
-import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
-import com.lodz.android.pandora.widget.rv.recycler.DataViewHolder
+import com.lodz.android.pandora.widget.rv.recycler.base.BaseRvAdapter
+import com.lodz.android.pandora.widget.rv.recycler.vh.DataViewHolder
 
 /**
  * Snap数据适配器
  * Created by zhouL on 2018/12/3.
  */
-class SnapAdapter(context: Context) : BaseRecyclerViewAdapter<NationBean>(context) {
+class SnapAdapter(context: Context) : BaseRvAdapter<NationBean>(context) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
             DataViewHolder(getLayoutView(parent, R.layout.rv_item_snap))

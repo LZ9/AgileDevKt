@@ -7,14 +7,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.rv.popup.LayoutManagerPopupWindow
 import com.lodz.android.corekt.anko.dp2px
-import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
-import com.lodz.android.pandora.widget.rv.recycler.DataViewHolder
+import com.lodz.android.pandora.widget.rv.recycler.base.BaseRvAdapter
+import com.lodz.android.pandora.widget.rv.recycler.vh.DataViewHolder
 
 /**
  * 装饰器测试适配器
  * Created by zhouL on 2018/12/5.
  */
-class DecorationRvAdapter(context: Context) : BaseRecyclerViewAdapter<String>(context) {
+class DecorationRvAdapter(context: Context) : BaseRvAdapter<String>(context) {
 
     /** 当前布局 */
     @LayoutManagerPopupWindow.LayoutManagerType

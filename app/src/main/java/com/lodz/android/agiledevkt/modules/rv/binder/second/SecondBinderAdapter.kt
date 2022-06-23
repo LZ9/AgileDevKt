@@ -6,13 +6,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.agiledevkt.bean.NationBean
 import com.lodz.android.agiledevkt.databinding.RvItemBinderSecondBinding
 import com.lodz.android.imageloaderkt.ImageLoader
-import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
-import com.lodz.android.pandora.widget.rv.recycler.DataVBViewHolder
+import com.lodz.android.pandora.widget.rv.recycler.base.BaseRvAdapter
+import com.lodz.android.pandora.widget.rv.recycler.vh.DataVBViewHolder
 
 /**
  * Created by zhouL on 2018/12/11.
  */
-class SecondBinderAdapter(context: Context) : BaseRecyclerViewAdapter<NationBean>(context) {
+class SecondBinderAdapter(context: Context) : BaseRvAdapter<NationBean>(context) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
         DataVBViewHolder(getViewBindingLayout(RvItemBinderSecondBinding::inflate, parent))
 

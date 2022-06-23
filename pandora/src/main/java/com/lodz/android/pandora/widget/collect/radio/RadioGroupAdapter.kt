@@ -13,14 +13,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.dp2px
 import com.lodz.android.pandora.R
-import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
+import com.lodz.android.pandora.widget.rv.recycler.base.BaseRvAdapter
 
 /**
  * 单选组适配器
  * @author zhouL
  * @date 2019/5/23
  */
-internal class RadioGroupAdapter(context: Context) : BaseRecyclerViewAdapter<RadioableWrapper>(context) {
+internal class RadioGroupAdapter(context: Context) : BaseRvAdapter<RadioableWrapper>(context) {
 
     /** 单选按钮图片 */
     private var mPdrBtnSrc: Drawable? = null

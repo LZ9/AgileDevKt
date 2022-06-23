@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.agiledevkt.databinding.FragmentViewBindingTestBinding
+import com.lodz.android.agiledevkt.databinding.RvItemViewBindingBinding
+import com.lodz.android.corekt.utils.DateUtils
 import com.lodz.android.pandora.base.fragment.LazyFragment
+import com.lodz.android.pandora.widget.rv.anko.linear
+import com.lodz.android.pandora.widget.rv.anko.setupVB
 
 /**
  * ViewBinding测试类
@@ -51,13 +53,14 @@ class ViewBindingTestFragment : LazyFragment() {
     }
 
     private fun initRecyclerView() {
-        val adapter = ViewBindingAdapter(requireContext())
-        val layoutManager = LinearLayoutManager(getContext())
-        layoutManager.orientation = RecyclerView.VERTICAL
-        mBinding?.recyclerView?.layoutManager = layoutManager
-        mBinding?.recyclerView?.setHasFixedSize(true)
-        mBinding?.recyclerView?.adapter = adapter
-        adapter.setData(getTestList())
+        mBinding?.recyclerView
+            ?.linear()
+            ?.setupVB<String, RvItemViewBindingBinding>(RvItemViewBindingBinding::inflate) { vb, holder, position ->
+                val item = getItem(position)
+                vb.idTv.text = item ?: "-1"
+                vb.timeTv.text = DateUtils.getCurrentFormatString(DateUtils.TYPE_2)
+            }
+            ?.setData(getTestList())
     }
 
     private fun getTestList(): ArrayList<String> {

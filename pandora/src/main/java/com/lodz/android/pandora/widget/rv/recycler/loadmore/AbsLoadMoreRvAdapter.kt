@@ -1,32 +1,29 @@
-package com.lodz.android.pandora.widget.rv.recycler
+package com.lodz.android.pandora.widget.rv.recycler.loadmore
 
 import android.content.Context
-import android.view.View
-import android.view.ViewGroup
-import android.widget.LinearLayout
-import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.lodz.android.corekt.anko.getSize
+import com.lodz.android.pandora.widget.rv.recycler.base.AbsRvAdapter
 
 /**
  * RecyclerView加载更多基类适配器
  * Created by zhouL on 2018/11/20.
  */
-abstract class BaseLoadMoreRVAdapter<T>(context: Context) : BaseRecyclerViewAdapter<T>(context) {
+abstract class AbsLoadMoreRvAdapter<T, VH : RecyclerView.ViewHolder>(context: Context) : AbsRvAdapter<T, VH>(context) {
 
     companion object {
         /** 列表内容 */
-        protected const val VIEW_TYPE_ITEM = 0
+        internal const val VIEW_TYPE_ITEM = 0
         /** 正在加载更多 */
-        protected const val VIEW_TYPE_LOADING_MORE = 1
+        internal const val VIEW_TYPE_LOADING_MORE = 1
         /** 已加载完全部数据 */
-        protected const val VIEW_TYPE_LOAD_FINISH = 2
+        internal const val VIEW_TYPE_LOAD_FINISH = 2
         /** 加载失败 */
-        protected const val VIEW_TYPE_LOAD_FAIL = 3
+        internal const val VIEW_TYPE_LOAD_FAIL = 3
         /** 隐藏数据 */
-        protected const val VIEW_TYPE_HIDE_ITEM = 4
+        internal const val VIEW_TYPE_HIDE_ITEM = 4
     }
 
     /** 总条数 */
@@ -86,81 +83,21 @@ abstract class BaseLoadMoreRVAdapter<T>(context: Context) : BaseRecyclerViewAdap
         return false
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        if (viewType == VIEW_TYPE_LOAD_FAIL) {
-            return getLoadFailViewHolder(parent)
-        }
-        if (viewType == VIEW_TYPE_LOADING_MORE) {
-            return getLoadingMoreViewHolder(parent)
-        }
-        if (viewType == VIEW_TYPE_LOAD_FINISH) {
-            return getLoadFinishViewHolder(parent)
-        }
-        if (viewType == VIEW_TYPE_HIDE_ITEM) {
-            return getBlankViewHolder(parent)
-        }
-        return getItemViewHolder(parent, viewType)
-    }
-
-    /** 获取加载完毕的ViewHolder */
-    private fun getLoadFinishViewHolder(parent: ViewGroup): RecyclerView.ViewHolder =
-            LoadFinishViewHolder(getLayoutView(parent, getLoadFinishLayoutId()))
-
-    /** 获取正在加载更多的ViewHolder */
-    private fun getLoadingMoreViewHolder(parent: ViewGroup): RecyclerView.ViewHolder =
-            LoadingMoreViewHolder(getLayoutView(parent, getLoadingMoreLayoutId()))
-
-    /** 获取加载失败的ViewHolder */
-    private fun getLoadFailViewHolder(parent: ViewGroup): RecyclerView.ViewHolder =
-            LoadFailViewHolder(getLayoutView(parent, getLoadFailLayoutId()))
-
-    /** 获取空白占位的ViewHolder */
-    private fun getBlankViewHolder(parent: ViewGroup): RecyclerView.ViewHolder =
-            BlankViewHolder(LinearLayout(parent.context))
-
-    /** 获取加载完毕的LayoutId */
-    @LayoutRes
-    abstract fun getLoadFinishLayoutId(): Int
-
-    /** 获取加载完毕的LayoutId */
-    @LayoutRes
-    abstract fun getLoadingMoreLayoutId(): Int
-
-    /** 获取加载失败的LayoutId */
-    @LayoutRes
-    abstract fun getLoadFailLayoutId(): Int
-
-    abstract fun getItemViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder
-
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when (holder) {
-            is BaseLoadMoreRVAdapter<*>.LoadFinishViewHolder -> showLoadFinish(holder)
-            is BaseLoadMoreRVAdapter<*>.LoadingMoreViewHolder -> showLoadingMore(holder)
-            is BaseLoadMoreRVAdapter<*>.LoadFailViewHolder -> {
-                holder.itemView.setOnClickListener {
-                    mPdrOnLoadFailClickListener?.invoke(mPdrPage + 1, mPdrSize)
-                }
-                showLoadFail(holder)
-            }
-            is BaseLoadMoreRVAdapter<*>.BlankViewHolder -> {
-                // 空白占位不需要操作
-            }
-            else -> super.onBindViewHolder(holder, position)
-        }
-        handleLoadMore(position)
-    }
-
     /** 显示正在加载界面 */
-    abstract fun showLoadingMore(holder: RecyclerView.ViewHolder)
+    abstract fun showLoadingMore(holder: VH)
 
     /** 显示加载完毕界面 */
-    abstract fun showLoadFinish(holder: RecyclerView.ViewHolder)
+    abstract fun showLoadFinish(holder: VH)
 
     /** 显示加载失败界面 */
-    abstract fun showLoadFail(holder: RecyclerView.ViewHolder)
+    abstract fun showLoadFail(holder: VH)
+
+    protected fun handleLoadFail(){
+        mPdrOnLoadFailClickListener?.invoke(mPdrPage + 1, mPdrSize)
+    }
 
     /** 处理加载更多，[position]当前滚动位置 */
-    private fun handleLoadMore(position: Int) {
+    protected fun handleLoadMore(position: Int) {
         if (getListItemCount() >= mPdrSumSize) {// 已经全部加载完成
             return
         }
@@ -235,22 +172,13 @@ abstract class BaseLoadMoreRVAdapter<T>(context: Context) : BaseRecyclerViewAdap
         this.mPdrOnLoadFailClickListener = listener
     }
 
+    protected fun getPdrOnLoadFailClickListener() = mPdrOnLoadFailClickListener
+
     /** 设置所有item隐藏后的回调监听器[listener] */
     fun setOnAllItemHideListener(listener: () -> Unit) {
         this.mPdrOnAllItemHideListener = listener
     }
 
-    /** 加载完毕布局的ViewHolder */
-    private inner class LoadFinishViewHolder(view: View) : RecyclerView.ViewHolder(view)
-
-    /** 加载更多布局的ViewHolder */
-    private inner class LoadingMoreViewHolder(view: View) : RecyclerView.ViewHolder(view)
-
-    /** 加载失败布局的ViewHolder */
-    private inner class LoadFailViewHolder(view: View) : RecyclerView.ViewHolder(view)
-
-    /** 空白的ViewHolder */
-    private inner class BlankViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
@@ -278,17 +206,18 @@ abstract class BaseLoadMoreRVAdapter<T>(context: Context) : BaseRecyclerViewAdap
         }
     }
 
-    override fun onViewAttachedToWindow(holder: RecyclerView.ViewHolder) {
+    override fun onViewAttachedToWindow(holder: VH) {
         super.onViewAttachedToWindow(holder)
         adapterStaggeredGridLayoutManager(holder)
     }
 
     /** 适配StaggeredGridLayoutManager */
-    private fun adapterStaggeredGridLayoutManager(holder: RecyclerView.ViewHolder) {
+    private fun adapterStaggeredGridLayoutManager(holder: VH) {
         val layoutParams = holder.itemView.layoutParams
         if (layoutParams is StaggeredGridLayoutManager.LayoutParams) {
             if (holder.itemViewType == VIEW_TYPE_LOADING_MORE || holder.itemViewType == VIEW_TYPE_LOAD_FINISH
-                    || holder.itemViewType == VIEW_TYPE_LOAD_FAIL) {//item的类型是加载更多 || 加载完成 || 加载失败时
+                    || holder.itemViewType == VIEW_TYPE_LOAD_FAIL
+            ) {//item的类型是加载更多 || 加载完成 || 加载失败时
                 layoutParams.isFullSpan = true
             }
         }

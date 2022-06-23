@@ -14,13 +14,13 @@ import com.lodz.android.agiledevkt.modules.rv.popup.LayoutManagerPopupWindow
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.dp2px
 import com.lodz.android.corekt.anko.getScreenWidth
-import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
+import com.lodz.android.pandora.widget.rv.recycler.base.BaseRvAdapter
 
 /**
  * 拖拽适配器
  * Created by zhouL on 2018/11/30.
  */
-class DragRvAdapter(context: Context) : BaseRecyclerViewAdapter<String>(context) {
+class DragRvAdapter(context: Context) : BaseRvAdapter<String>(context) {
 
     /** 设置拖拽帮助器 */
     private var mItemTouchHelper: ItemTouchHelper? = null

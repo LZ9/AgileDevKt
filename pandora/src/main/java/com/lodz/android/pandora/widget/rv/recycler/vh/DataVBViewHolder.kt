@@ -1,4 +1,4 @@
-package com.lodz.android.pandora.widget.rv.recycler
+package com.lodz.android.pandora.widget.rv.recycler.vh
 
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
@@ -10,7 +10,6 @@ import androidx.viewbinding.ViewBinding
  */
  open class DataVBViewHolder(private val viewBinding: ViewBinding) : RecyclerView.ViewHolder(viewBinding.root){
 
-    @SuppressWarnings("unchecked")
     fun <VB : ViewBinding> getVB(): VB {
         return viewBinding as VB
     }

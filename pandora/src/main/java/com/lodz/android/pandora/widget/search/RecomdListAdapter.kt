@@ -8,15 +8,15 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.pandora.R
-import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
-import com.lodz.android.pandora.widget.rv.recycler.DataViewHolder
+import com.lodz.android.pandora.widget.rv.recycler.base.BaseRvAdapter
+import com.lodz.android.pandora.widget.rv.recycler.vh.DataViewHolder
 
 /**
  * 搜索联想列表适配器
  * @author zhouL
  * @date 2019/10/25
  */
-class RecomdListAdapter(context: Context) : BaseRecyclerViewAdapter<RecomdData>(context) {
+class RecomdListAdapter(context: Context) : BaseRvAdapter<RecomdData>(context) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
         DataViewHolder(getLayoutView(parent, R.layout.pandora_item_search_recomd))

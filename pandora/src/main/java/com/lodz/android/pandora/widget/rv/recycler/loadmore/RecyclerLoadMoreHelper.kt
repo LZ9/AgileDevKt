@@ -1,4 +1,4 @@
-package com.lodz.android.pandora.widget.rv.recycler
+package com.lodz.android.pandora.widget.rv.recycler.loadmore
 
 import android.annotation.SuppressLint
 
@@ -7,7 +7,7 @@ import android.annotation.SuppressLint
  * Created by zhouL on 2018/11/21.
  */
 @SuppressLint("NotifyDataSetChanged")
-class RecyclerLoadMoreHelper<T>(val mPdrAdapter: BaseLoadMoreRVAdapter<T>) {
+class RecyclerLoadMoreHelper<T>(val mPdrAdapter: AbsLoadMoreRvAdapter<T, *>) {
 
     /** 监听器 */
     private var mPdrListener: Listener? = null

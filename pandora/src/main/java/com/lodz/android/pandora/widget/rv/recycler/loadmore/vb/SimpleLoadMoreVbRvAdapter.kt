@@ -1,22 +1,28 @@
-package com.lodz.android.pandora.widget.rv.recycler
+package com.lodz.android.pandora.widget.rv.recycler.loadmore.vb
 
 import android.content.Context
 import android.util.TypedValue
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
-import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBinding
 import com.lodz.android.corekt.anko.getColorCompat
 import com.lodz.android.corekt.anko.getDrawableCompat
 import com.lodz.android.corekt.anko.getScreenWidth
 import com.lodz.android.pandora.R
+import com.lodz.android.pandora.databinding.PandoraItemLoadFailBinding
+import com.lodz.android.pandora.databinding.PandoraItemLoadFinishBinding
+import com.lodz.android.pandora.databinding.PandoraItemLoadingMoreBinding
+import com.lodz.android.pandora.widget.rv.recycler.vh.DataVBViewHolder
 
 /**
  * 简单实现的BaseLoadMoreRecyclerViewAdapter
  * Created by zhouL on 2018/11/20.
  */
-abstract class SimpleLoadMoreRVAdapter<T>(context: Context) : BaseLoadMoreRVAdapter<T>(context) {
+abstract class SimpleLoadMoreVbRvAdapter<T>(context: Context) : BaseLoadMoreVbRvAdapter<T>(context) {
 
     /** 完成加载提示语 */
     private var mPdrFinishText = context.getString(R.string.pandora_load_finish_tips)
@@ -54,13 +60,21 @@ abstract class SimpleLoadMoreRVAdapter<T>(context: Context) : BaseLoadMoreRVAdap
     @ColorRes
     private var mPdrLoadFailBackgroundColor = android.R.color.transparent
 
-    override fun getLoadFinishLayoutId(): Int = R.layout.pandora_item_load_finish
+    override fun getLoadFinishVbInflate(): (LayoutInflater, parent: ViewGroup, attachToRoot: Boolean) -> ViewBinding =
+        PandoraItemLoadFinishBinding::inflate
 
-    override fun getLoadingMoreLayoutId(): Int = R.layout.pandora_item_loading_more
+    override fun getLoadingMoreVbInflate(): (LayoutInflater, parent: ViewGroup, attachToRoot: Boolean) -> ViewBinding =
+        PandoraItemLoadingMoreBinding::inflate
 
-    override fun getLoadFailLayoutId(): Int = R.layout.pandora_item_load_fail
+    override fun getLoadFailVbInflate(): (LayoutInflater, parent: ViewGroup, attachToRoot: Boolean) -> ViewBinding =
+        PandoraItemLoadFailBinding::inflate
 
-    override fun showLoadFinish(holder: RecyclerView.ViewHolder) {
+    override fun getItemViewHolder(parent: ViewGroup, viewType: Int): DataVBViewHolder =
+        DataVBViewHolder(getViewBindingLayout(getVbInflate(), parent))
+
+    abstract fun getVbInflate(): (LayoutInflater, parent: ViewGroup, attachToRoot: Boolean) -> ViewBinding
+
+    override fun showLoadFinish(holder: DataVBViewHolder) {
         if (isPdrGridLayoutManager) {
             val layoutParams = holder.itemView.layoutParams
             layoutParams.width = context.getScreenWidth()
@@ -74,7 +88,7 @@ abstract class SimpleLoadMoreRVAdapter<T>(context: Context) : BaseLoadMoreRVAdap
         textView.setTextColor(context.getColorCompat(mPdrFinishTextColor))
     }
 
-    override fun showLoadFail(holder: RecyclerView.ViewHolder) {
+    override fun showLoadFail(holder: DataVBViewHolder) {
         if (isPdrGridLayoutManager) {
             val layoutParams = holder.itemView.layoutParams
             layoutParams.width = context.getScreenWidth()
@@ -88,7 +102,7 @@ abstract class SimpleLoadMoreRVAdapter<T>(context: Context) : BaseLoadMoreRVAdap
         textView.setTextColor(context.getColorCompat(mPdrLoadFailTextColor))
     }
 
-    override fun showLoadingMore(holder: RecyclerView.ViewHolder) {
+    override fun showLoadingMore(holder: DataVBViewHolder) {
         if (isPdrGridLayoutManager) {
             val layoutParams = holder.itemView.layoutParams
             layoutParams.width = context.getScreenWidth()
@@ -108,7 +122,6 @@ abstract class SimpleLoadMoreRVAdapter<T>(context: Context) : BaseLoadMoreRVAdap
             mPdrIndeterminateDrawable = 0//设置过以后就清空数据，避免展示异常
         }
     }
-
 
     /** 设置完成加载时的提示语[text] */
     fun setFinishText(text: String) {

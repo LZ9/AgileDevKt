@@ -11,15 +11,15 @@ import com.lodz.android.corekt.anko.append
 import com.lodz.android.corekt.contacts.bean.ContactsInfoBean
 import com.lodz.android.imageloaderkt.glide.anko.loadBytes
 import com.lodz.android.imageloaderkt.glide.anko.loadUrl
-import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
-import com.lodz.android.pandora.widget.rv.recycler.DataVBViewHolder
+import com.lodz.android.pandora.widget.rv.recycler.base.BaseRvAdapter
+import com.lodz.android.pandora.widget.rv.recycler.vh.DataVBViewHolder
 
 /**
  * 通讯录适配器
  * @author zhouL
  * @date 2022/3/30
  */
-class ContactAdapter(context: Context) :BaseRecyclerViewAdapter<ContactsInfoBean>(context){
+class ContactAdapter(context: Context) : BaseRvAdapter<ContactsInfoBean>(context){
 
     /** 点击删除监听器 */
     private var mOnDeleteClickListener: ((viewHolder: RecyclerView.ViewHolder, item: ContactsInfoBean) -> Unit)? = null

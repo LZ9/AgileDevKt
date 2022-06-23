@@ -20,8 +20,8 @@ import com.lodz.android.pandora.R
 import com.lodz.android.pandora.picker.contract.OnImgLoader
 import com.lodz.android.pandora.picker.file.PickerUIConfig
 import com.lodz.android.pandora.picker.file.pick.DataWrapper
-import com.lodz.android.pandora.widget.rv.recycler.BaseRecyclerViewAdapter
-import com.lodz.android.pandora.widget.rv.recycler.DataViewHolder
+import com.lodz.android.pandora.widget.rv.recycler.base.BaseRvAdapter
+import com.lodz.android.pandora.widget.rv.recycler.vh.DataViewHolder
 
 /**
  * 照片选择适配器
@@ -32,7 +32,7 @@ internal class AnyPickerAdapter<T : Any>(
     imgLoader: OnImgLoader<T>?,
     isNeedCamera: Boolean,
     config: PickerUIConfig
-) : BaseRecyclerViewAdapter<DataWrapper<T>>(context) {
+) : BaseRvAdapter<DataWrapper<T>>(context) {
 
     /** 相机 */
     private val VIEW_TYPE_CAMERA = 0

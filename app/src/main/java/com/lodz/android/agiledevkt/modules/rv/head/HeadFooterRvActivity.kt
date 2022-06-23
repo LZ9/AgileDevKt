@@ -16,6 +16,8 @@ import com.lodz.android.agiledevkt.modules.rv.popup.OrientationPopupWindow
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
+import com.lodz.android.pandora.widget.rv.anko.layoutM
+import com.lodz.android.pandora.widget.rv.anko.setup
 
 /**
  * RV带头/底部测试
@@ -49,13 +51,14 @@ class HeadFooterRvActivity : BaseActivity() {
     }
 
     private fun initRecyclerView() {
-        mAdapter = HeadFooterAdapter(getContext())
-        mBinding.recyclerView.layoutManager = getLayoutManager()
-        mAdapter.onAttachedToRecyclerView(mBinding.recyclerView)// 如果使用网格布局请设置此方法
-        mAdapter.setLayoutManagerType(mLayoutManagerType)
-        mAdapter.setOrientation(mOrientation)
-        mBinding.recyclerView.setHasFixedSize(true)
-        mBinding.recyclerView.adapter = mAdapter
+        mAdapter = mBinding.recyclerView
+            .layoutM(getLayoutManager())
+            .setup(HeadFooterAdapter(getContext()))
+            .apply {
+                setLayoutManagerType(mLayoutManagerType)
+                setOrientation(mOrientation)
+                setData(getItemList())
+            }
     }
 
     private fun getLayoutManager(): RecyclerView.LayoutManager {
@@ -170,8 +173,6 @@ class HeadFooterRvActivity : BaseActivity() {
 
     override fun initData() {
         super.initData()
-        mAdapter.setData(getItemList())
-        mAdapter.notifyDataSetChanged()
         showStatusCompleted()
     }
 
