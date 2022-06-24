@@ -203,7 +203,6 @@ class CltRadioGroup : FrameLayout {
     }
 
     private fun initRecyclerView() {
-        mPdrRadioRv.isNestedScrollingEnabled = false
         mPdrLayoutManager = GridLayoutManager(context, mPdrSpanCount, RecyclerView.VERTICAL, false)
         mPdrAdapter = mPdrRadioRv.let {
             it.isNestedScrollingEnabled = false
@@ -217,7 +216,6 @@ class CltRadioGroup : FrameLayout {
             if (isPdrReadOnly) {
                 return@setOnItemClickListener
             }
-
             if (mPdrRadioType == TYPE_SINGLE) {// 单选
                 for (i in mPdrList.indices) {
                     mPdrList[i].isSelected = if (item.radioable.getIdTag() == mPdrList[i].getIdTag()) {
