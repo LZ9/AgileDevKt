@@ -2,8 +2,8 @@ package com.lodz.android.pandora.widget.ninegrid
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.View
 import android.widget.ImageView
+import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.corekt.album.PicInfo
 import com.lodz.android.pandora.picker.file.PickerUIConfig
 
@@ -12,10 +12,10 @@ import com.lodz.android.pandora.picker.file.PickerUIConfig
  * 简单的九宫格实现
  * Created by zhouL on 2018/12/26.
  */
-class SimpleNineGridView<V : View> : NineGridView {
+class SimpleNineGridView<T : Any, VH : RecyclerView.ViewHolder> : NineGridView {
 
     /** 接口 */
-    private var mPdrListener: OnSimpleNineGridViewListener<V>? = null
+    private var mPdrListener: OnSimpleNineGridViewListener<T, VH>? = null
     /** 照片保存地址 */
     private var mPdrCameraSavePath = ""
     /** 7.0的FileProvider名字 */
@@ -86,7 +86,7 @@ class SimpleNineGridView<V : View> : NineGridView {
     }
 
     /** 设置监听器[listener] */
-    fun setOnSimpleNineGridViewListener(listener: OnSimpleNineGridViewListener<V>) {
+    fun setOnSimpleNineGridViewListener(listener: OnSimpleNineGridViewListener<T, VH>) {
         mPdrListener = listener
     }
 

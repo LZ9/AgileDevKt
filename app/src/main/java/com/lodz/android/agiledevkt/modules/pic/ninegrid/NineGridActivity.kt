@@ -6,8 +6,8 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
-import com.github.chrisbanes.photoview.PhotoView
 import com.lodz.android.agiledevkt.BuildConfig
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.config.Constant
@@ -17,7 +17,8 @@ import com.lodz.android.corekt.album.PicInfo
 import com.lodz.android.corekt.anko.*
 import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.base.activity.BaseActivity
-import com.lodz.android.pandora.picker.preview.AbsImageView
+import com.lodz.android.pandora.picker.preview.vh.AbsImageView
+import com.lodz.android.pandora.picker.preview.vh.SimpleImageViewHolder
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.ninegrid.OnNineGridViewListener
 import com.lodz.android.pandora.widget.ninegrid.OnSimpleNineGridViewListener
@@ -135,45 +136,75 @@ class NineGridActivity : BaseActivity() {
         }
 
         // 可添加图片的九宫格
-        mBinding.pickerNineGridView.setOnSimpleNineGridViewListener(object : OnSimpleNineGridViewListener<ImageView> {
-            override fun createImageView(): AbsImageView<ImageView, PicInfo> = object : AbsImageView<ImageView, PicInfo>(mBinding.scaleSwitch.isChecked) {
-                override fun onCreateView(context: Context, isScale: Boolean): ImageView {
-                    val img = if (isScale) PhotoView(context) else ImageView(context)
-                    img.scaleType = ImageView.ScaleType.CENTER_INSIDE
-                    return img
-                }
-
-                override fun onDisplayImg(context: Context, source: PicInfo, view: ImageView) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                        ImageLoader.create(context).loadUri(source.uri).setFitCenter().into(view)
-                    } else {
-                        ImageLoader.create(context).loadFilePath(source.path).setFitCenter().into(view)
-                    }
-                }
-
-                override fun onViewDetached(view: ImageView, isScale: Boolean) {
-                    super.onViewDetached(view, isScale)
-                    if (isScale && view is PhotoView) {
-                        view.attacher.update()
-                    }
-                }
-            }
-
+        mBinding.pickerNineGridView.setOnSimpleNineGridViewListener(object : OnSimpleNineGridViewListener<PicInfo, SimpleImageViewHolder> {
             override fun onDisplayNineGridImg(context: Context, data: PicInfo, imageView: ImageView) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    ImageLoader.create(context).loadUri(data.uri).setCenterCrop().into(imageView)
-                } else {
-                    ImageLoader.create(context).loadFilePath(data.path).setCenterCrop().into(imageView)
-                }
+
+
+
             }
 
             override fun onDisplayPickerImg(context: Context, data: PicInfo, imageView: ImageView) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    ImageLoader.create(context).loadUri(data.uri).setCenterCrop().into(imageView)
-                } else {
-                    ImageLoader.create(context).loadFilePath(data.path).setCenterCrop().into(imageView)
-                }
+
+
             }
+
+            override fun createImageView(): AbsImageView<PicInfo, SimpleImageViewHolder> =
+                object : AbsImageView<PicInfo, SimpleImageViewHolder>() {
+//                    override fun onCreateViewHolder(context: Context): ImageViewHolder {
+//                        val frameLayout = FrameLayout(context)
+//                        val layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
+//                        frameLayout.layoutParams = layoutParams
+//                        return ImageViewHolder(context, frameLayout)
+//                    }
+
+                    override fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int): SimpleImageViewHolder =
+                        SimpleImageViewHolder(parent.context)
+
+                    override fun onBind(context: Context, source: PicInfo, viewHolder: SimpleImageViewHolder, position: Int) {
+                        ImageLoader.create(context).loadUri(source.uri).setFitCenter().into(viewHolder.imageView)
+                    }
+                }
+
+
+            //            override fun createImageView(): AbsImageViewHolder<ImageView, PicInfo> = object : AbsImageViewHolder<ImageView, PicInfo>() {
+//                override fun onCreateView(context: Context, isScale: Boolean): ImageView {
+//                    val img = if (isScale) PhotoView(context) else ImageView(context)
+//                    img.scaleType = ImageView.ScaleType.CENTER_INSIDE
+//                    return img
+//                }
+//
+//                override fun onDisplayImg(context: Context, source: PicInfo, view: ImageView) {
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+//                        ImageLoader.create(context).loadUri(source.uri).setFitCenter().into(view)
+//                    } else {
+//                        ImageLoader.create(context).loadFilePath(source.path).setFitCenter().into(view)
+//                    }
+//                }
+//
+//                override fun onViewDetached(view: ImageView, isScale: Boolean) {
+//                    super.onViewDetached(view, isScale)
+//                    if (isScale && view is PhotoView) {
+//                        view.attacher.update()
+//                    }
+//                }
+//            }
+//
+//            override fun onDisplayNineGridImg(context: Context, data: PicInfo, imageView: ImageView) {
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+//                    ImageLoader.create(context).loadUri(data.uri).setCenterCrop().into(imageView)
+//                } else {
+//                    ImageLoader.create(context).loadFilePath(data.path).setCenterCrop().into(imageView)
+//                }
+//            }
+//
+//            override fun onDisplayPickerImg(context: Context, data: PicInfo, imageView: ImageView) {
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+//                    ImageLoader.create(context).loadUri(data.uri).setCenterCrop().into(imageView)
+//                } else {
+//                    ImageLoader.create(context).loadFilePath(data.path).setCenterCrop().into(imageView)
+//                }
+//            }
+
         })
 
         // 获取九宫格路径按钮

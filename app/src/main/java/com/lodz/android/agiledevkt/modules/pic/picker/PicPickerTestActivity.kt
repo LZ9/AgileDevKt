@@ -7,7 +7,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.view.View
-import android.widget.FrameLayout
+import android.view.ViewGroup
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.lodz.android.agiledevkt.BuildConfig
@@ -22,8 +22,8 @@ import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.picker.file.PickerManager
 import com.lodz.android.pandora.picker.file.PickerUIConfig
-import com.lodz.android.pandora.picker.preview.adapter.ImageViewHolder
-import com.lodz.android.pandora.picker.preview.adapter.SimplePreviewAdapter
+import com.lodz.android.pandora.picker.preview.vh.AbsImageView
+import com.lodz.android.pandora.picker.preview.vh.SimpleImageViewHolder
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import permissions.dispatcher.*
 import permissions.dispatcher.ktx.constructPermissionsRequest
@@ -96,7 +96,7 @@ class PicPickerTestActivity : BaseActivity() {
 
         // 挑选手机相册
         mBinding.pickerPhoneAlbumBtn.setOnClickListener {
-            PickerManager.pickPhoneAlbum<ImageViewHolder>()
+            PickerManager.pickPhoneAlbum<SimpleImageViewHolder>()
                 .setMaxCount(mMaxCount)
                 .setNeedCamera(mBinding.showCameraSwitch.isChecked)
                 .setNeedPreview(mBinding.itemPreviewSwitch.isChecked)
@@ -111,18 +111,19 @@ class PicPickerTestActivity : BaseActivity() {
                         .setCenterCrop()
                         .into(imageView)
                 }
-                .setPreviewAdapter(object : SimplePreviewAdapter<DocumentWrapper, ImageViewHolder>(getContext()){
-                    override fun getViewHolder(frameLayout: FrameLayout): ImageViewHolder = ImageViewHolder(context, frameLayout)
+                .setPreviewView(object : AbsImageView<DocumentWrapper, SimpleImageViewHolder>(){
+                    override fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int): SimpleImageViewHolder =
+                        SimpleImageViewHolder(parent.context)
 
-                    override fun onDisplayImg(context: Context, source: DocumentWrapper, holder: ImageViewHolder) {
+                    override fun onBind(context: Context, source: DocumentWrapper, viewHolder: SimpleImageViewHolder, position: Int) {
                         ImageLoader.create(context)
                             .loadUri(source.documentFile.uri)
                             .setPlaceholder(R.drawable.pandora_ic_img)
                             .setError(R.drawable.pandora_ic_img)
                             .setFitCenter()
-                            .into(holder.imageView)
-                    }
+                            .into(viewHolder.imageView)
 
+                    }
                 })
                 .setOnLifecycleObserver(mLifecycleObserver)
                 .setOnFilePickerListener{

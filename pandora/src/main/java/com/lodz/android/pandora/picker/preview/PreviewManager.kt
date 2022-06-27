@@ -19,8 +19,8 @@ class PreviewManager<T : Any, VH : RecyclerView.ViewHolder> internal constructor
     /** 打开预览器，上下文[context]，Intent启动标记[flags]  */
     @JvmOverloads
     fun open(context: Context, flags: List<Int>? = null) {
-        if (previewBean.adapter == null) {// 校验图片加载器
-            ToastUtils.showShort(context, R.string.pandora_preview_adapter_unset)
+        if (previewBean.view == null) {// 校验图片加载器
+            ToastUtils.showShort(context, R.string.pandora_preview_imageview_unset)
             return
         }
         if (previewBean.sourceList.isNullOrEmpty()) {// 校验数据列表

@@ -17,7 +17,7 @@
     <string name="pandora_picker_public_directory_empty">设置公共目录路径失败</string>
     <string name="pandora_picker_uri_null">照片路径Uri获取失败</string>
     <string name="pandora_picker_loader_unset">您尚未设置图片加载器</string>
-    <string name="pandora_preview_adapter_unset">您尚未设置图片预览适配器</string>
+    <string name="pandora_preview_imageview_unset">您尚未设置图片预览控件</string>
     <string name="pandora_preview_loader_unset">您尚未设置图片预览器</string>
     <string name="pandora_preview_source_list_empty">图片数据为空</string>
     <string name="pandora_picker_source_list_empty">您没有可以选择的数据</string>

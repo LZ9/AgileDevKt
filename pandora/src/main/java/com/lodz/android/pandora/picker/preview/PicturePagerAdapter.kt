@@ -1,71 +1,34 @@
 package com.lodz.android.pandora.picker.preview
 
 import android.content.Context
-import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.lodz.android.pandora.widget.rv.recycler.base.BaseRvAdapter
+import com.lodz.android.pandora.picker.preview.vh.AbsImageView
+import com.lodz.android.pandora.widget.rv.recycler.base.AbsRvAdapter
 
 /**
  * 图片翻页适配器
  * Created by zhouL on 2018/12/17.
  */
-internal class PicturePagerAdapter<V : View, T : Any>(
+internal class PicturePagerAdapter<T : Any, VH : RecyclerView.ViewHolder>(
     context: Context,
-    private val mView: AbsImageView<V, T>, // 图片控件
-) : BaseRvAdapter<T>(context) {
+    private val mView: AbsImageView<T, VH>, // 图片控件
+) : AbsRvAdapter<T, VH>(context) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val frameLayout = FrameLayout(parent.context)
-        val layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
-        frameLayout.layoutParams = layoutParams
-        return DataViewHolder(frameLayout)
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH = mView.onCreateViewHolder(context, parent, viewType)
 
-    @Suppress("UNCHECKED_CAST")
-    override fun onViewDetachedFromWindow(holder: RecyclerView.ViewHolder) {
+    override fun onViewDetachedFromWindow(holder: VH) {
         super.onViewDetachedFromWindow(holder)
-        if (holder is PicturePagerAdapter<*, *>.DataViewHolder) {
-            mView.onViewDetached(holder.photoImg as V)
-        }
+        mView.onViewDetached(holder)
     }
 
-    override fun onBind(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is PicturePagerAdapter<*, *>.DataViewHolder) {
-            showItem(holder, position)
-        }
-    }
-
-    @Suppress("UNCHECKED_CAST")
-    private fun showItem(holder: PicturePagerAdapter<*, *>.DataViewHolder, position: Int) {
-        val item = getItem(position)
-        if (item != null) {
-            // 图片加载
-            mView.onDisplayImg(context, item, holder.photoImg as V)
-            // 点击事件
-            holder.photoImg.setOnClickListener {
-                mView.onClickImpl(holder, holder.photoImg, item, position)
-            }
-            // 长按事件
-            holder.photoImg.setOnLongClickListener {
-                mView.onLongClickImpl(holder, holder.photoImg, item, position)
-            }
-
-        }
+    override fun onBind(holder: VH, position: Int) {
+        val item = getItem(position) ?: return
+        mView.onBind(context, item, holder, position)
     }
 
     /** 释放资源 */
     fun release() {
         mView.onRelease()
     }
-
-    private inner class DataViewHolder(itemView: ViewGroup) : RecyclerView.ViewHolder(itemView) {
-        val photoImg: V = mView.onCreateView(itemView.context)
-
-        init {
-            itemView.addView(photoImg, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-        }
-    }
-
 }

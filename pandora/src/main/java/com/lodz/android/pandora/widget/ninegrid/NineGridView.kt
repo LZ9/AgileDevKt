@@ -110,7 +110,7 @@ open class NineGridView : FrameLayout {
                 0
             }
             val swipeFlags = 0
-            return ItemTouchHelper.Callback.makeMovementFlags(dragFlags, swipeFlags)
+            return makeMovementFlags(dragFlags, swipeFlags)
         }
 
         // 拖拽

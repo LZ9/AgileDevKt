@@ -5,7 +5,7 @@ import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.pandora.picker.contract.OnImgLoader
 import com.lodz.android.pandora.picker.contract.picker.OnFilePickerListener
-import com.lodz.android.pandora.widget.rv.recycler.base.AbsRvAdapter
+import com.lodz.android.pandora.picker.preview.vh.AbsImageView
 
 /**
  * 选择数据
@@ -31,8 +31,8 @@ class PickerBean<T : Any, VH : RecyclerView.ViewHolder>(val pickType: Int) {
     var pickerUIConfig = PickerUIConfig.createDefault()
     /** 7.0的FileProvider名字 */
     var authority = ""
-    /** 图片预览适配器 */
-    var adapter: AbsRvAdapter<T, VH>? = null
+    /** 图片预览view */
+    var view: AbsImageView<T, VH>? = null
     /** 生命周期接口 */
     var lifecycleObserver: DefaultLifecycleObserver? = null
     /** 文件后缀类型 */
@@ -44,7 +44,7 @@ class PickerBean<T : Any, VH : RecyclerView.ViewHolder>(val pickType: Int) {
     fun clear() {
         sourceList = null
         imgLoader = null
-        adapter = null
+        view = null
         filePickerListener = null
         lifecycleObserver = null
     }

@@ -13,8 +13,8 @@ import com.lodz.android.corekt.utils.StatusBarUtil
 import com.lodz.android.pandora.base.activity.AbsActivity
 import com.lodz.android.pandora.databinding.PandoraActivityPreviewBinding
 import com.lodz.android.pandora.event.PicturePreviewFinishEvent
+import com.lodz.android.pandora.picker.preview.vh.AbsImageView
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
-import com.lodz.android.pandora.widget.rv.recycler.base.AbsRvAdapter
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
@@ -47,7 +47,7 @@ internal class PicturePreviewActivity<T : Any, VH : RecyclerView.ViewHolder> : A
     @Suppress("UNCHECKED_CAST")
     private val mPdrPreviewBean: PreviewBean<T, VH>? by lazy { sPreviewBean as PreviewBean<T, VH> }
     /** 适配器 */
-    private lateinit var mPdrAdapter: AbsRvAdapter<T, VH>
+    private lateinit var mPdrAdapter: PicturePagerAdapter<T, VH>
 
     override fun getAbsViewBindingLayout(): View = mBinding.root
 
@@ -58,16 +58,16 @@ internal class PicturePreviewActivity<T : Any, VH : RecyclerView.ViewHolder> : A
             finish()
             return
         }
-        val adapter = bean.adapter
-        if (adapter == null) {
+        val view = bean.view
+        if (view == null) {
             finish()
             return
         }
-        initViewPager(adapter, bean.pageTransformer)
+        initViewPager(view, bean.pageTransformer)
     }
 
-    private fun initViewPager(adapter: AbsRvAdapter<T, VH>, pageTransformer: ViewPager2.PageTransformer?) {
-        mPdrAdapter = adapter
+    private fun initViewPager(view: AbsImageView<T, VH>, pageTransformer: ViewPager2.PageTransformer?) {
+        mPdrAdapter = PicturePagerAdapter(getContext(), view)
         mBinding.pdrPreviewVp2.adapter = mPdrAdapter
         mBinding.pdrPreviewVp2.orientation = ViewPager2.ORIENTATION_HORIZONTAL
         mBinding.pdrPreviewVp2.isUserInputEnabled = true
@@ -131,6 +131,7 @@ internal class PicturePreviewActivity<T : Any, VH : RecyclerView.ViewHolder> : A
     }
 
     private fun release() {
+        mPdrAdapter.release()
         mPdrPreviewBean?.clear()
         sPreviewBean?.clear()
         sPreviewBean = null

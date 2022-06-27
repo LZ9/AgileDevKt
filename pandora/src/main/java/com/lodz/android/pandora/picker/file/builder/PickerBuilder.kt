@@ -16,7 +16,7 @@ import com.lodz.android.pandora.picker.file.PickerBean
 import com.lodz.android.pandora.picker.file.PickerManager
 import com.lodz.android.pandora.picker.file.PickerUIConfig
 import com.lodz.android.pandora.picker.file.pick.any.AnyPickerActivity
-import com.lodz.android.pandora.widget.rv.recycler.base.AbsRvAdapter
+import com.lodz.android.pandora.picker.preview.vh.AbsImageView
 
 /**
  * 文件选择构建类
@@ -78,9 +78,9 @@ open class PickerBuilder<T : Any, VH : RecyclerView.ViewHolder> constructor(priv
         return this
     }
 
-    /** 设置图片预览适配器[adapter] */
-    fun setPreviewAdapter(adapter: AbsRvAdapter<T, VH>): PickerBuilder<T, VH> {
-        pickerBean.adapter = adapter
+    /** 设置图片预览[view] */
+    fun setPreviewView(view: AbsImageView<T, VH>): PickerBuilder<T, VH> {
+        pickerBean.view = view
         return this
     }
 
@@ -92,8 +92,8 @@ open class PickerBuilder<T : Any, VH : RecyclerView.ViewHolder> constructor(priv
             context.toastShort(R.string.pandora_picker_loader_unset)
             return manager
         }
-        if (pickerBean.adapter == null) {// 校验图片预览适配器
-            ToastUtils.showShort(context, R.string.pandora_preview_adapter_unset)
+        if (pickerBean.view == null) {// 校验图片预览适配器
+            ToastUtils.showShort(context, R.string.pandora_preview_imageview_unset)
             return manager
         }
         if (pickerBean.filePickerListener == null) {// 校验文件选中回调监听

@@ -228,7 +228,7 @@ internal open class AnyPickerActivity<T : Any, VH : RecyclerView.ViewHolder> : A
     /** 图片预览器 */
     protected fun previewPic(list: List<T>, isShowPage: Boolean) {
         val bean = mPdrPickerBean ?: return
-        val adapter = bean.adapter ?: return
+        val view = bean.view ?: return
         PreviewManager.create<T, VH>()
             .setPosition(0)
             .setPagerTextSize(14)
@@ -237,7 +237,7 @@ internal open class AnyPickerActivity<T : Any, VH : RecyclerView.ViewHolder> : A
             .setStatusBarColor(getContext(), bean.pickerUIConfig.getStatusBarColor())
             .setNavigationBarColor(getContext(), bean.pickerUIConfig.getNavigationBarColor())
             .setPagerTextColor(getContext(), bean.pickerUIConfig.getMainTextColor())
-            .setAdapter(adapter)
+            .setImageView(view)
             .build(list)
             .open(getContext())
     }
