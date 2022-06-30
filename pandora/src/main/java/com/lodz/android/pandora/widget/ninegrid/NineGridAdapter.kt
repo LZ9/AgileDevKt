@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.annotation.IntRange
 import androidx.recyclerview.widget.RecyclerView
-import com.lodz.android.corekt.album.PicInfo
 import com.lodz.android.pandora.R
 import com.lodz.android.pandora.widget.rv.recycler.base.BaseRvAdapter
 import com.lodz.android.pandora.widget.rv.recycler.vh.DataViewHolder
@@ -16,7 +15,7 @@ import com.lodz.android.pandora.widget.rv.recycler.vh.DataViewHolder
  * 图片九宫格适配器
  * Created by zhouL on 2018/12/25.
  */
-open class NineGridAdapter(context: Context) : BaseRvAdapter<PicInfo>(context) {
+open class NineGridAdapter<T>(context: Context) : BaseRvAdapter<T>(context) {
 
     /** 添加按钮 */
     private val VIEW_TYPE_ADD = 0
@@ -37,7 +36,7 @@ open class NineGridAdapter(context: Context) : BaseRvAdapter<PicInfo>(context) {
     private var mPdrItemHighPx = 0
 
     /** 监听器 */
-    private var mPdrListener: OnNineGridViewListener? = null
+    private var mPdrListener: OnNineGridViewListener<T>? = null
 
     /** 设置是否需要添加图标[isNeed] */
     fun setNeedAddBtn(isNeed: Boolean) {
@@ -73,7 +72,7 @@ open class NineGridAdapter(context: Context) : BaseRvAdapter<PicInfo>(context) {
     }
 
     /** 设置监听器[listener] */
-    fun setOnNineGridViewListener(listener: OnNineGridViewListener?) {
+    fun setOnNineGridViewListener(listener: OnNineGridViewListener<T>?) {
         mPdrListener = listener
     }
 
@@ -114,19 +113,19 @@ open class NineGridAdapter(context: Context) : BaseRvAdapter<PicInfo>(context) {
         if (mPdrItemHighPx > 0) {
             setItemViewHeight(holder.itemView, mPdrItemHighPx)
         }
-        if (holder is NineGridAddViewHolder) {
+        if (holder is NineGridAdapter<*>.NineGridAddViewHolder) {
             showAddItem(holder)
             return
         }
         val data = getItem(position)
-        if (data == null || holder !is NineGridViewHolder) {
+        if (data == null || holder !is NineGridAdapter<*>.NineGridViewHolder) {
             return
         }
         showItem(holder, data)
     }
 
     /** 显示添加按钮Item */
-    private fun showAddItem(holder: NineGridAddViewHolder) {
+    private fun showAddItem(holder: NineGridAdapter<*>.NineGridAddViewHolder) {
         // 添加按钮
         val addBtn = holder.withView<ImageView>(R.id.pdr_add_btn)
         if (mPdrAddBtnDrawable != null) {
@@ -140,14 +139,14 @@ open class NineGridAdapter(context: Context) : BaseRvAdapter<PicInfo>(context) {
     }
 
     /** 显示图片Item */
-    private fun showItem(holder: NineGridViewHolder, data: PicInfo) {
+    private fun showItem(holder: NineGridAdapter<*>.NineGridViewHolder, data: T) {
         // 图片
         val img = holder.withView<ImageView>(R.id.pdr_img)
         mPdrListener?.onDisplayImg(context, data, img)
         img.setOnClickListener {
-            val info = getItem(holder.adapterPosition)
-            if (info != null) {
-                mPdrListener?.onClickPic(info, holder.adapterPosition)
+            val item = getItem(holder.bindingAdapterPosition)
+            if (item != null) {
+                mPdrListener?.onClickPic(item, holder.bindingAdapterPosition)
             }
         }
 
@@ -160,9 +159,9 @@ open class NineGridAdapter(context: Context) : BaseRvAdapter<PicInfo>(context) {
         }
         deleteBtn.visibility = if (isPdrShowDelete) View.VISIBLE else View.GONE
         deleteBtn.setOnClickListener {
-            val info = getItem(holder.adapterPosition)
+            val info = getItem(holder.bindingAdapterPosition)
             if (info != null) {
-                mPdrListener?.onDeletePic(info, holder.adapterPosition)
+                mPdrListener?.onDeletePic(info, holder.bindingAdapterPosition)
             }
         }
     }

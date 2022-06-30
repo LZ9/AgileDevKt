@@ -113,7 +113,11 @@ class PicPreviewTestActivity : BaseActivity() {
                 mBinding.scaleSwitch.isChecked = true
                 toastShort(R.string.preview_only_scale)
             }
-            openPreview(PhotoViewImpl( mBinding.scaleSwitch.isChecked))
+            openPreview(object : PhotoViewImpl<String>(mBinding.scaleSwitch.isChecked){
+                override fun displayImag(context: Context, source: String, viewHolder: PhotoViewHolder, position: Int) {
+                    ImageLoader.create(context).loadUrl(source).setFitCenter().into(viewHolder.photoView)
+                }
+            })
         }
 
         // ScaleImageView预览

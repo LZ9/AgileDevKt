@@ -54,13 +54,6 @@
                 android:checked="true"
                 android:text="@string/picker_preview_scale" />
 
-            <com.google.android.material.switchmaterial.SwitchMaterial
-                android:id="@+id/click_close_preview_switch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="@string/picker_click_close_preview" />
-
         </LinearLayout>
 
         <LinearLayout

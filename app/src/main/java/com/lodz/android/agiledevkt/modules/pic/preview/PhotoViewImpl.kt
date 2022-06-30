@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.github.chrisbanes.photoview.PhotoView
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.corekt.anko.toastShort
-import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.picker.preview.vh.AbsImageView
 import com.lodz.android.pandora.picker.preview.vh.addViewInItem
 import com.lodz.android.pandora.picker.preview.vh.createFrameLayout
@@ -17,11 +16,11 @@ import com.lodz.android.pandora.picker.preview.vh.createFrameLayout
  * @author zhouL
  * @date 2022/4/20
  */
-class PhotoViewImpl(private val isScale: Boolean) : AbsImageView<String, PhotoViewImpl.PhotoViewHolder>() {
+abstract class PhotoViewImpl<T>(private val isScale: Boolean) : AbsImageView<T, PhotoViewImpl<T>.PhotoViewHolder>() {
 
     override fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int): PhotoViewHolder = PhotoViewHolder(context, isScale)
 
-    override fun onBind(context: Context, source: String, viewHolder: PhotoViewHolder, position: Int) {
+    override fun onBind(context: Context, source: T, viewHolder: PhotoViewHolder, position: Int) {
 
         viewHolder.photoView.setOnClickListener {
             context.toastShort(context.getString(R.string.preview_click_tips, (position + 1).toString()))
@@ -32,8 +31,10 @@ class PhotoViewImpl(private val isScale: Boolean) : AbsImageView<String, PhotoVi
             return@setOnLongClickListener true
         }
 
-        ImageLoader.create(context).loadUrl(source).setFitCenter().into(viewHolder.photoView)
+        displayImag(context, source, viewHolder, position)
     }
+
+    abstract fun displayImag(context: Context, source: T, viewHolder: PhotoViewHolder, position: Int)
 
     override fun onViewDetached(viewHolder: PhotoViewHolder) {
         super.onViewDetached(viewHolder)

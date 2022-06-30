@@ -4,18 +4,21 @@ import android.content.Context
 import android.util.AttributeSet
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import com.lodz.android.corekt.album.PicInfo
+import com.lodz.android.corekt.anko.toArrayList
+import com.lodz.android.corekt.file.DocumentWrapper
+import com.lodz.android.pandora.picker.file.PickerManager
 import com.lodz.android.pandora.picker.file.PickerUIConfig
+import com.lodz.android.pandora.picker.preview.PreviewManager
 
 
 /**
  * 简单的九宫格实现
  * Created by zhouL on 2018/12/26.
  */
-class SimpleNineGridView<T : Any, VH : RecyclerView.ViewHolder> : NineGridView {
+class SimpleNineGridView<VH : RecyclerView.ViewHolder> : NineGridView<DocumentWrapper> {
 
     /** 接口 */
-    private var mPdrListener: OnSimpleNineGridViewListener<T, VH>? = null
+    private var mPdrListener: OnSimpleNineGridViewListener<DocumentWrapper, VH>? = null
     /** 照片保存地址 */
     private var mPdrCameraSavePath = ""
     /** 7.0的FileProvider名字 */
@@ -33,48 +36,47 @@ class SimpleNineGridView<T : Any, VH : RecyclerView.ViewHolder> : NineGridView {
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes)
 
     init {
-        setListener(object : OnNineGridViewListener {
+        setListener(object :OnNineGridViewListener<DocumentWrapper>{
             override fun onAddPic(addCount: Int) {
                 val listener = mPdrListener ?: return
-//                PickerManager.create<V>()
-//                        .setImgLoader { context, source, imageView ->
-//                            mPdrListener?.onDisplayPickerImg(context, source, imageView)
-//                        }
-//                        .setImageView(listener.createImageView())
-//                        .setOnPhotoPickerListener { photos ->
-//                            addDatas(photos.toArrayList())
-//                        }
-//                        .setMaxCount(addCount)
-//                        .setNeedCamera(isPdrNeedCamera)
-//                        .setNeedItemPreview(isPdrNeedItemPreview)
-//                        .setPickerUIConfig(mPdrConfig)
-//                        .setCameraSavePath(mPdrCameraSavePath)
-//                        .setAuthority(mPdrAuthority)
-//                        .build()
-//                        .open(context)
+                PickerManager.pickPhoneAlbum<VH>()
+                    .setImgLoader { context, source, imageView ->
+                        mPdrListener?.onDisplayPickerImg(context, source, imageView)
+                    }
+                    .setPreviewView(listener.createImageView())
+                    .setOnFilePickerListener{
+                        addDatas(it.toArrayList())
+                    }
+                    .setMaxCount(addCount)
+                    .setNeedCamera(isPdrNeedCamera)
+                    .setNeedPreview(isPdrNeedItemPreview)
+                    .setPickerUIConfig(mPdrConfig)
+                    .setAuthority(mPdrAuthority)
+                    .open(context)
+
             }
 
-            override fun onDisplayImg(context: Context, data: PicInfo, imageView: ImageView) {
+            override fun onDisplayImg(context: Context, data: DocumentWrapper, imageView: ImageView) {
                 mPdrListener?.onDisplayNineGridImg(context, data, imageView)
             }
 
-            override fun onDeletePic(data: PicInfo, position: Int) {
+            override fun onDeletePic(data: DocumentWrapper, position: Int) {
                 removeDatas(position)
             }
 
-            override fun onClickPic(data: PicInfo, position: Int) {
+            override fun onClickPic(data: DocumentWrapper, position: Int) {
                 val listener = mPdrListener ?: return
-//                PreviewManager.create<V, PicInfo>()
-//                        .setPosition(position)
-//                        .setBackgroundColor(android.R.color.black)
-//                        .setStatusBarColor(android.R.color.black)
-//                        .setNavigationBarColor(android.R.color.black)
-//                        .setPagerTextColor(android.R.color.white)
-//                        .setPagerTextSize(14)
-//                        .setShowPagerText(true)
-//                        .setImageView(listener.createImageView())
-//                        .build(getPicData())
-//                        .open(context)
+                PreviewManager.create<DocumentWrapper, VH>()
+                    .setPosition(position)
+                    .setBackgroundColor(android.R.color.black)
+                    .setStatusBarColor(android.R.color.black)
+                    .setNavigationBarColor(android.R.color.black)
+                    .setPagerTextColor(android.R.color.white)
+                    .setPagerTextSize(14)
+                    .setShowPagerText(true)
+                    .setImageView(listener.createImageView())
+                    .build(getPicData())
+                    .open(context)
             }
         })
     }
@@ -86,7 +88,7 @@ class SimpleNineGridView<T : Any, VH : RecyclerView.ViewHolder> : NineGridView {
     }
 
     /** 设置监听器[listener] */
-    fun setOnSimpleNineGridViewListener(listener: OnSimpleNineGridViewListener<T, VH>) {
+    fun setOnSimpleNineGridViewListener(listener: OnSimpleNineGridViewListener<DocumentWrapper, VH>) {
         mPdrListener = listener
     }
 
@@ -105,13 +107,13 @@ class SimpleNineGridView<T : Any, VH : RecyclerView.ViewHolder> : NineGridView {
         this.mPdrConfig = config
     }
 
-    override fun addData(data: ArrayList<PicInfo>) {}
+    override fun addData(data: ArrayList<DocumentWrapper>) {}
 
     override fun removeData(position: Int) {}
 
-    override fun setOnNineGridViewListener(listener: OnNineGridViewListener) {}
+    override fun setOnNineGridViewListener(listener: OnNineGridViewListener<DocumentWrapper>) {}
 
-    private fun addDatas(data: ArrayList<PicInfo>) {
+    private fun addDatas(data: ArrayList<DocumentWrapper>) {
         super.addData(data)
     }
 
@@ -119,7 +121,7 @@ class SimpleNineGridView<T : Any, VH : RecyclerView.ViewHolder> : NineGridView {
         super.removeData(position)
     }
 
-    private fun setListener(listener: OnNineGridViewListener) {
+    private fun setListener(listener: OnNineGridViewListener<DocumentWrapper>) {
         super.setOnNineGridViewListener(listener)
     }
 }

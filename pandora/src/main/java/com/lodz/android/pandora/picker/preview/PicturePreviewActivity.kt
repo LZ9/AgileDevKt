@@ -110,7 +110,7 @@ internal class PicturePreviewActivity<T : Any, VH : RecyclerView.ViewHolder> : A
 
         mPdrAdapter.setData(list.toMutableList())
         mPdrAdapter.notifyDataSetChanged()
-        mBinding.pdrPreviewVp2.currentItem = bean.showPosition
+        mBinding.pdrPreviewVp2.setCurrentItem(bean.showPosition, false)
     }
 
     /** 设置页码[position] */

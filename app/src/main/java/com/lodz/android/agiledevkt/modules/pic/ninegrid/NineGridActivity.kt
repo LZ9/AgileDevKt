@@ -6,19 +6,18 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import com.lodz.android.agiledevkt.BuildConfig
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.config.Constant
 import com.lodz.android.agiledevkt.databinding.ActivityNineGridBinding
+import com.lodz.android.agiledevkt.modules.pic.preview.PhotoViewImpl
 import com.lodz.android.agiledevkt.utils.file.FileManager
-import com.lodz.android.corekt.album.PicInfo
 import com.lodz.android.corekt.anko.*
+import com.lodz.android.corekt.file.DocumentWrapper
 import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.picker.preview.vh.AbsImageView
-import com.lodz.android.pandora.picker.preview.vh.SimpleImageViewHolder
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.ninegrid.OnNineGridViewListener
 import com.lodz.android.pandora.widget.ninegrid.OnSimpleNineGridViewListener
@@ -72,16 +71,16 @@ class NineGridActivity : BaseActivity() {
     override fun setListeners() {
         super.setListeners()
         // 只显示图片的九宫格
-        mBinding.showOnlyNineGridView.setOnNineGridViewListener(object : OnNineGridViewListener {
+        mBinding.showOnlyNineGridView.setOnNineGridViewListener(object : OnNineGridViewListener<String>{
             override fun onAddPic(addCount: Int) {}
 
-            override fun onDisplayImg(context: Context, data: PicInfo, imageView: ImageView) {
-                ImageLoader.create(context).loadUrl(data.path).setCenterCrop().into(imageView)
+            override fun onDisplayImg(context: Context, data: String, imageView: ImageView) {
+                ImageLoader.create(context).loadUrl(data).setCenterCrop().into(imageView)
             }
 
-            override fun onDeletePic(data: PicInfo, position: Int) {}
+            override fun onDeletePic(data: String, position: Int) {}
 
-            override fun onClickPic(data: PicInfo, position: Int) {
+            override fun onClickPic(data: String, position: Int) {
                 toastShort("click position $position")
             }
         })
@@ -136,75 +135,21 @@ class NineGridActivity : BaseActivity() {
         }
 
         // 可添加图片的九宫格
-        mBinding.pickerNineGridView.setOnSimpleNineGridViewListener(object : OnSimpleNineGridViewListener<PicInfo, SimpleImageViewHolder> {
-            override fun onDisplayNineGridImg(context: Context, data: PicInfo, imageView: ImageView) {
-
-
-
+        mBinding.pickerNineGridView.setOnSimpleNineGridViewListener(object : OnSimpleNineGridViewListener<DocumentWrapper, PhotoViewImpl<DocumentWrapper>.PhotoViewHolder> {
+            override fun onDisplayNineGridImg(context: Context, data: DocumentWrapper, imageView: ImageView) {
+                ImageLoader.create(context).loadUri(data.documentFile.uri).setCenterCrop().into(imageView)
             }
 
-            override fun onDisplayPickerImg(context: Context, data: PicInfo, imageView: ImageView) {
-
-
+            override fun onDisplayPickerImg(context: Context, data: DocumentWrapper, imageView: ImageView) {
+                ImageLoader.create(context).loadUri(data.documentFile.uri).setCenterCrop().into(imageView)
             }
 
-            override fun createImageView(): AbsImageView<PicInfo, SimpleImageViewHolder> =
-                object : AbsImageView<PicInfo, SimpleImageViewHolder>() {
-//                    override fun onCreateViewHolder(context: Context): ImageViewHolder {
-//                        val frameLayout = FrameLayout(context)
-//                        val layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
-//                        frameLayout.layoutParams = layoutParams
-//                        return ImageViewHolder(context, frameLayout)
-//                    }
-
-                    override fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int): SimpleImageViewHolder =
-                        SimpleImageViewHolder(parent.context)
-
-                    override fun onBind(context: Context, source: PicInfo, viewHolder: SimpleImageViewHolder, position: Int) {
-                        ImageLoader.create(context).loadUri(source.uri).setFitCenter().into(viewHolder.imageView)
+            override fun createImageView(): AbsImageView<DocumentWrapper, PhotoViewImpl<DocumentWrapper>.PhotoViewHolder> =
+                object : PhotoViewImpl<DocumentWrapper>(mBinding.scaleSwitch.isChecked) {
+                    override fun displayImag(context: Context, source: DocumentWrapper, viewHolder: PhotoViewHolder, position: Int) {
+                        ImageLoader.create(context).loadUri(source.documentFile.uri).setFitCenter().into(viewHolder.photoView)
                     }
-                }
-
-
-            //            override fun createImageView(): AbsImageViewHolder<ImageView, PicInfo> = object : AbsImageViewHolder<ImageView, PicInfo>() {
-//                override fun onCreateView(context: Context, isScale: Boolean): ImageView {
-//                    val img = if (isScale) PhotoView(context) else ImageView(context)
-//                    img.scaleType = ImageView.ScaleType.CENTER_INSIDE
-//                    return img
-//                }
-//
-//                override fun onDisplayImg(context: Context, source: PicInfo, view: ImageView) {
-//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-//                        ImageLoader.create(context).loadUri(source.uri).setFitCenter().into(view)
-//                    } else {
-//                        ImageLoader.create(context).loadFilePath(source.path).setFitCenter().into(view)
-//                    }
-//                }
-//
-//                override fun onViewDetached(view: ImageView, isScale: Boolean) {
-//                    super.onViewDetached(view, isScale)
-//                    if (isScale && view is PhotoView) {
-//                        view.attacher.update()
-//                    }
-//                }
-//            }
-//
-//            override fun onDisplayNineGridImg(context: Context, data: PicInfo, imageView: ImageView) {
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-//                    ImageLoader.create(context).loadUri(data.uri).setCenterCrop().into(imageView)
-//                } else {
-//                    ImageLoader.create(context).loadFilePath(data.path).setCenterCrop().into(imageView)
-//                }
-//            }
-//
-//            override fun onDisplayPickerImg(context: Context, data: PicInfo, imageView: ImageView) {
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-//                    ImageLoader.create(context).loadUri(data.uri).setCenterCrop().into(imageView)
-//                } else {
-//                    ImageLoader.create(context).loadFilePath(data.path).setCenterCrop().into(imageView)
-//                }
-//            }
-
+            }
         })
 
         // 获取九宫格路径按钮
@@ -255,7 +200,7 @@ class NineGridActivity : BaseActivity() {
 
     private fun init() {
         mBinding.pickerNineGridView.config(FileManager.getCacheFolderPath(), BuildConfig.FILE_AUTHORITY)
-        mBinding.showOnlyNineGridView.setStrData(Constant.IMG_URLS.toArrayList())
+        mBinding.showOnlyNineGridView.setData(Constant.IMG_URLS.toArrayList())
         showStatusCompleted()
     }
 }

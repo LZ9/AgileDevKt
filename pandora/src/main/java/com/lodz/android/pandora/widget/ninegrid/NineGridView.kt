@@ -4,7 +4,6 @@ import android.annotation.TargetApi
 import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.Color
-import android.net.Uri
 import android.os.Build
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -14,7 +13,6 @@ import androidx.annotation.IntRange
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.lodz.android.corekt.album.PicInfo
 import com.lodz.android.corekt.anko.*
 import com.lodz.android.pandora.R
 import com.lodz.android.pandora.widget.rv.anko.layoutM
@@ -27,7 +25,7 @@ import kotlin.collections.ArrayList
  * 图片九宫格控件
  * Created by zhouL on 2018/12/25.
  */
-open class NineGridView : FrameLayout {
+open class NineGridView<T> : FrameLayout {
 
     companion object {
         /** 默认图片最大数 */
@@ -40,12 +38,12 @@ open class NineGridView : FrameLayout {
     /** 列表 */
     private val mPdrRecyclerView by bindView<RecyclerView>(R.id.pdr_nine_grid_rv)
     /** 适配器 */
-    private lateinit var mPdrAdapter: NineGridAdapter
+    private lateinit var mPdrAdapter: NineGridAdapter<T>
     /** 网格布局管理器 */
     private lateinit var mPdrGridLayoutManager: GridLayoutManager
 
     /** 数据列表 */
-    private var mPdrDataList = ArrayList<PicInfo>()
+    private var mPdrDataList = ArrayList<T>()
     /** 是否需要拖拽 */
     private var isPdrNeedDrag = false
     /** 是否需要拖拽震动提醒 */
@@ -104,7 +102,7 @@ open class NineGridView : FrameLayout {
     private val mPdrItemTouchHelperCallback = object : ItemTouchHelper.Callback() {
         // 配置拖拽类型
         override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
-            val dragFlags = if (isPdrNeedDrag && viewHolder is NineGridAdapter.NineGridViewHolder) {
+            val dragFlags = if (isPdrNeedDrag && viewHolder is NineGridAdapter<*>.NineGridViewHolder) {
                 ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
             } else {
                 0
@@ -118,14 +116,14 @@ open class NineGridView : FrameLayout {
             if (mPdrDataList.isEmpty()) {
                 return false
             }
-            if (viewHolder !is NineGridAdapter.NineGridViewHolder || target !is NineGridAdapter.NineGridViewHolder) {
+            if (viewHolder !is NineGridAdapter<*>.NineGridViewHolder || target !is NineGridAdapter<*>.NineGridViewHolder) {
                 return false
             }
 
             // 得到拖动ViewHolder的Position
-            val fromPosition = viewHolder.adapterPosition
+            val fromPosition = viewHolder.bindingAdapterPosition
             // 得到目标ViewHolder的Position
-            val toPosition = target.adapterPosition
+            val toPosition = target.bindingAdapterPosition
 
             if (fromPosition < toPosition) {//顺序小到大
                 for (i in fromPosition until toPosition) {
@@ -169,7 +167,7 @@ open class NineGridView : FrameLayout {
         mPdrGridLayoutManager = GridLayoutManager(context, DEFAULT_SPAN_COUNT, RecyclerView.VERTICAL, false)
         mPdrAdapter = mPdrRecyclerView.let {
             it.layoutM(mPdrGridLayoutManager)
-            it.setup(NineGridAdapter(context))
+            it.setup(NineGridAdapter<T>(context))
         }
         val itemTouchHelper = ItemTouchHelper(mPdrItemTouchHelperCallback)
         itemTouchHelper.attachToRecyclerView(mPdrRecyclerView)
@@ -207,16 +205,7 @@ open class NineGridView : FrameLayout {
     }
 
     /** 设置数据 */
-    fun setStrData(data: ArrayList<String>) {
-        val infos = ArrayList<PicInfo>()
-        for (url in data) {
-            infos.add(PicInfo(url, Uri.EMPTY))
-        }
-        setData(infos)
-    }
-
-    /** 设置数据 */
-    fun setData(data: ArrayList<PicInfo>) {
+    fun setData(data: ArrayList<T>) {
         mPdrDataList = ArrayList()
         //如果数据大于最大图片数，则取前n位数据
         val length = if (data.size > mPdrAdapter.getMaxPic()) mPdrAdapter.getMaxPic() else data.size
@@ -228,7 +217,7 @@ open class NineGridView : FrameLayout {
     }
 
     /** 添加数据 */
-    open fun addData(data: ArrayList<PicInfo>) {
+    open fun addData(data: ArrayList<T>) {
         // 判断添加的数据长度和已有数据长度之和是否超过总长度
         val length = if ((data.size + mPdrDataList.size) > mPdrAdapter.getMaxPic()) mPdrAdapter.getMaxPic() - mPdrDataList.size else data.size
         for (i in 0 until length) {
@@ -248,7 +237,7 @@ open class NineGridView : FrameLayout {
     }
 
     /** 获取图片数据 */
-    fun getPicData(): List<PicInfo> = mPdrDataList
+    fun getPicData(): List<T> = mPdrDataList
 
     /** 清空数据 */
     fun clearData() {
@@ -276,7 +265,7 @@ open class NineGridView : FrameLayout {
     }
 
     /** 设置监听器 */
-    open fun setOnNineGridViewListener(listener: OnNineGridViewListener) {
+    open fun setOnNineGridViewListener(listener: OnNineGridViewListener<T>) {
         mPdrAdapter.setOnNineGridViewListener(listener)
     }
 

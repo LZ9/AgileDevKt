@@ -563,8 +563,8 @@
     <string name="picker_custom_url">挑选指定网络图片</string>
     <string name="picker_custom_file">挑选指定文件</string>
     <string name="picker_max_count">最大可选数：</string>
-    <string name="picker_show_camera">显示拍照</string>
-    <string name="picker_item_preview">单张预览</string>
+    <string name="picker_show_camera">选择器显示拍照</string>
+    <string name="picker_item_preview">选择器单张预览</string>
     <string name="picker_preview_scale">预览时缩放图片</string>
     <string name="picker_click_close_preview">点击关闭预览</string>
     <string name="picker_style_default">默认风格</string>

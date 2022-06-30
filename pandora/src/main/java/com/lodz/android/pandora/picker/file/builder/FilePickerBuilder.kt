@@ -10,7 +10,7 @@ import java.io.File
  * @author zhouL
  * @date 2022/5/11
  */
-class FilePickerBuilder<VH : RecyclerView.ViewHolder>(val pickerBean: PickerBean<File, VH>) : PickerBuilder<File, VH>(pickerBean){
+class FilePickerBuilder<VH : RecyclerView.ViewHolder>(private val pickerBean: PickerBean<File, VH>) : PickerBuilder<File, VH>(pickerBean){
 
     override fun startActivity(context: Context, flags: List<Int>?) {
 

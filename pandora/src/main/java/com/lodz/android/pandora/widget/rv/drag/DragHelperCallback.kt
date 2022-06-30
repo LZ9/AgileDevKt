@@ -120,9 +120,9 @@ open class DragHelperCallback<T> : ItemTouchHelper.Callback() {
             return false
         }
         // 得到拖动ViewHolder的Position
-        val fromPosition = viewHolder.adapterPosition
+        val fromPosition = viewHolder.bindingAdapterPosition
         // 得到目标ViewHolder的Position
-        val toPosition = target.adapterPosition
+        val toPosition = target.bindingAdapterPosition
 
         if (fromPosition < toPosition) {//顺序小到大
             for (i in fromPosition until toPosition) {
@@ -143,7 +143,7 @@ open class DragHelperCallback<T> : ItemTouchHelper.Callback() {
         if (mPdrList == null) {
             return
         }
-        val position = viewHolder.adapterPosition
+        val position = viewHolder.bindingAdapterPosition
         mPdrList?.removeAt(position)
         if (mPdrAdapter != null) {
             mPdrAdapter?.notifyItemRemoved(position)
