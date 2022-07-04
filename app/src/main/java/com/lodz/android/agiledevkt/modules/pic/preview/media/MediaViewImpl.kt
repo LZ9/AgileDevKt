@@ -1,30 +1,38 @@
 package com.lodz.android.agiledevkt.modules.pic.preview.media
 
+import android.content.Context
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.lodz.android.corekt.file.DocumentWrapper
+import com.lodz.android.pandora.picker.preview.vh.AbsImageView
+import com.lodz.android.pandora.picker.preview.vh.addViewInItem
+import com.lodz.android.pandora.picker.preview.vh.createFrameLayout
+
 /**
  * 多媒体控件实现
  * @author zhouL
  * @date 2022/6/20
  */
-//class MediaViewImpl(private val context: Context, isScale: Boolean, private val isClickClose: Boolean) : AbsImageViewHolder<MediaView, DocumentWrapper>(isScale) {
-//
-//    override fun onCreateView(context: Context, isScale: Boolean): MediaView {
-//        val view = MediaView(context, isScale)
-//        return view
-//    }
-//
-//    override fun onDisplayImg(context: Context, source: DocumentWrapper, view: MediaView) {
-//        view.setData(source)
-//        ImageLoader.create(context)
-//            .loadUri(source.documentFile.uri)
-//            .setPlaceholder(R.drawable.pandora_ic_file)
-//            .setError(R.drawable.pandora_ic_audio)
-//            .setFitCenter()
-//            .into(view.getImageView())
-//    }
-//
-//    override fun onViewDetached(view: MediaView, isScale: Boolean) {
-//        super.onViewDetached(view, isScale)
-//        view.detached()
-//    }
-//
-//}
+class MediaViewImpl(private val context: Context,private val isScale: Boolean) : AbsImageView<DocumentWrapper, MediaViewImpl.MediaViewHolder>() {
+
+    override fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int): MediaViewHolder =
+        MediaViewHolder(context)
+
+    override fun onBind(context: Context, source: DocumentWrapper, viewHolder: MediaViewHolder, position: Int) {
+        viewHolder.mediaView.setData(source)
+    }
+
+    override fun onViewDetached(viewHolder: MediaViewHolder) {
+        super.onViewDetached(viewHolder)
+        viewHolder.mediaView.detached()
+    }
+
+    inner class MediaViewHolder(context: Context) : RecyclerView.ViewHolder(createFrameLayout(context)) {
+        val mediaView: MediaView = MediaView(context, isScale)
+        init {
+            addViewInItem(mediaView)
+        }
+    }
+
+
+}

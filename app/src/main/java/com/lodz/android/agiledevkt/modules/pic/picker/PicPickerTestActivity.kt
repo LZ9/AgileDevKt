@@ -13,6 +13,7 @@ import androidx.lifecycle.LifecycleOwner
 import com.lodz.android.agiledevkt.BuildConfig
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.databinding.ActivityPicPickerBinding
+import com.lodz.android.agiledevkt.modules.pic.preview.media.MediaViewImpl
 import com.lodz.android.corekt.anko.goAppDetailSetting
 import com.lodz.android.corekt.anko.isPermissionGranted
 import com.lodz.android.corekt.anko.toastShort
@@ -98,10 +99,9 @@ class PicPickerTestActivity : BaseActivity() {
         mBinding.pickerPhoneAlbumBtn.setOnClickListener {
             PickerManager.pickPhoneAlbum<SimpleImageViewHolder>()
                 .setMaxCount(mMaxCount)
-                .setNeedCamera(mBinding.showCameraSwitch.isChecked)
                 .setNeedPreview(mBinding.itemPreviewSwitch.isChecked)
                 .setPickerUIConfig(mConfig)
-                .setNeedCamera(true, Environment.DIRECTORY_DCIM)
+                .setNeedCamera(mBinding.showCameraSwitch.isChecked, Environment.DIRECTORY_DCIM)
                 .setAuthority(BuildConfig.FILE_AUTHORITY)
                 .setImgLoader { context, source, imageView ->
                     ImageLoader.create(context)
@@ -138,31 +138,29 @@ class PicPickerTestActivity : BaseActivity() {
 
         // 挑选手机相册、音频和视频
         mBinding.pickerPhoneMediaBtn.setOnClickListener {
-//            PickerManager.pickPhoneAssemble<MediaView>(PickerManager.PICK_PHONE_ALBUM, PickerManager.PICK_PHONE_VIDEO, PickerManager.PICK_PHONE_AUDIO)
-//                .setMaxCount(mMaxCount)
-//                .setNeedCamera(mBinding.showCameraSwitch.isChecked)
-//                .setNeedPreview(mBinding.itemPreviewSwitch.isChecked)
-//                .setPickerUIConfig(mConfig)
-//                .setNeedCamera(true, Environment.DIRECTORY_DCIM)
-//                .setAuthority(BuildConfig.FILE_AUTHORITY)
-//                .setImgLoader { context, source, imageView ->
-//                    ImageLoader.create(context)
-//                        .loadUri(source.documentFile.uri)
-//                        .setPlaceholder(R.drawable.pandora_ic_file)
-//                        .setError(R.drawable.pandora_ic_audio)
-//                        .setCenterCrop()
-//                        .into(imageView)
-//                }
-//                .setPreviewImageView(MediaViewImpl(getContext(), mBinding.scaleSwitch.isChecked, mBinding.clickClosePreviewSwitch.isChecked))
-//                .setOnFilePickerListener{
-//                    var str = ""
-//                    for (dw in it) {
-//                        str += "${dw.documentFile.name}\n\n"
-//                    }
-//                    mBinding.resultTv.text = str
-//                }
-//                .open(getContext())
-
+            PickerManager.pickPhoneAssemble<MediaViewImpl.MediaViewHolder>(PickerManager.PICK_PHONE_ALBUM, PickerManager.PICK_PHONE_VIDEO, PickerManager.PICK_PHONE_AUDIO)
+                .setMaxCount(mMaxCount)
+                .setNeedPreview(mBinding.itemPreviewSwitch.isChecked)
+                .setPickerUIConfig(mConfig)
+                .setNeedCamera(mBinding.showCameraSwitch.isChecked, Environment.DIRECTORY_DCIM)
+                .setAuthority(BuildConfig.FILE_AUTHORITY)
+                .setImgLoader { context, source, imageView ->
+                    ImageLoader.create(context)
+                        .loadUri(source.documentFile.uri)
+                        .setPlaceholder(R.drawable.pandora_ic_file)
+                        .setError(R.drawable.pandora_ic_audio)
+                        .setCenterCrop()
+                        .into(imageView)
+                }
+                .setPreviewView(MediaViewImpl(getContext(), mBinding.scaleSwitch.isChecked))
+                .setOnFilePickerListener{
+                    var str = ""
+                    for (dw in it) {
+                        str += "${dw.documentFile.name}\n\n"
+                    }
+                    mBinding.resultTv.text = str
+                }
+                .open(getContext())
         }
 
         // 挑选手机里的Word/Excel/PPT/PDF/APK

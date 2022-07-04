@@ -581,8 +581,8 @@
 
     <!-- 九宫格 -->
     <string name="nine_grid_get_pic">获取图片路径</string>
-    <string name="nine_grid_show_only">只显示图片</string>
-    <string name="nine_grid_add_pic">添加图片</string>
+    <string name="nine_grid_show_only">显示预定图片</string>
+    <string name="nine_grid_add_pic">选择手机相册图片</string>
     <string name="nine_grid_add_btn">添加图片按钮</string>
     <string name="nine_grid_delete_btn">删除按钮</string>
     <string name="nine_grid_drag">允许拖拽</string>

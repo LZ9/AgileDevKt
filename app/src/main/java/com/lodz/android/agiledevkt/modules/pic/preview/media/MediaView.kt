@@ -14,6 +14,7 @@ import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.then
 import com.lodz.android.corekt.file.DocumentWrapper
 import com.lodz.android.corekt.media.*
+import com.lodz.android.imageloaderkt.ImageLoader
 
 /**
  * 多媒体展示控件
@@ -49,8 +50,6 @@ class MediaView : LinearLayout {
     /** 图片是否缩放 */
     private val isScale: Boolean
 
-    private var mClickListener: OnClickListener? = null
-
     constructor(context: Context?, isScale: Boolean) : super(context) {
         this.isScale = isScale
         init(null)
@@ -83,6 +82,7 @@ class MediaView : LinearLayout {
         }
         if (wrapper.documentFile.type.isVideoMimeType() || wrapper.documentFile.name.isVideoSuffix()){
             mDocumentType = TYPE_VIDEO
+            mVideoView.setVideoURI(wrapper.documentFile.uri)
         }
         if (wrapper.documentFile.type.isAudioMimeType() || wrapper.documentFile.name.isAudioSuffix()){
             mDocumentType = TYPE_AUDIO
@@ -99,15 +99,25 @@ class MediaView : LinearLayout {
         if (documentType == TYPE_IMAGE){
             mImgView.visibility = isScale.then { View.GONE } ?: View.VISIBLE
             mPhotoView.visibility = isScale.then { View.VISIBLE } ?: View.GONE
-            if (mPhotoView.visibility == View.VISIBLE){
-                mPhotoView.setOnClickListener(mClickListener)
-            }
+            val img = if (mImgView.visibility == View.VISIBLE) mImgView else mPhotoView
+            ImageLoader.create(context)
+                .loadUri(wrapper.documentFile.uri)
+                .setPlaceholder(R.drawable.pandora_ic_img)
+                .setError(R.drawable.pandora_ic_img)
+                .setFitCenter()
+                .into(img)
             return
         }
         if (documentType == TYPE_VIDEO){
-            mVideoView.visibility = View.VISIBLE
+            mImgView.visibility = View.VISIBLE
             mPlayBtn.visibility = View.VISIBLE
             mBottomLayout.visibility = View.VISIBLE
+            ImageLoader.create(context)
+                .loadUri(wrapper.documentFile.uri)
+                .setPlaceholder(R.drawable.pandora_ic_video)
+                .setError(R.drawable.pandora_ic_video)
+                .setFitCenter()
+                .into(mImgView)
             return
         }
         if (documentType == TYPE_AUDIO){
@@ -122,11 +132,29 @@ class MediaView : LinearLayout {
 
     private fun setListeners() {
         mPlayBtn.setOnClickListener {
-
-
+            mImgView.visibility = View.GONE
+            mPlayBtn.visibility = View.GONE
+            mVideoView.visibility = View.VISIBLE
+            playVideo()
         }
+        this@MediaView.setOnClickListener {
+            if (mVideoView.visibility == View.VISIBLE){
+                mPlayBtn.visibility = View.VISIBLE
+                pauseVideo()
+            }
+        }
+    }
 
+    private fun pauseVideo() {
+        if (mVideoView.isPlaying) {
+            mVideoView.pause()
+        }
+    }
 
+    private fun playVideo() {
+        if (!mVideoView.isPlaying) {
+            mVideoView.start()
+        }
     }
 
     fun getImageView(): ImageView = isScale.then { mPhotoView } ?: mImgView
@@ -136,11 +164,6 @@ class MediaView : LinearLayout {
             mPhotoView.attacher.update()
         }
 
-    }
-
-    override fun setOnClickListener(l: OnClickListener?) {
-        mClickListener = l
-        super.setOnClickListener(l)
     }
 
 }

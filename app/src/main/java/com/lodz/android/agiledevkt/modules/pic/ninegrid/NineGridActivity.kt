@@ -81,19 +81,9 @@ class NineGridActivity : BaseActivity() {
             override fun onDeletePic(data: String, position: Int) {}
 
             override fun onClickPic(data: String, position: Int) {
-                toastShort("click position $position")
+                toastShort("$position : $data")
             }
         })
-
-        // 获取九宫格路径按钮
-        mBinding.onlyPicBtn.setOnClickListener {
-            val list = mBinding.showOnlyNineGridView.getPicData()
-            var result = ""
-            for (path in list) {
-                result += path.toString() + "\n\n"
-            }
-            mBinding.resultTv.text = result
-        }
 
         // 显示拍照
         mBinding.showCameraSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -156,8 +146,10 @@ class NineGridActivity : BaseActivity() {
         mBinding.getPicBtn.setOnClickListener {
             val list = mBinding.pickerNineGridView.getPicData()
             var result = ""
-            for (path in list) {
-                result += path.toString() + "\n\n"
+            for (wrapper in list) {
+                if (wrapper is DocumentWrapper){
+                    result += wrapper.documentFile.uri.toString() + "\n\n"
+                }
             }
             mBinding.resultTv.text = result
         }

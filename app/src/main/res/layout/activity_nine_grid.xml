@@ -10,36 +10,49 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <FrameLayout
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@color/color_00a0e9">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="10dp"
+            android:text="@string/nine_grid_show_only"
+            android:textColor="@color/color_00a0e9"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/nine_grid_add_pic"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+        <com.lodz.android.pandora.widget.ninegrid.NineGridView
+            android:id="@+id/show_only_nine_grid_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:addBtnDrawable="@drawable/ic_wallet"
+            app:deleteDrawable="@drawable/ic_update"
+            app:dividerSpace="1dp"
+            app:isNeedAddBtn="false"
+            app:isNeedDrag="false"
+            app:isNeedDragVibrate="false"
+            app:isShowDeleteBtn="false"
+            app:itemHigh="100dp"
+            app:maxPic="8"
+            app:spanCount="4">
 
-            <TextView
-                android:id="@+id/get_pic_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|end"
-                android:layout_marginEnd="5dp"
-                android:background="@drawable/bg_ffffff_corners_4"
-                android:paddingStart="4dp"
-                android:paddingTop="3dp"
-                android:paddingEnd="4dp"
-                android:paddingBottom="3dp"
-                android:text="@string/nine_grid_get_pic"
-                android:textColor="@color/color_00a0e9"
-                android:textSize="12sp" />
+        </com.lodz.android.pandora.widget.ninegrid.NineGridView>
 
-        </FrameLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@color/color_00a0e9" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="10dp"
+            android:text="@string/nine_grid_add_pic"
+            android:textColor="@color/color_00a0e9"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -53,6 +66,21 @@
                 android:layout_marginEnd="15dp"
                 android:checked="true"
                 android:text="@string/picker_preview_scale" />
+
+            <TextView
+                android:id="@+id/get_pic_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/bg_00a0e9_corners_4"
+                android:paddingStart="4dp"
+                android:paddingTop="3dp"
+                android:paddingEnd="4dp"
+                android:paddingBottom="3dp"
+                android:text="@string/nine_grid_get_pic"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
 
         </LinearLayout>
 
@@ -166,61 +194,6 @@
             app:spanCount="3">
 
         </com.lodz.android.pandora.widget.ninegrid.SimpleNineGridView>
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@color/color_00a0e9">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/nine_grid_show_only"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/only_pic_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|end"
-                android:layout_marginEnd="5dp"
-                android:background="@drawable/bg_ffffff_corners_4"
-                android:paddingStart="4dp"
-                android:paddingTop="3dp"
-                android:paddingEnd="4dp"
-                android:paddingBottom="3dp"
-                android:text="@string/nine_grid_get_pic"
-                android:textColor="@color/color_00a0e9"
-                android:textSize="12sp" />
-
-        </FrameLayout>
-
-        <com.lodz.android.pandora.widget.ninegrid.NineGridView
-            android:id="@+id/show_only_nine_grid_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:addBtnDrawable="@drawable/ic_wallet"
-            app:deleteDrawable="@drawable/ic_update"
-            app:dividerSpace="1dp"
-            app:isNeedAddBtn="false"
-            app:isNeedDrag="false"
-            app:isNeedDragVibrate="false"
-            app:isShowDeleteBtn="false"
-            app:itemHigh="100dp"
-            app:maxPic="8"
-            app:spanCount="4">
-
-        </com.lodz.android.pandora.widget.ninegrid.NineGridView>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:background="@color/color_00a0e9" />
 
         <TextView
             android:id="@+id/result_tv"
