@@ -5,45 +5,51 @@ import android.os.Build
 import android.os.Environment
 import androidx.annotation.IntRange
 import androidx.lifecycle.DefaultLifecycleObserver
-import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.corekt.anko.deduplication
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.corekt.utils.ToastUtils
 import com.lodz.android.pandora.R
 import com.lodz.android.pandora.picker.contract.OnImgLoader
 import com.lodz.android.pandora.picker.contract.picker.OnFilePickerListener
+import com.lodz.android.pandora.picker.contract.picker.OnFilePreviewListener
 import com.lodz.android.pandora.picker.file.PickerBean
 import com.lodz.android.pandora.picker.file.PickerManager
 import com.lodz.android.pandora.picker.file.PickerUIConfig
 import com.lodz.android.pandora.picker.file.pick.any.AnyPickerActivity
-import com.lodz.android.pandora.picker.preview.vh.AbsImageView
+import com.lodz.android.pandora.picker.preview.vh.DataPreviewAgent
 
 /**
  * 文件选择构建类
  * Created by zhouL on 2018/12/19.
  */
-open class PickerBuilder<T : Any, VH : RecyclerView.ViewHolder> constructor(private val pickerBean: PickerBean<T, VH>) {
+open class PickerBuilder<T : Any> constructor(private val pickerBean: PickerBean<T>) {
 
     /** 设置图片加载器[imgLoader] */
-    fun setImgLoader(imgLoader: OnImgLoader<T>): PickerBuilder<T, VH> {
+    fun setImgLoader(imgLoader: OnImgLoader<T>): PickerBuilder<T> {
         pickerBean.imgLoader = imgLoader
         return this
     }
 
     /** 设置文件选中回调[listener] */
-    fun setOnFilePickerListener(listener: OnFilePickerListener<T>): PickerBuilder<T, VH> {
+    fun setOnFilePickerListener(listener: OnFilePickerListener<T>): PickerBuilder<T> {
         pickerBean.filePickerListener = listener
         return this
     }
 
+    /** 设置文件预览回调[listener] */
+    fun setOnFilePreviewListener(listener: OnFilePreviewListener<T>): PickerBuilder<T> {
+        pickerBean.filePreviewListener = listener
+        return this
+    }
+
     /** 设置生命周期观察者[observer] */
-    fun setOnLifecycleObserver(observer: DefaultLifecycleObserver): PickerBuilder<T, VH> {
+    fun setOnLifecycleObserver(observer: DefaultLifecycleObserver): PickerBuilder<T> {
         pickerBean.lifecycleObserver = observer
         return this
     }
 
     /** 设置图片可选最大数量[maxCount] */
-    fun setMaxCount(@IntRange(from = 1) maxCount: Int): PickerBuilder<T, VH> {
+    fun setMaxCount(@IntRange(from = 1) maxCount: Int): PickerBuilder<T> {
         if (maxCount > 0) {
             pickerBean.maxCount = maxCount
         }
@@ -52,7 +58,7 @@ open class PickerBuilder<T : Any, VH : RecyclerView.ViewHolder> constructor(priv
 
     /** 设置是否需要相机功能[needCamera]，公共目录名称[directoryName]，不设置默认值为Environment.DIRECTORY_PICTURES */
     @JvmOverloads
-    fun setNeedCamera(needCamera: Boolean, directoryName: String = ""): PickerBuilder<T, VH> {
+    fun setNeedCamera(needCamera: Boolean, directoryName: String = ""): PickerBuilder<T> {
         pickerBean.isNeedCamera = needCamera
         if (directoryName.isNotEmpty()){
             pickerBean.publicDirectoryName = directoryName
@@ -61,25 +67,25 @@ open class PickerBuilder<T : Any, VH : RecyclerView.ViewHolder> constructor(priv
     }
 
     /** 设置是否需要预览功能[needPreview] */
-    fun setNeedPreview(needPreview: Boolean): PickerBuilder<T, VH> {
+    fun setNeedPreview(needPreview: Boolean): PickerBuilder<T> {
         pickerBean.isNeedPreview = needPreview
         return this
     }
 
     /** 设置选择器的界面配置[config] */
-    fun setPickerUIConfig(config: PickerUIConfig): PickerBuilder<T, VH> {
+    fun setPickerUIConfig(config: PickerUIConfig): PickerBuilder<T> {
         pickerBean.pickerUIConfig = config
         return this
     }
 
     /** 设置7.0的FileProvider名字[authority] */
-    fun setAuthority(authority: String): PickerBuilder<T, VH> {
+    fun setAuthority(authority: String): PickerBuilder<T> {
         pickerBean.authority = authority
         return this
     }
 
     /** 设置图片预览[view] */
-    fun setPreviewView(view: AbsImageView<T, VH>): PickerBuilder<T, VH> {
+    fun setPreviewView(view: DataPreviewAgent<T>): PickerBuilder<T> {
         pickerBean.view = view
         return this
     }
@@ -92,7 +98,7 @@ open class PickerBuilder<T : Any, VH : RecyclerView.ViewHolder> constructor(priv
             context.toastShort(R.string.pandora_picker_loader_unset)
             return manager
         }
-        if (pickerBean.view == null) {// 校验图片预览适配器
+        if (pickerBean.isNeedPreview && pickerBean.view == null && pickerBean.filePreviewListener == null) {// 校验图片预览适配器
             ToastUtils.showShort(context, R.string.pandora_preview_imageview_unset)
             return manager
         }

@@ -9,7 +9,7 @@ import com.lodz.android.pandora.picker.file.PickerBean
  * @author zhouL
  * @date 2022/5/11
  */
-class ResIdPickerBuilder<VH : RecyclerView.ViewHolder>(private val pickerBean: PickerBean<Int, VH>) : PickerBuilder<Int, VH>(pickerBean){
+class ResIdPickerBuilder(private val pickerBean: PickerBean<Int>) : PickerBuilder<Int>(pickerBean){
 
 
     override fun startActivity(context: Context, flags: List<Int>?) {

@@ -2,16 +2,16 @@ package com.lodz.android.pandora.picker.file
 
 import android.os.Environment
 import androidx.lifecycle.DefaultLifecycleObserver
-import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.pandora.picker.contract.OnImgLoader
 import com.lodz.android.pandora.picker.contract.picker.OnFilePickerListener
-import com.lodz.android.pandora.picker.preview.vh.AbsImageView
+import com.lodz.android.pandora.picker.contract.picker.OnFilePreviewListener
+import com.lodz.android.pandora.picker.preview.vh.DataPreviewAgent
 
 /**
  * 选择数据
  * Created by zhouL on 2018/12/18.
  */
-class PickerBean<T : Any, VH : RecyclerView.ViewHolder>(val pickType: Int) {
+class PickerBean<T : Any>(val pickType: Int) {
 
     /** 资源列表 */
     var sourceList: List<T>? = null
@@ -19,6 +19,8 @@ class PickerBean<T : Any, VH : RecyclerView.ViewHolder>(val pickType: Int) {
     var imgLoader: OnImgLoader<T>? = null
     /** 文件回调接口 */
     var filePickerListener: OnFilePickerListener<T>? = null
+    /** 文件预览接口 */
+    var filePreviewListener: OnFilePreviewListener<T>? = null
     /** 可选最大数量 */
     var maxCount = 9
     /** 是否需要相机功能 */
@@ -32,7 +34,7 @@ class PickerBean<T : Any, VH : RecyclerView.ViewHolder>(val pickType: Int) {
     /** 7.0的FileProvider名字 */
     var authority = ""
     /** 图片预览view */
-    var view: AbsImageView<T, VH>? = null
+    var view: DataPreviewAgent<T>? = null
     /** 生命周期接口 */
     var lifecycleObserver: DefaultLifecycleObserver? = null
     /** 文件后缀类型 */
@@ -47,5 +49,6 @@ class PickerBean<T : Any, VH : RecyclerView.ViewHolder>(val pickType: Int) {
         view = null
         filePickerListener = null
         lifecycleObserver = null
+        filePreviewListener = null
     }
 }

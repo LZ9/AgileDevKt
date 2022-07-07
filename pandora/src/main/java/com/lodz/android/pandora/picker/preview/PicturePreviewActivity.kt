@@ -9,11 +9,12 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.lodz.android.corekt.anko.getSize
+import com.lodz.android.corekt.utils.ReflectUtils
 import com.lodz.android.corekt.utils.StatusBarUtil
 import com.lodz.android.pandora.base.activity.AbsActivity
 import com.lodz.android.pandora.databinding.PandoraActivityPreviewBinding
 import com.lodz.android.pandora.event.PicturePreviewFinishEvent
-import com.lodz.android.pandora.picker.preview.vh.AbsImageView
+import com.lodz.android.pandora.picker.preview.vh.AbsPreviewAgent
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -48,6 +49,8 @@ internal class PicturePreviewActivity<T : Any, VH : RecyclerView.ViewHolder> : A
     private val mPdrPreviewBean: PreviewBean<T, VH>? by lazy { sPreviewBean as PreviewBean<T, VH> }
     /** 适配器 */
     private lateinit var mPdrAdapter: PicturePagerAdapter<T, VH>
+    /** 当前适配器位置 */
+    private var mCurrentPosition = -1
 
     override fun getAbsViewBindingLayout(): View = mBinding.root
 
@@ -66,7 +69,7 @@ internal class PicturePreviewActivity<T : Any, VH : RecyclerView.ViewHolder> : A
         initViewPager(view, bean.pageTransformer)
     }
 
-    private fun initViewPager(view: AbsImageView<T, VH>, pageTransformer: ViewPager2.PageTransformer?) {
+    private fun initViewPager(view: AbsPreviewAgent<T, VH>, pageTransformer: ViewPager2.PageTransformer?) {
         mPdrAdapter = PicturePagerAdapter(getContext(), view)
         mBinding.pdrPreviewVp2.adapter = mPdrAdapter
         mBinding.pdrPreviewVp2.orientation = ViewPager2.ORIENTATION_HORIZONTAL
@@ -82,6 +85,10 @@ internal class PicturePreviewActivity<T : Any, VH : RecyclerView.ViewHolder> : A
                 setPagerNum(position)
             }
         })
+
+        mPdrAdapter.setOnPicturePagerListener{
+            mCurrentPosition = it
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -120,21 +127,30 @@ internal class PicturePreviewActivity<T : Any, VH : RecyclerView.ViewHolder> : A
         }
     }
 
-    override fun finish() {
-        release()
-        super.finish()
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         release()
     }
 
     private fun release() {
+        detachedViewHolder()
         mPdrAdapter.release()
         mPdrPreviewBean?.clear()
         sPreviewBean?.clear()
         sPreviewBean = null
+    }
+
+    /** 通过反射获取VP2里的RV，然后触发onViewDetachedFromWindow方法，去释放VH里的itemview资源 */
+    private fun detachedViewHolder() {
+        val value = ReflectUtils.getFieldValue(ReflectUtils.getClassForType<ViewPager2>(), mBinding.pdrPreviewVp2, "mRecyclerView")
+        if (value is RecyclerView) {
+            if (mCurrentPosition != -1){
+                val vh = value.findViewHolderForAdapterPosition(mCurrentPosition)
+                if (vh != null){
+                    value.adapter?.onViewDetachedFromWindow(vh)
+                }
+            }
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

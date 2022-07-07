@@ -25,6 +25,7 @@ import com.lodz.android.pandora.utils.coroutines.CoroutinesWrapper
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.rv.anko.grid
 import com.lodz.android.pandora.widget.rv.anko.setup
+import com.lodz.android.pandora.widget.rv.recycler.vh.DataViewHolder
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
@@ -33,12 +34,12 @@ import org.greenrobot.eventbus.ThreadMode
  * Created by zhouL on 2018/12/20.
  */
 @SuppressLint("NotifyDataSetChanged")
-internal open class AnyPickerActivity<T : Any, VH : RecyclerView.ViewHolder> : AbsActivity() {
+internal open class AnyPickerActivity<T : Any> : AbsActivity() {
 
     companion object {
-        var sPickerBean: PickerBean<*, *>? = null
+        var sPickerBean: PickerBean<*>? = null
 
-        internal fun <T : Any, VH : RecyclerView.ViewHolder> start(context: Context, pickerBean: PickerBean<T, VH>, flags: List<Int>?) {
+        internal fun <T : Any> start(context: Context, pickerBean: PickerBean<T>, flags: List<Int>?) {
             synchronized(PickerBean::class.java) {
                 if (sPickerBean != null) {
                     return
@@ -62,7 +63,7 @@ internal open class AnyPickerActivity<T : Any, VH : RecyclerView.ViewHolder> : A
 
     /** 选择器数据 */
     @Suppress("UNCHECKED_CAST")
-    private val mPdrPickerBean: PickerBean<T, VH>? by lazy { sPickerBean as PickerBean<T, VH> }
+    private val mPdrPickerBean: PickerBean<T>? by lazy { sPickerBean as PickerBean<T> }
 
     /** 当前文件数据 */
     private val mPdrDataList = ArrayList<DataWrapper<T>>()
@@ -107,7 +108,7 @@ internal open class AnyPickerActivity<T : Any, VH : RecyclerView.ViewHolder> : A
     }
 
     /** 初始化RecyclerView */
-    private fun initRecyclerView(bean: PickerBean<T, VH>) {
+    private fun initRecyclerView(bean: PickerBean<T>) {
         mPdrAdapter = AnyPickerAdapter(getContext(), bean.imgLoader, bean.isNeedCamera, bean.pickerUIConfig)
         mPdrAdapter = mBinding.pdrPickerPhototRv
             .grid(3)
@@ -153,7 +154,16 @@ internal open class AnyPickerActivity<T : Any, VH : RecyclerView.ViewHolder> : A
                 mBinding.pdrPreviewBtn.isEnabled = false
                 return@setOnClickListener
             }
-            handlePreview(mPdrSelectedList)
+            val list = ArrayList<T>()
+            mPdrSelectedList.forEach {
+                list.add(it.data)
+            }
+            previewPic(list, list.size > 1)
+            if (mPdrPickerBean?.filePreviewListener != null) {// 由外部处理预览逻辑
+                mPdrPickerBean?.filePreviewListener?.onPickerSelected(getContext(), list, bean.pickerUIConfig)
+                return@setOnClickListener
+            }
+            handlePreview(list)
         }
 
         mPdrAdapter.setListener(object : AnyPickerAdapter.Listener<T> {
@@ -209,27 +219,27 @@ internal open class AnyPickerActivity<T : Any, VH : RecyclerView.ViewHolder> : A
             if (!bean.isNeedPreview) {// 不需要预览
                 return@setOnItemClickListener
             }
-            handlePreview(arrayListOf(item))
+            if (mPdrPickerBean?.filePreviewListener != null) {// 由外部处理预览逻辑
+                mPdrPickerBean?.filePreviewListener?.onPickerSelected(getContext(), arrayListOf(item.data), bean.pickerUIConfig)
+                return@setOnItemClickListener
+            }
+            handlePreview(arrayListOf(item.data))
         }
     }
 
     /** 处理预览逻辑 */
-    protected open fun handlePreview(datas: ArrayList<DataWrapper<T>>) {
-        val list = ArrayList<T>()
-        datas.forEach {
-            list.add(it.data)
-        }
+    protected open fun handlePreview(list: ArrayList<T>) {
         previewPic(list, list.size > 1)
     }
 
     /** 点击文件夹按钮 */
-    protected open fun onClickFolderBtn(bean: PickerBean<T, VH>) {}
+    protected open fun onClickFolderBtn(bean: PickerBean<T>) {}
 
     /** 图片预览器 */
     protected fun previewPic(list: List<T>, isShowPage: Boolean) {
         val bean = mPdrPickerBean ?: return
         val view = bean.view ?: return
-        PreviewManager.create<T, VH>()
+        PreviewManager.create<T, DataViewHolder>()
             .setPosition(0)
             .setPagerTextSize(14)
             .setShowPagerText(isShowPage)
@@ -252,7 +262,7 @@ internal open class AnyPickerActivity<T : Any, VH : RecyclerView.ViewHolder> : A
         loadData(bean, mBinding)
     }
 
-    protected open fun loadData(bean: PickerBean<T, VH>, binding: PandoraActivityPickerBinding) {
+    protected open fun loadData(bean: PickerBean<T>, binding: PandoraActivityPickerBinding) {
         binding.pdrFolderBtn.isEnabled = false
         binding.pdrFolderNameTv.setText(R.string.pandora_picker_custom_file)
         binding.pdrMoreImg.visibility = View.GONE
@@ -334,7 +344,7 @@ internal open class AnyPickerActivity<T : Any, VH : RecyclerView.ViewHolder> : A
     }
 
     /** 绘制确定按钮 */
-    private fun drawConfirmBtn(bean: PickerBean<T, VH>) {
+    private fun drawConfirmBtn(bean: PickerBean<T>) {
         mBinding.pdrConfirmBtn.viewTreeObserver.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
             override fun onPreDraw(): Boolean {
                 mBinding.pdrConfirmBtn.viewTreeObserver.removeOnPreDrawListener(this)
@@ -365,7 +375,7 @@ internal open class AnyPickerActivity<T : Any, VH : RecyclerView.ViewHolder> : A
     }
 
     /** 拍照 */
-    protected open fun takeCameraPhoto(bean: PickerBean<T, VH>) {}
+    protected open fun takeCameraPhoto(bean: PickerBean<T>) {}
 
     override fun finish() {
         release()

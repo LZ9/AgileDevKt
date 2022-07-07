@@ -11,7 +11,7 @@ import com.lodz.android.pandora.picker.file.pick.phone.PhonePickerActivity
  * @author zhouL
  * @date 2022/5/11
  */
-class DocumentPickerBuilder<VH : RecyclerView.ViewHolder>(private val pickerBean: PickerBean<DocumentWrapper, VH>) : PickerBuilder<DocumentWrapper, VH>(pickerBean){
+class DocumentPickerBuilder(private val pickerBean: PickerBean<DocumentWrapper>) : PickerBuilder<DocumentWrapper>(pickerBean){
 
     override fun startActivity(context: Context, flags: List<Int>?) {
         PhonePickerActivity.start(context, pickerBean, flags)

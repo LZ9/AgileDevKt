@@ -1,38 +1,32 @@
 package com.lodz.android.agiledevkt.modules.pic.preview.media
 
 import android.content.Context
-import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import android.view.View
 import com.lodz.android.corekt.file.DocumentWrapper
-import com.lodz.android.pandora.picker.preview.vh.AbsImageView
-import com.lodz.android.pandora.picker.preview.vh.addViewInItem
-import com.lodz.android.pandora.picker.preview.vh.createFrameLayout
+import com.lodz.android.pandora.picker.preview.vh.DataPreviewAgent
+import com.lodz.android.pandora.widget.rv.recycler.vh.DataViewHolder
 
 /**
  * 多媒体控件实现
  * @author zhouL
  * @date 2022/6/20
  */
-class MediaViewImpl(private val context: Context,private val isScale: Boolean) : AbsImageView<DocumentWrapper, MediaViewImpl.MediaViewHolder>() {
+class MediaViewImpl(private val context: Context,private val isScale: Boolean) : DataPreviewAgent<DocumentWrapper>() {
 
-    override fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int): MediaViewHolder =
-        MediaViewHolder(context)
-
-    override fun onBind(context: Context, source: DocumentWrapper, viewHolder: MediaViewHolder, position: Int) {
-        viewHolder.mediaView.setData(source)
+    override fun getLayoutView(context: Context, viewType: Int): View? {
+        val mediaView = MediaView(context, isScale)
+        mediaView.id = android.R.id.icon
+        return mediaView
     }
 
-    override fun onViewDetached(viewHolder: MediaViewHolder) {
-        super.onViewDetached(viewHolder)
-        viewHolder.mediaView.detached()
+    override fun onBind(context: Context, source: DocumentWrapper, viewHolder: DataViewHolder, position: Int) {
+        val mediaView = viewHolder.withView<MediaView>(android.R.id.icon)
+        mediaView.setData(source)
     }
 
-    inner class MediaViewHolder(context: Context) : RecyclerView.ViewHolder(createFrameLayout(context)) {
-        val mediaView: MediaView = MediaView(context, isScale)
-        init {
-            addViewInItem(mediaView)
-        }
+    override fun onViewDetachedFromWindow(viewHolder: DataViewHolder) {
+        super.onViewDetachedFromWindow(viewHolder)
+        viewHolder.withView<MediaView>(android.R.id.icon).detached()
     }
-
 
 }

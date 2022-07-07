@@ -281,98 +281,98 @@ class PickerUIConfig private constructor() {
 
     /** 顶部状态栏颜色 */
     @ColorRes
-    internal fun getStatusBarColor(): Int = statusBarColor
+    fun getStatusBarColor(): Int = statusBarColor
 
     /** 底部导航栏颜色 */
     @ColorRes
-    internal fun getNavigationBarColor(): Int = navigationBarColor
+    fun getNavigationBarColor(): Int = navigationBarColor
 
     /** 拍照按钮图片 */
     @DrawableRes
-    internal fun getCameraImg(): Int = cameraImg
+    fun getCameraImg(): Int = cameraImg
 
     /** 拍照按钮背景颜色 */
     @ColorRes
-    internal fun getCameraBgColor(): Int = cameraBgColor
+    fun getCameraBgColor(): Int = cameraBgColor
 
     /** 照片背景颜色 */
     @ColorRes
-    internal fun getItemBgColor(): Int = itemBgColor
+    fun getItemBgColor(): Int = itemBgColor
 
     /** 选择按钮未选中颜色 */
     @ColorRes
-    internal fun getSelectedBtnUnselect(): Int = selectedBtnUnselect
+    fun getSelectedBtnUnselect(): Int = selectedBtnUnselect
 
     /** 选择按钮选中颜色 */
     @ColorRes
-    internal fun getSelectedBtnSelected(): Int = selectedBtnSelected
+    fun getSelectedBtnSelected(): Int = selectedBtnSelected
 
     /** 选中后的遮罩层颜色 */
     @ColorRes
-    internal fun getMaskColor(): Int = maskColor
+    fun getMaskColor(): Int = maskColor
 
     /** 返回按钮颜色 */
     @ColorRes
-    internal fun getBackBtnColor(): Int = backBtnColor
+    fun getBackBtnColor(): Int = backBtnColor
 
     /** 主文字颜色 */
     @ColorRes
-    internal fun getMainTextColor(): Int = mainTextColor
+    fun getMainTextColor(): Int = mainTextColor
 
     /** 更多文件夹图片 */
     @DrawableRes
-    internal fun getMoreFolderImg(): Int = moreFolderImg
+    fun getMoreFolderImg(): Int = moreFolderImg
 
     /** 顶部背景颜色 */
     @ColorRes
-    internal fun getTopLayoutColor(): Int = topLayoutColor
+    fun getTopLayoutColor(): Int = topLayoutColor
 
     /** 底部背景颜色 */
     @ColorRes
-    internal fun getBottomLayoutColor(): Int = bottomLayoutColor
+    fun getBottomLayoutColor(): Int = bottomLayoutColor
 
     /** 预览按钮普通颜色 */
     @ColorRes
-    internal fun getPreviewBtnNormal(): Int = previewBtnNormal
+    fun getPreviewBtnNormal(): Int = previewBtnNormal
 
     /** 预览按钮按压颜色 */
     @ColorRes
-    internal fun getPreviewBtnPressed(): Int = previewBtnPressed
+    fun getPreviewBtnPressed(): Int = previewBtnPressed
 
     /** 预览按钮不可用颜色 */
     @ColorRes
-    internal fun getPreviewBtnUnable(): Int = previewBtnUnable
+    fun getPreviewBtnUnable(): Int = previewBtnUnable
 
     /** 确认按钮普通颜色 */
     @ColorRes
-    internal fun getConfirmBtnNormal(): Int = confirmBtnNormal
+    fun getConfirmBtnNormal(): Int = confirmBtnNormal
 
     /** 确认按钮按压颜色 */
     @ColorRes
-    internal fun getConfirmBtnPressed(): Int = confirmBtnPressed
+    fun getConfirmBtnPressed(): Int = confirmBtnPressed
 
     /** 确认按钮不可用颜色 */
     @ColorRes
-    internal fun getConfirmBtnUnable(): Int = confirmBtnUnable
+    fun getConfirmBtnUnable(): Int = confirmBtnUnable
 
     /** 确认文字普通颜色 */
     @ColorRes
-    internal fun getConfirmTextNormal(): Int = confirmTextNormal
+    fun getConfirmTextNormal(): Int = confirmTextNormal
 
     /** 确认文字按压颜色 */
     @ColorRes
-    internal fun getConfirmTextPressed(): Int = confirmTextPressed
+    fun getConfirmTextPressed(): Int = confirmTextPressed
 
     /** 确认文字不可用颜色 */
     @ColorRes
-    internal fun getConfirmTextUnable(): Int = confirmTextUnable
+    fun getConfirmTextUnable(): Int = confirmTextUnable
 
     /** 文件夹选择颜色 */
     @ColorRes
-    internal fun getFolderSelectColor(): Int = folderSelectColor
+    fun getFolderSelectColor(): Int = folderSelectColor
 
     /** 预览页背景色 */
     @ColorRes
-    internal fun getPreviewBgColor(): Int = previewBgColor
+    fun getPreviewBgColor(): Int = previewBgColor
 
 }

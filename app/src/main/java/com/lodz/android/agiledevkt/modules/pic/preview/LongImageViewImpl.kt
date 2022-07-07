@@ -1,9 +1,8 @@
 package com.lodz.android.agiledevkt.modules.pic.preview
 
 import android.content.Context
-import android.view.ViewGroup
+import android.view.View
 import android.widget.ImageView
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
@@ -12,52 +11,49 @@ import com.lodz.android.agiledevkt.R
 import com.lodz.android.corekt.anko.runOnMain
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.imageloaderkt.ImageLoader
-import com.lodz.android.pandora.picker.preview.vh.AbsImageView
-import com.lodz.android.pandora.picker.preview.vh.addViewInItem
-import com.lodz.android.pandora.picker.preview.vh.createFrameLayout
+import com.lodz.android.pandora.picker.preview.vh.DataPreviewAgent
 import com.lodz.android.pandora.widget.custom.LongImageView
+import com.lodz.android.pandora.widget.rv.recycler.vh.DataViewHolder
 import java.io.File
 
 /**
- * LongImageView对象
+ * LongImageView预览器中介
  * @author zhouL
  * @date 2022/4/20
  */
-class LongImageViewImpl : AbsImageView<String, LongImageViewImpl.LongImageViewHolder>() {
+class LongImageViewImpl : DataPreviewAgent<String>() {
 
-    override fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int): LongImageViewHolder = LongImageViewHolder(context)
+    override fun getLayoutView(context: Context, viewType: Int): View {
+        val longImageView = LongImageView(context)
+        longImageView.id = android.R.id.icon
+        longImageView.setPlaceholderRes(R.drawable.ic_launcher)
+        longImageView.setPlaceholderScaleType(ImageView.ScaleType.CENTER)
+        return longImageView
+    }
 
-    override fun onBind(context: Context, source: String, viewHolder: LongImageViewHolder, position: Int) {
-        viewHolder.itemView.setOnLongClickListener {
-            context.toastShort(context.getString(R.string.preview_long_click_tips, (position + 1).toString()))
-            return@setOnLongClickListener true
+    override fun onBind(context: Context, source: String, viewHolder: DataViewHolder, position: Int) {
+        val imageView = viewHolder.withView<LongImageView>(android.R.id.icon)
+
+        imageView.setOnClickListener {
+            context.toastShort(context.getString(R.string.preview_click_tips, (position + 1).toString()))
         }
 
-        viewHolder.itemView.setOnClickListener {
-            context.toastShort(context.getString(R.string.preview_click_tips, (position + 1).toString()))
+        imageView.setOnLongClickListener {
+            context.toastShort(context.getString(R.string.preview_long_click_tips, (position + 1).toString()))
+            true
         }
 
         ImageLoader.create(context).loadUrl(source).download(object :RequestListener<File>{
             override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<File>?, isFirstResource: Boolean): Boolean = false
-
             override fun onResourceReady(resource: File?, model: Any?, target: Target<File>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
                 runOnMain {
                     if (resource != null){
-                        viewHolder.longImageView.setImageFile(resource)
+                        imageView.setImageFile(resource)
                     }
                 }
                 return false
             }
         })
-    }
-
-    inner class LongImageViewHolder(context: Context) : RecyclerView.ViewHolder(createFrameLayout(context)) {
-        val longImageView: LongImageView = LongImageView(context)
-        init {
-            longImageView.setPlaceholderRes(R.drawable.ic_launcher)
-            longImageView.setPlaceholderScaleType(ImageView.ScaleType.CENTER)
-            addViewInItem(longImageView)
-        }
     }
 
 }

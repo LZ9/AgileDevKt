@@ -7,7 +7,7 @@ import androidx.annotation.IntRange
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.lodz.android.corekt.anko.getColorCompat
-import com.lodz.android.pandora.picker.preview.vh.AbsImageView
+import com.lodz.android.pandora.picker.preview.vh.AbsPreviewAgent
 
 /**
  * 图片预览构建器
@@ -76,7 +76,7 @@ class PreviewBuilder<T : Any, VH : RecyclerView.ViewHolder> {
     }
 
     /** 设置控件[view] */
-    fun setImageView(view: AbsImageView<T, VH>): PreviewBuilder<T, VH> {
+    fun setImageView(view: AbsPreviewAgent<T, VH>): PreviewBuilder<T, VH> {
         previewBean.view = view
         return this
     }

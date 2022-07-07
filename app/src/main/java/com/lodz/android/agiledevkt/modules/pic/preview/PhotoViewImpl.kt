@@ -1,55 +1,50 @@
 package com.lodz.android.agiledevkt.modules.pic.preview
 
 import android.content.Context
-import android.view.ViewGroup
+import android.view.View
 import android.widget.ImageView
-import androidx.recyclerview.widget.RecyclerView
 import com.github.chrisbanes.photoview.PhotoView
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.corekt.anko.toastShort
-import com.lodz.android.pandora.picker.preview.vh.AbsImageView
-import com.lodz.android.pandora.picker.preview.vh.addViewInItem
-import com.lodz.android.pandora.picker.preview.vh.createFrameLayout
+import com.lodz.android.pandora.picker.preview.vh.DataPreviewAgent
+import com.lodz.android.pandora.widget.rv.recycler.vh.DataViewHolder
 
 /**
- * PhotoView适配器
+ * PhotoView预览器中介
  * @author zhouL
  * @date 2022/4/20
  */
-abstract class PhotoViewImpl<T>(private val isScale: Boolean) : AbsImageView<T, PhotoViewImpl<T>.PhotoViewHolder>() {
+abstract class PhotoViewImpl<T>(private val isScale: Boolean) : DataPreviewAgent<T>() {
 
-    override fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int): PhotoViewHolder = PhotoViewHolder(context, isScale)
+    override fun getLayoutView(context: Context, viewType: Int): View? {
+        val photoView = PhotoView(context)
+        photoView.id = android.R.id.icon
+        photoView.scaleType = ImageView.ScaleType.CENTER_INSIDE
+        photoView.isZoomable = isScale
+        return photoView
+    }
 
-    override fun onBind(context: Context, source: T, viewHolder: PhotoViewHolder, position: Int) {
+    override fun onBind(context: Context, source: T, viewHolder: DataViewHolder, position: Int) {
+        val photoView = viewHolder.withView<PhotoView>(android.R.id.icon)
 
-        viewHolder.photoView.setOnClickListener {
+        photoView.setOnClickListener {
             context.toastShort(context.getString(R.string.preview_click_tips, (position + 1).toString()))
         }
 
-        viewHolder.photoView.setOnLongClickListener {
+        photoView.setOnLongClickListener {
             context.toastShort(context.getString(R.string.preview_long_click_tips, (position + 1).toString()))
-            return@setOnLongClickListener true
+            true
         }
 
-        displayImag(context, source, viewHolder, position)
+        displayImag(context, source, photoView, position)
     }
 
-    abstract fun displayImag(context: Context, source: T, viewHolder: PhotoViewHolder, position: Int)
+    abstract fun displayImag(context: Context, source: T, photoView: PhotoView, position: Int)
 
-    override fun onViewDetached(viewHolder: PhotoViewHolder) {
-        super.onViewDetached(viewHolder)
+    override fun onViewDetachedFromWindow(viewHolder: DataViewHolder) {
+        super.onViewDetachedFromWindow(viewHolder)
         if (isScale){
-            viewHolder.photoView.attacher.update()
+            viewHolder.withView<PhotoView>(android.R.id.icon).attacher.update()
         }
     }
-
-    inner class PhotoViewHolder(context: Context, isScale: Boolean) : RecyclerView.ViewHolder(createFrameLayout(context)) {
-        val photoView: PhotoView = PhotoView(context)
-        init {
-            photoView.scaleType = ImageView.ScaleType.CENTER_INSIDE
-            photoView.isZoomable = isScale
-            addViewInItem(photoView)
-        }
-    }
-
 }

@@ -4,7 +4,7 @@ import android.graphics.Color
 import androidx.annotation.ColorInt
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
-import com.lodz.android.pandora.picker.preview.vh.AbsImageView
+import com.lodz.android.pandora.picker.preview.vh.AbsPreviewAgent
 
 /**
  * 预览数据
@@ -33,7 +33,7 @@ internal class PreviewBean<T : Any, VH : RecyclerView.ViewHolder> {
     /** 是否显示页码文字 */
     var isShowPagerText = true
     /** 图片控件 */
-    var view: AbsImageView<T, VH>? = null
+    var view: AbsPreviewAgent<T, VH>? = null
     /** VP2的动画 */
     var pageTransformer: ViewPager2.PageTransformer? = null
 

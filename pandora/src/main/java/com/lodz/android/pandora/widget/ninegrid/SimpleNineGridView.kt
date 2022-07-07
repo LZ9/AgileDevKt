@@ -9,16 +9,17 @@ import com.lodz.android.corekt.file.DocumentWrapper
 import com.lodz.android.pandora.picker.file.PickerManager
 import com.lodz.android.pandora.picker.file.PickerUIConfig
 import com.lodz.android.pandora.picker.preview.PreviewManager
+import com.lodz.android.pandora.widget.rv.recycler.vh.DataViewHolder
 
 
 /**
  * 简单的九宫格实现
  * Created by zhouL on 2018/12/26.
  */
-class SimpleNineGridView<VH : RecyclerView.ViewHolder> : NineGridView<DocumentWrapper> {
+class SimpleNineGridView : NineGridView<DocumentWrapper> {
 
     /** 接口 */
-    private var mPdrListener: OnSimpleNineGridViewListener<DocumentWrapper, VH>? = null
+    private var mPdrListener: OnSimpleNineGridViewListener<DocumentWrapper>? = null
     /** 照片保存地址 */
     private var mPdrCameraSavePath = ""
     /** 7.0的FileProvider名字 */
@@ -39,7 +40,7 @@ class SimpleNineGridView<VH : RecyclerView.ViewHolder> : NineGridView<DocumentWr
         setListener(object :OnNineGridViewListener<DocumentWrapper>{
             override fun onAddPic(addCount: Int) {
                 val listener = mPdrListener ?: return
-                PickerManager.pickPhoneAlbum<VH>()
+                PickerManager.pickPhoneAlbum()
                     .setImgLoader { context, source, imageView ->
                         mPdrListener?.onDisplayPickerImg(context, source, imageView)
                     }
@@ -53,7 +54,6 @@ class SimpleNineGridView<VH : RecyclerView.ViewHolder> : NineGridView<DocumentWr
                     .setPickerUIConfig(mPdrConfig)
                     .setAuthority(mPdrAuthority)
                     .open(context)
-
             }
 
             override fun onDisplayImg(context: Context, data: DocumentWrapper, imageView: ImageView) {
@@ -66,7 +66,7 @@ class SimpleNineGridView<VH : RecyclerView.ViewHolder> : NineGridView<DocumentWr
 
             override fun onClickPic(data: DocumentWrapper, position: Int) {
                 val listener = mPdrListener ?: return
-                PreviewManager.create<DocumentWrapper, VH>()
+                PreviewManager.create<DocumentWrapper, DataViewHolder>()
                     .setPosition(position)
                     .setBackgroundColor(android.R.color.black)
                     .setStatusBarColor(android.R.color.black)
@@ -88,7 +88,7 @@ class SimpleNineGridView<VH : RecyclerView.ViewHolder> : NineGridView<DocumentWr
     }
 
     /** 设置监听器[listener] */
-    fun setOnSimpleNineGridViewListener(listener: OnSimpleNineGridViewListener<DocumentWrapper, VH>) {
+    fun setOnSimpleNineGridViewListener(listener: OnSimpleNineGridViewListener<DocumentWrapper>) {
         mPdrListener = listener
     }
 

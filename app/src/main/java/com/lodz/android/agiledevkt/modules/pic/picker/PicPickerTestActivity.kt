@@ -7,7 +7,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.view.View
-import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.lodz.android.agiledevkt.BuildConfig
@@ -23,8 +23,7 @@ import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.picker.file.PickerManager
 import com.lodz.android.pandora.picker.file.PickerUIConfig
-import com.lodz.android.pandora.picker.preview.vh.AbsImageView
-import com.lodz.android.pandora.picker.preview.vh.SimpleImageViewHolder
+import com.lodz.android.pandora.picker.preview.vh.ImagePreviewAgent
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import permissions.dispatcher.*
 import permissions.dispatcher.ktx.constructPermissionsRequest
@@ -97,7 +96,7 @@ class PicPickerTestActivity : BaseActivity() {
 
         // 挑选手机相册
         mBinding.pickerPhoneAlbumBtn.setOnClickListener {
-            PickerManager.pickPhoneAlbum<SimpleImageViewHolder>()
+            PickerManager.pickPhoneAlbum()
                 .setMaxCount(mMaxCount)
                 .setNeedPreview(mBinding.itemPreviewSwitch.isChecked)
                 .setPickerUIConfig(mConfig)
@@ -111,18 +110,14 @@ class PicPickerTestActivity : BaseActivity() {
                         .setCenterCrop()
                         .into(imageView)
                 }
-                .setPreviewView(object : AbsImageView<DocumentWrapper, SimpleImageViewHolder>(){
-                    override fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int): SimpleImageViewHolder =
-                        SimpleImageViewHolder(parent.context)
-
-                    override fun onBind(context: Context, source: DocumentWrapper, viewHolder: SimpleImageViewHolder, position: Int) {
+                .setPreviewView(object :ImagePreviewAgent<DocumentWrapper>(){
+                    override fun displayImag(context: Context, source: DocumentWrapper, imageView: ImageView, position: Int) {
                         ImageLoader.create(context)
                             .loadUri(source.documentFile.uri)
                             .setPlaceholder(R.drawable.pandora_ic_img)
                             .setError(R.drawable.pandora_ic_img)
                             .setFitCenter()
-                            .into(viewHolder.imageView)
-
+                            .into(imageView)
                     }
                 })
                 .setOnLifecycleObserver(mLifecycleObserver)
@@ -138,7 +133,8 @@ class PicPickerTestActivity : BaseActivity() {
 
         // 挑选手机相册、音频和视频
         mBinding.pickerPhoneMediaBtn.setOnClickListener {
-            PickerManager.pickPhoneAssemble<MediaViewImpl.MediaViewHolder>(PickerManager.PICK_PHONE_ALBUM, PickerManager.PICK_PHONE_VIDEO, PickerManager.PICK_PHONE_AUDIO)
+            mBinding.itemPreviewSwitch.isChecked = false
+            PickerManager.pickPhoneAssemble(PickerManager.PICK_PHONE_ALBUM, PickerManager.PICK_PHONE_VIDEO, PickerManager.PICK_PHONE_AUDIO)
                 .setMaxCount(mMaxCount)
                 .setNeedPreview(mBinding.itemPreviewSwitch.isChecked)
                 .setPickerUIConfig(mConfig)
@@ -152,7 +148,6 @@ class PicPickerTestActivity : BaseActivity() {
                         .setCenterCrop()
                         .into(imageView)
                 }
-                .setPreviewView(MediaViewImpl(getContext(), mBinding.scaleSwitch.isChecked))
                 .setOnFilePickerListener{
                     var str = ""
                     for (dw in it) {

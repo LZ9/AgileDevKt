@@ -9,7 +9,7 @@ import com.lodz.android.pandora.picker.file.PickerBean
  * @author zhouL
  * @date 2022/5/11
  */
-class ImageUrlPickerBuilder<VH : RecyclerView.ViewHolder>(private val pickerBean: PickerBean<String, VH>) : PickerBuilder<String, VH>(pickerBean){
+class ImageUrlPickerBuilder(private val pickerBean: PickerBean<String>) : PickerBuilder<String>(pickerBean){
 
 
     override fun startActivity(context: Context, flags: List<Int>?) {

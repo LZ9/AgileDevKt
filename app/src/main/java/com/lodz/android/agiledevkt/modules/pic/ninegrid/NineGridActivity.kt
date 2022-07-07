@@ -7,6 +7,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
+import com.github.chrisbanes.photoview.PhotoView
 import com.lodz.android.agiledevkt.BuildConfig
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.config.Constant
@@ -17,7 +18,7 @@ import com.lodz.android.corekt.anko.*
 import com.lodz.android.corekt.file.DocumentWrapper
 import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.base.activity.BaseActivity
-import com.lodz.android.pandora.picker.preview.vh.AbsImageView
+import com.lodz.android.pandora.picker.preview.vh.DataPreviewAgent
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.ninegrid.OnNineGridViewListener
 import com.lodz.android.pandora.widget.ninegrid.OnSimpleNineGridViewListener
@@ -125,7 +126,7 @@ class NineGridActivity : BaseActivity() {
         }
 
         // 可添加图片的九宫格
-        mBinding.pickerNineGridView.setOnSimpleNineGridViewListener(object : OnSimpleNineGridViewListener<DocumentWrapper, PhotoViewImpl<DocumentWrapper>.PhotoViewHolder> {
+        mBinding.pickerNineGridView.setOnSimpleNineGridViewListener(object :OnSimpleNineGridViewListener<DocumentWrapper>{
             override fun onDisplayNineGridImg(context: Context, data: DocumentWrapper, imageView: ImageView) {
                 ImageLoader.create(context).loadUri(data.documentFile.uri).setCenterCrop().into(imageView)
             }
@@ -134,11 +135,10 @@ class NineGridActivity : BaseActivity() {
                 ImageLoader.create(context).loadUri(data.documentFile.uri).setCenterCrop().into(imageView)
             }
 
-            override fun createImageView(): AbsImageView<DocumentWrapper, PhotoViewImpl<DocumentWrapper>.PhotoViewHolder> =
-                object : PhotoViewImpl<DocumentWrapper>(mBinding.scaleSwitch.isChecked) {
-                    override fun displayImag(context: Context, source: DocumentWrapper, viewHolder: PhotoViewHolder, position: Int) {
-                        ImageLoader.create(context).loadUri(source.documentFile.uri).setFitCenter().into(viewHolder.photoView)
-                    }
+            override fun createImageView(): DataPreviewAgent<DocumentWrapper> = object :PhotoViewImpl<DocumentWrapper>(mBinding.scaleSwitch.isChecked){
+                override fun displayImag(context: Context, source: DocumentWrapper, photoView: PhotoView, position: Int) {
+                    ImageLoader.create(context).loadUri(source.documentFile.uri).setFitCenter().into(photoView)
+                }
             }
         })
 

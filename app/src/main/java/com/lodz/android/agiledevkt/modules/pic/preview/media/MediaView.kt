@@ -11,10 +11,17 @@ import android.widget.VideoView
 import com.github.chrisbanes.photoview.PhotoView
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.corekt.anko.bindView
+import com.lodz.android.corekt.anko.runOnIO
 import com.lodz.android.corekt.anko.then
+import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.corekt.file.DocumentWrapper
+import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.corekt.media.*
 import com.lodz.android.imageloaderkt.ImageLoader
+import com.lodz.android.pandora.rx.utils.RxUtils
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.disposables.Disposable
+import java.util.concurrent.TimeUnit
 
 /**
  * 多媒体展示控件
@@ -49,6 +56,8 @@ class MediaView : LinearLayout {
     private var mDocumentType = TYPE_UNKNOWN_FILE
     /** 图片是否缩放 */
     private val isScale: Boolean
+
+    private var mDisposable: Disposable? = null
 
     constructor(context: Context?, isScale: Boolean) : super(context) {
         this.isScale = isScale
@@ -132,10 +141,10 @@ class MediaView : LinearLayout {
 
     private fun setListeners() {
         mPlayBtn.setOnClickListener {
-            mImgView.visibility = View.GONE
-            mPlayBtn.visibility = View.GONE
             mVideoView.visibility = View.VISIBLE
             playVideo()
+            mImgView.visibility = View.GONE
+            mPlayBtn.visibility = View.GONE
         }
         this@MediaView.setOnClickListener {
             if (mVideoView.visibility == View.VISIBLE){
@@ -143,17 +152,52 @@ class MediaView : LinearLayout {
                 pauseVideo()
             }
         }
+        mVideoView.setOnPreparedListener {
+            PrintLog.d("testtag", "setOnPreparedListener -> ${mVideoView.duration}")
+            mDurationTv.text = "0 / ${mVideoView.duration}"
+        }
+
+        mVideoView.setOnErrorListener { mp, what, extra ->
+            toastShort("播放异常")
+            return@setOnErrorListener false
+        }
+
+        mVideoView.setOnCompletionListener {
+            disposeInterval()
+            PrintLog.d("testtag", "setOnCompletionListener -> ${mVideoView.duration}")
+            mDurationTv.text = "${mVideoView.duration} / ${mVideoView.duration}"
+            mPlayBtn.visibility = View.VISIBLE
+        }
     }
 
     private fun pauseVideo() {
         if (mVideoView.isPlaying) {
             mVideoView.pause()
+            disposeInterval()
         }
     }
 
     private fun playVideo() {
         if (!mVideoView.isPlaying) {
             mVideoView.start()
+            intervalDuration()
+        }
+    }
+
+    private fun intervalDuration(){
+        disposeInterval()
+        mDisposable = Observable.interval(0, 500, TimeUnit.MILLISECONDS)
+            .compose(RxUtils.ioToMainObservable())
+            .subscribe {
+                PrintLog.e("testtag", "interval -> ${mVideoView.currentPosition}")
+                mDurationTv.setText("${mVideoView.currentPosition} / ${mVideoView.duration}")
+            }
+    }
+
+    private fun disposeInterval(){
+        if (mDisposable != null) {
+            mDisposable?.dispose()
+            mDisposable = null
         }
     }
 
@@ -162,6 +206,16 @@ class MediaView : LinearLayout {
     fun detached() {
         if (mPhotoView.visibility == View.VISIBLE) {
             mPhotoView.attacher.update()
+        }
+        disposeInterval()
+        if (mVideoView.isPlaying) {
+            mVideoView.pause()
+            mVideoView.visibility = View.GONE
+            mImgView.visibility = View.VISIBLE
+            mPlayBtn.visibility = View.VISIBLE
+            runOnIO {
+                mVideoView.stopPlayback()
+            }
         }
 
     }

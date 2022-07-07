@@ -22,11 +22,11 @@ import com.lodz.android.pandora.utils.coroutines.CoroutinesWrapper
  * @author zhouL
  * @date 2022/5/12
  */
-internal class PhonePickerActivity<VH : RecyclerView.ViewHolder> : AnyPickerActivity<DocumentWrapper, VH>() {
+internal class PhonePickerActivity : AnyPickerActivity<DocumentWrapper>() {
 
     companion object {
 
-        internal fun <VH : RecyclerView.ViewHolder> start(context: Context, pickerBean: PickerBean<DocumentWrapper, VH>, flags: List<Int>?) {
+        internal fun start(context: Context, pickerBean: PickerBean<DocumentWrapper>, flags: List<Int>?) {
             synchronized(PickerBean::class.java) {
                 if (sPickerBean != null) {
                     return
@@ -53,7 +53,7 @@ internal class PhonePickerActivity<VH : RecyclerView.ViewHolder> : AnyPickerActi
         }
     }
 
-    override fun loadData(bean: PickerBean<DocumentWrapper, VH>, binding: PandoraActivityPickerBinding) {
+    override fun loadData(bean: PickerBean<DocumentWrapper>, binding: PandoraActivityPickerBinding) {
         CoroutinesWrapper.create(this)
             .request { requestMediaData(bean) }
             .actionPg(context = getContext(), cancelable = false) {
@@ -63,7 +63,7 @@ internal class PhonePickerActivity<VH : RecyclerView.ViewHolder> : AnyPickerActi
             }
     }
 
-    override fun onClickFolderBtn(bean: PickerBean<DocumentWrapper, VH>) {
+    override fun onClickFolderBtn(bean: PickerBean<DocumentWrapper>) {
         CoroutinesWrapper.create(this)
             .request {
                 if (mPdrCurrentDocumentFolder == null) {
@@ -106,15 +106,13 @@ internal class PhonePickerActivity<VH : RecyclerView.ViewHolder> : AnyPickerActi
             }
     }
 
-
-    override fun handlePreview(datas: ArrayList<DataWrapper<DocumentWrapper>>) {
-        super.handlePreview(datas)
-
+    override fun handlePreview(list: ArrayList<DocumentWrapper>) {
+        super.handlePreview(list)
 
 
     }
 
-    override fun takeCameraPhoto(bean: PickerBean<DocumentWrapper, VH>) {
+    override fun takeCameraPhoto(bean: PickerBean<DocumentWrapper>) {
         TakePhotoManager.create()
             .setPublicDirectoryName(bean.publicDirectoryName)
             .setAuthority(bean.authority)
@@ -133,7 +131,7 @@ internal class PhonePickerActivity<VH : RecyclerView.ViewHolder> : AnyPickerActi
     }
 
     /** 处理拍照成功 */
-    private fun handleCameraSuccess(bean: PickerBean<DocumentWrapper, VH>) {
+    private fun handleCameraSuccess(bean: PickerBean<DocumentWrapper>) {
         CoroutinesWrapper.create(this)
             .request { requestMediaData(bean) }
             .actionPg(context = getContext(), cancelable = false) {
@@ -150,7 +148,7 @@ internal class PhonePickerActivity<VH : RecyclerView.ViewHolder> : AnyPickerActi
             }
     }
 
-    private fun requestMediaData(bean: PickerBean<DocumentWrapper, VH>): ArrayList<DataWrapper<DocumentWrapper>> {
+    private fun requestMediaData(bean: PickerBean<DocumentWrapper>): ArrayList<DataWrapper<DocumentWrapper>> {
         mPdrPhoneDataList.clear()
         mPdrPhoneDataList.addAll(
             when (bean.pickType) {
