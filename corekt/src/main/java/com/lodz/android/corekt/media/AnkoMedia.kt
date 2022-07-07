@@ -347,7 +347,8 @@ fun Context.getAllFiles(vararg suffix: String): List<DocumentWrapper> {
                 continue
             }
             val document = DocumentFile.fromSingleUri(this, ContentUris.withAppendedId(uri, id)) ?: continue
-            val wrapper = DocumentWrapper(file, document, duration, file.length().formatFileSize())
+            val durationFormat = if (duration > 0) duration.formatVideoDuration() else ""
+            val wrapper = DocumentWrapper(file, document, name, duration, durationFormat, file.length().formatFileSize())
             if (array.isEmpty()) {//后缀数组为空查询全部
                 list.add(wrapper)
                 continue
@@ -400,7 +401,8 @@ fun Context.getMediaData(uri: Uri): List<DocumentWrapper> {
                 continue
             }
             val document = DocumentFile.fromSingleUri(this, ContentUris.withAppendedId(uri, id)) ?: continue
-            val wrapper = DocumentWrapper(file, document, duration, file.length().formatFileSize())
+            val durationFormat = if (duration > 0) duration.formatVideoDuration() else ""
+            val wrapper = DocumentWrapper(file, document, name, duration, durationFormat, file.length().formatFileSize())
             list.add(wrapper)
         }
     }

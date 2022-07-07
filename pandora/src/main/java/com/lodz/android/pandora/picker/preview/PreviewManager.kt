@@ -10,10 +10,10 @@ import com.lodz.android.pandora.R
  * 图片预览管理类
  * Created by zhouL on 2018/12/13.
  */
-class PreviewManager<T : Any, VH : RecyclerView.ViewHolder> internal constructor(private val previewBean: PreviewBean<T, VH>) {
+class PreviewManager<T, VH : RecyclerView.ViewHolder> internal constructor(private val previewBean: PreviewBean<T, VH>) {
     companion object {
         @JvmStatic
-        fun <T : Any, VH : RecyclerView.ViewHolder> create(): PreviewBuilder<T, VH> = PreviewBuilder()
+        fun <T, VH : RecyclerView.ViewHolder> create(): PreviewBuilder<T, VH> = PreviewBuilder()
     }
 
     /** 打开预览器，上下文[context]，Intent启动标记[flags]  */

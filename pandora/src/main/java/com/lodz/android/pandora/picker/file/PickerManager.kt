@@ -76,7 +76,7 @@ class PickerManager {
 
         /** 选取指定的任意类型列表[list] */
         @JvmStatic
-        fun <T : Any> pickAny(list: List<T>): PickerBuilder<T> {
+        fun <T> pickAny(list: List<T>): PickerBuilder<T> {
             val pickerBean = PickerBean<T>(PICK_ANY)
             pickerBean.sourceList = list
             return PickerBuilder(pickerBean)
@@ -84,7 +84,7 @@ class PickerManager {
 
         /** 选取指定的任意类型数组[array] */
         @JvmStatic
-        fun <T : Any> pickAny(array: Array<T>): PickerBuilder<T> = pickAny(array.toList())
+        fun <T> pickAny(array: Array<T>): PickerBuilder<T> = pickAny(array.toList())
 
         /** 选取指定的文件列表[list] */
         @JvmStatic

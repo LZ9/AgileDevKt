@@ -2,9 +2,9 @@ package com.lodz.android.pandora.picker.file.pick.phone
 
 import android.content.Context
 import android.content.Intent
-import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.corekt.anko.startRotateSelf
 import com.lodz.android.corekt.file.DocumentWrapper
+import com.lodz.android.corekt.file.getFileSuffix
 import com.lodz.android.corekt.media.*
 import com.lodz.android.pandora.R
 import com.lodz.android.pandora.databinding.PandoraActivityPickerBinding
@@ -16,6 +16,7 @@ import com.lodz.android.pandora.picker.file.pick.DataWrapper
 import com.lodz.android.pandora.picker.file.pick.any.AnyPickerActivity
 import com.lodz.android.pandora.picker.take.TakePhotoManager
 import com.lodz.android.pandora.utils.coroutines.CoroutinesWrapper
+import com.lodz.android.pandora.utils.media.MediaUtils
 
 /**
  * 挑选手机文件
@@ -43,7 +44,7 @@ internal class PhonePickerActivity : AnyPickerActivity<DocumentWrapper>() {
 
     /** 当前展示的图片文件夹 */
     private var mPdrCurrentDocumentFolder: DocumentFolder? = null
-
+    /** 手机资源数据 */
     private val mPdrPhoneDataList: ArrayList<DocumentWrapper> = arrayListOf()
 
     override fun initData() {
@@ -150,16 +151,18 @@ internal class PhonePickerActivity : AnyPickerActivity<DocumentWrapper>() {
 
     private fun requestMediaData(bean: PickerBean<DocumentWrapper>): ArrayList<DataWrapper<DocumentWrapper>> {
         mPdrPhoneDataList.clear()
-        mPdrPhoneDataList.addAll(
-            when (bean.pickType) {
-                PickerManager.PICK_PHONE_ALBUM -> getMediaImages()
-                PickerManager.PICK_PHONE_AUDIO -> getMediaAudios()
-                PickerManager.PICK_PHONE_VIDEO -> getMediaVideos()
-                PickerManager.PICK_PHONE_SUFFIX -> getAllFiles(*bean.suffixArray)
-                PickerManager.PICK_PHONE_ASSEMBLE -> getAssembleData(bean.phoneAssemble)
-                else -> arrayListOf()
-            }
-        )
+        val list = when (bean.pickType) {
+            PickerManager.PICK_PHONE_ALBUM -> getMediaImages()
+            PickerManager.PICK_PHONE_AUDIO -> getMediaAudios()
+            PickerManager.PICK_PHONE_VIDEO -> getMediaVideos()
+            PickerManager.PICK_PHONE_SUFFIX -> getAllFiles(*bean.suffixArray)
+            PickerManager.PICK_PHONE_ASSEMBLE -> getAssembleData(bean.phoneAssemble)
+            else -> arrayListOf()
+        }
+        list.forEachIndexed { index, documentWrapper ->
+            list[index].iconId = MediaUtils.getIconBySuffix(documentWrapper.fileName.getFileSuffix())
+        }
+        mPdrPhoneDataList.addAll(list)
         return transformDataWrapper(mPdrPhoneDataList)
     }
 

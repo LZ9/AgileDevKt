@@ -23,11 +23,11 @@ import org.greenrobot.eventbus.ThreadMode
  * 图片预览页面
  * Created by zhouL on 2018/12/13.
  */
-internal class PicturePreviewActivity<T : Any, VH : RecyclerView.ViewHolder> : AbsActivity() {
+internal class PicturePreviewActivity<T, VH : RecyclerView.ViewHolder> : AbsActivity() {
 
     companion object {
         private var sPreviewBean: PreviewBean<*, *>? = null
-        internal fun <T : Any, VH : RecyclerView.ViewHolder> start(context: Context, previewBean: PreviewBean<T, VH>, flags: List<Int>?) {
+        internal fun <T, VH : RecyclerView.ViewHolder> start(context: Context, previewBean: PreviewBean<T, VH>, flags: List<Int>?) {
             synchronized(PreviewBean::class.java) {
                 if (sPreviewBean != null) {
                     return

@@ -14,8 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.corekt.anko.dp2pxRF
 import com.lodz.android.corekt.anko.getColorCompat
 import com.lodz.android.corekt.anko.getScreenWidth
-import com.lodz.android.corekt.file.DocumentWrapper
-import com.lodz.android.corekt.file.formatVideoDuration
+import com.lodz.android.corekt.file.PickerInfo
 import com.lodz.android.pandora.R
 import com.lodz.android.pandora.picker.contract.OnImgLoader
 import com.lodz.android.pandora.picker.file.PickerUIConfig
@@ -27,11 +26,12 @@ import com.lodz.android.pandora.widget.rv.recycler.vh.DataViewHolder
  * 照片选择适配器
  * Created by zhouL on 2018/12/20.
  */
-internal class AnyPickerAdapter<T : Any>(
+internal class AnyPickerAdapter<T>(
     context: Context,
     imgLoader: OnImgLoader<T>?,
-    isNeedCamera: Boolean,
-    config: PickerUIConfig
+    private val isPdrNeedCamera: Boolean,
+    private val isPdrNeedBottomInfo: Boolean,
+    private val mPdrConfig: PickerUIConfig
 ) : BaseRvAdapter<DataWrapper<T>>(context) {
 
     /** 相机 */
@@ -49,15 +49,8 @@ internal class AnyPickerAdapter<T : Any>(
     /** 已选中图标 */
     private val mPdrSelectedBitmap: Bitmap
 
-    /** 是否需要相机 */
-    private val isPdrNeedCamera: Boolean
-    /** UI配置 */
-    private val mPdrConfig: PickerUIConfig
-
     init {
         this.mPdrImgLoader = imgLoader
-        this.isPdrNeedCamera = isNeedCamera
-        this.mPdrConfig = config
         mPdrUnselectBitmap = getUnselectBitmap(mPdrConfig.getSelectedBtnUnselect())
         mPdrSelectedBitmap = getSelectedBitmap(mPdrConfig.getSelectedBtnSelected())
     }
@@ -118,16 +111,30 @@ internal class AnyPickerAdapter<T : Any>(
         }
         maskView.visibility = if (bean.isSelected) View.VISIBLE else View.GONE
 
-        val imageView = holder.withView<ImageView>(R.id.pdr_photo_img)
         val data = bean.data
-        val layout = holder.withView<ViewGroup>(R.id.bottom_info_layout)
-        if (data is DocumentWrapper && data.duration > 0) {
-            holder.withView<TextView>(R.id.duration_tv).text = data.duration.formatVideoDuration()
-            layout.visibility = View.VISIBLE
+        mPdrImgLoader?.displayImg(context, data, holder.withView(R.id.pdr_photo_img))
+
+        val layout = holder.withView<ViewGroup>(R.id.pdr_bottom_info_layout)
+        if (!isPdrNeedBottomInfo){
+            layout.visibility = View.GONE
+            return
+        }
+
+        if (data is PickerInfo) {
+            val name = data.getName()
+            val durationFormat = data.getDurationFormatStr()
+            layout.visibility = if (name.isEmpty() && durationFormat.isEmpty()) View.GONE else View.VISIBLE
+            holder.withView<TextView>(R.id.pdr_name_tv).text = name
+            val durationTv = holder.withView<TextView>(R.id.pdr_duration_tv)
+            if (durationFormat.isEmpty()) {
+                durationTv.visibility = View.GONE
+            } else {
+                durationTv.visibility = View.VISIBLE
+                durationTv.text = durationFormat
+            }
         } else {
             layout.visibility = View.GONE
         }
-        mPdrImgLoader?.displayImg(context, data, imageView)
     }
 
     /** 获取未选中的背景图，颜色[color] */

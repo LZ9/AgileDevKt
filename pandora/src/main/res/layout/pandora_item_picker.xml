@@ -15,7 +15,7 @@
         android:scaleType="center" />
 
     <LinearLayout
-        android:id="@+id/bottom_info_layout"
+        android:id="@+id/pdr_bottom_info_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
@@ -24,14 +24,19 @@
         android:orientation="horizontal"
         android:padding="3dp">
 
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:contentDescription="@string/pandora_app_img_name"
-            android:src="@drawable/pandora_ic_play" />
+        <TextView
+            android:id="@+id/pdr_name_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="middle"
+            android:singleLine="true"
+            android:textColor="#ffffff"
+            android:textSize="12sp"
+            tools:text="XXXXXXX.png" />
 
         <TextView
-            android:id="@+id/duration_tv"
+            android:id="@+id/pdr_duration_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"

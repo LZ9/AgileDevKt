@@ -10,7 +10,7 @@ import com.lodz.android.pandora.widget.rv.recycler.base.AbsRvAdapter
  * 图片翻页适配器
  * Created by zhouL on 2018/12/17.
  */
-internal class PicturePagerAdapter<T : Any, VH : RecyclerView.ViewHolder>(
+internal class PicturePagerAdapter<T, VH : RecyclerView.ViewHolder>(
     context: Context,
     private val mView: AbsPreviewAgent<T, VH>, // 图片控件
 ) : AbsRvAdapter<T, VH>(context) {

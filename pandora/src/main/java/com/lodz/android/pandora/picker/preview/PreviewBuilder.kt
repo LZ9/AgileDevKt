@@ -13,7 +13,7 @@ import com.lodz.android.pandora.picker.preview.vh.AbsPreviewAgent
  * 图片预览构建器
  * Created by zhouL on 2018/12/15.
  */
-class PreviewBuilder<T : Any, VH : RecyclerView.ViewHolder> {
+class PreviewBuilder<T, VH : RecyclerView.ViewHolder> {
     /** 预览数据 */
     private val previewBean = PreviewBean<T, VH>()
 

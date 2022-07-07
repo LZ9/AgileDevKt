@@ -10,6 +10,7 @@ import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.corekt.utils.ToastUtils
 import com.lodz.android.pandora.R
 import com.lodz.android.pandora.picker.contract.OnImgLoader
+import com.lodz.android.pandora.picker.contract.picker.OnFileClickListener
 import com.lodz.android.pandora.picker.contract.picker.OnFilePickerListener
 import com.lodz.android.pandora.picker.contract.picker.OnFilePreviewListener
 import com.lodz.android.pandora.picker.file.PickerBean
@@ -22,7 +23,7 @@ import com.lodz.android.pandora.picker.preview.vh.DataPreviewAgent
  * 文件选择构建类
  * Created by zhouL on 2018/12/19.
  */
-open class PickerBuilder<T : Any> constructor(private val pickerBean: PickerBean<T>) {
+open class PickerBuilder<T> constructor(private val pickerBean: PickerBean<T>) {
 
     /** 设置图片加载器[imgLoader] */
     fun setImgLoader(imgLoader: OnImgLoader<T>): PickerBuilder<T> {
@@ -39,6 +40,12 @@ open class PickerBuilder<T : Any> constructor(private val pickerBean: PickerBean
     /** 设置文件预览回调[listener] */
     fun setOnFilePreviewListener(listener: OnFilePreviewListener<T>): PickerBuilder<T> {
         pickerBean.filePreviewListener = listener
+        return this
+    }
+
+    /** 文件点击回调[listener] */
+    fun setOnFileClickListener(listener: OnFileClickListener<T>): PickerBuilder<T> {
+        pickerBean.fileClickListener = listener
         return this
     }
 
@@ -69,6 +76,12 @@ open class PickerBuilder<T : Any> constructor(private val pickerBean: PickerBean
     /** 设置是否需要预览功能[needPreview] */
     fun setNeedPreview(needPreview: Boolean): PickerBuilder<T> {
         pickerBean.isNeedPreview = needPreview
+        return this
+    }
+
+    /** 是否需要底部信息栏[needBottomInfo] */
+    fun setNeedBottomInfo(needBottomInfo: Boolean): PickerBuilder<T> {
+        pickerBean.isNeedBottomInfo = needBottomInfo
         return this
     }
 

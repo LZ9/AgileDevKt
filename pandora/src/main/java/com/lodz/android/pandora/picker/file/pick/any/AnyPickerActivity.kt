@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewTreeObserver
 import androidx.annotation.ColorRes
-import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.corekt.anko.*
 import com.lodz.android.corekt.utils.BitmapUtils
 import com.lodz.android.corekt.utils.SelectorUtils
@@ -34,12 +33,12 @@ import org.greenrobot.eventbus.ThreadMode
  * Created by zhouL on 2018/12/20.
  */
 @SuppressLint("NotifyDataSetChanged")
-internal open class AnyPickerActivity<T : Any> : AbsActivity() {
+internal open class AnyPickerActivity<T> : AbsActivity() {
 
     companion object {
         var sPickerBean: PickerBean<*>? = null
 
-        internal fun <T : Any> start(context: Context, pickerBean: PickerBean<T>, flags: List<Int>?) {
+        internal fun <T> start(context: Context, pickerBean: PickerBean<T>, flags: List<Int>?) {
             synchronized(PickerBean::class.java) {
                 if (sPickerBean != null) {
                     return
@@ -109,7 +108,7 @@ internal open class AnyPickerActivity<T : Any> : AbsActivity() {
 
     /** 初始化RecyclerView */
     private fun initRecyclerView(bean: PickerBean<T>) {
-        mPdrAdapter = AnyPickerAdapter(getContext(), bean.imgLoader, bean.isNeedCamera, bean.pickerUIConfig)
+        mPdrAdapter = AnyPickerAdapter(getContext(), bean.imgLoader, bean.isNeedCamera, bean.isNeedBottomInfo, bean.pickerUIConfig)
         mPdrAdapter = mBinding.pdrPickerPhototRv
             .grid(3)
             .setup(mPdrAdapter)
@@ -158,9 +157,8 @@ internal open class AnyPickerActivity<T : Any> : AbsActivity() {
             mPdrSelectedList.forEach {
                 list.add(it.data)
             }
-            previewPic(list, list.size > 1)
             if (mPdrPickerBean?.filePreviewListener != null) {// 由外部处理预览逻辑
-                mPdrPickerBean?.filePreviewListener?.onPickerSelected(getContext(), list, bean.pickerUIConfig)
+                mPdrPickerBean?.filePreviewListener?.onPickerPreview(getContext(), list, bean.pickerUIConfig)
                 return@setOnClickListener
             }
             handlePreview(list)
@@ -216,11 +214,11 @@ internal open class AnyPickerActivity<T : Any> : AbsActivity() {
         // 图片点击回调
         mPdrAdapter.setOnItemClickListener { viewHolder, item, position ->
             val bean = mPdrPickerBean ?: return@setOnItemClickListener
-            if (!bean.isNeedPreview) {// 不需要预览
+            if (mPdrPickerBean?.fileClickListener != null) {// 由外部处理预览逻辑
+                mPdrPickerBean?.fileClickListener?.onItemClick(getContext(), item.data)
                 return@setOnItemClickListener
             }
-            if (mPdrPickerBean?.filePreviewListener != null) {// 由外部处理预览逻辑
-                mPdrPickerBean?.filePreviewListener?.onPickerSelected(getContext(), arrayListOf(item.data), bean.pickerUIConfig)
+            if (!bean.isNeedPreview) {// 不需要预览
                 return@setOnItemClickListener
             }
             handlePreview(arrayListOf(item.data))

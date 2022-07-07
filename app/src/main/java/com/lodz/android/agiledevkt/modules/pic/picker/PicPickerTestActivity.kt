@@ -13,12 +13,14 @@ import androidx.lifecycle.LifecycleOwner
 import com.lodz.android.agiledevkt.BuildConfig
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.databinding.ActivityPicPickerBinding
-import com.lodz.android.agiledevkt.modules.pic.preview.media.MediaViewImpl
 import com.lodz.android.corekt.anko.goAppDetailSetting
+import com.lodz.android.corekt.anko.installApk
 import com.lodz.android.corekt.anko.isPermissionGranted
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.corekt.file.DocumentWrapper
+import com.lodz.android.corekt.file.getFileSuffix
 import com.lodz.android.corekt.log.PrintLog
+import com.lodz.android.corekt.media.isApkSuffix
 import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.picker.file.PickerManager
@@ -99,6 +101,7 @@ class PicPickerTestActivity : BaseActivity() {
             PickerManager.pickPhoneAlbum()
                 .setMaxCount(mMaxCount)
                 .setNeedPreview(mBinding.itemPreviewSwitch.isChecked)
+                .setNeedBottomInfo(false)
                 .setPickerUIConfig(mConfig)
                 .setNeedCamera(mBinding.showCameraSwitch.isChecked, Environment.DIRECTORY_DCIM)
                 .setAuthority(BuildConfig.FILE_AUTHORITY)
@@ -160,8 +163,36 @@ class PicPickerTestActivity : BaseActivity() {
 
         // 挑选手机里的Word/Excel/PPT/PDF/APK
         mBinding.pickerPhoneOfficeBtn.setOnClickListener {
-
-
+            mBinding.showCameraSwitch.isChecked = false
+            mBinding.itemPreviewSwitch.isChecked = false
+            PickerManager.pickPhoneBySuffix(".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx", ".pdf", ".apk")
+                .setMaxCount(mMaxCount)
+                .setNeedPreview(mBinding.itemPreviewSwitch.isChecked)
+                .setPickerUIConfig(mConfig)
+                .setNeedCamera(mBinding.showCameraSwitch.isChecked)
+                .setAuthority(BuildConfig.FILE_AUTHORITY)
+                .setImgLoader { context, source, imageView ->
+                    val iconId = if (source.iconId == 0) R.drawable.pandora_ic_file else source.iconId
+                    ImageLoader.create(context)
+                        .loadResId(iconId)
+                        .setCenterInside()
+                        .into(imageView)
+                }
+                .setOnFileClickListener { context, source ->
+                    if (source.fileName.getFileSuffix().isApkSuffix()){
+                        installApk(source.file.absolutePath, BuildConfig.FILE_AUTHORITY)
+                        return@setOnFileClickListener
+                    }
+                    openFileByOther(context, source)
+                }
+                .setOnFilePickerListener{
+                    var str = ""
+                    for (dw in it) {
+                        str += "${dw.documentFile.name}\n\n"
+                    }
+                    mBinding.resultTv.text = str
+                }
+                .open(getContext())
         }
 
 
@@ -321,6 +352,14 @@ class PicPickerTestActivity : BaseActivity() {
                 R.id.style_three_rb -> setThreeStyle()
             }
         }
+    }
+
+    /** 用第三方APP打开文件 */
+    private fun openFileByOther(context: Context, source: DocumentWrapper) {
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        intent.setDataAndType(source.documentFile.uri, source.documentFile.type)
+        context.startActivity(intent)
     }
 
     /** 设置默认风格 */
