@@ -1,5 +1,16 @@
 # core-kt库更新记录
 
+##### 2022/07/08
+1. 升级工程、更新依赖库版本
+2. AnkoDrawable.kt增加创建圆角方法
+3. SharedPreferencesUtils.kt使用弱关联包裹Context
+4. 新增通讯录常用方法封装AnkoContact.kt
+5. 新增多媒体资源（相册/音频/视频/文件）查询工具类AnkoMedia.kt
+6. AnkoDevice.kt增加获取永久SIM标识符方法
+7. AnkoFile.kt增加uri转base64的方法
+8. 根据sonar扫描结果修复相关类的BUG 
+9. 发布2.0.0版
+
 ##### 2022/03/15
 1. 更新依赖库版本
 2. 优化协程相关扩展类的方法

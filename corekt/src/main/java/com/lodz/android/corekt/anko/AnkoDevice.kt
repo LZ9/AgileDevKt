@@ -33,7 +33,6 @@ fun Context.getIMSI1(): String = getOperatorBySlot("getSubscriberId", 0)
 fun Context.getSubscriptionId(): String {
     val manager = getSystemService(Context.TELEPHONY_SERVICE)
     if (manager is TelephonyManager) {
-
         return TelephonyManagerCompat.getSubscriptionId(manager).toString()
     }
     return ""
