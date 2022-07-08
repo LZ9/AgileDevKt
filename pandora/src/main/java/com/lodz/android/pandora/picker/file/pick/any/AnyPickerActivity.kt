@@ -198,6 +198,8 @@ internal open class AnyPickerActivity<T> : AbsActivity() {
                                 getString(R.string.pandora_picker_confirm)
                             }
                             mBinding.pdrPreviewBtn.isEnabled = mPdrSelectedList.isNotEmpty()
+                            val previewStr = getString(R.string.pandora_picker_preview)
+                            mBinding.pdrPreviewBtn.text = if (mPdrSelectedList.isEmpty()) previewStr else previewStr.append("(${mPdrSelectedList.size})")
                             return
                         }
                     }

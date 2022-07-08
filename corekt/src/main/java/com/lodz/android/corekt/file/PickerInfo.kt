@@ -7,7 +7,7 @@ package com.lodz.android.corekt.file
 interface PickerInfo {
 
     /** 名称 */
-    fun getName(): String
+    fun getNameStr(): String
 
     /** 格式化文件大小 */
     fun getSizeFormatStr(): String

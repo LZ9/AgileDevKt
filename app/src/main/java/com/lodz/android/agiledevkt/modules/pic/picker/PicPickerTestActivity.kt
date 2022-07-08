@@ -12,6 +12,7 @@ import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.lodz.android.agiledevkt.BuildConfig
 import com.lodz.android.agiledevkt.R
+import com.lodz.android.agiledevkt.config.Constant
 import com.lodz.android.agiledevkt.databinding.ActivityPicPickerBinding
 import com.lodz.android.corekt.anko.goAppDetailSetting
 import com.lodz.android.corekt.anko.installApk
@@ -20,12 +21,14 @@ import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.corekt.file.DocumentWrapper
 import com.lodz.android.corekt.file.getFileSuffix
 import com.lodz.android.corekt.log.PrintLog
+import com.lodz.android.corekt.media.getAllFiles
 import com.lodz.android.corekt.media.isApkSuffix
 import com.lodz.android.imageloaderkt.ImageLoader
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.picker.file.PickerManager
 import com.lodz.android.pandora.picker.file.PickerUIConfig
 import com.lodz.android.pandora.picker.preview.vh.ImagePreviewAgent
+import com.lodz.android.pandora.utils.coroutines.CoroutinesWrapper
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import permissions.dispatcher.*
 import permissions.dispatcher.ktx.constructPermissionsRequest
@@ -83,17 +86,106 @@ class PicPickerTestActivity : BaseActivity() {
 
         // 挑选指定资源图片
         mBinding.pickerCustomResBtn.setOnClickListener {
-
+            PickerManager.pickAny(getResIdList())
+                .setMaxCount(mMaxCount)
+                .setNeedPreview(mBinding.itemPreviewSwitch.isChecked)
+                .setPickerUIConfig(mConfig)
+                .setImgLoader { context, source, imageView ->
+                    ImageLoader.create(context)
+                        .loadResId(source)
+                        .setCenterCrop()
+                        .into(imageView)
+                }
+                .setPreviewView(object :ImagePreviewAgent<Int>(){
+                    override fun displayImag(context: Context, source: Int, imageView: ImageView, position: Int) {
+                        ImageLoader.create(context)
+                            .loadResId(source)
+                            .setPlaceholder(R.drawable.pandora_ic_img)
+                            .setError(R.drawable.pandora_ic_img)
+                            .setFitCenter()
+                            .into(imageView)
+                    }
+                })
+                .setOnFilePickerListener { list ->
+                    var str = ""
+                    for (item in list) {
+                        str += "${item}\n\n"
+                    }
+                    mBinding.resultTv.text = str
+                }
+                .open(getContext())
         }
 
         // 挑选指定网络图片
         mBinding.pickerCustomUrlBtn.setOnClickListener {
-
+            PickerManager.pickAny(Constant.IMG_URLS)
+                .setMaxCount(mMaxCount)
+                .setNeedPreview(mBinding.itemPreviewSwitch.isChecked)
+                .setPickerUIConfig(mConfig)
+                .setImgLoader { context, source, imageView ->
+                    ImageLoader.create(context)
+                        .loadUrl(source)
+                        .setCenterCrop()
+                        .into(imageView)
+                }
+                .setPreviewView(object :ImagePreviewAgent<String>(){
+                    override fun displayImag(context: Context, source: String, imageView: ImageView, position: Int) {
+                        ImageLoader.create(context)
+                            .loadUrl(source)
+                            .setPlaceholder(R.drawable.pandora_ic_img)
+                            .setError(R.drawable.pandora_ic_img)
+                            .setFitCenter()
+                            .into(imageView)
+                    }
+                })
+                .setOnFilePickerListener { list ->
+                    var str = ""
+                    for (item in list) {
+                        str += "${item}\n\n"
+                    }
+                    mBinding.resultTv.text = str
+                }
+                .open(getContext())
         }
 
         // 挑选指定文件
         mBinding.pickerCustomFileBtn.setOnClickListener {
-
+            CoroutinesWrapper.create(this)
+                .request { getCustomList() }
+                .actionPg(getContext()) {
+                    onSuccess {
+                        PickerManager.pickAny(it)
+                            .setMaxCount(mMaxCount)
+                            .setNeedPreview(false)
+                            .setPickerUIConfig(mConfig)
+                            .setImgLoader { context, source, imageView ->
+                                if (source.type == CustomPickBean.URL_IMG_TYPE){
+                                    ImageLoader.create(context)
+                                        .loadUrl(source.url)
+                                        .setPlaceholder(R.drawable.pandora_ic_img)
+                                        .setError(R.drawable.pandora_ic_img)
+                                        .setCenterCrop()
+                                        .into(imageView)
+                                    return@setImgLoader
+                                }
+                                val documentFile = source.document?.documentFile ?: return@setImgLoader
+                                ImageLoader.create(context)
+                                    .loadUri(documentFile.uri)
+                                    .setPlaceholder(R.drawable.pandora_ic_file)
+                                    .setError(R.drawable.pandora_ic_file)
+                                    .setCenterInside()
+                                    .into(imageView)
+                            }
+                            .setOnFilePickerListener { list ->
+                                var str = ""
+                                for (item in list) {
+                                    str += "${item.name.ifEmpty { item.url }}\n\n"
+                                }
+                                mBinding.resultTv.text = str
+                            }
+                            .open(getContext())
+                    }
+                }
         }
 
         // 挑选手机相册
@@ -195,139 +287,6 @@ class PicPickerTestActivity : BaseActivity() {
                 .open(getContext())
         }
 
-
-
-        // 挑选手机相册
-//        mBinding.pickerPhoneAlbumBtn.setOnClickListener {
-
-
-//            PickerManager.create<ImageView>()
-//                .setMaxCount(mMaxCount)
-//                .setNeedCamera(mBinding.showCameraSwitch.isChecked)
-//                .setNeedItemPreview(mBinding.itemPreviewSwitch.isChecked)
-//                .setPickerUIConfig(mConfig)
-//                .setCameraSavePath(FileManager.getCacheFolderPath())
-//                .setAuthority(BuildConfig.FILE_AUTHORITY)
-//                .setImgLoader { context, source, imageView ->
-//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-//                        ImageLoader.create(context).loadUri(source.uri).setCenterCrop().into(imageView)
-//                    } else {
-//                        ImageLoader.create(context).loadFilePath(source.path).setCenterCrop().into(imageView)
-//                    }
-//                }
-//                .setImageView(object : AbsImageView<ImageView, PicInfo>(mBinding.scaleSwitch.isChecked) {
-//                    override fun onCreateView(context: Context, isScale: Boolean): ImageView {
-//                        val img = if (isScale) PhotoView(context) else ImageView(context)
-//                        img.scaleType = ImageView.ScaleType.CENTER_INSIDE
-//                        return img
-//                    }
-//
-//                    override fun onDisplayImg(context: Context, source: PicInfo, view: ImageView) {
-//                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-//                            ImageLoader.create(context).loadUri(source.uri).setFitCenter().into(view)
-//                        } else {
-//                            ImageLoader.create(context).loadFilePath(source.path).setFitCenter().into(view)
-//                        }
-//                    }
-//                    override fun onClickImpl(viewHolder: RecyclerView.ViewHolder, view: ImageView, source: PicInfo, position: Int, controller: PreviewController) {
-//                        if (mBinding.clickClosePreviewSwitch.isChecked) {
-//                            controller.close()
-//                        }
-//                    }
-//
-//                    override fun onViewDetached(view: ImageView, isScale: Boolean) {
-//                        super.onViewDetached(view, isScale)
-//                        if (isScale && view is PhotoView) {
-//                            view.attacher.update()
-//                        }
-//                    }
-//                })
-//                .setOnLifecycleObserver(object :DefaultLifecycleObserver{
-//                    override fun onDestroy(owner: LifecycleOwner) {
-//                        super.onDestroy(owner)
-//                        PrintLog.e("testtag", "DefaultLifecycleObserver onDestroy")
-//                    }
-//
-//                    override fun onCreate(owner: LifecycleOwner) {
-//                        super.onCreate(owner)
-//                        PrintLog.e("testtag", "DefaultLifecycleObserver onCreate")
-//                    }
-//
-//                    override fun onPause(owner: LifecycleOwner) {
-//                        super.onPause(owner)
-//                        PrintLog.v("testtag", "DefaultLifecycleObserver onPause")
-//                    }
-//
-//                    override fun onResume(owner: LifecycleOwner) {
-//                        super.onResume(owner)
-//                        PrintLog.v("testtag", "DefaultLifecycleObserver onResume")
-//                    }
-//
-//                    override fun onStart(owner: LifecycleOwner) {
-//                        super.onStart(owner)
-//                        PrintLog.d("testtag", "DefaultLifecycleObserver onStart")
-//                    }
-//
-//                    override fun onStop(owner: LifecycleOwner) {
-//                        super.onStop(owner)
-//                        PrintLog.d("testtag", "DefaultLifecycleObserver onStop")
-//                    }
-//                })
-//                .setOnPhotoPickerListener { photos ->
-//                    var str = ""
-//                    for (path in photos) {
-//                        str += "$path\n\n"
-//                    }
-//                    mBinding.resultTv.text = str
-//                }
-//                .build()
-//                .open(getContext())
-//        }
-
-//         挑选指定图片
-//        mBinding.pickerCustomResBtn.setOnClickListener {
-//            PickerManager.create<ImageView>()
-//                .setMaxCount(mMaxCount)
-//                .setNeedItemPreview(mBinding.itemPreviewSwitch.isChecked)
-//                .setPickerUIConfig(mConfig)
-//                .setImgLoader { context, source, imageView ->
-//                    ImageLoader.create(context).loadUrl(source.path).setCenterCrop().into(imageView)
-//                }
-//                .setImageView(object : AbsImageView<ImageView, PicInfo>(mBinding.scaleSwitch.isChecked) {
-//                    override fun onCreateView(context: Context, isScale: Boolean): ImageView {
-//                        val img = if (isScale) PhotoView(context) else ImageView(context)
-//                        img.scaleType = ImageView.ScaleType.CENTER_INSIDE
-//                        return img
-//                    }
-//
-//                    override fun onDisplayImg(context: Context, source: PicInfo, view: ImageView) {
-//                        ImageLoader.create(context).loadUrl(source.path).setFitCenter().into(view)
-//                    }
-//
-//                    override fun onClickImpl(viewHolder: RecyclerView.ViewHolder, view: ImageView, source: PicInfo, position: Int, controller: PreviewController) {
-//                        if (mBinding.clickClosePreviewSwitch.isChecked) {
-//                            controller.close()
-//                        }
-//                    }
-//
-//                    override fun onViewDetached(view: ImageView, isScale: Boolean) {
-//                        super.onViewDetached(view, isScale)
-//                        if (isScale && view is PhotoView) {
-//                            view.attacher.update()
-//                        }
-//                    }
-//                })
-//                .setOnPhotoPickerListener { photos ->
-//                    var str = ""
-//                    for (path in photos) {
-//                        str += "$path\n\n"
-//                    }
-//                    mBinding.resultTv.text = str
-//                }
-//                .build(Constant.IMG_URLS)
-//                .open(getContext())
-//        }
-
         // 加数量
         mBinding.plusBtn.setOnClickListener {
             mMaxCount++
@@ -352,6 +311,30 @@ class PicPickerTestActivity : BaseActivity() {
                 R.id.style_three_rb -> setThreeStyle()
             }
         }
+    }
+
+    private fun getResIdList(): List<Int> {
+        val list = ArrayList<Int>()
+        list.add(R.drawable.ic_brand)
+        list.add(R.drawable.ic_logo)
+        list.add(R.drawable.bg_old_trafford)
+        list.add(R.drawable.bg_pokemon)
+        list.add(R.drawable.bg_splash)
+        list.add(R.drawable.ic_gif)
+        list.add(R.drawable.ic_webp)
+        list.add(R.drawable.ic_regret)
+        return list
+    }
+
+    /** 获取自定义数据体 */
+    private fun getCustomList(): List<CustomPickBean> {
+        val list = ArrayList<CustomPickBean>()
+        val files = getAllFiles(".txt")
+        files.forEachIndexed { index, documentWrapper ->
+            list.add(CustomPickBean("", Constant.IMG_URLS[index % Constant.IMG_URLS.size], CustomPickBean.URL_IMG_TYPE, null))
+            list.add(CustomPickBean(documentWrapper.fileName, "", CustomPickBean.DOCUMENT_TYPE, documentWrapper))
+        }
+        return list
     }
 
     /** 用第三方APP打开文件 */
@@ -432,7 +415,7 @@ class PicPickerTestActivity : BaseActivity() {
             .setNavigationBarColor(R.color.black)
             .setCameraImg(R.drawable.ic_wallet)
             .setCameraBgColor(R.color.white)
-            .setItemBgColor(R.color.white)
+            .setItemBgColor(R.color.black)
             .setSelectedBtnUnselect(R.color.color_d43450)
             .setSelectedBtnSelected(R.color.color_d43450)
 //                .setMaskColor(R.color.color_aa9a9a9a)

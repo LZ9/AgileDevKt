@@ -19,7 +19,7 @@ class DocumentWrapper(
     @DrawableRes var iconId: Int = 0, //音视频时长
 ):PickerInfo {
 
-    override fun getName(): String = fileName
+    override fun getNameStr(): String = fileName
 
     override fun getDurationFormatStr(): String = durationFormat
 

@@ -1,7 +1,6 @@
 package com.lodz.android.pandora.picker.file.builder
 
 import android.content.Context
-import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.corekt.file.DocumentWrapper
 import com.lodz.android.pandora.picker.file.PickerBean
 import com.lodz.android.pandora.picker.file.pick.phone.PhonePickerActivity

@@ -26,7 +26,7 @@ class PickerUIConfig private constructor() {
     /** 拍照按钮背景颜色 */
     @ColorRes
     private var cameraBgColor = android.R.color.black
-    /** 照片背景颜色 */
+    /** 网格背景颜色 */
     @ColorRes
     private var itemBgColor = android.R.color.black
     /** 选择按钮未选中颜色 */

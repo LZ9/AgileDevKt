@@ -121,7 +121,7 @@ internal class AnyPickerAdapter<T>(
         }
 
         if (data is PickerInfo) {
-            val name = data.getName()
+            val name = data.getNameStr()
             val durationFormat = data.getDurationFormatStr()
             layout.visibility = if (name.isEmpty() && durationFormat.isEmpty()) View.GONE else View.VISIBLE
             holder.withView<TextView>(R.id.pdr_name_tv).text = name

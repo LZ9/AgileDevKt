@@ -27,14 +27,6 @@ class PickerManager {
         const val PICK_PHONE_SUFFIX = 4
         /** 选取指定的任意类型 */
         const val PICK_ANY = 5
-        /** 选取指定的文件 */
-        const val PICK_FILE = 6
-        /** 选取指定的Uri */
-        const val PICK_URI = 7
-        /** 选取指定的资源id */
-        const val PICK_RES_ID = 8
-        /** 选取指定的url */
-        const val PICK_IMAGE_URL = 9
 
         /** 选取手机组合文件（图片、视频、音频） */
         @JvmStatic
@@ -85,54 +77,6 @@ class PickerManager {
         /** 选取指定的任意类型数组[array] */
         @JvmStatic
         fun <T> pickAny(array: Array<T>): PickerBuilder<T> = pickAny(array.toList())
-
-        /** 选取指定的文件列表[list] */
-        @JvmStatic
-        fun pickFile(list: List<File>): FilePickerBuilder {
-            val pickerBean = PickerBean<File>(PICK_FILE)
-            pickerBean.sourceList = list
-            return FilePickerBuilder(pickerBean)
-        }
-
-        /** 选取指定的文件数组[array] */
-        @JvmStatic
-        fun pickFile(array: Array<File>): FilePickerBuilder = pickFile(array.toList())
-
-        /** 选取指定的Uri列表[list] */
-        @JvmStatic
-        fun pickUri(list: List<Uri>): UriPickerBuilder {
-            val pickerBean = PickerBean<Uri>(PICK_URI)
-            pickerBean.sourceList = list
-            return UriPickerBuilder(pickerBean)
-        }
-
-        /** 选取指定的Uri数组[array] */
-        @JvmStatic
-        fun pickUri(array: Array<Uri>): UriPickerBuilder = pickUri(array.toList())
-
-        /** 选取指定的资源id列表[list] */
-        @JvmStatic
-        fun pickResId(list: List<Int>): ResIdPickerBuilder {
-            val pickerBean = PickerBean<Int>(PICK_RES_ID)
-            pickerBean.sourceList = list
-            return ResIdPickerBuilder(pickerBean)
-        }
-
-        /** 选取指定的资源id数组[array] */
-        @JvmStatic
-        fun pickResId(array: Array<Int>): ResIdPickerBuilder = pickResId(array.toList())
-
-        /** 选取指定的url列表[list] */
-        @JvmStatic
-        fun pickImageUrl(list: List<String>): ImageUrlPickerBuilder {
-            val pickerBean = PickerBean<String>(PICK_IMAGE_URL)
-            pickerBean.sourceList = list
-            return ImageUrlPickerBuilder(pickerBean)
-        }
-
-        /** 选取指定的url数组[array] */
-        @JvmStatic
-        fun pickImageUrl(array: Array<String>): ImageUrlPickerBuilder = pickImageUrl(array.toList())
     }
 
 

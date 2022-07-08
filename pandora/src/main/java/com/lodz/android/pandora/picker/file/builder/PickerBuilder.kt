@@ -126,8 +126,7 @@ open class PickerBuilder<T> constructor(private val pickerBean: PickerBean<T>) {
         }
 
         val list = pickerBean.sourceList
-        if (type == PickerManager.PICK_ANY || type == PickerManager.PICK_FILE || type == PickerManager.PICK_URI
-            || type == PickerManager.PICK_RES_ID || type == PickerManager.PICK_IMAGE_URL) {//挑选指定文件
+        if (type == PickerManager.PICK_ANY) {//挑选指定文件
             if (list.isNullOrEmpty()) {
                 context.toastShort(R.string.pandora_picker_source_list_empty)
                 return manager

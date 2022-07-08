@@ -107,12 +107,6 @@ internal class PhonePickerActivity : AnyPickerActivity<DocumentWrapper>() {
             }
     }
 
-    override fun handlePreview(list: ArrayList<DocumentWrapper>) {
-        super.handlePreview(list)
-
-
-    }
-
     override fun takeCameraPhoto(bean: PickerBean<DocumentWrapper>) {
         TakePhotoManager.create()
             .setPublicDirectoryName(bean.publicDirectoryName)
