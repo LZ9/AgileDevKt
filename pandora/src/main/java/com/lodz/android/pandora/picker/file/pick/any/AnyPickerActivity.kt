@@ -67,7 +67,7 @@ internal open class AnyPickerActivity<T> : AbsActivity() {
     /** 当前文件数据 */
     private val mPdrDataList = ArrayList<DataWrapper<T>>()
     /** 已选中的文件 */
-    private val mPdrSelectedList = ArrayList<DataWrapper<T>>()
+    protected val mPdrSelectedList = ArrayList<DataWrapper<T>>()
 
     override fun findViews(savedInstanceState: Bundle?) {
         super.findViews(savedInstanceState)

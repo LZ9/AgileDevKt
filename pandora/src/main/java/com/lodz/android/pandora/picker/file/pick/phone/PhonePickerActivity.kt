@@ -66,45 +66,63 @@ internal class PhonePickerActivity : AnyPickerActivity<DocumentWrapper>() {
 
     override fun onClickFolderBtn(bean: PickerBean<DocumentWrapper>) {
         CoroutinesWrapper.create(this)
-            .request {
-                if (mPdrCurrentDocumentFolder == null) {
-                    mPdrCurrentDocumentFolder = mPdrPhoneDataList.getTotalFolder()
-                }
-                val list = ArrayList<FolderItemBean>()
-                val folders = mPdrPhoneDataList.getAllFileFolder()
-                for (folder in folders) {
-                    val itemBean = FolderItemBean()
-                    itemBean.documentFolder = folder
-                    itemBean.isSelected = mPdrCurrentDocumentFolder?.dirPath.equals(folder.dirPath)
-                    list.add(itemBean)
-                }
-                list
+            .request { getFolderList() }
+            .actionPg(getContext(), msg = getString(R.string.pandora_picker_folder_loading)) {
+                onSuccess { showFolderDialog(it, bean) }
             }
-            .actionPg(getContext(), msg = getString(R.string.pandora_picker_folder_loading)){
-                onSuccess {
-                    val dialog = FolderDialog(getContext())
-                    dialog.setOnImgLoader(bean.imgLoader)
-                    dialog.setPickerUIConfig(bean.pickerUIConfig)
-                    dialog.setData(it)
-                    dialog.setOnCancelListener { dialogInterface ->
-                        dialogInterface.dismiss()
-                        mBinding.pdrMoreImg.startRotateSelf(-180, 0, 500, true)
-                    }
-                    dialog.setListener { dialogInterface, folderItemBean ->
-                        dialogInterface.dismiss()
-                        val documentFolder = folderItemBean.documentFolder ?: return@setListener
-                        if (mPdrCurrentDocumentFolder?.dirPath.equals(documentFolder.dirPath)) {// 选择了同一个文件夹
-                            return@setListener
-                        }
-                        mPdrCurrentDocumentFolder = documentFolder
-                        mBinding.pdrFolderNameTv.text = documentFolder.dirName
-                        configAdapterData(transformDataWrapper(documentFolder.fileList))
-                        mBinding.pdrMoreImg.startRotateSelf(-180, 0, 500, true)
-                    }
-                    dialog.show()
-                    mBinding.pdrMoreImg.startRotateSelf(0, -180, 500, true)
+    }
+
+    /** 获取文件夹目录 */
+    private fun getFolderList(): List<FolderItemBean> {
+        if (mPdrCurrentDocumentFolder == null) {
+            mPdrCurrentDocumentFolder = mPdrPhoneDataList.getTotalFolder()
+        }
+        val list = ArrayList<FolderItemBean>()
+        val folders = mPdrPhoneDataList.getAllFileFolder()
+        for (folder in folders) {
+            val itemBean = FolderItemBean()
+            itemBean.documentFolder = folder
+            itemBean.isSelected = mPdrCurrentDocumentFolder?.dirPath.equals(folder.dirPath)
+            list.add(itemBean)
+        }
+        return list
+    }
+
+    /** 获取文件夹选择弹框 */
+    private fun showFolderDialog(list: List<FolderItemBean>, bean: PickerBean<DocumentWrapper>) {
+        val dialog = FolderDialog(getContext())
+        dialog.setOnImgLoader(bean.imgLoader)
+        dialog.setPickerUIConfig(bean.pickerUIConfig)
+        dialog.setData(list)
+        dialog.setOnCancelListener { dialogInterface ->
+            dialogInterface.dismiss()
+            mBinding.pdrMoreImg.startRotateSelf(-180, 0, 500, true)
+        }
+        dialog.setListener { dialogInterface, folderItemBean ->
+            dialogInterface.dismiss()
+            val documentFolder = folderItemBean.documentFolder ?: return@setListener
+            if (mPdrCurrentDocumentFolder?.dirPath.equals(documentFolder.dirPath)) {// 选择了同一个文件夹
+                return@setListener
+            }
+            mPdrCurrentDocumentFolder = documentFolder
+            mBinding.pdrFolderNameTv.text = documentFolder.dirName
+            configAdapterData(matchSelected(transformDataWrapper(documentFolder.fileList)))
+            mBinding.pdrMoreImg.startRotateSelf(-180, 0, 500, true)
+        }
+        dialog.show()
+        mBinding.pdrMoreImg.startRotateSelf(0, -180, 500, true)
+    }
+
+    /** 匹配选择列表，将选择状态赋值给新列表 */
+    private fun matchSelected(list: List<DataWrapper<DocumentWrapper>>): List<DataWrapper<DocumentWrapper>> {
+        list.forEachIndexed { index, documentWrapper ->
+            mPdrSelectedList.forEach {
+                if (it.data.documentFile.uri == list[index].data.documentFile.uri){
+                    list[index].isSelected = true
                 }
             }
+        }
+        return list
     }
 
     override fun takeCameraPhoto(bean: PickerBean<DocumentWrapper>) {
@@ -143,6 +161,7 @@ internal class PhonePickerActivity : AnyPickerActivity<DocumentWrapper>() {
             }
     }
 
+    /** 获取手机媒体文件数据 */
     private fun requestMediaData(bean: PickerBean<DocumentWrapper>): ArrayList<DataWrapper<DocumentWrapper>> {
         mPdrPhoneDataList.clear()
         val list = when (bean.pickType) {
