@@ -94,14 +94,12 @@ class NetworkManager private constructor() {
             val location: CellLocation = telephonyManager.cellLocation ?: return null
 
             // 电信
-            if (info.type == OperatorInfo.OPERATOR_CTCC) {
-                if (location is CdmaCellLocation) {
-                    val cdma: CdmaCellLocation = location
-                    info.cid = cdma.baseStationId.toString()
-                    info.lac = cdma.networkId.toString()
-                    info.mcc = telephonyManager.networkOperator.substring(0, 3)
-                    info.mnc = telephonyManager.networkOperator
-                }
+            if (info.type == OperatorInfo.OPERATOR_CTCC && location is CdmaCellLocation) {
+                val cdma: CdmaCellLocation = location
+                info.cid = cdma.baseStationId.toString()
+                info.lac = cdma.networkId.toString()
+                info.mcc = telephonyManager.networkOperator.substring(0, 3)
+                info.mnc = telephonyManager.networkOperator
             }
 
             // 其他情况
@@ -180,10 +178,8 @@ class NetworkManager private constructor() {
             if (type is Int) {
                 return type.toInt()
             }
-            if (type is String) {
-                if (type.isNotEmpty()) {
-                    return type.toInt()
-                }
+            if (type is String && type.isNotEmpty()) {
+                return type.toInt()
             }
             if (type is Double) {
                 return type.toInt()
@@ -205,10 +201,8 @@ class NetworkManager private constructor() {
             if (type is Int) {
                 return type.toInt()
             }
-            if (type is String) {
-                if (type.isNotEmpty()) {
-                    return type.toInt()
-                }
+            if (type is String && type.isNotEmpty()) {
+                return type.toInt()
             }
             if (type is Double) {
                 return type.toInt()
@@ -241,12 +235,8 @@ class NetworkManager private constructor() {
     internal fun notifyNetworkListeners() {
         val iterator = mNetworkListeners.iterator()
         while (iterator.hasNext()) {
-            val listener: NetworkListener? = iterator.next()
-            if (listener != null) {
-                listener.onNetworkStatusChanged(isNetworkAvailable(), mNetInfo)
-            } else {
-                iterator.remove()
-            }
+            val listener: NetworkListener = iterator.next()
+            listener.onNetworkStatusChanged(isNetworkAvailable(), mNetInfo)
         }
     }
 

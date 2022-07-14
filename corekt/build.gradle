@@ -8,8 +8,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 32
-        versionCode 45
-        versionName "2.0.0"// 成功上传
+        versionCode 46
+        versionName "2.0.1"// 未上传
     }
 
     kotlinOptions {
