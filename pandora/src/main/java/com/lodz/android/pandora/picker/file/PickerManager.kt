@@ -1,12 +1,10 @@
 package com.lodz.android.pandora.picker.file
 
-import android.net.Uri
 import com.lodz.android.corekt.file.DocumentWrapper
 import com.lodz.android.pandora.event.PhotoPickerFinishEvent
 import com.lodz.android.pandora.event.PicturePreviewFinishEvent
 import com.lodz.android.pandora.picker.file.builder.*
 import org.greenrobot.eventbus.EventBus
-import java.io.File
 
 /**
  * 照片选择器

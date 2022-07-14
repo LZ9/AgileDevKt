@@ -3,7 +3,6 @@ package com.lodz.android.pandora.widget.ninegrid
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.ImageView
-import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.corekt.anko.toArrayList
 import com.lodz.android.corekt.file.DocumentWrapper
 import com.lodz.android.pandora.picker.file.PickerManager
