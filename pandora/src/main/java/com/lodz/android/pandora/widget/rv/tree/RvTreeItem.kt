@@ -7,6 +7,9 @@ package com.lodz.android.pandora.widget.rv.tree
  */
 interface RvTreeItem {
 
+    /** 数据实体类型 */
     fun getCls(): Class<*> = this::class.java
 
+    /** 是否根节点 */
+    fun isRootItem(): Boolean
 }

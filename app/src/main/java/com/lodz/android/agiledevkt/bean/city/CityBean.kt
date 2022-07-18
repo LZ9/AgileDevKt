@@ -33,5 +33,6 @@ class CityBean : RvTreeGroup {
 
     override fun expandEnable(): Boolean = isCanExpand
 
+    override fun isRootItem(): Boolean = false
 
 }

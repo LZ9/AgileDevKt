@@ -31,5 +31,5 @@ class ProvinceBean : RvTreeGroup {
 
     override fun expandEnable(): Boolean = isCanExpand
 
-
+    override fun isRootItem(): Boolean = true
 }

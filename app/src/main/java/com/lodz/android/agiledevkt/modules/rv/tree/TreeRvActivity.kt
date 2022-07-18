@@ -11,6 +11,7 @@ import com.lodz.android.agiledevkt.bean.city.ProvinceBean
 import com.lodz.android.agiledevkt.databinding.ActivityRvTreeBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.corekt.anko.*
+import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.corekt.utils.SnackbarUtils
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.utils.coroutines.CoroutinesWrapper
@@ -87,15 +88,15 @@ class TreeRvActivity : BaseActivity() {
         }
 
         mAdapter.setOnTreeChangedListener {
-            toastShort("size : ${it.size}")
+            PrintLog.d("testtag", "${it[0].getCls()} :  ${it[0].isExpand}")
         }
 
         mBinding.collapsedAllBtn.setOnClickListener {
-            toastShort("size : ${mList.size}")
+            mAdapter.collapsedAll()
         }
 
         mBinding.expandAllBtn.setOnClickListener {
-            toastShort("size : ${mList.size}")
+            mAdapter.expandAll()
         }
     }
 

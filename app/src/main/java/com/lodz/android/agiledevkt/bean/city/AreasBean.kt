@@ -15,5 +15,5 @@ class AreasBean : RvTreeItem {
     /** 县名称 */
     var areaName = ""
 
-
+    override fun isRootItem(): Boolean = false
 }

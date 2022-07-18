@@ -79,4 +79,60 @@ abstract class BaseTreeRvAdapter<T : RvTreeItem>(context: Context) : AbsRvAdapte
         }
         mPdrOnTreeChangedListener?.invoke(data)
     }
+
+    /** 折叠所有子项 */
+    fun collapsedAll() {
+        val data = getData()?.toMutableList() ?: return
+        val rootList = ArrayList<RvTreeItem>()
+        data.forEach {
+            if (it.isRootItem()) {//得到根节点数据
+                rootList.add(it)
+            }
+        }
+        setData(setChildrenExpandChanged(rootList, false).toMutableList())//修改折叠标志位
+        invokeTreeChangedListener(rootList)
+        notifyDataSetChanged()
+    }
+
+    /** 设置子项的折叠标志位 */
+    private fun setChildrenExpandChanged(list: List<RvTreeItem>, isExpand: Boolean) :List<RvTreeItem>{
+        list.forEach {
+            if (it is RvTreeGroup && it.expandEnable() && it.getTreeItems().isNotEmpty()) {
+                it.onExpandChanged(isExpand)
+                setChildrenExpandChanged(it.getTreeItems(), isExpand)
+            }
+        }
+        return list
+    }
+
+    /** 展开所有子项 */
+    fun expandAll() {
+        val data = getData()?.toMutableList() ?: return
+        val rootList = ArrayList<RvTreeItem>()
+        data.forEach {
+            if (it.isRootItem()){//得到根节点数据
+                rootList.add(it)
+            }
+        }
+        val list = ArrayList<RvTreeItem>()
+        rootList.forEach {//按顺序逐个添加子项数据
+            list.addAll(getAllChildren(it))
+        }
+        setData(list)
+        invokeTreeChangedListener(list)
+        notifyDataSetChanged()
+    }
+
+    /** 获取所有的子项数据列表 */
+    private fun getAllChildren(item: RvTreeItem): List<RvTreeItem> {
+        val list = ArrayList<RvTreeItem>()
+        list.add(item)
+        if (item is RvTreeGroup && item.expandEnable() && item.getTreeItems().isNotEmpty()) {
+            item.onExpandChanged(true)
+            item.getTreeItems().forEach {
+                list.addAll(getAllChildren(it))
+            }
+        }
+        return list
+    }
 }
