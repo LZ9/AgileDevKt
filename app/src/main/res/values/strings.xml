@@ -909,4 +909,9 @@
     <string name="json_to_string">对象转字符串</string>
     <string name="json_to_obj">字符串转对象</string>
     <string name="json_clean">清空</string>
+
+    <!-- Rv树结构测试类 -->
+    <string name="rv_tree_collapsed_all">折叠全部</string>
+    <string name="rv_tree_expand_all">展开全部</string>
+
 </resources>

@@ -63,6 +63,7 @@ import com.lodz.android.agiledevkt.modules.rv.drag.DragRvActivity
 import com.lodz.android.agiledevkt.modules.rv.head.HeadFooterRvActivity
 import com.lodz.android.agiledevkt.modules.rv.loadmore.RefreshLoadMoreActivity
 import com.lodz.android.agiledevkt.modules.rv.snap.SnapRvActivity
+import com.lodz.android.agiledevkt.modules.rv.tree.TreeRvActivity
 import com.lodz.android.agiledevkt.modules.rxjava.completable.RxCompletableActivity
 import com.lodz.android.agiledevkt.modules.rxjava.flowable.RxFlowableActivity
 import com.lodz.android.agiledevkt.modules.rxjava.maybe.RxMaybeActivity
@@ -141,6 +142,7 @@ class MainActivity : BaseActivity() {
         MainBean("RV刷新/加载更多测试", "R", RefreshLoadMoreActivity::class.java),
         MainBean("RV带头/底部测试", "R", HeadFooterRvActivity::class.java),
         MainBean("RV拖拽测试", "R", DragRvActivity::class.java),
+        MainBean("RV树结构测试类", "R", TreeRvActivity::class.java),
         MainBean("RvSnap测试类", "R", SnapRvActivity::class.java),
         MainBean("RV装饰器测试", "R", DecorationRvActivity::class.java),
         MainBean("RecyclerBinder测试类", "R", BinderRvActivity::class.java),
