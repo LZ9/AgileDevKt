@@ -86,9 +86,12 @@ class TreeRvActivity : BaseActivity() {
             }
         }
 
+        mAdapter.setOnTreeChangedListener {
+            toastShort("size : ${it.size}")
+        }
+
         mBinding.collapsedAllBtn.setOnClickListener {
             toastShort("size : ${mList.size}")
-
         }
 
         mBinding.expandAllBtn.setOnClickListener {
