@@ -10,6 +10,9 @@ import com.lodz.android.pandora.widget.rv.tree.RvTreeItem
  */
 class CityBean : RvTreeGroup {
 
+    /** 父节点ID */
+    var parentId = ""
+
     /** 市ID */
     var cityId = ""
 
@@ -23,7 +26,7 @@ class CityBean : RvTreeGroup {
 
     var isCanExpand: Boolean = true
 
-    override fun getTreeItems(): List<RvTreeItem> = areas
+    override fun fetchTreeItems(): List<RvTreeItem> = areas
 
     override fun isExpandItem(): Boolean = isExpand
 
@@ -34,5 +37,9 @@ class CityBean : RvTreeGroup {
     override fun expandEnable(): Boolean = isCanExpand
 
     override fun isRootItem(): Boolean = false
+
+    override fun fetchItemId(): String = cityId
+
+    override fun fetchParentId(): String = parentId
 
 }

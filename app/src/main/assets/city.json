@@ -11820,30 +11820,37 @@
         ]
       },
       {
+        "parentId": 16,
         "cityId": 1315,
         "cityName": "厦门市",
         "areas": [
           {
+            "parentId": 1315,
             "areaId": 1316,
             "areaName": "思明区"
           },
           {
+            "parentId": 1315,
             "areaId": 3486,
             "areaName": "湖里区"
           },
           {
+            "parentId": 1315,
             "areaId": 3489,
             "areaName": "翔安区"
           },
           {
+            "parentId": 1315,
             "areaId": 46763,
             "areaName": "海沧区"
           },
           {
+            "parentId": 1315,
             "areaId": 46764,
             "areaName": "集美区"
           },
           {
+            "parentId": 1315,
             "areaId": 46765,
             "areaName": "同安区"
           }

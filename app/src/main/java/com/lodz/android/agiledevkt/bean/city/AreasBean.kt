@@ -9,11 +9,18 @@ import com.lodz.android.pandora.widget.rv.tree.RvTreeItem
  */
 class AreasBean : RvTreeItem {
 
+    /** 父节点ID */
+    var parentId = ""
+
     /** 县ID */
     var areaId = ""
 
     /** 县名称 */
     var areaName = ""
+
+    override fun fetchItemId(): String = areaId
+
+    override fun fetchParentId(): String = parentId
 
     override fun isRootItem(): Boolean = false
 }

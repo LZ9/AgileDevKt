@@ -8,7 +8,13 @@ package com.lodz.android.pandora.widget.rv.tree
 interface RvTreeItem {
 
     /** 数据实体类型 */
-    fun getCls(): Class<*> = this::class.java
+    fun fetchCls(): Class<*> = this::class.java
+
+    /** 是否根节点 */
+    fun fetchItemId(): String
+
+    /** 父节点ID */
+    fun fetchParentId(): String
 
     /** 是否根节点 */
     fun isRootItem(): Boolean

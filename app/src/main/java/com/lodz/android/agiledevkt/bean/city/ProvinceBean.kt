@@ -21,7 +21,7 @@ class ProvinceBean : RvTreeGroup {
 
     var isCanExpand: Boolean = true
 
-    override fun getTreeItems(): List<RvTreeItem> = citys
+    override fun fetchTreeItems(): List<RvTreeItem> = citys
 
     override fun isExpandItem(): Boolean = isExpand
 
@@ -32,4 +32,8 @@ class ProvinceBean : RvTreeGroup {
     override fun expandEnable(): Boolean = isCanExpand
 
     override fun isRootItem(): Boolean = true
+
+    override fun fetchItemId(): String = provinceId
+
+    override fun fetchParentId(): String = ""
 }

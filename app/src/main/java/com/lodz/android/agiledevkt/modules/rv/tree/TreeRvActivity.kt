@@ -19,6 +19,7 @@ import com.lodz.android.pandora.utils.jackson.parseJsonObject
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.rv.anko.linear
 import com.lodz.android.pandora.widget.rv.anko.setup
+import com.lodz.android.pandora.widget.rv.tree.RvTreeItem
 
 /**
  * Rv树结构测试类
@@ -42,8 +43,12 @@ class TreeRvActivity : BaseActivity() {
 
     /** 标题 */
     private val mTitle by intentExtrasNoNull(MainActivity.EXTRA_TITLE_NAME, "")
+    /** 厦门城市数据 */
+    private var mXmCityBean: CityBean? = null
+    /** 福建省数据 */
+    private var mFjProvinceBean: ProvinceBean? = null
     /** 数据列表 */
-    private var mList: ArrayList<ProvinceBean> = arrayListOf()
+    private var mList: ArrayList<RvTreeItem> = arrayListOf()
 
     override fun findViews(savedInstanceState: Bundle?) {
         getTitleBarLayout().setTitleName(mTitle)
@@ -59,6 +64,12 @@ class TreeRvActivity : BaseActivity() {
     override fun onClickBackBtn() {
         super.onClickBackBtn()
         finish()
+    }
+
+    override fun onClickReload() {
+        super.onClickReload()
+        showStatusLoading()
+        initData()
     }
 
     override fun setListeners() {
@@ -88,7 +99,8 @@ class TreeRvActivity : BaseActivity() {
         }
 
         mAdapter.setOnTreeChangedListener {
-            PrintLog.d("testtag", "${it[0].getCls()} :  ${it[0].isExpand}")
+            mList.clear()
+            mList.addAll(it)
         }
 
         mBinding.collapsedAllBtn.setOnClickListener {
@@ -97,6 +109,50 @@ class TreeRvActivity : BaseActivity() {
 
         mBinding.expandAllBtn.setOnClickListener {
             mAdapter.expandAll()
+        }
+
+        mBinding.collapsedXmBtn.setOnClickListener {
+            val fjBean = mFjProvinceBean ?: return@setOnClickListener
+            val xmBean = mXmCityBean ?: return@setOnClickListener
+            for (item in mList) {
+                if (item is ProvinceBean && item.provinceId == fjBean.provinceId) {
+                    for (cityBean in item.citys) {
+                        if (cityBean.cityId == xmBean.cityId) {
+                            item.isExpand = false
+                            cityBean.isExpand = false
+                            mAdapter.setTreeDataObj(mList)
+                            return@setOnClickListener
+                        }
+                    }
+                }
+            }
+        }
+
+        mBinding.expandXmBtn.setOnClickListener {
+            val fjBean = mFjProvinceBean ?: return@setOnClickListener
+            val xmBean = mXmCityBean ?: return@setOnClickListener
+            for (item in mList) {
+                if (item is ProvinceBean && item.provinceId == fjBean.provinceId) {
+                    for (cityBean in item.citys) {
+                        if (cityBean.cityId == xmBean.cityId) {
+                            item.isExpand = true
+                            cityBean.isExpand = true
+                            mAdapter.setTreeDataObj(mList)
+                            return@setOnClickListener
+                        }
+                    }
+                }
+            }
+        }
+
+        mBinding.expandEvenBtn.setOnClickListener {
+            mAdapter.collapsedAll()
+            for (item in mList) {
+                if (item is ProvinceBean) {
+                    item.isExpand = item.provinceId.toInt() % 2 == 1
+                }
+            }
+            mAdapter.setTreeDataObj(mList)
         }
     }
 
@@ -112,12 +168,29 @@ class TreeRvActivity : BaseActivity() {
 
     private fun getTestData() {
         CoroutinesWrapper.create(this)
-            .request { getAssetsFileContent("city.json") }
+            .request {
+                val json = getAssetsFileContent("city.json")
+                val list = json.parseJsonObject<ArrayList<ProvinceBean>>()
+                for (provinceBean in list) {
+                    for (cityBean in provinceBean.citys) {
+                        if (cityBean.cityName == "厦门市") {
+                            mXmCityBean = cityBean
+                            mFjProvinceBean = provinceBean
+                        }
+                    }
+                }
+                list
+            }
             .action {
                 onSuccess {
-                    mList = it.parseJsonObject()
-                    mAdapter.setTreeData(mList)
+                    mList.clear()
+                    mList.addAll(it)
+                    mAdapter.setTreeData(it)
                     showStatusCompleted()
+                }
+                onError { e, isNetwork ->
+                    showStatusError(e)
+                    toastShort(e.toString())
                 }
             }
     }

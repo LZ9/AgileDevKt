@@ -8,7 +8,7 @@ package com.lodz.android.pandora.widget.rv.tree
 interface RvTreeGroup : RvTreeItem {
 
     /** 子节点列表 */
-    fun getTreeItems(): List<RvTreeItem>
+    fun fetchTreeItems(): List<RvTreeItem>
 
     /** 当前是否展开子节点 */
     fun isExpandItem(): Boolean

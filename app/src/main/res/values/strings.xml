@@ -913,5 +913,7 @@
     <!-- Rv树结构测试类 -->
     <string name="rv_tree_collapsed_all">折叠全部</string>
     <string name="rv_tree_expand_all">展开全部</string>
-
+    <string name="rv_tree_collapsed_xm">折叠厦门</string>
+    <string name="rv_tree_expand_xm">展开厦门</string>
+    <string name="rv_tree_expand_even">偶数展开</string>
 </resources>
