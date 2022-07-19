@@ -11,7 +11,6 @@ import com.lodz.android.agiledevkt.bean.city.ProvinceBean
 import com.lodz.android.agiledevkt.databinding.ActivityRvTreeBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.corekt.anko.*
-import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.corekt.utils.SnackbarUtils
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.utils.coroutines.CoroutinesWrapper

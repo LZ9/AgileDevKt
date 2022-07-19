@@ -1,6 +1,9 @@
 package com.lodz.android.pandora.widget.rv.tree
 
 import android.content.Context
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.lodz.android.corekt.anko.toArrayList
 import com.lodz.android.pandora.widget.rv.recycler.base.AbsRvAdapter
 import com.lodz.android.pandora.widget.rv.recycler.vh.DataVBViewHolder
@@ -136,6 +139,46 @@ abstract class BaseTreeRvAdapter<T : RvTreeItem>(context: Context) : AbsRvAdapte
             }
         }
         return list
+    }
+
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        super.onAttachedToRecyclerView(recyclerView)
+        val manager = recyclerView.layoutManager
+        if (manager is GridLayoutManager) {
+            adapterGridLayoutManager(manager)
+        }
+    }
+
+    /** 适配GridLayoutManager */
+    private fun adapterGridLayoutManager(layoutManager: GridLayoutManager) {
+        if (layoutManager.orientation == RecyclerView.HORIZONTAL) {
+            return
+        }
+        layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int {
+                val item = getItem(position) ?: return 1
+                if (item is RvTreeGroup) {
+                    return layoutManager.spanCount
+                }
+                return 1
+            }
+        }
+    }
+
+    override fun onViewAttachedToWindow(holder: DataVBViewHolder) {
+        super.onViewAttachedToWindow(holder)
+        adapterStaggeredGridLayoutManager(holder)
+    }
+
+    /** 适配StaggeredGridLayoutManager */
+    private fun adapterStaggeredGridLayoutManager(holder: DataVBViewHolder) {
+        val layoutParams = holder.itemView.layoutParams
+        if (layoutParams is StaggeredGridLayoutManager.LayoutParams) {
+            val item = getItem(holder.bindingAdapterPosition) ?: return
+            if (item is RvTreeGroup) {
+                layoutParams.isFullSpan = true
+            }
+        }
     }
 
 }
