@@ -117,7 +117,6 @@ class TreeRvActivity : BaseActivity() {
                 if (item is ProvinceBean && item.provinceId == fjBean.provinceId) {
                     for (cityBean in item.citys) {
                         if (cityBean.cityId == xmBean.cityId) {
-                            item.isExpand = false
                             cityBean.isExpand = false
                             mAdapter.setTreeDataObj(mList)
                             return@setOnClickListener

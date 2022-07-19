@@ -17,7 +17,7 @@ import com.lodz.android.pandora.widget.rv.tree.BaseTreeRvAdapter
  * @author zhouL
  * @date 2022/7/15
  */
-class TreeRvAdapter(context: Context) : BaseTreeRvAdapter<ProvinceBean>(context){
+class TreeRvAdapter(context: Context) : BaseTreeRvAdapter<ProvinceBean, DataVBViewHolder>(context){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataVBViewHolder {
         if (viewType == ProvinceBean::class.java.hashCode()) {

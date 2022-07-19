@@ -6,21 +6,20 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.lodz.android.corekt.anko.toArrayList
 import com.lodz.android.pandora.widget.rv.recycler.base.AbsRvAdapter
-import com.lodz.android.pandora.widget.rv.recycler.vh.DataVBViewHolder
 
 /**
  * RV树结构基类
  * @author zhouL
  * @date 2022/7/15
  */
-abstract class BaseTreeRvAdapter<T : RvTreeItem>(context: Context) : AbsRvAdapter<RvTreeItem, DataVBViewHolder>(context) {
+abstract class BaseTreeRvAdapter<T : RvTreeItem, VH : RecyclerView.ViewHolder>(context: Context) : AbsRvAdapter<RvTreeItem, VH>(context) {
 
     /** 数据变动监听器 */
     private var mPdrOnTreeChangedListener: ((data: List<T>) -> Unit)? = null
 
     override fun getItemViewType(position: Int): Int = getItem(position)?.fetchCls().hashCode()
 
-    override fun setItemClick(holder: DataVBViewHolder, position: Int) {
+    override fun setItemClick(holder: VH, position: Int) {
         holder.itemView.setOnClickListener {
             val item = getItem(position) ?: return@setOnClickListener
             if (item is RvTreeGroup && item.expandEnable() && item.fetchTreeItems().isNotEmpty()){
@@ -165,13 +164,13 @@ abstract class BaseTreeRvAdapter<T : RvTreeItem>(context: Context) : AbsRvAdapte
         }
     }
 
-    override fun onViewAttachedToWindow(holder: DataVBViewHolder) {
+    override fun onViewAttachedToWindow(holder: VH) {
         super.onViewAttachedToWindow(holder)
         adapterStaggeredGridLayoutManager(holder)
     }
 
     /** 适配StaggeredGridLayoutManager */
-    private fun adapterStaggeredGridLayoutManager(holder: DataVBViewHolder) {
+    private fun adapterStaggeredGridLayoutManager(holder: VH) {
         val layoutParams = holder.itemView.layoutParams
         if (layoutParams is StaggeredGridLayoutManager.LayoutParams) {
             val item = getItem(holder.bindingAdapterPosition) ?: return
