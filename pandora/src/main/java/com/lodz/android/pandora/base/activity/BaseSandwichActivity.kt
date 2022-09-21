@@ -254,4 +254,16 @@ abstract class BaseSandwichActivity : AbsActivity() {
 
     /** 获取根目录布局 */
     protected fun getRootView(): ViewGroup = mPdrRootLayout
+
+    /** 是否加载中 */
+    protected fun isLoading(): Boolean = getLoadingLayout().visibility == View.VISIBLE
+
+    /** 是否加载完成 */
+    protected fun isCompleted(): Boolean = mPdrContentLayout.visibility == View.VISIBLE
+
+    /** 是否加载异常 */
+    protected fun isError(): Boolean = getErrorLayout().visibility == View.VISIBLE
+
+    /** 是否无数据 */
+    protected fun isNoData(): Boolean = getNoDataLayout().visibility == View.VISIBLE
 }
