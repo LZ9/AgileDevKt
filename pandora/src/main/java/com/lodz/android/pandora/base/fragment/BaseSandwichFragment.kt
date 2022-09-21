@@ -172,8 +172,9 @@ abstract class BaseSandwichFragment : LazyFragment() {
     }
 
     /** 设置刷新结束（隐藏刷新进度条） */
-    protected open fun setSwipeRefreshFinish() {
-        mPdrSwipeRefreshLayout.isRefreshing = false
+    @JvmOverloads
+    protected open fun setSwipeRefreshFinish(isRefreshing: Boolean = false) {
+        mPdrSwipeRefreshLayout.isRefreshing = isRefreshing
     }
 
     /** 设置刷新控件是否启用[enabled] */
