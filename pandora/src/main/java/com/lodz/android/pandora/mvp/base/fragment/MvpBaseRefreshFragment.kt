@@ -68,6 +68,10 @@ abstract class MvpBaseRefreshFragment<PC : PresenterContract<VC>, VC : BaseRefre
         super.setSwipeRefreshFinish()
     }
 
+    override fun setSwipeRefreshStatus(isRefreshing: Boolean) {
+        super.setSwipeRefreshStatus(isRefreshing)
+    }
+
     override fun setSwipeRefreshEnabled(enabled: Boolean) {
         super.setSwipeRefreshEnabled(enabled)
     }

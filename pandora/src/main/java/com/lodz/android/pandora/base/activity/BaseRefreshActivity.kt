@@ -117,8 +117,12 @@ abstract class BaseRefreshActivity : AbsActivity() {
     }
 
     /** 设置刷新结束（隐藏刷新进度条） */
-    @JvmOverloads
-    protected open fun setSwipeRefreshFinish(isRefreshing: Boolean = false) {
+    protected open fun setSwipeRefreshFinish() {
+        setSwipeRefreshStatus(false)
+    }
+
+    /** 设置刷新状态[isRefreshing] */
+    protected open fun setSwipeRefreshStatus(isRefreshing: Boolean) {
         mPdrSwipeRefreshLayout.isRefreshing = isRefreshing
     }
 

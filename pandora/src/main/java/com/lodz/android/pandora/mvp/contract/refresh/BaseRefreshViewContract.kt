@@ -12,6 +12,9 @@ interface BaseRefreshViewContract : BaseViewContract {
     /** 设置刷新结束（隐藏刷新进度条） */
     fun setSwipeRefreshFinish()
 
+    /** 设置刷新状态[isRefreshing] */
+    fun setSwipeRefreshStatus(isRefreshing: Boolean)
+
     /** 设置刷新控件是否启用[enabled] */
     fun setSwipeRefreshEnabled(enabled: Boolean)
 
