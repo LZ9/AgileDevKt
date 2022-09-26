@@ -40,6 +40,8 @@ abstract class BaseApplication : Application() {
     protected open fun configJackson(objectMapper: ObjectMapper) {
         // 忽略对象中未映射的属性
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+        //忽略大小写
+//        objectMapper.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true)
     }
 
     fun getJacksonObjectMapper() = mObjectMapper
