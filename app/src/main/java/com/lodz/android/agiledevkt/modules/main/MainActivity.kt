@@ -63,6 +63,7 @@ import com.lodz.android.agiledevkt.modules.rv.drag.DragRvActivity
 import com.lodz.android.agiledevkt.modules.rv.head.HeadFooterRvActivity
 import com.lodz.android.agiledevkt.modules.rv.loadmore.RefreshLoadMoreActivity
 import com.lodz.android.agiledevkt.modules.rv.snap.SnapRvActivity
+import com.lodz.android.agiledevkt.modules.rv.swipe.SwipeRvActivity
 import com.lodz.android.agiledevkt.modules.rv.tree.TreeRvActivity
 import com.lodz.android.agiledevkt.modules.rxjava.completable.RxCompletableActivity
 import com.lodz.android.agiledevkt.modules.rxjava.flowable.RxFlowableActivity
@@ -145,6 +146,7 @@ class MainActivity : BaseActivity() {
         MainBean("RV树结构测试类", "R", TreeRvActivity::class.java),
         MainBean("RvSnap测试类", "R", SnapRvActivity::class.java),
         MainBean("RV装饰器测试", "R", DecorationRvActivity::class.java),
+        MainBean("RV侧滑菜单测试", "R", SwipeRvActivity::class.java),
         MainBean("RecyclerBinder测试类", "R", BinderRvActivity::class.java),
         MainBean("BottomSheets测试类", "B", BottomSheetsActivity::class.java),
         MainBean("文件选择测试类", "W", PicActivity::class.java),
