@@ -1,5 +1,6 @@
 package com.lodz.android.pandora.widget.rv.tree
 
+import android.annotation.SuppressLint
 import android.content.Context
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -12,6 +13,7 @@ import com.lodz.android.pandora.widget.rv.recycler.base.AbsRvAdapter
  * @author zhouL
  * @date 2022/7/15
  */
+@SuppressLint("NotifyDataSetChanged")
 abstract class BaseTreeRvAdapter<T : RvTreeItem, VH : RecyclerView.ViewHolder>(context: Context) : AbsRvAdapter<RvTreeItem, VH>(context) {
 
     /** 数据变动监听器 */
@@ -34,7 +36,6 @@ abstract class BaseTreeRvAdapter<T : RvTreeItem, VH : RecyclerView.ViewHolder>(c
                 invokeTreeChangedListener(list)
                 setData(list)
                 notifyDataSetChanged()
-                return@setOnClickListener
             }
             mPdrOnItemClickListener?.invoke(holder, item, position)
         }
