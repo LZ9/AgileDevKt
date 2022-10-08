@@ -13,11 +13,11 @@
 在图片库里已经为大家加入了Glide的依赖，小伙伴不需要再重复添加，我在图片库里也已经集成了图片变换，可以直接通过链式来调用。
 ```
     dependencies {
-        implementation 'androidx.annotation:annotation:1.3.0'
+        implementation 'androidx.annotation:annotation:1.5.0'
 
-        api 'com.github.bumptech.glide:glide:4.13.0'
-        kapt 'com.github.bumptech.glide:compiler:4.13.0'
-        implementation "com.github.bumptech.glide:okhttp3-integration:4.13.0"
+        api 'com.github.bumptech.glide:glide:4.14.0'
+        kapt 'com.github.bumptech.glide:compiler:4.14.0'
+        implementation "com.github.bumptech.glide:okhttp3-integration:4.14.0"
         api 'jp.wasabeef:glide-transformations:4.3.0'
     }
 ```
