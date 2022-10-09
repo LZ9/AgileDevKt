@@ -19,7 +19,7 @@ import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.rv.anko.linear
 import com.lodz.android.pandora.widget.rv.anko.setup
 import com.lodz.android.pandora.widget.rv.drag.RecyclerViewDragHelper
-import com.lodz.android.pandora.widget.rv.swipe.data.SwipeDataViewHolder
+import com.lodz.android.pandora.widget.rv.swipe.vb.SwipeVbViewHolder
 
 /**
  * RV侧滑菜单测试
@@ -40,11 +40,9 @@ class SwipeRvActivity : BaseActivity() {
     override fun getViewBindingLayout(): View = mBinding.root
 
     /** 适配器 */
-    private lateinit var mAdapter: SwipeRvAdapter
+    private lateinit var mAdapter: SwipeTestVbAdapter
     /** 拖拽帮助类 */
-    private lateinit var mRecyclerViewDragHelper: RecyclerViewDragHelper<String, SwipeDataViewHolder>
-    /** 拖拽回调 */
-    private val mCallback = DragSpeedCallback<String, SwipeDataViewHolder>()
+    private lateinit var mRecyclerViewDragHelper: RecyclerViewDragHelper<String, SwipeVbViewHolder>
 
     override fun findViews(savedInstanceState: Bundle?) {
         getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME) ?: "")
@@ -57,14 +55,15 @@ class SwipeRvActivity : BaseActivity() {
                 linear()
                 addItemDecoration(DividerItemDecoration(context, RecyclerView.VERTICAL))
             }
-            .setup(SwipeRvAdapter(getContext()))
+            .setup(SwipeTestVbAdapter(getContext()))
         mRecyclerViewDragHelper = RecyclerViewDragHelper(getContext())
         mRecyclerViewDragHelper.setUseDrag(true)// 设置是否允许拖拽
             .setLongPressDragEnabled(true)// 是否启用长按拖拽效果
             .setSwipeEnabled(false)// 设置是否允许滑动
             .setVibrateEnabled(true)// 启用震动效果
-        mCallback.isLimit = true
-        mRecyclerViewDragHelper.build(mBinding.swipeMenuRv, mAdapter, mCallback)
+        val callback = DragSpeedCallback<String, SwipeVbViewHolder>()
+        callback.isLimit = true
+        mRecyclerViewDragHelper.build(mBinding.swipeMenuRv, mAdapter, callback)
     }
 
     override fun onClickBackBtn() {

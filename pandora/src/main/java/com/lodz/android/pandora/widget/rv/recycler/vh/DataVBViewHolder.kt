@@ -10,6 +10,7 @@ import androidx.viewbinding.ViewBinding
  */
  open class DataVBViewHolder(private val viewBinding: ViewBinding) : RecyclerView.ViewHolder(viewBinding.root){
 
+    @Suppress("UNCHECKED_CAST")
     fun <VB : ViewBinding> getVB(): VB {
         return viewBinding as VB
     }

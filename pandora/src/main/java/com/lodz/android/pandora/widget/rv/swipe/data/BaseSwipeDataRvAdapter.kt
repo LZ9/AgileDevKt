@@ -20,17 +20,18 @@ abstract class BaseSwipeDataRvAdapter<T>(context: Context) : AbsRvAdapter<T, Swi
     @LayoutRes
     protected open fun getRightLayout(): Int = 0
 
-    /** 初始化右侧布局 */
+    /** 初始化左侧布局 */
     @LayoutRes
     protected open fun getLeftLayout(): Int = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SwipeDataViewHolder {
         val holder = SwipeDataViewHolder(parent)
-        configSwipeViewHolder(holder)
+        configSwipeViewHolder(holder, parent, viewType)
         return holder
     }
 
-    protected open fun configSwipeViewHolder(holder: SwipeDataViewHolder) {
+    /** 配置ViewHolder */
+    protected open fun configSwipeViewHolder(holder: SwipeDataViewHolder, parent: ViewGroup, viewType: Int) {
         if (getContentLayout() != 0) {
             holder.contentLayout.addView(getLayoutView(holder.contentLayout, getContentLayout()))
         }

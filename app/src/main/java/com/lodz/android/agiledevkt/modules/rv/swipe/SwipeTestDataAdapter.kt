@@ -1,6 +1,7 @@
 package com.lodz.android.agiledevkt.modules.rv.swipe
 
 import android.content.Context
+import android.view.ViewGroup
 import android.widget.TextView
 import com.google.android.material.button.MaterialButton
 import com.lodz.android.agiledevkt.R
@@ -23,8 +24,8 @@ class SwipeRvAdapter(context: Context) : BaseSwipeDataRvAdapter<String>(context)
 
     override fun getRightLayout(): Int = R.layout.rv_item_swipe_right
 
-    override fun configSwipeViewHolder(holder: SwipeDataViewHolder) {
-        super.configSwipeViewHolder(holder)
+    override fun configSwipeViewHolder(holder: SwipeDataViewHolder, parent: ViewGroup, viewType: Int) {
+        super.configSwipeViewHolder(holder, parent, viewType)
         setItemViewHeight(holder.itemView, context.dp2px(50))
     }
 

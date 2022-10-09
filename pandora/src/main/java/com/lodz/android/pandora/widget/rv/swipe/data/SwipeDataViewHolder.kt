@@ -15,9 +15,7 @@ import com.lodz.android.pandora.widget.swipe.SwipeMenuLayout
 class SwipeDataViewHolder(
     parent: ViewGroup,
     attachToRoot: Boolean = false,
-    itemView: View = LayoutInflater.from(parent.context)
-        .inflate(R.layout.pandora_item_swipe_menu, parent, attachToRoot)
-) : DataViewHolder(itemView) {
+) : DataViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.pandora_item_swipe_menu, parent, attachToRoot)) {
 
     /** 侧滑布局  */
     var swipeMenuLayout: SwipeMenuLayout
