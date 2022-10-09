@@ -48,7 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="5dp"
-                android:text="@string/rv_swipe_left_like" />
+                android:text="@string/rv_swipe_like" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/share_btn"
@@ -56,14 +56,14 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
-                android:text="@string/rv_swipe_left_share" />
+                android:text="@string/rv_swipe_share" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/dislike_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
-                android:text="@string/rv_swipe_left_dislike" />
+                android:text="@string/rv_swipe_dislike" />
         </LinearLayout>
 
         <LinearLayout
@@ -77,14 +77,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="5dp"
-                android:text="@string/rv_swipe_right_follow" />
+                android:text="@string/rv_swipe_follow" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/reward_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
-                android:text="@string/rv_swipe_right_reward" />
+                android:text="@string/rv_swipe_reward" />
 
         </LinearLayout>
 
@@ -92,10 +92,10 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:background="@color/color_00a0e9" />
+        android:layout_height="8dp"
+        android:background="@color/color_d9d9d9" />
 
-    <com.lodz.android.pandora.widget.swipe.SwipeMenuRecyclerView
+    <com.lodz.android.pandora.widget.rv.swipe.SwipeMenuRecyclerView
         android:id="@+id/swipe_menu_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

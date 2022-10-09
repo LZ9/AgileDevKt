@@ -919,11 +919,11 @@
 
     <!-- Rv侧滑测试类 -->
     <string name="rv_swipe_content">Layout左右两边可以放任何View，滑动我试试吧</string>
-    <string name="rv_swipe_right_follow">关注</string>
-    <string name="rv_swipe_right_reward">打赏</string>
-    <string name="rv_swipe_left_like">点赞</string>
-    <string name="rv_swipe_left_dislike">踩</string>
-    <string name="rv_swipe_left_share">分享</string>
+    <string name="rv_swipe_follow">关注</string>
+    <string name="rv_swipe_reward">打赏</string>
+    <string name="rv_swipe_like">点赞</string>
+    <string name="rv_swipe_dislike">踩</string>
+    <string name="rv_swipe_share">分享</string>
 
 
 </resources>

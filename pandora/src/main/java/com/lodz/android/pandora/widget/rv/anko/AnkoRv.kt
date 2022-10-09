@@ -1,5 +1,6 @@
 package com.lodz.android.pandora.widget.rv.anko
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
@@ -154,6 +155,7 @@ fun <T, VB : ViewBinding> RecyclerView.loadMoreVB(
  * 加载更多[onLoadMore]，当前页码[currentPage]，需要加载的页码[nextPage]，每页大小[size]，回调位置[position]
  * 点击加载失败[onClickLoadFail]，需要重载的页码[reloadPage]，每页大小[size]
  */
+@SuppressLint("NotifyDataSetChanged")
 fun <T, AD : AbsLoadMoreRvAdapter<T, *>> AD.loadMoreListener(
     onLoadMore: (currentPage: Int, nextPage: Int, size: Int, position: Int) -> Unit,
     onClickLoadFail: (reloadPage: Int, size: Int) -> Unit
@@ -172,6 +174,7 @@ fun <T, AD : AbsLoadMoreRvAdapter<T, *>> AD.loadMoreListener(
 }
 
 /** 配置加载更多请在获得数据后调用该方法配置），数据[list]，总条数[sumSize]，每页条数[size]，是否显示底部提示界面[isShowBottomLayout]，预加载偏移量，滑动到倒数第[index]个item时就回调加载接口（默认值为0） */
+@SuppressLint("NotifyDataSetChanged")
 fun <T> AbsLoadMoreRvAdapter<T, *>.loadMoreStart(list: MutableList<T>, sumSize: Int, size: Int, isShowBottomLayout: Boolean, index: Int = 0) {
     if (this.isOpenItemAnim()) {
         this.resetItemAnimPosition()
@@ -185,6 +188,7 @@ fun <T> AbsLoadMoreRvAdapter<T, *>.loadMoreStart(list: MutableList<T>, sumSize: 
 }
 
 /** 加载更多数据获取成功，传入总数据[list] */
+@SuppressLint("NotifyDataSetChanged")
 fun <T> AbsLoadMoreRvAdapter<T, *>.loadMoreSuccess(list: MutableList<T>){
     this.setIsLoadMore(true)
     this.setData(list)
@@ -192,6 +196,7 @@ fun <T> AbsLoadMoreRvAdapter<T, *>.loadMoreSuccess(list: MutableList<T>){
 }
 
 /** 手动设置加载完成 */
+@SuppressLint("NotifyDataSetChanged")
 fun <T> AbsLoadMoreRvAdapter<T, *>.loadComplete(){
     this.setIsLoadMore(true)
     this.setLoadCompleted()
@@ -199,6 +204,7 @@ fun <T> AbsLoadMoreRvAdapter<T, *>.loadComplete(){
 }
 
 /** 加载更多数据获取失败 */
+@SuppressLint("NotifyDataSetChanged")
 fun <T> AbsLoadMoreRvAdapter<T, *>.loadMoreFail(){
     this.setIsLoadMore(true)
     this.setIsShowLoadFail(true)

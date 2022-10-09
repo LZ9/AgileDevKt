@@ -6,11 +6,20 @@ import android.os.Bundle
 import com.lodz.android.pandora.base.activity.BaseActivity
 
 import android.view.View
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.databinding.ActivitySwipeRvBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
+import com.lodz.android.agiledevkt.modules.rv.drag.DragSpeedCallback
+import com.lodz.android.corekt.anko.append
 import com.lodz.android.corekt.anko.toastShort
+import com.lodz.android.corekt.security.MD5
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
+import com.lodz.android.pandora.widget.rv.anko.linear
+import com.lodz.android.pandora.widget.rv.anko.setup
+import com.lodz.android.pandora.widget.rv.drag.RecyclerViewDragHelper
+import com.lodz.android.pandora.widget.rv.swipe.data.SwipeDataViewHolder
 
 /**
  * RV侧滑菜单测试
@@ -30,8 +39,32 @@ class SwipeRvActivity : BaseActivity() {
 
     override fun getViewBindingLayout(): View = mBinding.root
 
+    /** 适配器 */
+    private lateinit var mAdapter: SwipeRvAdapter
+    /** 拖拽帮助类 */
+    private lateinit var mRecyclerViewDragHelper: RecyclerViewDragHelper<String, SwipeDataViewHolder>
+    /** 拖拽回调 */
+    private val mCallback = DragSpeedCallback<String, SwipeDataViewHolder>()
+
     override fun findViews(savedInstanceState: Bundle?) {
         getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME) ?: "")
+        initRecyclerView()
+    }
+
+    private fun initRecyclerView() {
+        mAdapter = mBinding.swipeMenuRv
+            .apply {
+                linear()
+                addItemDecoration(DividerItemDecoration(context, RecyclerView.VERTICAL))
+            }
+            .setup(SwipeRvAdapter(getContext()))
+        mRecyclerViewDragHelper = RecyclerViewDragHelper(getContext())
+        mRecyclerViewDragHelper.setUseDrag(true)// 设置是否允许拖拽
+            .setLongPressDragEnabled(true)// 是否启用长按拖拽效果
+            .setSwipeEnabled(false)// 设置是否允许滑动
+            .setVibrateEnabled(true)// 启用震动效果
+        mCallback.isLimit = true
+        mRecyclerViewDragHelper.build(mBinding.swipeMenuRv, mAdapter, mCallback)
     }
 
     override fun onClickBackBtn() {
@@ -41,19 +74,35 @@ class SwipeRvActivity : BaseActivity() {
 
     override fun setListeners() {
         super.setListeners()
-        mBinding.likeBtn.setOnClickListener { toastShort(R.string.rv_swipe_left_like) }
+        mBinding.likeBtn.setOnClickListener { toastShort(R.string.rv_swipe_like) }
 
-        mBinding.shareBtn.setOnClickListener { toastShort(R.string.rv_swipe_left_share) }
+        mBinding.shareBtn.setOnClickListener { toastShort(R.string.rv_swipe_share) }
 
-        mBinding.dislikeBtn.setOnClickListener { toastShort(R.string.rv_swipe_left_dislike) }
+        mBinding.dislikeBtn.setOnClickListener { toastShort(R.string.rv_swipe_dislike) }
 
-        mBinding.followBtn.setOnClickListener { toastShort(R.string.rv_swipe_right_follow) }
+        mBinding.followBtn.setOnClickListener { toastShort(R.string.rv_swipe_follow) }
 
-        mBinding.rewardBtn.setOnClickListener { toastShort(R.string.rv_swipe_right_reward) }
+        mBinding.rewardBtn.setOnClickListener { toastShort(R.string.rv_swipe_reward) }
+
+        mAdapter.setOnItemClickListener { viewHolder, item, position ->
+            toastShort(position.toString().append(".").append(item))
+        }
     }
 
     override fun initData() {
         super.initData()
+        val list = initTestDatas()
+        mAdapter.setData(list)
+        mRecyclerViewDragHelper.setList(list)
         showStatusCompleted()
+    }
+
+    private fun initTestDatas(): ArrayList<String> {
+        val list = ArrayList<String>()
+        val time = MD5.md(System.currentTimeMillis().toString()) ?: ""
+        for (char in time) {
+            list.add(MD5.md(char.toString()) ?: "")
+        }
+        return list
     }
 }

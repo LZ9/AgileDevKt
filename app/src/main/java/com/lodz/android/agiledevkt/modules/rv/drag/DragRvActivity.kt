@@ -39,14 +39,14 @@ class DragRvActivity : BaseActivity() {
     /** 适配器 */
     private lateinit var mAdapter: DragRvAdapter
     /** 拖拽帮助类 */
-    private lateinit var mRecyclerViewDragHelper: RecyclerViewDragHelper<String>
+    private lateinit var mRecyclerViewDragHelper: RecyclerViewDragHelper<String, RecyclerView.ViewHolder>
     /** 当前布局 */
     @LayoutManagerPopupWindow.LayoutManagerType
     private var mLayoutManagerType = LayoutManagerPopupWindow.TYPE_LINEAR
     /** 布局方向 */
     private var mOrientation = RecyclerView.VERTICAL
     /** 拖拽回调 */
-    private val mCallback = DragSpeedCallback<String>()
+    private val mCallback = DragSpeedCallback<String, RecyclerView.ViewHolder>()
 
     override fun getViewBindingLayout(): View = mBinding.root
 

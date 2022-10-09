@@ -1,4 +1,4 @@
-package com.lodz.android.pandora.widget.swipe
+package com.lodz.android.pandora.widget.rv.swipe
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewConfiguration
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.lodz.android.pandora.widget.swipe.SwipeMenuLayout
 import kotlin.math.abs
 
 /**
