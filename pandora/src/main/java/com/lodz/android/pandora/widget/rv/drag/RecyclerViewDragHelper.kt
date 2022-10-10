@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
  * RecyclerView拖拽帮助类
  * Created by zhouL on 2018/11/21.
  */
-class RecyclerViewDragHelper<T, VH : RecyclerView.ViewHolder>(private val mContext: Context) {
+class RecyclerViewDragHelper<T>(private val mContext: Context) {
 
     /** 允许拖拽 */
     private var mPdrUseDrag = true
@@ -29,39 +29,39 @@ class RecyclerViewDragHelper<T, VH : RecyclerView.ViewHolder>(private val mConte
     /** 数据列表 */
     private var mPdrList: MutableList<T>? = null
 
-    private var mPdrCallback: DragHelperCallback<T, VH>? = null
+    private var mPdrCallback: DragHelperCallback<T>? = null
     private var mPdrItemTouchHelper: ItemTouchHelper? = null
 
     /** 设置是否允许拖拽[useDrag] */
-    fun setUseDrag(useDrag: Boolean): RecyclerViewDragHelper<T, VH> {
+    fun setUseDrag(useDrag: Boolean): RecyclerViewDragHelper<T> {
         this.mPdrUseDrag = useDrag
         mPdrCallback?.setUseDrag(useDrag)
         return this
     }
 
     /** 设置允许从右往左滑动[rightToLeftSwipe] */
-    fun setUseRightToLeftSwipe(rightToLeftSwipe: Boolean): RecyclerViewDragHelper<T, VH> {
+    fun setUseRightToLeftSwipe(rightToLeftSwipe: Boolean): RecyclerViewDragHelper<T> {
         this.mPdrUseRightToLeftSwipe = rightToLeftSwipe
         mPdrCallback?.setUseRightToLeftSwipe(rightToLeftSwipe)
         return this
     }
 
     /** 设置允许从左往右滑动[leftToRightSwipe] */
-    fun setUseLeftToRightSwipe(leftToRightSwipe: Boolean): RecyclerViewDragHelper<T, VH> {
+    fun setUseLeftToRightSwipe(leftToRightSwipe: Boolean): RecyclerViewDragHelper<T> {
         this.mPdrUseLeftToRightSwipe = leftToRightSwipe
         mPdrCallback?.setUseLeftToRightSwipe(leftToRightSwipe)
         return this
     }
 
     /** 设置是否启用[enabled]长按拖拽效果 */
-    fun setLongPressDragEnabled(enabled: Boolean): RecyclerViewDragHelper<T, VH> {
+    fun setLongPressDragEnabled(enabled: Boolean): RecyclerViewDragHelper<T> {
         isPdrLongPressDragEnabled = enabled
         mPdrCallback?.setLongPressDrag(enabled)
         return this
     }
 
     /** 设置是否启用[enabled]滑动效果 */
-    fun setSwipeEnabled(enabled: Boolean): RecyclerViewDragHelper<T, VH> {
+    fun setSwipeEnabled(enabled: Boolean): RecyclerViewDragHelper<T> {
         isPdrSwipeEnabled = enabled
         mPdrCallback?.setSwipe(enabled)
         return this
@@ -69,33 +69,33 @@ class RecyclerViewDragHelper<T, VH : RecyclerView.ViewHolder>(private val mConte
 
     /** 是否启用[enabled]震动效果 */
     @RequiresPermission(android.Manifest.permission.VIBRATE)
-    fun setVibrateEnabled(enabled: Boolean): RecyclerViewDragHelper<T, VH> {
+    fun setVibrateEnabled(enabled: Boolean): RecyclerViewDragHelper<T> {
         isPdrVibrateEnabled = enabled
         mPdrCallback?.setVibrate(enabled)
         return this
     }
 
     /** 设置数据列表[list] */
-    fun setList(list: MutableList<T>): RecyclerViewDragHelper<T, VH> {
+    fun setList(list: MutableList<T>): RecyclerViewDragHelper<T> {
         mPdrList = list
         mPdrCallback?.setList(list)
         return this
     }
 
     /** 设置监听器 */
-    fun setListener(listener: (list: List<T>) -> Unit): RecyclerViewDragHelper<T, VH> {
+    fun setListener(listener: (list: List<T>) -> Unit): RecyclerViewDragHelper<T> {
         mPdrListener = listener
         mPdrCallback?.setListener(listener)
         return this
     }
 
     /** 使用默认DragHelperCallback完成构建，控件[recyclerView]，适配器[adapter] */
-    fun build(recyclerView: RecyclerView, adapter: RecyclerView.Adapter<VH>) {
+    fun build(recyclerView: RecyclerView, adapter: RecyclerView.Adapter<*>) {
         build(recyclerView, adapter, DragHelperCallback())
     }
 
     /** 使用扩展DragHelperCallback完成构建，控件[recyclerView]，适配器[adapter]，回调[callback] */
-    fun build(recyclerView: RecyclerView, adapter: RecyclerView.Adapter<VH>, callback: DragHelperCallback<T, VH>) {
+    fun build(recyclerView: RecyclerView, adapter: RecyclerView.Adapter<*>, callback: DragHelperCallback<T>) {
         callback.setContext(mContext)
         callback.setUseDrag(mPdrUseDrag)
         callback.setUseRightToLeftSwipe(mPdrUseRightToLeftSwipe)

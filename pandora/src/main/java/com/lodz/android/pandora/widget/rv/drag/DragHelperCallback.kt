@@ -11,7 +11,7 @@ import java.util.*
  * 拖拽帮助回调
  * Created by zhouL on 2018/12/3.
  */
-open class DragHelperCallback<T, VH : RecyclerView.ViewHolder> : ItemTouchHelper.Callback() {
+open class DragHelperCallback<T> : ItemTouchHelper.Callback() {
 
     /** 允许拖拽 */
     private var mPdrContext: Context? = null
@@ -34,7 +34,7 @@ open class DragHelperCallback<T, VH : RecyclerView.ViewHolder> : ItemTouchHelper
     /** 数据列表 */
     private var mPdrList: MutableList<T>? = null
     /** 适配器 */
-    private var mPdrAdapter: RecyclerView.Adapter<VH>? = null
+    private var mPdrAdapter: RecyclerView.Adapter<*>? = null
 
     /** 设置上下文[context] */
     fun setContext(context: Context) {
@@ -72,7 +72,7 @@ open class DragHelperCallback<T, VH : RecyclerView.ViewHolder> : ItemTouchHelper
     }
 
     /** 设置适配器[adapter] */
-    fun setAdapter(adapter: RecyclerView.Adapter<VH>) {
+    fun setAdapter(adapter: RecyclerView.Adapter<*>) {
         this.mPdrAdapter = adapter
     }
 

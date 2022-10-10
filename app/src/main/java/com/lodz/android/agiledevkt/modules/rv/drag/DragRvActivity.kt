@@ -1,5 +1,6 @@
 package com.lodz.android.agiledevkt.modules.rv.drag
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -25,6 +26,7 @@ import com.lodz.android.pandora.widget.rv.drag.RecyclerViewDragHelper
  * RV拖拽测试
  * Created by zhouL on 2018/11/30.
  */
+@SuppressLint("NotifyDataSetChanged")
 class DragRvActivity : BaseActivity() {
 
     companion object {
@@ -39,14 +41,14 @@ class DragRvActivity : BaseActivity() {
     /** 适配器 */
     private lateinit var mAdapter: DragRvAdapter
     /** 拖拽帮助类 */
-    private lateinit var mRecyclerViewDragHelper: RecyclerViewDragHelper<String, RecyclerView.ViewHolder>
+    private lateinit var mRecyclerViewDragHelper: RecyclerViewDragHelper<String>
     /** 当前布局 */
     @LayoutManagerPopupWindow.LayoutManagerType
     private var mLayoutManagerType = LayoutManagerPopupWindow.TYPE_LINEAR
     /** 布局方向 */
     private var mOrientation = RecyclerView.VERTICAL
     /** 拖拽回调 */
-    private val mCallback = DragSpeedCallback<String, RecyclerView.ViewHolder>()
+    private val mCallback = DragSpeedCallback<String>()
 
     override fun getViewBindingLayout(): View = mBinding.root
 

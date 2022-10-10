@@ -7,7 +7,7 @@ import com.lodz.android.pandora.widget.rv.drag.DragHelperCallback
  * 匀速拖拽回调
  * Created by zhouL on 2018/12/3.
  */
-class DragSpeedCallback<T, VH : RecyclerView.ViewHolder> : DragHelperCallback<T, VH>() {
+class DragSpeedCallback<T> : DragHelperCallback<T>() {
     /** 是否限速 */
     var isLimit = false
 
