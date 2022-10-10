@@ -924,6 +924,6 @@
     <string name="rv_swipe_like">点赞</string>
     <string name="rv_swipe_dislike">踩</string>
     <string name="rv_swipe_share">分享</string>
-
+    <string name="rv_swipe_title">支持侧滑菜单和长按拖拽</string>
 
 </resources>
