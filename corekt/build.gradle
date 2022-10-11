@@ -8,7 +8,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 33
         versionCode 47
-        versionName "2.0.2"// 未上传
+        versionName "2.0.2"// 成功上传
     }
 
     kotlinOptions {
