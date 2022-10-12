@@ -129,7 +129,7 @@ class BaseNavigationView : BottomNavigationView {
         if (mPdrBadgeMode == BADGE_ALL_IMG_MODE) {
             return
         }
-        if (position < mPdrItemViews?.size ?: 0) {
+        if (position < (mPdrItemViews?.size ?: 0)) {
             val pointView = mPdrItemViews?.get(position)?.findViewById<View>(R.id.pdr_point_view)
             if (pointView != null) {
                 pointView.visibility = View.GONE
@@ -170,7 +170,7 @@ class BaseNavigationView : BottomNavigationView {
         if (mPdrBadgeMode == BADGE_ALL_IMG_MODE) {
             return
         }
-        if (position < mPdrItemViews?.size ?: 0) {
+        if (position < (mPdrItemViews?.size ?: 0)) {
             val numTv = mPdrItemViews?.get(position)?.findViewById<TextView>(R.id.pdr_num_tv)
             if (numTv != null) {
                 numTv.visibility = View.GONE
@@ -216,7 +216,7 @@ class BaseNavigationView : BottomNavigationView {
         if (mPdrBadgeMode == BADGE_ALL_NUM_MODE) {
             return
         }
-        if (position < mPdrItemViews?.size ?: 0) {
+        if (position < (mPdrItemViews?.size ?: 0)) {
             val pointView = mPdrItemViews?.get(position)?.findViewById<View>(R.id.pdr_point_view)
             if (pointView != null) {
                 pointView.visibility = View.GONE
