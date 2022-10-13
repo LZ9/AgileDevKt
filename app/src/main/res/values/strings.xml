@@ -926,4 +926,9 @@
     <string name="rv_swipe_share">分享</string>
     <string name="rv_swipe_title">支持侧滑菜单和长按拖拽</string>
 
+    <!-- 顶部菜单栏测试类 -->
+    <string name="tabbar_tt">头条</string>
+    <string name="tabbar_jx">精选</string>
+    <string name="tabbar_gz">关注</string>
+    <string name="tabbar_kx">快讯</string>
 </resources>

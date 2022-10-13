@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.google.android.material.tabs.TabLayoutMediator
-import com.lodz.android.agiledevkt.R
+import com.lodz.android.agiledevkt.config.Constant
 import com.lodz.android.agiledevkt.databinding.DialogFragmentTopBinding
+import com.lodz.android.corekt.anko.setupViewPager
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.dialogfragment.BaseTopDialogFragment
 import com.lodz.android.pandora.widget.vp2.SimpleTabAdapter
@@ -17,12 +17,6 @@ import com.lodz.android.pandora.widget.vp2.SimpleTabAdapter
  * Created by zhouL on 2018/12/13.
  */
 class TopDialogFragment : BaseTopDialogFragment() {
-
-    private val TABS = arrayListOf(
-            R.string.bottom_sheets_pikachu_pinarello,
-            R.string.bottom_sheets_pikachu_colnago,
-            R.string.bottom_sheets_pikachu_specialized
-    )
 
     private val mBinding: DialogFragmentTopBinding by bindingLayout(DialogFragmentTopBinding::inflate)
 
@@ -39,15 +33,13 @@ class TopDialogFragment : BaseTopDialogFragment() {
 
     private fun initViewPager() {
         val list = ArrayList<Fragment>()
-        for (i in 0 until TABS.size) {
-            list.add(TestFragment.newInstance(context.getString(TABS[i])))
+        for (i in 0 until Constant.TAB_NAME.size) {
+            list.add(TestFragment.newInstance(Constant.TAB_NAME[i]))
         }
         mBinding.viewPager.adapter = SimpleTabAdapter(this, list)
-        mBinding.viewPager.offscreenPageLimit = TABS.size
+        mBinding.viewPager.offscreenPageLimit = Constant.TAB_NAME.size
         mBinding.viewPager.setCurrentItem(0, true)
-        TabLayoutMediator(mBinding.tabLayout, mBinding.viewPager) { tab, position ->
-            tab.text = context.getText(TABS[position])
-        }.attach()
+        mBinding.tabLayout.setupViewPager(mBinding.viewPager, Constant.TAB_NAME)
     }
 
 }

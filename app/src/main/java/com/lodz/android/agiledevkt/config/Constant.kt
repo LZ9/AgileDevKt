@@ -56,4 +56,9 @@ object Constant {
         "http://www.cznews.gov.cn/newweb/d/file/zhuanti/jzfkgz/2021-08-05/e82c7f811539344b89c27c598113033e.jpg"
     )
 
+    val TAB_NAME = arrayListOf(
+        "Pinarello",
+        "Look",
+        "Specialized"
+    )
 }

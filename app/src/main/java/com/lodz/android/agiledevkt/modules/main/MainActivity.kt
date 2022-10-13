@@ -77,6 +77,7 @@ import com.lodz.android.agiledevkt.modules.setting.SettingTestActivity
 import com.lodz.android.agiledevkt.modules.snackbar.SnackbarTestActivity
 import com.lodz.android.agiledevkt.modules.statusbar.StatusBarTestActivity
 import com.lodz.android.agiledevkt.modules.str.StrTestActivity
+import com.lodz.android.agiledevkt.modules.tabbar.TabBarTestActivity
 import com.lodz.android.agiledevkt.modules.threadpool.ThreadPoolActivity
 import com.lodz.android.agiledevkt.modules.toast.ToastTestActivity
 import com.lodz.android.agiledevkt.modules.transition.TransitionActivity
@@ -159,6 +160,7 @@ class MainActivity : BaseActivity() {
         MainBean("RxMaybe订阅测试", "R", RxMaybeActivity::class.java),
         MainBean("RxCompletable订阅测试", "R", RxCompletableActivity::class.java),
         MainBean("底部菜单栏测试类", "D", MenuBarTestActivity::class.java),
+        MainBean("顶部菜单栏测试类", "D", TabBarTestActivity::class.java),
         MainBean("采集测试页", "C", CollectActivity::class.java),
         MainBean("接口测试类", "J", ApiTestActivity::class.java),
         MainBean("日期测试类", "R", DateActivity::class.java),

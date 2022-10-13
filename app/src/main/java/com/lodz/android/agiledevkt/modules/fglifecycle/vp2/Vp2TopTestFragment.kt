@@ -3,8 +3,8 @@ package com.lodz.android.agiledevkt.modules.fglifecycle.vp2
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import com.google.android.material.tabs.TabLayoutMediator
 import com.lodz.android.agiledevkt.databinding.FragmentVp2TestBinding
+import com.lodz.android.corekt.anko.setupViewPager
 import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.pandora.base.fragment.BaseFragment
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
@@ -53,9 +53,7 @@ class Vp2TopTestFragment :BaseFragment(){
         mBinding.fgViewPager.adapter = SimpleTabAdapter(this, list)
         mBinding.fgViewPager.offscreenPageLimit = MIDDLE_TAB_NAMES.size
         mBinding.fgViewPager.setCurrentItem(0, true)
-        TabLayoutMediator(mBinding.fgTabLayout, mBinding.fgViewPager) { tab, position ->
-            tab.text = MIDDLE_TAB_NAMES[position]
-        }.attach()
+        mBinding.fgTabLayout.setupViewPager(mBinding.fgViewPager, MIDDLE_TAB_NAMES)
     }
 
     override fun initData(view: View) {

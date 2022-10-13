@@ -3,8 +3,8 @@ package com.lodz.android.agiledevkt.modules.viewbinding
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import com.google.android.material.tabs.TabLayoutMediator
 import com.lodz.android.agiledevkt.databinding.ActivityViewBindingTestBinding
+import com.lodz.android.corekt.anko.setupViewPager
 import com.lodz.android.pandora.base.activity.AbsActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.vp2.SimpleTabAdapter
@@ -47,9 +47,7 @@ class ViewBindingTestActivity : AbsActivity() {
         mBinding.viewPager.adapter = SimpleTabAdapter(this, list)
         mBinding.viewPager.offscreenPageLimit = TOP_TAB_NAMES.size
         mBinding.viewPager.setCurrentItem(0, true)
-        TabLayoutMediator(mBinding.tabLayout, mBinding.viewPager) { tab, position ->
-            tab.text = TOP_TAB_NAMES[position]
-        }.attach()
+        mBinding.tabLayout.setupViewPager(mBinding.viewPager, TOP_TAB_NAMES)
     }
 
     /** 显示动画的PopupWindow */

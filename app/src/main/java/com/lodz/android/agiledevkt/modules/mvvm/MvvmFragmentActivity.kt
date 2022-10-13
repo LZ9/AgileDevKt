@@ -5,13 +5,13 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.modules.mvvm.abs.MvvmTestLazyFragment
 import com.lodz.android.agiledevkt.modules.mvvm.base.MvvmTestBaseFragment
 import com.lodz.android.agiledevkt.modules.mvvm.refresh.MvvmTestRefreshFragment
 import com.lodz.android.agiledevkt.modules.mvvm.sandwich.MvvmTestSandwichFragment
 import com.lodz.android.corekt.anko.bindView
+import com.lodz.android.corekt.anko.setupViewPager
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.widget.vp2.SimpleTabAdapter
 
@@ -55,9 +55,7 @@ class MvvmFragmentActivity : BaseActivity() {
         )
         mViewPager.offscreenPageLimit = TAB_NAMES.size
         mViewPager.adapter = SimpleTabAdapter(this, list)
-        TabLayoutMediator(mTabLayout, mViewPager) { tab, position ->
-            tab.text = TAB_NAMES[position]
-        }.attach()
+        mTabLayout.setupViewPager(mViewPager, TAB_NAMES)
     }
 
     override fun onClickBackBtn() {

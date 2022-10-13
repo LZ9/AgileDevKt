@@ -120,4 +120,6 @@ dependencies {
     // jsbridge
     implementation 'ink.lodz:jsbridge-kt:1.0.4'
 
+    implementation "com.airbnb.android:lottie:5.2.0"
+
 }

@@ -5,9 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import com.google.android.material.tabs.TabLayoutMediator
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.databinding.ActivityFgVp2TestBinding
+import com.lodz.android.corekt.anko.setupViewPager
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.vp2.SimpleTabAdapter
@@ -47,9 +47,7 @@ class FgVp2TestActivity :BaseActivity(){
         mBinding.acViewPager.adapter = SimpleTabAdapter(this, list)
         mBinding.acViewPager.offscreenPageLimit = TOP_TAB_NAMES.size
         mBinding.acViewPager.setCurrentItem(0, true)
-        TabLayoutMediator(mBinding.acTabLayout, mBinding.acViewPager) { tab, position ->
-            tab.text = TOP_TAB_NAMES[position]
-        }.attach()
+        mBinding.acTabLayout.setupViewPager(mBinding.acViewPager, TOP_TAB_NAMES)
     }
 
     override fun onClickBackBtn() {
