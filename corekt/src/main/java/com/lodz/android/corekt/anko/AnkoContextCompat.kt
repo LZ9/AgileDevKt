@@ -1,11 +1,13 @@
 package com.lodz.android.corekt.anko
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.graphics.drawable.Drawable
 import android.view.View
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 
 /**
@@ -23,3 +25,6 @@ fun View.getColorCompat(@ColorRes id: Int): Int = ContextCompat.getColor(context
 
 fun View.getDrawableCompat(@DrawableRes id: Int): Drawable? = ContextCompat.getDrawable(context, id)
 
+fun Context.getColorStateListCompat(@ColorRes id: Int): ColorStateList = AppCompatResources.getColorStateList(this, id)
+
+fun View.getColorStateListCompat(@ColorRes id: Int): ColorStateList = AppCompatResources.getColorStateList(context, id)
