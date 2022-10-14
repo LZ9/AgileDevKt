@@ -1094,6 +1094,14 @@
 
         </activity>
 
+        <activity
+            android:name=".modules.shapeableimg.ShapeableImgTestActivity"
+            android:label="Shapeable图片测试类"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
+
+        </activity>
+
     </application>
 
 </manifest>

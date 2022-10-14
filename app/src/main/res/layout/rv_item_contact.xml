@@ -12,7 +12,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:scaleType="centerCrop"
-        app:shapeAppearanceOverlay="@style/circleImageStyle"
+        app:shapeAppearanceOverlay="@style/CircleStyle"
         tools:srcCompat="@drawable/imageloaderkt_ic_default" />
 
     <LinearLayout

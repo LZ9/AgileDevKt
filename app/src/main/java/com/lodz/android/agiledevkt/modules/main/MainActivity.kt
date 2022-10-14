@@ -74,6 +74,7 @@ import com.lodz.android.agiledevkt.modules.rxjava.utils.RxUtilsTestActivity
 import com.lodz.android.agiledevkt.modules.security.EncryptTestActivity
 import com.lodz.android.agiledevkt.modules.selector.SelectorTestActivity
 import com.lodz.android.agiledevkt.modules.setting.SettingTestActivity
+import com.lodz.android.agiledevkt.modules.shapeableimg.ShapeableImgTestActivity
 import com.lodz.android.agiledevkt.modules.snackbar.SnackbarTestActivity
 import com.lodz.android.agiledevkt.modules.statusbar.StatusBarTestActivity
 import com.lodz.android.agiledevkt.modules.str.StrTestActivity
@@ -184,7 +185,8 @@ class MainActivity : BaseActivity() {
         MainBean("参数传递测试类", "C", ExtrasTestActivity::class.java),
         MainBean("ActivityResultContracts用例", "A", ResultContractsCaseActivity::class.java),
         MainBean("通讯录测试类", "T", ContactTestActivity::class.java),
-        MainBean("Json测试类", "J", JsonTestActivity::class.java)
+        MainBean("Json测试类", "J", JsonTestActivity::class.java),
+        MainBean("Shapeable图片测试类", "S", ShapeableImgTestActivity::class.java)
     )
 
     private val mBinding: ActivityMainBinding by bindingLayout(ActivityMainBinding::inflate)

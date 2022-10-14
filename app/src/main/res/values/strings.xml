@@ -931,4 +931,18 @@
     <string name="tabbar_jx">精选</string>
     <string name="tabbar_gz">关注</string>
     <string name="tabbar_kx">快讯</string>
+
+    <!-- ShapeableImageView测试类 -->
+    <string name="simg_original">原图</string>
+    <string name="simg_corners">圆角</string>
+    <string name="simg_circle">圆图</string>
+    <string name="simg_circle_stroke">圆图边框</string>
+    <string name="simg_cut_stroke">切角边框</string>
+    <string name="simg_rhombus_stroke">菱形边框</string>
+    <string name="simg_leaf_stroke">叶形边框</string>
+    <string name="simg_semicircle_stroke">半圆形边框</string>
+    <string name="simg_hexagon_stroke">六边形边框</string>
+    <string name="simg_code_set">代码设置</string>
+
+
 </resources>
