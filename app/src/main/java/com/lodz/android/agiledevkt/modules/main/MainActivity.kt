@@ -17,6 +17,7 @@ import com.lodz.android.agiledevkt.modules.phonefile.PhoneFileActivity
 import com.lodz.android.agiledevkt.modules.annotation.AnnotationTestActivity
 import com.lodz.android.agiledevkt.modules.api.ApiTestActivity
 import com.lodz.android.agiledevkt.modules.array.ArrayTestActivity
+import com.lodz.android.agiledevkt.modules.badge.BadgeTestActivity
 import com.lodz.android.agiledevkt.modules.bitmap.BitmapTestActivity
 import com.lodz.android.agiledevkt.modules.bluetooth.BluetoothTestActivity
 import com.lodz.android.agiledevkt.modules.bottomsheet.BottomSheetsActivity
@@ -186,7 +187,8 @@ class MainActivity : BaseActivity() {
         MainBean("ActivityResultContracts用例", "A", ResultContractsCaseActivity::class.java),
         MainBean("通讯录测试类", "T", ContactTestActivity::class.java),
         MainBean("Json测试类", "J", JsonTestActivity::class.java),
-        MainBean("Shapeable图片测试类", "S", ShapeableImgTestActivity::class.java)
+        MainBean("Shapeable图片测试类", "S", ShapeableImgTestActivity::class.java),
+        MainBean("角标测试类", "J", BadgeTestActivity::class.java)
     )
 
     private val mBinding: ActivityMainBinding by bindingLayout(ActivityMainBinding::inflate)

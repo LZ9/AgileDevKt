@@ -2,12 +2,14 @@ package com.lodz.android.agiledevkt.modules.menubar
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.google.android.material.tabs.TabLayout
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.databinding.ActivityMenuBarTestBinding
@@ -52,7 +54,8 @@ class MenuBarTestActivity : BaseActivity() {
         getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME) ?: "")
         initMenuBar()
         initTabLayout()
-        initNavigation()
+        initBaseNavigation()
+        initNavigationView()
     }
 
     private fun initMenuBar() {
@@ -145,17 +148,26 @@ class MenuBarTestActivity : BaseActivity() {
         mBinding.tabTv.text = getTimeText("首页")
     }
 
-    private fun initNavigation() {
-        mBinding.bottomNv.setItemBadgeNum(0, 2)
-        mBinding.bottomNv.setItemBadgeImg(
-            mBinding.bottomNv.menu.getItem(1),
+    private fun initBaseNavigation() {
+        mBinding.baseBnv.setItemBadgeNum(0, 2)
+        mBinding.baseBnv.setItemBadgeImg(
+            mBinding.baseBnv.menu.getItem(1),
             View.VISIBLE,
             R.drawable.pandora_ic_take_photo_cancel,
             dp2px(17),
             dp2px(17)
         )
-        mBinding.bottomNv.setItemBadgePoint(2, View.VISIBLE)
-        mBinding.bottomNv.setItemBadgePoint(mBinding.bottomNv.menu.getItem(3), View.VISIBLE)
+        mBinding.baseBnv.setItemBadgePoint(2, View.VISIBLE)
+        mBinding.baseBnv.setItemBadgePoint(mBinding.baseBnv.menu.getItem(3), View.VISIBLE)
+    }
+
+    private fun initNavigationView() {
+        mBinding.bottomNv.itemIconTintList = null
+        mBinding.bottomNv.getOrCreateBadge(R.id.msg_tab).apply {
+            backgroundColor = Color.RED
+            badgeTextColor = Color.WHITE
+            number = 12
+        }
     }
 
     override fun onClickBackBtn() {
@@ -234,15 +246,27 @@ class MenuBarTestActivity : BaseActivity() {
             mBinding.menuBar.setMenuConfigs(list)
         }
 
-        mBinding.bottomNv.setOnItemSelectedListener { item ->
+        mBinding.baseBnv.setOnItemSelectedListener { item ->
             mBinding.tabTv.text = when (item.itemId) {
-                R.id.develop_tab -> {
-                    mBinding.bottomNv.setItemBadgeNum(item, Random.nextInt(20))
+                R.id.home_tab -> {
+                    mBinding.baseBnv.setItemBadgeNum(item, Random.nextInt(20))
                     getTimeText("首页")
                 }
-                R.id.product_tab -> getTimeText("功能")
-                R.id.project_tab -> getTimeText("消息")
-                R.id.personnel_tab -> getTimeText("我的")
+                R.id.module_tab -> getTimeText("功能")
+                R.id.msg_tab -> getTimeText("消息")
+                R.id.mine_tab -> getTimeText("我的")
+                else -> ""
+            }
+            return@setOnItemSelectedListener true
+        }
+
+        mBinding.bottomNv.setOnItemSelectedListener { item ->
+            mBinding.bottomNv.getBadge(item.itemId)?.isVisible = !(mBinding.bottomNv.getBadge(item.itemId)?.isVisible ?: true)
+            mBinding.tabTv.text = when (item.itemId) {
+                R.id.home_tab ->  getTimeText("首页")
+                R.id.module_tab -> getTimeText("功能")
+                R.id.msg_tab -> getTimeText("消息")
+                R.id.mine_tab -> getTimeText("我的")
                 else -> ""
             }
             return@setOnItemSelectedListener true
@@ -251,6 +275,7 @@ class MenuBarTestActivity : BaseActivity() {
         mBinding.currentSelectedBtn.setOnClickListener {
             val text = "menuBar : ".append(mBinding.menuBar.getCurrentSelectedType()).append("\n")
                 .append("tabLayout : ").append(mBinding.tabLayout.selectedTabPosition.toString()).append("\n")
+                .append("baseBnv : ").append(mBinding.baseBnv.selectedItemId.toString()).append("\n")
                 .append("bottomNv : ").append(mBinding.bottomNv.selectedItemId.toString())
             toastShort(text)
         }

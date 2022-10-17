@@ -944,5 +944,10 @@
     <string name="simg_hexagon_stroke">六边形边框</string>
     <string name="simg_code_set">代码设置</string>
 
+    <!-- 角标测试类 -->
+    <string name="badge_text">文字角标（数字）</string>
+    <string name="badge_img">图片角标（红点）</string>
+    <string name="badge_app_huawei">APP角标（华为）</string>
+
 
 </resources>

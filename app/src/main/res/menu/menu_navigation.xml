@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/develop_tab"
+        android:id="@+id/home_tab"
         android:icon="@drawable/selector_ic_tab"
         android:title="@string/menu_bar_home" />
     <item
-        android:id="@+id/product_tab"
+        android:id="@+id/module_tab"
         android:icon="@drawable/selector_ic_tab"
         android:title="@string/menu_bar_module" />
     <item
-        android:id="@+id/project_tab"
+        android:id="@+id/msg_tab"
         android:icon="@drawable/selector_ic_tab"
         android:title="@string/menu_bar_msg" />
     <item
-        android:id="@+id/personnel_tab"
+        android:id="@+id/mine_tab"
         android:icon="@drawable/selector_ic_tab"
         android:title="@string/menu_bar_mine" />
 </menu>
