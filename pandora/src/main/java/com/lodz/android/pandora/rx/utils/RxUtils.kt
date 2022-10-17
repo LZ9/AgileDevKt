@@ -60,6 +60,10 @@ object RxUtils {
             if (status != null && status.valueMsg().isNotEmpty()) {
                 return status.valueMsg()
             }
+            val msg = e.message
+            if (msg != null && msg.isNotEmpty()){
+                return msg
+            }
         }
         return defaultTips
     }
