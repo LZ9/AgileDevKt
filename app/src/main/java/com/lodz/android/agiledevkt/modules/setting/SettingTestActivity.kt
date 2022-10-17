@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.provider.Settings
 import android.view.View
 import android.widget.*
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.databinding.ActivitySettingTestBinding
@@ -33,9 +34,6 @@ class SettingTestActivity : BaseActivity() {
             context.startActivity(intent)
         }
     }
-
-    /** 写入设置权限请求码 */
-    private val REQUEST_CODE_WRITE_SETTINGS = 77
 
     /** 亮度监听器 */
     private val mBrightnessObserver = BrightnessObserver()
@@ -202,9 +200,9 @@ class SettingTestActivity : BaseActivity() {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && requestCode == REQUEST_CODE_WRITE_SETTINGS) {
+    /** Activity传递回调 */
+    val mWriteSettingsPermissionResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (Settings.System.canWrite(getContext())) {
                 initLogic()
             } else {// 用户未开启权限继续申请
@@ -219,7 +217,7 @@ class SettingTestActivity : BaseActivity() {
         val intent = Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS)
         intent.data = Uri.parse("package:$packageName")
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        startActivityForResult(intent, REQUEST_CODE_WRITE_SETTINGS)
+        mWriteSettingsPermissionResult.launch(intent)
         toastShort(R.string.setting_request_permission_tips)
     }
 
