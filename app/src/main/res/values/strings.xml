@@ -947,7 +947,7 @@
     <!-- 角标测试类 -->
     <string name="badge_text">文字角标（数字）</string>
     <string name="badge_img">图片角标（红点）</string>
-    <string name="badge_app_huawei">APP角标（华为）</string>
+    <string name="badge_app">APP角标（华为/小米）</string>
 
 
 </resources>

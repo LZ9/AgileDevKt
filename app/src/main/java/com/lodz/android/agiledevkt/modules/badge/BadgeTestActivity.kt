@@ -15,9 +15,13 @@ import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.badge.BadgeUtils
 import com.google.android.material.tabs.TabLayout
 import com.lodz.android.agiledevkt.R
+import com.lodz.android.agiledevkt.config.Constant
 import com.lodz.android.agiledevkt.databinding.ActivityBadgeTestBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.corekt.anko.toastShort
+import com.lodz.android.corekt.utils.DeviceUtils
+import com.lodz.android.corekt.utils.updateHuaweiOSBadge
+import com.lodz.android.corekt.utils.updateXiaomiOSBadge
 import com.lodz.android.pandora.base.activity.BaseRefreshActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import kotlin.random.Random
@@ -181,16 +185,15 @@ class BadgeTestActivity : BaseRefreshActivity() {
         }
 
         mBinding.badgeBtn.setOnClickListener {
-            contentResolver.call(
-                Uri.parse("content://com.huawei.android.launcher.settings/badge/"),
-                "change_badge",
-                null,
-                bundleOf(
-                    "package" to getContext().packageName,
-                    "class" to "com.lodz.android.agiledevkt.modules.splash.SplashActivity",
-                    "badgenumber" to mBtnBadgeDrawable.number
-                )
-            )
+            val className = "com.lodz.android.agiledevkt.modules.splash.SplashActivity"
+            val badgeNum = mBtnBadgeDrawable.number
+            val brand = DeviceUtils.getDeviceValue(DeviceUtils.BRAND).lowercase()
+            if (brand.contains("huawei")) {
+                updateHuaweiOSBadge(className, badgeNum)
+            }
+            if (brand.contains("xiaomi")) {
+                updateXiaomiOSBadge(className, badgeNum, Constant.NOTIFI_CHANNEL_MAIN_ID, R.mipmap.ic_launcher, "您有${badgeNum}条未读消息")
+            }
         }
     }
 

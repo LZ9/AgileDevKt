@@ -72,12 +72,11 @@
             android:text="@string/badge_img" />
     </FrameLayout>
 
-
     <com.google.android.material.button.MaterialButton
         android:id="@+id/badge_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="10dp"
-        android:text="@string/badge_app_huawei" />
+        android:text="@string/badge_app" />
 </LinearLayout>
