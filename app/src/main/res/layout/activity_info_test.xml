@@ -5,10 +5,18 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/root_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
         android:orientation="vertical"
         android:padding="8dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/random_show_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/info_random_show" />
 
         <LinearLayout
             android:layout_width="match_parent"

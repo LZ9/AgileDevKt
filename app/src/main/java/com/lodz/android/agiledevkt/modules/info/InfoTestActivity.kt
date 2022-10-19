@@ -19,6 +19,7 @@ import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
 import com.lodz.android.pandora.rx.utils.RxUtils
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import io.reactivex.rxjava3.core.Observable
+import kotlin.random.Random
 
 /**
  * 信息展示测试类
@@ -52,6 +53,15 @@ class InfoTestActivity : BaseActivity() {
     override fun onClickBackBtn() {
         super.onClickBackBtn()
         finish()
+    }
+
+    override fun setListeners() {
+        super.setListeners()
+        mBinding.randomShowBtn.setOnClickListener {
+            for (i in 1 until mBinding.rootLayout.childCount){
+                mBinding.rootLayout.getChildAt(i).visibility = if (Random.nextInt(100) % 2 == 0) View.VISIBLE else View.GONE
+            }
+        }
     }
 
     override fun initData() {
