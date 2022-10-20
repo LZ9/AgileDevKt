@@ -350,7 +350,6 @@
         <attr name="rectangleLong" format="dimension" />
     </declare-styleable>
 
-
     <!--方形扫描控件-->
     <declare-styleable name="SquareScanView">
         <attr name="frameColor" format="color" />
@@ -361,5 +360,14 @@
         <attr name="scanDelayMilliseconds" format="integer" />
     </declare-styleable>
 
+    <!-- 吸边控件-->
+    <declare-styleable name="AdsorbView">
+        <attr name="adsorbType" format="integer">
+            <enum name="vertical" value="0" />
+            <enum name="horizontal" value="1" />
+        </attr>
+        <attr name="isCanDrag" format="boolean" />
+        <attr name="animDuration" format="integer" />
+    </declare-styleable>
 
 </resources>

@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
             android:contentDescription="@string/pandora_app_img_name"
-            android:src="@drawable/ic_required" />
+            android:src="@drawable/pandora_ic_required" />
 
         <TextView
             android:id="@+id/pdr_title_tv"
