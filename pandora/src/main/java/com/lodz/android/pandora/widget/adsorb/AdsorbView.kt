@@ -3,11 +3,15 @@ package com.lodz.android.pandora.widget.adsorb
 import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.Rect
+import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import android.widget.FrameLayout
+import android.widget.ImageView
+import android.widget.ImageView.ScaleType
+import androidx.annotation.DrawableRes
 import androidx.core.view.*
 import com.lodz.android.pandora.R
 import kotlin.math.abs
@@ -17,7 +21,7 @@ import kotlin.math.abs
  * @author zhouL
  * @date 2022/10/18
  */
-abstract class AdsorbView : FrameLayout, View.OnTouchListener {
+open class AdsorbView : FrameLayout, View.OnTouchListener {
 
     companion object {
         /** 垂直上下 */
@@ -32,6 +36,9 @@ abstract class AdsorbView : FrameLayout, View.OnTouchListener {
     private var isCanDrag = true
     /** 动画时长 */
     private var mAnimDuration = 300L
+
+    /** 默认图片控件 */
+    private var mDefImg: ImageView? = null
 
     /** 父控件宽度 */
     private var mParentWidth = 0
@@ -76,8 +83,8 @@ abstract class AdsorbView : FrameLayout, View.OnTouchListener {
     }
 
     private fun init(attrs: AttributeSet?) {
-        configLayout(attrs)
         addView(getContentView())
+        configLayout(attrs)
         setOnTouchListener(this)
         post {
             val view = parent as View
@@ -101,10 +108,31 @@ abstract class AdsorbView : FrameLayout, View.OnTouchListener {
         setCanDrag(typedArray?.getBoolean(R.styleable.AdsorbView_isCanDrag, true) ?: true)
         setAdsorbType(typedArray?.getInt(R.styleable.AdsorbView_adsorbType, HORIZONTAL) ?: HORIZONTAL)
         setAnimDuration(typedArray?.getInt(R.styleable.AdsorbView_animDuration, 300)?.toLong() ?: 300L)
+        val drawable = typedArray?.getDrawable(R.styleable.AdsorbView_src)
+        if (drawable != null){
+            setImg(drawable)
+        }
+        setScaleType(getScaleTypeById(typedArray?.getInt(R.styleable.AdsorbView_scaleType, ScaleType.FIT_CENTER.ordinal)?:ScaleType.FIT_CENTER.ordinal))
         typedArray?.recycle()
     }
 
-    abstract fun getContentView(): View
+    private fun getScaleTypeById(id: Int): ScaleType = when (id) {
+        ScaleType.MATRIX.ordinal -> ScaleType.MATRIX
+        ScaleType.FIT_XY.ordinal -> ScaleType.FIT_XY
+        ScaleType.FIT_START.ordinal -> ScaleType.FIT_START
+        ScaleType.FIT_CENTER.ordinal -> ScaleType.FIT_CENTER
+        ScaleType.FIT_END.ordinal -> ScaleType.FIT_END
+        ScaleType.CENTER.ordinal -> ScaleType.CENTER
+        ScaleType.CENTER_CROP.ordinal -> ScaleType.CENTER_CROP
+        ScaleType.CENTER_INSIDE.ordinal -> ScaleType.CENTER_INSIDE
+        else -> ScaleType.FIT_CENTER
+    }
+
+    open fun getContentView(): View {
+        val img = ImageView(context)
+        mDefImg = img
+        return img
+    }
 
     /** 设置吸边类型[type] */
     fun setAdsorbType(type: Int) {
@@ -132,6 +160,22 @@ abstract class AdsorbView : FrameLayout, View.OnTouchListener {
     /** 是否允许拖拽 */
     fun isCanDrag(): Boolean = isCanDrag
 
+    /** 设置图片资源[drawableResId] */
+    fun setImg(@DrawableRes drawableResId: Int) {
+        mDefImg?.setImageResource(drawableResId)
+    }
+
+    /** 设置据图片[drawable] */
+    fun setImg(drawable: Drawable) {
+        mDefImg?.setImageDrawable(drawable)
+    }
+
+    /** 设置据图片ScaleType[scaleType] */
+    fun setScaleType(scaleType: ScaleType) {
+        mDefImg?.scaleType = scaleType
+    }
+
+    /** 设置监听器[l] */
     override fun setOnClickListener(l: OnClickListener?) {
         mListener = l
         super.setOnClickListener(l)
