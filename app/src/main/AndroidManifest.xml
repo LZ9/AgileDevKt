@@ -1113,6 +1113,15 @@
 
         </activity>
 
+        <activity
+            android:name=".modules.adsorb.AdsorbViewActivity"
+            android:label="吸边控件展示类"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
+
+        </activity>
+
+
     </application>
 
 </manifest>

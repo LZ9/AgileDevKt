@@ -37,6 +37,9 @@ open class AdsorbView : FrameLayout, View.OnTouchListener {
     /** 动画时长 */
     private var mAnimDuration = 300L
 
+    private var mDrawable: Drawable? = null
+    private var mScaleTyp: ScaleType = ScaleType.FIT_CENTER
+
     /** 默认图片控件 */
     private var mDefImg: ImageView? = null
 
@@ -83,8 +86,8 @@ open class AdsorbView : FrameLayout, View.OnTouchListener {
     }
 
     private fun init(attrs: AttributeSet?) {
-        addView(getContentView())
         configLayout(attrs)
+        addView(getContentView())
         setOnTouchListener(this)
         post {
             val view = parent as View
@@ -108,14 +111,12 @@ open class AdsorbView : FrameLayout, View.OnTouchListener {
         setCanDrag(typedArray?.getBoolean(R.styleable.AdsorbView_isCanDrag, true) ?: true)
         setAdsorbType(typedArray?.getInt(R.styleable.AdsorbView_adsorbType, HORIZONTAL) ?: HORIZONTAL)
         setAnimDuration(typedArray?.getInt(R.styleable.AdsorbView_animDuration, 300)?.toLong() ?: 300L)
-        val drawable = typedArray?.getDrawable(R.styleable.AdsorbView_src)
-        if (drawable != null){
-            setImg(drawable)
-        }
-        setScaleType(getScaleTypeById(typedArray?.getInt(R.styleable.AdsorbView_scaleType, ScaleType.FIT_CENTER.ordinal)?:ScaleType.FIT_CENTER.ordinal))
+        mDrawable = typedArray?.getDrawable(R.styleable.AdsorbView_src)
+        mScaleTyp = getScaleTypeById(typedArray?.getInt(R.styleable.AdsorbView_scaleType, ScaleType.FIT_CENTER.ordinal)?:ScaleType.FIT_CENTER.ordinal)
         typedArray?.recycle()
     }
 
+    /** 根据编号[id]获取ScaleType */
     private fun getScaleTypeById(id: Int): ScaleType = when (id) {
         ScaleType.MATRIX.ordinal -> ScaleType.MATRIX
         ScaleType.FIT_XY.ordinal -> ScaleType.FIT_XY
@@ -130,6 +131,8 @@ open class AdsorbView : FrameLayout, View.OnTouchListener {
 
     open fun getContentView(): View {
         val img = ImageView(context)
+        img.setImageDrawable(mDrawable)
+        img.scaleType = mScaleTyp
         mDefImg = img
         return img
     }

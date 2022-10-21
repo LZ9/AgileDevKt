@@ -197,6 +197,7 @@
     <string name="str_list_to_separator">数组转分隔符字符串：</string>
 
     <!-- 信息测试类 -->
+    <string name="info_random_show">随机显隐（动画）</string>
     <string name="info_phone_ua">手机UA：%s</string>
     <string name="info_phone_language">语言：%s</string>
     <string name="info_phone_country">国家：%s</string>
@@ -948,6 +949,13 @@
     <string name="badge_text">文字角标（数字）</string>
     <string name="badge_img">图片角标（红点）</string>
     <string name="badge_app">APP角标（华为/小米）</string>
+
+    <!-- AdsorbView测试类 -->
+    <string name="adsorb_add">添加吸边控件</string>
+    <string name="adsorb_hide">隐藏吸边控件</string>
+    <string name="adsorb_adsorb_type">吸边方式：</string>
+    <string name="adsorb_horizontal">水平左右</string>
+    <string name="adsorb_vertical">垂直上下</string>
 
 
 </resources>
