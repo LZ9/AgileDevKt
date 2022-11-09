@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.annotation.DrawableRes
 import com.lodz.android.imageloaderkt.glide.config.GlideApp
 import com.lodz.android.imageloaderkt.utils.CompileUtils
+import okhttp3.OkHttpClient
 import java.io.File
 
 /**
@@ -76,6 +77,8 @@ class ImageloaderManager private constructor() {
         private var directoryFile: File? = null
         /** 缓存图片文件夹名称 */
         private var directoryName = ""
+        /** OkHttp客户端 */
+        private var client: OkHttpClient? = null
 
         init {
             if (!CompileUtils.isClassExists("com.bumptech.glide.Glide")) {
@@ -107,6 +110,12 @@ class ImageloaderManager private constructor() {
             return this
         }
 
+        /** 设置OkHttp客户端[client] */
+        fun setOkHttpClient(client: OkHttpClient): Builder {
+            this.client = client
+            return this
+        }
+
         /** 完成构建并初始化 */
         fun build() {}
 
@@ -123,5 +132,8 @@ class ImageloaderManager private constructor() {
 
         /** 获取缓存图片文件夹名称 */
         fun getDirectoryName(): String = directoryName
+
+        /** 获取OkHttp客户端 */
+        fun getOkHttpClient(): OkHttpClient? = client
     }
 }

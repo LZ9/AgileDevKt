@@ -18,7 +18,7 @@ import java.io.InputStream
  * Created by zhouL on 2018/7/10.
  */
 @GlideModule
-class CacheAppGlideModule : AppGlideModule() {
+open class CacheAppGlideModule : AppGlideModule() {
 
     /** 缓存文件夹名称 */
     private val IMAGE_PIPELINE_CACHE_DIR = "image_cache"
@@ -59,7 +59,13 @@ class CacheAppGlideModule : AppGlideModule() {
     override fun registerComponents(context: Context, glide: Glide, registry: Registry) {
         super.registerComponents(context, glide, registry)
         if (CompileUtils.isClassExists("com.bumptech.glide.integration.okhttp3.OkHttpUrlLoader")) {
-            registry.replace(GlideUrl::class.java, InputStream::class.java, OkHttpUrlLoader.Factory())
+            val client = ImageloaderManager.get().getBuilder().getOkHttpClient()
+            val factory = if (client != null) {
+                OkHttpUrlLoader.Factory(client)
+            } else {
+                OkHttpUrlLoader.Factory()
+            }
+            registry.replace(GlideUrl::class.java, InputStream::class.java, factory)
         }
     }
 }
