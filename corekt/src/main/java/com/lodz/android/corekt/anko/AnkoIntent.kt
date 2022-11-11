@@ -15,6 +15,7 @@ import android.os.Parcelable
 import android.provider.MediaStore
 import android.provider.Settings
 import androidx.core.content.FileProvider
+import androidx.core.net.toUri
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import com.lodz.android.corekt.utils.FileUtils
@@ -235,6 +236,18 @@ fun Activity.takePhoto(savePath: String, authority: String, requestCode: Int): B
     return true
 }
 
+/** 使用第三方软件播放音频文件[file]，FileProvider名称[authority] */
+fun Activity.playAudio(file: File, authority: String) {
+    val intent = Intent(Intent.ACTION_VIEW)
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+        val uri = FileProvider.getUriForFile(this, authority, file)
+        intent.setDataAndType(uri, "audio/*")
+    } else {
+        intent.setDataAndType(file.toUri(), "audio/*")
+    }
+    this.startActivity(intent)
+}
 
 /** 从intent中根据[nameKey]来获取传递过来的对象的值，默认值为[defaultValue] */
 inline fun <reified T> Activity.intentExtrasNoNull(nameKey: String, defaultValue: T): Lazy<T> = lazy {
