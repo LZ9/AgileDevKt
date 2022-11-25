@@ -38,8 +38,6 @@ android {
         buildConfigField "String", FILE_AUTHORITY, "\"com.lodz.android.agiledevkt.fileprovider\""
     }
 
-    // 程序在编译的时候会检查lint，有任何错误提示会停止build，我们可以关闭这个开关
-
     buildTypes {
 
         debug {//debug版本的配置
@@ -60,6 +58,8 @@ android {
             manifestPlaceholders = [FILE_AUTHORITY: defaultConfig.getBuildConfigFields().get("FILE_AUTHORITY").value.replace("\"", "")]
         }
     }
+
+    // 程序在编译的时候会检查lint，有任何错误提示会停止build，我们可以关闭这个开关
     lint {
         abortOnError false
         checkReleaseBuilds false
