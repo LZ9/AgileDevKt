@@ -31,7 +31,7 @@ android {
 dependencies {
     // 支持库
     api 'androidx.appcompat:appcompat:1.5.1'
-    api 'com.google.android.material:material:1.6.1'
+    api 'com.google.android.material:material:1.7.0'
     api 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     api 'androidx.recyclerview:recyclerview:1.2.1'
     api 'androidx.cardview:cardview:1.0.0'
@@ -40,8 +40,8 @@ dependencies {
     api 'androidx.constraintlayout:constraintlayout:2.1.4'
     api 'androidx.multidex:multidex:2.0.1'
     api 'androidx.core:core-ktx:1.9.0'
-    api 'androidx.activity:activity-ktx:1.6.0'
-    api 'androidx.fragment:fragment-ktx:1.5.3'
+    api 'androidx.activity:activity-ktx:1.6.1'
+    api 'androidx.fragment:fragment-ktx:1.5.5'
     api 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
     api 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
     api 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
