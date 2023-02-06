@@ -22,12 +22,12 @@ interface PresenterContract<VC : ViewContract> {
     fun isDetach(): Boolean
 
     /** 在Activity里绑定Rx生命周期 */
-    fun <T> bindUntilActivityEvent(event: ActivityEvent): LifecycleTransformer<T>?
+    fun <T> bindUntilActivityEvent(event: ActivityEvent): LifecycleTransformer<T>
 
     /** 在Fragment里绑定Rx生命周期 */
-    fun <T> bindUntilFragmentEvent(event: FragmentEvent): LifecycleTransformer<T>?
+    fun <T> bindUntilFragmentEvent(event: FragmentEvent): LifecycleTransformer<T>
 
     /** 自动绑定Rx生命周期 */
-    fun <T> bindUntilDetachEvent(): LifecycleTransformer<T>?
+    fun <T> bindUntilDetachEvent(): LifecycleTransformer<T>
 
 }

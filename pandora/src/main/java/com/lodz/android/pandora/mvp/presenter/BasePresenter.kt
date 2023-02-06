@@ -42,11 +42,20 @@ open class BasePresenter<VC : ViewContract> : PresenterContract<VC> {
 
     override fun isDetach(): Boolean = mContext == null || mViewContract == null
 
-    override fun <T> bindUntilActivityEvent(event: ActivityEvent): LifecycleTransformer<T>? = mViewContract?.bindUntilActivityEvent(event)
+    override fun <T> bindUntilActivityEvent(event: ActivityEvent): LifecycleTransformer<T> {
+        val view = mViewContract ?: throw NullPointerException("ViewContract is null")
+        return view.bindUntilActivityEvent(event)
+    }
 
-    override fun <T> bindUntilFragmentEvent(event: FragmentEvent): LifecycleTransformer<T>? = mViewContract?.bindUntilFragmentEvent(event)
+    override fun <T> bindUntilFragmentEvent(event: FragmentEvent): LifecycleTransformer<T> {
+        val view = mViewContract ?: throw NullPointerException("ViewContract is null")
+        return view.bindUntilFragmentEvent(event)
+    }
 
-    override fun <T> bindUntilDetachEvent(): LifecycleTransformer<T>? = mViewContract?.bindUntilDetachEvent()
+    override fun <T> bindUntilDetachEvent(): LifecycleTransformer<T> {
+        val view = mViewContract ?: throw NullPointerException("ViewContract is null")
+        return view.bindUntilDetachEvent()
+    }
 
     fun getViewContract(): VC? = mViewContract
 
