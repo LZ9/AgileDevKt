@@ -1,7 +1,8 @@
 package com.lodz.android.corekt.file
 
 import android.content.Context
-import android.media.MediaPlayer
+import android.media.MediaExtractor
+import android.media.MediaFormat
 import android.net.Uri
 import android.util.Base64
 import androidx.core.content.FileProvider
@@ -92,40 +93,45 @@ fun String.getDirName(): String {
     return this
 }
 
-/** 获取音视频的总时长 */
-fun Uri.getMediaDuration(context: Context): Int {
-    val player = MediaPlayer()
-    try {
-        player.setDataSource(context, this)
-        player.prepare()
-        return player.duration
-    } catch (e: Exception) {
-        e.printStackTrace()
-        player.release()
+/** 获取音视频的总时长（毫秒） */
+fun Uri.getMediaDuration(context: Context, mode: String = "r"): Long {
+    context.contentResolver.openFileDescriptor(this, mode)?.use {
+        var media: MediaExtractor? = null
+        try {
+            media = MediaExtractor()
+            media.setDataSource(it.fileDescriptor)
+            val mf = media.getTrackFormat(0)
+            return mf.getLong(MediaFormat.KEY_DURATION) / 1000L
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            media?.release()
+        }
     }
     return 0
 }
 
 /** 获取音视频的总时长（毫秒） */
-fun File.getMediaDuration(): Int {
-    val player = MediaPlayer()
+fun File.getMediaDuration(): Long {
+    var media: MediaExtractor? = null
     try {
-        player.setDataSource(this.absolutePath)
-        player.prepare()
-        return player.duration
+        media = MediaExtractor()
+        media.setDataSource(this.absolutePath)
+        val mf = media.getTrackFormat(0)
+        return mf.getLong(MediaFormat.KEY_DURATION) / 1000L
     } catch (e: Exception) {
         e.printStackTrace()
     } finally {
-        player.release()
+        media?.release()
     }
     return 0
 }
 
 /** 格式化视频时长 */
-fun Uri.formatVideoDuration(context: Context): String = getMediaDuration(context).toLong().formatVideoDuration()
+fun Uri.formatVideoDuration(context: Context): String = getMediaDuration(context).formatVideoDuration()
 
 /** 格式化视频时长 */
-fun File.formatVideoDuration(): String = getMediaDuration().toLong().formatVideoDuration()
+fun File.formatVideoDuration(): String = getMediaDuration().formatVideoDuration()
 
 /** 格式化视频时长（毫秒） */
 fun Long.formatVideoDuration(): String {

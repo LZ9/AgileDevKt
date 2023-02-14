@@ -19,7 +19,7 @@ fun ByteArray.merge(other: ByteArray): ByteArray {
 }
 
 /** Int转ByteArray（高字节在前） */
-@Deprecated("试用toByteArray方法")
+@Deprecated("使用toByteArray方法")
 fun Int.toByteArrayHF(): ByteArray {
     val byteArray = ByteArray(4)
     byteArray[0] = (this and 0xff).toByte()
@@ -30,7 +30,7 @@ fun Int.toByteArrayHF(): ByteArray {
 }
 
 /** Int转ByteArray（低字节在前） */
-@Deprecated("试用toByteArray方法")
+@Deprecated("使用toByteArray方法")
 fun Int.toByteArrayLF(): ByteArray {
     val byteArray = ByteArray(4)
     byteArray[3] = (this and 0xff).toByte()
@@ -94,6 +94,31 @@ fun ShortArray.toByteArray(): ByteArray {
     return dest
 }
 
+/** ByteArray转ShortArray */
+fun ByteArray.toShortArray(): ShortArray {
+    val shorts = ShortArray(this.size / 2)
+    ByteBuffer.wrap(this).asShortBuffer().get(shorts)
+    return shorts
+}
+
+fun UInt.toByteArray(littleEndian: Boolean = true): ByteArray {
+    val bytes = ByteArray(4)
+    if (littleEndian) {
+        for (i in 0..3) bytes[i] = (this shr (i * 8)).toByte()
+    } else {
+        for (i in 0..3) bytes[3 - i] = (this shr (i * 8)).toByte()
+    }
+    return bytes
+}
+
+fun Short.toByteArray(littleEndian: Boolean = true): ByteArray {
+    return if (littleEndian) {
+        byteArrayOf((this.toInt() and 0x00FF).toByte(), ((this.toInt() and 0xFF00) shr 8).toByte())
+    } else {
+        byteArrayOf(((this.toInt() and 0xFF00) shr 8).toByte(), (this.toInt() and 0x00FF).toByte())
+    }
+}
+
 /** ByteArray转Int */
 fun ByteArray.toInt(): Int = ByteBuffer.wrap(this).int
 
@@ -108,10 +133,3 @@ fun ByteArray.toFloat(): Float = ByteBuffer.wrap(this).float
 
 /** ByteArray转Double */
 fun ByteArray.toDouble(): Double = ByteBuffer.wrap(this).double
-
-/** ByteArray转ShortArray */
-fun ByteArray.toShortArray(): ShortArray {
-    val shorts = ShortArray(this.size / 2)
-    ByteBuffer.wrap(this).asShortBuffer().get(shorts)
-    return shorts
-}
