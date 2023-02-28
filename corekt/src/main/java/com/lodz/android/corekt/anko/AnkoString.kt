@@ -14,8 +14,8 @@ import java.net.URLEncoder
 /** 把String转为Editable */
 fun CharSequence.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)
 
-/** 在String尾部进行文字拼接 */
-fun <T> CharSequence.append(t: T?): String = StringBuilder(this).append((t != null).then { t } ?: "").toString()
+/** 在对象尾部进行文字拼接 */
+fun <T> Any.append(t: T?): String = StringBuilder(this.toString()).append((t != null).then { t } ?: "").toString()
 
 /**
  * ping一个ip地址，true表示连通，false表示不连通
