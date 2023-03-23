@@ -76,7 +76,7 @@ internal open class AnyPickerActivity<T> : AbsActivity() {
             finish()
             return
         }
-        mPdrPickerBean?.lifecycleObserver?.onCreate { lifecycle }
+        mPdrPickerBean?.lifecycleObserver?.onCreate(getLifecycleOwner())
         initRecyclerView(bean)
 
         //页面绘制
@@ -384,22 +384,22 @@ internal open class AnyPickerActivity<T> : AbsActivity() {
 
     override fun onResume() {
         super.onResume()
-        mPdrPickerBean?.lifecycleObserver?.onResume { lifecycle }
+        mPdrPickerBean?.lifecycleObserver?.onResume(getLifecycleOwner())
     }
 
     override fun onStart() {
         super.onStart()
-        mPdrPickerBean?.lifecycleObserver?.onStart { lifecycle }
+        mPdrPickerBean?.lifecycleObserver?.onStart(getLifecycleOwner())
     }
 
     override fun onPause() {
         super.onPause()
-        mPdrPickerBean?.lifecycleObserver?.onPause { lifecycle }
+        mPdrPickerBean?.lifecycleObserver?.onPause(getLifecycleOwner())
     }
 
     override fun onStop() {
         super.onStop()
-        mPdrPickerBean?.lifecycleObserver?.onStop { lifecycle }
+        mPdrPickerBean?.lifecycleObserver?.onStop(getLifecycleOwner())
     }
 
     override fun onDestroy() {
@@ -409,7 +409,7 @@ internal open class AnyPickerActivity<T> : AbsActivity() {
 
     /** 释放资源 */
     private fun release() {
-        mPdrPickerBean?.lifecycleObserver?.onDestroy { lifecycle }
+        mPdrPickerBean?.lifecycleObserver?.onDestroy(getLifecycleOwner())
         mPdrAdapter.release()
         mPdrPickerBean?.clear()
         sPickerBean?.clear()
