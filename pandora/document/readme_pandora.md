@@ -43,6 +43,11 @@ Pandora支持Androidx和Kotlin开发插件，内部集成了包括
 - 九宫格封装[待补充]()
 - RecyclerView封装[待补充]()
 
+## 待开发
+- 用DataStore来替代SharedPreferences
+- 支持MVI模式
+- 添加协程Flow的用例
+
 ## 扩展
 
 - [更新记录](https://github.com/LZ9/AgileDevKt/blob/master/pandora/document/readme_pandora_update.md)
