@@ -7,18 +7,12 @@ import android.view.View
 import com.google.android.material.tabs.TabLayout
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.databinding.ActivityConfigLayoutBinding
-import com.lodz.android.agiledevkt.databinding.ActivityMainBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
-import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.getColorCompat
 import com.lodz.android.corekt.utils.StatusBarUtil
 import com.lodz.android.pandora.base.activity.AbsActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
-import com.lodz.android.pandora.widget.base.ErrorLayout
-import com.lodz.android.pandora.widget.base.LoadingLayout
-import com.lodz.android.pandora.widget.base.NoDataLayout
-import com.lodz.android.pandora.widget.base.TitleBarLayout
-import com.lodz.android.pandora.widget.custom.MmsTabLayout
+
 
 /**
  * 基础控件配置
