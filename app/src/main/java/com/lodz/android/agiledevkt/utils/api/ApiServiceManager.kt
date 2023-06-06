@@ -3,6 +3,8 @@ package com.lodz.android.agiledevkt.utils.api
 import com.lodz.android.agiledevkt.App
 import com.lodz.android.agiledevkt.config.UrlConfig
 import com.lodz.android.corekt.log.PrintLog
+import okhttp3.Headers
+import okhttp3.HttpUrl
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -54,10 +56,43 @@ class ApiServiceManager private constructor() {
     private class RequestInterceptor : Interceptor {
         override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
             val oldRequest = chain.request()
-            val request = oldRequest.newBuilder().build()
+            val request = oldRequest.newBuilder()
+//                .headers(Headers.of(getHeaders(oldRequest.headers())))//注入头信息
+//                .url(getCommonUrl(oldRequest))// 注入通用入参
+                .build()
             logRequest(request)
             return logResponse(chain.proceed(request))
         }
+
+//        /** 在原始头信息[headers]中注入新的头信息 */
+//        private fun getHeaders(headers: Headers?): Map<String, String> {
+//            val map = HashMap<String, String>()
+//            map["appKey"] = "00001"
+//            map["format"] = "json"
+//            map["locale"] = "zh_CN"
+//            if (headers == null) {
+//                return map
+//            }
+//            val oldHeadersMap = headers.toMultimap()
+//            for (entry in oldHeadersMap) {
+//                if (entry.value.isNotEmpty()) {
+//                    map[entry.key] = entry.value[0]
+//                }
+//            }
+//            return map
+//        }
+//
+//        /** 在原始请求[request]中放入新的通用参数 */
+//        private fun getCommonUrl(request: Request): HttpUrl =
+//            request.url()
+//                .newBuilder()
+//                .scheme(request.url().scheme())
+//                .host(request.url().host())
+//                .addQueryParameter("appKey", "00001")
+//                .addQueryParameter("format", "json")
+//                .addQueryParameter("locale", "zh_CN")
+//                .build()
+
 
         /** 获取请求字符串，[request]请求 */
         private fun logRequest(request: Request) {
