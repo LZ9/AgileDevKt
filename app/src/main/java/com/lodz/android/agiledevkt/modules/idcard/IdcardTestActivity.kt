@@ -102,7 +102,7 @@ class IdcardTestActivity : AbsActivity() {
     private fun getCacheList(text: String): MutableList<SearchRecomBean> {
         val list = ArrayList<SearchRecomBean>()
         val json = ACacheUtils.get().create().getAsString(CACHE_KEY)
-        val cacheList = if (json.isEmpty()) ArrayList() else json.parseJsonObject<List<SearchRecomBean>>()
+        val cacheList = json.parseJsonObject<List<SearchRecomBean>>() ?: ArrayList()
         if (text.isEmpty()) {
             return list
         }
@@ -116,7 +116,7 @@ class IdcardTestActivity : AbsActivity() {
 
     private fun putCache(text: String) {
         val json = ACacheUtils.get().create().getAsString(CACHE_KEY)
-        val list = if (json.isEmpty()) ArrayList() else json.parseJsonObject<List<SearchRecomBean>>().toArrayList()
+        val list = json.parseJsonObject<ArrayList<SearchRecomBean>>() ?: ArrayList()
         var hasCache = false
         for (bean in list) {
             if (bean.getTitleText() == text) {

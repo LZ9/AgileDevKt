@@ -88,7 +88,7 @@ object ApiServiceImpl : ApiService {
                     return@create
                 }
                 val json = "{\"code\":200,\"data\":{\"name\":\"鼓浪屿\",\"score\":\"10分\",\"isRecommend\":\"FALSE\"},\"msg\":\"success\",\"success\":true,\"tokenUnauth\":false}"
-                emitter.doNext(json.parseJsonObject())
+                emitter.doNext(json.parseJsonObject() ?: ResponseBean.createFail("parse fail"))
                 emitter.doComplete()
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -101,7 +101,7 @@ object ApiServiceImpl : ApiService {
             try {
                 Thread.sleep(2000)
                 val json = "{\"code\":200,\"msg\":\"success\",\"data\":[]}"
-                val responseBean = json.parseJsonObject<ResponseBean<List<SpotBean>>>()
+                val responseBean = json.parseJsonObject<ResponseBean<List<SpotBean>>>() ?: ResponseBean.createFail("parse fail")
                 val list = ArrayList<SpotBean>()
                 val spotBean = SpotBean()
                 spotBean.name = getJsonByRequestBody(requestBody)

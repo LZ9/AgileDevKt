@@ -73,7 +73,7 @@ object ApiModuleSuspend :ApiCoroutinesService{
     override suspend fun querySpot(requestBody: RequestBody): ResponseBean<List<SpotBean>> {
         delay(2000)
         val json = "{\"code\":200,\"msg\":\"success\",\"data\":[]}"
-        val responseBean = json.parseJsonObject<ResponseBean<List<SpotBean>>>()
+        val responseBean = json.parseJsonObject<ResponseBean<List<SpotBean>>>() ?: ResponseBean.createFail("parse fail")
         val list = ArrayList<SpotBean>()
         val spotBean = SpotBean()
         spotBean.name = getJsonByRequestBody(requestBody)

@@ -168,7 +168,7 @@ class TreeRvActivity : BaseActivity() {
         CoroutinesWrapper.create(this)
             .request {
                 val json = getAssetsFileContent("city.json")
-                val list = json.parseJsonObject<ArrayList<ProvinceBean>>()
+                val list = json.parseJsonObject<ArrayList<ProvinceBean>>() ?: ArrayList()
                 for (provinceBean in list) {
                     for (cityBean in provinceBean.citys) {
                         if (cityBean.cityName == "厦门市") {

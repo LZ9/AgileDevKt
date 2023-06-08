@@ -71,18 +71,18 @@ class JsonTestActivity :BaseActivity(){
 
         mBinding.jsonToObjBtn.setOnClickListener {
             cleanResult()
-            val spotBean = mDefObjJson.parseJsonObject<SpotBean>()
+            val spotBean = mDefObjJson.parseJsonObject<SpotBean>() ?: SpotBean()
             addLog("SpotBean : ${spotBean.name} , ${spotBean.score}")
 
-            val list = mDefListJson.parseJsonObject<List<SpotBean>>()
+            val list = mDefListJson.parseJsonObject<List<SpotBean>>() ?: ArrayList()
             addLog("List<SpotBean> : ${list[0].name} , ${list[0].score} ; ${list[1].name} , ${list[1].score}")
 
-            val responseBean = mDefObjListJson.parseJsonObject<ResponseBean<List<SpotBean>>>()
+            val responseBean = mDefObjListJson.parseJsonObject<ResponseBean<List<SpotBean>>>() ?: ResponseBean.createFail("parse fail")
             addLog("ResponseBean<List<SpotBean>> : ${responseBean.code} , ${responseBean.msg} ; " +
                     "${responseBean.data?.get(0)?.name} , ${responseBean.data?.get(0)?.score} ; " +
                     "${responseBean.data?.get(1)?.name} , ${responseBean.data?.get(1)?.score}")
 
-            val resMockBean = mDefTypeRefJson.parseJsonObject<ResponseBean<MockBean<SpotBean>>>()
+            val resMockBean = mDefTypeRefJson.parseJsonObject<ResponseBean<MockBean<SpotBean>>>() ?: ResponseBean.createFail("parse fail")
             addLog("ResponseBean<MockBean<SpotBean>> : ${resMockBean.code} , ${responseBean.msg} ; " +
                     "${resMockBean.data?.id} , ${resMockBean.data?.loginName} ; " +
                     "${resMockBean.data?.roles?.get(0)?.name} , ${resMockBean.data?.roles?.get(0)?.score} ; " +
