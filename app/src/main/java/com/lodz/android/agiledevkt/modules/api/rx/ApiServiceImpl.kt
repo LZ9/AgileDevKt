@@ -87,13 +87,8 @@ object ApiServiceImpl : ApiService {
                     emitter.doComplete()
                     return@create
                 }
-                val responseBean = ResponseBean.createSuccess<SpotBean>()
-                responseBean.msg = "success"
-                val spotBean = SpotBean()
-                spotBean.name = "鼓浪屿"
-                spotBean.score = "10分"
-                responseBean.data = spotBean
-                emitter.doNext(responseBean)
+                val json = "{\"code\":200,\"data\":{\"name\":\"鼓浪屿\",\"score\":\"10分\",\"isRecommend\":\"FALSE\"},\"msg\":\"success\",\"success\":true,\"tokenUnauth\":false}"
+                emitter.doNext(json.parseJsonObject())
                 emitter.doComplete()
             } catch (e: Exception) {
                 e.printStackTrace()

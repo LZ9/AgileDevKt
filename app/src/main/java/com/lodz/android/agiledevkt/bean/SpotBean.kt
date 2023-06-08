@@ -1,5 +1,8 @@
 package com.lodz.android.agiledevkt.bean
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize
+import com.lodz.android.agiledevkt.modules.api.json.String2Boolean
+
 /**
  * 景点数据实体
  * @author zhouL
@@ -11,7 +14,10 @@ class SpotBean {
 
     var score: String = ""
 
+    @JsonDeserialize(using = String2Boolean::class)
+    var isRecommend = true
+
     override fun toString(): String {
-        return "SpotBean(name='$name', score='$score')"
+        return "SpotBean(name='$name', score='$score', isRecommend='$isRecommend')"
     }
 }

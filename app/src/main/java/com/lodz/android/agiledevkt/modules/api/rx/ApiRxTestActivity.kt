@@ -96,7 +96,7 @@ class ApiRxTestActivity : BaseActivity() {
                     override fun onPgNext(any: ResponseBean<SpotBean>) {
                         val data = any.data
                         if (data != null){
-                            mBinding.resultTv.text = java.lang.StringBuilder("spotName : ${data.name} ; score : ${data.score}")
+                            mBinding.resultTv.text = java.lang.StringBuilder("spotName : ${data.name} ; score : ${data.score} ; isRecommend : ${data.isRecommend}")
                         }
                     }
 
@@ -114,7 +114,7 @@ class ApiRxTestActivity : BaseActivity() {
                     override fun onPgNext(any: ResponseBean<SpotBean>) {
                         val data = any.data
                         if (data != null){
-                            mBinding.resultTv.text = java.lang.StringBuilder("spotName : ${data.name} ; score : ${data.score}")
+                            mBinding.resultTv.text = java.lang.StringBuilder("spotName : ${data.name} ; score : ${data.score} ; isRecommend : ${data.isRecommend}")
                         }
                     }
 
@@ -134,7 +134,7 @@ class ApiRxTestActivity : BaseActivity() {
                     override fun onPgNext(any: ResponseBean<List<SpotBean>>) {
                         val data = any.data
                         if (data != null){
-                            mBinding.resultTv.text = StringBuilder("spotName : ${data[0].name} ; score : ${data[0].score}")
+                            mBinding.resultTv.text = StringBuilder("spotName : ${data[0].name} ; score : ${data[0].score} ; isRecommend : ${data[0].isRecommend}")
                         }
                     }
 
