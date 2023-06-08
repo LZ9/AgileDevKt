@@ -2,7 +2,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'signing'
 
 task androidSourcesJar(type: Jar) {
-    classifier = 'sources'
+    archiveClassifier.set("sources")
     from android.sourceSets.main.java.source
 
     exclude "**/R.class"
@@ -12,7 +12,7 @@ task androidSourcesJar(type: Jar) {
 ext {path=
     PUBLISH_GROUP_ID = 'ink.lodz'
     PUBLISH_ARTIFACT_ID = 'core-kt'
-    PUBLISH_VERSION = '2.0.3'
+    PUBLISH_VERSION = '2.0.4'
 }
 
 ext["signing.keyId"] = ''
