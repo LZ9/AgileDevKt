@@ -11,9 +11,12 @@ import com.lodz.android.pandora.base.application.BaseApplication
  */
 
 /** 把Json字符串转为对象 */
-inline fun <reified T> String.parseJsonObject(
-    mapper: ObjectMapper = BaseApplication.get()?.getJacksonObjectMapper() ?: ObjectMapper()
-): T = mapper.readValue(this, object : TypeReference<T>() {})
+inline fun <reified T> String.parseJsonObject(mapper: ObjectMapper = BaseApplication.get()?.getJacksonObjectMapper() ?: ObjectMapper()): T? {
+    if (this.isEmpty()) {
+        return null
+    }
+    return mapper.readValue(this, object : TypeReference<T>() {})
+}
 
 /** 把对象转为Json字符串 */
 fun <T> T.toJsonString(
