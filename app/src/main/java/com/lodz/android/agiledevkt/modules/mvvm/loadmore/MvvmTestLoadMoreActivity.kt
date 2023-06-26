@@ -49,7 +49,7 @@ class MvvmTestLoadMoreActivity : BaseRefreshVmActivity() {
 
     private fun initRecyclerView() {
         mAdapter = mBinding.recyclerView.linear()
-            .loadMoreVB<String, RvItemMainBinding>(RvItemMainBinding::inflate) { vb, holder, position ->
+            .loadMoreVB<String, RvItemMainBinding>(RvItemMainBinding::inflate) { context, vb, holder, position ->
                 val str = getItem(position)
                 vb.name.text = str
             }

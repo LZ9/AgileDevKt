@@ -1,6 +1,7 @@
 package com.lodz.android.pandora.widget.rv.anko
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
@@ -81,11 +82,11 @@ fun <T, AD : AbsRvAdapter<T, *>> RecyclerView.setup(absAdapter: AD): AD {
 /** 设置RV的布局[layoutId]和DataViewHolder绑定逻辑[bind] */
 fun <T> RecyclerView.setupData(
     @LayoutRes layoutId: Int,
-    bind: BaseDataRvAdapter<T>.(holder: DataViewHolder, position: Int) -> Unit
+    bind: BaseDataRvAdapter<T>.(context: Context, holder: DataViewHolder, position: Int) -> Unit
 ): BaseDataRvAdapter<T> {
     val absAdapter = object : BaseDataRvAdapter<T>(context) {
         override fun onBind(holder: DataViewHolder, position: Int) {
-            bind(holder, position)
+            bind(context, holder, position)
         }
 
         override fun getLayoutId(): Int = layoutId
@@ -98,11 +99,11 @@ fun <T> RecyclerView.setupData(
 /** 设置RV的ViewBinding方法[inflate]和DataVBViewHolder绑定逻辑 */
 fun <T, VB : ViewBinding> RecyclerView.setupVB(
     inflate: (LayoutInflater, parent: ViewGroup, attachToRoot: Boolean) -> VB,
-    bind: BaseVbRvAdapter<T>.(vb: VB, holder: DataVBViewHolder, position: Int) -> Unit
+    bind: BaseVbRvAdapter<T>.(context: Context, vb: VB, holder: DataVBViewHolder, position: Int) -> Unit
 ): BaseVbRvAdapter<T> {
     val absAdapter = object : BaseVbRvAdapter<T>(context) {
         override fun onBind(holder: DataVBViewHolder, position: Int) {
-            holder.getVB<VB>().apply { bind(this, holder, position) }
+            holder.getVB<VB>().apply { bind(context, this, holder, position) }
         }
 
         override fun getVbInflate(): (LayoutInflater, parent: ViewGroup, attachToRoot: Boolean) -> ViewBinding = inflate
@@ -119,11 +120,11 @@ fun <T, AD : AbsLoadMoreRvAdapter<T, *>> RecyclerView.loadMore(absAdapter: AD) =
 /** 设置RV的布局[layoutId]和DataViewHolder绑定逻辑[bind] */
 fun <T> RecyclerView.loadMoreData(
     @LayoutRes layoutId: Int,
-    bind: SimpleLoadMoreDataRvAdapter<T>.(holder: DataViewHolder, position: Int) -> Unit
+    bind: SimpleLoadMoreDataRvAdapter<T>.(context: Context, holder: DataViewHolder, position: Int) -> Unit
 ): SimpleLoadMoreDataRvAdapter<T> {
     val absAdapter = object : SimpleLoadMoreDataRvAdapter<T>(context){
         override fun onBind(holder: DataViewHolder, position: Int) {
-            bind(holder, position)
+            bind(context, holder, position)
         }
 
         override fun getItemLayoutId(): Int = layoutId
@@ -136,11 +137,11 @@ fun <T> RecyclerView.loadMoreData(
 /** 设置RV的ViewBinding方法[inflate]和DataVBViewHolder绑定逻辑 */
 fun <T, VB : ViewBinding> RecyclerView.loadMoreVB(
     inflate: (LayoutInflater, parent: ViewGroup, attachToRoot: Boolean) -> VB,
-    bind: SimpleLoadMoreVbRvAdapter<T>.(vb: VB, holder: DataVBViewHolder, position: Int) -> Unit
+    bind: SimpleLoadMoreVbRvAdapter<T>.(context: Context, vb: VB, holder: DataVBViewHolder, position: Int) -> Unit
 ): SimpleLoadMoreVbRvAdapter<T> {
     val absAdapter = object : SimpleLoadMoreVbRvAdapter<T>(context) {
         override fun onBind(holder: DataVBViewHolder, position: Int) {
-            holder.getVB<VB>().apply { bind(this, holder, position) }
+            holder.getVB<VB>().apply { bind(context, this, holder, position) }
         }
 
         override fun getVbInflate(): (LayoutInflater, parent: ViewGroup, attachToRoot: Boolean) -> ViewBinding = inflate

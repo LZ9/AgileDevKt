@@ -55,7 +55,7 @@ class ViewBindingTestFragment : LazyFragment() {
     private fun initRecyclerView() {
         mBinding?.recyclerView
             ?.linear()
-            ?.setupVB<String, RvItemViewBindingBinding>(RvItemViewBindingBinding::inflate) { vb, holder, position ->
+            ?.setupVB<String, RvItemViewBindingBinding>(RvItemViewBindingBinding::inflate) { context, vb, holder, position ->
                 val item = getItem(position)
                 vb.idTv.text = item ?: "-1"
                 vb.timeTv.text = DateUtils.getCurrentFormatString(DateUtils.TYPE_2)

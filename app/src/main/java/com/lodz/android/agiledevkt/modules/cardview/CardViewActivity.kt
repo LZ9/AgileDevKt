@@ -43,7 +43,7 @@ class CardViewActivity : BaseActivity() {
     private fun initRecyclerView() {
          mBinding.recyclerView
              .linear()
-             .setupVB<String, RvItemCardViewBinding>(RvItemCardViewBinding::inflate) { vb, holder, position ->
+             .setupVB<String, RvItemCardViewBinding>(RvItemCardViewBinding::inflate) { context, vb, holder, position ->
                  val str = getItem(position) ?: return@setupVB
                  vb.titleTv.text = str
                  var content = str

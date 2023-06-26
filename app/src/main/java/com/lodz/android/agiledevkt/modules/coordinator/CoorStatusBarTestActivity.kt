@@ -49,7 +49,7 @@ class CoorStatusBarTestActivity : AbsActivity() {
     private fun initRecyclerView() {
         mBinding.recyclerView
             .linear()
-            .setupData<String>(R.layout.rv_item_coordinator) { holder, position ->
+            .setupData<String>(R.layout.rv_item_coordinator) { context, holder, position ->
                 val data = getItem(position)
                 holder.withView<TextView>(R.id.data_tv).text = data
             }

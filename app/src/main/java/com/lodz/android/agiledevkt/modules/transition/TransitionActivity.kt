@@ -73,7 +73,7 @@ class TransitionActivity : BaseActivity() {
     private fun initRecyclerView() {
         mBinding.recyclerView
             .linear()
-            .setupVB<TransitionBean, RvItemTransitionBinding>(RvItemTransitionBinding::inflate) { vb, holder, position ->
+            .setupVB<TransitionBean, RvItemTransitionBinding>(RvItemTransitionBinding::inflate) { context, vb, holder, position ->
                 val bean = getItem(position) ?: return@setupVB
                 vb.img.setImageResource(bean.imgRes)
                 vb.titleTv.text = bean.title

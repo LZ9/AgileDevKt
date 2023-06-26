@@ -71,7 +71,7 @@ class BluetoothTestActivity : BaseActivity() {
     private fun initRecyclerView() {
         mAdapter = mBinding.recyclerView
             .linear()
-            .setupVB(RvItemBleDeviceBinding::inflate) { vb, holder, position ->
+            .setupVB(RvItemBleDeviceBinding::inflate) { context, vb, holder, position ->
                 val device = getItem(position)
                 vb.nameTv.text = device?.name ?: ""
                 vb.addressTv.text = device?.address ?: ""

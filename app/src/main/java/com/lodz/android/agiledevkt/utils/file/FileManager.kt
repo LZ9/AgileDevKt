@@ -2,7 +2,6 @@ package com.lodz.android.agiledevkt.utils.file
 
 import android.content.Context
 import android.os.Build
-import android.text.TextUtils
 import com.lodz.android.agiledevkt.App
 import com.lodz.android.corekt.anko.getStoragePath
 import com.lodz.android.corekt.utils.FileUtils
@@ -104,7 +103,7 @@ object FileManager {
 
     /** 修复文件夹路径[path] */
     private fun fixPath(path: String): String {
-        if (TextUtils.isEmpty(path)) {
+        if (path.isEmpty()) {
             // 路径为空说明未初始化
             init()
         }
