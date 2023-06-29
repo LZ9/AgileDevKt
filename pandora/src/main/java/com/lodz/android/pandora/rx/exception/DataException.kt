@@ -1,5 +1,7 @@
 package com.lodz.android.pandora.rx.exception
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.lodz.android.pandora.rx.status.ResponseStatus
 
 /**
@@ -15,6 +17,7 @@ class DataException : Exception {
     constructor(message: String?) : super(message)
     constructor(message: String?, cause: Throwable?) : super(message, cause)
     constructor(cause: Throwable?) : super(cause)
+    @RequiresApi(Build.VERSION_CODES.N)
     constructor(
         message: String?,
         cause: Throwable?,
@@ -27,8 +30,9 @@ class DataException : Exception {
     fun getData(): ResponseStatus? = mData
 
     /** 设置数据[data] */
-    fun setData(data: ResponseStatus?) {
+    fun setData(data: ResponseStatus?): DataException {
         mData = data
+        return this
     }
 
 }
