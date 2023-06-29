@@ -21,3 +21,21 @@ fun TabLayout.setupViewPager(vp: ViewPager2, titleList: ArrayList<String>) {
 fun TabLayout.setupViewPager(vp: ViewPager2, titleArray: Array<String>) {
     setupViewPager(vp, titleArray.toArrayList())
 }
+
+/** 设置ViewPager2[vp]，标题资源ID数组[titleResIdList] */
+fun TabLayout.setupViewPager(vp: ViewPager2, titleResIdList: ArrayList<Int>) {
+    val titleList = ArrayList<String>()
+    for (strResId in titleResIdList) {
+        titleList.add(vp.context.getString(strResId))
+    }
+    setupViewPager(vp, titleList)
+}
+
+/** 设置ViewPager2[vp]，标题资源ID数组[titleResIdArray] */
+fun TabLayout.setupViewPager(vp: ViewPager2, titleResIdArray: IntArray) {
+    val titleList = ArrayList<String>()
+    for (strResId in titleResIdArray) {
+        titleList.add(vp.context.getString(strResId))
+    }
+    setupViewPager(vp, titleList)
+}
