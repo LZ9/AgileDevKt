@@ -7,7 +7,7 @@ import com.lodz.android.agiledevkt.databinding.ActivityViewBindingTestBinding
 import com.lodz.android.corekt.anko.setupViewPager
 import com.lodz.android.pandora.base.activity.AbsActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
-import com.lodz.android.pandora.widget.vp2.SimpleTabAdapter
+import com.lodz.android.pandora.widget.vp2.SimpleVp2Adapter
 
 /**
  * ViewBinding测试类
@@ -44,7 +44,7 @@ class ViewBindingTestActivity : AbsActivity() {
         for (i in 0 until TOP_TAB_NAMES.size) {
             list.add(ViewBindingTestFragment.newInstance(TOP_TAB_NAMES[i]))
         }
-        mBinding.viewPager.adapter = SimpleTabAdapter(this, list)
+        mBinding.viewPager.adapter = SimpleVp2Adapter(this, list)
         mBinding.viewPager.offscreenPageLimit = TOP_TAB_NAMES.size
         mBinding.viewPager.setCurrentItem(0, true)
         mBinding.tabLayout.setupViewPager(mBinding.viewPager, TOP_TAB_NAMES)

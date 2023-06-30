@@ -29,7 +29,7 @@ import com.lodz.android.corekt.anko.getColorCompat
 import com.lodz.android.corekt.anko.getColorStateListCompat
 import com.lodz.android.corekt.anko.setupViewPager
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
-import com.lodz.android.pandora.widget.vp2.SimpleTabAdapter
+import com.lodz.android.pandora.widget.vp2.SimpleVp2Adapter
 
 /**
  * 顶部菜单栏测试类
@@ -86,7 +86,7 @@ class TabBarTestActivity : BaseActivity() {
         for (tabName in mTabNameList) {
             list.add(TestFragment.newInstance(tabName))
         }
-        mBinding.viewPager.adapter = SimpleTabAdapter(this, list)
+        mBinding.viewPager.adapter = SimpleVp2Adapter(this, list)
         mBinding.viewPager.offscreenPageLimit = 1
         mBinding.viewPager.setCurrentItem(0, true)
     }

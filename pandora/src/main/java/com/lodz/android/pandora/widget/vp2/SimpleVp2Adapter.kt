@@ -7,11 +7,11 @@ import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
 /**
- * 简单的tablayout适配器
+ * 简单的ViewPager2适配器
  * @author zhouL
  * @date 2020/1/2
  */
-class SimpleTabAdapter : FragmentStateAdapter {
+class SimpleVp2Adapter : FragmentStateAdapter {
 
     private val mFragments: List<Fragment>
 

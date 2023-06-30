@@ -10,7 +10,7 @@ import com.lodz.android.agiledevkt.databinding.DialogFragmentRightBinding
 import com.lodz.android.corekt.anko.setupViewPager
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.dialogfragment.BaseRightDialogFragment
-import com.lodz.android.pandora.widget.vp2.SimpleTabAdapter
+import com.lodz.android.pandora.widget.vp2.SimpleVp2Adapter
 
 /**
  * 右侧DialogFragment测试类
@@ -36,7 +36,7 @@ class RightDialogFragment : BaseRightDialogFragment() {
         for (i in 0 until Constant.TAB_NAME.size){
             list.add(TestFragment.newInstance(Constant.TAB_NAME[i]))
         }
-        mBinding.viewPager.adapter = SimpleTabAdapter(this, list)
+        mBinding.viewPager.adapter = SimpleVp2Adapter(this, list)
         mBinding.viewPager.offscreenPageLimit = Constant.TAB_NAME.size
         mBinding.viewPager.setCurrentItem(0, true)
         mBinding.tabLayout.setupViewPager(mBinding.viewPager, Constant.TAB_NAME)

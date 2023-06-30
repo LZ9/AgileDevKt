@@ -12,7 +12,7 @@ import com.lodz.android.corekt.anko.setupViewPager
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
-import com.lodz.android.pandora.widget.vp2.SimpleTabAdapter
+import com.lodz.android.pandora.widget.vp2.SimpleVp2Adapter
 
 /**
  * 测试Activity
@@ -42,7 +42,7 @@ class TestResultActivity : BaseActivity() {
          val tabList = arrayListOf("测试1", "测试2")
         list.add(TestResultAFragment.newInstance(tabList[0]))
         list.add(TestResultBFragment.newInstance(tabList[1]))
-        mBinding.viewPager.adapter = SimpleTabAdapter(this, list)
+        mBinding.viewPager.adapter = SimpleVp2Adapter(this, list)
         mBinding.viewPager.offscreenPageLimit = tabList.size
         mBinding.viewPager.setCurrentItem(0, true)
         mBinding.tabLayout.setupViewPager(mBinding.viewPager, tabList)

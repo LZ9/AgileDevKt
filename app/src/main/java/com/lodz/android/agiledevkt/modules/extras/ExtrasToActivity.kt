@@ -13,7 +13,7 @@ import com.lodz.android.agiledevkt.databinding.ActivityExtrasResultBinding
 import com.lodz.android.corekt.anko.*
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
-import com.lodz.android.pandora.widget.vp2.SimpleTabAdapter
+import com.lodz.android.pandora.widget.vp2.SimpleVp2Adapter
 
 /**
  * 参数传递给Activity
@@ -136,7 +136,7 @@ class ExtrasToActivity : BaseActivity() {
     private fun initViewPager() {
         val list = ArrayList<Fragment>()
         list.add(ExtrasToFragment.newInstance())
-        mBinding.viewPager.adapter = SimpleTabAdapter(this, list)
+        mBinding.viewPager.adapter = SimpleVp2Adapter(this, list)
         mBinding.viewPager.offscreenPageLimit = 1
     }
 

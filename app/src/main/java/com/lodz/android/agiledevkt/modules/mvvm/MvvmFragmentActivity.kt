@@ -13,7 +13,7 @@ import com.lodz.android.agiledevkt.modules.mvvm.sandwich.MvvmTestSandwichFragmen
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.setupViewPager
 import com.lodz.android.pandora.base.activity.BaseActivity
-import com.lodz.android.pandora.widget.vp2.SimpleTabAdapter
+import com.lodz.android.pandora.widget.vp2.SimpleVp2Adapter
 
 /**
  * Fragment生命周期测试类
@@ -54,7 +54,7 @@ class MvvmFragmentActivity : BaseActivity() {
             MvvmTestSandwichFragment.newInstance()
         )
         mViewPager.offscreenPageLimit = TAB_NAMES.size
-        mViewPager.adapter = SimpleTabAdapter(this, list)
+        mViewPager.adapter = SimpleVp2Adapter(this, list)
         mTabLayout.setupViewPager(mViewPager, TAB_NAMES)
     }
 

@@ -8,7 +8,7 @@ import com.lodz.android.corekt.anko.setupViewPager
 import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.pandora.base.fragment.BaseFragment
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
-import com.lodz.android.pandora.widget.vp2.SimpleTabAdapter
+import com.lodz.android.pandora.widget.vp2.SimpleVp2Adapter
 
 /**
  * ViewPager嵌套Fragment测试
@@ -50,7 +50,7 @@ class Vp2TopTestFragment :BaseFragment(){
             list.add(Vp2BottomTestFragment.newInstance(mName, MIDDLE_TAB_NAMES[i]))
         }
 
-        mBinding.fgViewPager.adapter = SimpleTabAdapter(this, list)
+        mBinding.fgViewPager.adapter = SimpleVp2Adapter(this, list)
         mBinding.fgViewPager.offscreenPageLimit = MIDDLE_TAB_NAMES.size
         mBinding.fgViewPager.setCurrentItem(0, true)
         mBinding.fgTabLayout.setupViewPager(mBinding.fgViewPager, MIDDLE_TAB_NAMES)
