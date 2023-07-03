@@ -3,9 +3,11 @@ package com.lodz.android.agiledevkt
 import android.content.Context
 import android.widget.LinearLayout
 import androidx.multidex.MultiDex
+import com.lodz.android.corekt.anko.append
 import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.corekt.network.NetworkManager
 import com.lodz.android.corekt.threadpool.ThreadPoolManager
+import com.lodz.android.corekt.utils.DateUtils
 import com.lodz.android.pandora.base.application.BaseApplication
 import io.reactivex.plugins.RxJavaPlugins
 
@@ -31,6 +33,12 @@ class App : BaseApplication() {
         RxJavaPlugins.setErrorHandler {
             PrintLog.e("testtag", "App", it)
         }
+        setWatermarkContent(
+            "123456".append("\n")
+                .append("张某某").append("\n")
+                .append("某某省某某市某某局某某处某某科").append("\n")
+                .append(DateUtils.getCurrentFormatString(DateUtils.TYPE_6))
+        )
     }
 
     /** 配置基类 */

@@ -3,10 +3,10 @@ apply plugin: 'kotlin-android'
 //apply from: 'publish.gradle'
 
 android {
-    compileSdkVersion 33
+    compileSdkVersion 34
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 33
+        targetSdkVersion 34
         versionCode 63
         versionName "2.0.5"// 未上传
     }

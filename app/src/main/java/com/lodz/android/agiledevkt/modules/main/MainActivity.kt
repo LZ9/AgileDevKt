@@ -1,5 +1,6 @@
 package com.lodz.android.agiledevkt.modules.main
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
@@ -86,6 +87,7 @@ import com.lodz.android.agiledevkt.modules.toast.ToastTestActivity
 import com.lodz.android.agiledevkt.modules.transition.TransitionActivity
 import com.lodz.android.agiledevkt.modules.viewbinding.ViewBindingTestActivity
 import com.lodz.android.agiledevkt.modules.viewpager.ViewPagerActivity
+import com.lodz.android.agiledevkt.modules.watermark.WatermarkActivity
 import com.lodz.android.agiledevkt.modules.webview.WebViewActivity
 import com.lodz.android.corekt.anko.*
 import com.lodz.android.pandora.base.activity.BaseActivity
@@ -96,6 +98,7 @@ import com.lodz.android.pandora.widget.rv.anko.linear
 import com.lodz.android.pandora.widget.rv.anko.setup
 import com.lodz.android.pandora.widget.rv.decoration.StickyItemDecoration
 
+@SuppressLint("NotifyDataSetChanged")
 class MainActivity : BaseActivity() {
 
     companion object {
@@ -190,7 +193,8 @@ class MainActivity : BaseActivity() {
         MainBean("Json测试类", "J", JsonTestActivity::class.java),
         MainBean("Shapeable图片测试类", "S", ShapeableImgTestActivity::class.java),
         MainBean("角标测试类", "J", BadgeTestActivity::class.java),
-        MainBean("吸边控件展示类", "X", AdsorbViewActivity::class.java)
+        MainBean("吸边控件展示类", "X", AdsorbViewActivity::class.java),
+        MainBean("水印测试", "S", WatermarkActivity::class.java)
     )
 
     private val mBinding: ActivityMainBinding by bindingLayout(ActivityMainBinding::inflate)

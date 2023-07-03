@@ -1,0 +1,46 @@
+package com.lodz.android.pandora.widget.watermark
+
+import android.app.Activity
+import android.app.Dialog
+import android.view.ViewGroup
+import com.lodz.android.pandora.base.application.BaseApplication
+
+/**
+ * 水印工具类
+ * @author zhouL
+ * @date 2023/6/9
+ */
+
+/** 在Activity的decorView上添加水印 */
+fun Activity.addWatermark(text: String = ""): Activity {
+    val content = text.ifEmpty { BaseApplication.get()?.getWatermarkContent() ?: "" }
+    if (content.isEmpty()) {
+        return this
+    }
+
+    val root = window?.decorView ?: return this
+    if (root is ViewGroup) {
+        val view = WatermarkView(applicationContext)
+        view.setText(content)
+        root.addView(view, ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
+    }
+    return this
+}
+
+/** 在Dialog的decorView上添加水印 */
+fun Dialog.addWatermark(text: String = ""): Dialog {
+    setOnShowListener {
+        val content = text.ifEmpty { BaseApplication.get()?.getWatermarkContent() ?: "" }
+        if (content.isEmpty()) {
+            return@setOnShowListener
+        }
+
+        val view = WatermarkView(context)
+        view.setText(content)
+
+        val root = window?.decorView as? ViewGroup ?: return@setOnShowListener
+        val contentView = root.findViewById<ViewGroup>(android.R.id.content) ?: return@setOnShowListener
+        contentView.addView(view, contentView.width, contentView.height)
+    }
+    return this
+}

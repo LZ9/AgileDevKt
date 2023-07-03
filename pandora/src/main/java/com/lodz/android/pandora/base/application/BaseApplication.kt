@@ -28,6 +28,8 @@ abstract class BaseApplication : Application() {
 
     private val mObjectMapper = ObjectMapper()
 
+    private var mWatermarkContent = ""
+
     final override fun onCreate() {
         super.onCreate()
         sInstance = this
@@ -45,6 +47,14 @@ abstract class BaseApplication : Application() {
     }
 
     fun getJacksonObjectMapper() = mObjectMapper
+
+    /** 配置水印内容 */
+    fun setWatermarkContent(content: String) {
+        mWatermarkContent = content
+    }
+
+    /** 获取水印内容 */
+    fun getWatermarkContent() = mWatermarkContent
 
     /** 获取基础控件配置 */
     fun getBaseLayoutConfig(): BaseLayoutConfig = mPdrBaseLayoutConfig

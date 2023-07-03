@@ -161,7 +161,7 @@ open class HoleLayout : FrameLayout {
         mRectangleWidth = rectangleWidth
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         if (mHoleType == NONE){
             return
@@ -180,12 +180,12 @@ open class HoleLayout : FrameLayout {
 
         val srcRect = createMaskSrcBitmap(width, height)
         mPaint.isFilterBitmap = false
-        canvas?.saveLayer(0f, 0f, width.toFloat(), height.toFloat(), null)
-        canvas?.drawBitmap(dstCircle, 0f, 0f, mPaint)
+        canvas.saveLayer(0f, 0f, width.toFloat(), height.toFloat(), null)
+        canvas.drawBitmap(dstCircle, 0f, 0f, mPaint)
         mPaint.xfermode = mXfermode
-        canvas?.drawBitmap(srcRect, 0f, 0f, mPaint)
+        canvas.drawBitmap(srcRect, 0f, 0f, mPaint)
         mPaint.xfermode = null
-        canvas?.saveLayer(0f, 0f, width.toFloat(), height.toFloat(), null)
+        canvas.saveLayer(0f, 0f, width.toFloat(), height.toFloat(), null)
     }
 
     /** 创建遮罩层形状 */

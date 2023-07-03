@@ -957,5 +957,7 @@
     <string name="adsorb_horizontal">水平左右</string>
     <string name="adsorb_vertical">垂直上下</string>
 
+    <!-- 水印测试类 -->
+    <string name="watermark_content">富强、民主、文明、和谐\n自由、平等、公正、法治\n爱国、敬业、诚信、友善</string>
 
 </resources>

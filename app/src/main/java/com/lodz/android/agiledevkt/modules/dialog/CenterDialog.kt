@@ -16,9 +16,4 @@ class CenterDialog(context: Context) : BaseCenterDialog(context) {
     private val mBinding : DialogCenterBinding by bindingLayout(DialogCenterBinding::inflate)
 
     override fun getViewBindingLayout(): View = mBinding.root
-
-    override fun findViews() {
-        super.findViews()
-        addWatermark()
-    }
 }

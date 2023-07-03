@@ -194,28 +194,28 @@ class SquareScanView  : View {
     fun getScanDelayMilliseconds(): Long = mScanDelayMilliseconds
 
     @SuppressLint("DrawAllocation")
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         val width  = measuredWidth.toFloat()
         val height  = measuredHeight.toFloat()
 
         // 左上
-        canvas?.drawLine(0f, 0f, mFrameLongPx, 0f, mFramePaint)
-        canvas?.drawLine(0f, 0f, 0f, mFrameLongPx, mFramePaint)
+        canvas.drawLine(0f, 0f, mFrameLongPx, 0f, mFramePaint)
+        canvas.drawLine(0f, 0f, 0f, mFrameLongPx, mFramePaint)
         // 左下
-        canvas?.drawLine(0f, height, 0f, height - mFrameLongPx, mFramePaint)
-        canvas?.drawLine(0f, height, mFrameLongPx, height, mFramePaint)
+        canvas.drawLine(0f, height, 0f, height - mFrameLongPx, mFramePaint)
+        canvas.drawLine(0f, height, mFrameLongPx, height, mFramePaint)
         // 右上
-        canvas?.drawLine(width, 0f, width - mFrameLongPx, 0f, mFramePaint)
-        canvas?.drawLine(width, 0f, width, mFrameLongPx, mFramePaint)
+        canvas.drawLine(width, 0f, width - mFrameLongPx, 0f, mFramePaint)
+        canvas.drawLine(width, 0f, width, mFrameLongPx, mFramePaint)
         // 右下
-        canvas?.drawLine(width, height, width - mFrameLongPx, height, mFramePaint)
-        canvas?.drawLine(width, height, width, height - mFrameLongPx, mFramePaint)
+        canvas.drawLine(width, height, width - mFrameLongPx, height, mFramePaint)
+        canvas.drawLine(width, height, width, height - mFrameLongPx, mFramePaint)
 
 
         mScanLineHeight += 10
         mGradientPaint.shader = LinearGradient(0f, mScanLineHeight, width, mScanLineHeight, mGradientColors, null, Shader.TileMode.CLAMP)
-        canvas?.drawLine(0f, mScanLineHeight, width, mScanLineHeight, mGradientPaint)
+        canvas.drawLine(0f, mScanLineHeight, width, mScanLineHeight, mGradientPaint)
         if (mScanLineHeight >= height - 10) {
             mScanLineHeight = 0f
         }

@@ -381,4 +381,8 @@
         </attr>
     </declare-styleable>
 
+    <!-- 水印控件-->
+    <declare-styleable name="WatermarkView">
+        <attr name="watermarkText" format="string" />
+    </declare-styleable>
 </resources>
