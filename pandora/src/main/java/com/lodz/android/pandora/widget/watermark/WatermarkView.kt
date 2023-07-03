@@ -119,7 +119,7 @@ class WatermarkView : View {
 
         //先平移，再旋转才不会有空白，使整个图片充满
         if (width > height) {
-            canvas.translate(width.toFloat() - sideLength.toFloat() - inter, sideLength - width + inter)
+            canvas.translate((width.toFloat() - sideLength.toFloat() - inter * 4), sideLength - width + inter)
         } else {
             canvas.translate(height.toFloat() - sideLength.toFloat() - inter, sideLength - height + inter)
         }
