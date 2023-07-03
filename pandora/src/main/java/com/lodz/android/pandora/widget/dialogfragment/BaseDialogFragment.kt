@@ -20,6 +20,9 @@ import com.trello.rxlifecycle4.components.support.RxDialogFragment
  */
 abstract class BaseDialogFragment : RxDialogFragment() {
 
+    /** Dialog创建回调 */
+    private var mOnDialogCreatedListener: ((dialog: Dialog) -> Unit)? = null
+
     final override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val layoutId = getLayoutId()
         val view = if (layoutId != 0) {
@@ -58,7 +61,9 @@ abstract class BaseDialogFragment : RxDialogFragment() {
     protected open fun endCreate() {}
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return Dialog(context, R.style.BaseDialog)
+        val d = Dialog(context, R.style.BaseDialog)
+        mOnDialogCreatedListener?.invoke(d)
+        return d
     }
 
     override fun onStart() {
@@ -91,6 +96,11 @@ abstract class BaseDialogFragment : RxDialogFragment() {
             return ctx
         }
         return requireContext()
+    }
+
+    /** 设置Dialog创建回调 */
+    fun setOnDialogCreatedListener(listener: ((dialog: Dialog) -> Unit)?) {
+        mOnDialogCreatedListener = listener
     }
 
     /** 绑定Fragment的DestroyView生命周期 */

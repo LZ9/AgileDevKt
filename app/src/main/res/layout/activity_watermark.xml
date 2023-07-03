@@ -20,28 +20,20 @@
         android:orientation="horizontal">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/normal_btn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/dialog_normal" />
-
-        <com.google.android.material.button.MaterialButton
             android:id="@+id/center_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
             android:layout_weight="1"
             android:text="@string/dialog_center" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/left_btn"
+            android:id="@+id/right_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
             android:layout_weight="1"
-            android:text="@string/dialog_left" />
-
+            android:text="@string/dialog_right" />
     </LinearLayout>
 
     <LinearLayout
@@ -52,27 +44,20 @@
         android:orientation="horizontal">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/right_btn"
+            android:id="@+id/normal_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
             android:layout_weight="1"
-            android:text="@string/dialog_right" />
+            android:text="@string/dialog_normal" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/bottom_btn"
+            android:id="@+id/left_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
             android:layout_weight="1"
-            android:text="@string/dialog_bottom" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/top_btn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/dialog_top" />
+            android:text="@string/dialog_left" />
 
     </LinearLayout>
 
