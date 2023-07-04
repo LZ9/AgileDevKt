@@ -3,6 +3,8 @@ package com.lodz.android.pandora.widget.watermark
 import android.app.Activity
 import android.app.Dialog
 import android.view.ViewGroup
+import android.widget.FrameLayout
+import android.widget.PopupWindow
 import com.lodz.android.pandora.base.application.BaseApplication
 import com.lodz.android.pandora.widget.dialogfragment.BaseDialogFragment
 
@@ -53,3 +55,23 @@ fun BaseDialogFragment.addWatermark(text: String = ""): BaseDialogFragment {
     }
     return this
 }
+
+/** 在DialogFragment上添加水印 */
+fun PopupWindow.addWatermark(text: String = ""): PopupWindow {
+    this.contentView.viewTreeObserver.addOnGlobalLayoutListener {
+        val content = text.ifEmpty { BaseApplication.get()?.getWatermarkContent() ?: "" }
+        if (content.isEmpty()) {
+            return@addOnGlobalLayoutListener
+        }
+        val root = contentView as? FrameLayout ?: return@addOnGlobalLayoutListener
+        if (root.tag == root.javaClass.name) {//已经添加过了
+            return@addOnGlobalLayoutListener
+        }
+        val view = WatermarkView(root.context)
+        view.setText(content)
+        root.addView(view, root.width, root.height)
+        root.tag = root.javaClass.name
+    }
+    return this
+}
+

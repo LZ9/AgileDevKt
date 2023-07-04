@@ -98,7 +98,7 @@ abstract class BaseDialogFragment : RxDialogFragment() {
         return requireContext()
     }
 
-    /** 设置Dialog创建回调 */
+    /** 设置Dialog创建回调[listener] */
     fun setOnDialogCreatedListener(listener: ((dialog: Dialog) -> Unit)?) {
         mOnDialogCreatedListener = listener
     }

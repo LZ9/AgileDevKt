@@ -1,8 +1,9 @@
-package com.lodz.android.corekt.contract
+package com.lodz.android.pandora.widget.contract
 
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
+
 
 /**
  * 后台activity数量统计

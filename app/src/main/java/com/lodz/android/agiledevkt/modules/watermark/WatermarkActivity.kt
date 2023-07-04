@@ -10,6 +10,7 @@ import com.lodz.android.agiledevkt.modules.dialog.RightDialog
 import com.lodz.android.agiledevkt.modules.dialogfragment.LeftDialogFragment
 import com.lodz.android.agiledevkt.modules.dialogfragment.NormalDialogFragment
 import com.lodz.android.agiledevkt.modules.main.MainActivity
+import com.lodz.android.agiledevkt.modules.rv.anim.AnimPopupWindow
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.watermark.addWatermark
@@ -65,6 +66,9 @@ class WatermarkActivity : BaseActivity() {
             LeftDialogFragment().addWatermark().show(supportFragmentManager, "LeftDialogFragment")
         }
 
+        mBinding.popupBtn.setOnClickListener {
+            AnimPopupWindow(getContext()).create().addWatermark().showAsDropDown(it, 100, 20)
+        }
     }
 
     override fun initData() {

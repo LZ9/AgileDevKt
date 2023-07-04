@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.PopupWindow
 import androidx.annotation.LayoutRes
 
@@ -27,7 +28,7 @@ abstract class BasePopupWindow(context: Context) {
         val layoutId = getLayoutId()
         val popView =  if (layoutId != 0) LayoutInflater.from(context).inflate(layoutId, null) else null
         val popupWindow = if (popView != null) {
-            PopupWindow(popView, getWidthPx(), getHeightPx(), true)
+            PopupWindow(wrapperLayout(popView), getWidthPx(), getHeightPx(), true)
         } else {
             PopupWindow(getWidthPx(), getHeightPx())
         }
@@ -39,9 +40,9 @@ abstract class BasePopupWindow(context: Context) {
         return popupWindow
     }
 
-    fun create() {
+    fun create(): PopupWindow {
         if (mPdrPopupWindow.contentView == null){
-            mPdrPopupWindow.contentView = getViewBindingLayout()
+            mPdrPopupWindow.contentView = wrapperLayout(getViewBindingLayout())
         }
         if (mPdrPopupWindow.contentView == null) {
             throw NullPointerException("please override getLayoutId() or getViewBindingLayout() to create")
@@ -51,6 +52,17 @@ abstract class BasePopupWindow(context: Context) {
         setListeners()
         initData()
         endCreate()
+        return mPdrPopupWindow
+    }
+
+    /** 包装布局 */
+    private fun wrapperLayout(view: View?): FrameLayout? {
+        if (view == null) {
+            return null
+        }
+        val layout = FrameLayout(mPdrContext)
+        layout.addView(view, getWidthPx(), getHeightPx())
+        return layout
     }
 
     /** 设置宽度，可重写该方法 */

@@ -5,7 +5,6 @@ import android.view.View
 import com.lodz.android.agiledevkt.databinding.DialogCenterBinding
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.dialog.BaseCenterDialog
-import com.lodz.android.pandora.widget.watermark.addWatermark
 
 /**
  * 居中弹框测试类
