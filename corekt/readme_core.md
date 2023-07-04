@@ -33,7 +33,7 @@
         api 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
         api 'androidx.startup:startup-runtime:1.1.1'
         api 'com.google.android.flexbox:flexbox:3.0.0'
-        api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1'
+        api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.2'
     }
 ```
 

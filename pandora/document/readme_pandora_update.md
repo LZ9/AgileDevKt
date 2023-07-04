@@ -1,5 +1,12 @@
 # Pandora更新记录
 
+##### 2023/07/04
+1. RV的setupData方法增加上下文回调
+2. 增加VP适配器基础封装类
+3. 添加水印控件和水印快捷添加方法（包括Activity、Dialog、DialogFragment、PopupWindow）
+4. BaseApplication增加水印文字全局配置
+5. 发布2.0.5版
+
 ##### 2023/06/09
 1. 新增吸边控件AdsorbView
 2. 更新依赖库版本并进行代码适配
