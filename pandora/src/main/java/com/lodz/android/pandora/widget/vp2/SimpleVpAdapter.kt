@@ -14,7 +14,15 @@ import java.lang.IllegalArgumentException
 class SimpleVpAdapter : FragmentPagerAdapter {
 
     private val mFragments: List<Fragment>
-    private val mTitles: List<String>
+    private var mTitles: List<String> = ArrayList()
+
+    constructor(fm: FragmentManager, fragments: List<Fragment>) : super(fm) {
+        this.mFragments = fragments
+    }
+
+    constructor(fm: FragmentManager, behavior: Int, fragments: List<Fragment>) : super(fm, behavior) {
+        this.mFragments = fragments
+    }
 
     constructor(fm: FragmentManager, fragments: List<Fragment>, titles: List<String>) : super(fm) {
         if (fragments.size != titles.size) {
@@ -32,11 +40,7 @@ class SimpleVpAdapter : FragmentPagerAdapter {
         this.mTitles = titles
     }
 
-    constructor(
-        fm: FragmentManager, fragments: List<Fragment>,
-        context: Context,
-        titleResIds: IntArray
-    ) : super(fm) {
+    constructor(fm: FragmentManager, fragments: List<Fragment>, context: Context, titleResIds: IntArray) : super(fm) {
         if (fragments.size != titleResIds.size) {
             throw IllegalArgumentException("fragment size does not match title size")
         }
@@ -48,13 +52,7 @@ class SimpleVpAdapter : FragmentPagerAdapter {
         this.mTitles = list
     }
 
-    constructor(
-        fm: FragmentManager,
-        behavior: Int,
-        fragments: List<Fragment>,
-        context: Context,
-        titleResIds: IntArray
-    ) : super(fm, behavior) {
+    constructor(fm: FragmentManager, behavior: Int, fragments: List<Fragment>, context: Context, titleResIds: IntArray) : super(fm, behavior) {
         if (fragments.size != titleResIds.size) {
             throw IllegalArgumentException("fragment size does not match title size")
         }
@@ -70,5 +68,10 @@ class SimpleVpAdapter : FragmentPagerAdapter {
 
     override fun getItem(position: Int): Fragment = mFragments[position]
 
-    override fun getPageTitle(position: Int): CharSequence = mTitles[position]
+    override fun getPageTitle(position: Int): CharSequence? {
+        if (mTitles.isEmpty()) {
+            return super.getPageTitle(position)
+        }
+        return mTitles[position]
+    }
 }
