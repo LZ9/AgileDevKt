@@ -31,17 +31,15 @@ open class SectionItemDecoration<T> protected constructor(context: Context) : Ba
 
     override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
         super.getItemOffsets(outRect, view, parent, state)
-        if (mPdrOnSectionCallback == null) {
-            return
-        }
+        val callback = mPdrOnSectionCallback ?: return
         if (!isVerLinearLayout(parent)) {
             return
         }
         val position = parent.getChildAdapterPosition(view)
-        if (getItem(position, mPdrOnSectionCallback!!).isEmpty()) {
+        if (getItem(position, callback).isEmpty()) {
             return
         }
-        outRect.top = if (isFirstGroupItem(position, mPdrOnSectionCallback!!)) mPdrSectionHeightPx else 0// 设置分组高度
+        outRect.top = if (isFirstGroupItem(position, callback)) mPdrSectionHeightPx else 0// 设置分组高度
     }
 
     override fun onDraw(canvas: Canvas, parent: RecyclerView, state: RecyclerView.State) {
@@ -49,9 +47,7 @@ open class SectionItemDecoration<T> protected constructor(context: Context) : Ba
         if (!isVerLinearLayout(parent)) {
             return
         }
-        if (mPdrOnSectionCallback == null) {
-            return
-        }
+        val callback = mPdrOnSectionCallback ?: return
         val childCount = parent.childCount
         if (childCount == 0) {
             return
@@ -62,14 +58,14 @@ open class SectionItemDecoration<T> protected constructor(context: Context) : Ba
         for (i in 0 until childCount) {
             val view = parent.getChildAt(i)
             val position = parent.getChildAdapterPosition(view)
-            if (!isFirstGroupItem(position, mPdrOnSectionCallback!!)) {
+            if (!isFirstGroupItem(position, callback)) {
                 continue
             }
 
             val top = view.top - mPdrSectionHeightPx
             val bottom = view.top
             drawBgPaint(canvas, left, top, right, bottom)
-            drawTextPaint(canvas, getItem(position, mPdrOnSectionCallback!!), left, top, right, bottom)
+            drawTextPaint(canvas, getItem(position, callback), left, top, right, bottom)
         }
     }
 
