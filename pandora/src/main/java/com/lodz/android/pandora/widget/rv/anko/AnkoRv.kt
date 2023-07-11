@@ -72,6 +72,18 @@ fun RecyclerView.staggeredGrid(
     return this
 }
 
+/** 添加RV装饰器 */
+fun RecyclerView.addItemDecorationR(decor: RecyclerView.ItemDecoration, index: Int): RecyclerView {
+    addItemDecoration(decor, index)
+    return this
+}
+
+/** 添加RV装饰器 */
+fun RecyclerView.addItemDecorationR(decor: RecyclerView.ItemDecoration): RecyclerView {
+    addItemDecoration(decor)
+    return this
+}
+
 /** 设置RV适配器[absAdapter] */
 fun <T, AD : AbsRvAdapter<T, *>> RecyclerView.setup(absAdapter: AD): AD {
     absAdapter.onAttachedToRecyclerView(this)
@@ -213,6 +225,7 @@ fun <T> AbsLoadMoreRvAdapter<T, *>.loadMoreFail(){
 }
 
 /** 隐藏某个位置[position]的Item */
+@SuppressLint("NotifyDataSetChanged")
 fun <T> AbsLoadMoreRvAdapter<T, *>.hideItemNotify(position: Int){
     this.hideItem(position)
     this.notifyDataSetChanged()
