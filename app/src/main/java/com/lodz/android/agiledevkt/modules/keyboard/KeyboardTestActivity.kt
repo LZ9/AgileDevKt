@@ -7,6 +7,7 @@ import android.view.View
 import com.lodz.android.agiledevkt.databinding.ActivityKeyboardTestBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.corekt.anko.toastShort
+import com.lodz.android.corekt.utils.IdCardUtils
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 
@@ -44,16 +45,15 @@ class KeyboardTestActivity : BaseActivity() {
     override fun setListeners() {
         super.setListeners()
         // 身份证键盘
-        mBinding.idcardKeyboardView.setOnClickFinishListener{
-            mBinding.idcardKeyboardView.goneKeyboard()
-            if (it.isNotEmpty()){
-                toastShort(it)
+        mBinding.idcardKeyboardView.setOnClickFinishListener {
+            if (it.isNotEmpty()) {
+                val tips = if (IdCardUtils.validateIdCard(it)) "合法身份证：$it" else "身份证号不合法"
+                toastShort(tips)
             }
         }
 
         // 车牌键盘
         mBinding.carplateKeyboardView.setOnClickFinishListener{
-            mBinding.carplateKeyboardView.goneKeyboard()
             if (it.isNotEmpty()){
                 toastShort(it)
             }
@@ -61,7 +61,6 @@ class KeyboardTestActivity : BaseActivity() {
 
         // 全键盘
         mBinding.commonCertKeyboardView.setOnClickFinishListener{
-            mBinding.commonCertKeyboardView.goneKeyboard()
             if (it.isNotEmpty()){
                 toastShort(it)
             }

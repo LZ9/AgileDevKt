@@ -3,8 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:horizontalGap="0.0px"
-    android:keyHeight="8.8%p"
     android:keyWidth="10%p"
+    android:keyHeight="8.8%p"
     android:verticalGap="0.0px">
     <Row>
         <Key
@@ -38,9 +38,9 @@
         <Key
             android:codes="-5"
             android:isRepeatable="true"
+            android:keyWidth="15%p"
             android:keyEdgeFlags="right"
-            android:keyLabel="删除"
-            android:keyWidth="15%p" />
+            android:keyLabel="删除" />
     </Row>
     <Row>
         <Key
@@ -112,9 +112,9 @@
         <Key
             android:codes="-8"
             android:horizontalGap="10%p"
+            android:keyWidth="15%p"
             android:keyEdgeFlags="left"
-            android:keyLabel="ABC"
-            android:keyWidth="15%p" />
+            android:keyLabel="ABC" />
         <Key
             android:codes="28189"
             android:keyLabel="渝" />
@@ -132,8 +132,8 @@
             android:keyLabel="澳" />
         <Key
             android:codes="-3"
+            android:keyWidth="15%p"
             android:keyEdgeFlags="right"
-            android:keyLabel="完成"
-            android:keyWidth="15%p" />
+            android:keyLabel="完成" />
     </Row>
 </Keyboard>

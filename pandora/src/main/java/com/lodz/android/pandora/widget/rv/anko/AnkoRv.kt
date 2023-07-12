@@ -84,6 +84,14 @@ fun RecyclerView.addItemDecorationR(decor: RecyclerView.ItemDecoration): Recycle
     return this
 }
 
+/** 删除全部装饰器 */
+fun RecyclerView.removeAllItemDecoration(): RecyclerView {
+    for (i in 0 until itemDecorationCount) {
+        removeItemDecorationAt(i)
+    }
+    return this
+}
+
 /** 设置RV适配器[absAdapter] */
 fun <T, AD : AbsRvAdapter<T, *>> RecyclerView.setup(absAdapter: AD): AD {
     absAdapter.onAttachedToRecyclerView(this)

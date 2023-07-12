@@ -40,7 +40,7 @@ open class BaseKeyboardView : KeyboardView {
 
         isEnabled = true
         isPreviewEnabled = true
-        setOnKeyboardActionListener(object : OnKeyboardActionListener {
+        onKeyboardActionListener = object : OnKeyboardActionListener {
             override fun onPress(primaryCode: Int) {
                 onActionPress(primaryCode)
             }
@@ -72,7 +72,7 @@ open class BaseKeyboardView : KeyboardView {
             override fun onKey(primaryCode: Int, keyCodes: IntArray?) {
                 onActionKey(primaryCode, keyCodes)
             }
-        })
+        }
         isPreviewEnabled = false
         mEditText?.replaceOriginalKeyboard(window)
         setKeyboardChange()

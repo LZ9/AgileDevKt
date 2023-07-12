@@ -3,8 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:horizontalGap="0.0px"
-    android:keyHeight="7%p"
     android:keyWidth="10%p"
+    android:keyHeight="7%p"
     android:verticalGap="0.0px">
     <Row>
         <Key
@@ -131,24 +131,24 @@
         <Key
             android:codes="-5"
             android:isRepeatable="true"
+            android:keyWidth="18%p"
             android:keyEdgeFlags="right"
-            android:keyLabel="删除"
-            android:keyWidth="18%p" />
+            android:keyLabel="删除" />
     </Row>
     <Row>
         <Key
             android:codes="-9"
+            android:keyWidth="20%p"
             android:keyEdgeFlags="left"
-            android:keyLabel="京"
-            android:keyWidth="20%p" />
+            android:keyLabel="京" />
         <Key
             android:codes="32"
             android:isRepeatable="true"
             android:keyWidth="60%p" />
         <Key
             android:codes="-3"
+            android:keyWidth="20%p"
             android:keyEdgeFlags="right"
-            android:keyLabel="完成"
-            android:keyWidth="20%p" />
+            android:keyLabel="完成" />
     </Row>
 </Keyboard>
