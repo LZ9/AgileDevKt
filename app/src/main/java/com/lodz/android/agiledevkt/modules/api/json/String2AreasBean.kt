@@ -1,10 +1,9 @@
 package com.lodz.android.agiledevkt.modules.api.json
 
 import com.fasterxml.jackson.core.JsonParser
-import com.fasterxml.jackson.core.TreeNode
 import com.fasterxml.jackson.databind.DeserializationContext
-import com.fasterxml.jackson.databind.JsonDeserializer
 import com.lodz.android.agiledevkt.bean.city.AreasBean
+import com.lodz.android.pandora.utils.jackson.BaseJsonDeserializer
 import com.lodz.android.pandora.utils.jackson.parseJsonObject
 
 /**
@@ -12,12 +11,6 @@ import com.lodz.android.pandora.utils.jackson.parseJsonObject
  * @author zhouL
  * @date 2023/6/7
  */
-class String2AreasBean : JsonDeserializer<AreasBean>() {
-    override fun deserialize(p: JsonParser?, ctxt: DeserializationContext?): AreasBean? =
-        try {
-            p?.readValueAsTree<TreeNode>()?.toString()?.parseJsonObject<AreasBean>()
-        } catch (e: Exception) {
-            e.printStackTrace()
-            null
-        }
+class String2AreasBean : BaseJsonDeserializer<AreasBean?>() {
+    override fun deserialize(json: String?, p: JsonParser?, ctxt: DeserializationContext?): AreasBean? = json?.parseJsonObject<AreasBean>()
 }

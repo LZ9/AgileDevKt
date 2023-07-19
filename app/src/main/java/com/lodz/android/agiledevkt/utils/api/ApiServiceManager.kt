@@ -3,6 +3,7 @@ package com.lodz.android.agiledevkt.utils.api
 import com.lodz.android.agiledevkt.App
 import com.lodz.android.agiledevkt.config.UrlConfig
 import com.lodz.android.corekt.log.PrintLog
+import com.lodz.android.pandora.utils.jackson.converter.JacksonConverterFactory
 import okhttp3.Headers
 import okhttp3.HttpUrl
 import okhttp3.Interceptor
@@ -12,7 +13,6 @@ import okhttp3.ResponseBody
 import okio.Buffer
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
-import retrofit2.converter.jackson.JacksonConverterFactory
 import java.util.concurrent.TimeUnit
 
 /**
