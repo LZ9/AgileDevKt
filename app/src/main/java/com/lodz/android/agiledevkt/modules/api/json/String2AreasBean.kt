@@ -3,7 +3,7 @@ package com.lodz.android.agiledevkt.modules.api.json
 import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.databind.DeserializationContext
 import com.lodz.android.agiledevkt.bean.city.AreasBean
-import com.lodz.android.pandora.utils.jackson.BaseJsonDeserializer
+import com.lodz.android.pandora.utils.jackson.deserializer.BaseJsonDeserializer
 import com.lodz.android.pandora.utils.jackson.parseJsonObject
 
 /**

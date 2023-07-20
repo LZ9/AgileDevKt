@@ -1,4 +1,4 @@
-package com.lodz.android.pandora.utils.jackson
+package com.lodz.android.pandora.utils.jackson.deserializer
 
 import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.core.TreeNode
@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.DeserializationContext
 import com.fasterxml.jackson.databind.JsonDeserializer
 
 /**
- * Json解析基类
+ * Json反序列化基类
  * @author zhouL
  * @date 2023/7/19
  */

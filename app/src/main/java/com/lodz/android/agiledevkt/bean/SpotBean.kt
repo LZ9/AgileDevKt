@@ -1,7 +1,9 @@
 package com.lodz.android.agiledevkt.bean
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
-import com.lodz.android.agiledevkt.modules.api.json.String2Boolean
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
+import com.lodz.android.pandora.utils.jackson.deserializer.String2Boolean
+import com.lodz.android.pandora.utils.jackson.serializer.PrefixFixSerializer
 
 /**
  * 景点数据实体
@@ -14,10 +16,13 @@ class SpotBean {
 
     var score: String = ""
 
+//    @JsonProperty("isDriver")
+    @JsonSerialize(using = PrefixFixSerializer::class)
+    var isDriver = 0
+
     @JsonDeserialize(using = String2Boolean::class)
+    @JsonSerialize(using = PrefixFixSerializer::class)
+//    @JsonProperty("isRecommend")
     var isRecommend = true
 
-    override fun toString(): String {
-        return "SpotBean(name='$name', score='$score', isRecommend='$isRecommend')"
-    }
 }

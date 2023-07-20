@@ -46,7 +46,8 @@ dependencies {
     // Retrofit
     api 'com.squareup.retrofit2:retrofit:2.9.0'
     api 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'
-    api 'com.squareup.retrofit2:converter-jackson:2.9.0'
+//    api 'com.squareup.retrofit2:converter-jackson:2.9.0'
+    api 'com.fasterxml.jackson.core:jackson-databind:2.14.3'
     // RxJava生命周期
     api 'com.trello.rxlifecycle4:rxlifecycle-components:4.0.2'
     // EventBus

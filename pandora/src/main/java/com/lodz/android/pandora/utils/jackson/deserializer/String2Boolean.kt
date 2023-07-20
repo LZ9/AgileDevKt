@@ -1,4 +1,4 @@
-package com.lodz.android.pandora.utils.jackson
+package com.lodz.android.pandora.utils.jackson.deserializer
 
 import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.databind.DeserializationContext
