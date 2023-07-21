@@ -40,7 +40,6 @@ allprojects {
         }
     }
 
-//    tasks.getByPath(":imageloaderkt:javadocRelease").enabled = false
 }
 
 task clean(type: Delete) {
