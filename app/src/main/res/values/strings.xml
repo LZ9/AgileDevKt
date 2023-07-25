@@ -960,4 +960,12 @@
     <!-- 水印测试类 -->
     <string name="watermark_content">富强、民主、文明、和谐\n自由、平等、公正、法治\n爱国、敬业、诚信、友善</string>
 
+    <!-- DataStore测试 -->
+    <string name="datastore_rx">RX方式</string>
+    <string name="datastore_coroutines">协程方式</string>
+    <string name="datastore_name">姓名：</string>
+    <string name="datastore_age">年龄：</string>
+    <string name="datastore_update_name">更新姓名</string>
+    <string name="datastore_update_age">更新年龄</string>
+
 </resources>

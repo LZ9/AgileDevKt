@@ -5,6 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.lodz.android.agiledevkt.databinding.ActivityDataStoreBinding
+import com.lodz.android.agiledevkt.modules.datastore.coroutines.DataStoreCoroutinesActivity
+import com.lodz.android.agiledevkt.modules.datastore.rx.DataStoreRxActivity
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
@@ -33,6 +35,17 @@ class DataStoreActivity : BaseActivity() {
 
     override fun onClickBackBtn() {
         finish()
+    }
+
+    override fun setListeners() {
+        super.setListeners()
+        mBinding.rxBtn.setOnClickListener {
+            DataStoreRxActivity.start(getContext())
+        }
+
+        mBinding.coroutinesBtn.setOnClickListener {
+            DataStoreCoroutinesActivity.start(getContext())
+        }
     }
 
     override fun initData() {
