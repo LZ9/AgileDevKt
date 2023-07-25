@@ -42,6 +42,7 @@ import com.lodz.android.agiledevkt.modules.extras.ExtrasTestActivity
 import com.lodz.android.agiledevkt.modules.fglifecycle.FragmentLifecycleActivity
 import com.lodz.android.agiledevkt.modules.file.FileTestActivity
 import com.lodz.android.agiledevkt.modules.adsorb.AdsorbViewActivity
+import com.lodz.android.agiledevkt.modules.datastore.DataStoreActivity
 import com.lodz.android.agiledevkt.modules.format.NumFormatTestActivity
 import com.lodz.android.agiledevkt.modules.hole.HoleTestActivity
 import com.lodz.android.agiledevkt.modules.idcard.IdcardTestActivity
@@ -194,7 +195,8 @@ class MainActivity : BaseActivity() {
         MainBean("Shapeable图片测试类", "S", ShapeableImgTestActivity::class.java),
         MainBean("角标测试类", "J", BadgeTestActivity::class.java),
         MainBean("吸边控件展示类", "X", AdsorbViewActivity::class.java),
-        MainBean("水印测试", "S", WatermarkActivity::class.java)
+        MainBean("水印测试", "S", WatermarkActivity::class.java),
+        MainBean("DataStore测试类", "D", DataStoreActivity::class.java)
     )
 
     private val mBinding: ActivityMainBinding by bindingLayout(ActivityMainBinding::inflate)

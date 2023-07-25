@@ -7,8 +7,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 34
-        versionCode 51
-        versionName "2.0.6"// 成功上传
+        versionCode 52
+        versionName "2.0.7" //未上传
     }
 
     compileOptions {
@@ -51,6 +51,7 @@ dependencies {
     api 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.1'
     api 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
     api 'androidx.startup:startup-runtime:1.1.1'
+    api 'androidx.datastore:datastore-preferences:1.0.0'
     api 'com.google.android.flexbox:flexbox:3.0.0'
     api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.2'
 }
