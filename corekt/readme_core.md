@@ -32,6 +32,7 @@
         api 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.1'
         api 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
         api 'androidx.startup:startup-runtime:1.1.1'
+        api 'androidx.datastore:datastore-preferences:1.0.0'
         api 'com.google.android.flexbox:flexbox:3.0.0'
         api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.2'
     }
