@@ -963,9 +963,20 @@
     <!-- DataStore测试 -->
     <string name="datastore_rx">RX方式</string>
     <string name="datastore_coroutines">协程方式</string>
+    <string name="datastore_id">编号：</string>
+    <string name="datastore_update_id">更新编号</string>
     <string name="datastore_name">姓名：</string>
-    <string name="datastore_age">年龄：</string>
     <string name="datastore_update_name">更新姓名</string>
+    <string name="datastore_age">年龄：</string>
     <string name="datastore_update_age">更新年龄</string>
+    <string name="datastore_height">身高：</string>
+    <string name="datastore_update_height">更新身高</string>
+    <string name="datastore_is_postgraduate">是否研究生：</string>
+    <string name="datastore_update_is_postgraduate">更新是否研究生</string>
+    <string name="datastore_salary">薪资：</string>
+    <string name="datastore_update_salary">更新薪资</string>
+    <string name="datastore_hobby">兴趣爱好：</string>
+    <string name="datastore_update_hobby">更新兴趣爱好</string>
+    <string name="datastore_clean">清空</string>
 
 </resources>

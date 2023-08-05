@@ -2,6 +2,9 @@ package com.lodz.android.pandora.base.application
 
 import android.app.Application
 import android.os.Bundle
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.lodz.android.pandora.base.application.config.BaseLayoutConfig
@@ -29,6 +32,8 @@ abstract class BaseApplication : Application() {
     private val mObjectMapper = ObjectMapper()
 
     private var mWatermarkContent = ""
+
+    val dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
     final override fun onCreate() {
         super.onCreate()

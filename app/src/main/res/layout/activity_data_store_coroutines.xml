@@ -6,55 +6,124 @@
     android:orientation="vertical"
     android:padding="10dp">
 
-    <LinearLayout
+    <com.lodz.android.pandora.widget.collect.CltTextView
+        android:id="@+id/id_ctv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        app:jumpBackground="@color/color_00a0e9"
+        app:jumpText="@string/datastore_update_id"
+        app:requiredVisibility="gone"
+        app:titleText="@string/datastore_id" />
 
-        <com.lodz.android.pandora.widget.collect.CltTextView
-            android:id="@+id/name_ctv"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:requiredVisibility="gone"
-            app:titleText="@string/datastore_name" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp"
+        android:background="@color/color_d9d9d9" />
 
-        <com.lodz.android.pandora.widget.collect.CltTextView
-            android:id="@+id/age_ctv"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:requiredVisibility="gone"
-            app:titleText="@string/datastore_age" />
-    </LinearLayout>
-
-
-    <LinearLayout
+    <com.lodz.android.pandora.widget.collect.CltTextView
+        android:id="@+id/name_ctv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        app:jumpBackground="@color/color_00a0e9"
+        app:jumpText="@string/datastore_update_name"
+        app:requiredVisibility="gone"
+        app:titleText="@string/datastore_name" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/update_name_btn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
-            android:layout_weight="1"
-            android:text="@string/datastore_update_name"
-            android:textAllCaps="false"
-            android:textColor="@color/white" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp"
+        android:background="@color/color_d9d9d9" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/update_age_btn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_weight="1"
-            android:text="@string/datastore_update_age"
-            android:textAllCaps="false"
-            android:textColor="@color/white" />
+    <com.lodz.android.pandora.widget.collect.CltTextView
+        android:id="@+id/age_ctv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:jumpBackground="@color/color_00a0e9"
+        app:jumpText="@string/datastore_update_age"
+        app:requiredVisibility="gone"
+        app:titleText="@string/datastore_age" />
 
-    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp"
+        android:background="@color/color_d9d9d9" />
 
+    <com.lodz.android.pandora.widget.collect.CltTextView
+        android:id="@+id/height_ctv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:jumpBackground="@color/color_00a0e9"
+        app:jumpText="@string/datastore_update_height"
+        app:requiredVisibility="gone"
+        app:titleText="@string/datastore_height" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp"
+        android:background="@color/color_d9d9d9" />
+
+    <com.lodz.android.pandora.widget.collect.CltTextView
+        android:id="@+id/postgraduate_ctv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:jumpBackground="@color/color_00a0e9"
+        app:jumpText="@string/datastore_update_is_postgraduate"
+        app:requiredVisibility="gone"
+        app:titleText="@string/datastore_is_postgraduate" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp"
+        android:background="@color/color_d9d9d9" />
+
+    <com.lodz.android.pandora.widget.collect.CltTextView
+        android:id="@+id/salary_ctv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:jumpBackground="@color/color_00a0e9"
+        app:jumpText="@string/datastore_update_salary"
+        app:requiredVisibility="gone"
+        app:titleText="@string/datastore_salary" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp"
+        android:background="@color/color_d9d9d9" />
+
+    <com.lodz.android.pandora.widget.collect.CltTextView
+        android:id="@+id/hobby_ctv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:jumpBackground="@color/color_00a0e9"
+        app:jumpText="@string/datastore_update_hobby"
+        app:requiredVisibility="gone"
+        app:titleText="@string/datastore_hobby" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp"
+        android:background="@color/color_d9d9d9" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/clean_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/datastore_clean"
+        android:textAllCaps="false"
+        android:textColor="@color/white" />
 
 </LinearLayout>
