@@ -1,4 +1,4 @@
-package com.lodz.android.agiledevkt.utils.dataStore
+package com.lodz.android.agiledevkt.utils.ds
 
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.doublePreferencesKey

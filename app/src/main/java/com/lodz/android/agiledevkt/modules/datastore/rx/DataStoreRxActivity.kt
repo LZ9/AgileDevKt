@@ -2,59 +2,93 @@ package com.lodz.android.agiledevkt.modules.datastore.rx
 
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
-import android.view.View
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.intPreferencesKey
-import androidx.datastore.preferences.rxjava3.RxPreferenceDataStoreBuilder
-import androidx.datastore.rxjava3.RxDataStore
-import com.lodz.android.agiledevkt.R
-import com.lodz.android.agiledevkt.databinding.ActivityDataStoreRxBinding
-import com.lodz.android.pandora.base.activity.BaseActivity
-import com.lodz.android.pandora.utils.viewbinding.bindingLayout
-import io.reactivex.rxjava3.core.Single
+import com.lodz.android.agiledevkt.modules.datastore.DataStoreBaseActivity
+import com.lodz.android.agiledevkt.utils.ds.DsManager
+import com.lodz.android.corekt.utils.AppUtils
+import com.lodz.android.pandora.rx.subscribe.subscriber.BaseSubscriber
+import com.lodz.android.pandora.rx.utils.RxUtils
+import io.reactivex.rxjava3.core.Flowable
+import kotlin.random.Random
 
 /**
  * DataStore Rx测试类
  * @author zhouL
  * @date 2023/7/25
  */
-class DataStoreRxActivity : BaseActivity() {
+class DataStoreRxActivity : DataStoreBaseActivity() {
     companion object {
-
-        private val KEY_AGE = intPreferencesKey("key_age")
-
         fun start(context: Context){
             val intent = Intent(context, DataStoreRxActivity::class.java)
             context.startActivity(intent)
         }
     }
 
-    private val mBinding: ActivityDataStoreRxBinding by bindingLayout(ActivityDataStoreRxBinding::inflate)
-
-    override fun getViewBindingLayout(): View = mBinding.root
-
-    private val mDataStore: RxDataStore<Preferences> = RxPreferenceDataStoreBuilder(getContext(), "settings").build()
-
-    override fun findViews(savedInstanceState: Bundle?) {
-        super.findViews(savedInstanceState)
-        getTitleBarLayout().setTitleName(R.string.datastore_rx)
+    override fun updateUI() {
+        mBinding.apply {
+            idCtv.setContentText(DsManager.getIdRx().sync().toString())
+            nameCtv.setContentText(DsManager.getNameRx().sync())
+            ageCtv.setContentText(DsManager.getAgeRx().sync().toString())
+            heightCtv.setContentText(DsManager.getHeightRx().sync().toString())
+            postgraduateCtv.setContentText(DsManager.getPostgraduateRx().sync().toString())
+            salaryCtv.setContentText(DsManager.getSalaryRx().sync().toString())
+            hobbyCtv.setContentText(DsManager.getHobbyRx().sync().toString())
+        }
     }
 
-    override fun onClickBackBtn() {
-        finish()
+    override fun updateId() {
+        var id = AppUtils.getUUID32().hashCode().toLong()
+        if (id < 0) {
+            id *= -1
+        }
+        Flowable.just(id)
+            .flatMap { DsManager.setIdRx(it).rx() }
+            .flatMap { DsManager.getIdRx().rx() }
+            .compose(RxUtils.ioToMainFlowable())
+            .subscribe(BaseSubscriber.action(next = {
+                mBinding.idCtv.setContentText(it.toString())
+            }))
     }
 
-    override fun initData() {
-        super.initData()
-        mDataStore.data().map { it.get(KEY_AGE) ?: 0 }.subscribe()
-
-        mDataStore.updateDataAsync {
-            val mutablePreferences = it.toMutablePreferences()
-            val currentInt = it.get(KEY_AGE)
-            mutablePreferences.set(KEY_AGE, if (currentInt != null) currentInt + 1 else 1)
-            return@updateDataAsync Single.just(mutablePreferences)
-        }.subscribe()
-        showStatusCompleted()
+    override fun updateName() {
+        Flowable.just(arrayListOf("张三", "李四", "王五", "赵六", "孙七", "周八", "吴九", "郑十"))
+            .flatMap { DsManager.setNameRx(it[Random.nextInt(it.size - 1)]).rx() }
+            .flatMap { DsManager.getNameRx().rx() }
+            .compose(RxUtils.ioToMainFlowable())
+            .subscribe(BaseSubscriber.action(next = {
+                mBinding.nameCtv.setContentText(it)
+            }))
     }
+
+    override fun updateAge() {
+        Flowable.just(Random.nextInt(99) + 1)
+            .flatMap { DsManager.setAgeRx(it).rx() }
+            .flatMap { DsManager.getAgeRx().rx() }
+            .compose(RxUtils.ioToMainFlowable())
+            .subscribe(BaseSubscriber.action(next = {
+                mBinding.ageCtv.setContentText(it.toString())
+            }))
+    }
+
+    override fun updateHeight() {
+        TODO("Not yet implemented")
+    }
+
+    override fun updatePostgraduate() {
+        TODO("Not yet implemented")
+    }
+
+    override fun updateSalary() {
+        TODO("Not yet implemented")
+    }
+
+    override fun updateHobby() {
+        TODO("Not yet implemented")
+    }
+
+    override fun cleanData() {
+        TODO("Not yet implemented")
+    }
+
+
+
 }
