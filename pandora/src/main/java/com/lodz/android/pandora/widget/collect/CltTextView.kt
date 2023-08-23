@@ -21,7 +21,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.getColorCompat
-import com.lodz.android.corekt.anko.px2spRF
+import com.lodz.android.corekt.anko.px2sp
 import com.lodz.android.pandora.R
 
 /**
@@ -101,10 +101,9 @@ class CltTextView : FrameLayout {
             setTitleTextColor(titleTextColor)
         }
         // 设置标题文字大小
-        val titleTextSize: Int = typedArray?.getDimensionPixelSize(R.styleable.CltTextView_titleTextSize, 0)
-                ?: 0
+        val titleTextSize: Int = typedArray?.getDimensionPixelSize(R.styleable.CltTextView_titleTextSize, 0) ?: 0
         if (titleTextSize > 0) {
-            setTitleTextSize(px2spRF(titleTextSize))
+            setTitleTextSize(px2sp(titleTextSize.toFloat()))
         }
         // 设置标题控件宽度
         val titleWidth: Int = typedArray?.getDimensionPixelSize(R.styleable.CltTextView_titleWidth, 0)
@@ -128,10 +127,9 @@ class CltTextView : FrameLayout {
             setContentTextColor(contentTextColor)
         }
         // 设置内容文字大小
-        val contentTextSize: Int = typedArray?.getDimensionPixelSize(R.styleable.CltTextView_contentTextSize, 0)
-                ?: 0
+        val contentTextSize: Int = typedArray?.getDimensionPixelSize(R.styleable.CltTextView_contentTextSize, 0) ?: 0
         if (contentTextSize > 0) {
-            setContentTextSize(px2spRF(contentTextSize))
+            setContentTextSize(px2sp(contentTextSize.toFloat()))
         }
         // 设置内容提示语
         val contentHint: String? = typedArray?.getString(R.styleable.CltTextView_contentHint)
@@ -193,10 +191,9 @@ class CltTextView : FrameLayout {
             setUnitTextColor(unitTextColor)
         }
         // 设置单位文字大小
-        val unitTextSize: Int = typedArray?.getDimensionPixelSize(R.styleable.CltTextView_unitTextSize, 0)
-                ?: 0
+        val unitTextSize: Int = typedArray?.getDimensionPixelSize(R.styleable.CltTextView_unitTextSize, 0) ?: 0
         if (unitTextSize > 0) {
-            setUnitTextSize(px2spRF(unitTextSize))
+            setUnitTextSize(px2sp(unitTextSize.toFloat()))
         }
         // 设置跳转按钮文字
         val jumpText: String? = typedArray?.getString(R.styleable.CltTextView_jumpText)
@@ -212,10 +209,9 @@ class CltTextView : FrameLayout {
             setJumpBtnTextColor(jumpTextColor)
         }
         // 设置跳转按钮文字大小
-        val jumpTextSize: Int = typedArray?.getDimensionPixelSize(R.styleable.CltTextView_jumpTextSize, 0)
-                ?: 0
+        val jumpTextSize: Int = typedArray?.getDimensionPixelSize(R.styleable.CltTextView_jumpTextSize, 0) ?: 0
         if (jumpTextSize > 0) {
-            setJumpBtnTextSize(px2spRF(jumpTextSize))
+            setJumpBtnTextSize(px2sp(jumpTextSize.toFloat()))
         }
         // 设置内容右侧图标
         val jumpBackground: Drawable? = typedArray?.getDrawable(R.styleable.CltTextView_jumpBackground)

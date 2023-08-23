@@ -4,11 +4,9 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.MutablePreferences
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 /**
  * DataStore扩展类
@@ -26,12 +24,12 @@ fun DataStore<Preferences>.putDataIO(action: (transform: MutablePreferences) -> 
 suspend fun <T> DataStore<Preferences>.putData(key: Preferences.Key<T>, value: T) = edit { it[key] = value }
 
 /** 通过[key]获取数据，[defValue]为默认值 */
-inline fun <reified T> DataStore<Preferences>.getDataSync(key: Preferences.Key<T>, defValue: T): T = runBlocking { getData(key, defValue) }
+inline fun <reified T> DataStore<Preferences>.getDataSync(key: Preferences.Key<T>, defValue: T): T = await { getData(key, defValue) }
 
 /** 通过[key]获取数据 */
-inline fun <reified T> DataStore<Preferences>.getDataSync(key: Preferences.Key<T>): T? = runBlocking { getData(key) }
+inline fun <reified T> DataStore<Preferences>.getDataSync(key: Preferences.Key<T>): T? = awaitOrNull { getData(key) }
 
-/** 通过[key]同步获取数据 */
+/** 通过[key]获取数据 */
 suspend inline fun <reified T> DataStore<Preferences>.getData(key: Preferences.Key<T>): T? =
     data.map {
         it.asMap().filter { it.key == key }.toList()
@@ -47,7 +45,7 @@ suspend inline fun <reified T> DataStore<Preferences>.getData(key: Preferences.K
         }
     }.first()
 
-/** 通过[key]同步获取数据，[defValue]为默认值 */
+/** 通过[key]获取数据，[defValue]为默认值 */
 suspend inline fun <reified T> DataStore<Preferences>.getData(key: Preferences.Key<T>, defValue: T): T = getData(key) ?: defValue
 
 /** 异步清空数据数据 */

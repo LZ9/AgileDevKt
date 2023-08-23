@@ -18,21 +18,21 @@ fun IoScope(): CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
 /** 主线程执行 */
 @JvmOverloads
-fun runOnMain(scope: CoroutineScope = MainScope(), action: () -> Unit): Job = scope.launch(Dispatchers.Main)  { action() }
+fun runOnMain(scope: CoroutineScope = MainScope(), action: suspend () -> Unit): Job = scope.launch(Dispatchers.Main)  { action() }
 
 /** 主线程执行（ViewModel） */
-fun ViewModel.runOnMain(action: () -> Unit): Job = viewModelScope.launch(Dispatchers.Main) { action() }
+fun ViewModel.runOnMain(action: suspend () -> Unit): Job = viewModelScope.launch(Dispatchers.Main) { action() }
 
 /** 主线程执行（AppCompatActivity） */
-fun AppCompatActivity.runOnMain(action: () -> Unit): Job = lifecycleScope.launch(Dispatchers.Main) { action() }
+fun AppCompatActivity.runOnMain(action: suspend () -> Unit): Job = lifecycleScope.launch(Dispatchers.Main) { action() }
 
 /** 主线程执行（Fragment） */
-fun Fragment.runOnMain(action: () -> Unit): Job = lifecycleScope.launch(Dispatchers.Main) { action() }
+fun Fragment.runOnMain(action: suspend () -> Unit): Job = lifecycleScope.launch(Dispatchers.Main) { action() }
 
 /** 主线程执行捕获异常 */
 @JvmOverloads
 fun runOnMainCatch(
-    action: () -> Unit,
+    action: suspend () -> Unit,
     error: (e: Exception) -> Unit = {},
     scope: CoroutineScope = MainScope()
 ): Job = scope.launch(Dispatchers.Main) {
@@ -47,7 +47,7 @@ fun runOnMainCatch(
 /** 主线程执行捕获异常（ViewModel） */
 @JvmOverloads
 fun ViewModel.runOnMainCatch(
-    action: () -> Unit,
+    action: suspend () -> Unit,
     error: (e: Exception) -> Unit = {}
 ): Job = viewModelScope.launch(Dispatchers.Main) {
     try {
@@ -61,7 +61,7 @@ fun ViewModel.runOnMainCatch(
 /** 主线程执行捕获异常（AppCompatActivity） */
 @JvmOverloads
 fun AppCompatActivity.runOnMainCatch(
-    action: () -> Unit,
+    action: suspend () -> Unit,
     error: (e: Exception) -> Unit = {}
 ): Job = lifecycleScope.launch(Dispatchers.Main) {
     try {
@@ -75,7 +75,7 @@ fun AppCompatActivity.runOnMainCatch(
 /** 主线程执行捕获异常（Fragment） */
 @JvmOverloads
 fun Fragment.runOnMainCatch(
-    action: () -> Unit,
+    action: suspend () -> Unit,
     error: (e: Exception) -> Unit = {}
 ): Job = lifecycleScope.launch(Dispatchers.Main) {
     try {
@@ -91,7 +91,7 @@ fun Fragment.runOnMainCatch(
 fun runOnMainDelay(
     timeMillis: Long,
     scope: CoroutineScope = IoScope(),
-    action: () -> Unit
+    action: suspend () -> Unit
 ): Job = scope.launch(Dispatchers.Main) {
     delay(timeMillis)
     launch(Dispatchers.Main) { action() }
@@ -100,7 +100,7 @@ fun runOnMainDelay(
 /** 主线程延迟[timeMillis]毫秒执行（ViewModel） */
 fun ViewModel.runOnMainDelay(
     timeMillis: Long,
-    action: () -> Unit
+    action: suspend () -> Unit
 ): Job = viewModelScope.launch(Dispatchers.IO) {
     delay(timeMillis)
     launch(Dispatchers.Main) { action() }
@@ -109,7 +109,7 @@ fun ViewModel.runOnMainDelay(
 /** 主线程延迟[timeMillis]毫秒执行（AppCompatActivity） */
 fun AppCompatActivity.runOnMainDelay(
     timeMillis: Long,
-    action: () -> Unit
+    action: suspend () -> Unit
 ): Job = lifecycleScope.launch(Dispatchers.IO) {
     delay(timeMillis)
     launch(Dispatchers.Main) { action() }
@@ -118,7 +118,7 @@ fun AppCompatActivity.runOnMainDelay(
 /** 主线程延迟[timeMillis]毫秒执行（Fragment） */
 fun Fragment.runOnMainDelay(
     timeMillis: Long,
-    action: () -> Unit
+    action: suspend () -> Unit
 ): Job = lifecycleScope.launch(Dispatchers.IO) {
     delay(timeMillis)
     launch(Dispatchers.Main) { action() }
@@ -126,21 +126,21 @@ fun Fragment.runOnMainDelay(
 
 /** 异步线程执行 */
 @JvmOverloads
-fun runOnIO(scope: CoroutineScope = IoScope(), actionIO: () -> Unit): Job = scope.launch(Dispatchers.IO) { actionIO() }
+fun runOnIO(scope: CoroutineScope = IoScope(), actionIO: suspend () -> Unit): Job = scope.launch(Dispatchers.IO) { actionIO() }
 
 /** 异步线程执行（ViewModel） */
-fun ViewModel.runOnIO(actionIO: () -> Unit): Job = viewModelScope.launch(Dispatchers.IO) { actionIO() }
+fun ViewModel.runOnIO(actionIO: suspend () -> Unit): Job = viewModelScope.launch(Dispatchers.IO) { actionIO() }
 
 /** 异步线程执行（AppCompatActivity） */
-fun AppCompatActivity.runOnIO(actionIO: () -> Unit): Job = lifecycleScope.launch(Dispatchers.IO) { actionIO() }
+fun AppCompatActivity.runOnIO(actionIO: suspend () -> Unit): Job = lifecycleScope.launch(Dispatchers.IO) { actionIO() }
 
 /** 异步线程执行（Fragment） */
-fun Fragment.runOnIO(actionIO: () -> Unit): Job = lifecycleScope.launch(Dispatchers.IO) { actionIO() }
+fun Fragment.runOnIO(actionIO: suspend () -> Unit): Job = lifecycleScope.launch(Dispatchers.IO) { actionIO() }
 
 /** 异步线程执行捕获异常 */
 @JvmOverloads
 fun runOnIOCatch(
-    actionIO: () -> Unit,
+    actionIO: suspend () -> Unit,
     error: (e: Exception) -> Unit = {},
     scope: CoroutineScope = IoScope()
 ): Job = scope.launch(Dispatchers.IO) {
@@ -155,7 +155,7 @@ fun runOnIOCatch(
 /** 异步线程执行捕获异常（ViewModel） */
 @JvmOverloads
 fun ViewModel.runOnIOCatch(
-    actionIO: () -> Unit,
+    actionIO: suspend () -> Unit,
     error: (e: Exception) -> Unit = {}
 ): Job = viewModelScope.launch(Dispatchers.IO) {
     try {
@@ -169,7 +169,7 @@ fun ViewModel.runOnIOCatch(
 /** 异步线程执行捕获异常（AppCompatActivity） */
 @JvmOverloads
 fun AppCompatActivity.runOnIOCatch(
-    actionIO: () -> Unit,
+    actionIO: suspend () -> Unit,
     error: (e: Exception) -> Unit = {}
 ): Job = lifecycleScope.launch(Dispatchers.IO) {
     try {
@@ -183,62 +183,6 @@ fun AppCompatActivity.runOnIOCatch(
 /** 异步线程执行捕获异常（Fragment） */
 @JvmOverloads
 fun Fragment.runOnIOCatch(
-    actionIO: () -> Unit,
-    error: (e: Exception) -> Unit = {}
-): Job = lifecycleScope.launch(Dispatchers.IO) {
-    try {
-        actionIO()
-    } catch (e: Exception) {
-        e.printStackTrace()
-        launch(Dispatchers.Main) { error(e) }
-    }
-}
-
-/** 异步线程执行挂起函数 */
-@JvmOverloads
-fun runOnSuspendIO(scope: CoroutineScope = IoScope(), actionIO: suspend () -> Unit): Job = scope.launch(Dispatchers.IO) { actionIO() }
-
-/** 异步线程执行挂起函数（ViewModel） */
-fun ViewModel.runOnSuspendIO(actionIO: suspend () -> Unit): Job = viewModelScope.launch(Dispatchers.IO) { actionIO() }
-
-/** 异步线程执行挂起函数（AppCompatActivity） */
-fun AppCompatActivity.runOnSuspendIO(actionIO: suspend () -> Unit): Job = lifecycleScope.launch(Dispatchers.IO) { actionIO() }
-
-/** 异步线程执行挂起函数（Fragment） */
-fun Fragment.runOnSuspendIO(actionIO: suspend () -> Unit): Job = lifecycleScope.launch(Dispatchers.IO) { actionIO() }
-
-/** 异步线程执行挂起函数捕获异常 */
-@JvmOverloads
-fun runOnSuspendIOCatch(
-    actionIO: suspend () -> Unit,
-    error: (e: Exception) -> Unit = {},
-    scope: CoroutineScope = IoScope()
-): Job = scope.launch(Dispatchers.IO) {
-    try {
-        actionIO()
-    } catch (e: Exception) {
-        e.printStackTrace()
-        launch(Dispatchers.Main) { error(e) }
-    }
-}
-
-/** 异步线程执行挂起函数捕获异常（ViewModel） */
-@JvmOverloads
-fun ViewModel.runOnSuspendIOCatch(
-    actionIO: suspend () -> Unit,
-    error: (e: Exception) -> Unit = {}
-): Job = viewModelScope.launch(Dispatchers.IO) {
-    try {
-        actionIO()
-    } catch (e: Exception) {
-        e.printStackTrace()
-        launch(Dispatchers.Main) { error(e) }
-    }
-}
-
-/** 异步线程执行挂起函数捕获异常（AppCompatActivity） */
-@JvmOverloads
-fun AppCompatActivity.runOnSuspendIOCatch(
     actionIO: suspend () -> Unit,
     error: (e: Exception) -> Unit = {}
 ): Job = lifecycleScope.launch(Dispatchers.IO) {
@@ -250,26 +194,8 @@ fun AppCompatActivity.runOnSuspendIOCatch(
     }
 }
 
-/** 异步线程执行挂起函数捕获异常（Fragment） */
-@JvmOverloads
-fun Fragment.runOnSuspendIOCatch(
-    actionIO: suspend () -> Unit,
-    error: (e: Exception) -> Unit = {}
-): Job = lifecycleScope.launch(Dispatchers.IO) {
-    try {
-        actionIO()
-    } catch (e: Exception) {
-        e.printStackTrace()
-        launch(Dispatchers.Main) { error(e) }
-    }
-}
+/** 在主线程执行挂起函数[action]（如果挂起函数耗时则会阻断主线程） */
+fun <T> awaitOrNull(action: suspend () -> T?): T? = runBlocking { action() }
 
-suspend fun <T> awaitOrNull(action: suspend () -> T?): T? =
-    withContext(Dispatchers.IO) {
-        action()
-    }
-
-suspend fun <T> await(action: suspend () -> T): T =
-    withContext(Dispatchers.IO) {
-        action()
-    }
+/** 在主线程执行挂起函数[action]（如果挂起函数耗时则会阻断主线程） */
+fun <T> await(action: suspend () -> T): T = runBlocking { action() }

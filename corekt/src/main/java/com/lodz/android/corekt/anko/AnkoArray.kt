@@ -6,7 +6,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 /**
- * 数组列表帮助类
+ * 数组列表扩展类
  * Created by zhouL on 2018/11/2.
  */
 
@@ -37,11 +37,11 @@ fun Collection<*>?.isNullOrEmpty(): Boolean = this == null || this.isEmpty()
 /** 将列表转为数组 */
 inline fun <reified T> Collection<T>.toArrays(): Array<T> = this.toTypedArray()
 
-/** 将数据分组，泛型T可以为String或者实现了Groupable的任意类，[groups]为分组标题，[compareLength]为匹配长度 */
+/** 将数组数据分组，泛型T可以为String或者实现了Groupable的任意类，[groups]为分组标题，[compareLength]为匹配长度 */
 @JvmOverloads
 inline fun <reified T> Array<T>.group(groups: Array<String>, @IntRange(from = 1) compareLength: Int = 1): Array<T> = toList().group(groups.toList(), compareLength).toTypedArray()
 
-/** 将数据分组，泛型T可以为String或者实现了Groupable的任意类，[groups]为分组标题，[compareLength]为匹配长度 */
+/** 将列表数据分组，泛型T可以为String或者实现了Groupable的任意类，[groups]为分组标题，[compareLength]为匹配长度 */
 @JvmOverloads
 fun <T> Collection<T>.group(groups: Collection<String>, @IntRange(from = 1) compareLength: Int = 1): Collection<T> {
     if (isEmpty() || groups.isEmpty() || compareLength <= 0) {

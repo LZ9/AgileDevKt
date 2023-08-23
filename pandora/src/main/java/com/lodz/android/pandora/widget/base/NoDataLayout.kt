@@ -17,7 +17,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.lodz.android.corekt.anko.bindView
 import com.lodz.android.corekt.anko.getColorCompat
-import com.lodz.android.corekt.anko.px2spRF
+import com.lodz.android.corekt.anko.px2sp
 import com.lodz.android.pandora.R
 import com.lodz.android.pandora.base.application.BaseApplication
 import com.lodz.android.pandora.base.application.config.BaseLayoutConfig
@@ -103,10 +103,9 @@ class NoDataLayout : LinearLayout {
         }
 
         // 提示语大小
-        val tipsSize: Int = typedArray?.getDimensionPixelSize(R.styleable.NoDataLayout_tipsSize, 0)
-                ?: 0
+        val tipsSize: Int = typedArray?.getDimensionPixelSize(R.styleable.NoDataLayout_tipsSize, 0) ?: 0
         if (tipsSize != 0) {
-            setTipsTextSize(px2spRF(tipsSize))
+            setTipsTextSize(px2sp(tipsSize.toFloat()))
         } else if (mPdrConfig.textSize != 0) {
             setTipsTextSize(mPdrConfig.textSize.toFloat())
         }

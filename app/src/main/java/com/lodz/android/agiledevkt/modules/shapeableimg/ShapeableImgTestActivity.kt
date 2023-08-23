@@ -45,13 +45,13 @@ class ShapeableImgTestActivity : BaseActivity() {
     private fun setCustomImg() {
         mBinding.customSimg.shapeAppearanceModel = ShapeAppearanceModel.builder().apply {
             setTopLeftCorner(RoundedCornerTreatment())
-            setTopLeftCornerSize(dp2pxRF(20))
+            setTopLeftCornerSize(dp2px(20f))
             setBottomRightCorner(RoundedCornerTreatment())
-            setBottomRightCornerSize(dp2pxRF(20))
+            setBottomRightCornerSize(dp2px(20f))
             setTopRightCorner(CutCornerTreatment())
-            setTopRightCornerSize(dp2pxRF(20))
+            setTopRightCornerSize(dp2px(20f))
             setBottomLeftCorner(CutCornerTreatment())
-            setBottomLeftCornerSize(dp2pxRF(20))
+            setBottomLeftCornerSize(dp2px(20f))
         }.build()
     }
 
@@ -59,13 +59,13 @@ class ShapeableImgTestActivity : BaseActivity() {
     private fun setCustomTv() {
         val model = ShapeAppearanceModel.builder().apply {
             setAllCorners(RoundedCornerTreatment())
-            setAllCornerSizes(dp2pxRF(15))
-            setAllEdges(TriangleEdgeTreatment(dp2pxRF(15), false))
+            setAllCornerSizes(dp2px(15f))
+            setAllEdges(TriangleEdgeTreatment(dp2px(15f), false))
         }.build()
         val drawable = MaterialShapeDrawable(model).apply {
             setTint(getContext().getColorCompat(R.color.color_00a0e9))
             paintStyle = Paint.Style.FILL_AND_STROKE
-            strokeWidth = dp2pxRF(15)
+            strokeWidth = dp2px(15f)
             strokeColor = getContext().getColorStateListCompat(R.color.red)
         }
         mBinding.customTv.setTextColor(Color.WHITE)
@@ -76,8 +76,8 @@ class ShapeableImgTestActivity : BaseActivity() {
     private fun setBubbleTv() {
         val model = ShapeAppearanceModel.builder().apply {
             setAllCorners(RoundedCornerTreatment())
-            setAllCornerSizes(dp2pxRF(8))
-            setRightEdge(TriangleEdgeTreatment(dp2pxRF(8), false))
+            setAllCornerSizes(dp2px(8f))
+            setRightEdge(TriangleEdgeTreatment(dp2px(8f), false))
         }.build()
         val drawable = MaterialShapeDrawable(model).apply {
             setTint(getContext().getColorCompat(R.color.color_00a0e9))

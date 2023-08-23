@@ -4,11 +4,17 @@ import android.content.Context
 import android.content.Intent
 import com.lodz.android.agiledevkt.App
 import com.lodz.android.agiledevkt.modules.datastore.DataStoreBaseActivity
+import com.lodz.android.agiledevkt.utils.ds.DsConfig
 import com.lodz.android.agiledevkt.utils.ds.DsManager
 import com.lodz.android.corekt.anko.AnkoNumFormat
 import com.lodz.android.corekt.anko.IoScope
 import com.lodz.android.corekt.anko.clean
+import com.lodz.android.corekt.anko.cleanIO
 import com.lodz.android.corekt.anko.format
+import com.lodz.android.corekt.anko.getDataSync
+import com.lodz.android.corekt.anko.putData
+import com.lodz.android.corekt.anko.putDataIO
+import com.lodz.android.corekt.anko.runOnIO
 import com.lodz.android.corekt.utils.AppUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
@@ -29,6 +35,8 @@ class DataStoreCoroutinesActivity : DataStoreBaseActivity() {
     }
 
     override fun updateUI() {
+        App.get().dataStore.getDataSync(DsConfig.KEY_AGE)
+        App.get().dataStore.getDataSync(DsConfig.KEY_AGE, 0)
         MainScope().launch {
             mBinding.apply {
                 idCtv.setContentText(DsManager.getId().toString())

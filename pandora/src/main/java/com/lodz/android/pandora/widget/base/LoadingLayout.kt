@@ -92,10 +92,9 @@ class LoadingLayout : LinearLayout {
         }
 
         // 提示语大小
-        val tipsSize: Int = typedArray?.getDimensionPixelSize(R.styleable.LoadingLayout_tipsSize, 0)
-                ?: 0
+        val tipsSize: Int = typedArray?.getDimensionPixelSize(R.styleable.LoadingLayout_tipsSize, 0) ?: 0
         if (tipsSize != 0) {
-            setTipsTextSize(px2spRF(tipsSize))
+            setTipsTextSize(px2sp(tipsSize.toFloat()))
         } else if (mPdrConfig.textSize != 0) {
             setTipsTextSize(mPdrConfig.textSize.toFloat())
         }

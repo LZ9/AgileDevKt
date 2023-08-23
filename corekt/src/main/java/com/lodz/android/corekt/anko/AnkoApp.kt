@@ -13,6 +13,7 @@ import android.nfc.NfcAdapter
 import android.os.Build
 import androidx.annotation.RequiresPermission
 import androidx.core.app.ActivityCompat
+import kotlinx.coroutines.runBlocking
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.nio.charset.StandardCharsets
@@ -62,7 +63,7 @@ fun Context.getVersionCode(packageName: String = getPackageName()): Long {
 }
 
 /** 获取APP的图标 */
-fun Context.getAppIcon(packageName: String): Drawable? {
+fun Context.getAppIcon(packageName: String = getPackageName()): Drawable? {
     try {
         val packageInfo: PackageInfo? = packageManager.getPackageInfo(packageName, 0)
         return packageInfo?.applicationInfo?.loadIcon(packageManager)
@@ -98,22 +99,11 @@ fun Context.getProcessName(): String {
 }
 
 /** 判断包名为[packageName]的app是否安装 */
-fun Context.isPkgInstalled(packageName: String): Boolean {
-    if (packageName.isEmpty()) {
-        return false
-    }
-    try {
-        val packageInfo: PackageInfo? = packageManager.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES or PackageManager.GET_SERVICES)
-        return packageInfo != null
-    } catch (e: Exception) {
-        e.printStackTrace()
-    }
-    return false
-}
+fun Context.isPkgInstalled(packageName: String): Boolean = getPackageInfo(packageName) != null
 
 /** 获取已安装的PackageInfo列表 */
 fun Context.getInstalledPackages(): List<PackageInfo> =
-    packageManager.getInstalledPackages(PackageManager.GET_ACTIVITIES or PackageManager.GET_SERVICES) ?: Collections.emptyList()
+    packageManager.getInstalledPackages(PackageManager.GET_ACTIVITIES or PackageManager.GET_SERVICES)
 
 /** 获取包名为[packageName]的PackageInfo */
 fun Context.getPackageInfo(packageName: String): PackageInfo? {
@@ -178,7 +168,7 @@ fun Context.isNfcOpen(): Boolean {
     return adapter.isEnabled
 }
 
-/** 获取Assets下的文件内容 */
+/** 获取Assets下文件名为[fileName]的内容 */
 fun Context.getAssetsFileContent(fileName: String): String {
     InputStreamReader(assets.open(fileName), StandardCharsets.UTF_8).use { isr: InputStreamReader ->
         BufferedReader(isr).use { br: BufferedReader ->

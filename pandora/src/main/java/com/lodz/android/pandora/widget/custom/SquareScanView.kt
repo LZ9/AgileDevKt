@@ -8,7 +8,7 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
-import com.lodz.android.corekt.anko.dp2pxRF
+import com.lodz.android.corekt.anko.dp2px
 import com.lodz.android.corekt.anko.getColorCompat
 import com.lodz.android.pandora.R
 
@@ -123,7 +123,7 @@ class SquareScanView  : View {
 
     /** 设置边框横线长度[dp] */
     fun setFrameLong(dp: Int) {
-        setFrameLong(dp2pxRF(dp))
+        setFrameLong(dp2px(dp.toFloat()))
     }
 
     /** 设置边框横线长度[px] */
@@ -136,7 +136,7 @@ class SquareScanView  : View {
 
     /** 设置边框宽度[dp] */
     fun setFrameStrokeWidth(dp: Int) {
-        setFrameStrokeWidth(dp2pxRF(dp))
+        setFrameStrokeWidth(dp2px(dp.toFloat()))
     }
 
     /** 设置边框宽度[px] */
@@ -173,7 +173,7 @@ class SquareScanView  : View {
 
     /** 设置扫描线宽度[dp] */
     fun setScanLineStrokeWidth(dp: Int) {
-        setScanLineStrokeWidth(dp2pxRF(dp))
+        setScanLineStrokeWidth(dp2px(dp.toFloat()))
     }
 
     /** 设置扫描线宽度[px] */

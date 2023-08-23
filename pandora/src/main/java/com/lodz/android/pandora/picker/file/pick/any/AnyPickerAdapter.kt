@@ -11,7 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.recyclerview.widget.RecyclerView
-import com.lodz.android.corekt.anko.dp2pxRF
+import com.lodz.android.corekt.anko.dp2px
 import com.lodz.android.corekt.anko.getColorCompat
 import com.lodz.android.corekt.anko.getScreenWidth
 import com.lodz.android.corekt.file.PickerInfo
@@ -149,7 +149,7 @@ internal class AnyPickerAdapter<T>(
         paint.strokeWidth = 4f
         paint.isAntiAlias = true
         paint.style = Paint.Style.STROKE
-        canvas.drawCircle(side / 2, side / 2, side / 2 - context.dp2pxRF(4), paint)
+        canvas.drawCircle(side / 2, side / 2, side / 2 - context.dp2px(4f), paint)
         return bitmap
     }
 
@@ -165,11 +165,11 @@ internal class AnyPickerAdapter<T>(
         paint.strokeWidth = 4f
         paint.isAntiAlias = true
         paint.style = Paint.Style.STROKE
-        canvas.drawCircle(side / 2, side / 2, side / 2 - context.dp2pxRF(4), paint)
+        canvas.drawCircle(side / 2, side / 2, side / 2 - context.dp2px(4f), paint)
 
         paint.isAntiAlias = true
         paint.style = Paint.Style.FILL
-        canvas.drawCircle(side / 2, side / 2, side / 2 - context.dp2pxRF(10), paint)
+        canvas.drawCircle(side / 2, side / 2, side / 2 - context.dp2px(10f), paint)
         return bitmap
     }
 

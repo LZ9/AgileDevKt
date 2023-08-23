@@ -14,5 +14,5 @@ fun Boolean?.check(): Boolean = this ?: false
 /** 将布尔型转为Int，0为false，1为true */
 fun Boolean.toInt(): Int = if (this) 1 else 0
 
-/** 将Int转为布尔型，true为1 */
-fun Int.toBoolean(): Boolean = this == 1
+/** 将Int转为布尔型，[trueCode]为返回true的数字，默认为1 */
+fun Int.toBoolean(trueCode: Int = 1): Boolean = this == trueCode

@@ -8,7 +8,7 @@ import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.shape.RoundedCornerTreatment
 import com.google.android.material.shape.ShapeAppearanceModel
 import com.lodz.android.agiledevkt.R
-import com.lodz.android.corekt.anko.dp2pxRF
+import com.lodz.android.corekt.anko.dp2px
 import com.lodz.android.pandora.widget.adsorb.AdsorbView
 
 /**
@@ -38,7 +38,7 @@ class ImageAdsorbView : AdsorbView {
         imageView.scaleType = ImageView.ScaleType.CENTER_CROP
         imageView.shapeAppearanceModel = ShapeAppearanceModel.builder().apply {
             setAllCorners(RoundedCornerTreatment())
-            setAllCornerSizes(dp2pxRF(15))
+            setAllCornerSizes(dp2px(15f))
         }.build()
         return imageView
     }

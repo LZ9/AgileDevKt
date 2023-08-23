@@ -25,7 +25,7 @@ fun Context.getStoragePath(): Pair<String?, String?> {
 
         for (i in 0 until length) {
             val storageVolumeElement = Array.get(result, i)
-            val path: String? = getPath.invoke(storageVolumeElement) as String
+            val path: String? = getPath.invoke(storageVolumeElement) as? String
             val removable: Boolean = isRemovable.invoke(storageVolumeElement) as Boolean
             if (!removable) {
                 internal = path// 内置路径

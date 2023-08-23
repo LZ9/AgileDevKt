@@ -14,10 +14,10 @@ import java.lang.reflect.Method
  */
 
 /** 软键盘是否打开 */
-fun Context.isKeybordShow(): Boolean = (getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).isActive
+fun Context.isKeyBordShow(): Boolean = (getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).isActive
 
 /** 软键盘是否打开 */
-fun View.isKeybordShow(): Boolean = (context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).isActive(this)
+fun View.isKeyBordShow(): Boolean = (context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).isActive(this)
 
 /** 显示软键盘 */
 fun View.showInputMethod() {

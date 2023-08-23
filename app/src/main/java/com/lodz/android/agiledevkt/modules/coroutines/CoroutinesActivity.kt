@@ -110,7 +110,7 @@ class CoroutinesActivity : BaseActivity() {
             }
             cleanResult()
             if (mType == TYPE_JOIN) {
-                runOnSuspendIO {
+                runOnIO {
                     mJob = join()
                 }
                 return@setOnClickListener
@@ -201,7 +201,7 @@ class CoroutinesActivity : BaseActivity() {
     }
 
     /** 超时限制 */
-    private fun timeout(): Job = runOnSuspendIOCatch({
+    private fun timeout(): Job = runOnIOCatch({
         withTimeout(1500) {
             logResult(Thread.currentThread().name, "开始执行协程")
             repeat(12) { i ->

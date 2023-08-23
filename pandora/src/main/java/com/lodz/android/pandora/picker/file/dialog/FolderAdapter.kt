@@ -10,7 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.recyclerview.widget.RecyclerView
-import com.lodz.android.corekt.anko.dp2pxRF
+import com.lodz.android.corekt.anko.dp2px
 import com.lodz.android.corekt.anko.getColorCompat
 import com.lodz.android.corekt.file.DocumentWrapper
 import com.lodz.android.pandora.R
@@ -75,7 +75,7 @@ internal class FolderAdapter(context: Context) : BaseRvAdapter<FolderItemBean>(c
     }
 
     private fun getUnselectBitmap(@ColorRes color: Int): Bitmap {
-        val side = context.dp2pxRF(30)
+        val side = context.dp2px(30f)
         val bitmap = Bitmap.createBitmap(side.toInt(), side.toInt(), Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
         canvas.drawColor(Color.TRANSPARENT)
@@ -89,7 +89,7 @@ internal class FolderAdapter(context: Context) : BaseRvAdapter<FolderItemBean>(c
     }
 
     private fun getSelectedBitmap(@ColorRes color: Int): Bitmap {
-        val side = context.dp2pxRF(30)
+        val side = context.dp2px(30f)
         val bitmap = Bitmap.createBitmap(side.toInt(), side.toInt(), Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
         canvas.drawColor(Color.TRANSPARENT)

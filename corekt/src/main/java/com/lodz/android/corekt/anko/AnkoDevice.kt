@@ -20,16 +20,16 @@ import com.lodz.android.corekt.utils.ReflectUtils
 fun Context.getApnName(): String {
     val manager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     val info: NetworkInfo = manager.activeNetworkInfo ?: return ""
-    if (ConnectivityManager.TYPE_MOBILE == info.type && info.extraInfo.isNotEmpty()) {
-        return info.extraInfo
-    }
-    return ""
+    return if (ConnectivityManager.TYPE_MOBILE == info.type && info.extraInfo.isNotEmpty()) info.extraInfo else ""
 }
 
 /** 获取手机的IMSI1 */
 fun Context.getIMSI1(): String = getOperatorBySlot("getSubscriberId", 0)
 
-/** 获取永久SIM标识符 */
+/** 获取手机的IMSI2 */
+fun Context.getIMSI2(): String = getOperatorBySlot("getSubscriberId", 1)
+
+/** 获取SIM标识符 */
 fun Context.getSubscriptionId(): String {
     val manager = getSystemService(Context.TELEPHONY_SERVICE)
     if (manager is TelephonyManager) {
@@ -46,9 +46,6 @@ fun Context.isSim1Ready(): Boolean {
     }
     return type.isNotEmpty() && type.toInt() == TelephonyManager.SIM_STATE_READY
 }
-
-/** 获取手机的IMSI2 */
-fun Context.getIMSI2(): String = getOperatorBySlot("getSubscriberId", 1)
 
 /** Sim卡2是否可用 */
 fun Context.isSim2Ready(): Boolean {
@@ -110,16 +107,10 @@ private fun Context.getOperatorBySlot(predictedMethodName: String, slotId: Int):
 
 /** 获取手机Android ID */
 @SuppressLint("HardwareIds")
-fun Context.getAndroidId(): String {
-    val id: String? = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID)
-    return id ?: ""
-}
+fun Context.getAndroidId(): String = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID) ?: ""
 
 /** 获取手机硬件id兼容方法 */
 fun Context.getDeviceIdCompat(): String {
-    val imei :String? = getIMEI1()
-    if (imei != null && imei.isNotEmpty()){
-        return imei
-    }
-    return getAndroidId()
+    val imei: String = getIMEI1()
+    return imei.ifEmpty { getAndroidId() }
 }

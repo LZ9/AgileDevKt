@@ -136,10 +136,9 @@ class CltRadioGroup : FrameLayout {
             setTitleTextColor(titleTextColor)
         }
         // 设置标题文字大小
-        val titleTextSize: Int = typedArray?.getDimensionPixelSize(R.styleable.CltRadioGroup_titleTextSize, 0)
-                ?: 0
+        val titleTextSize: Int = typedArray?.getDimensionPixelSize(R.styleable.CltRadioGroup_titleTextSize, 0) ?: 0
         if (titleTextSize > 0) {
-            setTitleTextSize(px2spRF(titleTextSize))
+            setTitleTextSize(px2sp(titleTextSize.toFloat()))
         }
         // 设置标题控件宽度
         val titleWidth: Int = typedArray?.getDimensionPixelSize(R.styleable.CltRadioGroup_titleWidth, 0)
@@ -173,10 +172,9 @@ class CltRadioGroup : FrameLayout {
             setRadioTextColor(radioTextColor)
         }
         // 设置单选文字大小
-        val radioTextSize: Int = typedArray?.getDimensionPixelSize(R.styleable.CltRadioGroup_radioTextSize, 0)
-                ?: 0
+        val radioTextSize: Int = typedArray?.getDimensionPixelSize(R.styleable.CltRadioGroup_radioTextSize, 0) ?: 0
         if (radioTextSize > 0) {
-            setRadioTextSize(px2spRF(radioTextSize))
+            setRadioTextSize(px2sp(radioTextSize.toFloat()))
         }
         // 设置选择类型
         setRadioType(typedArray?.getInt(R.styleable.CltRadioGroup_radioType, TYPE_SINGLE)

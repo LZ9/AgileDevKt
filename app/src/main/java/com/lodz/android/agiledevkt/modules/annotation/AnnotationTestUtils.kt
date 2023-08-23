@@ -14,21 +14,21 @@ import com.lodz.android.corekt.utils.ReflectUtils
 object AnnotationTestUtils {
 
     /** 加密注解解析 */
-    fun <T> injectEncryption(any: T) {
-        any?.injectAs<EncryptionAES> { c, obj, inject, field ->
+    fun injectEncryption(any: Any) {
+        any.injectAs<EncryptionAES, Any> { cls, obj, inject, field ->
             val key = if (inject.key.length == 16) inject.key else AES.KEY
-            val value = ReflectUtils.getFieldValue(c, obj, field.name)
+            val value = ReflectUtils.getFieldValue(cls, obj, field.name)
             val source = if (value is String) value else ""
-            ReflectUtils.setFieldValue(c, obj, field.name, AES.encrypt(source, key) ?: "")
+            ReflectUtils.setFieldValue(cls, obj, field.name, AES.encrypt(source, key) ?: "")
         }
     }
 
     /** 控件绑定注解解析 */
-    inline fun <reified T : Activity> bind(activity: T) {
-        activity.injectAs<BindViews, T>(activity) { c, obj, inject, field ->
+     fun bind(activity: Activity) {
+        activity.injectAs<BindViews, Activity> { cls, obj, inject, field ->
             val id = inject.id
-            val view = obj.findViewById<View>(id) ?: throw IllegalStateException("View ID $id for '${c.name}' not found.")
-            ReflectUtils.setFieldValue(c, obj, field.name, view)
+            val view = obj.findViewById<View>(id) ?: throw IllegalStateException("View ID $id for '${cls.name}' not found.")
+            ReflectUtils.setFieldValue(cls, obj, field.name, view)
         }
     }
 }

@@ -130,10 +130,9 @@ class SearchTitleBarLayout : FrameLayout {
         }
 
         // 返回按钮文字大小
-        val backTextSize: Int = typedArray?.getDimensionPixelSize(R.styleable.SearchTitleBarLayout_backTextSize, 0)
-                ?: 0
+        val backTextSize: Int = typedArray?.getDimensionPixelSize(R.styleable.SearchTitleBarLayout_backTextSize, 0) ?: 0
         if (backTextSize != 0) {
-            setBackBtnTextSize(px2spRF(backTextSize))
+            setBackBtnTextSize(px2sp(backTextSize.toFloat()))
         } else if (mPdrConfig.backBtnTextSize != 0) {
             setBackBtnTextSize(mPdrConfig.backBtnTextSize.toFloat())
         }
@@ -236,7 +235,7 @@ class SearchTitleBarLayout : FrameLayout {
         // 标题文字大小
         val inputTextSize: Int = typedArray?.getDimensionPixelSize(R.styleable.SearchTitleBarLayout_inputTextSize, 0) ?: 0
         if (inputTextSize != 0) {
-            setInputTextSize(px2spRF(inputTextSize))
+            setInputTextSize(px2sp(inputTextSize.toFloat()))
         }
 
         // 是否显示竖线
@@ -257,7 +256,7 @@ class SearchTitleBarLayout : FrameLayout {
         // 搜索按钮文字大小
         val searchTextSize: Int = typedArray?.getDimensionPixelSize(R.styleable.SearchTitleBarLayout_searchTextSize, 0) ?: 0
         if (searchTextSize != 0) {
-            setSearchTextSize(px2spRF(searchTextSize))
+            setSearchTextSize(px2sp(searchTextSize.toFloat()))
         }
 
         // 搜索按钮文字颜色

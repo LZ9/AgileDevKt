@@ -7,7 +7,7 @@ import android.util.AttributeSet
 import android.util.TypedValue
 import android.widget.LinearLayout
 import com.google.android.material.tabs.TabLayout
-import com.lodz.android.corekt.anko.px2dpRF
+import com.lodz.android.corekt.anko.px2dp
 import com.lodz.android.corekt.utils.ReflectUtils
 import com.lodz.android.pandora.R
 
@@ -45,7 +45,7 @@ open class MmsTabLayout : TabLayout {
         super.onLayout(changed, l, t, r, b)
         if (changed) {
             if (mPdrTabMarginPx != 0) {
-                setTabIndicatorMargin(px2dpRF(mPdrTabMarginPx))
+                setTabIndicatorMargin(px2dp(mPdrTabMarginPx.toFloat()))
             }
         }
     }

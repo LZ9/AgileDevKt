@@ -9,7 +9,7 @@ import android.widget.TextView
 import com.google.android.material.appbar.AppBarLayout
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.databinding.ActivityCoorTranslationBinding
-import com.lodz.android.corekt.anko.dp2pxRF
+import com.lodz.android.corekt.anko.dp2px
 import com.lodz.android.corekt.anko.getScreenWidth
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.imageloaderkt.ImageLoader
@@ -28,7 +28,7 @@ class CoorTranslationActivity : AbsActivity() {
 
     companion object {
         /** 按钮右侧间距（单位dp） */
-        private const val BTN_MARGIN_END_DP = 10
+        private const val BTN_MARGIN_END_DP = 10f
 
         fun start(context: Context) {
             val intent = Intent(context, CoorTranslationActivity::class.java)
@@ -95,7 +95,7 @@ class CoorTranslationActivity : AbsActivity() {
 
                 // 订阅按钮位移
                 mBinding.subscribeBtn.translationY = (mSubscribeBtnCenterY - mToolbarCenterY) * (delta.toFloat() - 1)
-                mBinding.subscribeBtn.translationX = (getScreenWidth() - mBinding.subscribeBtn.width / 2 - dp2pxRF(BTN_MARGIN_END_DP) - mSubscribeBtnCenterX) * (1 - delta.toFloat())
+                mBinding.subscribeBtn.translationX = (getScreenWidth() - mBinding.subscribeBtn.width / 2 - dp2px(BTN_MARGIN_END_DP) - mSubscribeBtnCenterX) * (1 - delta.toFloat())
             }
         })
     }

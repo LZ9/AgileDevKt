@@ -95,10 +95,9 @@ open class TitleBarLayout : LinearLayout {
         }
 
         // 返回按钮文字大小
-        val backTextSize: Int = typedArray?.getDimensionPixelSize(R.styleable.TitleBarLayout_backTextSize, 0)
-                ?: 0
+        val backTextSize: Int = typedArray?.getDimensionPixelSize(R.styleable.TitleBarLayout_backTextSize, 0) ?: 0
         if (backTextSize != 0) {
-            setBackBtnTextSize(px2spRF(backTextSize))
+            setBackBtnTextSize(px2sp(backTextSize.toFloat()))
         } else if (mPdrConfig.backBtnTextSize != 0) {
             setBackBtnTextSize(mPdrConfig.backBtnTextSize.toFloat())
         }
@@ -118,10 +117,9 @@ open class TitleBarLayout : LinearLayout {
         }
 
         // 标题文字大小
-        val titleTextSize: Int = typedArray?.getDimensionPixelSize(R.styleable.TitleBarLayout_titleTextSize, 0)
-                ?: 0
+        val titleTextSize: Int = typedArray?.getDimensionPixelSize(R.styleable.TitleBarLayout_titleTextSize, 0) ?: 0
         if (titleTextSize != 0) {
-            setTitleTextSize(px2spRF(titleTextSize))
+            setTitleTextSize(px2sp(titleTextSize.toFloat()))
         } else if (mPdrConfig.titleTextSize != 0) {
             setTitleTextSize(mPdrConfig.titleTextSize.toFloat())
         }
