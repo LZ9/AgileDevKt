@@ -2,11 +2,14 @@ package com.lodz.android.pandora.rx.utils
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
 import com.lodz.android.corekt.anko.getData
 import com.lodz.android.corekt.anko.putData
+import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
 import com.lodz.android.pandora.rx.subscribe.subscriber.BaseSubscriber
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.core.Observable
 import kotlinx.coroutines.runBlocking
 
 /**
@@ -47,3 +50,21 @@ inline fun <reified T : Any> DataStore<Preferences>.getDataRx(key: Preferences.K
             }
         }
     }, BackpressureStrategy.BUFFER))
+
+/** 清空数据 */
+fun DataStore<Preferences>.cleanRx(): RxObAgent<Boolean> =
+    RxObAgent(Observable.create {
+        runBlocking {
+            try {
+                edit { it.clear() }
+                it.doNext(true)
+                it.doComplete()
+            } catch (e: Exception) {
+                e.printStackTrace()
+                it.doError(e)
+            }
+        }
+    })
+
+/** 清空数据 */
+fun DataStore<Preferences>.cleanRxAuto() = cleanRx().rx().subscribe(BaseObserver.empty())

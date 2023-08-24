@@ -48,8 +48,8 @@ suspend inline fun <reified T> DataStore<Preferences>.getData(key: Preferences.K
 /** 通过[key]获取数据，[defValue]为默认值 */
 suspend inline fun <reified T> DataStore<Preferences>.getData(key: Preferences.Key<T>, defValue: T): T = getData(key) ?: defValue
 
-/** 异步清空数据数据 */
-fun DataStore<Preferences>.cleanIO() = IoScope().launch { edit { it.clear() } }
+/** 异步清空数据 */
+fun DataStore<Preferences>.cleanIO() = IoScope().launch { clean() }
 
-/** 清空数据数据 */
+/** 清空数据 */
 suspend fun DataStore<Preferences>.clean() = edit { it.clear() }

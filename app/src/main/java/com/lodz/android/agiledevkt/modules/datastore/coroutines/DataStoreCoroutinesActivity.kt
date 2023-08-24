@@ -35,8 +35,6 @@ class DataStoreCoroutinesActivity : DataStoreBaseActivity() {
     }
 
     override fun updateUI() {
-        App.get().dataStore.getDataSync(DsConfig.KEY_AGE)
-        App.get().dataStore.getDataSync(DsConfig.KEY_AGE, 0)
         MainScope().launch {
             mBinding.apply {
                 idCtv.setContentText(DsManager.getId().toString())
