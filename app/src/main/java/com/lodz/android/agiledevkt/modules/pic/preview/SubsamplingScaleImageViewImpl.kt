@@ -43,22 +43,18 @@ class SubsamplingScaleImageViewImpl(private val isScale: Boolean): DataPreviewAg
             context.toastShort(context.getString(R.string.preview_long_click_tips, (position + 1).toString()))
             true
         }
-        ImageLoader.create(context).loadUrl(source).download(object :RequestListener<File>{
-            override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<File>?, isFirstResource: Boolean): Boolean {
-                runOnMain {
-                    imageView.setImage(ImageSource.resource(R.drawable.ic_launcher))
+        ImageLoader.create(context).loadUrl(source)
+            .download(object : RequestListener<File> {
+                override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<File>, isFirstResource: Boolean): Boolean {
+                    runOnMain {  imageView.setImage(ImageSource.resource(R.drawable.ic_launcher)) }
+                    return false
                 }
-                return false
-            }
-            override fun onResourceReady(resource: File?, model: Any?, target: Target<File>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                runOnMain {
-                    if (resource != null){
-                        imageView.setImage(ImageSource.uri(Uri.fromFile(resource)))
-                    }
+
+                override fun onResourceReady(resource: File, model: Any, target: Target<File>?, dataSource: DataSource, isFirstResource: Boolean): Boolean {
+                    runOnMain { imageView.setImage(ImageSource.uri(Uri.fromFile(resource))) }
+                    return false
                 }
-                return false
-            }
-        })
+            })
     }
 
     override fun onViewDetachedFromWindow(viewHolder: DataViewHolder) {

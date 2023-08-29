@@ -43,17 +43,15 @@ class LongImageViewImpl : DataPreviewAgent<String>() {
             true
         }
 
-        ImageLoader.create(context).loadUrl(source).download(object :RequestListener<File>{
-            override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<File>?, isFirstResource: Boolean): Boolean = false
-            override fun onResourceReady(resource: File?, model: Any?, target: Target<File>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                runOnMain {
-                    if (resource != null){
-                        imageView.setImageFile(resource)
-                    }
+        ImageLoader.create(context).loadUrl(source)
+            .download(object : RequestListener<File> {
+                override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<File>, isFirstResource: Boolean): Boolean = false
+                override fun onResourceReady(resource: File, model: Any, target: Target<File>?, dataSource: DataSource, isFirstResource: Boolean): Boolean {
+                    imageView.setImageFile(resource)
+                    return false
                 }
-                return false
-            }
-        })
+
+            })
     }
 
 }

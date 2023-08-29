@@ -194,21 +194,21 @@ class GlideActivity : BaseActivity() {
     /** 网络图片 */
     private fun showUrlImg() {
         ImageLoader.create(getContext())
-                .loadUrl(IMG_URL)
-                .setFitCenter()
-                .into(mBinding.urlImg, object :RequestListener<Drawable>{
-                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
-                        if (e != null) {
-                            PrintLog.e("testtag", model?.toString() ?: "", e)
-                        }
-                        return false
+            .loadUrl(IMG_URL)
+            .setFitCenter()
+            .into(mBinding.urlImg, object : RequestListener<Drawable> {
+                override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>, isFirstResource: Boolean): Boolean {
+                    if (e != null) {
+                        PrintLog.e("testtag", model?.toString() ?: "", e)
                     }
+                    return false
+                }
 
-                    override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                        PrintLog.d("testtag", model?.toString() ?: "")
-                        return false
-                    }
-                })
+                override fun onResourceReady(resource: Drawable, model: Any, target: Target<Drawable>?, dataSource: DataSource, isFirstResource: Boolean): Boolean {
+                    PrintLog.d("testtag", model.toString())
+                    return false
+                }
+            })
     }
 
     /** 动画显示 */

@@ -592,23 +592,14 @@ class BitmapTestActivity : BaseActivity() {
     private fun downloadLargeBitmap() {
         val url = "https://wx1.sinaimg.cn/mw690/71696c12ly1g3qj9n8qo8j20m8209wr2.jpg"
         ImageLoader.create(this).loadUrl(url)
-            .download(object :RequestListener<File>{
-                override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<File>?, isFirstResource: Boolean): Boolean {
-                    runOnMain {
-                        // 监听器回调可能不在主线程
-                        mBinding.largeImg.setImageResource(R.drawable.ic_launcher)
-                    }
+            .download(object : RequestListener<File> {
+                override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<File>, isFirstResource: Boolean): Boolean {
+                    runOnMain { mBinding.largeImg.setImageResource(R.drawable.ic_launcher) }// 监听器回调可能不在主线程
                     return false
                 }
 
-                override fun onResourceReady(resource: File?, model: Any?, target: Target<File>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                    runOnMain {
-                        if (resource != null) {
-                            showLargeBitmap(resource)
-                            return@runOnMain
-                        }
-                        mBinding.largeImg.setImageResource(R.drawable.ic_launcher)
-                    }
+                override fun onResourceReady(resource: File, model: Any, target: Target<File>?, dataSource: DataSource, isFirstResource: Boolean): Boolean {
+                    runOnMain { showLargeBitmap(resource) }
                     return false
                 }
             })
