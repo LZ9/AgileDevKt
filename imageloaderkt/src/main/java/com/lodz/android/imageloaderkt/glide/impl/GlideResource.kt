@@ -8,11 +8,11 @@ import android.util.Base64
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.lodz.android.imageloaderkt.ImageloaderManager
 import com.lodz.android.imageloaderkt.contract.ImageLoaderContract
 import com.lodz.android.imageloaderkt.contract.ResourceContract
-import com.lodz.android.imageloaderkt.glide.config.GlideApp
 import java.io.File
 
 /**
@@ -33,7 +33,7 @@ internal class GlideResource private constructor() : ResourceContract {
         fun with(context: Context): GlideResource {
             val imageLoader = GlideResource()
             imageLoader.mGlideBuilderBean = getGlideBuilderBean(ImageloaderManager.get().getBuilder())
-            imageLoader.mRequestManager = GlideApp.with(context)
+            imageLoader.mRequestManager = Glide.with(context)
             return imageLoader
         }
 
@@ -42,7 +42,7 @@ internal class GlideResource private constructor() : ResourceContract {
         fun with(activity: Activity): GlideResource {
             val imageLoader = GlideResource()
             imageLoader.mGlideBuilderBean = getGlideBuilderBean(ImageloaderManager.get().getBuilder())
-            imageLoader.mRequestManager = GlideApp.with(activity)
+            imageLoader.mRequestManager = Glide.with(activity)
             return imageLoader
         }
 
@@ -51,7 +51,7 @@ internal class GlideResource private constructor() : ResourceContract {
         fun with(fragmentActivity: FragmentActivity): GlideResource {
             val imageLoader = GlideResource()
             imageLoader.mGlideBuilderBean = getGlideBuilderBean(ImageloaderManager.get().getBuilder())
-            imageLoader.mRequestManager = GlideApp.with(fragmentActivity)
+            imageLoader.mRequestManager = Glide.with(fragmentActivity)
             return imageLoader
         }
 
@@ -60,7 +60,7 @@ internal class GlideResource private constructor() : ResourceContract {
         fun with(fragment: Fragment): GlideResource {
             val imageLoader = GlideResource()
             imageLoader.mGlideBuilderBean = getGlideBuilderBean(ImageloaderManager.get().getBuilder())
-            imageLoader.mRequestManager = GlideApp.with(fragment)
+            imageLoader.mRequestManager = Glide.with(fragment)
             return imageLoader
         }
 
@@ -69,7 +69,7 @@ internal class GlideResource private constructor() : ResourceContract {
         fun with(view: View): GlideResource {
             val imageLoader = GlideResource()
             imageLoader.mGlideBuilderBean = getGlideBuilderBean(ImageloaderManager.get().getBuilder())
-            imageLoader.mRequestManager = GlideApp.with(view)
+            imageLoader.mRequestManager = Glide.with(view)
             return imageLoader
         }
 

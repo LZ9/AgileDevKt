@@ -2,7 +2,7 @@ package com.lodz.android.imageloaderkt
 
 import android.content.Context
 import androidx.annotation.DrawableRes
-import com.lodz.android.imageloaderkt.glide.config.GlideApp
+import com.bumptech.glide.Glide
 import com.lodz.android.imageloaderkt.utils.CompileUtils
 import okhttp3.OkHttpClient
 import java.io.File
@@ -38,32 +38,32 @@ class ImageloaderManager private constructor() {
 
     /** 清除内存缓存（必须在主线程） */
     fun clearMemoryCaches(context: Context) {
-        GlideApp.get(context).clearMemory()
+        Glide.get(context).clearMemory()
     }
 
     /** 清除内存缓存（包括手动GC内存，必须在主线程） */
     fun clearMemoryCachesWithGC(context: Context) {
-        GlideApp.get(context).clearMemory()
+        Glide.get(context).clearMemory()
         System.gc()
     }
 
     /** 清除磁盘缓存（必须异步线程） */
     fun clearDiskCaches(context: Context) {
-        GlideApp.get(context).clearDiskCache()
+        Glide.get(context).clearDiskCache()
     }
 
     /** 暂停加载 */
     fun pauseLoad(context: Context) {
-        GlideApp.with(context).pauseRequests()
+        Glide.with(context).pauseRequests()
     }
 
     /** 恢复加载 */
     fun resumeLoad(context: Context) {
-        GlideApp.with(context).resumeRequests()
+        Glide.with(context).resumeRequests()
     }
 
     /** 是否暂停加载 */
-    fun isPaused(context: Context): Boolean = GlideApp.with(context).isPaused
+    fun isPaused(context: Context): Boolean = Glide.with(context).isPaused
 
     inner class Builder {
 

@@ -1,13 +1,15 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'com.google.devtools.ksp'
+}
 //apply from: 'publish.gradle'
 
 android {
-    compileSdkVersion 34
+    compileSdk 34
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 34
+        minSdk 21
+        targetSdk 34
         versionCode 26
         versionName "1.2.5"// 未上传
     }
@@ -38,7 +40,7 @@ dependencies {
 
     // glide
     api 'com.github.bumptech.glide:glide:4.16.0'
-    kapt 'com.github.bumptech.glide:compiler:4.16.0'
+    ksp 'com.github.bumptech.glide:ksp:4.16.0'
     implementation "com.github.bumptech.glide:okhttp3-integration:4.16.0"
     api 'jp.wasabeef:glide-transformations:4.3.0'
 }
