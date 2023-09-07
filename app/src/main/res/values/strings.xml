@@ -220,6 +220,7 @@
     <string name="info_phone_sim_data_state">sim卡数据连接状态：%s</string>
     <string name="info_phone_is_connected_data">是否已连接数据：%s</string>
     <string name="info_apn_name">APN名称：%s</string>
+    <string name="info_ipv4_name">IPV4列表：%s</string>
     <string name="info_screen_height">屏幕高度：%s</string>
     <string name="info_screen_width">屏幕宽度：%s</string>
     <string name="info_status_bar_height">状态栏高度：%s</string>

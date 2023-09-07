@@ -405,6 +405,14 @@
                 android:text="@string/info_apn_name"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/ipv4_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/info_ipv4_name"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
         </LinearLayout>
 
         <LinearLayout

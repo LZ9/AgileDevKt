@@ -17,6 +17,7 @@ import com.lodz.android.corekt.utils.DeviceUtils
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
 import com.lodz.android.pandora.rx.utils.RxUtils
+import com.lodz.android.pandora.utils.jackson.toJsonString
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import io.reactivex.rxjava3.core.Observable
 import kotlin.random.Random
@@ -123,6 +124,8 @@ class InfoTestActivity : BaseActivity() {
         mBinding.simConnectedDataTv.text = getString(R.string.info_phone_is_connected_data).format(isSimDataConnected())
         // APN名称
         mBinding.apnNameTv.text = getString(R.string.info_apn_name).format(getApnName())
+        // IP地址
+        mBinding.ipv4Tv.text = getString(R.string.info_ipv4_name).format(getIpv4List().toJsonString())
     }
 
     /** 显示屏幕信息 */
@@ -243,6 +246,7 @@ class InfoTestActivity : BaseActivity() {
         mBinding.simDataStateTv.text = getString(R.string.info_phone_sim_data_state).format(getSimDataState())
         mBinding.simConnectedDataTv.text = getString(R.string.info_phone_is_connected_data).format(isSimDataConnected())
         mBinding.apnNameTv.text = getString(R.string.info_apn_name).format(getApnName())
+        mBinding.ipv4Tv.text = getString(R.string.info_ipv4_name).format(getIpv4List().toJsonString())
     }
 
     /** GPS广播接收器 */

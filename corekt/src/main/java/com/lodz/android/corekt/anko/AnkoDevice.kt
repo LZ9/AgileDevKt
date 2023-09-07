@@ -9,6 +9,9 @@ import android.telephony.TelephonyManager
 import androidx.annotation.RequiresPermission
 import androidx.core.telephony.TelephonyManagerCompat
 import com.lodz.android.corekt.utils.ReflectUtils
+import java.net.Inet4Address
+import java.net.NetworkInterface
+import java.util.ArrayList
 
 /**
  * 设备扩展类
@@ -21,6 +24,34 @@ fun Context.getApnName(): String {
     val manager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     val info: NetworkInfo = manager.activeNetworkInfo ?: return ""
     return if (ConnectivityManager.TYPE_MOBILE == info.type && info.extraInfo.isNotEmpty()) info.extraInfo else ""
+}
+
+/** 获取IPV4的列表 */
+fun Any.getIpv4List(): List<Pair<String, String>> {
+    val result = ArrayList<Pair<String, String>>()
+    val list = NetworkInterface.getNetworkInterfaces()
+    while (list.hasMoreElements()) {
+        val element = list.nextElement()
+        val addresses = element.inetAddresses
+        while (addresses.hasMoreElements()) {
+            val address = addresses.nextElement()
+            if (address is Inet4Address && !address.isLoopbackAddress) {
+                result.add(Pair<String, String>(element.name, address.hostAddress ?: ""))
+            }
+        }
+    }
+    return result
+}
+
+/** 根据网络名称[networkName]获取IPV4的地址，例如eth0、wlan0、rndis0等等 */
+fun Any.getIpv4Address(networkName: String): String {
+    val list = getIpv4List()
+    for (pair in list) {
+        if (pair.first == networkName) {
+            return pair.second
+        }
+    }
+    return ""
 }
 
 /** 获取手机的IMSI1 */
