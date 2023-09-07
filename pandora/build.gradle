@@ -10,7 +10,7 @@ android {
         minSdk 21
         targetSdk 34
         versionCode 65
-        versionName "2.0.7"// 未上传
+        versionName "2.0.7"// 成功上传
     }
 
     viewBinding {
@@ -40,7 +40,7 @@ android {
 }
 
 dependencies {
-//    api 'ink.lodz:core-kt:2.0.6'
+//    api 'ink.lodz:core-kt:2.0.7'
     api project(':corekt')
 
     // RxJava

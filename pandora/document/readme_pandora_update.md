@@ -1,5 +1,16 @@
 # Pandora更新记录
 
+##### 2023/09/07
+1. 优化装饰器代码
+2. AnkoRv.kt增加装饰器相关扩展方法
+3. 优化自定义键盘相关代码
+4. 新增jackson的解析转换类并升级jackson依赖的版本
+5. 增加jackson前缀修复类PrefixFixSerializer.kt
+6. BaseApplication.kt增加dataStore的对象调用
+7. 添加DataStore的Rx扩展类
+8. 升级Rxjava依赖库
+9. 发布2.0.7版
+
 ##### 2023/07/05
 1. SimpleVpAdapter增加无标题入参
 2. 发布2.0.6版
