@@ -10,7 +10,7 @@ android {
         minSdk 21
         targetSdk 34
         versionCode 52
-        versionName "2.0.7" //未上传
+        versionName "2.0.7" //成功上传
     }
 
     compileOptions {
