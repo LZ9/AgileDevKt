@@ -9,8 +9,8 @@ android {
     defaultConfig {
         minSdk 21
         targetSdk 34
-        versionCode 65
-        versionName "2.0.7"// 成功上传
+        versionCode 66
+        versionName "2.0.8"// 未上传
     }
 
     viewBinding {
@@ -44,7 +44,7 @@ dependencies {
     api project(':corekt')
 
     // RxJava
-    api 'io.reactivex.rxjava3:rxjava:3.1.7'
+    api 'io.reactivex.rxjava3:rxjava:3.1.8'
     // Retrofit
     api 'com.squareup.retrofit2:retrofit:2.9.0'
     api 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'
