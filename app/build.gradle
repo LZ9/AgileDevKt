@@ -31,6 +31,10 @@ android {
         jvmTarget = JavaVersion.VERSION_17.toString()
     }
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     def LOG_DEBUG = "LOG_DEBUG"
     def FILE_AUTHORITY = "FILE_AUTHORITY"
     defaultConfig {
