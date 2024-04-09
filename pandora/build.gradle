@@ -46,8 +46,8 @@ dependencies {
     // RxJava
     api 'io.reactivex.rxjava3:rxjava:3.1.8'
     // Retrofit
-    api 'com.squareup.retrofit2:retrofit:2.9.0'
-    api 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'
+    api 'com.squareup.retrofit2:retrofit:2.11.0'
+    api 'com.squareup.retrofit2:adapter-rxjava3:2.11.0'
 //    api 'com.squareup.retrofit2:converter-jackson:2.9.0'
     api 'com.fasterxml.jackson.core:jackson-databind:2.14.3'
     // RxJava生命周期
