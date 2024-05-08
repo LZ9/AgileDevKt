@@ -86,7 +86,9 @@ class ResultContractsCaseActivity : BaseActivity() {
                 BuildConfig.FILE_AUTHORITY,
                 Environment.DIRECTORY_DCIM
             )
-            mTakePictureResult.launch(mPair?.first)
+            mPair?.let {
+                mTakePictureResult.launch(it.first)
+            }
         }
 
         mBinding.takePicturePreviewBtn.setOnClickListener {
@@ -137,7 +139,9 @@ class ResultContractsCaseActivity : BaseActivity() {
             addResultLog("视频存储路径：$path")
             val file = File(path)
             mPair = insertVideoForPair(file.name, BuildConfig.FILE_AUTHORITY)
-            mCaptureVideoResult.launch(mPair?.first)
+            mPair?.let {
+                mCaptureVideoResult.launch(it.first)
+            }
         }
     }
 

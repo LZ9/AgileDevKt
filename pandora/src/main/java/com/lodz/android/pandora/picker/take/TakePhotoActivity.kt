@@ -91,12 +91,13 @@ internal class TakePhotoActivity : AbsActivity() {
             bean.authority,
             bean.publicDirectoryName
         )
-        if (mPair?.first == null){//校验Uri路径是否获取成功
+        val uri = mPair?.first
+        if (uri == null){//校验Uri路径是否获取成功
             toastShort(R.string.pandora_picker_uri_null)
             finish()
             return
         }
-        mTakePictureResult.launch(mPair?.first)
+        mTakePictureResult.launch(uri)
     }
 
     /** 拍照回调 */
