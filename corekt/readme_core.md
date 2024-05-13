@@ -17,24 +17,24 @@
 ```
     dependencies {
         api 'androidx.appcompat:appcompat:1.6.1'
-        api 'com.google.android.material:material:1.9.0'
+        api 'com.google.android.material:material:1.12.0'
         api 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
-        api 'androidx.recyclerview:recyclerview:1.3.1'
+        api 'androidx.recyclerview:recyclerview:1.3.2'
         api 'androidx.cardview:cardview:1.0.0'
         api "androidx.viewpager2:viewpager2:1.0.0"
-        api 'androidx.annotation:annotation:1.6.0'
+        api 'androidx.annotation:annotation:1.7.1'
         api 'androidx.constraintlayout:constraintlayout:2.1.4'
         api 'androidx.multidex:multidex:2.0.1'
-        api 'androidx.core:core-ktx:1.10.1'
-        api 'androidx.activity:activity-ktx:1.7.2'
-        api 'androidx.fragment:fragment-ktx:1.6.1'
-        api 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
-        api 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.1'
-        api 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
+        api 'androidx.core:core-ktx:1.13.1'
+        api 'androidx.activity:activity-ktx:1.9.0'
+        api 'androidx.fragment:fragment-ktx:1.7.0'
+        api 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0'
+        api 'androidx.lifecycle:lifecycle-livedata-ktx:2.7.0'
+        api 'androidx.lifecycle:lifecycle-runtime-ktx:2.7.0'
         api 'androidx.startup:startup-runtime:1.1.1'
-        api 'androidx.datastore:datastore-preferences:1.0.0'
+        api 'androidx.datastore:datastore-preferences:1.1.1'
         api 'com.google.android.flexbox:flexbox:3.0.0'
-        api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3'
+        api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0'
     }
 ```
 
