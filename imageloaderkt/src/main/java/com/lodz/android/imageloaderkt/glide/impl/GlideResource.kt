@@ -86,22 +86,25 @@ internal class GlideResource private constructor() : ResourceContract {
 
     }
 
-    override fun loadUrl(url: String): ImageLoaderContract {
+    override fun loadUrl(url: String?): ImageLoaderContract {
         mGlideBuilderBean.path = url
         return GlideImageLoader(mGlideBuilderBean, mRequestManager)
     }
 
-    override fun loadUri(uri: Uri): ImageLoaderContract {
+    override fun loadUri(uri: Uri?): ImageLoaderContract {
         mGlideBuilderBean.path = uri
         return GlideImageLoader(mGlideBuilderBean, mRequestManager)
     }
 
-    override fun loadFile(file: File): ImageLoaderContract {
+    override fun loadFile(file: File?): ImageLoaderContract {
         mGlideBuilderBean.path = file
         return GlideImageLoader(mGlideBuilderBean, mRequestManager)
     }
 
-    override fun loadFilePath(path: String): ImageLoaderContract {
+    override fun loadFilePath(path: String?): ImageLoaderContract {
+        if (path.isNullOrEmpty()){
+            return loadUrl("")
+        }
         val file = File(path)
         if (file.exists()) {
             mGlideBuilderBean.path = file
@@ -115,21 +118,22 @@ internal class GlideResource private constructor() : ResourceContract {
         return GlideImageLoader(mGlideBuilderBean, mRequestManager)
     }
 
-    override fun loadBase64(base64: String, flags: Int): ImageLoaderContract {
+    override fun loadBase64(base64: String?, flags: Int): ImageLoaderContract {
         try {
-            return loadBytes(Base64.decode(base64, flags))
+            val check = base64 ?: ""
+            return loadBytes(Base64.decode(check, flags))
         } catch (e: Exception) {
             e.printStackTrace()
         }
         return loadUrl("")
     }
 
-    override fun loadBytes(bytes: ByteArray): ImageLoaderContract {
+    override fun loadBytes(bytes: ByteArray?): ImageLoaderContract {
         mGlideBuilderBean.path = bytes
         return GlideImageLoader(mGlideBuilderBean, mRequestManager)
     }
 
-    override fun loadBitmap(bitmap: Bitmap): ImageLoaderContract {
+    override fun loadBitmap(bitmap: Bitmap?): ImageLoaderContract {
         mGlideBuilderBean.path = bitmap
         return GlideImageLoader(mGlideBuilderBean, mRequestManager)
     }
