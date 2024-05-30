@@ -14,8 +14,8 @@ object ExceptionFactory {
 
     /** 创建一个数据异常 */
     @JvmStatic
-    fun createDataException(res: ResponseStatus?): DataException {
-        val exception = DataException("response fail")
+    fun createDataException(res: ResponseStatus?, msg: String = "response fail"): DataException {
+        val exception = DataException(msg)
         exception.setData(res)
         return exception
     }
