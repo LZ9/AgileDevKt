@@ -22,3 +22,6 @@ inline fun <reified T> String.parseJsonObject(mapper: ObjectMapper = BaseApplica
 fun <T> T.toJsonString(
     mapper: ObjectMapper = BaseApplication.get()?.getJacksonObjectMapper() ?: ObjectMapper()
 ): String = mapper.writeValueAsString(this)
+
+/** 把对象转为Json字符串（去掉String转json后多出来的\和"） */
+fun String.jsonFormat(): String = this.replace("\\", "").replace("\"{", "{").replace("}\"", "}")

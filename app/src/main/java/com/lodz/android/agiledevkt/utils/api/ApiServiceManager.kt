@@ -97,8 +97,8 @@ class ApiServiceManager private constructor() {
         /** 获取请求字符串，[request]请求 */
         private fun logRequest(request: Request) {
             val list = request.url().pathSegments()
-            PrintLog.iS(TAG, "[" + list[list.size - 1] + "] ----> " + request.url().toString())
-            PrintLog.iS(TAG, "[" + list[list.size - 1] + "] <--- " + getRequestString(request))
+            PrintLog.iS(TAG, "[" + getApiName(list) + "] ----> " + request.url().toString())
+            PrintLog.iS(TAG, "[" + getApiName(list) + "] <--- " + getRequestString(request))
         }
 
         /** 获取请求字符串，[request]请求 */
@@ -117,12 +117,20 @@ class ApiServiceManager private constructor() {
             try {
                 log = body.string()
                 val list = response.request().url().pathSegments()
-                PrintLog.dS(TAG, "[" + list[list.size - 1] + "] <--- " + log)
+                PrintLog.dS(TAG, "[" + getApiName(list) + "] <--- " + log)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
             // 打印完需要将数据重新写入，因为response.body().string()执行一次以后会将数据清空
             return response.newBuilder().body(ResponseBody.create(body.contentType(), log)).build()
+        }
+
+        private fun getApiName(list: List<String>): String {
+            var api = ""
+            for (name in list) {
+                api = "$api$name/"
+            }
+            return api
         }
     }
 
