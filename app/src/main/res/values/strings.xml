@@ -910,6 +910,7 @@
     <!-- Json测试 -->
     <string name="json_to_string">对象转字符串</string>
     <string name="json_to_obj">字符串转对象</string>
+    <string name="json_format">json字符串格式化</string>
     <string name="json_clean">清空</string>
 
     <!-- Rv树结构测试类 -->

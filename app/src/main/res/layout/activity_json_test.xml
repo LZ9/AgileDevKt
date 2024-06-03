@@ -14,6 +14,7 @@
         android:id="@+id/clean_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:text="@string/json_clean" />
 
     <androidx.core.widget.NestedScrollView
@@ -33,13 +34,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="8dp">
+        android:orientation="horizontal">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/obj_to_json_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
             android:layout_marginEnd="5dp"
             android:layout_weight="1"
             android:text="@string/json_to_string" />
@@ -49,8 +50,17 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
+            android:layout_marginEnd="10dp"
             android:layout_weight="1"
             android:text="@string/json_to_obj" />
     </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/format_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:text="@string/json_format" />
 
 </LinearLayout>

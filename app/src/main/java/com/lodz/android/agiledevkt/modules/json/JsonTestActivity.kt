@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import com.lodz.android.agiledevkt.bean.MockBean
 import com.lodz.android.agiledevkt.bean.SpotBean
+import com.lodz.android.agiledevkt.bean.TokenBean
 import com.lodz.android.agiledevkt.bean.base.response.ResponseBean
 import com.lodz.android.agiledevkt.databinding.ActivityJsonTestBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
@@ -12,6 +13,7 @@ import com.lodz.android.corekt.anko.append
 import com.lodz.android.corekt.anko.intentExtrasNoNull
 import com.lodz.android.corekt.anko.then
 import com.lodz.android.pandora.base.activity.BaseActivity
+import com.lodz.android.pandora.utils.jackson.jsonFormat
 import com.lodz.android.pandora.utils.jackson.parseJsonObject
 import com.lodz.android.pandora.utils.jackson.toJsonString
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
@@ -38,6 +40,8 @@ class JsonTestActivity :BaseActivity(){
     private val mDefObjListJson = "{\"code\":200,\"msg\":\"请求成功\",\"data\":[{\"name\":\"鼓浪屿\",\"score\":\"10分\"},{\"name\":\"南普陀\",\"score\":\"8分\"}]}"
     /** 默认泛型Json字符 */
     private val mDefTypeRefJson = "{\"code\":200,\"msg\":\"请求成功\",\"data\":{\"id\":1,\"loginName\":\"admin\",\"roles\":[{\"name\":\"鼓浪屿\",\"score\":\"10分\"},{\"name\":\"南普陀\",\"score\":\"8分\"}]}}"
+    /** 非标准的JSON格式，需要先进行格式化 */
+    private val mDefJson = "{\"data\":\"{\\\"token\\\":\\\"eyJ0E\\\"}\",\"code\":200,\"tokenUnauth\":false}"
 
     private val mBinding: ActivityJsonTestBinding by bindingLayout(ActivityJsonTestBinding::inflate)
 
@@ -54,7 +58,8 @@ class JsonTestActivity :BaseActivity(){
         mBinding.defJsonTv.text = "1. ".append(mDefObjJson).append("\n\n")
             .append("2. ").append(mDefListJson).append("\n\n")
             .append("3. ").append(mDefObjListJson).append("\n\n")
-            .append("4. ").append(mDefTypeRefJson)
+            .append("4. ").append(mDefTypeRefJson).append("\n\n")
+            .append("5. ").append(mDefJson)
     }
 
     override fun onClickBackBtn() {
@@ -112,6 +117,14 @@ class JsonTestActivity :BaseActivity(){
             addLog("ResponseBean<SpotBean> : ${responseBean.toJsonString()}")
             addLog("ResponseBean<List<SpotBean>> : ${resListBean.toJsonString()}")
             addLog("ResponseBean<MockBean<SpotBean>> : ${resMockBean.toJsonString()}")
+        }
+
+        mBinding.formatBtn.setOnClickListener {
+            cleanResult()
+            val json = mDefJson.jsonFormat()
+            addLog("Json Format : $json")
+            val responseBean = json.parseJsonObject<ResponseBean<TokenBean>>()
+            addLog("ResponseBean<TokenBean> token : ${responseBean?.data?.token}")
         }
     }
 
