@@ -30,6 +30,7 @@ abstract class AbsActivity : RxAppCompatActivity() {
 
     final override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+//        enableEdgeToEdge()//状态栏透明，且忽略状态栏高度将页面顶到手机屏幕上方
         isPdrUseAnko = injectAnko()
         EventBus.getDefault().register(this)
         startCreate()
@@ -44,6 +45,12 @@ abstract class AbsActivity : RxAppCompatActivity() {
                 throw NullPointerException("please override getAbsLayoutId() or getViewBindingLayout() to set layout")
             }
         }
+        //通过添加padding隔出上方状态栏的高度
+//        ViewCompat.setOnApplyWindowInsetsListener(window.decorView) { v, insets ->
+//            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+//            insets
+//        }
         afterSetContentView()
         findViews(savedInstanceState)
         setListeners()
