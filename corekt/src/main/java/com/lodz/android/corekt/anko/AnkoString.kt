@@ -1,6 +1,8 @@
 package com.lodz.android.corekt.anko
 
 import android.text.Editable
+import android.widget.EditText
+import android.widget.TextView
 import java.io.IOException
 import java.net.URLDecoder
 import java.net.URLEncoder
@@ -86,3 +88,8 @@ fun String.getListBySeparator(separator: String): List<String> {
 /** 根据分隔符[separator]将字符串转为数组 */
 fun String.getArrayBySeparator(separator: String): Array<String> = this.getListBySeparator(separator).toTypedArray()
 
+/** 将TextView里的text转为String输出 */
+fun TextView.textStr(): String = this.text.toString()
+
+/** 将EditText里的text转为String输出 */
+fun EditText.textStr(): String = this.text.toString()
