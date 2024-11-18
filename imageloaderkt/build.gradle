@@ -6,7 +6,7 @@ plugins {
 //apply from: 'publish.gradle'
 
 android {
-    compileSdk 34
+    compileSdk 35
     defaultConfig {
         minSdk 21
         targetSdk 35
@@ -36,7 +36,7 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.annotation:annotation:1.9.0'
+    implementation 'androidx.annotation:annotation:1.9.1'
 
     // glide
     api 'com.github.bumptech.glide:glide:4.16.0'

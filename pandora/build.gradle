@@ -5,7 +5,7 @@ plugins {
 //apply from: 'publish.gradle'
 
 android {
-    compileSdk 34
+    compileSdk 35
     defaultConfig {
         minSdk 21
         targetSdk 35
@@ -49,7 +49,7 @@ dependencies {
     api 'com.squareup.retrofit2:retrofit:2.11.0'
     api 'com.squareup.retrofit2:adapter-rxjava3:2.11.0'
 //    api 'com.squareup.retrofit2:converter-jackson:2.9.0'
-    api 'com.fasterxml.jackson.core:jackson-databind:2.18.0'
+    api 'com.fasterxml.jackson.core:jackson-databind:2.18.1'
     // RxJava生命周期
     api 'com.trello.rxlifecycle4:rxlifecycle-components:4.0.2'
     // EventBus

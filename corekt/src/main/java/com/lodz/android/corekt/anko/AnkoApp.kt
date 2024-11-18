@@ -40,7 +40,7 @@ fun Context.getAppName(packageName: String = getPackageName()): String {
 @JvmOverloads
 fun Context.getVersionName(packageName: String = getPackageName()): String {
     try {
-        return packageManager.getPackageInfo(packageName, 0).versionName
+        return packageManager.getPackageInfo(packageName, 0).versionName ?: ""
     } catch (e: Exception) {
         e.printStackTrace()
     }
