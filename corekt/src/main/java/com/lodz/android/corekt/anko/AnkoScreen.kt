@@ -58,7 +58,7 @@ fun View.getScreenHeight(): Int = context.getScreenHeight()
 
 /** 判断是否存在NavigationBar */
 fun Window.hasNavigationBar(): Boolean {
-    if (Build.BRAND.toUpperCase(Locale.CHINA).contains("XIAOMI")){
+    if (Build.BRAND.uppercase(Locale.CHINA).contains("XIAOMI")){
         val isFullScreen = Settings.Global.getInt(context.getContentResolver(), "force_fsg_nav_bar", 0) != 0
         return !isFullScreen
     }

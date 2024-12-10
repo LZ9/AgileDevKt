@@ -82,7 +82,7 @@ open class CommonCertKeyboardView : BaseKeyboardView {
             //大写转小写
             for (key in keylist) {
                 if (key.label != null && isWord(key.label.toString())){
-                    key.label = key.label.toString().toLowerCase(Locale.CHINA)
+                    key.label = key.label.toString().lowercase(Locale.CHINA)
                     key.codes[0] = key.codes[0] + 32
                 }
             }
@@ -91,7 +91,7 @@ open class CommonCertKeyboardView : BaseKeyboardView {
             // 小写转大写
             for (key in keylist) {
                 if (key.label != null && isWord(key.label.toString())){
-                    key.label = key.label.toString().toUpperCase(Locale.CHINA)
+                    key.label = key.label.toString().uppercase(Locale.CHINA)
                     key.codes[0] = key.codes[0] - 32
                 }
             }
@@ -100,6 +100,6 @@ open class CommonCertKeyboardView : BaseKeyboardView {
     }
 
     /** 是否是文字 */
-    private fun isWord(str: String): Boolean = "abcdefghijklmnopqrstuvwxyz".contains(str.toLowerCase(Locale.CHINA))
+    private fun isWord(str: String): Boolean = "abcdefghijklmnopqrstuvwxyz".contains(str.lowercase(Locale.CHINA))
 
 }
