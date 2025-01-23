@@ -31,7 +31,7 @@ class ViewBindingTestActivity : AbsActivity() {
     override fun setListeners() {
         super.setListeners()
         mBinding.dialogBtn.setOnClickListener {
-            val dialog = ViewBindingDialog(this@ViewBindingTestActivity)
+            val dialog = ViewBindingDialog(getContext())
             dialog.show()
         }
         mBinding.popupBtn.setOnClickListener {
@@ -52,7 +52,7 @@ class ViewBindingTestActivity : AbsActivity() {
 
     /** 显示动画的PopupWindow */
     private fun showViewBindingPopupWindow(view: View) {
-        val popupWindow = ViewBindingPopupWindow(this@ViewBindingTestActivity)
+        val popupWindow = ViewBindingPopupWindow(getContext())
         popupWindow.create()
         popupWindow.getPopup().showAsDropDown(view, 100, 20)
     }
