@@ -44,71 +44,53 @@ fun Float.format(formatType: String = AnkoNumFormat.TYPE_TWO_DECIMAL): String {
     return ""
 }
 
-/** 数字转中文（到4位千） */
-fun Int.toChinese(): String {
-    val numCHN = arrayListOf("零", "一", "二", "三", "四", "五", "六", "七", "八", "九")
-    val numEmptyCHN = arrayListOf("", "一", "二", "三", "四", "五", "六", "七", "八", "九")
-    val numStr = this.toString()
-    //个
-    if (numStr.length == 1) {
-        return numCHN[this]
+/** 15位以内数字转中文 */
+fun Long.toChinese(): String {
+    // 中文数字字符数组，用于将 0 - 9 转换为中文数字
+    val chineseNumbers = arrayOf("零", "一", "二", "三", "四", "五", "六", "七", "八", "九")
+    // 中文数位字符数组，支持到 15 位数字转换
+    val units = arrayOf("", "十", "百", "千", "万", "十", "百", "千", "亿", "十", "百", "千", "兆", "十", "百")
+    // 处理输入数字为 0 的特殊情况
+    if (this == 0L) {
+        return "零"
     }
-    //十
-    if (numStr.length == 2) {
-        val ten = numStr.substring(0, 1).toInt()
-        val one = numStr.substring(1, 2).toInt()
-        if (ten == 1) {
-            return "十" + numEmptyCHN[one]
-        }
-        return numEmptyCHN[ten] + "十" + numEmptyCHN[one]
+    var numStr = this.toString()
+    if (numStr.length > 15) {
+        return "数字超出范围"
     }
-    //百
-    if (numStr.length == 3) {
-        if (this == 100) {
-            return "一百"
+    var result = ""
+    var zeroFlag = false
+    val length = numStr.length
+    for (i in 0 until length) {
+        val digit = numStr[i].toString().toInt()
+        val unitIndex = length - i - 1
+        if (digit == 0) {
+            zeroFlag = true
+            // 处理每 4 位分隔处，避免连续零丢失大数位单位
+            if (unitIndex % 4 == 0 && result.isNotEmpty() &&!result.endsWith("零")) {
+                result += units[unitIndex]
+            }
+        } else {
+            if (zeroFlag) {
+                result += "零"
+                zeroFlag = false
+            }
+            result += chineseNumbers[digit] + units[unitIndex]
         }
-        val hundred = numStr.substring(0, 1).toInt()
-        val ten = numStr.substring(1, 2).toInt()
-        val one = numStr.substring(2, 3).toInt()
-        if (one == 0 && ten == 0) {
-            return numEmptyCHN[hundred] + "百"
-        }
-        if (one == 0) {
-            return numEmptyCHN[hundred] + "百" + numEmptyCHN[ten] + "十"
-        }
-        if (ten == 0) {
-            return numEmptyCHN[hundred] + "百零" + numEmptyCHN[one]
-        }
-        return numEmptyCHN[hundred] + "百" + numEmptyCHN[ten] + "十" + numEmptyCHN[one]
     }
-    //千
-    if (numStr.length == 4) {
-        val thousand = numStr.substring(0, 1).toInt()
-        val hundred = numStr.substring(1, 2).toInt()
-        val ten = numStr.substring(2, 3).toInt()
-        val one = numStr.substring(3, 4).toInt()
-        if (one == 0 && ten == 0 && hundred == 0) {
-            return numEmptyCHN[thousand] + "千"
-        }
-        if (hundred == 0 && ten == 0) {
-            return numEmptyCHN[thousand] + "千零" + numEmptyCHN[one]
-        }
-        if (ten == 0 && one == 0) {
-            return numEmptyCHN[thousand] + "千" + numEmptyCHN[hundred] + "百"
-        }
-        if (hundred == 0 && one == 0) {
-            return numEmptyCHN[thousand] + "千零" + numEmptyCHN[ten] + "十"
-        }
-        if (hundred == 0) {
-            return numEmptyCHN[thousand] + "千零" + numEmptyCHN[ten] + "十" + numEmptyCHN[one]
-        }
-        if (ten == 0) {
-            return numEmptyCHN[thousand] + "千" + numEmptyCHN[hundred] + "百零" + numEmptyCHN[one]
-        }
-        if (one == 0) {
-            return numEmptyCHN[thousand] + "千" + numEmptyCHN[hundred] + "百" + numEmptyCHN[ten] + "十"
-        }
-        return numEmptyCHN[thousand] + "千" + numEmptyCHN[hundred] + "百" + numEmptyCHN[ten] + "十" + numEmptyCHN[one]
+    // 去除末尾多余的零
+    while (result.endsWith("零")) {
+        result = result.dropLast(1)
     }
-    return ""
+    // 处理一十开头的情况，简化为十
+    if (result.startsWith("一十")) {
+        result = result.drop(1)
+    }
+    // 处理大数位分隔情况，避免多余表述
+    result = result.replace("零亿", "亿").replace("零万", "万").replace("亿万", "亿").replace("兆亿", "兆")
+    return result
 }
+
+
+/** 15位以内数字转中文 */
+fun Int.toChinese(): String = this.toLong().toChinese()

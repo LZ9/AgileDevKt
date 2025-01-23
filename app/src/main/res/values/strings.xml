@@ -146,7 +146,7 @@
     <string name="format_num_one">18.49382716</string>
     <string name="format_num_two">9.51839461</string>
     <string name="format_num_three">0.45179283</string>
-    <string name="format_num_hint">请输入数字</string>
+    <string name="format_num_hint">请输入数字15位以内</string>
     <string name="format_num_to_chinese">转中文</string>
 
     <!-- 背景选择器测试类 -->

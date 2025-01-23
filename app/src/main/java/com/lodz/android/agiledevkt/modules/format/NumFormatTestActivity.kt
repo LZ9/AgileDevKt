@@ -62,7 +62,7 @@ class NumFormatTestActivity : BaseActivity() {
                 toastShort(R.string.format_num_hint)
                 return@setOnClickListener
             }
-            mBinding.resultTv.text = str.toInt().toChinese()
+            mBinding.resultTv.text = str.toLong().toChinese()
         }
     }
 
