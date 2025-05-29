@@ -12,7 +12,7 @@ import com.lodz.android.agiledevkt.databinding.ActivityCoorTranslationBinding
 import com.lodz.android.corekt.anko.dp2px
 import com.lodz.android.corekt.anko.getScreenWidth
 import com.lodz.android.corekt.anko.toastShort
-import com.lodz.android.imageloaderkt.ImageLoader
+import com.lodz.android.imageloaderkt.glide.anko.loadResId
 import com.lodz.android.pandora.base.activity.AbsActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.contract.OnAppBarStateChangeListener
@@ -116,10 +116,9 @@ class CoorTranslationActivity : AbsActivity() {
 
     /** 显示头像 */
     private fun showHeadImg(imageView: ImageView) {
-        ImageLoader.create(this)
-                .loadResId(R.drawable.bg_pokemon)
-                .useCircle()
-                .into(imageView)
+        imageView.loadResId(R.drawable.bg_pokemon){
+            useCircle()
+        }
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {

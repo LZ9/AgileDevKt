@@ -18,10 +18,12 @@ import com.lodz.android.corekt.file.DocumentWrapper
 import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.corekt.media.*
 import com.lodz.android.imageloaderkt.ImageLoader
+import com.lodz.android.imageloaderkt.glide.anko.loadUri
 import com.lodz.android.pandora.rx.utils.RxUtils
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.Disposable
 import java.util.concurrent.TimeUnit
+import androidx.core.view.isVisible
 
 /**
  * 多媒体展示控件
@@ -108,25 +110,23 @@ class MediaView : LinearLayout {
         if (documentType == TYPE_IMAGE){
             mImgView.visibility = isScale.then { View.GONE } ?: View.VISIBLE
             mPhotoView.visibility = isScale.then { View.VISIBLE } ?: View.GONE
-            val img = if (mImgView.visibility == View.VISIBLE) mImgView else mPhotoView
-            ImageLoader.create(context)
-                .loadUri(wrapper.documentFile.uri)
-                .setPlaceholder(R.drawable.pandora_ic_img)
-                .setError(R.drawable.pandora_ic_img)
-                .setFitCenter()
-                .into(img)
+            val img = if (mImgView.isVisible) mImgView else mPhotoView
+            img.loadUri(wrapper.documentFile.uri,context){
+                setPlaceholder(R.drawable.pandora_ic_img)
+                setError(R.drawable.pandora_ic_img)
+                setFitCenter()
+            }
             return
         }
         if (documentType == TYPE_VIDEO){
             mImgView.visibility = View.VISIBLE
             mPlayBtn.visibility = View.VISIBLE
             mBottomLayout.visibility = View.VISIBLE
-            ImageLoader.create(context)
-                .loadUri(wrapper.documentFile.uri)
-                .setPlaceholder(R.drawable.pandora_ic_video)
-                .setError(R.drawable.pandora_ic_video)
-                .setFitCenter()
-                .into(mImgView)
+            mImgView.loadUri(wrapper.documentFile.uri, context){
+                setPlaceholder(R.drawable.pandora_ic_video)
+                setError(R.drawable.pandora_ic_video)
+                setFitCenter()
+            }
             return
         }
         if (documentType == TYPE_AUDIO){

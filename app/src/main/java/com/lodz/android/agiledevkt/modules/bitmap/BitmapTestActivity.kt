@@ -16,7 +16,7 @@ import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.corekt.anko.getDrawableCompat
 import com.lodz.android.corekt.anko.runOnMain
 import com.lodz.android.corekt.utils.BitmapUtils
-import com.lodz.android.imageloaderkt.ImageLoader
+import com.lodz.android.imageloaderkt.glide.anko.downloadImg
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
 import com.lodz.android.pandora.rx.utils.RxUtils
@@ -263,7 +263,7 @@ class BitmapTestActivity : BaseActivity() {
     /** 显示View转Bitmap */
     private fun showViewBitmap() {
         Observable.just(mBinding.viewImg)
-            .delay(500, TimeUnit.MILLISECONDS)
+            .delay(1000, TimeUnit.MILLISECONDS)
             .map { view ->
                 BitmapUtils.viewToBitmap(view) ?: throw KotlinNullPointerException("view to bitmap is null")
             }
@@ -591,18 +591,17 @@ class BitmapTestActivity : BaseActivity() {
     /** 下载长图 */
     private fun downloadLargeBitmap() {
         val url = "https://wx1.sinaimg.cn/mw690/71696c12ly1g3qj9n8qo8j20m8209wr2.jpg"
-        ImageLoader.create(this).loadUrl(url)
-            .download(object : RequestListener<File> {
-                override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<File>, isFirstResource: Boolean): Boolean {
-                    runOnMain { mBinding.largeImg.setImageResource(R.drawable.ic_launcher) }// 监听器回调可能不在主线程
-                    return false
-                }
+        url.downloadImg(getContext(), object : RequestListener<File> {
+            override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<File>, isFirstResource: Boolean): Boolean {
+                runOnMain { mBinding.largeImg.setImageResource(R.drawable.ic_launcher) }// 监听器回调可能不在主线程
+                return false
+            }
 
-                override fun onResourceReady(resource: File, model: Any, target: Target<File>?, dataSource: DataSource, isFirstResource: Boolean): Boolean {
-                    runOnMain { showLargeBitmap(resource) }
-                    return false
-                }
-            })
+            override fun onResourceReady(resource: File, model: Any, target: Target<File>?, dataSource: DataSource, isFirstResource: Boolean): Boolean {
+                runOnMain { showLargeBitmap(resource) }
+                return false
+            }
+        })
     }
 
     /** 显示长图 */

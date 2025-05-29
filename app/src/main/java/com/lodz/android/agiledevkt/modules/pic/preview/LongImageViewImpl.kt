@@ -8,9 +8,8 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.lodz.android.agiledevkt.R
-import com.lodz.android.corekt.anko.runOnMain
 import com.lodz.android.corekt.anko.toastShort
-import com.lodz.android.imageloaderkt.ImageLoader
+import com.lodz.android.imageloaderkt.glide.anko.downloadImg
 import com.lodz.android.pandora.picker.preview.vh.DataPreviewAgent
 import com.lodz.android.pandora.widget.custom.LongImageView
 import com.lodz.android.pandora.widget.rv.recycler.vh.DataViewHolder
@@ -43,15 +42,13 @@ class LongImageViewImpl : DataPreviewAgent<String>() {
             true
         }
 
-        ImageLoader.create(context).loadUrl(source)
-            .download(object : RequestListener<File> {
-                override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<File>, isFirstResource: Boolean): Boolean = false
-                override fun onResourceReady(resource: File, model: Any, target: Target<File>?, dataSource: DataSource, isFirstResource: Boolean): Boolean {
-                    imageView.setImageFile(resource)
-                    return false
-                }
-
-            })
+        source.downloadImg(context, object : RequestListener<File> {
+            override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<File>, isFirstResource: Boolean): Boolean = false
+            override fun onResourceReady(resource: File, model: Any, target: Target<File>?, dataSource: DataSource, isFirstResource: Boolean): Boolean {
+                imageView.setImageFile(resource)
+                return false
+            }
+        })
     }
 
 }

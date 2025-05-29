@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
+import com.bumptech.glide.load.model.GlideUrl
+import com.bumptech.glide.load.model.Headers
 import com.lodz.android.imageloaderkt.ImageloaderManager
 import com.lodz.android.imageloaderkt.contract.ImageLoaderContract
 import com.lodz.android.imageloaderkt.contract.ResourceContract
@@ -88,6 +90,16 @@ internal class GlideResource private constructor() : ResourceContract {
 
     override fun loadUrl(url: String?): ImageLoaderContract {
         mGlideBuilderBean.path = url
+        return GlideImageLoader(mGlideBuilderBean, mRequestManager)
+    }
+
+    override fun loadUrl(url: String?, headers: Headers): ImageLoaderContract {
+        mGlideBuilderBean.path = GlideUrl(url, headers)
+        return GlideImageLoader(mGlideBuilderBean, mRequestManager)
+    }
+
+    override fun loadGlideUrl(glideUrl: GlideUrl?): ImageLoaderContract {
+        mGlideBuilderBean.path = glideUrl
         return GlideImageLoader(mGlideBuilderBean, mRequestManager)
     }
 

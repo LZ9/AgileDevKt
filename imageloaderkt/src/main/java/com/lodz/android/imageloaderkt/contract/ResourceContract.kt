@@ -4,6 +4,8 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.util.Base64
 import androidx.annotation.DrawableRes
+import com.bumptech.glide.load.model.GlideUrl
+import com.bumptech.glide.load.model.Headers
 import java.io.File
 
 /**
@@ -15,6 +17,12 @@ interface ResourceContract {
 
     /** 加载网页图片[url] */
     fun loadUrl(url: String?): ImageLoaderContract
+
+    /** 加载网页图片[url]，并附带头信息[headers] */
+    fun loadUrl(url: String?, headers: Headers): ImageLoaderContract
+
+    /** 加载自定义地址[glideUrl] */
+    fun loadGlideUrl(glideUrl: GlideUrl?): ImageLoaderContract
 
     /** 加载URI[uri] */
     fun loadUri(uri: Uri?): ImageLoaderContract
