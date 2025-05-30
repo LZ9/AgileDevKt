@@ -9,8 +9,8 @@ android {
     defaultConfig {
         minSdk 21
         targetSdk 35
-        versionCode 54
-        versionName "2.0.9" //未上传
+        versionCode 55
+        versionName "2.1.0" //成功上传
     }
 
     compileOptions {

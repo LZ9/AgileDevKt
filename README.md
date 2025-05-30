@@ -15,7 +15,7 @@
 如果你希望获取丰富的扩展方法来支持你的工程，你可以选择依赖[corek-kt](https://github.com/LZ9/AgileDevKt/blob/master/corekt/readme_core.md)，
 里面同时包含了Androidx相关的支持库。
 ```
-    implementation 'ink.lodz:core-kt:2.0.8'
+    implementation 'ink.lodz:core-kt:2.1.0'
 ```
 
 ## 2. 使用Pandora组件：
@@ -29,7 +29,7 @@
 如果你希望便捷的使用图片加载库来服务你的工程，你可以选择依赖[imageloader-kt](https://github.com/LZ9/AgileDevKt/blob/master/imageloaderkt/readme_imageloader.md)，
 它内部集成了Glide，通过简单的链式调用来降低你的学习梯度。
 ```
-    implementation 'ink.lodz:imageloader-kt:1.2.5'
+    implementation 'ink.lodz:imageloader-kt:1.2.7'
 ```
 
 ## 4、详细了解

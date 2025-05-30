@@ -1,5 +1,12 @@
 # core-kt库更新记录
 
+##### 2025/05/30
+1. 升级工程
+2. 更新依赖库
+3. AnkoString.kt添加TextView和EditText获取textString的方法
+4. AnkoNumFormat.kt增加15位以内数字转中文的方法
+5. 发布2.1.0版
+
 ##### 2024/05/13
 1. 升级工程
 2. 更新依赖库 
