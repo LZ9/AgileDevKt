@@ -65,7 +65,7 @@
 ## 5、使用方法
 下面为基本的使用方法，你可以根据自己的需要链上对应的方法，对图片进行控制。
 ```
-    ImageLoader.create(this)
+    ImageLoader.create(context)
         .loadUrl("http://ww2.sinaimg.cn/large/610dc034jw1f91ypzqaivj20u00k0jui.jpg")// 设置加载路径，其他加载方法：loadUri、loadFile、loadFilePath等等
         .setPlaceholder(R.drawable.ic_launcher)// 设置加载图占位图
         .setError(R.drawable.ic_launcher)// 设置加载失败图
@@ -107,6 +107,28 @@
             }
         })
 ```
+
+下面为kotlin扩展方式的使用方法。
+```
+    // 加载图片
+    imageView.loadUrl(url){
+        setPlaceholder(R.drawable.ic_launcher)
+        setCenterCrop()
+        //.......等等，具体调用方法同上
+    }
+    
+    // 下载图片
+    url.downloadImg(context, object : RequestListener<File> {
+        override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<File>, isFirstResource: Boolean): Boolean {
+            return false
+        }
+
+        override fun onResourceReady(resource: File, model: Any, target: Target<File>?, dataSource: DataSource, isFirstResource: Boolean): Boolean {
+            return false
+        }
+    })
+```
+
 
 ## 扩展
 
