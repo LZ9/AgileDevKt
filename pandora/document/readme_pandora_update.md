@@ -1,5 +1,11 @@
 # Pandora更新记录
 
+##### 2025/05/30
+1. 更新依赖库版本
+2. ExceptionFactory.kt里的createDataException增加默认提示语入参
+3. AnkoJson.kt添加String转json的格式化方法
+4. 发布2.1.0版
+
 ##### 2024/05/14
 1. 更新依赖库版本
 2. 发布2.0.8版
