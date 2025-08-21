@@ -5,10 +5,11 @@ plugins {
 //apply from: 'publish.gradle'
 
 android {
-    compileSdk 35
+    namespace 'com.lodz.android.corekt'
+    compileSdkVersion 36
     defaultConfig {
-        minSdk 21
-        targetSdk 35
+        minSdkVersion 21
+        targetSdkVersion 36
         versionCode 56
         versionName "2.1.1" //未上传
     }
@@ -32,7 +33,6 @@ android {
         abortOnError false
         checkReleaseBuilds false
     }
-    namespace 'com.lodz.android.corekt'
 }
 
 dependencies {
@@ -46,12 +46,12 @@ dependencies {
     api 'androidx.annotation:annotation:1.9.1'
     api 'androidx.constraintlayout:constraintlayout:2.2.1'
     api 'androidx.multidex:multidex:2.0.1'
-    api 'androidx.core:core-ktx:1.16.0'
+    api 'androidx.core:core-ktx:1.17.0'
     api 'androidx.activity:activity-ktx:1.10.1'
-    api 'androidx.fragment:fragment-ktx:1.8.8'
-    api 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.9.1'
-    api 'androidx.lifecycle:lifecycle-livedata-ktx:2.9.1'
-    api 'androidx.lifecycle:lifecycle-runtime-ktx:2.9.1'
+    api 'androidx.fragment:fragment-ktx:1.8.9'
+    api 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.9.2'
+    api 'androidx.lifecycle:lifecycle-livedata-ktx:2.9.2'
+    api 'androidx.lifecycle:lifecycle-runtime-ktx:2.9.2'
     api 'androidx.startup:startup-runtime:1.2.0'
     api 'androidx.datastore:datastore-preferences:1.1.7'
     api 'com.google.android.flexbox:flexbox:3.0.0'

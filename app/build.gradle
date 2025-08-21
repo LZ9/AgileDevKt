@@ -4,11 +4,12 @@ plugins {
 }
 
 android {
-    compileSdk 35
+    namespace 'com.lodz.android.agiledevkt'
+    compileSdkVersion 36
     defaultConfig {
         applicationId "com.lodz.android.agiledevkt"
-        minSdk 21
-        targetSdk 35
+        minSdkVersion 21
+        targetSdkVersion 36
         versionCode 1
         versionName "1.0"
         multiDexEnabled = true// 启用dex分包
@@ -68,7 +69,6 @@ android {
         abortOnError false
         checkReleaseBuilds false
     }
-    namespace 'com.lodz.android.agiledevkt'
 
     applicationVariants.all { variant ->
         variant.outputs.all { output ->

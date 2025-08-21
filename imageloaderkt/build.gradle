@@ -6,10 +6,11 @@ plugins {
 //apply from: 'publish.gradle'
 
 android {
-    compileSdk 35
+    namespace 'com.lodz.android.imageloaderkt'
+    compileSdkVersion 36
     defaultConfig {
-        minSdk 21
-        targetSdk 35
+        minSdkVersion 21
+        targetSdkVersion 36
         versionCode 28
         versionName "1.2.7"// 成功上传
     }
@@ -32,7 +33,6 @@ android {
         abortOnError false
         checkReleaseBuilds false
     }
-    namespace 'com.lodz.android.imageloaderkt'
 }
 
 dependencies {
