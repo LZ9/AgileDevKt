@@ -29,6 +29,8 @@ abstract class BaseRefreshActivity : AbsActivity() {
     private val mPdrNoDataViewStub by bindView<ViewStub>(R.id.pdr_view_stub_no_data_layout)
     /** 失败页 */
     private val mPdrErrorViewStub by bindView<ViewStub>(R.id.pdr_view_stub_error_layout)
+    /** 根目录布局 */
+    private val mPdrRootLayout by bindView<ViewGroup>(R.id.pdr_base_root_layout)
 
     /** 顶部标题布局 */
     private var mPdrTitleBarLayout: TitleBarLayout? = null
@@ -238,4 +240,7 @@ abstract class BaseRefreshActivity : AbsActivity() {
 
     /** 是否无数据 */
     protected fun isNoData(): Boolean = getNoDataLayout().visibility == View.VISIBLE
+
+    /** 获取根目录布局 */
+    protected fun getRootView(): ViewGroup = mPdrRootLayout
 }
