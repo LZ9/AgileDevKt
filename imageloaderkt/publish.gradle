@@ -12,7 +12,7 @@ task androidSourcesJar(type: Jar) {
 ext {path=
     PUBLISH_GROUP_ID = 'ink.lodz'
     PUBLISH_ARTIFACT_ID = 'imageloader-kt'
-    PUBLISH_VERSION = '1.2.7'
+    PUBLISH_VERSION = '1.2.8'
 }
 
 ext["signing.keyId"] = ''
@@ -95,8 +95,8 @@ publishing {
             // any other name that's descriptive for you
             name = "mavenCentral"
 
-            def releasesRepoUrl = "https://s01.oss.sonatype.org/content/repositories/releases/"
-            def snapshotsRepoUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+            def releasesRepoUrl = "https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/"
+            def snapshotsRepoUrl = "https://central.sonatype.com/repository/maven-snapshots/"
             // You only need this if you want to publish snapshots, otherwise just set the URL
             // to the release repo directly
             url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
