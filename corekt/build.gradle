@@ -1,8 +1,8 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'com.vanniktech.maven.publish'
 }
-//apply from: 'publish.gradle'
 
 android {
     namespace 'com.lodz.android.corekt'
@@ -10,8 +10,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 36
-        versionCode 56
-        versionName "2.1.1" //成功上传
+        versionCode 57
+        versionName "2.1.2" //成功上传
     }
 
     compileOptions {
@@ -57,4 +57,44 @@ dependencies {
     api 'androidx.documentfile:documentfile:1.1.0'
     api 'com.google.android.flexbox:flexbox:3.0.0'
     api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2'
+}
+
+
+//----------------------- 发布到 Maven Central  ------------------------------
+String PUBLISH_GROUP_ID = 'ink.lodz'
+String PUBLISH_ARTIFACT_ID = 'core-kt'
+String PUBLISH_VERSION = '2.1.2'
+
+mavenPublishing {
+    publishToMavenCentral(true)
+    signAllPublications()
+
+    coordinates(PUBLISH_GROUP_ID, PUBLISH_ARTIFACT_ID, PUBLISH_VERSION)
+
+    pom {
+
+        name = PUBLISH_ARTIFACT_ID
+        description = "This is a simple tools lib for android project."
+        inceptionYear = "2025"
+        url = 'https://github.com/LZ9/AgileDevKt'
+        licenses {
+            license {
+                name = "The Apache License, Version 2.0"
+                url = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+            }
+        }
+        developers {
+            developer {
+                id = "Lodz"
+                name = "Lodz"
+                email = "lz.mms@foxmail.com"
+                url = "https://github.com/LZ9"
+            }
+        }
+        scm {
+            url = 'https://github.com/LZ9/AgileDevKt/tree/master'
+            connection = 'scm:git:github.com/LZ9/AgileDevKt.git'
+            developerConnection = 'scm:git:ssh://github.com/LZ9/AgileDevKt.git'
+        }
+    }
 }
