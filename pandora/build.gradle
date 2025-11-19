@@ -1,8 +1,8 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'com.vanniktech.maven.publish'
 }
-//apply from: 'publish.gradle'
 
 android {
     namespace 'com.lodz.android.pandora'
@@ -40,7 +40,7 @@ android {
 }
 
 dependencies {
-//    api 'ink.lodz:core-kt:2.1.0'
+//    api 'ink.lodz:core-kt:2.1.2'
     api project(':corekt')
 
     // RxJava
@@ -54,4 +54,44 @@ dependencies {
     api 'com.trello.rxlifecycle4:rxlifecycle-components:4.0.2'
     // EventBus
     api 'org.greenrobot:eventbus:3.3.1'
+}
+
+
+//----------------------- 发布到 Maven Central  ------------------------------
+String PUBLISH_GROUP_ID = 'ink.lodz'
+String PUBLISH_ARTIFACT_ID = 'pandora'
+String PUBLISH_VERSION = '2.1.1'
+
+mavenPublishing {
+    publishToMavenCentral(true)
+    signAllPublications()
+
+    coordinates(PUBLISH_GROUP_ID, PUBLISH_ARTIFACT_ID, PUBLISH_VERSION)
+
+    pom {
+
+        name = PUBLISH_ARTIFACT_ID
+        description = "This is a android base component library."
+        inceptionYear = "2025"
+        url = 'https://github.com/LZ9/AgileDevKt'
+        licenses {
+            license {
+                name = "The Apache License, Version 2.0"
+                url = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+            }
+        }
+        developers {
+            developer {
+                id = "Lodz"
+                name = "Lodz"
+                email = "lz.mms@foxmail.com"
+                url = "https://github.com/LZ9"
+            }
+        }
+        scm {
+            url = 'https://github.com/LZ9/AgileDevKt/tree/master'
+            connection = 'scm:git:github.com/LZ9/AgileDevKt.git'
+            developerConnection = 'scm:git:ssh://github.com/LZ9/AgileDevKt.git'
+        }
+    }
 }
