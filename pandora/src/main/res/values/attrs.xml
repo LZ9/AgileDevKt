@@ -276,6 +276,7 @@
         <attr name="jumpTextSize" />
         <attr name="jumpBackground" />
         <attr name="isReadOnly" />
+        <attr name="singleLine" format="boolean" />
         <attr name="maxLength" format="integer" />
         <attr name="inputType" format="integer">
             <enum name="text" value="0" />

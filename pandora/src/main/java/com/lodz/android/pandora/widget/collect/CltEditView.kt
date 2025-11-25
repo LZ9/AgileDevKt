@@ -275,6 +275,13 @@ class CltEditView : FrameLayout {
         if (maxLines > 1) {
             setMaxLines(maxLines)
         }
+
+        // 设置是否单行显示
+        val isSingleLine = typedArray?.getBoolean(R.styleable.CltEditView_singleLine, false) ?: false
+        if (isSingleLine){
+            setSingleLine(true)
+        }
+
         // 设置限制文字是否显示
         val limitVisibility = typedArray?.getInt(R.styleable.CltEditView_limitVisibility, 2) ?: 2
         when (limitVisibility) {
@@ -690,14 +697,19 @@ class CltEditView : FrameLayout {
         mPdrContentEdit.filters = arrayOf(InputFilter.LengthFilter(max))
     }
 
-    /** 最小行数[lines] */
+    /** 设置最小行数[lines] */
     fun setMinLines(lines: Int) {
         mPdrContentEdit.minLines = lines
     }
 
-    /** 最大行数[lines] */
+    /** 设置最大行数[lines] */
     fun setMaxLines(lines: Int) {
         mPdrContentEdit.maxLines = lines
+    }
+
+    /** 设置是否单行显示[isSingleLine] */
+    fun setSingleLine(isSingleLine: Boolean) {
+        mPdrContentEdit.isSingleLine = isSingleLine
     }
 
     /** 设置限制文字显隐[visibility] */
