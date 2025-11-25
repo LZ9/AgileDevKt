@@ -106,7 +106,7 @@ class CltEditView : FrameLayout {
     }
 
     private fun findViews() {
-        LayoutInflater.from(context).inflate(R.layout.pandora_view_clt_edit_view, this)
+        LayoutInflater.from(context).inflate(R.layout.pandora_view_clt_edit, this)
     }
 
     private fun configLayout(attrs: AttributeSet?) {

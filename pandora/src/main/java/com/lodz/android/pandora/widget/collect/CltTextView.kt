@@ -68,7 +68,7 @@ class CltTextView : FrameLayout {
     }
 
     private fun findViews() {
-        LayoutInflater.from(context).inflate(R.layout.pandora_view_clt_text_view, this)
+        LayoutInflater.from(context).inflate(R.layout.pandora_view_clt_text, this)
     }
 
     private fun configLayout(attrs: AttributeSet?) {
