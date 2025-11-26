@@ -182,7 +182,7 @@ abstract class AbsRvAdapter<T, VH : RecyclerView.ViewHolder>(protected val conte
     }
 
     /** 获取数据列表 */
-    fun getData(): List<T>? = mPdrData
+    fun getData(): MutableList<T>? = mPdrData
 
     /** 在onCreateViewHolder方法中根据[layoutId]获取View */
     @JvmOverloads

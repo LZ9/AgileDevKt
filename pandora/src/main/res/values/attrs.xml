@@ -295,6 +295,116 @@
         </attr>
     </declare-styleable>
 
+    <!--采集动态条目输入控件-->
+    <declare-styleable name="CltDynItemsEditView">
+        <attr name="titleText" />
+        <attr name="titleTextColor" />
+        <attr name="titleTextSize" />
+        <attr name="titleWidth" />
+        <attr name="titleBackground" />
+        <attr name="requiredVisibility" />
+        <attr name="requiredSrc" />
+        <attr name="addBtnSrc" format="reference" />
+        <attr name="addBtnSide" format="dimension" />
+        <attr name="addBtnScaleType" format="integer">
+            <enum name="matrix" value="0" />
+            <enum name="fitXY" value="1" />
+            <enum name="fitStart" value="2" />
+            <enum name="fitCenter" value="3" />
+            <enum name="fitEnd" value="4" />
+            <enum name="center" value="5" />
+            <enum name="centerCrop" value="6" />
+            <enum name="centerInside" value="7" />
+        </attr>
+        <attr name="addBtnVisibility" format="integer">
+            <enum name="visible" value="0" />
+            <enum name="invisible" value="1" />
+            <enum name="gone" value="2" />
+        </attr>
+        <attr name="itemDeleteBtnSrc" format="reference" />
+        <attr name="itemDeleteBtnSide" format="dimension" />
+        <attr name="itemDeleteBtnScaleType" format="integer">
+            <enum name="matrix" value="0" />
+            <enum name="fitXY" value="1" />
+            <enum name="fitStart" value="2" />
+            <enum name="fitCenter" value="3" />
+            <enum name="fitEnd" value="4" />
+            <enum name="center" value="5" />
+            <enum name="centerCrop" value="6" />
+            <enum name="centerInside" value="7" />
+        </attr>
+        <attr name="itemDeleteBtnVisibility" format="integer">
+            <enum name="visible" value="0" />
+            <enum name="invisible" value="1" />
+            <enum name="gone" value="2" />
+        </attr>
+        <attr name="itemEditBtnSrc" format="reference" />
+        <attr name="itemEditBtnSide" format="dimension" />
+        <attr name="itemEditBtnScaleType" format="integer">
+            <enum name="matrix" value="0" />
+            <enum name="fitXY" value="1" />
+            <enum name="fitStart" value="2" />
+            <enum name="fitCenter" value="3" />
+            <enum name="fitEnd" value="4" />
+            <enum name="center" value="5" />
+            <enum name="centerCrop" value="6" />
+            <enum name="centerInside" value="7" />
+        </attr>
+        <attr name="itemEditBtnVisibility" format="integer">
+            <enum name="visible" value="0" />
+            <enum name="invisible" value="1" />
+            <enum name="gone" value="2" />
+        </attr>
+        <attr name="unitText" />
+        <attr name="unitTextColor" />
+        <attr name="unitTextSize" />
+        <attr name="jumpText" />
+        <attr name="jumpTextColor" />
+        <attr name="jumpTextSize" />
+        <attr name="jumpBackground" />
+        <attr name="isReadOnly" />
+        <attr name="nestedScrollingEnabled" format="boolean" />
+        <attr name="maxItems" format="integer" />
+        <attr name="itemHeight" format="dimension" />
+        <attr name="itemTitleText" format="string" />
+        <attr name="itemTitleTextColor" format="reference|color" />
+        <attr name="itemTitleTextSize" format="dimension" />
+        <attr name="itemTitleWidth" format="dimension" />
+        <attr name="itemTitleBackground" format="reference|color" />
+        <attr name="itemEtText" format="string" />
+        <attr name="itemEtTextColor" format="reference|color" />
+        <attr name="itemEtTextSize" format="dimension" />
+        <attr name="itemEtHint" format="string" />
+        <attr name="itemEtHintColor" format="reference|color" />
+        <attr name="itemEtTag" format="string" />
+        <attr name="itemEtGravity" format="integer">
+            <enum name="center_vertical" value="0" />
+            <enum name="center" value="1" />
+            <enum name="start" value="2" />
+            <enum name="end" value="3" />
+            <enum name="start_vertical" value="4" />
+            <enum name="end_vertical" value="5" />
+        </attr>
+        <attr name="itemEtBackground" format="reference|color" />
+        <attr name="itemEtSingleLine" format="boolean" />
+        <attr name="itemEtMaxLength" format="integer" />
+        <attr name="itemEtInputType" format="integer">
+            <enum name="text" value="0" />
+            <enum name="idcard" value="1" />
+            <enum name="phone" value="2" />
+            <enum name="number" value="3" />
+            <enum name="numberDecimal" value="4" />
+            <enum name="foreignCert" value="5" />
+        </attr>
+        <attr name="itemEtMinLines" format="integer" />
+        <attr name="itemEtMaxLines" format="integer" />
+        <attr name="itemEtLimitVisibility" format="integer">
+            <enum name="visible" value="0" />
+            <enum name="invisible" value="1" />
+            <enum name="gone" value="2" />
+        </attr>
+    </declare-styleable>
+
     <!--采集单选控件-->
     <declare-styleable name="CltRadioGroup">
         <attr name="titleText" />

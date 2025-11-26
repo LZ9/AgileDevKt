@@ -258,8 +258,7 @@ class CltEditView : FrameLayout {
         // 设置是否只读
         setReadOnly(typedArray?.getBoolean(R.styleable.CltEditView_isReadOnly, false) ?: false)
         // 设置输入类型
-        setEditInputType(typedArray?.getInt(R.styleable.CltEditView_inputType, TYPE_TEXT)
-                ?: TYPE_TEXT)
+        setEditInputType(typedArray?.getInt(R.styleable.CltEditView_inputType, TYPE_TEXT)?: TYPE_TEXT)
         // 设置文本最大长度
         val max: Int = typedArray?.getInt(R.styleable.CltEditView_maxLength, -1) ?: -1
         if (max >= 0) {
@@ -726,7 +725,7 @@ class CltEditView : FrameLayout {
     fun getEditText(): ScrollEditText = mPdrContentEdit
 
     /** 所有字符转大写 */
-    private class UpperCaseTransformation : ReplacementTransformationMethod() {
+    class UpperCaseTransformation : ReplacementTransformationMethod() {
         override fun getOriginal(): CharArray = charArrayOf('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z')
         override fun getReplacement(): CharArray = charArrayOf('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z')
     }

@@ -99,7 +99,7 @@ class MvvmTestLoadMoreActivity : BaseRefreshVmActivity() {
                 mAdapter.loadComplete()
                 return@observe
             }
-            val datas = mAdapter.getData()?.toMutableList() ?: ArrayList()
+            val datas = mAdapter.getData() ?: ArrayList()
             datas.addAll(list)
             mAdapter.loadMoreSuccess(datas)
         }

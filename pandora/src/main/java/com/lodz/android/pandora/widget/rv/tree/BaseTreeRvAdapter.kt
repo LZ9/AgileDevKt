@@ -25,7 +25,7 @@ abstract class BaseTreeRvAdapter<T : RvTreeItem, VH : RecyclerView.ViewHolder>(c
         holder.itemView.setOnClickListener {
             val item = getItem(position) ?: return@setOnClickListener
             if (item is RvTreeGroup && item.expandEnable() && item.fetchTreeItems().isNotEmpty()){
-                val list = getData()?.toArrayList() ?: return@setOnClickListener
+                val list = getData() ?: return@setOnClickListener
                 val isExpand = item.isExpandItem()
                 if (isExpand) { //收回已经展开的子项（包含子项内的子项）
                     list.removeAll(collapsedItemsChildren(item).toSet())
@@ -120,13 +120,13 @@ abstract class BaseTreeRvAdapter<T : RvTreeItem, VH : RecyclerView.ViewHolder>(c
 
     /** 折叠所有子项 */
     fun collapsedAll() {
-        val data = getData()?.toMutableList() ?: return
+        val data = getData() ?: return
         setTreeDataObj(setChildrenExpandChanged(data, false))
     }
 
     /** 展开所有子项 */
     fun expandAll() {
-        val data = getData()?.toMutableList() ?: return
+        val data = getData() ?: return
         setTreeDataObj(setChildrenExpandChanged(data, true))
     }
 

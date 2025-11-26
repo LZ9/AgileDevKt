@@ -669,6 +669,11 @@
     <string name="clt_person_type">人员类型：</string>
     <string name="clt_person_type_tips">请选择人员类型</string>
     <string name="clt_sport_type">运动类型：</string>
+    <string name="clt_contact">联系方式：</string>
+    <string name="clt_contact_tpis">请填写联系方式</string>
+    <string name="clt_phone_number">手机号：</string>
+    <string name="clt_phone_number_tips">手机号不能为空</string>
+    <string name="clt_phone_number_length_tips">请输入11位手机号</string>
 
     <!-- 接口测试 -->
     <string name="api_rx">RX请求</string>

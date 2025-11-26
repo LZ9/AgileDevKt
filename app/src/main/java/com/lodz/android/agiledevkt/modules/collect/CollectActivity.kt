@@ -119,6 +119,11 @@ class CollectActivity : BaseActivity() {
             toastShort("只能输入${max}字")
         }
 
+        // 联系人
+        mBinding.contactCdiev.setOnEditBtnClickListener { bean, vb, holder, position ->
+            toastShort("点击了第${position + 1}个数据项的编辑按钮，内容为${bean.text}")
+        }
+
         // 提交按钮
         mBinding.submitBtn.setOnClickListener {
             if (mBinding.nameCltv.getContentText().isEmpty()) {
@@ -136,6 +141,21 @@ class CollectActivity : BaseActivity() {
             if (mBinding.hobbyCedit.getContentText().isEmpty()) {
                 toastShort(R.string.clt_hobby_tips)
                 return@setOnClickListener
+            }
+            val data = mBinding.contactCdiev.getRvAdapter().getData()
+            if (data == null || data.isEmpty()){
+                toastShort(R.string.clt_contact_tpis)
+                return@setOnClickListener
+            }
+            for (item in data){
+                if (item.text.isEmpty()){
+                    toastShort(R.string.clt_phone_number_tips)
+                    return@setOnClickListener
+                }
+                if (item.text.length != 11){
+                    toastShort(R.string.clt_phone_number_length_tips)
+                    return@setOnClickListener
+                }
             }
             if (!mBinding.personTypeCrg.isSelectedId()){
                 toastShort(R.string.clt_person_type_tips)
