@@ -11,7 +11,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 36
         versionCode 70
-        versionName "2.1.2"// 未上传
+        versionName "2.1.2"// 成功上传
     }
 
     viewBinding {
@@ -60,7 +60,7 @@ dependencies {
 //----------------------- 发布到 Maven Central  ------------------------------
 String PUBLISH_GROUP_ID = 'ink.lodz'
 String PUBLISH_ARTIFACT_ID = 'pandora'
-String PUBLISH_VERSION = '2.1.1'
+String PUBLISH_VERSION = '2.1.2'
 
 mavenPublishing {
     publishToMavenCentral(true)
