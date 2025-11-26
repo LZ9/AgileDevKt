@@ -121,7 +121,7 @@ class CollectActivity : BaseActivity() {
 
         // 联系人
         mBinding.contactCdiev.setOnEditBtnClickListener { bean, vb, holder, position ->
-            toastShort("点击了第${position + 1}个数据项的编辑按钮，内容为${bean.text}")
+            toastShort("点击了第${position + 1}个数据项的编辑按钮，内容为${bean.itemEtText}")
         }
 
         // 提交按钮
@@ -148,11 +148,11 @@ class CollectActivity : BaseActivity() {
                 return@setOnClickListener
             }
             for (item in data){
-                if (item.text.isEmpty()){
+                if (item.itemEtText.isEmpty()){
                     toastShort(R.string.clt_phone_number_tips)
                     return@setOnClickListener
                 }
-                if (item.text.length != 11){
+                if (item.itemEtText.length != 11){
                     toastShort(R.string.clt_phone_number_length_tips)
                     return@setOnClickListener
                 }

@@ -4,8 +4,10 @@ import android.content.res.ColorStateList
 import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.ImageView.ScaleType
+import com.lodz.android.pandora.databinding.PandoraItemCltDynEditBinding
 import com.lodz.android.pandora.widget.collect.CltEditView.Companion.TYPE_TEXT
 import com.lodz.android.pandora.widget.collect.CltEditView.EditInputType
+import com.lodz.android.pandora.widget.rv.recycler.vh.DataVBViewHolder
 
 /**
  * 动态条目输入框数据对象
@@ -13,11 +15,11 @@ import com.lodz.android.pandora.widget.collect.CltEditView.EditInputType
  * @date 2025/11/25
  */
 class CltItemsEditBean {
+    /** 编号 */
+    var id = ""
 
     /** 是否只读 */
     var readOnly = false
-    /** 用户输入文字 */
-    var text = ""
 
     /** 条目高度 */
     var itemHeight: Int = 0
@@ -89,4 +91,13 @@ class CltItemsEditBean {
     /** 条目编辑图标可见性 */
     var itemEditBtnVisibility = View.GONE
 
+
+    /** 编辑按钮点击监听器 */
+    var itemEditBtnClickListener: ((bean: CltItemsEditBean, vb: PandoraItemCltDynEditBinding, holder: DataVBViewHolder, position: Int) -> Unit)? = null
+    /** 删除按钮点击监听器 */
+    var itemDeleteBtnClickListener: ((bean: CltItemsEditBean, vb: PandoraItemCltDynEditBinding, holder: DataVBViewHolder, position: Int) -> Unit)? = null
+    /** 文字限制监听器 */
+    var itemLimitListener: ((s: CharSequence, max: Int, bean: CltItemsEditBean, vb: PandoraItemCltDynEditBinding, holder: DataVBViewHolder, position: Int) -> Unit)? = null
+    /** 文字变化监听器 */
+    var itemTextWatcherListener: ((s: CharSequence, bean: CltItemsEditBean, vb: PandoraItemCltDynEditBinding, holder: DataVBViewHolder, position: Int) -> Unit)? = null
 }

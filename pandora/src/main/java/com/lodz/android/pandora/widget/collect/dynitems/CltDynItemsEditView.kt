@@ -33,6 +33,9 @@ import com.lodz.android.corekt.anko.getColorCompat
 import com.lodz.android.corekt.anko.getDrawableCompat
 import com.lodz.android.corekt.anko.px2sp
 import com.lodz.android.corekt.anko.toastShort
+import com.lodz.android.corekt.log.PrintLog
+import com.lodz.android.corekt.utils.AppUtils
+import com.lodz.android.corekt.utils.DateUtils
 import com.lodz.android.pandora.R
 import com.lodz.android.pandora.databinding.PandoraItemCltDynEditBinding
 import com.lodz.android.pandora.widget.collect.CltEditView
@@ -44,9 +47,12 @@ import com.lodz.android.pandora.widget.collect.CltEditView.Companion.TYPE_PHONE
 import com.lodz.android.pandora.widget.collect.CltEditView.Companion.TYPE_TEXT
 import com.lodz.android.pandora.widget.collect.CltEditView.EditInputType
 import com.lodz.android.pandora.widget.rv.anko.linear
+import com.lodz.android.pandora.widget.rv.anko.setup
 import com.lodz.android.pandora.widget.rv.anko.setupVB
 import com.lodz.android.pandora.widget.rv.recycler.base.BaseVbRvAdapter
 import com.lodz.android.pandora.widget.rv.recycler.vh.DataVBViewHolder
+import kotlin.text.equals
+import kotlin.toString
 
 /**
  * 动态条目输入框
@@ -73,7 +79,7 @@ class CltDynItemsEditView : FrameLayout {
     private val mPdrDefItemsEditBean = CltItemsEditBean()
 
     /** 条目列表适配器 */
-    private lateinit var mAdapter: BaseVbRvAdapter<CltItemsEditBean>
+    private lateinit var mAdapter: CltItemsEditAdapter
 
     /** 文字限制监听器 */
     private var mPdrLimitListener: ((s: CharSequence, max: Int, bean: CltItemsEditBean, vb: PandoraItemCltDynEditBinding, holder: DataVBViewHolder, position: Int) -> Unit)? = null
@@ -90,7 +96,7 @@ class CltDynItemsEditView : FrameLayout {
     /** 删除按钮点击监听器 */
     private var mPdrDeleteBtnClickListener: ((bean: CltItemsEditBean, vb: PandoraItemCltDynEditBinding, holder: DataVBViewHolder, position: Int) -> Unit)? = null
 
-
+    private var mPdrDataList = ArrayList<CltItemsEditBean>()
 
     constructor(context: Context) : super(context) {
         init(null)
@@ -123,184 +129,8 @@ class CltDynItemsEditView : FrameLayout {
     private fun initRecyclerView() {
         mRecyclerView.isNestedScrollingEnabled = false
         mRecyclerView.setHasFixedSize(false)
-        mAdapter = mRecyclerView
-            .linear()
-            .setupVB(PandoraItemCltDynEditBinding::inflate) { context, vb, holder, position ->
-                val bean = getItem(position) ?: return@setupVB
-                if (bean.itemHeight > 0){
-                    val layoutParams = holder.itemView.layoutParams
-                    layoutParams.height = bean.itemHeight
-                    holder.itemView.layoutParams = layoutParams
-                }
-
-                // 标题栏
-                vb.pdrTitleTv.let {
-                    it.visibility = if (bean.itemTitleText.isEmpty()) GONE else VISIBLE
-                    it.text = bean.itemTitleText
-                    if (bean.itemTitleTextColor != null) {
-                        it.setTextColor(bean.itemTitleTextColor)
-                    }
-                    if (bean.itemTitleTextSizeSp > 0) {
-                        it.setTextSize(TypedValue.COMPLEX_UNIT_SP, bean.itemTitleTextSizeSp)
-                    }
-                    if (bean.itemTitleWidthPx > 0) {
-                        it.layoutParams.width = bean.itemTitleWidthPx
-                    }
-                    if (bean.itemTitleBackgroundDrawable != null) {
-                        it.background = bean.itemTitleBackgroundDrawable
-                    }
-                }
-
-                // 输入框
-                vb.pdrContentEdit.let {
-                    it.isEnabled = !bean.readOnly
-                    if (bean.itemEtBackgroundDrawable != null) {
-                        vb.pdrContentLayout.background = bean.itemEtBackgroundDrawable
-                    }
-                    it.setText(bean.itemEtText)
-                    if (bean.itemEtTextColor != null) {
-                        it.setTextColor(bean.itemEtTextColor)
-                    }
-                    if (bean.itemEtTextSizeSp > 0) {
-                        it.setTextSize(TypedValue.COMPLEX_UNIT_SP, bean.itemEtTextSizeSp)
-                    }
-                    it.setHint(bean.itemEtHintText)
-                    if (bean.itemEtHintTextColor != null) {
-                        it.setHintTextColor(bean.itemEtHintTextColor)
-                    }
-                    it.gravity = bean.itemEtGravity
-                    if (bean.itemEtSingleLine){
-                        it.isSingleLine = bean.itemEtSingleLine
-                    }
-                    if (bean.itemEtMaxCount > 0){
-                        it.filters = arrayOf(InputFilter.LengthFilter(bean.itemEtMaxCount))
-                    }
-                    if (bean.itemEtMinLines > 0) {
-                        it.minLines = bean.itemEtMinLines
-                    }
-                    if (bean.itemEtMaxLines > 0) {
-                        it.maxLines = bean.itemEtMaxLines
-                    }
-
-                    when (bean.itemEtInputType) {
-                        TYPE_ID_CARD -> {
-                            // 输入身份证号
-                            it.inputType = InputType.TYPE_CLASS_NUMBER
-                            it.keyListener = DigitsKeyListener.getInstance("1234567890xX")
-                            it.transformationMethod = CltEditView.UpperCaseTransformation()
-                        }
-                        TYPE_PHONE -> it.inputType = InputType.TYPE_CLASS_PHONE// 输入手机号
-                        TYPE_NUMBER -> it.inputType = InputType.TYPE_CLASS_NUMBER// 输入数字
-                        TYPE_NUMBER_DECIMAL -> {
-                            // 输入小数
-                            it.inputType = InputType.TYPE_CLASS_NUMBER
-                            it.keyListener = DigitsKeyListener.getInstance("1234567890.")
-                        }
-                        TYPE_FOREIGN_CERT -> {
-                            // 输入国外证件号
-                            it.inputType = InputType.TYPE_CLASS_NUMBER
-                            it.keyListener = DigitsKeyListener.getInstance("1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
-                            it.transformationMethod = CltEditView.UpperCaseTransformation()
-                        }
-                    }
-                    bean.text = it.text?.toString() ?: ""
-
-                    it.addTextChangedListener(object : TextWatcher{
-                        override fun afterTextChanged(s: Editable?) {}
-
-                        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-                        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                            bean.text = it.text.toString()
-                            if (bean.itemEtInputType == TYPE_NUMBER_DECIMAL) {
-                                val index = it.text.toString().indexOf(".")
-                                val lastIndex = it.text.toString().lastIndexOf(".")
-                                if (index == 0) {
-                                    // 第一位输入点则默认头部加0
-                                    it.setText("0.")
-                                    it.setSelection(it.text.toString().length)
-                                } else if (index != lastIndex) {
-                                    // 输入了多个小数点只保留第一个
-                                    val str = it.text.toString().take(lastIndex)
-                                    it.setText(str)
-                                    it.setSelection(str.length)
-                                }
-                            }
-                            if (bean.itemEtMaxCount > 0) {
-                                // 限制输入字数
-                                val length = it.text.toString().length
-                                if (length == bean.itemEtMaxCount && start != 0) {
-                                    mPdrLimitListener?.invoke(s ?: "", bean.itemEtMaxCount, bean, vb, holder, position)
-                                }
-                                vb.pdrLimitTv.text = StringBuilder().append(length).append("/").append(bean.itemEtMaxCount)
-                            }
-                            mPdrTextWatcherListener?.invoke(s ?: "", bean, vb, holder, position)
-                        }
-                    })
-                }
-
-                // 输入限制提醒
-                vb.pdrLimitTv.visibility = bean.itemEtLimitVisibility
-
-                // 单位文字
-                vb.pdrUnitTv.let {
-                    it.visibility = if (bean.needItemUnit) VISIBLE else GONE
-                    it.text = bean.itemUnitText
-                    if (bean.itemUnitTextColor != null){
-                        it.setTextColor(bean.itemUnitTextColor)
-                    }
-                    if (bean.itemUnitTextSizeSp > 0) {
-                        it.setTextSize(TypedValue.COMPLEX_UNIT_SP, bean.itemUnitTextSizeSp)
-                    }
-                }
-
-                // 编辑按钮
-                vb.pdrEditBtn.let {
-                    it.isEnabled = !bean.readOnly
-                    if (bean.itemEditBtnDrawable != null){
-                        it.setImageDrawable(bean.itemEditBtnDrawable)
-                    }
-                    if (bean.itemEditBtnSidePx > 0) {
-                        it.layoutParams.width = bean.itemEditBtnSidePx
-                        it.layoutParams.height = bean.itemEditBtnSidePx
-                    }
-
-                    if (bean.itemEditBtnScaleType != null){
-                        it.scaleType = bean.itemEditBtnScaleType
-                    }
-                    it.visibility = bean.itemEditBtnVisibility
-                    it.setOnClickListener {
-                        mPdrEditBtnClickListener?.invoke(bean, vb, holder, position)
-                    }
-                }
-
-                // 删除按钮
-                vb.pdrDeleteBtn.let {
-                    it.isEnabled = !bean.readOnly
-                    if (bean.itemDeleteBtnDrawable != null){
-                        it.setImageDrawable(bean.itemDeleteBtnDrawable)
-                    }
-                    if (bean.itemDeleteBtnSidePx > 0) {
-                        it.layoutParams.width = bean.itemDeleteBtnSidePx
-                        it.layoutParams.height = bean.itemDeleteBtnSidePx
-                    }
-
-                    if (bean.itemDeleteBtnScaleType != null){
-                        it.scaleType = bean.itemDeleteBtnScaleType
-                    }
-                    it.visibility = bean.itemDeleteBtnVisibility
-                    it.setOnClickListener {
-                        if (mPdrDeleteBtnClickListener == null) {
-                            mAdapter.notifyItemRemovedChanged(position)
-                            mRecyclerView.postDelayed(400) {
-                                mRecyclerView.requestLayout()
-                            }
-                        } else {
-                            mPdrDeleteBtnClickListener?.invoke(bean, vb, holder, position)
-                        }
-                    }
-                }
-            }
+        mAdapter = CltItemsEditAdapter(context)
+        mRecyclerView.linear().setup(mAdapter)
     }
 
     // 配置布局
@@ -1048,18 +878,31 @@ class CltDynItemsEditView : FrameLayout {
     fun getRvAdapter(): BaseVbRvAdapter<CltItemsEditBean> = mAdapter
 
     /** 获取条目配置 */
-    fun getItemConfig(): CltItemsEditBean {
-        return mPdrDefItemsEditBean
-    }
+    fun getItemConfig(): CltItemsEditBean = copyConfig()
 
     /** 添加采集条目[itemBean] */
     fun addItem(itemBean: CltItemsEditBean? = null) {
-        val count = mAdapter.getData()?.size ?: 0
+        val count = mPdrDataList.size
         if (mMaxItems != -1 && count >= mMaxItems) { // 已经到达限制条数
             toastShort("您最多可以新增 $mMaxItems 条数据")
             return
         }
 
+        val bean = copyConfig()
+        val item = itemBean ?: bean
+        if (item.id.isEmpty()){
+            item.id = DateUtils.getCurrentFormatString(DateUtils.TYPE_3)
+        }
+        mPdrDataList.add(item)
+        for ((i, editBean) in mPdrDataList.withIndex()) {
+            PrintLog.i("testtag", "i : $i ; itemText : ${editBean.itemEtText}")
+        }
+        mAdapter.setData(mPdrDataList)
+        mAdapter.notifyDataSetChanged()
+    }
+
+    /** 拷贝配置 */
+    private fun copyConfig(): CltItemsEditBean {
         val bean = CltItemsEditBean()
         bean.readOnly = mPdrDefItemsEditBean.readOnly
         bean.itemHeight = mPdrDefItemsEditBean.itemHeight
@@ -1094,17 +937,43 @@ class CltDynItemsEditView : FrameLayout {
         bean.itemEditBtnSidePx = mPdrDefItemsEditBean.itemEditBtnSidePx
         bean.itemEditBtnScaleType = mPdrDefItemsEditBean.itemEditBtnScaleType
         bean.itemEditBtnVisibility = mPdrDefItemsEditBean.itemEditBtnVisibility
-
-        val item = itemBean ?: bean
-        val list = mAdapter.getData() ?: ArrayList()
-        list.add(item)
-        mAdapter.setData(list)
-        mAdapter.notifyDataSetChanged()
+        bean.itemDeleteBtnClickListener = { bean, vb, holder, position ->
+            if (mPdrDeleteBtnClickListener == null){
+                mAdapter.notifyItemRemovedChanged(position)
+                mPdrDataList.removeAt(position)
+                mRecyclerView.postDelayed(400) {
+                    mRecyclerView.requestLayout()
+                }
+            } else {
+                mPdrDeleteBtnClickListener?.invoke(bean, vb, holder, position)
+            }
+        }
+        bean.itemTextWatcherListener = { s, bean, vb, holder, position ->
+            for (i in 0 until mPdrDataList.size) {
+                if (bean.id.equals(mPdrDataList[i].id)){
+                    mPdrDataList[i].itemEtText = s.toString()
+                    PrintLog.v("testtag", "position : $position ; i : $i ; itemText : ${mPdrDataList[i].itemEtText}")
+                }
+            }
+            mPdrTextWatcherListener?.invoke(s, bean, vb, holder, position)
+        }
+        bean.itemLimitListener = { s, max, bean, vb, holder, position ->
+            mPdrLimitListener?.invoke(s, max, bean, vb, holder, position)
+        }
+        bean.itemEditBtnClickListener = {ean, vb, holder, position ->
+            mPdrEditBtnClickListener?.invoke(bean, vb, holder, position)
+        }
+        return bean
     }
 
     /** 设置最大条目数量[max] */
     fun setMaxItems(max: Int) {
         mMaxItems = max
+    }
+
+    /** 设置新增按钮点击监听器[listener] */
+    fun setOnAddBtnClickListener(listener: (config: CltItemsEditBean) -> Unit) {
+        mPdrAddBtnClickListener = listener
     }
 
     /** 设置文字限制监听器[listener] */
@@ -1115,11 +984,6 @@ class CltDynItemsEditView : FrameLayout {
     /** 设置文字变化监听器[listener] */
     fun setOnTextWatcherListener(listener: (s: CharSequence, bean: CltItemsEditBean, vb: PandoraItemCltDynEditBinding, holder: DataVBViewHolder, position: Int) -> Unit) {
         mPdrTextWatcherListener = listener
-    }
-
-    /** 设置新增按钮点击监听器[listener] */
-    fun setOnAddBtnClickListener(listener: (config: CltItemsEditBean) -> Unit) {
-        mPdrAddBtnClickListener = listener
     }
 
     /** 设置编辑按钮点击监听器[listener] */
