@@ -8,11 +8,6 @@ import android.graphics.Bitmap
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Build
-import android.text.Editable
-import android.text.InputFilter
-import android.text.InputType
-import android.text.TextWatcher
-import android.text.method.DigitsKeyListener
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.Gravity
@@ -33,26 +28,16 @@ import com.lodz.android.corekt.anko.getColorCompat
 import com.lodz.android.corekt.anko.getDrawableCompat
 import com.lodz.android.corekt.anko.px2sp
 import com.lodz.android.corekt.anko.toastShort
-import com.lodz.android.corekt.log.PrintLog
-import com.lodz.android.corekt.utils.AppUtils
 import com.lodz.android.corekt.utils.DateUtils
 import com.lodz.android.pandora.R
 import com.lodz.android.pandora.databinding.PandoraItemCltDynEditBinding
 import com.lodz.android.pandora.widget.collect.CltEditView
-import com.lodz.android.pandora.widget.collect.CltEditView.Companion.TYPE_FOREIGN_CERT
-import com.lodz.android.pandora.widget.collect.CltEditView.Companion.TYPE_ID_CARD
-import com.lodz.android.pandora.widget.collect.CltEditView.Companion.TYPE_NUMBER
-import com.lodz.android.pandora.widget.collect.CltEditView.Companion.TYPE_NUMBER_DECIMAL
-import com.lodz.android.pandora.widget.collect.CltEditView.Companion.TYPE_PHONE
-import com.lodz.android.pandora.widget.collect.CltEditView.Companion.TYPE_TEXT
 import com.lodz.android.pandora.widget.collect.CltEditView.EditInputType
 import com.lodz.android.pandora.widget.rv.anko.linear
 import com.lodz.android.pandora.widget.rv.anko.setup
-import com.lodz.android.pandora.widget.rv.anko.setupVB
 import com.lodz.android.pandora.widget.rv.recycler.base.BaseVbRvAdapter
 import com.lodz.android.pandora.widget.rv.recycler.vh.DataVBViewHolder
-import kotlin.text.equals
-import kotlin.toString
+import kotlin.random.Random
 
 /**
  * 动态条目输入框
@@ -81,20 +66,20 @@ class CltDynItemsEditView : FrameLayout {
     /** 条目列表适配器 */
     private lateinit var mAdapter: CltItemsEditAdapter
 
-    /** 文字限制监听器 */
-    private var mPdrLimitListener: ((s: CharSequence, max: Int, bean: CltItemsEditBean, vb: PandoraItemCltDynEditBinding, holder: DataVBViewHolder, position: Int) -> Unit)? = null
-
-    /** 文字变化监听器 */
-    private var mPdrTextWatcherListener: ((s: CharSequence, bean: CltItemsEditBean, vb: PandoraItemCltDynEditBinding, holder: DataVBViewHolder, position: Int) -> Unit)? = null
-
     /** 新增按钮点击监听器 */
     private var mPdrAddBtnClickListener: ((config: CltItemsEditBean) -> Unit)? = null
 
+    /** 文字限制监听器 */
+    private var mPdrItemLimitListener: ((s: CharSequence, max: Int, bean: CltItemsEditBean, vb: PandoraItemCltDynEditBinding, holder: DataVBViewHolder, position: Int) -> Unit)? = null
+
+    /** 文字变化监听器 */
+    private var mPdrItemTextChangedListener: ((s: CharSequence, bean: CltItemsEditBean, vb: PandoraItemCltDynEditBinding, holder: DataVBViewHolder, position: Int) -> Unit)? = null
+
     /** 编辑按钮点击监听器 */
-    private var mPdrEditBtnClickListener: ((bean: CltItemsEditBean, vb: PandoraItemCltDynEditBinding, holder: DataVBViewHolder, position: Int) -> Unit)? = null
+    private var mPdrItemEditBtnClickListener: ((bean: CltItemsEditBean, vb: PandoraItemCltDynEditBinding, holder: DataVBViewHolder, position: Int) -> Unit)? = null
 
     /** 删除按钮点击监听器 */
-    private var mPdrDeleteBtnClickListener: ((bean: CltItemsEditBean, vb: PandoraItemCltDynEditBinding, holder: DataVBViewHolder, position: Int) -> Unit)? = null
+    private var mPdrItemDeleteBtnClickListener: ((bean: CltItemsEditBean, vb: PandoraItemCltDynEditBinding, holder: DataVBViewHolder, position: Int) -> Unit)? = null
 
     private var mPdrDataList = ArrayList<CltItemsEditBean>()
 
@@ -131,6 +116,7 @@ class CltDynItemsEditView : FrameLayout {
         mRecyclerView.setHasFixedSize(false)
         mAdapter = CltItemsEditAdapter(context)
         mRecyclerView.linear().setup(mAdapter)
+        mAdapter.setData(mPdrDataList)
     }
 
     // 配置布局
@@ -318,7 +304,7 @@ class CltDynItemsEditView : FrameLayout {
             setMaxLength(max)
         }
         // 设置输入类型
-        setEditInputType(typedArray?.getInt(R.styleable.CltDynItemsEditView_itemEtInputType, TYPE_TEXT)?: TYPE_TEXT)
+        setEditInputType(typedArray?.getInt(R.styleable.CltDynItemsEditView_itemEtInputType, CltEditView.TYPE_TEXT)?: CltEditView.TYPE_TEXT)
         // 最小行数
         val minLines: Int = typedArray?.getInt(R.styleable.CltDynItemsEditView_itemEtMinLines, 0) ?: 0
         if (minLines > 0) {
@@ -412,6 +398,35 @@ class CltDynItemsEditView : FrameLayout {
             }
             mPdrAddBtnClickListener?.invoke(mPdrDefItemsEditBean)
         }
+
+        mAdapter.setOnItemEditBtnClickListener { bean, vb, holder, position ->
+            mPdrItemEditBtnClickListener?.invoke(bean, vb, holder, position)
+        }
+
+        mAdapter.setOnItemDeleteBtnClickListener { bean, vb, holder, position ->
+            if (mPdrItemDeleteBtnClickListener == null){
+                mAdapter.notifyItemRemovedChanged(position)
+                mRecyclerView.postDelayed(400) { // 删除后需要重绘RV，否则会有空白区域
+                    mRecyclerView.requestLayout()
+                }
+                return@setOnItemDeleteBtnClickListener
+            }
+            mPdrItemDeleteBtnClickListener?.invoke(bean, vb, holder, position)
+        }
+
+        mAdapter.setOnItemLimitListener { s, max, bean, vb, holder, position ->
+            mPdrItemLimitListener?.invoke(s, max, bean, vb, holder, position)
+        }
+
+        mAdapter.setOnItemTextChangedListener { s, bean, vb, holder, position ->
+            for (i in 0 until mPdrDataList.size) {
+                if (bean.id == mPdrDataList[i].id) {
+                    mPdrDataList[i].itemEtText = s.toString()
+                }
+            }
+            mPdrItemTextChangedListener?.invoke(s, bean, vb, holder, position)
+        }
+
     }
 
     /** 根据编号[id]获取ScaleType */
@@ -887,16 +902,12 @@ class CltDynItemsEditView : FrameLayout {
             toastShort("您最多可以新增 $mMaxItems 条数据")
             return
         }
-
         val bean = copyConfig()
         val item = itemBean ?: bean
-        if (item.id.isEmpty()){
-            item.id = DateUtils.getCurrentFormatString(DateUtils.TYPE_3)
+        if (item.id.isEmpty()){// 如果数据没有ID则补充上ID
+            item.id = DateUtils.getCurrentFormatString(DateUtils.TYPE_3) + Random.nextInt(999).toString()
         }
         mPdrDataList.add(item)
-        for ((i, editBean) in mPdrDataList.withIndex()) {
-            PrintLog.i("testtag", "i : $i ; itemText : ${editBean.itemEtText}")
-        }
         mAdapter.setData(mPdrDataList)
         mAdapter.notifyDataSetChanged()
     }
@@ -937,32 +948,6 @@ class CltDynItemsEditView : FrameLayout {
         bean.itemEditBtnSidePx = mPdrDefItemsEditBean.itemEditBtnSidePx
         bean.itemEditBtnScaleType = mPdrDefItemsEditBean.itemEditBtnScaleType
         bean.itemEditBtnVisibility = mPdrDefItemsEditBean.itemEditBtnVisibility
-        bean.itemDeleteBtnClickListener = { bean, vb, holder, position ->
-            if (mPdrDeleteBtnClickListener == null){
-                mAdapter.notifyItemRemovedChanged(position)
-                mPdrDataList.removeAt(position)
-                mRecyclerView.postDelayed(400) {
-                    mRecyclerView.requestLayout()
-                }
-            } else {
-                mPdrDeleteBtnClickListener?.invoke(bean, vb, holder, position)
-            }
-        }
-        bean.itemTextWatcherListener = { s, bean, vb, holder, position ->
-            for (i in 0 until mPdrDataList.size) {
-                if (bean.id.equals(mPdrDataList[i].id)){
-                    mPdrDataList[i].itemEtText = s.toString()
-                    PrintLog.v("testtag", "position : $position ; i : $i ; itemText : ${mPdrDataList[i].itemEtText}")
-                }
-            }
-            mPdrTextWatcherListener?.invoke(s, bean, vb, holder, position)
-        }
-        bean.itemLimitListener = { s, max, bean, vb, holder, position ->
-            mPdrLimitListener?.invoke(s, max, bean, vb, holder, position)
-        }
-        bean.itemEditBtnClickListener = {ean, vb, holder, position ->
-            mPdrEditBtnClickListener?.invoke(bean, vb, holder, position)
-        }
         return bean
     }
 
@@ -977,22 +962,22 @@ class CltDynItemsEditView : FrameLayout {
     }
 
     /** 设置文字限制监听器[listener] */
-    fun setOnInputTextLimitListener(listener: (s: CharSequence, max: Int, bean: CltItemsEditBean, vb: PandoraItemCltDynEditBinding, holder: DataVBViewHolder, position: Int) -> Unit) {
-        mPdrLimitListener = listener
+    fun setOnItemInputTextLimitListener(listener: (s: CharSequence, max: Int, bean: CltItemsEditBean, vb: PandoraItemCltDynEditBinding, holder: DataVBViewHolder, position: Int) -> Unit) {
+        mPdrItemLimitListener = listener
     }
 
     /** 设置文字变化监听器[listener] */
-    fun setOnTextWatcherListener(listener: (s: CharSequence, bean: CltItemsEditBean, vb: PandoraItemCltDynEditBinding, holder: DataVBViewHolder, position: Int) -> Unit) {
-        mPdrTextWatcherListener = listener
+    fun setOnItemTextChangedListener(listener: (s: CharSequence, bean: CltItemsEditBean, vb: PandoraItemCltDynEditBinding, holder: DataVBViewHolder, position: Int) -> Unit) {
+        mPdrItemTextChangedListener = listener
     }
 
     /** 设置编辑按钮点击监听器[listener] */
-    fun setOnEditBtnClickListener(listener: (bean: CltItemsEditBean, vb: PandoraItemCltDynEditBinding, holder: DataVBViewHolder, position: Int) -> Unit) {
-        mPdrEditBtnClickListener = listener
+    fun setOnItemEditBtnClickListener(listener: (bean: CltItemsEditBean, vb: PandoraItemCltDynEditBinding, holder: DataVBViewHolder, position: Int) -> Unit) {
+        mPdrItemEditBtnClickListener = listener
     }
 
     /** 设置删除按钮点击监听器[listener] */
-    fun setOnDeleteBtnClickListener(listener: (bean: CltItemsEditBean, vb: PandoraItemCltDynEditBinding, holder: DataVBViewHolder, position: Int) -> Unit) {
-        mPdrDeleteBtnClickListener = listener
+    fun setOnItemDeleteBtnClickListener(listener: (bean: CltItemsEditBean, vb: PandoraItemCltDynEditBinding, holder: DataVBViewHolder, position: Int) -> Unit) {
+        mPdrItemDeleteBtnClickListener = listener
     }
 }

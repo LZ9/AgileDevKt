@@ -90,14 +90,4 @@ class CltItemsEditBean {
     var itemEditBtnScaleType: ScaleType? = null
     /** 条目编辑图标可见性 */
     var itemEditBtnVisibility = View.GONE
-
-
-    /** 编辑按钮点击监听器 */
-    var itemEditBtnClickListener: ((bean: CltItemsEditBean, vb: PandoraItemCltDynEditBinding, holder: DataVBViewHolder, position: Int) -> Unit)? = null
-    /** 删除按钮点击监听器 */
-    var itemDeleteBtnClickListener: ((bean: CltItemsEditBean, vb: PandoraItemCltDynEditBinding, holder: DataVBViewHolder, position: Int) -> Unit)? = null
-    /** 文字限制监听器 */
-    var itemLimitListener: ((s: CharSequence, max: Int, bean: CltItemsEditBean, vb: PandoraItemCltDynEditBinding, holder: DataVBViewHolder, position: Int) -> Unit)? = null
-    /** 文字变化监听器 */
-    var itemTextWatcherListener: ((s: CharSequence, bean: CltItemsEditBean, vb: PandoraItemCltDynEditBinding, holder: DataVBViewHolder, position: Int) -> Unit)? = null
 }
