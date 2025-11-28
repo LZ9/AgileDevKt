@@ -892,6 +892,16 @@ class CltDynItemsEditView : FrameLayout {
     /** 获取列表适配器 */
     fun getRvAdapter(): BaseVbRvAdapter<CltItemsEditBean> = mAdapter
 
+    /** 获取列表数据 */
+    fun getDataList(): ArrayList<CltItemsEditBean> = mPdrDataList
+
+    /** 清空数据 */
+    fun cleanDataList(){
+        mPdrDataList.clear()
+        mAdapter.setData(mPdrDataList)
+        mAdapter.notifyDataSetChanged()
+    }
+
     /** 获取条目配置 */
     fun getItemConfig(): CltItemsEditBean = copyConfig()
 
