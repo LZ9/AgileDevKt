@@ -248,6 +248,9 @@ class CltDynItemsEditView : FrameLayout {
             setItemTitleBackground(itemTitleBackground)
         }
 
+        // 设置条目输入框最后一条记录是否启用请求焦点
+        setItemEtLastFocusEnabled(typedArray?.getBoolean(R.styleable.CltDynItemsEditView_itemEtLastFocusEnabled, false) ?: false)
+
         // 设置条目输入框文字
         val itemEtText: String? = typedArray?.getString(R.styleable.CltDynItemsEditView_itemEtText)
         if (itemEtText != null) {
@@ -696,6 +699,11 @@ class CltDynItemsEditView : FrameLayout {
         setItemEtText(context.getString(resId))
     }
 
+    /** 设置条目输入框最后一条记录是否启用[enabled]请求焦点 */
+    fun setItemEtLastFocusEnabled(enabled: Boolean) {
+        mPdrDefItemsEditBean.itemEtLastFocusEnabled = enabled
+    }
+
     /** 设置条目输入框标记[tag] */
     fun setItemEtTag(tag: String) {
         mPdrDefItemsEditBean.itemEtTag = tag
@@ -940,6 +948,7 @@ class CltDynItemsEditView : FrameLayout {
         bean.itemEtHintTextColor = mPdrDefItemsEditBean.itemEtHintTextColor
         bean.itemEtBackgroundDrawable = mPdrDefItemsEditBean.itemEtBackgroundDrawable
         bean.itemEtGravity = mPdrDefItemsEditBean.itemEtGravity
+        bean.itemEtLastFocusEnabled = mPdrDefItemsEditBean.itemEtLastFocusEnabled
         bean.itemEtSingleLine = mPdrDefItemsEditBean.itemEtSingleLine
         bean.itemEtMaxCount = mPdrDefItemsEditBean.itemEtMaxCount
         bean.itemEtMinLines = mPdrDefItemsEditBean.itemEtMinLines

@@ -4,10 +4,8 @@ import android.content.res.ColorStateList
 import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.ImageView.ScaleType
-import com.lodz.android.pandora.databinding.PandoraItemCltDynEditBinding
 import com.lodz.android.pandora.widget.collect.CltEditView.Companion.TYPE_TEXT
 import com.lodz.android.pandora.widget.collect.CltEditView.EditInputType
-import com.lodz.android.pandora.widget.rv.recycler.vh.DataVBViewHolder
 
 /**
  * 动态条目输入框数据对象
@@ -50,6 +48,8 @@ class CltItemsEditBean {
     var itemEtBackgroundDrawable: Drawable? = null
     /** 条目输入框文字位置 */
     var itemEtGravity: Int = 0
+    /** 条目输入框最后一条记录是否启用请求焦点 */
+    var itemEtLastFocusEnabled = false
     /** 条目输入框是否单行显示 */
     var itemEtSingleLine: Boolean = false
     /** 条目输入框最大输入字数 */

@@ -143,6 +143,14 @@ class CltItemsEditAdapter(context: Context) : BaseVbRvAdapter<CltItemsEditBean>(
     private fun showEditTextView(bean: CltItemsEditBean, vb: PandoraItemCltDynEditBinding, holder: DataVBViewHolder, position: Int) {
         vb.pdrContentEdit.let {
             it.isEnabled = !bean.readOnly
+            if (bean.itemEtLastFocusEnabled){
+                if (position == getDataSize() - 1){
+                    it.post { it.requestFocus() }
+                }else{
+                    it.clearFocus()
+                }
+            }
+
             it.setText(bean.itemEtText)
 
             if (bean.itemEtBackgroundDrawable != null) {

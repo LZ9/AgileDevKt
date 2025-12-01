@@ -377,6 +377,7 @@
         <attr name="itemEtHint" format="string" />
         <attr name="itemEtHintColor" format="reference|color" />
         <attr name="itemEtTag" format="string" />
+        <attr name="itemEtLastFocusEnabled" format="boolean" />
         <attr name="itemEtGravity" format="integer">
             <enum name="center_vertical" value="0" />
             <enum name="center" value="1" />

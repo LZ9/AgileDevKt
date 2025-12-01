@@ -143,6 +143,7 @@
                 app:itemEtGravity="center_vertical"
                 app:itemEtHint="请输入"
                 app:itemEtInputType="phone"
+                app:itemEtLastFocusEnabled="true"
                 app:itemTitleText="@string/clt_phone_number"
                 app:titleText="@string/clt_contact" />
 
