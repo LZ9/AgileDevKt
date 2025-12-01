@@ -204,6 +204,12 @@ open class NineGridView<T> : FrameLayout {
         mPdrAdapter.notifyDataSetChanged()
     }
 
+    /** 获取最大图片数 */
+    fun getMaxPic(): Int = mPdrAdapter.getMaxPic()
+
+    /** 获取适配器 */
+    fun getAdapter(): NineGridAdapter<T> = mPdrAdapter
+
     /** 设置数据 */
     fun setData(data: ArrayList<T>) {
         mPdrDataList = ArrayList()
