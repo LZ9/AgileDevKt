@@ -9,25 +9,43 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.lodz.android.agiledevkt.R
-import com.lodz.android.agiledevkt.databinding.ActivityRefreshLoadMoreBinding
+import com.lodz.android.agiledevkt.bean.NationBean
+import com.lodz.android.agiledevkt.config.Constant
+import com.lodz.android.agiledevkt.databinding.ActivityRefreshLoadMoreNsvBinding
+import com.lodz.android.agiledevkt.databinding.RvItemHeadFooterBinding
 import com.lodz.android.agiledevkt.modules.rv.popup.LayoutManagerPopupWindow
+import com.lodz.android.agiledevkt.modules.rv.snap.SnapAdapter
+import com.lodz.android.corekt.anko.getScreenWidth
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.pandora.base.activity.BaseRefreshActivity
 import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
 import com.lodz.android.pandora.rx.utils.RxUtils
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
-import com.lodz.android.pandora.widget.rv.anko.*
+import com.lodz.android.pandora.widget.rv.anko.grid
+import com.lodz.android.pandora.widget.rv.anko.hideItemNotify
+import com.lodz.android.pandora.widget.rv.anko.layoutM
+import com.lodz.android.pandora.widget.rv.anko.linear
+import com.lodz.android.pandora.widget.rv.anko.loadMore
+import com.lodz.android.pandora.widget.rv.anko.loadMoreFail
+import com.lodz.android.pandora.widget.rv.anko.loadMoreListener
+import com.lodz.android.pandora.widget.rv.anko.loadMoreStart
+import com.lodz.android.pandora.widget.rv.anko.loadMoreSuccess
+import com.lodz.android.pandora.widget.rv.anko.setup
+import com.lodz.android.pandora.widget.rv.anko.setupVB
+import com.lodz.android.pandora.widget.rv.snap.TabPagerSnapHelper
 import com.trello.rxlifecycle4.android.ActivityEvent
+import kotlin.getValue
 
 /**
- * RV刷新/加载更多测试（继承BaseRefreshActivity实现）
- * Created by zhouL on 2018/11/23.
+ * RV刷新/加载更多测试（嵌套NestedScrollView实现）
+ * @author zhouL
+ * @date 2025/12/15
  */
-class RefreshLoadMoreActivity : BaseRefreshActivity() {
+class RefreshLoadMoreNSVActivity : BaseRefreshActivity() {
 
     companion object {
         fun start(context: Context) {
-            val intent = Intent(context, RefreshLoadMoreActivity::class.java)
+            val intent = Intent(context, RefreshLoadMoreNSVActivity::class.java)
             context.startActivity(intent)
         }
     }
@@ -39,7 +57,7 @@ class RefreshLoadMoreActivity : BaseRefreshActivity() {
     /** 预加载偏移量 */
     private val LOAD_MORE_INDEX = 1
 
-    private val mBinding: ActivityRefreshLoadMoreBinding by bindingLayout(ActivityRefreshLoadMoreBinding::inflate)
+    private val mBinding: ActivityRefreshLoadMoreNsvBinding by bindingLayout(ActivityRefreshLoadMoreNsvBinding::inflate)
 
     /** 适配器 */
     private lateinit var mAdapter: LoadMoreRvAdapter
@@ -55,12 +73,34 @@ class RefreshLoadMoreActivity : BaseRefreshActivity() {
     override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
-        getTitleBarLayout().setTitleName(R.string.rvrefresh_load_extends_activity)
-        initRecyclerView()
+        getTitleBarLayout().setTitleName(R.string.rvrefresh_load_nested_scrollview)
+        initTabRecyclerView()
+        initGridRecyclerView()
+        initListRecyclerView()
     }
 
-    private fun initRecyclerView() {
-        mAdapter = mBinding.recyclerView
+    private fun initTabRecyclerView() {
+        mBinding.tabRv
+            .linear(RecyclerView.HORIZONTAL)
+            .setup(SnapAdapter(getContext()))
+            .setData(getNationList())
+        val snapHelper = TabPagerSnapHelper(0)
+        snapHelper.attachToRecyclerView(mBinding.tabRv)
+    }
+
+    private fun initGridRecyclerView() {
+        mBinding.gridRv
+            .grid(3)
+            .setupVB<NationBean, RvItemHeadFooterBinding>(RvItemHeadFooterBinding::inflate) { context, vb, holder, position ->
+                setItemViewWidth(holder.itemView, context.getScreenWidth() / 3)
+                val item = getItem(position)
+                vb.dataTv.text = item?.name ?: ""
+            }
+            .setData(getNationList())
+    }
+
+    private fun initListRecyclerView() {
+        mAdapter = mBinding.listRv
             .layoutM(getLayoutManager())
             .loadMore(LoadMoreRvAdapter(getContext()))
             .apply {
@@ -161,11 +201,6 @@ class RefreshLoadMoreActivity : BaseRefreshActivity() {
         mBinding.loadFailSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
             isLoadFail = isChecked
         }
-
-        // 布局按钮
-        mBinding.layoutManagerBtn.setOnClickListener { view ->
-            showLayoutManagerPopupWindow(view)
-        }
     }
 
     override fun initData() {
@@ -191,20 +226,33 @@ class RefreshLoadMoreActivity : BaseRefreshActivity() {
             })
     }
 
-    /** 显示布局的PopupWindow */
-    private fun showLayoutManagerPopupWindow(view: View) {
-        val popupWindow = LayoutManagerPopupWindow(getContext())
-        popupWindow.create()
-        popupWindow.setLayoutManagerType(mLayoutManagerType)
-        popupWindow.getPopup().showAsDropDown(view, -45, 20)
-        popupWindow.setOnClickListener { popup, type ->
-            mLayoutManagerType = type
-            mBinding.recyclerView.layoutManager = getLayoutManager()
-            mAdapter.setLayoutManagerType(mLayoutManagerType)
-            mAdapter.onAttachedToRecyclerView(mBinding.recyclerView)
-            mAdapter.notifyDataSetChanged()
-            popup.dismiss()
-        }
-    }
+    /** 获取国家数据 */
+    private fun getNationList(): ArrayList<NationBean> {
+        /** 国旗 */
+        val imgs = arrayOf(
+            Constant.CHN_FLAG_URL,
+            Constant.USA_FLAG_URL,
+            Constant.RUS_FLAG_URL,
+            Constant.JPN_FLAG_URL,
+            Constant.KOR_FLAG_URL,
+            Constant.AUS_FLAG_URL,
+            Constant.UKR_FLAG_URL,
+            Constant.PRK_FLAG_URL,
+            Constant.BRA_FLAG_URL
+        )
+        /** 名称 */
+        val names = arrayOf("中国", "美国", "俄罗斯", "日本", "韩国", "澳大利亚", "乌克兰", "朝鲜", "巴西")
+        /** 缩写 */
+        val codes = arrayOf("CHN", "USA", "RUS", "JPN", "KOR", "AUS", "UKR", "PRK", "BRA")
 
+        val list = ArrayList<NationBean>()
+        for (i in imgs.indices) {
+            val bean = NationBean()
+            bean.imgUrl = imgs[i]
+            bean.name = names[i]
+            bean.code = codes[i]
+            list.add(bean)
+        }
+        return list
+    }
 }

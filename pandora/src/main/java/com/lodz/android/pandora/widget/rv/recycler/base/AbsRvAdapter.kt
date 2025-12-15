@@ -198,14 +198,14 @@ abstract class AbsRvAdapter<T, VH : RecyclerView.ViewHolder>(protected val conte
     ): VB = inflate(LayoutInflater.from(parent.context), parent, attachToRoot)
 
     /** 设置[itemView]的宽度值[width] */
-    protected fun setItemViewWidth(itemView: View, width: Int) {
+    fun setItemViewWidth(itemView: View, width: Int) {
         val layoutParams = itemView.layoutParams
         layoutParams.width = width
         itemView.layoutParams = layoutParams
     }
 
     /** 设置[itemView]的高度值[height] */
-    protected fun setItemViewHeight(itemView: View, height: Int) {
+    fun setItemViewHeight(itemView: View, height: Int) {
         val layoutParams = itemView.layoutParams
         layoutParams.height = height
         itemView.layoutParams = layoutParams

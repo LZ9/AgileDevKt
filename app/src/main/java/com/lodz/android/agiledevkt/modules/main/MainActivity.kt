@@ -65,7 +65,7 @@ import com.lodz.android.agiledevkt.modules.rv.binder.BinderRvActivity
 import com.lodz.android.agiledevkt.modules.rv.decoration.DecorationRvActivity
 import com.lodz.android.agiledevkt.modules.rv.drag.DragRvActivity
 import com.lodz.android.agiledevkt.modules.rv.head.HeadFooterRvActivity
-import com.lodz.android.agiledevkt.modules.rv.loadmore.RefreshLoadMoreActivity
+import com.lodz.android.agiledevkt.modules.rv.loadmore.RefreshLoadMoreMainActivity
 import com.lodz.android.agiledevkt.modules.rv.snap.SnapRvActivity
 import com.lodz.android.agiledevkt.modules.rv.swipe.SwipeRvActivity
 import com.lodz.android.agiledevkt.modules.rv.tree.TreeRvActivity
@@ -148,7 +148,7 @@ class MainActivity : BaseActivity() {
         MainBean("MVC模式测试类", "M", MvcDemoActivity::class.java),
         MainBean("共享元素动画", "G", TransitionActivity::class.java),
         MainBean("RV动画测试", "R", AnimRvActivity::class.java),
-        MainBean("RV刷新/加载更多测试", "R", RefreshLoadMoreActivity::class.java),
+        MainBean("RV刷新/加载更多测试", "R", RefreshLoadMoreMainActivity::class.java),
         MainBean("RV带头/底部测试", "R", HeadFooterRvActivity::class.java),
         MainBean("RV拖拽测试", "R", DragRvActivity::class.java),
         MainBean("RV树结构测试类", "R", TreeRvActivity::class.java),
