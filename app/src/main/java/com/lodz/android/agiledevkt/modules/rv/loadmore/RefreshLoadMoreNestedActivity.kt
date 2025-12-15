@@ -4,16 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.NationBean
 import com.lodz.android.agiledevkt.config.Constant
-import com.lodz.android.agiledevkt.databinding.ActivityRefreshLoadMoreNsvBinding
+import com.lodz.android.agiledevkt.databinding.ActivityRefreshLoadMoreNestedBinding
 import com.lodz.android.agiledevkt.databinding.RvItemHeadFooterBinding
-import com.lodz.android.agiledevkt.modules.rv.popup.LayoutManagerPopupWindow
 import com.lodz.android.agiledevkt.modules.rv.snap.SnapAdapter
 import com.lodz.android.corekt.anko.getScreenWidth
 import com.lodz.android.corekt.anko.toastShort
@@ -23,7 +19,6 @@ import com.lodz.android.pandora.rx.utils.RxUtils
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.rv.anko.grid
 import com.lodz.android.pandora.widget.rv.anko.hideItemNotify
-import com.lodz.android.pandora.widget.rv.anko.layoutM
 import com.lodz.android.pandora.widget.rv.anko.linear
 import com.lodz.android.pandora.widget.rv.anko.loadMore
 import com.lodz.android.pandora.widget.rv.anko.loadMoreFail
@@ -37,15 +32,15 @@ import com.trello.rxlifecycle4.android.ActivityEvent
 import kotlin.getValue
 
 /**
- * RV刷新/加载更多测试（嵌套NestedScrollView实现）
+ * RV刷新/加载更多测试（嵌套滑动实现）
  * @author zhouL
  * @date 2025/12/15
  */
-class RefreshLoadMoreNSVActivity : BaseRefreshActivity() {
+class RefreshLoadMoreNestedActivity : BaseRefreshActivity() {
 
     companion object {
         fun start(context: Context) {
-            val intent = Intent(context, RefreshLoadMoreNSVActivity::class.java)
+            val intent = Intent(context, RefreshLoadMoreNestedActivity::class.java)
             context.startActivity(intent)
         }
     }
@@ -57,7 +52,7 @@ class RefreshLoadMoreNSVActivity : BaseRefreshActivity() {
     /** 预加载偏移量 */
     private val LOAD_MORE_INDEX = 1
 
-    private val mBinding: ActivityRefreshLoadMoreNsvBinding by bindingLayout(ActivityRefreshLoadMoreNsvBinding::inflate)
+    private val mBinding: ActivityRefreshLoadMoreNestedBinding by bindingLayout(ActivityRefreshLoadMoreNestedBinding::inflate)
 
     /** 适配器 */
     private lateinit var mAdapter: LoadMoreRvAdapter
@@ -66,19 +61,16 @@ class RefreshLoadMoreNSVActivity : BaseRefreshActivity() {
     /** 是否加载失败 */
     private var isLoadFail: Boolean = false
 
-    /** 当前布局 */
-    @LayoutManagerPopupWindow.LayoutManagerType
-    private var mLayoutManagerType = LayoutManagerPopupWindow.TYPE_LINEAR
-
     override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
-        getTitleBarLayout().setTitleName(R.string.rvrefresh_load_nested_scrollview)
+        getTitleBarLayout().setTitleName(R.string.rvrefresh_load_nested)
         initTabRecyclerView()
         initGridRecyclerView()
         initListRecyclerView()
     }
 
+    /** 初始化栏目布局 */
     private fun initTabRecyclerView() {
         mBinding.tabRv
             .linear(RecyclerView.HORIZONTAL)
@@ -88,6 +80,7 @@ class RefreshLoadMoreNSVActivity : BaseRefreshActivity() {
         snapHelper.attachToRecyclerView(mBinding.tabRv)
     }
 
+    /** 初始化网格布局 */
     private fun initGridRecyclerView() {
         mBinding.gridRv
             .grid(3)
@@ -99,13 +92,12 @@ class RefreshLoadMoreNSVActivity : BaseRefreshActivity() {
             .setData(getNationList())
     }
 
+    /** 初始化列表布局 */
     private fun initListRecyclerView() {
         mAdapter = mBinding.listRv
-            .layoutM(getLayoutManager())
+            .linear()
             .loadMore(LoadMoreRvAdapter(getContext()))
-            .apply {
-                setLayoutManagerType(mLayoutManagerType)
-            }.loadMoreListener(
+            .loadMoreListener(
                 onLoadMore = {currentPage, nextPage, size, position ->
                     DataModule.get().requestData(nextPage)
                         .compose(RxUtils.ioToMainObservable())
@@ -133,21 +125,6 @@ class RefreshLoadMoreNSVActivity : BaseRefreshActivity() {
                         }))
                 }
             )
-    }
-
-    /** 获取RV布局 */
-    private fun getLayoutManager(): RecyclerView.LayoutManager {
-        if (mLayoutManagerType == LayoutManagerPopupWindow.TYPE_GRID) {
-            val layoutManager = GridLayoutManager(getContext(), 3)
-            layoutManager.orientation = RecyclerView.VERTICAL
-            return layoutManager
-        }
-        if (mLayoutManagerType == LayoutManagerPopupWindow.TYPE_STAGGERED) {
-            return StaggeredGridLayoutManager(3, RecyclerView.VERTICAL)
-        }
-        val layoutManager = LinearLayoutManager(getContext())
-        layoutManager.orientation = RecyclerView.VERTICAL
-        return layoutManager
     }
 
     override fun onClickBackBtn() {
@@ -200,6 +177,13 @@ class RefreshLoadMoreNSVActivity : BaseRefreshActivity() {
         // 加载失败开关
         mBinding.loadFailSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
             isLoadFail = isChecked
+        }
+
+        mBinding.appBarLayout.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
+            val enable = verticalOffset >= 0
+            if (getSwipeRefreshLayout().isEnabled != enable){
+                getSwipeRefreshLayout().isEnabled = enable
+            }
         }
     }
 

@@ -45,9 +45,9 @@ class RefreshLoadMoreMainActivity : BaseActivity() {
             RefreshLoadMoreActivity.start(getContext())
         }
 
-        // 嵌套NestedScrollView实现
+        // 嵌套滑动实现
         mBinding.nestedBtn.setOnClickListener {
-            RefreshLoadMoreNSVActivity.start(getContext())
+            RefreshLoadMoreNestedActivity.start(getContext())
         }
     }
 

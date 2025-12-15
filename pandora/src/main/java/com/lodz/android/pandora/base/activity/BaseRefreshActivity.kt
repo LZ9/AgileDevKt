@@ -229,6 +229,9 @@ abstract class BaseRefreshActivity : AbsActivity() {
         return mPdrErrorLayout!!
     }
 
+    /** 获取下拉刷新控件 */
+    protected fun getSwipeRefreshLayout(): SwipeRefreshLayout = mPdrSwipeRefreshLayout
+
     /** 是否加载中 */
     protected fun isLoading(): Boolean = getLoadingLayout().visibility == View.VISIBLE
 
