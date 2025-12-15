@@ -9,10 +9,10 @@ android {
     namespace 'com.lodz.android.imageloaderkt'
     compileSdkVersion 36
     defaultConfig {
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 36
-        versionCode 29
-        versionName "1.2.9"// 成功上传
+        versionCode 30
+        versionName "1.3.0"// 未上传
     }
 
     buildTypes {

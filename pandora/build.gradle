@@ -8,10 +8,10 @@ android {
     namespace 'com.lodz.android.pandora'
     compileSdkVersion 36
     defaultConfig {
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 36
-        versionCode 74
-        versionName "2.1.6"// 成功上传
+        versionCode 75
+        versionName "2.1.7"// 未上传
     }
 
     viewBinding {
