@@ -34,9 +34,9 @@ class RefreshLoadMoreActivity : BaseRefreshActivity() {
     }
 
     /** 每页数量 */
-    private val PAGE_SIZE = 10
+    private val PAGE_SIZE = 20
     /** 最大数量 */
-    private val MAX_SIZE = 30
+    private val MAX_SIZE = 60
 
     private val mBinding: ActivityRefreshLoadMoreBinding by bindingLayout(ActivityRefreshLoadMoreBinding::inflate)
 

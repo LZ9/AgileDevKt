@@ -29,7 +29,7 @@ class DataModule private constructor() {
 
     private fun getList(page: Int): List<String> {
         val list = ArrayList<String>()
-        for (i in 0 until 10) {
+        for (i in 0 until 20) {
             val data = "第${page}页 - ${i + 1}号小姐姐"
             list.add(data)
         }

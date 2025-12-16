@@ -4,12 +4,16 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.NationBean
 import com.lodz.android.agiledevkt.config.Constant
 import com.lodz.android.agiledevkt.databinding.ActivityRefreshLoadMoreNestedBinding
 import com.lodz.android.agiledevkt.databinding.RvItemHeadFooterBinding
+import com.lodz.android.agiledevkt.modules.rv.popup.LayoutManagerPopupWindow
 import com.lodz.android.agiledevkt.modules.rv.snap.SnapAdapter
 import com.lodz.android.corekt.anko.append
 import com.lodz.android.corekt.anko.getScreenWidth
@@ -20,6 +24,7 @@ import com.lodz.android.pandora.rx.utils.RxUtils
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.rv.anko.grid
 import com.lodz.android.pandora.widget.rv.anko.hideItemNotify
+import com.lodz.android.pandora.widget.rv.anko.layoutM
 import com.lodz.android.pandora.widget.rv.anko.linear
 import com.lodz.android.pandora.widget.rv.anko.loadMore
 import com.lodz.android.pandora.widget.rv.anko.loadMoreFail
@@ -47,9 +52,9 @@ class RefreshLoadMoreNestedActivity : BaseRefreshActivity() {
     }
 
     /** 每页数量 */
-    private val PAGE_SIZE = 10
+    private val PAGE_SIZE = 20
     /** 最大数量 */
-    private val MAX_SIZE = 30
+    private val MAX_SIZE = 60
 
     private val mBinding: ActivityRefreshLoadMoreNestedBinding by bindingLayout(ActivityRefreshLoadMoreNestedBinding::inflate)
 
@@ -59,6 +64,10 @@ class RefreshLoadMoreNestedActivity : BaseRefreshActivity() {
     private var mList: MutableList<String> = ArrayList()
     /** 是否加载失败 */
     private var isLoadFail: Boolean = false
+
+    /** 当前布局 */
+    @LayoutManagerPopupWindow.LayoutManagerType
+    private var mLayoutManagerType = LayoutManagerPopupWindow.TYPE_LINEAR
 
     override fun getViewBindingLayout(): View = mBinding.root
 
@@ -94,7 +103,7 @@ class RefreshLoadMoreNestedActivity : BaseRefreshActivity() {
     /** 初始化列表布局 */
     private fun initListRecyclerView() {
         mAdapter = mBinding.listRv
-            .linear()
+            .layoutM(getLayoutManager())
             .loadMore(LoadMoreRvAdapter(getContext()))
             .loadMoreListener(
                 onLoadMore = {currentPage, nextPage, size, position ->
@@ -124,6 +133,21 @@ class RefreshLoadMoreNestedActivity : BaseRefreshActivity() {
                         }))
                 }
             )
+    }
+
+    /** 获取RV布局 */
+    private fun getLayoutManager(): RecyclerView.LayoutManager {
+        if (mLayoutManagerType == LayoutManagerPopupWindow.TYPE_GRID) {
+            val layoutManager = GridLayoutManager(getContext(), 3)
+            layoutManager.orientation = RecyclerView.VERTICAL
+            return layoutManager
+        }
+        if (mLayoutManagerType == LayoutManagerPopupWindow.TYPE_STAGGERED) {
+            return StaggeredGridLayoutManager(3, RecyclerView.VERTICAL)
+        }
+        val layoutManager = LinearLayoutManager(getContext())
+        layoutManager.orientation = RecyclerView.VERTICAL
+        return layoutManager
     }
 
     override fun onClickBackBtn() {
@@ -178,7 +202,13 @@ class RefreshLoadMoreNestedActivity : BaseRefreshActivity() {
             isLoadFail = isChecked
         }
 
+        // 布局按钮
+        mBinding.layoutManagerBtn.setOnClickListener { view ->
+            showLayoutManagerPopupWindow(view)
+        }
+
         mBinding.appBarLayout.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
+            // 滑动到顶部时启用下拉刷新，其他情况下禁用
             val enable = verticalOffset >= 0
             if (getSwipeRefreshLayout().isEnabled != enable){
                 getSwipeRefreshLayout().isEnabled = enable
@@ -207,6 +237,22 @@ class RefreshLoadMoreNestedActivity : BaseRefreshActivity() {
 
                 }
             })
+    }
+
+    /** 显示布局的PopupWindow */
+    private fun showLayoutManagerPopupWindow(view: View) {
+        val popupWindow = LayoutManagerPopupWindow(getContext())
+        popupWindow.create()
+        popupWindow.setLayoutManagerType(mLayoutManagerType)
+        popupWindow.getPopup().showAsDropDown(view, -45, 20)
+        popupWindow.setOnClickListener { popup, type ->
+            mLayoutManagerType = type
+            mBinding.listRv.layoutManager = getLayoutManager()
+            mAdapter.setLayoutManagerType(mLayoutManagerType)
+            mAdapter.onAttachedToRecyclerView(mBinding.listRv)
+            mAdapter.notifyDataSetChanged()
+            popup.dismiss()
+        }
     }
 
     /** 获取国家数据 */

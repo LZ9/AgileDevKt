@@ -5,13 +5,34 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/load_fail_switch"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:text="@string/rvrefresh_load_fail"
-        android:textColor="@color/color_00a0e9" />
+        android:background="@color/white"
+        android:elevation="10dp"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/load_fail_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/rvrefresh_load_fail"
+            android:textColor="@color/color_00a0e9" />
+
+        <TextView
+            android:id="@+id/layout_manager_btn"
+            android:layout_width="60dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/bg_3981ef_corners_8"
+            android:gravity="center"
+            android:text="@string/rvpopup_layout_manager"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"
