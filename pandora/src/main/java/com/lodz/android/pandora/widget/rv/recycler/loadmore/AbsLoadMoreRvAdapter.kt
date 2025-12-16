@@ -158,7 +158,7 @@ abstract class AbsLoadMoreRvAdapter<T, VH : RecyclerView.ViewHolder>(context: Co
     }
 
     /** 隐藏某个位置[position]的Item */
-    fun hideItem(position: Int) {
+    open fun hideItem(position: Int) {
         mPdrHidePositionList?.add(position)
         if (mPdrHidePositionList.getSize() == mPdrSumSize) {// 隐藏的item数等于总数
             mPdrOnAllItemHideListener?.invoke()

@@ -37,6 +37,10 @@ abstract class AbsHeaderLoadMoreRvAdapter<T, H, VH : RecyclerView.ViewHolder>(co
     /** 获取头部数据 */
     fun getHeaderData(): H? = mPdrHeaderData
 
+    override fun hideItem(position: Int) {
+        super.hideItem(if (mPdrHeaderData != null) position + 1 else position)
+    }
+
     /** 适配GridLayoutManager */
     override fun adapterGridLayoutManager(layoutManager: GridLayoutManager) {
         if (layoutManager.orientation == RecyclerView.HORIZONTAL) {
