@@ -194,9 +194,9 @@ fun <T, AD : AbsLoadMoreRvAdapter<T, *>> AD.loadMoreListener(
     return this
 }
 
-/** 配置加载更多请在获得数据后调用该方法配置），数据[list]，总条数[sumSize]，每页条数[size]，是否显示底部提示界面[isShowBottomLayout]，预加载偏移量，滑动到倒数第[index]个item时就回调加载接口（默认值为0） */
+/** 配置加载更多请在获得数据后调用该方法配置），数据[list]，总条数[sumSize]，每页条数[size]，是否显示底部提示界面[isShowBottomLayout]，预加载偏移量（默认值为true），滑动到倒数第[index]个item时就回调加载接口（默认值为1） */
 @SuppressLint("NotifyDataSetChanged")
-fun <T> AbsLoadMoreRvAdapter<T, *>.loadMoreStart(list: MutableList<T>, sumSize: Int, size: Int, isShowBottomLayout: Boolean, index: Int = 0) {
+fun <T> AbsLoadMoreRvAdapter<T, *>.loadMoreStart(list: MutableList<T>, sumSize: Int, size: Int, isShowBottomLayout: Boolean = true, index: Int = 1) {
     if (this.isOpenItemAnim()) {
         this.resetItemAnimPosition()
     }

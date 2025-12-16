@@ -91,7 +91,7 @@ class MvvmTestLoadMoreActivity : BaseRefreshVmActivity() {
                     showStatusNoData()
                     return@observe
                 }
-                mAdapter.loadMoreStart(list, pageBean.total, pageBean.pageSize, true, 1)
+                mAdapter.loadMoreStart(list, pageBean.total, pageBean.pageSize)
                 showStatusCompleted()
                 return@observe
             }

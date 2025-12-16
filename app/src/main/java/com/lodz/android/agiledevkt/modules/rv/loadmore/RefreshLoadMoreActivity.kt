@@ -36,8 +36,6 @@ class RefreshLoadMoreActivity : BaseRefreshActivity() {
     private val PAGE_SIZE = 20
     /** 最大数量 */
     private val MAX_SIZE = 120
-    /** 预加载偏移量 */
-    private val LOAD_MORE_INDEX = 1
 
     private val mBinding: ActivityRefreshLoadMoreBinding by bindingLayout(ActivityRefreshLoadMoreBinding::inflate)
 
@@ -128,7 +126,7 @@ class RefreshLoadMoreActivity : BaseRefreshActivity() {
                     }
                     mList.clear()
                     mList.addAll(any)
-                    mAdapter.loadMoreStart(mList, MAX_SIZE, PAGE_SIZE, true, LOAD_MORE_INDEX)
+                    mAdapter.loadMoreStart(mList, MAX_SIZE, PAGE_SIZE)
                     showStatusCompleted()
                 }
 
@@ -181,7 +179,7 @@ class RefreshLoadMoreActivity : BaseRefreshActivity() {
                 override fun onBaseNext(any: List<String>) {
                     mList.clear()
                     mList.addAll(any)
-                    mAdapter.loadMoreStart(mList, MAX_SIZE, PAGE_SIZE, true, LOAD_MORE_INDEX)
+                    mAdapter.loadMoreStart(mList, MAX_SIZE, PAGE_SIZE)
                     showStatusCompleted()
                 }
 

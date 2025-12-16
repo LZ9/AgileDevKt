@@ -32,8 +32,8 @@ abstract class AbsLoadMoreRvAdapter<T, VH : RecyclerView.ViewHolder>(context: Co
     private var mPdrSize = 0
     /** 当前为第一页 */
     private var mPdrPage = 1
-    /** 预加载偏移量，默认滑动到倒数第3个item时就回调加载接口 */
-    private var mPdrLoadIndex = 3
+    /** 预加载偏移量，默认滑动到倒数第1个item时就回调加载接口 */
+    private var mPdrLoadIndex = 1
     /** 是否启动加载更多 */
     private var isPdrLoadMore = false
     /** 是否显示底部提示界面 */
@@ -128,7 +128,7 @@ abstract class AbsLoadMoreRvAdapter<T, VH : RecyclerView.ViewHolder>(context: Co
         this.mPdrHidePositionList = ArrayList()
     }
 
-    /** 预加载偏移量，滑动到倒数第[index]个item时就回调加载接口（默认值为3） */
+    /** 预加载偏移量，滑动到倒数第[index]个item时就回调加载接口（默认值为1） */
     fun setLoadIndex(index: Int) {
         this.mPdrLoadIndex = index
     }
