@@ -44,17 +44,15 @@ abstract class AbsHeaderLoadMoreRvAdapter<T, H, VH : RecyclerView.ViewHolder>(co
         }
         layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
-                var fixPosition = position
                 if (mPdrHeaderData != null){
-                    fixPosition = position - 1
                     if (position == 0){
                         return layoutManager.spanCount
                     }
                 }
-                // 如果开启底部加载提示则需要减去一个item数量
-                val size = if (isShowBottomLayout()) layoutManager.itemCount - 1 else layoutManager.itemCount
-                if ((fixPosition + 1) == size) {// 滚到底部
-                    return layoutManager.spanCount - fixPosition % layoutManager.spanCount
+//                // 默认减去头布局一个item数量，如果开启底部加载提示则需要再减去一个item数量
+                val size = if (isShowBottomLayout()) layoutManager.itemCount - 2 else layoutManager.itemCount - 1
+                if ((position - 1) == size) {// 滚到底部
+                    return layoutManager.spanCount
                 }
                 return 1
             }

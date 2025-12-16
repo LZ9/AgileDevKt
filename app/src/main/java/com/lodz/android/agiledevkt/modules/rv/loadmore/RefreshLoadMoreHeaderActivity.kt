@@ -4,10 +4,15 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.NationBean
 import com.lodz.android.agiledevkt.config.Constant
 import com.lodz.android.agiledevkt.databinding.ActivityRefreshLoadMoreHeaderBinding
+import com.lodz.android.agiledevkt.modules.rv.popup.LayoutManagerPopupWindow
 import com.lodz.android.corekt.anko.append
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.pandora.base.activity.BaseRefreshActivity
@@ -15,7 +20,7 @@ import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
 import com.lodz.android.pandora.rx.utils.RxUtils
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import com.lodz.android.pandora.widget.rv.anko.hideItemNotify
-import com.lodz.android.pandora.widget.rv.anko.linear
+import com.lodz.android.pandora.widget.rv.anko.layoutM
 import com.lodz.android.pandora.widget.rv.anko.loadMore
 import com.lodz.android.pandora.widget.rv.anko.loadMoreFail
 import com.lodz.android.pandora.widget.rv.anko.loadMoreListener
@@ -53,6 +58,10 @@ class RefreshLoadMoreHeaderActivity : BaseRefreshActivity() {
     /** 是否加载失败 */
     private var isLoadFail: Boolean = false
 
+    /** 当前布局 */
+    @LayoutManagerPopupWindow.LayoutManagerType
+    private var mLayoutManagerType = LayoutManagerPopupWindow.TYPE_LINEAR
+
     override fun getViewBindingLayout(): View = mBinding.root
 
     override fun findViews(savedInstanceState: Bundle?) {
@@ -65,7 +74,7 @@ class RefreshLoadMoreHeaderActivity : BaseRefreshActivity() {
         val adapter = LoadMoreHeadRvAdapter(getContext())
         adapter.setHeaderData(getNationList())
         mAdapter = mBinding.recyclerView
-            .linear()
+            .layoutM(getLayoutManager())
             .loadMore(adapter)
             .loadMoreListener(
                 onLoadMore = {currentPage, nextPage, size, position ->
@@ -95,6 +104,21 @@ class RefreshLoadMoreHeaderActivity : BaseRefreshActivity() {
                         }))
                 }
             )
+    }
+
+    /** 获取RV布局 */
+    private fun getLayoutManager(): RecyclerView.LayoutManager {
+        if (mLayoutManagerType == LayoutManagerPopupWindow.TYPE_GRID) {
+            val layoutManager = GridLayoutManager(getContext(), 3)
+            layoutManager.orientation = RecyclerView.VERTICAL
+            return layoutManager
+        }
+        if (mLayoutManagerType == LayoutManagerPopupWindow.TYPE_STAGGERED) {
+            return StaggeredGridLayoutManager(3, RecyclerView.VERTICAL)
+        }
+        val layoutManager = LinearLayoutManager(getContext())
+        layoutManager.orientation = RecyclerView.VERTICAL
+        return layoutManager
     }
 
     override fun onClickBackBtn() {
@@ -148,6 +172,11 @@ class RefreshLoadMoreHeaderActivity : BaseRefreshActivity() {
         mBinding.loadFailSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
             isLoadFail = isChecked
         }
+
+        // 布局按钮
+        mBinding.layoutManagerBtn.setOnClickListener { view ->
+            showLayoutManagerPopupWindow(view)
+        }
     }
 
     override fun initData() {
@@ -171,6 +200,22 @@ class RefreshLoadMoreHeaderActivity : BaseRefreshActivity() {
 
                 }
             })
+    }
+
+    /** 显示布局的PopupWindow */
+    private fun showLayoutManagerPopupWindow(view: View) {
+        val popupWindow = LayoutManagerPopupWindow(getContext())
+        popupWindow.create()
+        popupWindow.setLayoutManagerType(mLayoutManagerType)
+        popupWindow.getPopup().showAsDropDown(view, -45, 20)
+        popupWindow.setOnClickListener { popup, type ->
+            mLayoutManagerType = type
+            mBinding.recyclerView.layoutManager = getLayoutManager()
+            mAdapter.setLayoutManagerType(mLayoutManagerType)
+            mAdapter.onAttachedToRecyclerView(mBinding.recyclerView)
+            mAdapter.notifyDataSetChanged()
+            popup.dismiss()
+        }
     }
 
     /** 获取国家数据 */
