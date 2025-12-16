@@ -1,11 +1,12 @@
-package com.lodz.android.pandora.widget.rv.recycler
+package com.lodz.android.pandora.widget.rv.recycler.base
 
 import android.content.Context
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.lodz.android.pandora.widget.rv.recycler.base.BaseRvAdapter
+import androidx.viewbinding.ViewBinding
+import com.lodz.android.pandora.databinding.PandoraItemBlankBinding
 
 /**
  * 带Header和Footer的RecyclerView
@@ -67,8 +68,9 @@ abstract class BaseHeaderFooterRvAdapter<H, T, F>(context: Context) : BaseRvAdap
     /** 获取列表布局的ViewHolder */
     abstract fun getItemViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder
 
-    /** 获取头布局的ViewHolder */
-    abstract fun getFooterViewHolder(parent: ViewGroup): RecyclerView.ViewHolder
+    /** 获取底布局的ViewHolder */
+    protected open fun getFooterViewHolder(parent: ViewGroup): RecyclerView.ViewHolder =
+        BlankViewHolder(getViewBindingLayout(PandoraItemBlankBinding::inflate, parent))
 
     /** 设置头部数据[headerData] */
     fun setHeaderData(headerData: H?) {
@@ -268,4 +270,7 @@ abstract class BaseHeaderFooterRvAdapter<H, T, F>(context: Context) : BaseRvAdap
             }
         }
     }
+
+    /** 空白的ViewHolder */
+    private class BlankViewHolder(view: ViewBinding) : RecyclerView.ViewHolder(view.root)
 }
