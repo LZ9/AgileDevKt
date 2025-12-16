@@ -11,6 +11,7 @@ import com.lodz.android.agiledevkt.config.Constant
 import com.lodz.android.agiledevkt.databinding.ActivityRefreshLoadMoreNestedBinding
 import com.lodz.android.agiledevkt.databinding.RvItemHeadFooterBinding
 import com.lodz.android.agiledevkt.modules.rv.snap.SnapAdapter
+import com.lodz.android.corekt.anko.append
 import com.lodz.android.corekt.anko.getScreenWidth
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.pandora.base.activity.BaseRefreshActivity
@@ -46,9 +47,9 @@ class RefreshLoadMoreNestedActivity : BaseRefreshActivity() {
     }
 
     /** 每页数量 */
-    private val PAGE_SIZE = 20
+    private val PAGE_SIZE = 10
     /** 最大数量 */
-    private val MAX_SIZE = 120
+    private val MAX_SIZE = 30
 
     private val mBinding: ActivityRefreshLoadMoreNestedBinding by bindingLayout(ActivityRefreshLoadMoreNestedBinding::inflate)
 
@@ -161,7 +162,7 @@ class RefreshLoadMoreNestedActivity : BaseRefreshActivity() {
         }
 
         mAdapter.setOnItemLongClickListener { viewHolder, item, position ->
-            toastShort(R.string.rvrefresh_long_click_tips)
+            toastShort(item.append("  ").append(getContext().getString(R.string.rvrefresh_long_click_tips)))
         }
 
         mAdapter.setOnClickDeleteListener { position ->

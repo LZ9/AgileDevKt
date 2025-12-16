@@ -473,6 +473,7 @@
     <!-- 刷新/加载更多测试 -->
     <string name="rvrefresh_load_extends_activity">继承BaseRefreshActivity实现</string>
     <string name="rvrefresh_load_nested">嵌套滑动实现</string>
+    <string name="rvrefresh_load_header">头布局实现嵌套</string>
     <string name="rvrefresh_load_fail">加载失败</string>
     <string name="rvrefresh_delete">取关</string>
     <string name="rvrefresh_refresh_fail">刷新失败啦</string>

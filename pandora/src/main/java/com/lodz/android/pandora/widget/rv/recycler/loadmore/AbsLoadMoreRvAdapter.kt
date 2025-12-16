@@ -128,6 +128,9 @@ abstract class AbsLoadMoreRvAdapter<T, VH : RecyclerView.ViewHolder>(context: Co
         this.mPdrHidePositionList = ArrayList()
     }
 
+    /** 是否显示底部提示界面 */
+    fun isShowBottomLayout(): Boolean = isPdrShowBottomLayout
+
     /** 预加载偏移量，滑动到倒数第[index]个item时就回调加载接口（默认值为1） */
     fun setLoadIndex(index: Int) {
         this.mPdrLoadIndex = index
@@ -190,7 +193,7 @@ abstract class AbsLoadMoreRvAdapter<T, VH : RecyclerView.ViewHolder>(context: Co
     }
 
     /** 适配GridLayoutManager */
-    private fun adapterGridLayoutManager(layoutManager: GridLayoutManager) {
+    protected open fun adapterGridLayoutManager(layoutManager: GridLayoutManager) {
         if (layoutManager.orientation == RecyclerView.HORIZONTAL) {
             return
         }
@@ -212,7 +215,7 @@ abstract class AbsLoadMoreRvAdapter<T, VH : RecyclerView.ViewHolder>(context: Co
     }
 
     /** 适配StaggeredGridLayoutManager */
-    private fun adapterStaggeredGridLayoutManager(holder: VH) {
+    protected open fun adapterStaggeredGridLayoutManager(holder: VH) {
         val layoutParams = holder.itemView.layoutParams
         if (layoutParams is StaggeredGridLayoutManager.LayoutParams) {
             if (holder.itemViewType == VIEW_TYPE_LOADING_MORE || holder.itemViewType == VIEW_TYPE_LOAD_FINISH

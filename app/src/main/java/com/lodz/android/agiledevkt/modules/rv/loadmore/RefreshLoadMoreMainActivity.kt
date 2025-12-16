@@ -49,6 +49,11 @@ class RefreshLoadMoreMainActivity : BaseActivity() {
         mBinding.nestedBtn.setOnClickListener {
             RefreshLoadMoreNestedActivity.start(getContext())
         }
+
+        // 头布局实现嵌套
+        mBinding.headerBtn.setOnClickListener {
+            RefreshLoadMoreHeaderActivity.start(getContext())
+        }
     }
 
     override fun initData() {
