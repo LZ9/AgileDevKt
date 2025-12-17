@@ -18,12 +18,70 @@ import com.lodz.android.pandora.widget.rv.recycler.loadmore.data.SimpleLoadMoreD
 import com.lodz.android.pandora.widget.rv.recycler.loadmore.vb.SimpleLoadMoreVbRvAdapter
 import com.lodz.android.pandora.widget.rv.recycler.vh.DataVBViewHolder
 import com.lodz.android.pandora.widget.rv.recycler.vh.DataViewHolder
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlin.math.floor
 
 /**
  * RecyclerView工具类
  * @author zhouL
  * @date 2022/6/21
  */
+
+
+/** 判断RV是否滚动到顶部 */
+fun RecyclerView.isAtTop(): Boolean{
+    val ad = adapter ?: return true
+    if (ad.itemCount == 0) return true
+    val lm = layoutManager ?: return true
+    if (lm is LinearLayoutManager){
+        return lm.findFirstCompletelyVisibleItemPosition() == 0
+    }
+    if (lm is StaggeredGridLayoutManager){
+        val array = IntArray(lm.spanCount)
+        lm.findFirstCompletelyVisibleItemPositions(array)
+        val position = array.minOrNull() ?: -1
+        return position == 0
+    }
+    return false
+}
+
+/** RV平滑滚动到顶部 */
+fun RecyclerView.smoothScrollToTop(){
+    if (isAtTop()){
+        return
+    }
+    val ad = adapter ?: return
+    val lm = layoutManager ?: return
+    if (ad.itemCount <= 0){
+        return
+    }
+    val position = when(lm){
+        is LinearLayoutManager -> lm.findFirstCompletelyVisibleItemPosition()
+        is StaggeredGridLayoutManager -> {
+            val array = IntArray(lm.spanCount)
+            lm.findFirstCompletelyVisibleItemPositions(array)
+            array.minOrNull() ?: -1
+        }
+        else -> -1
+    }
+    if (position == -1){
+        this.smoothScrollToPosition(0)
+        return
+    }
+    val front = floor(ad.itemCount * 0.2).toInt()
+    if (position <= front){
+        this.smoothScrollToPosition(0)
+        return
+    }
+    val that = this
+    MainScope().launch {
+        that.scrollToPosition(front)
+        delay(20)
+        that.smoothScrollToPosition(0)
+    }
+}
 
 /** 设置RV布局 */
 fun RecyclerView.layoutM(

@@ -165,6 +165,11 @@ class RefreshLoadMoreActivity : BaseRefreshActivity() {
         mBinding.layoutManagerBtn.setOnClickListener { view ->
             showLayoutManagerPopupWindow(view)
         }
+
+        // 回到顶部按钮
+        mBinding.scorllTopBtn.setOnClickListener {
+            mBinding.recyclerView.smoothScrollToTop()
+        }
     }
 
     override fun initData() {

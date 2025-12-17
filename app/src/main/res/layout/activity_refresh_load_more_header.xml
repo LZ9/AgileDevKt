@@ -31,6 +31,22 @@
             android:text="@string/rvpopup_layout_manager"
             android:textColor="@color/white" />
 
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/scorll_top_btn"
+            android:layout_width="90dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/bg_3981ef_corners_8"
+            android:gravity="center"
+            android:text="@string/rvrefresh_scroll_top"
+            android:textColor="@color/white" />
+
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

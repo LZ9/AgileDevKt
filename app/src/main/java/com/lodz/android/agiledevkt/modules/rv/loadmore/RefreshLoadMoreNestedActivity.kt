@@ -33,6 +33,7 @@ import com.lodz.android.pandora.widget.rv.anko.loadMoreStart
 import com.lodz.android.pandora.widget.rv.anko.loadMoreSuccess
 import com.lodz.android.pandora.widget.rv.anko.setup
 import com.lodz.android.pandora.widget.rv.anko.setupVB
+import com.lodz.android.pandora.widget.rv.anko.smoothScrollToTop
 import com.lodz.android.pandora.widget.rv.snap.TabPagerSnapHelper
 import com.trello.rxlifecycle4.android.ActivityEvent
 import kotlin.getValue
@@ -205,6 +206,12 @@ class RefreshLoadMoreNestedActivity : BaseRefreshActivity() {
         // 布局按钮
         mBinding.layoutManagerBtn.setOnClickListener { view ->
             showLayoutManagerPopupWindow(view)
+        }
+
+        // 回到顶部按钮
+        mBinding.scorllTopBtn.setOnClickListener {
+            mBinding.listRv.smoothScrollToTop()
+            mBinding.appBarLayout.setExpanded(true, true)
         }
 
         mBinding.appBarLayout.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
