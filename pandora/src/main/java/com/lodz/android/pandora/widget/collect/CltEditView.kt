@@ -51,7 +51,7 @@ class CltEditView : FrameLayout {
         const val TYPE_NUMBER_DECIMAL = 4
         /** 外国证件 */
         const val TYPE_FOREIGN_CERT = 5
-        /** 外国证件 */
+        /** 输入车牌号 */
         const val TYPE_CAR_PLATE = 6
     }
 
