@@ -1,6 +1,22 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application>
+
+        <service
+            android:name=".widget.keyboard.collect.CollectInputMethodService"
+            android:exported="false"
+            android:label="@string/pandora_im_collect"
+            android:permission="android.permission.BIND_INPUT_METHOD">
+            <intent-filter>
+                <action android:name="android.view.InputMethod" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.view.im"
+                android:resource="@xml/pandora_method" />
+
+        </service>
+
         <activity
             android:name=".picker.preview.PicturePreviewActivity"
             android:screenOrientation="portrait">

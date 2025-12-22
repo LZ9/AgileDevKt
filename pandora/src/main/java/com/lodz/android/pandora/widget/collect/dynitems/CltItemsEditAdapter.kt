@@ -1,6 +1,7 @@
 package com.lodz.android.pandora.widget.collect.dynitems
 
 import android.content.Context
+import android.os.Bundle
 import android.text.Editable
 import android.text.InputFilter
 import android.text.InputType
@@ -13,6 +14,7 @@ import android.view.ViewGroup
 import androidx.viewbinding.ViewBinding
 import com.lodz.android.pandora.databinding.PandoraItemCltDynEditBinding
 import com.lodz.android.pandora.widget.collect.CltEditView
+import com.lodz.android.pandora.widget.keyboard.collect.CollectInputMethodService
 import com.lodz.android.pandora.widget.rv.recycler.base.BaseVbRvAdapter
 import com.lodz.android.pandora.widget.rv.recycler.vh.DataVBViewHolder
 
@@ -180,6 +182,7 @@ class CltItemsEditAdapter(context: Context) : BaseVbRvAdapter<CltItemsEditBean>(
                 it.maxLines = bean.itemEtMaxLines
             }
 
+            it.setEditorExtras(Bundle().apply { putInt(CollectInputMethodService.IMS_INPUT_TYPE, bean.itemEtInputType) })
             when (bean.itemEtInputType) {
                 CltEditView.TYPE_ID_CARD -> {
                     // 输入身份证号
@@ -198,6 +201,11 @@ class CltItemsEditAdapter(context: Context) : BaseVbRvAdapter<CltItemsEditBean>(
                     // 输入国外证件号
                     it.inputType = InputType.TYPE_CLASS_NUMBER
                     it.keyListener = DigitsKeyListener.getInstance("1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+                }
+                CltEditView.TYPE_CAR_PLATE -> {
+                    // 输入车牌
+                    it.inputType = InputType.TYPE_CLASS_NUMBER
+                    it.keyListener = DigitsKeyListener.getInstance("1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ京津渝沪冀晋辽吉黑苏浙皖闽赣鲁豫鄂湘粤琼川贵云陕甘青蒙桂宁新藏使领警学港澳")
                     it.transformationMethod = CltEditView.UpperCaseTransformation()
                 }
             }

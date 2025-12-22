@@ -280,11 +280,12 @@
         <attr name="maxLength" format="integer" />
         <attr name="inputType" format="integer">
             <enum name="text" value="0" />
-            <enum name="idcard" value="1" />
+            <enum name="idCard" value="1" />
             <enum name="phone" value="2" />
             <enum name="number" value="3" />
             <enum name="numberDecimal" value="4" />
             <enum name="foreignCert" value="5" />
+            <enum name="carPlate" value="6" />
         </attr>
         <attr name="minLines" format="integer" />
         <attr name="maxLines" format="integer" />
@@ -391,11 +392,12 @@
         <attr name="itemEtMaxLength" format="integer" />
         <attr name="itemEtInputType" format="integer">
             <enum name="text" value="0" />
-            <enum name="idcard" value="1" />
+            <enum name="idCard" value="1" />
             <enum name="phone" value="2" />
             <enum name="number" value="3" />
             <enum name="numberDecimal" value="4" />
             <enum name="foreignCert" value="5" />
+            <enum name="carPlate" value="6" />
         </attr>
         <attr name="itemEtMinLines" format="integer" />
         <attr name="itemEtMaxLines" format="integer" />

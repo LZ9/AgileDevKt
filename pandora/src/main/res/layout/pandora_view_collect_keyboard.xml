@@ -1,0 +1,1255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#d1d5db"
+    android:orientation="vertical"
+    android:padding="1dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/picker_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:scaleType="center"
+            android:src="@drawable/pandora_ic_keyboard" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@android:color/darker_gray" />
+
+        <TextView
+            android:id="@+id/id_card_btn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/pandora_im_id_card"
+            android:textColor="@drawable/pandora_selector_im_tab_text_color"
+            android:textSize="16sp" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@android:color/darker_gray" />
+
+        <TextView
+            android:id="@+id/car_plate_btn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/pandora_im_car_plate"
+            android:textColor="@drawable/pandora_selector_im_tab_text_color"
+            android:textSize="16sp" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@android:color/darker_gray" />
+
+        <TextView
+            android:id="@+id/com_cert_btn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/pandora_im_common_cert"
+            android:textColor="@drawable/pandora_selector_im_tab_text_color"
+            android:textSize="16sp" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@android:color/darker_gray" />
+
+        <ImageView
+            android:id="@+id/hide_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:scaleType="center"
+            android:src="@drawable/pandora_ic_arrow_down" />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp">
+
+        <!-- 身份证采集键盘 -->
+        <LinearLayout
+            android:id="@+id/id_card_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="4dp"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/id_card_1_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="1"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/id_card_2_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="2"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/id_card_3_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="3"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/id_card_4_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="4"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/id_card_5_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="5"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/id_card_6_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="6"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/id_card_7_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="7"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/id_card_8_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="8"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/id_card_9_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="9"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/id_card_X_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="X"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/id_card_0_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:layout_weight="2"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/id_card_delete_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="@string/pandora_im_delete"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/id_card_complete_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="@string/pandora_im_complete"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- 车牌号采集键盘 -->
+        <LinearLayout
+            android:id="@+id/car_plate_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="4dp"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="6dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/car_plate_1_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="1"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/car_plate_2_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="2"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/car_plate_3_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="3"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/car_plate_4_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="4"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/car_plate_5_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="5"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/car_plate_6_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="6"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/car_plate_7_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="7"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/car_plate_8_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="8"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/car_plate_9_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="9"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/car_plate_0_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="6dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/car_plate_q_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="Q"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/car_plate_w_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="W"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/car_plate_e_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="E"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/car_plate_r_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="R"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/car_plate_t_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="T"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/car_plate_y_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="Y"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/car_plate_u_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="U"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/car_plate_i_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="I"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/car_plate_o_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="O"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/car_plate_p_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="P"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="6dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/car_plate_a_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="A"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/car_plate_s_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="S"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/car_plate_d_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="D"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/car_plate_f_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="F"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/car_plate_g_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="G"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/car_plate_h_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="H"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/car_plate_j_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="J"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/car_plate_k_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="K"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/car_plate_l_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="L"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/car_plate_delete_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.5"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="@string/pandora_im_delete"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="6dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/car_plate_zw_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.5"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="@string/pandora_im_chinese"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/car_plate_z_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="Z"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/car_plate_x_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="X"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/car_plate_c_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="C"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/car_plate_v_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="V"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/car_plate_b_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="B"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/car_plate_n_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="N"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/car_plate_m_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="M"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/car_plate_complete_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.5"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="@string/pandora_im_complete"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- 通用证件号采集键盘 -->
+        <LinearLayout
+            android:id="@+id/com_cert_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="4dp"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="6dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/com_cert_1_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="1"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/com_cert_2_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="2"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/com_cert_3_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="3"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/com_cert_4_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="4"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/com_cert_5_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="5"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/com_cert_6_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="6"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/com_cert_7_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="7"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/com_cert_8_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="8"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/com_cert_9_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="9"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/com_cert_0_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="6dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/com_cert_q_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="Q"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/com_cert_w_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="W"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/com_cert_e_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="E"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/com_cert_r_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="R"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/com_cert_t_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="T"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/com_cert_y_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="Y"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/com_cert_u_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="U"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/com_cert_i_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="I"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/com_cert_o_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="O"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/com_cert_p_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="P"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="6dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/com_cert_a_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="A"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/com_cert_s_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="S"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/com_cert_d_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="D"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/com_cert_f_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="F"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/com_cert_g_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="G"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/com_cert_h_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="H"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/com_cert_j_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="J"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/com_cert_k_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="K"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/com_cert_l_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="L"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/com_cert_delete_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.5"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="@string/pandora_im_delete"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="6dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/com_cert_shift_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.5"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="@string/pandora_im_shift"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/com_cert_z_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="Z"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/com_cert_x_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="X"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/com_cert_c_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="C"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/com_cert_v_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="V"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/com_cert_b_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="B"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/com_cert_n_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="N"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/com_cert_m_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="M"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/com_cert_complete_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.5"
+                    android:background="@drawable/pandora_selector_btn_kayboard"
+                    android:gravity="center"
+                    android:text="@string/pandora_im_complete"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </FrameLayout>
+
+</LinearLayout>

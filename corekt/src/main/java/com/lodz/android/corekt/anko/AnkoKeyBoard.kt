@@ -55,3 +55,32 @@ fun EditText.replaceOriginalKeyboard(window: Window) {
         e.printStackTrace()
     }
 }
+
+/** 自定义输入法[modeName]是否启用 */
+fun Context.isInputMethodEnabled(modeName: String): Boolean{
+    val imm = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    val enabledImeList = imm.enabledInputMethodList
+    // 遍历列表，判断是否包含自定义输入法
+    for (imeInfo in enabledImeList) {
+        if (imeInfo.id.contains(modeName)) {
+            return true
+        }
+    }
+    return false
+}
+
+/** 核对当前输入法是否为自定义输入法[modeName] */
+fun Context.checkInputMethodMode(modeName: String): Boolean {
+    val imm = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    val currentModeName = imm.currentInputMethodSubtype?.mode ?: "" // 获取当前输入法ID
+    if (currentModeName.isEmpty()){
+        return false
+    }
+    return currentModeName == modeName
+}
+
+/** 显示系统输入法选择器 */
+fun Context.showInputMethodPicker() {
+    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm.showInputMethodPicker()
+}

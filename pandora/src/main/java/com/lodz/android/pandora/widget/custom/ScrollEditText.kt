@@ -2,8 +2,11 @@ package com.lodz.android.pandora.widget.custom
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.os.Bundle
 import android.util.AttributeSet
 import android.view.MotionEvent
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputConnection
 import androidx.appcompat.widget.AppCompatEditText
 
 /**
@@ -23,6 +26,9 @@ open class ScrollEditText : AppCompatEditText {
 
     /** 前一次Y坐标的值 */
     private var mPdrLastY = -1f
+
+    /** 扩展数据对象 */
+    private val mPdrExtras = Bundle()
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
@@ -72,4 +78,20 @@ open class ScrollEditText : AppCompatEditText {
         isPdrScrollBottom = !canScrollVertically(vert)
         isPdrScrolled = true
     }
+
+    override fun onCreateInputConnection(outAttrs: EditorInfo): InputConnection? {
+        val connection = super.onCreateInputConnection(outAttrs)
+        val bundle = outAttrs.extras ?: Bundle()
+        bundle.putAll(mPdrExtras)
+        outAttrs.extras = bundle
+        return connection
+    }
+
+    /** 设置扩展数据对象[bundle] */
+    fun setEditorExtras(bundle: Bundle) {
+        mPdrExtras.putAll(bundle)
+    }
+
+    /** 获取扩展数据对象 */
+    fun getEditorExtras(): Bundle = mPdrExtras
 }

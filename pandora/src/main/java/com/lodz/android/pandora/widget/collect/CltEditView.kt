@@ -7,6 +7,7 @@ import android.content.res.TypedArray
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.os.Build
+import android.os.Bundle
 import android.text.Editable
 import android.text.InputFilter
 import android.text.InputType
@@ -28,6 +29,7 @@ import com.lodz.android.corekt.anko.getColorCompat
 import com.lodz.android.corekt.anko.px2sp
 import com.lodz.android.pandora.R
 import com.lodz.android.pandora.widget.custom.ScrollEditText
+import com.lodz.android.pandora.widget.keyboard.collect.CollectInputMethodService
 
 /**
  * 采集EditText
@@ -49,9 +51,11 @@ class CltEditView : FrameLayout {
         const val TYPE_NUMBER_DECIMAL = 4
         /** 外国证件 */
         const val TYPE_FOREIGN_CERT = 5
+        /** 外国证件 */
+        const val TYPE_CAR_PLATE = 6
     }
 
-    @IntDef(TYPE_TEXT, TYPE_ID_CARD, TYPE_PHONE, TYPE_NUMBER, TYPE_NUMBER_DECIMAL, TYPE_FOREIGN_CERT)
+    @IntDef(TYPE_TEXT, TYPE_ID_CARD, TYPE_PHONE, TYPE_NUMBER, TYPE_NUMBER_DECIMAL, TYPE_FOREIGN_CERT, TYPE_CAR_PLATE)
     @Retention(AnnotationRetention.SOURCE)
     annotation class EditInputType
 
@@ -667,6 +671,7 @@ class CltEditView : FrameLayout {
     /** 设置输入类型[type] */
     fun setEditInputType(@EditInputType type: Int) {
         mPdrInputType = type
+        mPdrContentEdit.setEditorExtras(Bundle().apply { putInt(CollectInputMethodService.IMS_INPUT_TYPE, type) })
         when (type) {
             TYPE_ID_CARD -> {
                 // 输入身份证号
@@ -674,8 +679,14 @@ class CltEditView : FrameLayout {
                 mPdrContentEdit.keyListener = DigitsKeyListener.getInstance("1234567890xX")
                 mPdrContentEdit.transformationMethod = UpperCaseTransformation()
             }
-            TYPE_PHONE -> mPdrContentEdit.inputType = InputType.TYPE_CLASS_PHONE// 输入手机号
-            TYPE_NUMBER -> mPdrContentEdit.inputType = InputType.TYPE_CLASS_NUMBER// 输入数字
+            TYPE_PHONE -> {
+                mPdrContentEdit.inputType = InputType.TYPE_CLASS_PHONE // 输入手机号
+            }
+
+            TYPE_NUMBER -> {
+                mPdrContentEdit.inputType = InputType.TYPE_CLASS_NUMBER // 输入数字
+            }
+
             TYPE_NUMBER_DECIMAL -> {
                 // 输入小数
                 mPdrContentEdit.inputType = InputType.TYPE_CLASS_NUMBER
@@ -685,6 +696,11 @@ class CltEditView : FrameLayout {
                 // 输入国外证件号
                 mPdrContentEdit.inputType = InputType.TYPE_CLASS_NUMBER
                 mPdrContentEdit.keyListener = DigitsKeyListener.getInstance("1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+            }
+            TYPE_CAR_PLATE -> {
+                // 输入车牌
+                mPdrContentEdit.inputType = InputType.TYPE_CLASS_NUMBER
+                mPdrContentEdit.keyListener = DigitsKeyListener.getInstance("1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ京津渝沪冀晋辽吉黑苏浙皖闽赣鲁豫鄂湘粤琼川贵云陕甘青蒙桂宁新藏使领警学港澳")
                 mPdrContentEdit.transformationMethod = UpperCaseTransformation()
             }
         }

@@ -47,4 +47,19 @@
     <!-- 采集控件 -->
     <string name="pandora_clt_hint">请填写</string>
 
+    <!-- 输入法 -->
+    <string name="pandora_im_collect">采集专用输入法</string>
+    <string name="pandora_im_id_card">身份证号</string>
+    <string name="pandora_im_car_plate">车牌号</string>
+    <string name="pandora_im_common_cert">通用证件</string>
+    <string name="pandora_im_delete">删除</string>
+    <string name="pandora_im_complete">完成</string>
+    <string name="pandora_im_abc">ABC</string>
+    <string name="pandora_im_chinese">中文</string>
+    <string name="pandora_im_shift">Shift</string>
+    <string name="pandora_im_go_setting_title">采集专用键盘启用提醒</string>
+    <string name="pandora_im_go_setting_message">该输入框支持采集专用键盘输入，请先到设置页面启用该键盘</string>
+    <string name="pandora_im_go">前往</string>
+    <string name="pandora_im_cancel">取消</string>
+
 </resources>

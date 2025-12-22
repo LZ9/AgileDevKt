@@ -7,9 +7,10 @@ import android.view.View
 import com.lodz.android.agiledevkt.databinding.ActivityKeyboardTestBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
 import com.lodz.android.corekt.anko.toastShort
-import com.lodz.android.corekt.utils.IdCardUtils
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
+import com.lodz.android.pandora.widget.keyboard.collect.checkInputMethodOnFocusChange
+import com.lodz.android.pandora.widget.keyboard.collect.setOnClickFinishListener
 
 /**
  * 自定义键盘测试类
@@ -32,9 +33,9 @@ class KeyboardTestActivity : BaseActivity() {
     override fun findViews(savedInstanceState: Bundle?) {
         super.findViews(savedInstanceState)
         getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME) ?: "")
-        mBinding.idcardKeyboardView.initView(window, mBinding.idcardCltedt.getEditText())
-        mBinding.carplateKeyboardView.initView(window, mBinding.carplateCltedt.getEditText())
-        mBinding.commonCertKeyboardView.initView(window, mBinding.commonCertCltedt.getEditText())
+        mBinding.idcardCltedt.getEditText().checkInputMethodOnFocusChange()
+        mBinding.carplateCltedt.getEditText().checkInputMethodOnFocusChange()
+        mBinding.commonCertCltedt.getEditText().checkInputMethodOnFocusChange()
     }
 
     override fun onClickBackBtn() {
@@ -44,27 +45,29 @@ class KeyboardTestActivity : BaseActivity() {
 
     override fun setListeners() {
         super.setListeners()
-        // 身份证键盘
-        mBinding.idcardKeyboardView.setOnClickFinishListener {
-            if (it.isNotEmpty()) {
-                val tips = if (IdCardUtils.validateIdCard(it)) "合法身份证：$it" else "身份证号不合法"
-                toastShort(tips)
-            }
+
+        mBinding.idcardCltedt.getEditText().setOnClickFinishListener {
+            toastShort(it)
         }
 
-        // 车牌键盘
-        mBinding.carplateKeyboardView.setOnClickFinishListener{
-            if (it.isNotEmpty()){
-                toastShort(it)
-            }
+        mBinding.carplateCltedt.getEditText().setOnClickFinishListener {
+            toastShort(it)
         }
 
-        // 全键盘
-        mBinding.commonCertKeyboardView.setOnClickFinishListener{
-            if (it.isNotEmpty()){
-                toastShort(it)
-            }
+        mBinding.commonCertCltedt.getEditText().setOnClickFinishListener {
+            toastShort(it)
         }
+
+        // 自定义键盘测试弹窗
+        mBinding.showDialogBtn.setOnClickListener {
+            showKeyboardTestDialog()
+        }
+    }
+
+    /** 显示自定义键盘测试弹窗 */
+    private fun showKeyboardTestDialog() {
+        val dialog = KeyboardTestDialog(this)
+        dialog.show()
     }
 
     override fun initData() {

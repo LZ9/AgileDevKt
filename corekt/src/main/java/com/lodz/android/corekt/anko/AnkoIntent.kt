@@ -159,6 +159,11 @@ fun Context.goNfcSetting() {
     startActivity(Intent(Settings.ACTION_NFC_SETTINGS))
 }
 
+/** 跳转到输入法设置页 */
+fun Context.goInputMethodSetting() {
+    startActivity(Intent(Settings.ACTION_INPUT_METHOD_SETTINGS))
+}
+
 /** 打开浏览器访问[url] */
 @JvmOverloads
 fun Context.browse(url: String, newTask: Boolean = true) {

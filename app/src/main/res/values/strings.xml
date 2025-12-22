@@ -809,6 +809,7 @@
     <string name="keyboard_carplate">车牌：</string>
     <string name="keyboard_common_cert">通用证件：</string>
     <string name="keyboard_default">默认：</string>
+    <string name="keyboard_dialog">弹框中使用自定义键盘</string>
 
     <!-- ViewBinding测试 -->
     <string name="vb_title">ViewBinding测试</string>
