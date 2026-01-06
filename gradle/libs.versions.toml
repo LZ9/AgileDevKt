@@ -1,0 +1,111 @@
+[versions]
+#插件
+agp = "8.13.2"
+kotlin = "2.1.10"
+ksp = "2.1.10-1.0.31"
+publish = "0.35.0"
+#app依赖
+permissionsDispatcher = "1.1.4"
+amapLocation = "4.7.0"
+scaleImage = "3.10.0"
+photoView = "2.3.0"
+rxDownload = "1.1.4"
+okio = "3.1.0"
+jsbridge = "1.0.5"
+lottie = "5.2.0"
+junit = "4.13.2"
+junitVersion = "1.1.5"
+espressoCore = "3.6.1"
+#core依赖
+annotation = "1.9.1"
+appcompat = "1.7.1"
+material = "1.13.0"
+swiperefreshlayout = "1.2.0"
+recyclerview = "1.4.0"
+cardview = "1.0.0"
+viewpager2 = "1.1.0"
+constraintlayout = "2.2.1"
+multidex = "2.0.1"
+coreKtx = "1.17.0"
+activityKtx = "1.12.2"
+fragmentKtx = "1.8.9"
+lifecycleKtx = "2.10.0"
+startup = "1.2.0"
+datastore = "1.2.0"
+documentfile = "1.1.0"
+splashscreen = "1.2.0"
+flexbox = "3.0.0"
+coroutines = "1.10.2"
+#pandora依赖
+lodzCore = "2.1.3"
+rxjava3 = "3.1.12"
+retrofit = "3.0.0"
+jackson = "2.20.1"
+rxlifecycle4 = "4.0.2"
+eventbus = "3.3.1"
+#ImageLoader依赖
+glide = "5.0.5"
+glideTransformations = "4.3.0"
+
+#-----------------------------------------------------------------------------------------------------------
+#插件
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+google-devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+vanniktech-maven-publish = { id = "com.vanniktech.maven.publish", version.ref = "publish" }
+
+#-----------------------------------------------------------------------------------------------------------
+#依赖库
+[libraries]
+#app依赖
+permissions-dispatcher = { group = "com.github.permissions-dispatcher", name = "ktx", version.ref = "permissionsDispatcher" } #权限申请
+amap-location = { group = "com.amap.api", name = "location", version.ref = "amapLocation" } #高德定位SDK
+davemorrissey-scaleimage = { group = "com.davemorrissey.labs", name = "subsampling-scale-image-view", version.ref = "scaleImage" } #大图载缩放
+chrisbanes-photoview = { group = "com.github.chrisbanes", name = "PhotoView", version.ref = "photoView" } #PhotoView
+ssseasonnn-rxdownload = { group = "com.github.ssseasonnn", name = "RxDownload", version.ref = "rxDownload" } #RxDownload4
+squareup-okio = { group = "com.squareup.okio", name = "okio", version.ref = "okio" } #okio
+lodz-jsbridge = { group = "ink.lodz", name = "jsbridge-kt", version.ref = "jsbridge" } #jsbridge
+airbnb-lottie = { group = "com.airbnb.android", name = "lottie", version.ref = "lottie" } #动画
+junit = { group = "junit", name = "junit", version.ref = "junit" } #单元测试
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" } #单元测试
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" } #单元测试
+#core依赖
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+google-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+androidx-swiperefreshlayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "swiperefreshlayout" }
+androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
+androidx-cardview = { group = "androidx.cardview", name = "cardview", version.ref = "cardview" }
+androidx-viewpager2 = { group = "androidx.viewpager2", name = "viewpager2", version.ref = "viewpager2" }
+androidx-annotation = { group = "androidx.annotation", name = "annotation", version.ref = "annotation" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+androidx-multidex = { group = "androidx.multidex", name = "multidex", version.ref = "multidex" }
+androidx-corektx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-activityKtx = { group = "androidx.activity", name = "activity-ktx", version.ref = "activityKtx" }
+androidx-fragmentKtx = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "fragmentKtx" }
+androidx-lifecycle-viewmodelKtx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleKtx" }
+androidx-lifecycle-livedataKtx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleKtx" }
+androidx-lifecycle-runtimeKtx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleKtx" }
+androidx-startup = { group = "androidx.startup", name = "startup-runtime", version.ref = "startup" }
+androidx-datastore = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
+androidx-documentfile = { group = "androidx.documentfile", name = "documentfile", version.ref = "documentfile" }
+androidx-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "splashscreen" }
+google-flexbox = { group = "com.google.android.flexbox", name = "flexbox", version.ref = "flexbox" }
+kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
+#pandora依赖
+lodz-core = { group = "ink.lodz", name = "core-kt", version.ref = "lodzCore" }
+reactivex-rxjava3 = { group = "io.reactivex.rxjava3", name = "rxjava", version.ref = "rxjava3" }
+squareup-retrofit2-retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+squareup-retrofit2-adapter-rxjava3 = { group = "com.squareup.retrofit2", name = "adapter-rxjava3", version.ref = "retrofit" }
+squareup-retrofit2-converter-jackson = { group = "com.squareup.retrofit2", name = "converter-jackson", version.ref = "retrofit" }
+fasterxml-jackson = { group = "com.fasterxml.jackson.core", name = "jackson-databind", version.ref = "jackson" }
+trello-rxlifecycle4 = { group = "com.trello.rxlifecycle4", name = "rxlifecycle-components", version.ref = "rxlifecycle4" }
+greenrobot-eventbus = { group = "org.greenrobot", name = "eventbus", version.ref = "eventbus" }
+#ImageLoader依赖
+bumptech-glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
+bumptech-glide-ksp = { group = "com.github.bumptech.glide", name = "ksp", version.ref = "glide" }
+bumptech-glide-okhttp3-integration = { group = "com.github.bumptech.glide", name = "okhttp3-integration", version.ref = "glide" }
+wasabeef-glide-transformations = { group = "jp.wasabeef", name = "glide-transformations", version.ref = "glideTransformations" }
+
