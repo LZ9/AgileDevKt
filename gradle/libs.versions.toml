@@ -1,9 +1,9 @@
 [versions]
 #插件
-agp = "8.13.2"
-kotlin = "2.1.10"
-ksp = "2.1.10-1.0.31"
-publish = "0.35.0"
+agp = "9.0.0"
+kotlin = "2.3.0"
+ksp = "2.3.4"
+publish = "0.36.0"
 #app依赖
 permissionsDispatcher = "1.1.4"
 amapLocation = "4.7.0"
