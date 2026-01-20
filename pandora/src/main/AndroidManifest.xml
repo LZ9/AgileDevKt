@@ -2,20 +2,21 @@
 
     <application>
 
-        <service
-            android:name=".widget.keyboard.collect.CollectInputMethodService"
-            android:exported="false"
-            android:label="@string/pandora_im_collect"
-            android:permission="android.permission.BIND_INPUT_METHOD">
-            <intent-filter>
-                <action android:name="android.view.InputMethod" />
-            </intent-filter>
+<!--    外部需要调用时再在app目录下的AndroidManifest进行声明    -->
+<!--        <service-->
+<!--            android:name=".widget.keyboard.collect.CollectInputMethodService"-->
+<!--            android:exported="false"-->
+<!--            android:label="@string/pandora_im_collect"-->
+<!--            android:permission="android.permission.BIND_INPUT_METHOD">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.view.InputMethod" />-->
+<!--            </intent-filter>-->
 
-            <meta-data
-                android:name="android.view.im"
-                android:resource="@xml/pandora_method" />
+<!--            <meta-data-->
+<!--                android:name="android.view.im"-->
+<!--                android:resource="@xml/pandora_method" />-->
 
-        </service>
+<!--        </service>-->
 
         <activity
             android:name=".picker.preview.PicturePreviewActivity"

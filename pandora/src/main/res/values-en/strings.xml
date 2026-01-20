@@ -1,0 +1,61 @@
+<resources>
+    <string name="pandora_app_name">Pandora</string>
+    <string name="pandora_app_img_name">Image</string>
+
+    <!-- 数据状态提示语 -->
+    <string name="pandora_loading">Loading…</string>
+    <string name="pandora_no_data">No data available…</string>
+    <string name="pandora_load_fail">Loading failed, please click to try again.…</string>
+    <string name="pandora_load_fail_net">Network error, please click to try again.…</string>
+
+    <!-- 加载更多 -->
+    <string name="pandora_load_finish_tips">Loading complete</string>
+    <string name="pandora_loading_more_tips">Loading</string>
+    <string name="pandora_load_fail_tips">Loading failed, please click to try again.</string>
+
+    <!-- 图片预览/选择 -->
+    <string name="pandora_picker_public_directory_empty">Public directory is empty</string>
+    <string name="pandora_picker_uri_null">Photo uri is null</string>
+    <string name="pandora_picker_loader_unset">ImgLoader is null, please set it</string>
+    <string name="pandora_preview_imageview_unset">PreviewView is null, please set it</string>
+    <string name="pandora_preview_loader_unset">ImgLoader is null, please set it</string>
+    <string name="pandora_preview_source_list_empty">Source list is empty</string>
+    <string name="pandora_picker_source_list_empty">You have no data to select</string>
+    <string name="pandora_picker_selected_listener_unset">FilePickerListener is null, please set it</string>
+    <string name="pandora_picker_suffix_unset">You have not set a file suffix</string>
+    <string name="pandora_picker_folder_loading">Loading folder…</string>
+    <string name="pandora_picker_title">File picker</string>
+    <string name="pandora_picker_confirm">Confirm</string>
+    <string name="pandora_picker_confirm_num">Confirm(%1$s/%2$s)</string>
+    <string name="pandora_picker_preview">Preview</string>
+    <string name="pandora_picker_preview_num">Preview(%s)</string>
+    <string name="pandora_picker_all_file">All files</string>
+    <string name="pandora_picker_custom_file">Custom files</string>
+    <string name="pandora_picker_max_count_tips">You can pick a maximum of %s files</string>
+    <string name="pandora_picker_folder_num">%s items</string>
+    <string name="pandora_no_camera">No camera available.</string>
+    <string name="pandora_picker_authority_empty">FileProvider authorities is empty</string>
+    <string name="pandora_picker_take_listener_unset">PhotoTakeListener is null, please set it</string>
+
+    <!-- 搜索标题栏 -->
+    <string name="pandora_search_title_hint">Enter query keyword</string>
+
+    <!-- 采集控件 -->
+    <string name="pandora_clt_hint">Please fill in the form</string>
+
+    <!-- 输入法 -->
+    <string name="pandora_im_collect">Info Collection Input Method</string>
+    <string name="pandora_im_id_card">ID number</string>
+    <string name="pandora_im_car_plate">License plate number</string>
+    <string name="pandora_im_common_cert">Document number</string>
+    <string name="pandora_im_delete">Delete</string>
+    <string name="pandora_im_complete">Complete</string>
+    <string name="pandora_im_abc">ABC</string>
+    <string name="pandora_im_chinese">Chinese</string>
+    <string name="pandora_im_shift">Shift</string>
+    <string name="pandora_im_go_setting_title">Reminder</string>
+    <string name="pandora_im_go_setting_message">This input field supports the Info Collection Input Method, Please enable it in the settings page</string>
+    <string name="pandora_im_go">Go</string>
+    <string name="pandora_im_cancel">Cancel</string>
+
+</resources>
