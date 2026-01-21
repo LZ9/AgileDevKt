@@ -16,7 +16,6 @@ android {
         buildConfigField("int", "versionCode", "76")
         buildConfigField("String", "versionName", "\"2.2.0\"") //未上传
 
-        consumerProguardFiles("consumer-rules.pro")
     }
 
     viewBinding {

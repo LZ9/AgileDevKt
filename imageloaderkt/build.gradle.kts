@@ -16,7 +16,6 @@ android {
         buildConfigField("int", "versionCode", "31")
         buildConfigField("String", "versionName", "\"1.3.1\"") //未上传
 
-        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildFeatures {
