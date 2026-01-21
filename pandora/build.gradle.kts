@@ -23,7 +23,9 @@ android {
         enable = true
     }
 
-    buildFeatures.buildConfig = true
+    buildFeatures {
+        buildConfig = true
+    }
 
     buildTypes {
         release {

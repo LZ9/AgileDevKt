@@ -13,13 +13,15 @@ android {
 
     defaultConfig {
         minSdk = 23
-        buildConfigField("int", "versionCode", "30")
-        buildConfigField("String", "versionName", "\"1.3.0\"") //成功上传
+        buildConfigField("int", "versionCode", "31")
+        buildConfigField("String", "versionName", "\"1.3.1\"") //未上传
 
         consumerProguardFiles("consumer-rules.pro")
     }
 
-    buildFeatures.buildConfig = true
+    buildFeatures {
+        buildConfig = true
+    }
 
     buildTypes {
         release {
