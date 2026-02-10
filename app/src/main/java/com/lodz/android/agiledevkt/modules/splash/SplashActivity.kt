@@ -70,11 +70,7 @@ class SplashActivity : AbsActivity() {
             return
         }
         runOnMainDelay(1000) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {// 6.0以上的手机对权限进行动态申请
-                onRequestPermission()
-            } else {
-                init()
-            }
+            onRequestPermission()
         }
     }
 
@@ -84,13 +80,15 @@ class SplashActivity : AbsActivity() {
             hasReadPhoneStatePermissions.launch()
             return
         }
-        if (!isPermissionGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE)){
-            hasWriteExternalStoragePermissions.launch()
-            return
-        }
-        if (!isPermissionGranted(Manifest.permission.READ_EXTERNAL_STORAGE)){
-            hasReadExternalStoragePermissions.launch()
-            return
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.VANILLA_ICE_CREAM) {
+            if (!isPermissionGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+                hasWriteExternalStoragePermissions.launch()
+                return
+            }
+            if (!isPermissionGranted(Manifest.permission.READ_EXTERNAL_STORAGE)){
+                hasReadExternalStoragePermissions.launch()
+                return
+            }
         }
         init()
     }
