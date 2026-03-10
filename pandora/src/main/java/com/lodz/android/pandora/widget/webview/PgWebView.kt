@@ -206,8 +206,12 @@ open class PgWebView : FrameLayout {
         mPdrWebView = null
     }
 
+    /** 设置加载状态监听器 */
     fun setOnPgStatusChangeListener(listener: OnPgStatusChangeListener?) {
         mPdrListener = listener
     }
+
+    /** 获取WebView */
+    fun getWebView(): WebView? = mPdrWebView
 
 }

@@ -1,6 +1,6 @@
 [versions]
 #插件
-agp = "9.0.0"
+agp = "9.1.0"
 kotlin = "2.3.0"
 ksp = "2.3.4"
 publish = "0.36.0"
@@ -40,7 +40,7 @@ coroutines = "1.10.2"
 lodzCore = "2.1.4"
 rxjava3 = "3.1.12"
 retrofit = "3.0.0"
-jackson = "2.20.1"
+jackson = "2.21.1"
 rxlifecycle4 = "4.0.2"
 eventbus = "3.3.1"
 #ImageLoader依赖

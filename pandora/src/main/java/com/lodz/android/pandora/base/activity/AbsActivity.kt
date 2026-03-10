@@ -3,6 +3,7 @@ package com.lodz.android.pandora.base.activity
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.activity.enableEdgeToEdge
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
@@ -30,7 +31,7 @@ abstract class AbsActivity : RxAppCompatActivity() {
 
     final override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        enableEdgeToEdge()//状态栏透明，且忽略状态栏高度将页面顶到手机屏幕上方
+        enableEdgeToEdge()//状态栏透明，且忽略状态栏高度将页面顶到手机屏幕上方
         isPdrUseAnko = injectAnko()
         EventBus.getDefault().register(this)
         startCreate()
