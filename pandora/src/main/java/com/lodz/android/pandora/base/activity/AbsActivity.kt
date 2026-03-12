@@ -1,13 +1,19 @@
 package com.lodz.android.pandora.base.activity
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.ColorInt
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
+import com.lodz.android.corekt.anko.getColorCompat
 import com.lodz.android.corekt.utils.ReflectUtils
 import com.lodz.android.pandora.base.application.BaseApplication
 import com.lodz.android.pandora.base.fragment.IFragmentBackPressed
@@ -37,21 +43,21 @@ abstract class AbsActivity : RxAppCompatActivity() {
         startCreate()
         if (!isPdrUseAnko) {//不使用AnkoLayout再加载布局
             val layoutId = getAbsLayoutId()
-            val view = getAbsViewBindingLayout()
-            if (layoutId != 0) {
-                setContentView(layoutId)
-            } else if (view != null) {
+            val view = if (layoutId != 0) LayoutInflater.from(this).inflate(layoutId, null) else  getAbsViewBindingLayout()
+             if (view != null) {
+                 view.setBackgroundColor(configRootBackgroundColor())
                 setContentView(view)
+                 //通过添加padding隔出上方状态栏的高度
+                 ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
+                     val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+                     v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+                     insets
+                 }
             } else {
                 throw NullPointerException("please override getAbsLayoutId() or getViewBindingLayout() to set layout")
             }
         }
-        //通过添加padding隔出上方状态栏的高度
-//        ViewCompat.setOnApplyWindowInsetsListener(window.decorView) { v, insets ->
-//            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-//            insets
-//        }
+
         afterSetContentView()
         findViews(savedInstanceState)
         setListeners()
@@ -79,6 +85,20 @@ abstract class AbsActivity : RxAppCompatActivity() {
     protected open fun getLifecycleOwner(): LifecycleOwner = this
 
     protected open fun getContext(): Context = this
+
+    /** 配置跟布局的背景颜色，可以重写配置，优先获取TitleBarLayout的背景颜色，若都不设置则为白色 */
+    @ColorInt
+    protected open fun configRootBackgroundColor(): Int {
+        val app = BaseApplication.get()
+        if (app != null) {
+            val config = app.getBaseLayoutConfig().getTitleBarLayoutConfig()
+            val color = config.backgroundColor
+            if (color != 0) {
+                return getColorCompat(color)
+            }
+        }
+        return Color.WHITE
+    }
 
     override fun finish() {
         EventBus.getDefault().unregister(this)

@@ -23,10 +23,6 @@ android {
 //        ndk { abiFilters += listOf("armeabi", "armeabi-v7a", "arm64-v8a", "x86", "x86_64") }
     }
 
-    viewBinding {
-        enable = true
-    }
-
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -44,6 +40,7 @@ android {
     }
 
     buildFeatures {
+        viewBinding = true
         buildConfig = true
     }
 

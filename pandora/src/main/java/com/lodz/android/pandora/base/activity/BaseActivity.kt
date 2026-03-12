@@ -12,6 +12,7 @@ import com.lodz.android.pandora.widget.base.ErrorLayout
 import com.lodz.android.pandora.widget.base.LoadingLayout
 import com.lodz.android.pandora.widget.base.NoDataLayout
 import com.lodz.android.pandora.widget.base.TitleBarLayout
+import androidx.core.view.isVisible
 
 /**
  * 基类Activity（带基础状态控件）
@@ -176,16 +177,16 @@ abstract class BaseActivity : AbsActivity() {
     }
 
     /** 是否加载中 */
-    protected fun isLoading(): Boolean = getLoadingLayout().visibility == View.VISIBLE
+    protected fun isLoading(): Boolean = getLoadingLayout().isVisible
 
     /** 是否加载完成 */
-    protected fun isCompleted(): Boolean = mPdrContentLayout.visibility == View.VISIBLE
+    protected fun isCompleted(): Boolean = mPdrContentLayout.isVisible
 
     /** 是否加载异常 */
-    protected fun isError(): Boolean = getErrorLayout().visibility == View.VISIBLE
+    protected fun isError(): Boolean = getErrorLayout().isVisible
 
     /** 是否无数据 */
-    protected fun isNoData(): Boolean = getNoDataLayout().visibility == View.VISIBLE
+    protected fun isNoData(): Boolean = getNoDataLayout().isVisible
 
     /** 获取根目录布局 */
     protected fun getRootView(): ViewGroup = mPdrRootLayout
