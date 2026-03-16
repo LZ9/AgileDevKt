@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.SeekBar
 import androidx.core.view.GravityCompat
+import androidx.core.view.ViewCompat
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.databinding.ActivityDrawerTestBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
@@ -50,6 +51,11 @@ class DrawerTestActivity : AbsActivity() {
             mBinding.contentLayout,
             mBinding.alphaSb.progress / 100.0f
         )
+        ViewCompat.setOnApplyWindowInsetsListener(mBinding.drawerLeftView.root) { v, insets ->
+            val systemBars = insets.getInsets(WINDOW_INSETS_TYPE_NAVIGATION_BARS)
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
     }
 
     override fun onPressBack(): Boolean {
@@ -158,4 +164,6 @@ class DrawerTestActivity : AbsActivity() {
     private fun updateAlphaValue() {
         mBinding.alphaValueTv.text = mBinding.alphaSb.progress.toString()
     }
+
+    override fun configWindowInsetsType(): Int = WINDOW_INSETS_TYPE_NAVIGATION_BARS
 }

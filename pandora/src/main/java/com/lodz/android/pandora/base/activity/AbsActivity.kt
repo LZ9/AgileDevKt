@@ -32,6 +32,14 @@ import org.greenrobot.eventbus.ThreadMode
  */
 abstract class AbsActivity : RxAppCompatActivity() {
 
+    /** 全部系统栏目 */
+    protected val WINDOW_INSETS_TYPE_SYSTEM_BARS = WindowInsetsCompat.Type.systemBars()
+    /** 系统顶部状态栏 */
+    protected val WINDOW_INSETS_TYPE_STATUS_BARS = WindowInsetsCompat.Type.statusBars()
+    /** 系统底部导航栏 */
+    protected val WINDOW_INSETS_TYPE_NAVIGATION_BARS = WindowInsetsCompat.Type.navigationBars()
+
+
     /** 是否使用Anko Layout */
     private var isPdrUseAnko = false
 
@@ -49,7 +57,7 @@ abstract class AbsActivity : RxAppCompatActivity() {
                 setContentView(view)
                  //通过添加padding隔出上方状态栏的高度
                  ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
-                     val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+                     val systemBars = insets.getInsets(configWindowInsetsType())
                      v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
                      insets
                  }
@@ -99,6 +107,9 @@ abstract class AbsActivity : RxAppCompatActivity() {
         }
         return Color.WHITE
     }
+
+    /** 配置页面的间距 */
+    protected open fun configWindowInsetsType() = WINDOW_INSETS_TYPE_SYSTEM_BARS
 
     override fun finish() {
         EventBus.getDefault().unregister(this)

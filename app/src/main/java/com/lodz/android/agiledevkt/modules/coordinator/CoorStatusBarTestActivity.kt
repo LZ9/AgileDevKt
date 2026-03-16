@@ -115,4 +115,6 @@ class CoorStatusBarTestActivity : AbsActivity() {
         }
         return list
     }
+
+    override fun configWindowInsetsType(): Int = WINDOW_INSETS_TYPE_NAVIGATION_BARS
 }
