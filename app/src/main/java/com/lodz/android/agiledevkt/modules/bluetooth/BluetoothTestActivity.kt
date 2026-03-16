@@ -28,6 +28,7 @@ import com.lodz.android.pandora.widget.rv.recycler.base.BaseVbRvAdapter
 import permissions.dispatcher.PermissionRequest
 import permissions.dispatcher.ktx.LocationPermission
 import permissions.dispatcher.ktx.constructLocationPermissionRequest
+import permissions.dispatcher.ktx.constructPermissionsRequest
 
 /**
  * 蓝牙测试类
@@ -48,6 +49,28 @@ class BluetoothTestActivity : BaseActivity() {
     private val hasFinePermissions by lazy {
         constructLocationPermissionRequest(
             LocationPermission.FINE,//后台定位
+            onShowRationale = ::onShowRationaleBeforeRequest,
+            onPermissionDenied = ::onDenied,
+            onNeverAskAgain = ::onNeverAskAgain,
+            requiresPermission = ::onRequestPermission
+        )
+    }
+
+    /** 申请蓝牙扫描权限 */
+    private val hasBluetoothScanPermissions by lazy {
+        constructPermissionsRequest(
+            Manifest.permission.BLUETOOTH_SCAN,//后台定位
+            onShowRationale = ::onShowRationaleBeforeRequest,
+            onPermissionDenied = ::onDenied,
+            onNeverAskAgain = ::onNeverAskAgain,
+            requiresPermission = ::onRequestPermission
+        )
+    }
+
+    /** 申请蓝牙连接权限 */
+    private val hasBluetoothConnectPermissions by lazy {
+        constructPermissionsRequest(
+            Manifest.permission.BLUETOOTH_CONNECT,//后台定位
             onShowRationale = ::onShowRationaleBeforeRequest,
             onPermissionDenied = ::onDenied,
             onNeverAskAgain = ::onNeverAskAgain,
@@ -97,6 +120,10 @@ class BluetoothTestActivity : BaseActivity() {
 
         // 蓝牙开关
         mBinding.bleSwitchBtn.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                toastShort("Android12版本开始该功能无效")
+              return@setOnCheckedChangeListener
+            }
             BleSimpleHelper.get().setBluetoothState(isChecked)
         }
 
@@ -174,14 +201,13 @@ class BluetoothTestActivity : BaseActivity() {
 
     override fun initData() {
         super.initData()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {// 6.0以上的手机对权限进行动态申请
-            onRequestPermission()//申请权限
-        } else {
-            initLogic()
-        }
+        onRequestPermission()//申请权限
     }
 
     private fun initLogic() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            mBinding.bleSwitchBtn.isEnabled = false
+        }
         BleSimpleHelper.get().registerBleReceiver(getContext())
         val state = BleSimpleHelper.get().getBluetoothState()
         mBinding.bleStatusTv.text = getString(R.string.ble_status).format(getBleTips(state))
@@ -200,6 +226,9 @@ class BluetoothTestActivity : BaseActivity() {
 
     /** 根据蓝牙状态[state]设置开关 */
     private fun setSwitchByState(state: Int) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            return
+        }
         if (state == BluetoothAdapter.STATE_OFF) {
             mBinding.bleSwitchBtn.isChecked = false
             return
@@ -222,6 +251,16 @@ class BluetoothTestActivity : BaseActivity() {
         if (!isPermissionGranted(Manifest.permission.ACCESS_FINE_LOCATION)) {
             hasFinePermissions.launch()
             return
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if (!isPermissionGranted(Manifest.permission.BLUETOOTH_SCAN)) {
+                hasBluetoothScanPermissions.launch()
+                return
+            }
+            if (!isPermissionGranted(Manifest.permission.BLUETOOTH_CONNECT)) {
+                hasBluetoothConnectPermissions.launch()
+                return
+            }
         }
         initLogic()
     }
