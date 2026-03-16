@@ -1,5 +1,6 @@
 package com.lodz.android.agiledevkt.modules.image
 
+import android.Manifest
 import android.animation.ObjectAnimator
 import android.app.Notification
 import android.app.NotificationChannel
@@ -26,7 +27,10 @@ import com.bumptech.glide.request.transition.ViewPropertyTransition
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.databinding.ActivityGlideBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
+import com.lodz.android.agiledevkt.modules.splash.CheckDialog
 import com.lodz.android.agiledevkt.utils.file.FileManager
+import com.lodz.android.corekt.anko.goAppDetailSetting
+import com.lodz.android.corekt.anko.isPermissionGranted
 import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.corekt.utils.FileUtils
@@ -36,6 +40,8 @@ import com.lodz.android.imageloaderkt.glide.impl.NotificationTargetFix
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
+import permissions.dispatcher.PermissionRequest
+import permissions.dispatcher.ktx.constructPermissionsRequest
 
 /**
  * Glide测试
@@ -59,6 +65,17 @@ class GlideActivity : BaseActivity() {
     /** 图片的BASE64 */
     private val PIC_BASE64 = "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"
 
+    /** 申请通知权限 */
+    private val hasPostNotificationsPermissions by lazy {
+        constructPermissionsRequest(
+            Manifest.permission.POST_NOTIFICATIONS,
+            onShowRationale = ::onShowRationaleBeforeRequest,
+            onPermissionDenied = ::onDenied,
+            onNeverAskAgain = ::onNeverAskAgain,
+            requiresPermission = ::onRequestPermission
+        )
+    }
+
     private val mBinding: ActivityGlideBinding by bindingLayout(ActivityGlideBinding::inflate)
 
     override fun getViewBindingLayout(): View = mBinding.root
@@ -77,28 +94,31 @@ class GlideActivity : BaseActivity() {
 
         // 自定义通知栏
         mBinding.customNotificationBtn.setOnClickListener {
-            val builder = NotificationCompat.Builder(getContext(), NOTIFI_CHANNEL_MAIN_ID)
-            builder.setTicker("")// 通知栏显示的文字
-            builder.setAutoCancel(true)// 设置为true，点击该条通知会自动删除，false时只能通过滑动来删除（一般都是true）
-            builder.setSmallIcon(R.mipmap.ic_launcher)//通知上面的小图标（必传）
-            builder.setDefaults(NotificationCompat.DEFAULT_ALL)//通知默认的声音 震动 呼吸灯
-            builder.priority = NotificationCompat.PRIORITY_DEFAULT//设置优先级，级别高的排在前面
+            onRequestPermission {
+                val builder = NotificationCompat.Builder(getContext(), NOTIFI_CHANNEL_MAIN_ID)
+                builder.setTicker("")// 通知栏显示的文字
+                builder.setAutoCancel(true)// 设置为true，点击该条通知会自动删除，false时只能通过滑动来删除（一般都是true）
+                builder.setSmallIcon(R.mipmap.ic_launcher)//通知上面的小图标（必传）
+                builder.setDefaults(NotificationCompat.DEFAULT_ALL)//通知默认的声音 震动 呼吸灯
+                builder.priority = NotificationCompat.PRIORITY_DEFAULT//设置优先级，级别高的排在前面
 
-            val remoteViews = RemoteViews(packageName, R.layout.notify_glide_custom)
-            remoteViews.setImageViewResource(R.id.remoteview_icon, R.drawable.ic_launcher)
-            remoteViews.setTextViewText(R.id.remoteview_title, "耿鬼")
-            remoteViews.setTextViewText(R.id.remoteview_msg, "鬼斯-鬼斯通-耿鬼")
-            builder.setContent(remoteViews)
+                val remoteViews = RemoteViews(packageName, R.layout.notify_glide_custom)
+                remoteViews.setImageViewResource(R.id.remoteview_icon, R.drawable.ic_launcher)
+                remoteViews.setTextViewText(R.id.remoteview_title, "耿鬼")
+                remoteViews.setTextViewText(R.id.remoteview_msg, "鬼斯-鬼斯通-耿鬼")
+                builder.setContent(remoteViews)
 
-            ImageLoader.create(getContext())
+                ImageLoader.create(getContext())
                     .loadUrl(IMG_URL)
                     .setCenterCrop()
                     .asBitmapInto(NotificationTargetFix(getContext(), R.id.remoteview_icon, remoteViews, builder.build(), 1235))
+            }
         }
 
         // 原生通知栏
         mBinding.sysNotificationBtn.setOnClickListener {
-            ImageLoader.create(getContext())
+            onRequestPermission {
+                ImageLoader.create(getContext())
                     .loadUrl(IMG_URL)
                     .setCenterCrop()
                     .asBitmapInto(object : CustomTarget<Bitmap>() {
@@ -117,6 +137,7 @@ class GlideActivity : BaseActivity() {
                             NotificationUtils.create(getContext()).send(builder.build())
                         }
                     })
+            }
         }
     }
 
@@ -381,6 +402,52 @@ class GlideActivity : BaseActivity() {
                 .loadUri(Uri.fromFile(file))
                 .setVideo()
                 .into(mBinding.localVideoImg)
+    }
+
+    /** 权限申请成功 */
+    private fun onRequestPermission(block: () -> Unit = {}) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (!isPermissionGranted(Manifest.permission.POST_NOTIFICATIONS)) {
+                hasPostNotificationsPermissions.launch()
+                return
+            }
+        }
+        block.invoke()
+    }
+
+    /** 用户拒绝后再次申请前告知用户为什么需要该权限 */
+    private fun onShowRationaleBeforeRequest(request: PermissionRequest) {
+        request.proceed()//请求权限
+    }
+
+    /** 被拒绝 */
+    private fun onDenied() {
+        toastShort(R.string.location_denied_permission_tips)
+    }
+
+    /** 被拒绝并且勾选了不再提醒 */
+    private fun onNeverAskAgain() {
+        toastShort(R.string.location_check_permission_tips)
+        showPermissionCheckDialog()
+        goAppDetailSetting()
+    }
+
+    /** 显示权限核对弹框 */
+    private fun showPermissionCheckDialog() {
+        val checkDialog = CheckDialog(getContext())
+        checkDialog.setContentMsg(R.string.location_check_permission_title)
+        checkDialog.setPositiveText(R.string.splash_check_permission_confirm) { dialog, which ->
+            onRequestPermission()
+            dialog.dismiss()
+        }
+        checkDialog.setNegativeText(R.string.splash_check_permission_unconfirmed) { dialog, which ->
+            goAppDetailSetting()
+        }
+        checkDialog.setCanceledOnTouchOutside(false)
+        checkDialog.setOnCancelListener {
+            finish()
+        }
+        checkDialog.show()
     }
 
 }

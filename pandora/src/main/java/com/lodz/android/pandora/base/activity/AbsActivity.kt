@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.FrameLayout
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.ColorInt
 import androidx.annotation.IdRes
@@ -51,16 +52,18 @@ abstract class AbsActivity : RxAppCompatActivity() {
         startCreate()
         if (!isPdrUseAnko) {//不使用AnkoLayout再加载布局
             val layoutId = getAbsLayoutId()
-            val view = if (layoutId != 0) LayoutInflater.from(this).inflate(layoutId, null) else  getAbsViewBindingLayout()
-             if (view != null) {
-                 view.setBackgroundColor(configRootBackgroundColor())
-                setContentView(view)
-                 //通过添加padding隔出上方状态栏的高度
-                 ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
-                     val systemBars = insets.getInsets(configWindowInsetsType())
-                     v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-                     insets
-                 }
+            val view = if (layoutId != 0) LayoutInflater.from(this).inflate(layoutId, null) else getAbsViewBindingLayout()
+            if (view != null) {
+                val layout = FrameLayout(getContext())
+                layout.addView(view, FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT))
+                layout.setBackgroundColor(configRootBackgroundColor())
+                setContentView(layout)
+                //通过添加padding隔出上方状态栏的高度
+                ViewCompat.setOnApplyWindowInsetsListener(layout) { v, insets ->
+                    val systemBars = insets.getInsets(configWindowInsetsType())
+                    v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+                    insets
+                }
             } else {
                 throw NullPointerException("please override getAbsLayoutId() or getViewBindingLayout() to set layout")
             }

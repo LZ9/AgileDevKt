@@ -30,6 +30,8 @@
     <uses-permission android:name="android.permission.GET_TASKS" />
 
     <!-- ********************* 需要申请（只要同组有一个授权整组的权限都可以使用） ********************* -->
+    <!-- 通知权限 -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <!-- 读通讯录 -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <!-- 写通讯录 -->

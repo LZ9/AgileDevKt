@@ -59,7 +59,7 @@ class BluetoothTestActivity : BaseActivity() {
     /** 申请蓝牙扫描权限 */
     private val hasBluetoothScanPermissions by lazy {
         constructPermissionsRequest(
-            Manifest.permission.BLUETOOTH_SCAN,//后台定位
+            Manifest.permission.BLUETOOTH_SCAN,
             onShowRationale = ::onShowRationaleBeforeRequest,
             onPermissionDenied = ::onDenied,
             onNeverAskAgain = ::onNeverAskAgain,
@@ -70,7 +70,7 @@ class BluetoothTestActivity : BaseActivity() {
     /** 申请蓝牙连接权限 */
     private val hasBluetoothConnectPermissions by lazy {
         constructPermissionsRequest(
-            Manifest.permission.BLUETOOTH_CONNECT,//后台定位
+            Manifest.permission.BLUETOOTH_CONNECT,
             onShowRationale = ::onShowRationaleBeforeRequest,
             onPermissionDenied = ::onDenied,
             onNeverAskAgain = ::onNeverAskAgain,

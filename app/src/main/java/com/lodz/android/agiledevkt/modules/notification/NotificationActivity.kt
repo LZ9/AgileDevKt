@@ -1,5 +1,6 @@
 package com.lodz.android.agiledevkt.modules.notification
 
+import android.Manifest
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -14,11 +15,17 @@ import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.config.Constant
 import com.lodz.android.agiledevkt.databinding.ActivityNotificationBinding
 import com.lodz.android.agiledevkt.modules.main.MainActivity
+import com.lodz.android.agiledevkt.modules.splash.CheckDialog
+import com.lodz.android.corekt.anko.goAppDetailSetting
+import com.lodz.android.corekt.anko.isPermissionGranted
+import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.corekt.utils.NotificationUtils
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.rx.subscribe.observer.BaseObserver
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
 import io.reactivex.rxjava3.core.Observable
+import permissions.dispatcher.PermissionRequest
+import permissions.dispatcher.ktx.constructPermissionsRequest
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -38,6 +45,17 @@ class NotificationActivity : BaseActivity() {
     private val mBinding: ActivityNotificationBinding by bindingLayout(ActivityNotificationBinding::inflate)
 
     override fun getViewBindingLayout(): View = mBinding.root
+
+    /** 申请通知权限 */
+    private val hasPostNotificationsPermissions by lazy {
+        constructPermissionsRequest(
+            Manifest.permission.POST_NOTIFICATIONS,
+            onShowRationale = ::onShowRationaleBeforeRequest,
+            onPermissionDenied = ::onDenied,
+            onNeverAskAgain = ::onNeverAskAgain,
+            requiresPermission = ::onRequestPermission
+        )
+    }
 
     override fun findViews(savedInstanceState: Bundle?) {
         getTitleBarLayout().setTitleName(intent.getStringExtra(MainActivity.EXTRA_TITLE_NAME) ?: "")
@@ -274,7 +292,60 @@ class NotificationActivity : BaseActivity() {
 
     override fun initData() {
         super.initData()
+        onRequestPermission()//申请权限
+    }
+
+    override fun onClickReload() {
+        super.onClickReload()
+        showStatusLoading()
+        onRequestPermission()
+    }
+
+    /** 权限申请成功 */
+    private fun onRequestPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (!isPermissionGranted(Manifest.permission.POST_NOTIFICATIONS)) {
+                hasPostNotificationsPermissions.launch()
+                return
+            }
+        }
         showStatusCompleted()
+    }
+
+    /** 用户拒绝后再次申请前告知用户为什么需要该权限 */
+    private fun onShowRationaleBeforeRequest(request: PermissionRequest) {
+        request.proceed()//请求权限
+    }
+
+    /** 被拒绝 */
+    private fun onDenied() {
+        toastShort(R.string.location_denied_permission_tips)
+        showStatusError()
+    }
+
+    /** 被拒绝并且勾选了不再提醒 */
+    private fun onNeverAskAgain() {
+        toastShort(R.string.location_check_permission_tips)
+        showPermissionCheckDialog()
+        goAppDetailSetting()
+    }
+
+    /** 显示权限核对弹框 */
+    private fun showPermissionCheckDialog() {
+        val checkDialog = CheckDialog(getContext())
+        checkDialog.setContentMsg(R.string.location_check_permission_title)
+        checkDialog.setPositiveText(R.string.splash_check_permission_confirm) { dialog, which ->
+            onRequestPermission()
+            dialog.dismiss()
+        }
+        checkDialog.setNegativeText(R.string.splash_check_permission_unconfirmed) { dialog, which ->
+            goAppDetailSetting()
+        }
+        checkDialog.setCanceledOnTouchOutside(false)
+        checkDialog.setOnCancelListener {
+            finish()
+        }
+        checkDialog.show()
     }
 
 }
