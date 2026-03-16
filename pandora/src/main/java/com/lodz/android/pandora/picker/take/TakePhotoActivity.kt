@@ -2,6 +2,7 @@ package com.lodz.android.pandora.picker.take
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
@@ -54,6 +55,10 @@ internal class TakePhotoActivity : AbsActivity() {
     override fun onPressBack(): Boolean {
         handleCameraCancel()
         return true
+    }
+
+    override fun configRootBackgroundColor(): Int {
+        return Color.BLACK
     }
 
     override fun setListeners() {

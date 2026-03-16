@@ -106,6 +106,14 @@ internal open class AnyPickerActivity<T> : AbsActivity() {
         StatusBarUtil.setNavigationBarColor(window, getColorCompat(bean.pickerUIConfig.getNavigationBarColor()))
     }
 
+    override fun configRootBackgroundColor(): Int {
+        val color = mPdrPickerBean?.pickerUIConfig?.getTopLayoutColor()
+        if (color != null){
+            return getColorCompat(color)
+        }
+        return super.configRootBackgroundColor()
+    }
+
     /** 初始化RecyclerView */
     private fun initRecyclerView(bean: PickerBean<T>) {
         mPdrAdapter = AnyPickerAdapter(getContext(), bean.imgLoader, bean.isNeedCamera, bean.isNeedBottomInfo, bean.pickerUIConfig)

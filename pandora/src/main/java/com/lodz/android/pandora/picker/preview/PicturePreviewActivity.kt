@@ -3,6 +3,7 @@ package com.lodz.android.pandora.picker.preview
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.View
@@ -75,6 +76,10 @@ internal class PicturePreviewActivity<T, VH : RecyclerView.ViewHolder> : AbsActi
         mBinding.pdrPreviewVp2.orientation = ViewPager2.ORIENTATION_HORIZONTAL
         mBinding.pdrPreviewVp2.isUserInputEnabled = true
         mBinding.pdrPreviewVp2.setPageTransformer(pageTransformer)
+    }
+
+    override fun configRootBackgroundColor(): Int {
+        return Color.BLACK
     }
 
     override fun setListeners() {

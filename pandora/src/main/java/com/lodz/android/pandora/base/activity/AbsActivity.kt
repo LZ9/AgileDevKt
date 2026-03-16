@@ -40,9 +40,10 @@ abstract class AbsActivity : RxAppCompatActivity() {
     /** 系统底部导航栏 */
     protected val WINDOW_INSETS_TYPE_NAVIGATION_BARS = WindowInsetsCompat.Type.navigationBars()
 
-
     /** 是否使用Anko Layout */
     private var isPdrUseAnko = false
+
+    private var mPdrWrapperLayout: FrameLayout? = null
 
     final override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +58,7 @@ abstract class AbsActivity : RxAppCompatActivity() {
                 val layout = FrameLayout(getContext())
                 layout.addView(view, FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT))
                 layout.setBackgroundColor(configRootBackgroundColor())
+                mPdrWrapperLayout = layout
                 setContentView(layout)
                 //通过添加padding隔出上方状态栏的高度
                 ViewCompat.setOnApplyWindowInsetsListener(layout) { v, insets ->
@@ -96,6 +98,8 @@ abstract class AbsActivity : RxAppCompatActivity() {
     protected open fun getLifecycleOwner(): LifecycleOwner = this
 
     protected open fun getContext(): Context = this
+
+    protected fun getWrapperLayout() = mPdrWrapperLayout
 
     /** 配置跟布局的背景颜色，可以重写配置，优先获取TitleBarLayout的背景颜色，若都不设置则为白色 */
     @ColorInt
