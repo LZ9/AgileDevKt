@@ -18,15 +18,15 @@ object AnnotationTestUtils {
         any.injectAs<EncryptionAES, Any> { cls, obj, inject, field ->
             val key = if (inject.key.length == 16) inject.key else AES.KEY
             val value = ReflectUtils.getFieldValue(cls, obj, field.name)
-            val source = if (value is String) value else ""
+            val source = value as? String ?: ""
             ReflectUtils.setFieldValue(cls, obj, field.name, AES.encrypt(source, key) ?: "")
         }
     }
 
     /** 控件绑定注解解析 */
-     fun bind(activity: Activity) {
+    fun bind(activity: Activity) {
         activity.injectAs<BindViews, Activity> { cls, obj, inject, field ->
-            val id = inject.id
+            val id =  obj.resources.getIdentifier(inject.idName, "id", obj.packageName)
             val view = obj.findViewById<View>(id) ?: throw IllegalStateException("View ID $id for '${cls.name}' not found.")
             ReflectUtils.setFieldValue(cls, obj, field.name, view)
         }

@@ -10,4 +10,4 @@ import androidx.annotation.IdRes
 
 @Target(AnnotationTarget.FIELD)
 @Retention(AnnotationRetention.RUNTIME)
-annotation class BindViews(@IdRes val id: Int)
+annotation class BindViews(val idName: String)

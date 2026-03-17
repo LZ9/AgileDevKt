@@ -59,7 +59,7 @@ class AnnotationTestActivity : BaseActivity() {
     }
 
     /** 解密按钮 */
-    @BindViews(R.id.decrypt_btn)
+    @BindViews("decrypt_btn")
     private lateinit var mDecryptBtn : MaterialButton
 
     /** 内容 */
