@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.ColorInt
 import androidx.annotation.IdRes
@@ -70,6 +71,21 @@ abstract class AbsActivity : RxAppCompatActivity() {
                 throw NullPointerException("please override getAbsLayoutId() or getViewBindingLayout() to set layout")
             }
         }
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val list = supportFragmentManager.fragments // 获取activity下的fragment
+                if (list.isNotEmpty()) {
+                    for (fragment in list) {
+                        if (isFragmentConsumeBackPressed(fragment)) {
+                            return
+                        }
+                    }
+                }
+                if (!onPressBack()) {
+                    finish()
+                }
+            }
+        })
 
         afterSetContentView()
         findViews(savedInstanceState)
@@ -121,20 +137,6 @@ abstract class AbsActivity : RxAppCompatActivity() {
     override fun finish() {
         EventBus.getDefault().unregister(this)
         super.finish()
-    }
-
-    final override fun onBackPressed() {
-        val list: List<Fragment> = supportFragmentManager.fragments// 获取activity下的fragment
-        if (list.isNotEmpty()) {
-            for (fragment in list) {
-                if (isFragmentConsumeBackPressed(fragment)) {
-                    return
-                }
-            }
-        }
-        if (!onPressBack()) {
-            super.onBackPressed()
-        }
     }
 
     private fun isFragmentConsumeBackPressed(fragment: Fragment): Boolean {
