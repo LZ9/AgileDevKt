@@ -71,4 +71,5 @@ class StatusBarImgTestActivity : AbsActivity() {
         mBinding.alphaValueTv.text = mBinding.alphaSb.progress.toString()
     }
 
+    override fun configWindowInsetsType(): Int = WINDOW_INSETS_TYPE_NAVIGATION_BARS
 }

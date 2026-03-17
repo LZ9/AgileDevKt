@@ -3,6 +3,7 @@ package com.lodz.android.agiledevkt.modules.statusbar
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
 import android.widget.SeekBar
@@ -11,6 +12,7 @@ import com.lodz.android.agiledevkt.databinding.ActivityStatusbarTestBinding
 import com.lodz.android.agiledevkt.modules.coordinator.CoorStatusBarTestActivity
 import com.lodz.android.agiledevkt.modules.drawer.DrawerTestActivity
 import com.lodz.android.agiledevkt.modules.main.MainActivity
+import com.lodz.android.corekt.utils.ColorUtils
 import com.lodz.android.corekt.utils.StatusBarUtil
 import com.lodz.android.pandora.base.activity.BaseActivity
 import com.lodz.android.pandora.utils.viewbinding.bindingLayout
@@ -41,6 +43,8 @@ class StatusBarTestActivity : BaseActivity() {
         getTitleBarLayout().setBackgroundColor(DEFAULT_COLOR)
     }
 
+    override fun configRootBackgroundColor(): Int = DEFAULT_COLOR
+
     override fun onClickBackBtn() {
         super.onClickBackBtn()
         finish()
@@ -55,8 +59,7 @@ class StatusBarTestActivity : BaseActivity() {
                 if (!fromUser) {
                     return
                 }
-                StatusBarUtil.setColor(window, DEFAULT_COLOR, progress / 100.0f)
-                updateAlphaValue()
+                updateAlpha(mBinding.alphaSb.progress)
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
@@ -81,14 +84,18 @@ class StatusBarTestActivity : BaseActivity() {
 
     override fun initData() {
         super.initData()
-        StatusBarUtil.setColor(window, DEFAULT_COLOR, mBinding.alphaSb.progress / 100.0f)
-        updateAlphaValue()
+        updateAlpha(mBinding.alphaSb.progress)
         showStatusCompleted()
     }
 
     /** 更新透明度 */
-    private fun updateAlphaValue() {
-        mBinding.alphaValueTv.text = mBinding.alphaSb.progress.toString()
+    private fun updateAlpha(progress: Int) {
+        StatusBarUtil.setColor(window, DEFAULT_COLOR, progress / 100.0f)
+        val bg = getWrapperLayout()?.background
+        if (bg is ColorDrawable){
+            getWrapperLayout()?.setBackgroundColor(ColorUtils.getColorAlphaInt(bg.color, progress / 100.0f))
+        }
+        mBinding.alphaValueTv.text = progress.toString()
     }
 
 }
