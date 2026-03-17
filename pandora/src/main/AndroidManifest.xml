@@ -2,9 +2,9 @@
 
     <application>
 
-<!--    外部需要调用时再在app目录下的AndroidManifest进行声明    -->
+        <!--    外部需要调用时再在app目录下的AndroidManifest进行声明    -->
 <!--        <service-->
-<!--            android:name=".widget.keyboard.collect.CollectInputMethodService"-->
+<!--            android:name="com.lodz.android.pandora.widget.keyboard.collect.CollectInputMethodService"-->
 <!--            android:exported="false"-->
 <!--            android:label="@string/pandora_im_collect"-->
 <!--            android:permission="android.permission.BIND_INPUT_METHOD">-->

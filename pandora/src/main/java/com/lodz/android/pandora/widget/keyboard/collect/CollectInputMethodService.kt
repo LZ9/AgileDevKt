@@ -7,6 +7,8 @@ import android.view.inputmethod.InputConnection
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.lodz.android.corekt.anko.showInputMethodPicker
 import com.lodz.android.pandora.R
 import com.lodz.android.pandora.widget.collect.CltEditView
@@ -28,6 +30,11 @@ class CollectInputMethodService : InputMethodService() {
     override fun onCreateInputView(): View {
         // 加载自定义键盘布局
         val view = layoutInflater.inflate(R.layout.pandora_view_collect_keyboard, null)
+        ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
         keyboardView = view
         return view
     }

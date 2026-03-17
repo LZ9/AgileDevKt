@@ -185,6 +185,21 @@
 
         </service>
 
+        <service
+            android:name="com.lodz.android.pandora.widget.keyboard.collect.CollectInputMethodService"
+            android:exported="false"
+            android:label="@string/pandora_im_collect"
+            android:permission="android.permission.BIND_INPUT_METHOD">
+            <intent-filter>
+                <action android:name="android.view.InputMethod" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.view.im"
+                android:resource="@xml/pandora_method" />
+
+        </service>
+
         <activity
             android:name=".modules.splash.SplashActivity"
             android:exported="true"
