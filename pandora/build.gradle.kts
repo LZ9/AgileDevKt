@@ -14,7 +14,7 @@ android {
     defaultConfig {
         minSdk = 23
         buildConfigField("int", "versionCode", "77")
-        buildConfigField("String", "versionName", "\"2.2.1\"") //未上传
+        buildConfigField("String", "versionName", "\"2.3.0\"") //成功上传
 
     }
 
@@ -64,7 +64,7 @@ dependencies {
 //----------------------- 发布到 Maven Central  ------------------------------
 val PUBLISH_GROUP_ID = "ink.lodz"
 val PUBLISH_ARTIFACT_ID = "pandora"
-val PUBLISH_VERSION = "2.2.0"
+val PUBLISH_VERSION = "2.3.0"
 
 mavenPublishing {
     publishToMavenCentral(automaticRelease = true)

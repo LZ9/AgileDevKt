@@ -1,5 +1,11 @@
 # Pandora更新记录
 
+##### 2026/03/18
+1. AbsActivity.kt开启enableEdgeToEdge()，并对基类、键盘、图片选择器等进行适配
+2. 增加RxComponentActivity.kt，应对后续compose改造
+3. 取消onBackPressed的实现，改为onBackPressedDispatcher
+4. 发布2.3.0版
+
 ##### 2026/01/21
 1. 升级AGP，使用kts脚本
 2. strings.xml增加英文支持
