@@ -1,6 +1,6 @@
 [versions]
 #插件
-agp = "9.1.0"
+agp = "9.2.0"
 kotlin = "2.3.0"
 ksp = "2.3.4"
 publish = "0.36.0"
@@ -17,7 +17,7 @@ junit = "4.13.2"
 junitVersion = "1.1.5"
 espressoCore = "3.6.1"
 #core依赖
-annotation = "1.9.1"
+annotation = "1.10.0"
 appcompat = "1.7.1"
 material = "1.13.0"
 swiperefreshlayout = "1.2.0"
@@ -44,7 +44,7 @@ jackson = "2.21.1"
 rxlifecycle4 = "4.0.2"
 eventbus = "3.3.1"
 #ImageLoader依赖
-glide = "5.0.5"
+glide = "5.0.7"
 glideTransformations = "4.3.0"
 
 #-----------------------------------------------------------------------------------------------------------
