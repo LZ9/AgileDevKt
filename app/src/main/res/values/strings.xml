@@ -13,6 +13,7 @@
     <!-- 主页面 -->
     <string name="main_title">功能模块</string>
     <string name="main_change_mood">换个心情</string>
+    <string name="main_try_compose">试试Compose</string>
     <string name="test_author">作者：%s</string>
     <string name="test_alert">我的名字叫%1$s，我来自%2$s</string>
 

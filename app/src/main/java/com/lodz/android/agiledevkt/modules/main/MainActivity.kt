@@ -3,6 +3,7 @@ package com.lodz.android.agiledevkt.modules.main
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lodz.android.agiledevkt.App
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.bean.MainBean
+import com.lodz.android.agiledevkt.compose.splash.SplashCpsActivity
 import com.lodz.android.agiledevkt.databinding.ActivityMainBinding
 import com.lodz.android.agiledevkt.modules.acache.ACacheTestActivity
 import com.lodz.android.agiledevkt.modules.phonefile.PhoneFileActivity
@@ -222,7 +224,12 @@ class MainActivity : BaseActivity() {
             mAdapter.notifyDataSetChanged()
         }
         titleBarLayout.addExpandView(refreshBtn)
-        titleBarLayout.needBackButton(false)
+
+        val tv = TextView(getContext())
+        tv.setText(R.string.main_try_compose)
+        tv.setTextColor(Color.WHITE)
+        tv.setPadding(dp2px(15), 0, dp2px(15), 0)
+        titleBarLayout.replaceBackBtn(tv)
     }
 
     /** 初始化RV */
@@ -256,6 +263,11 @@ class MainActivity : BaseActivity() {
     override fun onPressBack(): Boolean {
         App.get().exit()
         return true
+    }
+
+    override fun onClickBackBtn() {
+        super.onClickBackBtn()
+        SplashCpsActivity.start(getContext())
     }
 
     override fun setListeners() {
