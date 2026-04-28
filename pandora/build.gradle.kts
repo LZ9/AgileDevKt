@@ -1,48 +1,36 @@
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-
 plugins {
     alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.vanniktech.maven.publish)
 }
 
-
 android {
     namespace = "com.lodz.android.pandora"
-    compileSdk = 36
+    compileSdk {
+        version = release(36) {
+            minorApiLevel = 1
+        }
+    }
 
     defaultConfig {
         minSdk = 23
         buildConfigField("int", "versionCode", "77")
         buildConfigField("String", "versionName", "\"2.3.0\"") //成功上传
 
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildFeatures {
+        compose = true
         viewBinding = true
         buildConfig = true
     }
 
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-        }
-    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlin {
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_17)
-        }
-    }
 
-    lint {
-        abortOnError = false
-        checkReleaseBuilds = false
-    }
 }
 
 dependencies {
@@ -59,6 +47,15 @@ dependencies {
     api(libs.trello.rxlifecycle4)
     // EventBus
     api(libs.greenrobot.eventbus)
+
+    // Compose
+    api(platform(libs.androidx.compose.bom))
+    api(libs.androidx.activity.compose)
+    api(libs.androidx.compose.material3)
+    api(libs.androidx.compose.ui)
+    api(libs.androidx.compose.ui.graphics)
+    api(libs.androidx.compose.ui.tooling.preview)
+    debugImplementation(libs.androidx.compose.ui.tooling)
 }
 
 //----------------------- 发布到 Maven Central  ------------------------------

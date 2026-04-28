@@ -1,45 +1,31 @@
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-
 plugins {
     alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.vanniktech.maven.publish)
 }
 
-
 android {
     namespace = "com.lodz.android.corekt"
-    compileSdk = 36
+    compileSdk {
+        version = release(36) {
+            minorApiLevel = 1
+        }
+    }
 
     defaultConfig {
         minSdk = 23
         buildConfigField("int", "versionCode", "61")
         buildConfigField("String", "versionName", "\"2.1.6\"") //未上传
+
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildFeatures {
         buildConfig = true
     }
 
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-        }
-    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
-    }
-    kotlin {
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_17)
-        }
-    }
-
-    lint {
-        abortOnError = false
-        checkReleaseBuilds = false
     }
 }
 
