@@ -1,7 +1,7 @@
 [versions]
 #插件
 agp = "9.2.1"
-kotlin = "2.3.20"
+kotlin = "2.3.21"
 ksp = "2.3.4"
 publish = "0.36.0"
 
@@ -34,7 +34,7 @@ datastore = "1.2.1"
 documentfile = "1.1.0"
 splashscreen = "1.2.0"
 flexbox = "3.0.0"
-coroutines = "1.10.2"
+coroutines = "1.11.0"
 
 #pandora依赖
 lodzCore = "2.1.5"
@@ -43,8 +43,8 @@ retrofit = "3.0.0"
 jackson = "2.21.1"
 rxlifecycle4 = "4.0.2"
 eventbus = "3.3.1"
-activityCompose = "1.8.0"
-composeBom = "2026.02.01"
+activityCompose = "1.13.0"
+composeBom = "2026.05.00"
 
 #ImageLoader依赖
 glide = "5.0.7"
