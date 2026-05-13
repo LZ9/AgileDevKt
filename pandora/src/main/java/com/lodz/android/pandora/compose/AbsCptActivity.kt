@@ -1,5 +1,6 @@
 package com.lodz.android.pandora.compose
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -27,4 +28,6 @@ abstract class AbsCptActivity : ComponentActivity() {
     protected open fun startCreate() {}
 
     protected open fun initData() {}
+
+    protected open fun getContext(): Context = this
 }

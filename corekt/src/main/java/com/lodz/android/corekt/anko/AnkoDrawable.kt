@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.RoundedCornerTreatment
 import com.google.android.material.shape.ShapeAppearanceModel
+import androidx.core.graphics.drawable.toDrawable
 
 /**
  * Drawable扩展类
@@ -19,7 +20,7 @@ import com.google.android.material.shape.ShapeAppearanceModel
  */
 
 /** 用颜色资源[color]创建Drawable */
-fun Context.createColorDrawable(@ColorRes color: Int): ColorDrawable = ColorDrawable(getColorCompat(color))
+fun Context.createColorDrawable(@ColorRes color: Int): ColorDrawable = getColorCompat(color).toDrawable()
 
 /** 用颜色资源[color]创建Drawable */
 fun View.createColorDrawable(@ColorRes color: Int): ColorDrawable = context.createColorDrawable(color)
@@ -28,7 +29,7 @@ fun View.createColorDrawable(@ColorRes color: Int): ColorDrawable = context.crea
 fun RecyclerView.ViewHolder.createColorDrawable(@ColorRes color: Int): ColorDrawable = itemView.createColorDrawable(color)
 
 /** 用颜色[color]创建Drawable */
-fun Context.createColorIntDrawable(@ColorInt color: Int): ColorDrawable = ColorDrawable(color)
+fun Context.createColorIntDrawable(@ColorInt color: Int): ColorDrawable = color.toDrawable()
 
 /** 用颜色[color]创建Drawable */
 fun View.createColorIntDrawable(@ColorInt color: Int): ColorDrawable = context.createColorIntDrawable(color)
@@ -37,7 +38,7 @@ fun View.createColorIntDrawable(@ColorInt color: Int): ColorDrawable = context.c
 fun RecyclerView.ViewHolder.createColorIntDrawable(@ColorInt color: Int): ColorDrawable = itemView.createColorIntDrawable(color)
 
 /** 用[bitmap]创建Drawable */
-fun Context.createBitmapDrawable(bitmap: Bitmap): BitmapDrawable = BitmapDrawable(resources, bitmap)
+fun Context.createBitmapDrawable(bitmap: Bitmap): BitmapDrawable = bitmap.toDrawable(resources)
 
 /** 用[bitmap]创建Drawable */
 fun View.createBitmapDrawable(bitmap: Bitmap): BitmapDrawable = context.createBitmapDrawable(bitmap)
