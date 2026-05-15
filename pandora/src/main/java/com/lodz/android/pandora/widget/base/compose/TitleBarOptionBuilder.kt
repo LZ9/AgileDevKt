@@ -1,7 +1,6 @@
 package com.lodz.android.pandora.widget.base.compose
 
 import android.content.Context
-import android.graphics.drawable.Drawable
 import androidx.annotation.DrawableRes
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
@@ -10,7 +9,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.lodz.android.corekt.anko.getDrawableCompat
 import com.lodz.android.pandora.anko.getComposeColor
 import com.lodz.android.pandora.base.application.BaseApplication
 import com.lodz.android.pandora.base.application.config.TitleBarLayoutConfig
@@ -22,15 +20,19 @@ import com.lodz.android.pandora.base.application.config.TitleBarLayoutConfig
  */
 class TitleBarOptionBuilder {
 
+    /** 是否保留状态栏间距 */
+    var isPaddingStatusBar: Boolean = true
+
     /** 是否需要返回按钮 */
     var isNeedBackBtn: Boolean? = null
 
-    /** 替换默认的返回按钮资源图片 */
+    /** 返回按钮资源图片 */
     @DrawableRes
-    var backBtnResId: Int = 0
+    var backBtnResId: Int? = null
 
-    /** 替换默认的返回按钮资源图片 */
-    var backBtnDrawable: Drawable? = null
+    /** 返回按钮按下资源图片 */
+    @DrawableRes
+    var backBtnSelResId: Int? = null
 
     /** 返回按钮文字 */
     var backText: String? = null
@@ -72,6 +74,9 @@ class TitleBarOptionBuilder {
     /** 背景颜色 */
     var backgroundColor: Color? = null
 
+    /** 是否由用户在外部自定义背景色 */
+    var backgroundOverlay: Boolean = false
+
     /** 是否需要阴影 */
     var isNeedElevation: Boolean? = null
 
@@ -84,13 +89,13 @@ class TitleBarOptionBuilder {
         val config = BaseApplication.get()?.getBaseLayoutConfig()?.getTitleBarLayoutConfig() ?: TitleBarLayoutConfig()
 
         return TitleBarOption(
+            isPaddingStatusBar = isPaddingStatusBar,
+
             isNeedBackBtn = isNeedBackBtn ?: config.isNeedBackBtn,
 
-            backBtnDrawable = backBtnDrawable ?: if (backBtnResId != 0) {
-                context.getDrawableCompat(backBtnResId)
-            } else if (config.backBtnResId != 0) {
-                context.getDrawableCompat(config.backBtnResId)
-            } else null,
+            backBtnResId = backBtnResId ?: if (config.backBtnResId != 0) config.backBtnResId else null,
+
+            backBtnSelResId = backBtnSelResId ?: if (config.backBtnResId != 0) config.backBtnResId else null,
 
             backBtnText = backText ?: config.backBtnText,
 
@@ -117,6 +122,8 @@ class TitleBarOptionBuilder {
             backgroundAlignment = backgroundAlignment,
 
             backgroundColor = backgroundColor ?: if (config.backgroundColor != 0) context.getComposeColor(config.backgroundColor) else null,
+
+            backgroundOverlay = backgroundOverlay,
 
             isNeedElevation = isNeedElevation ?: config.isNeedElevation,
 

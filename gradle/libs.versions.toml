@@ -45,6 +45,7 @@ rxlifecycle4 = "4.0.2"
 eventbus = "3.3.1"
 activityCompose = "1.13.0"
 composeBom = "2026.05.00"
+composeConstraintlayout = "1.1.1"
 
 #ImageLoader依赖
 glide = "5.0.7"
@@ -111,6 +112,7 @@ androidx-compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graph
 androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-compose-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "composeConstraintlayout" }
 
 #ImageLoader依赖
 bumptech-glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }

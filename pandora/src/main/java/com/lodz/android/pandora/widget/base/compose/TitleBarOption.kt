@@ -1,6 +1,5 @@
 package com.lodz.android.pandora.widget.base.compose
 
-import android.graphics.drawable.Drawable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
@@ -16,10 +15,14 @@ import androidx.compose.ui.unit.dp
  */
 @Immutable
 data class TitleBarOption(
+    /** 是否保留状态栏间距 */
+    val isPaddingStatusBar: Boolean = true,
     /** 是否需要显示返回按钮 */
     val isNeedBackBtn: Boolean = true,
-    /** 替换默认的返回按钮资源图片 */
-    val backBtnDrawable: Drawable? = null,
+    /** 返回按钮资源图片 */
+    val backBtnResId: Int? = null,
+    /** 返回按钮按下资源图片 */
+    val backBtnSelResId: Int? = null,
     /** 返回按钮文字 */
     val backBtnText: String = "",
     /** 返回按钮文字颜色 */
@@ -46,6 +49,8 @@ data class TitleBarOption(
     val backgroundAlignment: Alignment = Alignment.Center,
     /** 背景颜色 */
     val backgroundColor: Color? = null,
+    /** 是否由用户在外部自定义背景色 */
+    val backgroundOverlay: Boolean = false,
     /** 是否需要阴影 */
     val isNeedElevation: Boolean = true,
     /** 阴影的值 */
