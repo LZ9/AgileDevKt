@@ -18,9 +18,12 @@ abstract class AbsCptActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         startCreate()
+        beforeSetContent()
         setContent { RootContentUI() }
         initData()
     }
+
+    protected open fun beforeSetContent() {}
 
     @Composable
     abstract fun RootContentUI()

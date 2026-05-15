@@ -131,6 +131,12 @@ class TitleBarOptionBuilder {
 
             )
     }
+
+    fun update(option: TitleBarOption): TitleBarOption {
+        return option.copy(
+            titleText = titleText
+        )
+    }
 }
 
 fun Context.titleBarOption(block: TitleBarOptionBuilder.() -> Unit): TitleBarOption = TitleBarOptionBuilder().apply(block).build(this)

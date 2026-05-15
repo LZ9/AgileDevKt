@@ -11,8 +11,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.lodz.android.agiledevkt.compose.splash.SplashPage
-import com.lodz.android.agiledevkt.compose.theme.AgileDevKtTheme
 import com.lodz.android.pandora.compose.BaseCptActivity
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 /**
  * 主页（Compose实现）
@@ -28,12 +30,33 @@ class MainCpsActivity : BaseCptActivity() {
         }
     }
 
-    @Composable
-    override fun RootContentUI() {
-        AgileDevKtTheme {
-            super.RootContentUI()
+    override fun initData() {
+        super.initData()
+        updateTitleBar {
+            copy(
+                titleText = "测试标题",
+                titleTextColor = Color.Red
+            )
+        }
+
+        MainScope().launch {
+            delay(2000)
+
+            updateTitleBar {
+                copy(
+                    titleText = "测试标题2222",
+                )
+            }
+
         }
     }
+
+//    @Composable
+//    override fun RootContentUI() {
+//        AgileDevKtTheme {
+//            super.RootContentUI()
+//        }
+//    }
 
     @Composable
     override fun ContentUI(innerPadding: PaddingValues) {

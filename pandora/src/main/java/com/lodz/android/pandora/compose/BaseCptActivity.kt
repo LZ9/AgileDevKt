@@ -6,8 +6,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.lodz.android.pandora.widget.base.compose.TitleBar
+import com.lodz.android.pandora.widget.base.compose.TitleBarOption
+import com.lodz.android.pandora.widget.base.compose.TitleBarOptionBuilder
 import com.lodz.android.pandora.widget.base.compose.titleBarOption
 
 
@@ -18,18 +23,21 @@ import com.lodz.android.pandora.widget.base.compose.titleBarOption
  */
 abstract class BaseCptActivity : AbsCptActivity() {
 
+    private var titleBarOption by mutableStateOf(TitleBarOption())
+
+    override fun beforeSetContent() {
+        super.beforeSetContent()
+        titleBarOption = getContext().titleBarOption {  }
+    }
+
     @Composable
     override fun RootContentUI() {
-
         Scaffold(
             modifier = Modifier.fillMaxSize(),
             topBar = {
                 TitleBar(
                     modifier = Modifier.fillMaxWidth(),
-                    option = getContext().titleBarOption {
-                        titleText = "测试标题"
-
-                    },
+                    option = titleBarOption,
                     onBackBtnClick = {
                         finish()
                     }
@@ -42,4 +50,12 @@ abstract class BaseCptActivity : AbsCptActivity() {
 
     @Composable
     abstract fun ContentUI(innerPadding: PaddingValues)
+
+    protected fun updateTitleBar(block: TitleBarOption.() -> TitleBarOption) {
+        titleBarOption = titleBarOption.block()
+    }
+
+    protected fun update(block: TitleBarOptionBuilder.() -> Unit) {
+        titleBarOption = TitleBarOptionBuilder().apply(block).update(titleBarOption)
+    }
 }

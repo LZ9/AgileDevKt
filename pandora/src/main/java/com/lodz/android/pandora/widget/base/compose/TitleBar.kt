@@ -74,7 +74,7 @@ fun TitleBar(
     }
 
     Column(
-        modifier = modifier.let{
+        modifier = modifier.fillMaxWidth().let{
             var modifier = it
             if (option.isNeedElevation) { // 配置阴影
                 modifier = modifier.dropShadow(
