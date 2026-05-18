@@ -2,19 +2,16 @@ package com.lodz.android.agiledevkt.compose.main
 
 import android.content.Context
 import android.content.Intent
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.lifecycle.lifecycleScope
+import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.compose.splash.SplashPage
+import com.lodz.android.agiledevkt.compose.theme.AgileDevKtTheme
 import com.lodz.android.pandora.compose.BaseCptActivity
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 /**
  * 主页（Compose实现）
@@ -33,30 +30,20 @@ class MainCpsActivity : BaseCptActivity() {
     override fun initData() {
         super.initData()
         updateTitleBar {
-            titleText = "测试标题"
-            titleTextColor = Color.Red
-        }
-
-       lifecycleScope.launch {
-            delay(2000)
-
-            updateTitleBar {
-                titleText = "测试标题2222"
-            }
-
+            titleText = getString(R.string.main_title)
         }
     }
 
-//    @Composable
-//    override fun RootContentUI() {
-//        AgileDevKtTheme {
-//            super.RootContentUI()
-//        }
-//    }
+    @Composable
+    override fun RootContentUI() {
+        AgileDevKtTheme {
+            super.RootContentUI()
+        }
+    }
 
     @Composable
     override fun ContentUI(innerPadding: PaddingValues) {
-        Box(Modifier.fillMaxSize().padding(innerPadding).background(Color.Green)){
+        Box(Modifier.fillMaxSize().padding(innerPadding)){
             SplashPage()
         }
     }

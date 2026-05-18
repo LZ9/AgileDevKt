@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import com.lodz.android.pandora.widget.base.compose.TitleBar
 import com.lodz.android.pandora.widget.base.compose.TitleBarOption
 import com.lodz.android.pandora.widget.base.compose.TitleBarOptionBuilder
-import com.lodz.android.pandora.widget.base.compose.titleBarOption
+import com.lodz.android.pandora.widget.base.compose.titleBarOptionCreate
 import com.lodz.android.pandora.widget.base.compose.titleBarOptionUpdate
 
 
@@ -28,7 +28,7 @@ abstract class BaseCptActivity : AbsCptActivity() {
 
     override fun beforeSetContent() {
         super.beforeSetContent()
-        titleBarOption = getContext().titleBarOption {  }
+        titleBarOption = getContext().titleBarOptionCreate {  }
     }
 
     @Composable
@@ -53,6 +53,6 @@ abstract class BaseCptActivity : AbsCptActivity() {
     abstract fun ContentUI(innerPadding: PaddingValues)
 
     protected fun updateTitleBar(block: TitleBarOptionBuilder.() -> Unit) {
-        titleBarOption = titleBarOptionUpdate(titleBarOption, block)
+        titleBarOption = titleBarOption.titleBarOptionUpdate(block)
     }
 }

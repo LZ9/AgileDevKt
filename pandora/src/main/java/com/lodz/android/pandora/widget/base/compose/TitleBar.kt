@@ -202,13 +202,13 @@ fun TitleBar(
 fun UIPreview() {
 
     TitleBar(
-        option = LocalContext.current.titleBarOption {
+        option = LocalContext.current.titleBarOptionCreate {
             titleText = "测试标题"
             backgroundColor = Color.DarkGray
-            backText = "返回"
+            backBtnText = "返回"
         },
         areaRight = {
-            Row() {
+            Row {
                 Text(text = "保存", color = Color.White)
                 Spacer(Modifier.size(10.dp))
                 Text(text = "提交", color = Color.White)

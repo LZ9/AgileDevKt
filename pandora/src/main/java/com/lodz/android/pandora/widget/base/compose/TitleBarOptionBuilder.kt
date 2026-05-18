@@ -35,7 +35,7 @@ class TitleBarOptionBuilder(option: TitleBarOption? = null) {
     var backBtnSelResId: Int? = option?.backBtnSelResId
 
     /** 返回按钮文字 */
-    var backText: String? = option?.backBtnText
+    var backBtnText: String? = option?.backBtnText
 
     /** 返回按钮文字颜色 */
     var backBtnTextColor: Color? = option?.backBtnTextColor
@@ -98,7 +98,7 @@ class TitleBarOptionBuilder(option: TitleBarOption? = null) {
 
             backBtnSelResId = backBtnSelResId ?: if (config.backBtnResId != 0) config.backBtnResId else null,
 
-            backBtnText = backText ?: config.backBtnText,
+            backBtnText = backBtnText ?: config.backBtnText,
 
             backBtnTextColor = backBtnTextColor ?: if (config.backBtnTextColor != 0) context.getComposeColor(config.backBtnTextColor) else null,
 
@@ -144,7 +144,7 @@ class TitleBarOptionBuilder(option: TitleBarOption? = null) {
 
             backBtnSelResId = backBtnSelResId,
 
-            backBtnText = backText ?: "",
+            backBtnText = backBtnText ?: "",
 
             backBtnTextColor = backBtnTextColor ,
 
@@ -179,6 +179,8 @@ class TitleBarOptionBuilder(option: TitleBarOption? = null) {
     }
 }
 
-fun Context.titleBarOption(block: TitleBarOptionBuilder.() -> Unit): TitleBarOption = TitleBarOptionBuilder().apply(block).build(this)
+/** 创建TitleBarOption对象 */
+fun Context.titleBarOptionCreate(block: TitleBarOptionBuilder.() -> Unit): TitleBarOption = TitleBarOptionBuilder().apply(block).build(this)
 
-fun titleBarOptionUpdate(option: TitleBarOption, block: TitleBarOptionBuilder.() -> Unit): TitleBarOption = TitleBarOptionBuilder(option).apply(block).update()
+/** 更新TitleBarOption对象 */
+fun TitleBarOption.titleBarOptionUpdate(block: TitleBarOptionBuilder.() -> Unit): TitleBarOption = TitleBarOptionBuilder(this).apply(block).update()
