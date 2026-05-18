@@ -10,9 +10,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.lifecycle.lifecycleScope
 import com.lodz.android.agiledevkt.compose.splash.SplashPage
 import com.lodz.android.pandora.compose.BaseCptActivity
-import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -33,19 +33,15 @@ class MainCpsActivity : BaseCptActivity() {
     override fun initData() {
         super.initData()
         updateTitleBar {
-            copy(
-                titleText = "测试标题",
-                titleTextColor = Color.Red
-            )
+            titleText = "测试标题"
+            titleTextColor = Color.Red
         }
 
-        MainScope().launch {
+       lifecycleScope.launch {
             delay(2000)
 
             updateTitleBar {
-                copy(
-                    titleText = "测试标题2222",
-                )
+                titleText = "测试标题2222"
             }
 
         }

@@ -18,72 +18,73 @@ import com.lodz.android.pandora.base.application.config.TitleBarLayoutConfig
  * @author zhouL
  * @date 2026/5/12
  */
-class TitleBarOptionBuilder {
+class TitleBarOptionBuilder(option: TitleBarOption? = null) {
 
     /** 是否保留状态栏间距 */
-    var isPaddingStatusBar: Boolean = true
+    var isPaddingStatusBar: Boolean = option?.isPaddingStatusBar ?: true
 
     /** 是否需要返回按钮 */
-    var isNeedBackBtn: Boolean? = null
+    var isNeedBackBtn: Boolean? = option?.isNeedBackBtn
 
     /** 返回按钮资源图片 */
     @DrawableRes
-    var backBtnResId: Int? = null
+    var backBtnResId: Int? = option?.backBtnResId
 
     /** 返回按钮按下资源图片 */
     @DrawableRes
-    var backBtnSelResId: Int? = null
+    var backBtnSelResId: Int? = option?.backBtnSelResId
 
     /** 返回按钮文字 */
-    var backText: String? = null
+    var backText: String? = option?.backBtnText
 
     /** 返回按钮文字颜色 */
-    var backBtnTextColor: Color? = null
+    var backBtnTextColor: Color? = option?.backBtnTextColor
 
     /** 返回按钮文字大小（单位sp） */
-    var backBtnTextSize: TextUnit? = null
+    var backBtnTextSize: TextUnit? = option?.backBtnTextSize
 
     /** 标题文字 */
-    var titleText: String = ""
+    var titleText: String = option?.titleText ?: ""
 
     /** 标题文字颜色 */
-    var titleTextColor: Color? = null
+    var titleTextColor: Color? = option?.titleTextColor
 
     /** 标题文字大小（单位sp） */
-    var titleTextSize: TextUnit? = null
+    var titleTextSize: TextUnit? = option?.titleTextSize
 
     /** 是否显示分割线 */
-    var isShowDivideLine: Boolean? = null
+    var isShowDivideLine: Boolean? = option?.isShowDivideLine
 
     /** 分割线背景色 */
-    var divideLineColor: Color? = null
+    var divideLineColor: Color? = option?.divideLineColor
 
     /** 分割线高度 */
-    var divideLineHeight: Dp? = null
+    var divideLineHeight: Dp? = option?.divideLineHeight
 
     /** 背景资源图片 */
     @DrawableRes
-    var backgroundResId: Int? = null
+    var backgroundResId: Int? = option?.backgroundResId
 
     /** 背景资源图片缩放策略 */
-    var backgroundScale: ContentScale = ContentScale.Inside
+    var backgroundScale: ContentScale = option?.backgroundScale ?: ContentScale.Inside
 
     /** 背景资源图片对齐方式 */
-    var backgroundAlignment: Alignment = Alignment.Center
+    var backgroundAlignment: Alignment = option?.backgroundAlignment ?: Alignment.Center
 
     /** 背景颜色 */
-    var backgroundColor: Color? = null
+    var backgroundColor: Color? = option?.backgroundColor
 
     /** 是否由用户在外部自定义背景色 */
-    var backgroundOverlay: Boolean = false
+    var backgroundOverlay: Boolean = option?.backgroundOverlay ?: false
 
     /** 是否需要阴影 */
-    var isNeedElevation: Boolean? = null
+    var isNeedElevation: Boolean? = option?.isNeedElevation
 
     /** 阴影取值 */
-    var elevationVale: Float? = null
+    var elevationVale: Float? = option?.elevationVale
 
 
+    /** 构建TitleBarOption，上下文[context] */
     fun build(context: Context): TitleBarOption {
         // 获取Application里面的标题栏全局配置参数
         val config = BaseApplication.get()?.getBaseLayoutConfig()?.getTitleBarLayoutConfig() ?: TitleBarLayoutConfig()
@@ -129,14 +130,55 @@ class TitleBarOptionBuilder {
 
             elevationVale = elevationVale ?: config.elevationVale
 
-            )
+        )
     }
 
-    fun update(option: TitleBarOption): TitleBarOption {
-        return option.copy(
-            titleText = titleText
+    /** 更新TitleBarOption */
+    fun update(): TitleBarOption {
+        return TitleBarOption(
+            isPaddingStatusBar = isPaddingStatusBar,
+
+            isNeedBackBtn = isNeedBackBtn ?: true,
+
+            backBtnResId = backBtnResId,
+
+            backBtnSelResId = backBtnSelResId,
+
+            backBtnText = backText ?: "",
+
+            backBtnTextColor = backBtnTextColor ,
+
+            backBtnTextSize = backBtnTextSize ,
+
+            titleText = titleText,
+
+            titleTextColor = titleTextColor,
+
+            titleTextSize = titleTextSize,
+
+            isShowDivideLine = isShowDivideLine ?: false,
+
+            divideLineColor = divideLineColor,
+
+            divideLineHeight = divideLineHeight ?: 1.dp,
+
+            backgroundResId = backgroundResId,
+
+            backgroundScale = backgroundScale,
+
+            backgroundAlignment = backgroundAlignment,
+
+            backgroundColor = backgroundColor,
+
+            backgroundOverlay = backgroundOverlay,
+
+            isNeedElevation = isNeedElevation ?: true,
+
+            elevationVale = elevationVale ?: 12f
         )
     }
 }
 
 fun Context.titleBarOption(block: TitleBarOptionBuilder.() -> Unit): TitleBarOption = TitleBarOptionBuilder().apply(block).build(this)
+
+fun titleBarOptionUpdate(option: TitleBarOption, block: TitleBarOptionBuilder.() -> Unit): TitleBarOption = TitleBarOptionBuilder(option).apply(block).update()
