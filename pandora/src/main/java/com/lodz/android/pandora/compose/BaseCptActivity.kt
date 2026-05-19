@@ -10,11 +10,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import com.lodz.android.pandora.widget.base.compose.TitleBar
-import com.lodz.android.pandora.widget.base.compose.TitleBarOption
-import com.lodz.android.pandora.widget.base.compose.TitleBarOptionBuilder
-import com.lodz.android.pandora.widget.base.compose.titleBarOptionCreate
-import com.lodz.android.pandora.widget.base.compose.titleBarOptionUpdate
+import com.lodz.android.pandora.widget.base.compose.titlebar.TitleBar
+import com.lodz.android.pandora.widget.base.compose.titlebar.TitleBarOption
+import com.lodz.android.pandora.widget.base.compose.titlebar.TitleBarOptionBuilder
+import com.lodz.android.pandora.widget.base.compose.titlebar.titleBarOptionCreate
+import com.lodz.android.pandora.widget.base.compose.titlebar.titleBarOptionUpdate
 
 
 /**

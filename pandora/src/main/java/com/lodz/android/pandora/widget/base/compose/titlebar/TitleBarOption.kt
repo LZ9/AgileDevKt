@@ -1,4 +1,4 @@
-package com.lodz.android.pandora.widget.base.compose
+package com.lodz.android.pandora.widget.base.compose.titlebar
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment

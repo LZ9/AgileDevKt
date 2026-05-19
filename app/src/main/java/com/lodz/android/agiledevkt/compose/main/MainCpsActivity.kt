@@ -49,9 +49,7 @@ class MainCpsActivity : BaseCptActivity() {
 
     @Composable
     override fun ContentUI(innerPadding: PaddingValues) {
-        Box(Modifier
-            .fillMaxSize()
-            .padding(innerPadding)){
+        Box(Modifier.fillMaxSize().padding(innerPadding)){
             SplashPage()
         }
     }

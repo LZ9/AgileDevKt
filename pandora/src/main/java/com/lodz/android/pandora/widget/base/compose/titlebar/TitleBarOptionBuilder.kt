@@ -1,4 +1,4 @@
-package com.lodz.android.pandora.widget.base.compose
+package com.lodz.android.pandora.widget.base.compose.titlebar
 
 import android.content.Context
 import androidx.annotation.DrawableRes
