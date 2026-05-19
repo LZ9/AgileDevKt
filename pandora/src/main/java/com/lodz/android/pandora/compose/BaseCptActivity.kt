@@ -24,11 +24,11 @@ import com.lodz.android.pandora.widget.base.compose.titleBarOptionUpdate
  */
 abstract class BaseCptActivity : AbsCptActivity() {
 
-    private var titleBarOption by mutableStateOf(TitleBarOption())
+    private var mPdrTitleBarOption by mutableStateOf(TitleBarOption())
 
     override fun beforeSetContent() {
         super.beforeSetContent()
-        titleBarOption = getContext().titleBarOptionCreate {  }
+        mPdrTitleBarOption = getContext().titleBarOptionCreate { }
     }
 
     @Composable
@@ -38,10 +38,10 @@ abstract class BaseCptActivity : AbsCptActivity() {
             topBar = {
                 TitleBar(
                     modifier = Modifier.fillMaxWidth(),
-                    option = titleBarOption,
-                    onBackBtnClick = {
-                        finish()
-                    }
+                    option = mPdrTitleBarOption,
+                    onBackBtnClick = { onClickBackBtn() },
+                    areaLeft = { TitleBarAreaLeft() },
+                    areaRight = { TitleBarAreaRight() }
                 )
             }
         ) { innerPadding ->
@@ -53,6 +53,20 @@ abstract class BaseCptActivity : AbsCptActivity() {
     abstract fun ContentUI(innerPadding: PaddingValues)
 
     protected fun updateTitleBar(block: TitleBarOptionBuilder.() -> Unit) {
-        titleBarOption = titleBarOption.titleBarOptionUpdate(block)
+        mPdrTitleBarOption = mPdrTitleBarOption.titleBarOptionUpdate(block)
     }
+
+    /** 点击标题栏的返回按钮 */
+    protected open fun onClickBackBtn() {}
+
+    /** 点击错误页面的重试按钮 */
+    protected open fun onClickReload() {}
+
+    /** 标题栏左侧区域覆盖 */
+    @Composable
+    protected open fun TitleBarAreaLeft() {}
+
+    /** 标题栏右侧区域覆盖 */
+    @Composable
+    protected open fun TitleBarAreaRight() {}
 }

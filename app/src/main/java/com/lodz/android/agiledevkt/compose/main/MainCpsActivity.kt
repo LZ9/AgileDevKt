@@ -34,8 +34,14 @@ class MainCpsActivity : BaseCptActivity() {
         }
     }
 
+    override fun onClickBackBtn() {
+        super.onClickBackBtn()
+        finish()
+    }
+
     @Composable
     override fun RootContentUI() {
+        // 如果有统一主题可以在该方法里配置
         AgileDevKtTheme {
             super.RootContentUI()
         }
@@ -43,7 +49,9 @@ class MainCpsActivity : BaseCptActivity() {
 
     @Composable
     override fun ContentUI(innerPadding: PaddingValues) {
-        Box(Modifier.fillMaxSize().padding(innerPadding)){
+        Box(Modifier
+            .fillMaxSize()
+            .padding(innerPadding)){
             SplashPage()
         }
     }

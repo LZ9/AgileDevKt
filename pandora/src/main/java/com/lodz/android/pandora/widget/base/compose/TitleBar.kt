@@ -1,6 +1,7 @@
 package com.lodz.android.pandora.widget.base.compose
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -37,13 +39,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.lodz.android.corekt.anko.px2dp
+import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.pandora.R
 
 
@@ -82,7 +84,6 @@ fun TitleBar(
                     shadow = Shadow(
                         radius = context.px2dp(option.elevationVale).dp, // 模糊半径
                         color = Color.Black.copy(alpha = 0.25f),
-                        offset = DpOffset(0.dp, context.px2dp(option.elevationVale).dp) // 只向下偏移
                     )
                 )
             }
@@ -200,12 +201,41 @@ fun TitleBar(
 @Preview(device = Devices.NEXUS_6, showSystemUi = true)
 @Composable
 fun UIPreview() {
+    val context = LocalContext.current
 
     TitleBar(
-        option = LocalContext.current.titleBarOptionCreate {
+        option = context.titleBarOptionCreate {
+            titleText = "测试标题"
+            backgroundColor = Color.DarkGray
+        }
+    )
+}
+
+@Preview(device = Devices.NEXUS_6, showSystemUi = true)
+@Composable
+fun UIPreviewCustom() {
+    val context = LocalContext.current
+
+    TitleBar(
+        option = context.titleBarOptionCreate {
             titleText = "测试标题"
             backgroundColor = Color.DarkGray
             backBtnText = "返回"
+        },
+        areaLeft = {
+            Row(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .clickable{
+                        context.toastShort("返回")
+                    },
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Spacer(Modifier.size(10.dp))
+                Text(text = "返回", color = Color.White)
+                Spacer(Modifier.size(10.dp))
+            }
         },
         areaRight = {
             Row {
