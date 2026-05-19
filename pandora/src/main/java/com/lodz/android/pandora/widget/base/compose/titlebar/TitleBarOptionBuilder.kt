@@ -14,7 +14,7 @@ import com.lodz.android.pandora.base.application.BaseApplication
 import com.lodz.android.pandora.base.application.config.TitleBarLayoutConfig
 
 /**
- * TitleBar配置选项构建器
+ * 标题栏配置选项构建器
  * @author zhouL
  * @date 2026/5/12
  */

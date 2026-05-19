@@ -26,7 +26,7 @@ abstract class AbsCptActivity : ComponentActivity() {
     protected open fun beforeSetContent() {}
 
     @Composable
-    abstract fun RootContentUI()
+    protected abstract fun RootContentUI()
 
     protected open fun startCreate() {}
 

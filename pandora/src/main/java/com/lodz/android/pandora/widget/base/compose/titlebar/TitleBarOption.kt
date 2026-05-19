@@ -9,7 +9,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 
 /**
- * TitleBar配置选项
+ * 标题栏配置选项
  * @author zhouL
  * @date 2026/5/12
  */

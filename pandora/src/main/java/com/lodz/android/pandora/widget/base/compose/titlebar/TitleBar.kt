@@ -146,6 +146,7 @@ fun TitleBar(
                     areaLeft()
                 } else {
                     TextButton(
+                        modifier = Modifier.width(50.dp),
                         onClick = { onBackBtnClick?.invoke() },
                         interactionSource = interactionSource,
                     ) {
@@ -198,7 +199,7 @@ fun TitleBar(
     }
 }
 
-@Preview(device = Devices.NEXUS_6, showSystemUi = true)
+@Preview(device = Devices.NEXUS_6, showSystemUi = true, locale = "zh")
 @Composable
 fun UIPreview() {
     val context = LocalContext.current
@@ -211,7 +212,7 @@ fun UIPreview() {
     )
 }
 
-@Preview(device = Devices.NEXUS_6, showSystemUi = true)
+@Preview(device = Devices.NEXUS_6, showSystemUi = true, locale = "zh")
 @Composable
 fun UIPreviewCustom() {
     val context = LocalContext.current

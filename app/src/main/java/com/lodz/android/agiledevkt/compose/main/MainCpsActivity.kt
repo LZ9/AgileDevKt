@@ -5,13 +5,20 @@ import android.content.Intent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Devices
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.lifecycleScope
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.compose.splash.SplashPage
 import com.lodz.android.agiledevkt.compose.theme.AgileDevKtTheme
 import com.lodz.android.pandora.compose.BaseCptActivity
+import com.lodz.android.pandora.widget.base.compose.base.BaseContent
+import com.lodz.android.pandora.widget.base.compose.base.BaseContentState
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 /**
  * 主页（Compose实现）
@@ -32,6 +39,11 @@ class MainCpsActivity : BaseCptActivity() {
         updateTitleBar {
             titleText = getString(R.string.main_title)
         }
+
+        lifecycleScope.launch{
+            delay(2000)
+            showStatusCompleted()
+        }
     }
 
     override fun onClickBackBtn() {
@@ -49,8 +61,21 @@ class MainCpsActivity : BaseCptActivity() {
 
     @Composable
     override fun ContentUI(innerPadding: PaddingValues) {
-        Box(Modifier.fillMaxSize().padding(innerPadding)){
+        Box(Modifier.fillMaxSize()){
             SplashPage()
         }
     }
+}
+
+@Preview(device = Devices.NEXUS_6, showSystemUi = true, locale = "zh")
+@Composable
+fun UIPreview() {
+    val context = LocalContext.current
+    AgileDevKtTheme {
+        BaseContent(pageState = BaseContentState.Content) {
+            SplashPage()
+        }
+
+    }
+
 }
