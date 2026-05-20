@@ -2,6 +2,7 @@ package com.lodz.android.pandora.compose
 
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
@@ -12,6 +13,10 @@ import androidx.compose.ui.Modifier
 import com.lodz.android.pandora.widget.base.compose.base.BaseContent
 import com.lodz.android.pandora.widget.base.compose.base.BaseContentState
 import com.lodz.android.pandora.widget.base.compose.loading.LoadingPage
+import com.lodz.android.pandora.widget.base.compose.loading.LoadingPageOption
+import com.lodz.android.pandora.widget.base.compose.loading.LoadingPageOptionBuilder
+import com.lodz.android.pandora.widget.base.compose.loading.loadingPageOptionCreate
+import com.lodz.android.pandora.widget.base.compose.loading.loadingPageOptionUpdate
 import com.lodz.android.pandora.widget.base.compose.titlebar.TitleBar
 import com.lodz.android.pandora.widget.base.compose.titlebar.TitleBarOption
 import com.lodz.android.pandora.widget.base.compose.titlebar.TitleBarOptionBuilder
@@ -28,6 +33,10 @@ abstract class BaseCptActivity : AbsCptActivity() {
 
     /** 标题栏配置项 */
     private var mPdrTitleBarOption by mutableStateOf(TitleBarOption())
+    /** 加载页配置项 */
+    private var mPdrLoadingPageOption by mutableStateOf(LoadingPageOption())
+
+
 
     /** 是否显示标题栏 */
     private var isShowTitleBar by mutableStateOf(true)
@@ -39,6 +48,7 @@ abstract class BaseCptActivity : AbsCptActivity() {
     override fun beforeSetContent() {
         super.beforeSetContent()
         mPdrTitleBarOption = getContext().titleBarOptionCreate { }
+        mPdrLoadingPageOption = getContext().loadingPageOptionCreate {  }
     }
 
     @Composable
@@ -59,7 +69,10 @@ abstract class BaseCptActivity : AbsCptActivity() {
             },
 
             loading = {
-                LoadingPage()
+                LoadingPage(
+                    modifier = Modifier.fillMaxSize(),
+                    option = mPdrLoadingPageOption
+                )
             },
 
             error = {
@@ -79,6 +92,10 @@ abstract class BaseCptActivity : AbsCptActivity() {
 
     protected fun updateTitleBar(block: TitleBarOptionBuilder.() -> Unit) {
         mPdrTitleBarOption = mPdrTitleBarOption.titleBarOptionUpdate(block)
+    }
+
+    protected fun updateLoadingPage(block: LoadingPageOptionBuilder.() -> Unit) {
+        mPdrLoadingPageOption = mPdrLoadingPageOption.loadingPageOptionUpdate(block)
     }
 
     /** 点击标题栏的返回按钮 */

@@ -11,6 +11,9 @@ import com.lodz.android.corekt.anko.getColorCompat
  * @author zhouL
  * @date 2026/5/13
  */
+
+/** 通过ColorRes获取Compose的颜色 */
 fun Context.getComposeColor(@ColorRes id: Int): Color = Color(this.getColorCompat(id))
 
+/** 将ColorInt转为Compose的颜色 */
 fun toComposeColor(@ColorInt color: Int): Color = Color(color)

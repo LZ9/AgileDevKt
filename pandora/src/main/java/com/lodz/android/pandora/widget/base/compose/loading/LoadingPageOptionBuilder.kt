@@ -1,17 +1,21 @@
 package com.lodz.android.pandora.widget.base.compose.loading
 
 import android.content.Context
+import android.graphics.drawable.Drawable
+import android.widget.LinearLayout
 import androidx.annotation.DrawableRes
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.lodz.android.corekt.anko.px2dp
 import com.lodz.android.pandora.anko.getComposeColor
 import com.lodz.android.pandora.base.application.BaseApplication
 import com.lodz.android.pandora.base.application.config.LoadingLayoutConfig
+import com.lodz.android.pandora.widget.base.compose.base.Orientation
 import kotlin.Boolean
 
 
@@ -23,7 +27,7 @@ import kotlin.Boolean
 class LoadingPageOptionBuilder(option: LoadingPageOption? = null) {
 
     /** 是否需要提示文字 */
-    var isNeedTips: Boolean? = option?.isNeedTips ?: true
+    var isNeedTips: Boolean? = option?.isNeedTips
 
     /** 提示文字 */
     var tips: String = option?.tips ?: ""
@@ -51,26 +55,29 @@ class LoadingPageOptionBuilder(option: LoadingPageOption? = null) {
     var backgroundOverlay: Boolean = option?.backgroundOverlay ?: false
 
     /** 不确定模式 */
-    var isIndeterminate: Boolean = option?.isIndeterminate ?: true
+    var isIndeterminate: Boolean? = option?.isIndeterminate
 
-    /** 不确定模式下的资源 */
+    /** 不确定模式下的动画资源 */
     @DrawableRes
     var indeterminateDrawableResId: Int? = option?.indeterminateDrawableResId
 
+    /** 不确定模式下的帧列表 */
+    var indeterminateDrawable: List<Pair<Drawable, Int>>? = option?.indeterminateDrawable
+
     /** 使用系统默认加载资源 */
-    var useSysDefDrawable: Boolean = option?.useSysDefDrawable ?: true
+    var useSysDefDrawable: Boolean? = option?.useSysDefDrawable
 
-    /** 页面子元素垂直排列方式 */
-    var verticalArrangement: Arrangement.Vertical = option?.verticalArrangement ?: Arrangement.Center
-
-    /** 页面子元素水平排列方式 */
-    var horizontalAlignment: Alignment.Horizontal = option?.horizontalAlignment ?: Alignment.CenterHorizontally
+    /** 页面方向布局 */
+    var orientation: Orientation? = option?.orientation
 
     /** 进度条高度 */
     var pbHeight: Dp? = option?.pbHeight
 
     /** 进度条宽度 */
     var pbWidth: Dp? = option?.pbWidth
+
+    /** 进度值 */
+    var progress: Float? = option?.progress
 
     /** 构建LoadingPageOption，上下文[context] */
     fun build(context: Context): LoadingPageOption {
@@ -96,19 +103,21 @@ class LoadingPageOptionBuilder(option: LoadingPageOption? = null) {
 
             backgroundOverlay = backgroundOverlay,
 
-            isIndeterminate = isIndeterminate,
+            isIndeterminate = isIndeterminate ?: config.isIndeterminate,
 
             indeterminateDrawableResId = indeterminateDrawableResId ?: if (config.indeterminateDrawable != 0) config.indeterminateDrawable else null,
 
-            useSysDefDrawable = useSysDefDrawable,
+            indeterminateDrawable = indeterminateDrawable,
 
-            verticalArrangement = verticalArrangement,
+            useSysDefDrawable = useSysDefDrawable ?: config.useSysDefDrawable,
 
-            horizontalAlignment = horizontalAlignment,
+            orientation = orientation ?: if (config.orientation == LinearLayout.VERTICAL) Orientation.Vertical else Orientation.Horizontal,
 
-            pbHeight = pbHeight,
+            pbHeight = pbHeight ?: context.px2dp(config.pbHeightPx).dp,
 
-            pbWidth = pbWidth,
+            pbWidth = pbWidth ?: context.px2dp(config.pbWidthPx).dp,
+
+            progress = progress
         )
     }
 
@@ -133,19 +142,21 @@ class LoadingPageOptionBuilder(option: LoadingPageOption? = null) {
 
             backgroundOverlay = backgroundOverlay,
 
-            isIndeterminate = isIndeterminate,
+            isIndeterminate = isIndeterminate ?: true,
 
             indeterminateDrawableResId = indeterminateDrawableResId,
 
-            useSysDefDrawable = useSysDefDrawable,
+            indeterminateDrawable = indeterminateDrawable,
 
-            verticalArrangement = verticalArrangement,
+            useSysDefDrawable = useSysDefDrawable ?: true,
 
-            horizontalAlignment = horizontalAlignment,
+            orientation = orientation ?: Orientation.Vertical,
 
-            pbHeight = pbHeight,
+            pbHeight = pbHeight ?: 0.dp,
 
-            pbWidth = pbWidth,
+            pbWidth = pbWidth?: 0.dp,
+
+            progress = progress
         )
     }
 }

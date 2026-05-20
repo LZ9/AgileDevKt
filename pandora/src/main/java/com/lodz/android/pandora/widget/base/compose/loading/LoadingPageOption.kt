@@ -1,12 +1,14 @@
 package com.lodz.android.pandora.widget.base.compose.loading
 
-import androidx.compose.foundation.layout.Arrangement
+import android.graphics.drawable.Drawable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.dp
+import com.lodz.android.pandora.widget.base.compose.base.Orientation
 
 /**
  * 加载页配置选项
@@ -35,16 +37,18 @@ data class LoadingPageOption(
     val backgroundOverlay: Boolean = false,
     /** 不确定模式 */
     val isIndeterminate: Boolean = true,
-    /** 不确定模式下的资源 */
+    /** 不确定模式下的动画资源 */
     val indeterminateDrawableResId: Int? = null,
+    /** 不确定模式下的帧列表 */
+    val indeterminateDrawable: List<Pair<Drawable, Int>>? = null,
     /** 使用系统默认加载资源 */
     val useSysDefDrawable: Boolean = true,
-    /** 页面子元素垂直排列方式 */
-    val verticalArrangement: Arrangement.Vertical = Arrangement.Center,
-    /** 页面子元素水平排列方式 */
-    val horizontalAlignment: Alignment.Horizontal = Alignment.CenterHorizontally,
+    /** 页面方向布局 */
+    val orientation: Orientation = Orientation.Vertical,
     /** 进度条高度 */
-    val pbHeight: Dp? = null,
+    val pbHeight: Dp = 0.dp,
     /** 进度条宽度 */
-    val pbWidth: Dp? = null,
+    val pbWidth: Dp = 0.dp,
+    /** 进度值 */
+    val progress: Float? = null,
 )

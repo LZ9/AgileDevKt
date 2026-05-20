@@ -56,6 +56,7 @@ dependencies {
     api(libs.androidx.compose.ui.graphics)
     api(libs.androidx.compose.ui.tooling.preview)
     debugImplementation(libs.androidx.compose.ui.tooling)
+    api(libs.androidx.compose.foundation)
     api(libs.androidx.compose.constraintlayout)
 }
 
