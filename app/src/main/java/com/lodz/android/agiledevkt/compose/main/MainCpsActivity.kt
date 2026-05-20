@@ -14,7 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.compose.splash.SplashPage
 import com.lodz.android.agiledevkt.compose.theme.AgileDevKtTheme
-import com.lodz.android.pandora.compose.BaseCptActivity
+import com.lodz.android.pandora.compose.BaseCpsActivity
 import com.lodz.android.pandora.widget.base.compose.base.BaseContent
 import com.lodz.android.pandora.widget.base.compose.base.BaseContentState
 import kotlinx.coroutines.delay
@@ -25,7 +25,7 @@ import kotlinx.coroutines.launch
  * @author zhouL
  * @date 2026/5/9
  */
-class MainCpsActivity : BaseCptActivity() {
+class MainCpsActivity : BaseCpsActivity() {
 
     companion object {
         fun start(context: Context) {

@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
  * @author zhouL
  * @date 2026/5/9
  */
-abstract class AbsCptActivity : ComponentActivity() {
+abstract class AbsCpsActivity : ComponentActivity() {
 
     final override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

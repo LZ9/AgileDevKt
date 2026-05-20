@@ -39,7 +39,7 @@ import com.lodz.android.pandora.widget.base.compose.titlebar.titleBarOptionUpdat
  * @author zhouL
  * @date 2026/5/9
  */
-abstract class BaseCptActivity : AbsCptActivity() {
+abstract class BaseCpsActivity : AbsCpsActivity() {
 
     /** 标题栏配置项 */
     private var mPdrTitleBarOption by mutableStateOf(TitleBarOption())
