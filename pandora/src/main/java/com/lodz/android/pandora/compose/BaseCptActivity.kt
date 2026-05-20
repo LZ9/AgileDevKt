@@ -17,6 +17,11 @@ import com.lodz.android.pandora.widget.base.compose.loading.LoadingPageOption
 import com.lodz.android.pandora.widget.base.compose.loading.LoadingPageOptionBuilder
 import com.lodz.android.pandora.widget.base.compose.loading.loadingPageOptionCreate
 import com.lodz.android.pandora.widget.base.compose.loading.loadingPageOptionUpdate
+import com.lodz.android.pandora.widget.base.compose.nodata.NoDataPage
+import com.lodz.android.pandora.widget.base.compose.nodata.NoDataPageOption
+import com.lodz.android.pandora.widget.base.compose.nodata.NoDataPageOptionBuilder
+import com.lodz.android.pandora.widget.base.compose.nodata.noDataPageOptionCreate
+import com.lodz.android.pandora.widget.base.compose.nodata.noDataPageOptionUpdate
 import com.lodz.android.pandora.widget.base.compose.titlebar.TitleBar
 import com.lodz.android.pandora.widget.base.compose.titlebar.TitleBarOption
 import com.lodz.android.pandora.widget.base.compose.titlebar.TitleBarOptionBuilder
@@ -35,7 +40,8 @@ abstract class BaseCptActivity : AbsCptActivity() {
     private var mPdrTitleBarOption by mutableStateOf(TitleBarOption())
     /** 加载页配置项 */
     private var mPdrLoadingPageOption by mutableStateOf(LoadingPageOption())
-
+    /** 无数据页配置项 */
+    private var mPdrNoDataPageOption by mutableStateOf(NoDataPageOption())
 
 
     /** 是否显示标题栏 */
@@ -49,6 +55,7 @@ abstract class BaseCptActivity : AbsCptActivity() {
         super.beforeSetContent()
         mPdrTitleBarOption = getContext().titleBarOptionCreate { }
         mPdrLoadingPageOption = getContext().loadingPageOptionCreate {  }
+        mPdrNoDataPageOption = getContext().noDataPageOptionCreate {  }
     }
 
     @Composable
@@ -80,7 +87,10 @@ abstract class BaseCptActivity : AbsCptActivity() {
             },
 
             noData = {
-                LoadingPage()
+                NoDataPage(
+                    modifier = Modifier.fillMaxSize(),
+                    option = mPdrNoDataPageOption
+                )
             }
         ) { innerPadding ->
             ContentUI(innerPadding)
@@ -90,12 +100,19 @@ abstract class BaseCptActivity : AbsCptActivity() {
     @Composable
     protected abstract fun ContentUI(innerPadding: PaddingValues)
 
+    /** 更新标题栏配置项参数 */
     protected fun updateTitleBar(block: TitleBarOptionBuilder.() -> Unit) {
         mPdrTitleBarOption = mPdrTitleBarOption.titleBarOptionUpdate(block)
     }
 
+    /** 更新加载页配置项参数 */
     protected fun updateLoadingPage(block: LoadingPageOptionBuilder.() -> Unit) {
         mPdrLoadingPageOption = mPdrLoadingPageOption.loadingPageOptionUpdate(block)
+    }
+
+    /** 更新无数据页配置项参数 */
+    protected fun updateNoDataPage(block: NoDataPageOptionBuilder.() -> Unit) {
+        mPdrNoDataPageOption = mPdrNoDataPageOption.noDataPageOptionUpdate(block)
     }
 
     /** 点击标题栏的返回按钮 */
