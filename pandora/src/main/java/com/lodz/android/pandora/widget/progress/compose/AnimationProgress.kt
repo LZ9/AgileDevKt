@@ -11,6 +11,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import com.lodz.android.corekt.anko.getAnimationDrawable
@@ -45,7 +46,7 @@ fun AnimationProgress(modifier: Modifier, frames: List<Pair<Drawable, Int>>) {
         }
     }
 
-    Box(modifier) {
+    Box(modifier, contentAlignment = Alignment.Center) {
         Image(
             painter = rememberDrawablePainterCompat(frames[currentFrameIndex].first),
             contentDescription = null
