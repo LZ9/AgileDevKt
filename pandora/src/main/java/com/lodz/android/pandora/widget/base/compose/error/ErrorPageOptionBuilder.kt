@@ -1,4 +1,4 @@
-package com.lodz.android.pandora.widget.base.compose.nodata
+package com.lodz.android.pandora.widget.base.compose.error
 
 import android.content.Context
 import android.widget.LinearLayout
@@ -12,30 +12,35 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.lodz.android.pandora.anko.getComposeColor
 import com.lodz.android.pandora.base.application.BaseApplication
-import com.lodz.android.pandora.base.application.config.NoDataLayoutConfig
+import com.lodz.android.pandora.base.application.config.ErrorLayoutConfig
 import com.lodz.android.pandora.widget.base.compose.base.Orientation
 
+
 /**
- * 无数据页配置选项构建器
+ * 错误页配置选项构建器
  * @author zhouL
  * @date 2026/5/20
  */
-class NoDataPageOptionBuilder(option: NoDataPageOption? = null)  {
+class ErrorPageOptionBuilder(option: ErrorPageOption? = null) {
 
     /** 需要提示图片 */
     var isNeedImg: Boolean? = option?.isNeedImg
 
-    /** 无数据图片 */
+    /** 错误图片 */
     @DrawableRes
     var imgResId: Int? = option?.imgResId
 
-    /** 无数据图片大小 */
+    /** 网络错误图片 */
+    @DrawableRes
+    var imgNetResId: Int? = option?.imgNetResId
+
+    /** 错误图片大小 */
     var imgSize: Dp = option?.imgSize ?: 200.dp
 
-    /** 无数据图片缩放策略 */
+    /** 错误图片缩放策略 */
     var imgScale: ContentScale = option?.imgScale ?: ContentScale.Fit
 
-    /** 无数据图片对齐方式 */
+    /** 错误图片对齐方式 */
     var imgAlignment: Alignment = option?.imgAlignment ?: Alignment.Center
 
     /** 是否需要提示文字 */
@@ -43,6 +48,9 @@ class NoDataPageOptionBuilder(option: NoDataPageOption? = null)  {
 
     /** 提示文字 */
     var tips: String = option?.tips ?: ""
+
+    /** 网络异常提示文字 */
+    var netTips: String = option?.netTips ?: ""
 
     /** 文字颜色 */
     var textColor: Color? = option?.textColor
@@ -70,15 +78,17 @@ class NoDataPageOptionBuilder(option: NoDataPageOption? = null)  {
     var orientation: Orientation? = option?.orientation
 
 
-    /** 构建NoDataPageOption，上下文[context] */
-    fun build(context: Context): NoDataPageOption {
+    /** 构建ErrorPageOption，上下文[context] */
+    fun build(context: Context): ErrorPageOption {
         // 获取Application里面的标题栏全局配置参数
-        val config = BaseApplication.get()?.getBaseLayoutConfig()?.getNoDataLayoutConfig() ?: NoDataLayoutConfig()
+        val config = BaseApplication.get()?.getBaseLayoutConfig()?.getErrorLayoutConfig() ?: ErrorLayoutConfig()
 
-        return NoDataPageOption(
+        return ErrorPageOption(
             isNeedImg = isNeedImg ?: config.isNeedImg,
 
             imgResId = imgResId ?: config.drawableResId,
+
+            imgNetResId = imgNetResId,
 
             imgSize = imgSize,
 
@@ -89,6 +99,8 @@ class NoDataPageOptionBuilder(option: NoDataPageOption? = null)  {
             isNeedTips = isNeedTips ?: config.isNeedTips,
 
             tips = tips,
+
+            netTips = netTips,
 
             textColor = textColor ?: if (config.textColor != 0) context.getComposeColor(config.textColor) else null,
 
@@ -108,12 +120,14 @@ class NoDataPageOptionBuilder(option: NoDataPageOption? = null)  {
         )
     }
 
-    /** 更新NoDataPageOption */
-    fun update(): NoDataPageOption {
-        return NoDataPageOption(
+    /** 更新ErrorPageOption */
+    fun update(): ErrorPageOption {
+        return ErrorPageOption(
             isNeedImg = isNeedImg ?: true,
 
             imgResId = imgResId,
+
+            imgNetResId = imgNetResId,
 
             imgSize = imgSize,
 
@@ -124,6 +138,8 @@ class NoDataPageOptionBuilder(option: NoDataPageOption? = null)  {
             isNeedTips = isNeedTips ?: true,
 
             tips = tips,
+
+            netTips = netTips,
 
             textColor = textColor,
 
@@ -144,8 +160,8 @@ class NoDataPageOptionBuilder(option: NoDataPageOption? = null)  {
     }
 }
 
-/** 创建NoDataPageOption对象 */
-fun Context.noDataPageOptionCreate(block: NoDataPageOptionBuilder.() -> Unit): NoDataPageOption = NoDataPageOptionBuilder().apply(block).build(this)
+/** 创建ErrorPageOption对象 */
+fun Context.errorPageOptionCreate(block: ErrorPageOptionBuilder.() -> Unit): ErrorPageOption = ErrorPageOptionBuilder().apply(block).build(this)
 
-/** 更新NoDataPageOption对象 */
-fun NoDataPageOption.noDataPageOptionUpdate(block: NoDataPageOptionBuilder.() -> Unit): NoDataPageOption = NoDataPageOptionBuilder(this).apply(block).update()
+/** 更新ErrorPageOption对象 */
+fun ErrorPageOption.errorPageOptionUpdate(block: ErrorPageOptionBuilder.() -> Unit): ErrorPageOption = ErrorPageOptionBuilder(this).apply(block).update()

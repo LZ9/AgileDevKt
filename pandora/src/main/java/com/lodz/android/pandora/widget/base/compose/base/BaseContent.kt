@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import com.lodz.android.pandora.widget.base.compose.error.ErrorPage
 import com.lodz.android.pandora.widget.base.compose.loading.LoadingPage
 import com.lodz.android.pandora.widget.base.compose.nodata.NoDataPage
 import com.lodz.android.pandora.widget.base.compose.titlebar.TitleBar
@@ -38,7 +39,7 @@ fun BaseContent(
     },
 
     error: @Composable (() -> Unit)? = {
-        LoadingPage(Modifier.fillMaxSize())
+        ErrorPage(Modifier.fillMaxSize())
     },
 
     noData: @Composable (() -> Unit)? = {

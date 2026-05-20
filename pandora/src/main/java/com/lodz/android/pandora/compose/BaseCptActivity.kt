@@ -12,6 +12,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.lodz.android.pandora.widget.base.compose.base.BaseContent
 import com.lodz.android.pandora.widget.base.compose.base.BaseContentState
+import com.lodz.android.pandora.widget.base.compose.error.ErrorPage
+import com.lodz.android.pandora.widget.base.compose.error.ErrorPageOption
+import com.lodz.android.pandora.widget.base.compose.error.ErrorPageOptionBuilder
+import com.lodz.android.pandora.widget.base.compose.error.errorPageOptionCreate
+import com.lodz.android.pandora.widget.base.compose.error.errorPageOptionUpdate
 import com.lodz.android.pandora.widget.base.compose.loading.LoadingPage
 import com.lodz.android.pandora.widget.base.compose.loading.LoadingPageOption
 import com.lodz.android.pandora.widget.base.compose.loading.LoadingPageOptionBuilder
@@ -42,12 +47,15 @@ abstract class BaseCptActivity : AbsCptActivity() {
     private var mPdrLoadingPageOption by mutableStateOf(LoadingPageOption())
     /** 无数据页配置项 */
     private var mPdrNoDataPageOption by mutableStateOf(NoDataPageOption())
-
+    /** 错误页配置项 */
+    private var mPdrErrorPageOption by mutableStateOf(ErrorPageOption())
 
     /** 是否显示标题栏 */
     private var isShowTitleBar by mutableStateOf(true)
     /** 页面状态 */
     private var mPdrPageState by mutableStateOf<BaseContentState>(BaseContentState.Loading)
+    /** 是否显示标题栏 */
+    private var mPdrErrorThrowable by mutableStateOf<Throwable?>(null)
 
     typealias AreaContent = @Composable BoxScope.() -> Unit
 
@@ -56,6 +64,7 @@ abstract class BaseCptActivity : AbsCptActivity() {
         mPdrTitleBarOption = getContext().titleBarOptionCreate { }
         mPdrLoadingPageOption = getContext().loadingPageOptionCreate {  }
         mPdrNoDataPageOption = getContext().noDataPageOptionCreate {  }
+        mPdrErrorPageOption = getContext().errorPageOptionCreate {  }
     }
 
     @Composable
@@ -83,7 +92,12 @@ abstract class BaseCptActivity : AbsCptActivity() {
             },
 
             error = {
-                LoadingPage()
+                ErrorPage(
+                    modifier = Modifier.fillMaxSize(),
+                    option = mPdrErrorPageOption,
+                    t = mPdrErrorThrowable,
+                    onReloadClick = { onClickReload() }
+                )
             },
 
             noData = {
@@ -99,21 +113,6 @@ abstract class BaseCptActivity : AbsCptActivity() {
 
     @Composable
     protected abstract fun ContentUI(innerPadding: PaddingValues)
-
-    /** 更新标题栏配置项参数 */
-    protected fun updateTitleBar(block: TitleBarOptionBuilder.() -> Unit) {
-        mPdrTitleBarOption = mPdrTitleBarOption.titleBarOptionUpdate(block)
-    }
-
-    /** 更新加载页配置项参数 */
-    protected fun updateLoadingPage(block: LoadingPageOptionBuilder.() -> Unit) {
-        mPdrLoadingPageOption = mPdrLoadingPageOption.loadingPageOptionUpdate(block)
-    }
-
-    /** 更新无数据页配置项参数 */
-    protected fun updateNoDataPage(block: NoDataPageOptionBuilder.() -> Unit) {
-        mPdrNoDataPageOption = mPdrNoDataPageOption.noDataPageOptionUpdate(block)
-    }
 
     /** 点击标题栏的返回按钮 */
     protected open fun onClickBackBtn() {}
@@ -149,6 +148,7 @@ abstract class BaseCptActivity : AbsCptActivity() {
 
     /** 显示错误页面,[t]异常信息 */
     protected open fun showStatusError(t: Throwable?) {
+        mPdrErrorThrowable = t
         mPdrPageState = BaseContentState.Error
     }
 
@@ -160,5 +160,25 @@ abstract class BaseCptActivity : AbsCptActivity() {
     /** 显示内容页面 */
     protected open fun showStatusCompleted() {
         mPdrPageState = BaseContentState.Content
+    }
+
+    /** 更新标题栏配置项参数 */
+    protected fun updateTitleBar(block: TitleBarOptionBuilder.() -> Unit) {
+        mPdrTitleBarOption = mPdrTitleBarOption.titleBarOptionUpdate(block)
+    }
+
+    /** 更新加载页配置项参数 */
+    protected fun updateLoadingPage(block: LoadingPageOptionBuilder.() -> Unit) {
+        mPdrLoadingPageOption = mPdrLoadingPageOption.loadingPageOptionUpdate(block)
+    }
+
+    /** 更新无数据页配置项参数 */
+    protected fun updateNoDataPage(block: NoDataPageOptionBuilder.() -> Unit) {
+        mPdrNoDataPageOption = mPdrNoDataPageOption.noDataPageOptionUpdate(block)
+    }
+
+    /** 更新错误页配置项参数 */
+    protected fun updateErrorPage(block: ErrorPageOptionBuilder.() -> Unit) {
+        mPdrErrorPageOption = mPdrErrorPageOption.errorPageOptionUpdate(block)
     }
 }
