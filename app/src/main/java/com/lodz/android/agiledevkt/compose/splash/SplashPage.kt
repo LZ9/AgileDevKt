@@ -29,6 +29,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import com.lodz.android.agiledevkt.compose.theme.AgileDevKtTheme
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
@@ -52,6 +53,7 @@ import kotlinx.coroutines.delay
 @Composable
 fun SplashPage(nav: NavController? = null) {
     val context = LocalContext.current
+    val isInPreview = LocalInspectionMode.current
 
     /** 权限重新申请开关 */
     var permissionRetryKey by rememberSaveable { mutableIntStateOf(0) }
@@ -62,42 +64,44 @@ fun SplashPage(nav: NavController? = null) {
     /** 是否展示弹框 */
     var isShowDialog by remember { mutableStateOf(false) }
 
-    // 权限申请
-    PermissionRequestEffect(
-        permissions = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) listOf(
-            Manifest.permission.READ_PHONE_STATE,
-            Manifest.permission.CAMERA,
-            Manifest.permission.READ_MEDIA_IMAGES,
-            Manifest.permission.READ_MEDIA_VIDEO,
-            Manifest.permission.READ_MEDIA_AUDIO
-        ) else listOf(
-            Manifest.permission.READ_PHONE_STATE,
-            Manifest.permission.CAMERA,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.READ_EXTERNAL_STORAGE
-        ),
+    if (!isInPreview){
+        // 权限申请
+        PermissionRequestEffect(
+            permissions = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) listOf(
+                Manifest.permission.READ_PHONE_STATE,
+                Manifest.permission.CAMERA,
+                Manifest.permission.READ_MEDIA_IMAGES,
+                Manifest.permission.READ_MEDIA_VIDEO,
+                Manifest.permission.READ_MEDIA_AUDIO
+            ) else listOf(
+                Manifest.permission.READ_PHONE_STATE,
+                Manifest.permission.CAMERA,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            ),
 
-        trigger = permissionRetryKey,
+            trigger = permissionRetryKey,
 
-        onGranted = {
-            isAllGranted = true
-        },
+            onGranted = {
+                isAllGranted = true
+            },
 
-        onDenied = {
-            PrintLog.w("testtag", "权限被拒绝:$it")
-            permissionRetryKey++
-        },
+            onDenied = {
+                PrintLog.w("testtag", "权限被拒绝:$it")
+                permissionRetryKey++
+            },
 
-        onNeverAskAgain = {
-            PrintLog.e("testtag", "永久拒绝:$it")
-            context.toastShort(R.string.splash_check_permission_tips)
-            isShowDialog = true
-            context.goAppDetailSetting()
-        }
-    )
+            onNeverAskAgain = {
+                PrintLog.e("testtag", "永久拒绝:$it")
+                context.toastShort(R.string.splash_check_permission_tips)
+                isShowDialog = true
+                context.goAppDetailSetting()
+            }
+        )
+    }
 
     LaunchedEffect(isAllGranted) {
-        if (isAllGranted){
+        if (isAllGranted) {
             delay(1000)
             nav?.start(Route.Splash, Route.Main)
         }
