@@ -12,9 +12,10 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.lifecycleScope
 import com.lodz.android.agiledevkt.R
+import com.lodz.android.agiledevkt.compose.navigation.AppNavHost
 import com.lodz.android.agiledevkt.compose.splash.SplashPage
 import com.lodz.android.agiledevkt.compose.theme.AgileDevKtTheme
-import com.lodz.android.pandora.compose.BaseCpsActivity
+import com.lodz.android.pandora.compose.AbsCpsActivity
 import com.lodz.android.pandora.widget.base.compose.base.BaseContent
 import com.lodz.android.pandora.widget.base.compose.base.BaseContentState
 import kotlinx.coroutines.delay
@@ -25,7 +26,7 @@ import kotlinx.coroutines.launch
  * @author zhouL
  * @date 2026/5/9
  */
-class MainCpsActivity : BaseCpsActivity() {
+class MainCpsActivity : AbsCpsActivity() {
 
     companion object {
         fun start(context: Context) {
@@ -34,42 +35,50 @@ class MainCpsActivity : BaseCpsActivity() {
         }
     }
 
-    override fun initData() {
-        super.initData()
-        updateTitleBar {
-            titleText = getString(R.string.main_title)
-        }
-        showStatusCompleted()
-    }
-
-    override fun onClickBackBtn() {
-        super.onClickBackBtn()
-        finish()
-    }
-
-    override fun onClickReload() {
-        super.onClickReload()
-        showStatusLoading()
-        lifecycleScope.launch {
-            delay(2000)
-            showStatusCompleted()
-        }
-    }
-
     @Composable
     override fun RootContentUI() {
-        // 如果有统一主题可以在该方法里配置
         AgileDevKtTheme {
-            super.RootContentUI()
+            AppNavHost()
         }
     }
 
-    @Composable
-    override fun ContentUI(innerPadding: PaddingValues) {
-        Box(Modifier.fillMaxSize()){
-            SplashPage()
-        }
-    }
+
+//    override fun initData() {
+//        super.initData()
+//        updateTitleBar {
+//            titleText = getString(R.string.main_title)
+//        }
+//        showStatusCompleted()
+//    }
+//
+//    override fun onClickBackBtn() {
+//        super.onClickBackBtn()
+//        finish()
+//    }
+//
+//    override fun onClickReload() {
+//        super.onClickReload()
+//        showStatusLoading()
+//        lifecycleScope.launch {
+//            delay(2000)
+//            showStatusCompleted()
+//        }
+//    }
+//
+//    @Composable
+//    override fun RootContentUI() {
+//        // 如果有统一主题可以在该方法里配置
+//        AgileDevKtTheme {
+//            super.RootContentUI()
+//        }
+//    }
+//
+//    @Composable
+//    override fun ContentUI(innerPadding: PaddingValues) {
+//        Box(Modifier.fillMaxSize()){
+//            SplashPage()
+//        }
+//    }
 }
 
 @Preview(device = Devices.NEXUS_6, showSystemUi = true, locale = "zh")
@@ -77,10 +86,7 @@ class MainCpsActivity : BaseCpsActivity() {
 fun UIPreview() {
     val context = LocalContext.current
     AgileDevKtTheme {
-        BaseContent(pageState = BaseContentState.Content) {
-            SplashPage()
-        }
-
+        AppNavHost()
     }
 
 }

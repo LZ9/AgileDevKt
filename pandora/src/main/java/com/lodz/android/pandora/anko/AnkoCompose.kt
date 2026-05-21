@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.compose.ui.graphics.Color
+import androidx.navigation.NavController
 import com.lodz.android.corekt.anko.getColorCompat
 
 /**
@@ -17,3 +18,12 @@ fun Context.getComposeColor(@ColorRes id: Int): Color = Color(this.getColorCompa
 
 /** 将ColorInt转为Compose的颜色 */
 fun toComposeColor(@ColorInt color: Int): Color = Color(color)
+
+/** 导航到目标页面[target]，并关闭当前页面[current] */
+fun NavController.start(current: String, target: String, finish: Boolean = true) {
+    this.navigate(target) {
+        popUpTo(current) {
+            inclusive = finish
+        }
+    }
+}

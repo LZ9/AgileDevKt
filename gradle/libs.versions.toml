@@ -18,7 +18,7 @@ lottie = "5.2.0"
 #core依赖
 annotation = "1.10.0"
 appcompat = "1.7.1"
-material = "1.13.0"
+material = "1.14.0"
 swiperefreshlayout = "1.2.0"
 recyclerview = "1.4.0"
 cardview = "1.0.0"
@@ -44,6 +44,7 @@ jackson = "2.21.1"
 rxlifecycle4 = "4.0.2"
 eventbus = "3.3.1"
 activityCompose = "1.13.0"
+navigationCompose = "2.9.8"
 composeBom = "2026.05.01"
 composeConstraintlayout = "1.1.1"
 composeUI = "1.11.2"
@@ -109,6 +110,7 @@ fasterxml-jackson = { group = "com.fasterxml.jackson.core", name = "jackson-data
 trello-rxlifecycle4 = { group = "com.trello.rxlifecycle4", name = "rxlifecycle-components", version.ref = "rxlifecycle4" }
 greenrobot-eventbus = { group = "org.greenrobot", name = "eventbus", version.ref = "eventbus" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 androidx-compose-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "composeUI" }
 androidx-compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics", version.ref = "composeUI" }

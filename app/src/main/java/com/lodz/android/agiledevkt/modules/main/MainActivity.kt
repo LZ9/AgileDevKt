@@ -268,6 +268,7 @@ class MainActivity : BaseActivity() {
     override fun onClickBackBtn() {
         super.onClickBackBtn()
         MainCpsActivity.start(getContext())
+        finish()
     }
 
     override fun setListeners() {
