@@ -10,8 +10,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -37,6 +39,7 @@ import com.lodz.android.agiledevkt.R
 import com.lodz.android.agiledevkt.compose.effect.PermissionRequestEffect
 import com.lodz.android.agiledevkt.compose.navigation.Route
 import com.lodz.android.corekt.anko.goAppDetailSetting
+import com.lodz.android.corekt.anko.toastShort
 import com.lodz.android.corekt.log.PrintLog
 import com.lodz.android.pandora.anko.start
 import kotlinx.coroutines.delay
@@ -50,12 +53,17 @@ import kotlinx.coroutines.delay
 fun SplashPage(nav: NavController? = null) {
     val context = LocalContext.current
 
+    /** 权限重新申请开关 */
     var permissionRetryKey by rememberSaveable { mutableIntStateOf(0) }
 
+    /** 是否所有权限都已授权 */
     var isAllGranted by remember { mutableStateOf(false) }
 
-    PermissionRequestEffect(
+    /** 是否展示弹框 */
+    var isShowDialog by remember { mutableStateOf(false) }
 
+    // 权限申请
+    PermissionRequestEffect(
         permissions = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) listOf(
             Manifest.permission.READ_PHONE_STATE,
             Manifest.permission.CAMERA,
@@ -72,7 +80,6 @@ fun SplashPage(nav: NavController? = null) {
         trigger = permissionRetryKey,
 
         onGranted = {
-            PrintLog.d("testtag", "权限全部通过")
             isAllGranted = true
         },
 
@@ -83,6 +90,8 @@ fun SplashPage(nav: NavController? = null) {
 
         onNeverAskAgain = {
             PrintLog.e("testtag", "永久拒绝:$it")
+            context.toastShort(R.string.splash_check_permission_tips)
+            isShowDialog = true
             context.goAppDetailSetting()
         }
     )
@@ -117,6 +126,30 @@ fun SplashPage(nav: NavController? = null) {
                     text = stringResource(R.string.splash_title),
                     fontSize = 24.sp,
                     color = Color.White
+                )
+            }
+
+            if (isShowDialog) {
+                AlertDialog(
+                    onDismissRequest = {
+                        isShowDialog = true
+                    },
+                    title = { Text(stringResource(R.string.splash_check_permission_title)) },
+                    confirmButton = {
+                        TextButton(onClick = {
+                            permissionRetryKey++
+                            isShowDialog = false
+                        }) {
+                            Text(stringResource(R.string.splash_check_permission_confirm))
+                        }
+                    },
+                    dismissButton = {
+                        TextButton(onClick = {
+                            context.goAppDetailSetting()
+                        }) {
+                            Text(stringResource(R.string.splash_check_permission_unconfirmed))
+                        }
+                    }
                 )
             }
         }
