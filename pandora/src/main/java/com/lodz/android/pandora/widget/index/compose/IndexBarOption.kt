@@ -1,5 +1,6 @@
 package com.lodz.android.pandora.widget.index.compose
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -20,6 +21,10 @@ data class IndexBarOption(
     val indexTextSize: TextUnit = 13.sp,
     /** 索引文字大小 */
     val indexTextWeight: FontWeight = FontWeight.Bold,
+    /** 索引栏间距 */
+    val padding: PaddingValues? = null,
+    /** 索引栏的背景颜色 */
+    val backgroundColor: Color = Color.Transparent,
     /** 按下时索引栏的背景颜色 */
     val pressBackgroundColor: Color? = null,
     /** 页面方向布局 */

@@ -3,6 +3,7 @@ package com.lodz.android.pandora.anko
 import android.content.Context
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
+import androidx.annotation.StringRes
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
 import com.lodz.android.corekt.anko.getColorCompat
@@ -27,3 +28,6 @@ fun NavController.start(current: String, target: String, finish: Boolean = true)
         }
     }
 }
+
+/** 兼容使用Composable里的LocalContext.current来获取资源文字 */
+fun Context.getStringCompat(@StringRes id: Int): String = this.getString(id)
