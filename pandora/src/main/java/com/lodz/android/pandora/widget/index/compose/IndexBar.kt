@@ -45,7 +45,7 @@ fun IndexBar(
     modifier: Modifier = Modifier,
     option: IndexBarOption = IndexBarOption(), // 配置项
     indexList: List<String>, // 索引数据
-    onIndexSelected: ((position: Int, indexText: String) -> Unit)? = null,
+    onIndexSelected: ((position: Int, text: String) -> Unit)? = null,
     onDragEnd: (() -> Unit)? = null
 ) {
 
