@@ -1,11 +1,13 @@
 package com.lodz.android.corekt.anko
 
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.ComponentActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.*
+import kotlin.time.Duration.Companion.milliseconds
 
 /**
  * 协程扩展类
@@ -23,11 +25,15 @@ fun runOnMain(scope: CoroutineScope = MainScope(), action: suspend () -> Unit): 
 /** 主线程执行（ViewModel） */
 fun ViewModel.runOnMain(action: suspend () -> Unit): Job = viewModelScope.launch(Dispatchers.Main) { action() }
 
-/** 主线程执行（AppCompatActivity） */
-fun AppCompatActivity.runOnMain(action: suspend () -> Unit): Job = lifecycleScope.launch(Dispatchers.Main) { action() }
-
 /** 主线程执行（Fragment） */
 fun Fragment.runOnMain(action: suspend () -> Unit): Job = lifecycleScope.launch(Dispatchers.Main) { action() }
+
+/** 主线程执行（LifecycleCoroutineScope） */
+fun LifecycleCoroutineScope.runOnMain(action: suspend () -> Unit): Job = this.launch(Dispatchers.Main) { action() }
+
+/** 主线程执行（ComponentActivity） */
+fun ComponentActivity.runOnMain(action: suspend () -> Unit): Job = lifecycleScope.launch(Dispatchers.Main) { action() }
+
 
 /** 主线程执行捕获异常 */
 @JvmOverloads
@@ -58,9 +64,9 @@ fun ViewModel.runOnMainCatch(
     }
 }
 
-/** 主线程执行捕获异常（AppCompatActivity） */
+/** 主线程执行捕获异常（ComponentActivity） */
 @JvmOverloads
-fun AppCompatActivity.runOnMainCatch(
+fun ComponentActivity.runOnMainCatch(
     action: suspend () -> Unit,
     error: (e: Exception) -> Unit = {}
 ): Job = lifecycleScope.launch(Dispatchers.Main) {
@@ -93,7 +99,7 @@ fun runOnMainDelay(
     scope: CoroutineScope = IoScope(),
     action: suspend () -> Unit
 ): Job = scope.launch(Dispatchers.Main) {
-    delay(timeMillis)
+    delay(timeMillis.milliseconds)
     launch(Dispatchers.Main) { action() }
 }
 
@@ -102,16 +108,16 @@ fun ViewModel.runOnMainDelay(
     timeMillis: Long,
     action: suspend () -> Unit
 ): Job = viewModelScope.launch(Dispatchers.IO) {
-    delay(timeMillis)
+    delay(timeMillis.milliseconds)
     launch(Dispatchers.Main) { action() }
 }
 
-/** 主线程延迟[timeMillis]毫秒执行（AppCompatActivity） */
-fun AppCompatActivity.runOnMainDelay(
+/** 主线程延迟[timeMillis]毫秒执行（ComponentActivity） */
+fun ComponentActivity.runOnMainDelay(
     timeMillis: Long,
     action: suspend () -> Unit
 ): Job = lifecycleScope.launch(Dispatchers.IO) {
-    delay(timeMillis)
+    delay(timeMillis.milliseconds)
     launch(Dispatchers.Main) { action() }
 }
 
@@ -120,7 +126,7 @@ fun Fragment.runOnMainDelay(
     timeMillis: Long,
     action: suspend () -> Unit
 ): Job = lifecycleScope.launch(Dispatchers.IO) {
-    delay(timeMillis)
+    delay(timeMillis.milliseconds)
     launch(Dispatchers.Main) { action() }
 }
 
@@ -131,11 +137,15 @@ fun runOnIO(scope: CoroutineScope = IoScope(), actionIO: suspend () -> Unit): Jo
 /** 异步线程执行（ViewModel） */
 fun ViewModel.runOnIO(actionIO: suspend () -> Unit): Job = viewModelScope.launch(Dispatchers.IO) { actionIO() }
 
-/** 异步线程执行（AppCompatActivity） */
-fun AppCompatActivity.runOnIO(actionIO: suspend () -> Unit): Job = lifecycleScope.launch(Dispatchers.IO) { actionIO() }
+/** 异步线程执行（ComponentActivity） */
+fun ComponentActivity.runOnIO(actionIO: suspend () -> Unit): Job = lifecycleScope.launch(Dispatchers.IO) { actionIO() }
 
 /** 异步线程执行（Fragment） */
 fun Fragment.runOnIO(actionIO: suspend () -> Unit): Job = lifecycleScope.launch(Dispatchers.IO) { actionIO() }
+
+/** 异步线程执行（LifecycleCoroutineScope） */
+fun LifecycleCoroutineScope.runOnIO(actionIO: suspend () -> Unit): Job = this.launch(Dispatchers.IO) { actionIO() }
+
 
 /** 异步线程执行捕获异常 */
 @JvmOverloads
@@ -166,9 +176,9 @@ fun ViewModel.runOnIOCatch(
     }
 }
 
-/** 异步线程执行捕获异常（AppCompatActivity） */
+/** 异步线程执行捕获异常（ComponentActivity） */
 @JvmOverloads
-fun AppCompatActivity.runOnIOCatch(
+fun ComponentActivity.runOnIOCatch(
     actionIO: suspend () -> Unit,
     error: (e: Exception) -> Unit = {}
 ): Job = lifecycleScope.launch(Dispatchers.IO) {
