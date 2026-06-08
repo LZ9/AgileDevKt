@@ -82,6 +82,7 @@ open class CameraHelper @JvmOverloads constructor(activity: Activity, surfaceVie
                 mCamera?.setPreviewCallback { data, camera ->
                     mListener?.onPreviewFrame(data, camera)
                 }
+                return true
             } catch (e: Exception) {
                 e.printStackTrace()
                 mListener?.onStatusChange(OnCameraListener.CAMERA_UNSUPPORT_CAMERA_FACING, "不支持该摄像头")

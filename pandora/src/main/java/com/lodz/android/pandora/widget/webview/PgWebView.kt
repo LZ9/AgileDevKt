@@ -198,7 +198,7 @@ open class PgWebView : FrameLayout {
     }
 
     /** 释放资源 */
-    fun release() {
+    open fun release() {
         mPdrWebView?.loadDataWithBaseURL(null, "", "text/html", "utf-8", null)
         mPdrWebView?.clearHistory()
         mPdrWebView?.clearCache(true)
@@ -212,6 +212,6 @@ open class PgWebView : FrameLayout {
     }
 
     /** 获取WebView */
-    fun getWebView(): WebView? = mPdrWebView
+    open fun getWebView(): WebView? = mPdrWebView
 
 }
