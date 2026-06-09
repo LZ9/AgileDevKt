@@ -3,6 +3,7 @@ package com.lodz.android.corekt.media
 import android.content.ContentUris
 import android.content.ContentValues
 import android.content.Context
+import android.graphics.Bitmap
 import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Build
@@ -543,11 +544,43 @@ fun Context.insertMediaByPath(
     values.put(MediaStore.Images.Media.DESCRIPTION, "This is an media")
     values.put(MediaStore.Images.Media.MIME_TYPE, mimeType)
     values.put(MediaStore.Images.Media.TITLE, file.name)
-    values.put(MediaStore.Images.Media.DATA, file.absolutePath)
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+        values.put(MediaStore.Images.Media.DATA, file.absolutePath)
+    }
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
         values.put(MediaStore.MediaColumns.RELATIVE_PATH, directoryName)
     }
     contentResolver.insert(uri, values)
+}
+
+fun Context.insertMediaByBitmap(
+    bitmap: Bitmap, fileName: String,
+    directoryName: String = Environment.DIRECTORY_DCIM,
+    mimeType: String = AnkoMedia.MIME_TYPE_IMAGE_JPEG,
+    format: Bitmap.CompressFormat = Bitmap.CompressFormat.JPEG
+): Uri {
+    val values = ContentValues().apply {
+        put(MediaStore.Images.Media.DISPLAY_NAME, fileName)
+        put(MediaStore.Images.Media.MIME_TYPE, mimeType)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            put(MediaStore.Images.Media.RELATIVE_PATH, directoryName)
+            put(MediaStore.Images.Media.IS_PENDING, 1)
+        }
+    }
+
+    val uri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values) ?: throw RuntimeException("insert image failed")
+    contentResolver.openOutputStream(uri)?.use { out ->
+        bitmap.compress(format, 100, out)
+    }
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        val updateValues = ContentValues().apply {
+            put(MediaStore.Images.Media.IS_PENDING, 0)
+        }
+        contentResolver.update(uri, updateValues, null, null)
+    }
+
+    return uri
 }
 
 /** 通知刷新图片数据库 */
