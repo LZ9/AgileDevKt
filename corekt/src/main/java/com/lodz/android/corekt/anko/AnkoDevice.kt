@@ -163,16 +163,13 @@ fun Context.getSimOperator(): String {
 @OperatorInfo.OperatorType
 fun Context.getSimOperatorType(): Int {
     val operator = getSimOperator()
-    if (operator == "46000" || operator == "46002" || operator == "46004" || operator == "46007" || operator == "46008" || operator == "46013") {// 中国移动
-        return OperatorInfo.OPERATOR_CMCC
-    } else if (operator == "46001" || operator == "46006" || operator == "46009") {// 中国联通
-        return OperatorInfo.OPERATOR_CUCC
-    } else if (operator == "46003" || operator == "46005" || operator == "46011") {// 中国电信
-        return OperatorInfo.OPERATOR_CTCC
-    } else if (operator == "46015") {// 中国广电
-        return OperatorInfo.OPERATOR_CBN
+    return when (operator) {
+        "46000", "46002", "46004", "46007", "46008", "46013" -> OperatorInfo.OPERATOR_CMCC// 中国移动
+        "46001", "46006", "46009" -> OperatorInfo.OPERATOR_CUCC// 中国联通
+        "46003", "46005", "46011" -> OperatorInfo.OPERATOR_CTCC// 中国电信
+        "46015" -> OperatorInfo.OPERATOR_CBN// 中国广电
+        else -> OperatorInfo.OPERATOR_UNKNOWN
     }
-    return OperatorInfo.OPERATOR_UNKNOWN
 }
 
 /** 获取运营商名称 */
