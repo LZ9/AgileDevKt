@@ -26,20 +26,44 @@ class OperatorInfo {
     @Retention(AnnotationRetention.SOURCE)
     annotation class OperatorType
 
-    /** 网络运营商 */
+    /** 运营商代码 */
     @OperatorType
-    var type = OPERATOR_UNKNOWN
+    var operatorType = OPERATOR_UNKNOWN
+
+    /** 运营商名称 */
+    var operatorName = ""
+
+    /** 运营商名称（MNC转换） */
+    var operatorNameMNC = ""
+
+    /** 网络类型 */
+    var networkType = ""
 
     // --------------------- 基站信息 ---------------------------
-    /** 中国460 */
+    /** 移动国家代码，中国460 */
     var mcc = ""
-    /** 00移动、01联通、11电信4G */
+    /** 移动网络代码 */
     var mnc = ""
-    /** 1~65535 */
-    var lac = ""
-    /** 2G（1~65535） 3G/4G（1~268435455） */
-    var cid = ""
+
+    /**
+     * 2G/3G：LAC
+     * 4G/5G：TAC
+     */
+    var areaCode = ""
+
+    /**
+     * 2G/3G：CID
+     * 4G：CI
+     * 5G：NCI
+     */
+    var cellId  = ""
+
+    /** 信号强度 */
+    var dbm = 0
+
+    /** 是否是当前注册基站 */
+    var isRegistered = false
 
     /** 是否获取成功 */
-    fun isSuccess(): Boolean = type != OPERATOR_UNKNOWN
+    fun isSuccess(): Boolean = operatorType != OPERATOR_UNKNOWN
 }

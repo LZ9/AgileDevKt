@@ -1,9 +1,8 @@
 package com.lodz.android.agiledevkt.modules.service.impl
 
-import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import androidx.annotation.RequiresPermission
 import com.amap.api.location.AMapLocation
 import com.amap.api.location.AMapLocationClient
 import com.amap.api.location.AMapLocationClientOption
@@ -12,13 +11,14 @@ import com.lodz.android.agiledevkt.App
 import com.lodz.android.agiledevkt.modules.location.LocationTestActivity
 import com.lodz.android.agiledevkt.modules.location.LocationUpdateEvent
 import com.lodz.android.agiledevkt.modules.service.ServiceContract
-import com.lodz.android.corekt.anko.getOperatorInfo
+import com.lodz.android.corekt.anko.getCellInfoRegistered
 import org.greenrobot.eventbus.EventBus
 
 /**
  * 高德定位服务
  * Created by zhouL on 2018/11/15.
  */
+@SuppressLint("MissingPermission")
 class AMapLocationServiceImpl : ServiceContract {
 
     /** 超时时间 */
@@ -71,28 +71,29 @@ class AMapLocationServiceImpl : ServiceContract {
     }
 
     private val mAMapLocationListener = object : AMapLocationListener {
-        @RequiresPermission(Manifest.permission.ACCESS_FINE_LOCATION)
         override fun onLocationChanged(location: AMapLocation?) {
             if (null == location) {
-                EventBus.getDefault().post(LocationUpdateEvent(false, "", "", "", "", "", "", "定位失败，定位结果为null"))
+                EventBus.getDefault().post(LocationUpdateEvent(false, "", "", "",0,"", "", "", "", "定位失败，定位结果为null"))
                 return
             }
             if (location.errorCode != REQUEST_LOCATION_OK) {
                 val log = "定位失败，类型：${location.errorCode}，原因：${location.locationDetail}"
-                EventBus.getDefault().post(LocationUpdateEvent(false, "", "", "", "", "", "", log))
+                EventBus.getDefault().post(LocationUpdateEvent(false, "", "", "",0,"", "", "", "", log))
                 return
             }
 
             val longitude = location.longitude.toString() // 经度
             val latitude = location.latitude.toString() // 纬度
-            val info = App.get().getOperatorInfo()
+            val info = App.get().getCellInfoRegistered()
+            val networkOperator = info?.operatorName ?: ""
+            val dbm = info?.dbm ?: 0
             val mcc = info?.mcc ?: ""
             val mnc = info?.mnc ?: ""
-            val lac = info?.lac ?: ""
-            val cid = info?.cid ?: ""
+            val areaCode = info?.areaCode ?: ""
+            val cellId = info?.cellId ?: ""
             val log = location.toStr()
 
-            EventBus.getDefault().post(LocationUpdateEvent(true, longitude, latitude, mcc, mnc, lac, cid, log))
+            EventBus.getDefault().post(LocationUpdateEvent(true, longitude, latitude, networkOperator,dbm, mcc, mnc, areaCode, cellId, log))
         }
     }
 

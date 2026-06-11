@@ -218,8 +218,8 @@
     <string name="info_phone_imsi2">IMSI2：%s</string>
     <string name="info_phone_sim1_ready">sim1可用：%s</string>
     <string name="info_phone_sim2_ready">sim2可用：%s</string>
-    <string name="info_phone_sim_operator">运营商名称：%s</string>
-    <string name="info_phone_sim_operator_mnc">运营商名称（MNC转换）：%s</string>
+    <string name="info_phone_sim_operator">sim运营商名称：%s</string>
+    <string name="info_phone_sim_operator_type">sim运营商名称（编号转换）：%s</string>
     <string name="info_phone_sim_data_state">sim卡数据连接状态：%s</string>
     <string name="info_phone_is_connected_data">是否已连接数据：%s</string>
     <string name="info_phone_data_network_type">数据网络类型：%s</string>
@@ -337,8 +337,10 @@
     <string name="location_base_station_info">基站信息：</string>
     <string name="location_mcc">mcc：%s</string>
     <string name="location_mnc">mnc：%s</string>
-    <string name="location_lac">lac：%s</string>
-    <string name="location_cid">cid：%s</string>
+    <string name="location_area_code">areaCode：%s</string>
+    <string name="location_cell_id">cellId：%s</string>
+    <string name="location_dbm">信号强度（dbm）：%s</string>
+    <string name="location_network_operator">网络运营商：%s</string>
     <string name="location_log_info">日志信息：</string>
     <string name="location_foreground_service_title">AgileDevKt定位</string>
     <string name="location_foreground_service_tips">后台定位正在为您服务</string>

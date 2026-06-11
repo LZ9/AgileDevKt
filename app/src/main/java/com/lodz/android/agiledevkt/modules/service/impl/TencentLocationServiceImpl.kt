@@ -1,14 +1,13 @@
 package com.lodz.android.agiledevkt.modules.service.impl
 
-import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import androidx.annotation.RequiresPermission
 import com.lodz.android.agiledevkt.App
 import com.lodz.android.agiledevkt.modules.location.LocationTestActivity
 import com.lodz.android.agiledevkt.modules.location.LocationUpdateEvent
 import com.lodz.android.agiledevkt.modules.service.ServiceContract
-import com.lodz.android.corekt.anko.getOperatorInfo
+import com.lodz.android.corekt.anko.getCellInfoRegistered
 import com.tencent.map.geolocation.TencentLocation
 import com.tencent.map.geolocation.TencentLocationListener
 import com.tencent.map.geolocation.TencentLocationManager
@@ -19,6 +18,7 @@ import org.greenrobot.eventbus.EventBus
  * 腾讯定位服务
  * Created by zhouL on 2018/11/15.
  */
+@SuppressLint("MissingPermission")
 class TencentLocationServiceImpl : ServiceContract {
 
     /** 注册腾讯定位成功 */
@@ -46,34 +46,35 @@ class TencentLocationServiceImpl : ServiceContract {
         }
 
         mTencentLocationListener = object : TencentLocationListener {
-            @RequiresPermission(Manifest.permission.ACCESS_FINE_LOCATION)
             override fun onLocationChanged(location: TencentLocation?, type: Int, reason: String?) {
                 if (type == TencentLocation.ERROR_OK && location != null) {// 定位成功
 
                     val longitude = location.longitude.toString() // 经度
                     val latitude = location.latitude.toString() // 纬度
-                    val info = App.get().getOperatorInfo()
+                    val info = App.get().getCellInfoRegistered()
+                    val networkOperator = info?.operatorName ?: ""
+                    val dbm = info?.dbm ?: 0
                     val mcc = info?.mcc ?: ""
                     val mnc = info?.mnc ?: ""
-                    val lac = info?.lac ?: ""
-                    val cid = info?.cid ?: ""
+                    val areaCode = info?.areaCode ?: ""
+                    val cellId = info?.cellId ?: ""
 
                     val bundle = location.extra
                     val log = (if (bundle == null) "" else bundle.getString("resp_json")) ?: ""
 
-                    EventBus.getDefault().post(LocationUpdateEvent(true, longitude, latitude, mcc, mnc, lac, cid, log))
+                    EventBus.getDefault().post(LocationUpdateEvent(true, longitude, latitude, networkOperator, dbm, mcc, mnc, areaCode, cellId, log))
                 }else if (type == TencentLocation.ERROR_UNKNOWN) {// android8.1需要打开定位开关才能定位到
                     val log = "定位失败，如果您是Android8.1以上版本，请打开GPS定位开关，失败类型：$type，原因：$reason"
-                    EventBus.getDefault().post(LocationUpdateEvent(false, "", "", "", "", "", "", log))
+                    EventBus.getDefault().post(LocationUpdateEvent(false, "", "", "",0,"", "", "", "", log))
                 }else{// 定位失败
                     val log = "定位失败，失败类型：$type，原因：$reason"
-                    EventBus.getDefault().post(LocationUpdateEvent(false, "", "", "", "", "", "", log))
+                    EventBus.getDefault().post(LocationUpdateEvent(false, "", "", "",0,"", "", "", "", log))
                 }
             }
 
             override fun onStatusUpdate(name: String?, status: Int, desc: String?) {
                 val log = "定位状态变化，名称：$name，状态：$status，原因：$desc"
-                EventBus.getDefault().post(LocationUpdateEvent(false, "", "", "", "", "", "", log))
+                EventBus.getDefault().post(LocationUpdateEvent(false, "", "", "",0,"", "", "", "", log))
             }
         }
 
@@ -89,10 +90,10 @@ class TencentLocationServiceImpl : ServiceContract {
         val locationManager = TencentLocationManager.getInstance(mContext)
         val result = locationManager.requestLocationUpdates(request, mTencentLocationListener)
         if (result != REQUEST_LOCATION_OK) {
-            EventBus.getDefault().post(LocationUpdateEvent(false, "", "", "", "", "", "", "腾讯定位注册失败"))
+            EventBus.getDefault().post(LocationUpdateEvent(false, "", "", "",0,"", "", "", "", "腾讯定位注册失败"))
             return
         }
-        EventBus.getDefault().post(LocationUpdateEvent(false, "", "", "", "", "", "", "腾讯定位注册成功"))
+        EventBus.getDefault().post(LocationUpdateEvent(false, "", "", "",0,"", "", "", "", "腾讯定位注册成功"))
     }
 
     override fun onDestroy() {

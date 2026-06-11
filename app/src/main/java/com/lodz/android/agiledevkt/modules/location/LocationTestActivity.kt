@@ -207,10 +207,12 @@ class LocationTestActivity : BaseActivity() {
         mBinding.updateTimeTv.text = getString(R.string.location_update_time, "无")
         mBinding.longitudeTv.text = getString(R.string.location_longitude, "无")//经度
         mBinding.latitudeTv.text = getString(R.string.location_latitude, "无")//纬度
-        mBinding.mccTv.text = getString(R.string.location_mcc, "无")// 基站信息mcc
-        mBinding.mncTv.text = getString(R.string.location_mnc, "无")// 基站信息mnc
-        mBinding.lacTv.text = getString(R.string.location_lac, "无") // 基站信息lac
-        mBinding.cidTv.text = getString(R.string.location_cid, "无") // 基站信息cid
+        mBinding.networkOperatorTv.text = getString(R.string.location_network_operator, "无")
+        mBinding.dbmTv.text = getString(R.string.location_dbm, "无")
+        mBinding.mccTv.text = getString(R.string.location_mcc, "无")
+        mBinding.mncTv.text = getString(R.string.location_mnc, "无")
+        mBinding.areaCodeTv.text = getString(R.string.location_area_code, "无")
+        mBinding.cellIdTv.text = getString(R.string.location_cell_id, "无")
 
         updateBindBtn()
         showStatusCompleted()
@@ -237,10 +239,12 @@ class LocationTestActivity : BaseActivity() {
             mBinding.updateTimeTv.text = getString(R.string.location_update_time, time)
             mBinding.longitudeTv.text = getString(R.string.location_longitude, event.longitude)
             mBinding.latitudeTv.text = getString(R.string.location_latitude, event.latitude)
+            mBinding.networkOperatorTv.text = getString(R.string.location_network_operator, event.networkOperator)
+            mBinding.dbmTv.text = getString(R.string.location_dbm, event.dbm.toString())
             mBinding.mccTv.text = getString(R.string.location_mcc, event.mcc)
             mBinding.mncTv.text = getString(R.string.location_mnc, event.mnc)
-            mBinding.lacTv.text = getString(R.string.location_lac, event.lac)
-            mBinding.cidTv.text = getString(R.string.location_cid, event.cid)
+            mBinding.areaCodeTv.text = getString(R.string.location_area_code, event.areaCode)
+            mBinding.cellIdTv.text = getString(R.string.location_cell_id, event.cellId)
             printResult(event.log + "    " + time)
         } else {
             printResult(event.log)

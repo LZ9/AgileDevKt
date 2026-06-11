@@ -1,6 +1,5 @@
 package com.lodz.android.agiledevkt.modules.service.impl
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
@@ -8,18 +7,18 @@ import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
-import androidx.annotation.RequiresPermission
 import com.lodz.android.agiledevkt.App
 import com.lodz.android.agiledevkt.modules.location.LocationTestActivity
 import com.lodz.android.agiledevkt.modules.location.LocationUpdateEvent
 import com.lodz.android.agiledevkt.modules.service.ServiceContract
-import com.lodz.android.corekt.anko.getOperatorInfo
+import com.lodz.android.corekt.anko.getCellInfoRegistered
 import org.greenrobot.eventbus.EventBus
 
 /**
  * 原生GPS定位服务
  * Created by zhouL on 2018/11/15.
  */
+@SuppressLint("MissingPermission")
 class GpsLocationServiceImpl : ServiceContract {
 
     private lateinit var mContext:Context
@@ -53,42 +52,41 @@ class GpsLocationServiceImpl : ServiceContract {
         startLocation(mLocationManager!!)
     }
 
-
-    @SuppressLint("MissingPermission")
     private fun startLocation(locationManager: LocationManager) {
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, LocationTestActivity.LOCATION_INTERVAL_TIME, 0f, mLocationListener)
     }
 
     private val mLocationListener = object : LocationListener {
-        @RequiresPermission(Manifest.permission.ACCESS_FINE_LOCATION)
         override fun onLocationChanged(location: Location) {
             val longitude = location.longitude.toString() // 经度
             val latitude = location.latitude.toString() // 纬度
-            val info = App.get().getOperatorInfo()
+            val info = App.get().getCellInfoRegistered()
+            val networkOperator = info?.operatorName ?: ""
+            val dbm = info?.dbm ?: 0
             val mcc = info?.mcc ?: ""
             val mnc = info?.mnc ?: ""
-            val lac = info?.lac ?: ""
-            val cid = info?.cid ?: ""
+            val areaCode = info?.areaCode ?: ""
+            val cellId = info?.cellId ?: ""
             val log = "更新成功"
-            EventBus.getDefault().post(LocationUpdateEvent(true, longitude, latitude, mcc, mnc, lac, cid, log))
+            EventBus.getDefault().post(LocationUpdateEvent(true, longitude, latitude, networkOperator, dbm,mcc, mnc, areaCode, cellId, log))
         }
 
         override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
             super.onStatusChanged(provider, status, extras)
             val log = "onStatusChanged   --->   provider : $provider    status : $status"
-            EventBus.getDefault().post(LocationUpdateEvent(false, "", "", "", "", "", "", log))
+            EventBus.getDefault().post(LocationUpdateEvent(false, "", "", "",0,"", "", "", "", log))
         }
 
         override fun onProviderEnabled(provider: String) {
             super.onProviderEnabled(provider)
             val log = "onProviderEnabled   --->   provider : $provider"
-            EventBus.getDefault().post(LocationUpdateEvent(false, "", "", "", "", "", "", log))
+            EventBus.getDefault().post(LocationUpdateEvent(false, "", "", "",0,"", "", "", "", log))
         }
 
         override fun onProviderDisabled(provider: String) {
             super.onProviderDisabled(provider)
             val log = "onProviderDisabled   --->   provider : $provider"
-            EventBus.getDefault().post(LocationUpdateEvent(false, "", "", "", "", "", "", log))
+            EventBus.getDefault().post(LocationUpdateEvent(false, "", "", "",0,"", "", "", "", log))
         }
     }
 

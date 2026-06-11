@@ -123,7 +123,7 @@ class InfoTestActivity : BaseActivity() {
         // 运营商名称
         mBinding.simOperatorTv.text = getString(R.string.info_phone_sim_operator).format(getSimOperatorName())
         // 运营商名称（MNC转换）
-        mBinding.simOperatorMncTv.text = getString(R.string.info_phone_sim_operator_mnc).format(getSimOperatorNameByMNC())
+        mBinding.simOperatorTypeTv.text = getString(R.string.info_phone_sim_operator_type).format(getSimOperatorName(getSimOperatorType()))
         // sim卡数据连接状态
         mBinding.simDataStateTv.text = getString(R.string.info_phone_sim_data_state).format(getSimDataState())
         // sim卡是否已连接数据
@@ -255,7 +255,7 @@ class InfoTestActivity : BaseActivity() {
 
     private val mNetworkListener = NetworkManager.NetworkListener { isNetworkAvailable, network, networkCapabilities ->  // 运营商名称
         mBinding.simOperatorTv.text = getString(R.string.info_phone_sim_operator).format(getSimOperatorName())
-        mBinding.simOperatorMncTv.text = getString(R.string.info_phone_sim_operator_mnc).format(getSimOperatorNameByMNC())
+        mBinding.simOperatorTypeTv.text = getString(R.string.info_phone_sim_operator_type).format(getSimOperatorName(getSimOperatorType()))
         mBinding.simDataStateTv.text = getString(R.string.info_phone_sim_data_state).format(getSimDataState())
         mBinding.simConnectedDataTv.text = getString(R.string.info_phone_is_connected_data).format(isSimDataConnected())        // 数据网络类型
         mBinding.dataNetworkTypeTv.text = getString(R.string.info_phone_data_network_type).format(NetworkManager.get().getDataNetworkTypeName())

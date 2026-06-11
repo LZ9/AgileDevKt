@@ -5,11 +5,15 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
+import android.os.Build
 import android.provider.Settings
-import android.telephony.CellLocation
+import android.telephony.CellIdentityNr
+import android.telephony.CellInfoGsm
+import android.telephony.CellInfoLte
+import android.telephony.CellInfoNr
+import android.telephony.CellInfoTdscdma
+import android.telephony.CellInfoWcdma
 import android.telephony.TelephonyManager
-import android.telephony.cdma.CdmaCellLocation
-import android.telephony.gsm.GsmCellLocation
 import androidx.annotation.RequiresPermission
 import androidx.core.telephony.TelephonyManagerCompat
 import com.lodz.android.corekt.network.OperatorInfo
@@ -158,15 +162,23 @@ fun Context.getSimOperator(): String {
 }
 
 /** 获取运营商名称 */
-fun Context.getSimOperatorName(): String {
+fun Context.getSimOperatorName(@OperatorInfo.OperatorType type: Int? = null): String {
+    if (type != null){
+        return when (type) {
+            OperatorInfo.OPERATOR_CMCC -> "中国移动"
+            OperatorInfo.OPERATOR_CUCC -> "中国联通"
+            OperatorInfo.OPERATOR_CTCC -> "中国电信"
+            OperatorInfo.OPERATOR_CBN -> "中国广电"
+            else -> "未知"
+        }
+    }
     val telephonyManager = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
     return telephonyManager.simOperatorName
 }
 
 /** 获取运营商类型（0：未知 1：移动 2：联通 3：电信 4：广电） */
 @OperatorInfo.OperatorType
-fun Context.getSimOperatorType(): Int {
-    val operator = getSimOperator()
+fun Context.getSimOperatorType(operator: String = getSimOperator()): Int {
     return when (operator) {
         "46000", "46002", "46004", "46007", "46008", "46013" -> OperatorInfo.OPERATOR_CMCC// 中国移动
         "46001", "46006", "46009" -> OperatorInfo.OPERATOR_CUCC// 中国联通
@@ -176,52 +188,84 @@ fun Context.getSimOperatorType(): Int {
     }
 }
 
-/** 通过MNC获取运营商名称 */
-fun Context.getSimOperatorNameByMNC(): String {
-    return when (getSimOperatorType()) {
-        OperatorInfo.OPERATOR_CMCC -> "中国移动"
-        OperatorInfo.OPERATOR_CUCC -> "中国联通"
-        OperatorInfo.OPERATOR_CTCC -> "中国电信"
-        OperatorInfo.OPERATOR_CBN -> "中国广电"
-        else -> "未知"
-    }
-}
+/** 获取附近所有基站信息 */
+@RequiresPermission(allOf = [Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_PHONE_STATE])
+fun Context.getCellInfos(): List<OperatorInfo> {
+    val result = ArrayList<OperatorInfo>()
+    val tm = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+    val operatorType = getSimOperatorType(tm.networkOperator)
+    val operatorName = tm.networkOperatorName
+    val operatorNameMNC = getSimOperatorName(operatorType)
 
-/** 获取运营商（基站）信息 */
-@RequiresPermission(Manifest.permission.ACCESS_FINE_LOCATION)
-fun Context.getOperatorInfo(): OperatorInfo? {
-    val telephonyManager = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-    val info = OperatorInfo()
-    info.type = getSimOperatorType()
-    if (!info.isSuccess()) {
-        return null
-    }
-
-    try {
-        val location: CellLocation = telephonyManager.cellLocation ?: return null
-
-        // 电信
-        if (info.type == OperatorInfo.OPERATOR_CTCC && location is CdmaCellLocation) {
-            val cdma: CdmaCellLocation = location
-            info.cid = cdma.baseStationId.toString()
-            info.lac = cdma.networkId.toString()
-            info.mcc = telephonyManager.networkOperator.substring(0, 3)
-            info.mnc = telephonyManager.networkOperator
+    val list = tm.allCellInfo ?: return emptyList()
+    for (cell in list) {
+        val info = OperatorInfo()
+        info.operatorType = operatorType
+        info.operatorName = operatorName
+        info.operatorNameMNC = operatorNameMNC
+        info.isRegistered = cell.isRegistered
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            info.dbm = cell.cellSignalStrength.dbm
+        }
+        if (cell is CellInfoGsm){
+            val identity = cell.cellIdentity
+            info.networkType = "2G"
+            info.mcc = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) identity.mccString ?: "" else ""
+            info.mnc = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) identity.mncString ?: "" else ""
+            info.areaCode = identity.lac.toString()
+            info.cellId = identity.cid.toString()
+            result.add(info)
+            continue
         }
 
-        // 其他情况
-        if (location is GsmCellLocation) {
-            val gsm: GsmCellLocation = location
-            info.cid = gsm.cid.toString()
-            info.lac = gsm.lac.toString()
-            info.mcc = telephonyManager.networkOperator.substring(0, 3)
-            info.mnc = telephonyManager.networkOperator.substring(3)
-            return info
+        if (cell is CellInfoWcdma){
+            val identity = cell.cellIdentity
+            info.networkType = "3G"
+            info.mcc = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) identity.mccString ?: "" else ""
+            info.mnc = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) identity.mncString ?: "" else ""
+            info.areaCode = identity.lac.toString()
+            info.cellId = identity.cid.toString()
+            result.add(info)
+            continue
         }
-    } catch (e: Exception) {
-        e.printStackTrace()
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && cell is CellInfoTdscdma){
+            val identity = cell.cellIdentity
+            info.networkType = "3G"
+            info.mcc = identity.mccString ?: ""
+            info.mnc = identity.mncString ?: ""
+            info.areaCode = identity.lac.toString()
+            info.cellId = identity.cid.toString()
+            result.add(info)
+            continue
+        }
+
+        if (cell is CellInfoLte){
+            val identity = cell.cellIdentity
+            info.networkType = "4G"
+            info.mcc = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) identity.mccString ?: "" else ""
+            info.mnc = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) identity.mncString ?: "" else ""
+            info.areaCode = identity.tac.toString()
+            info.cellId = identity.ci.toString()
+            result.add(info)
+            continue
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && cell is CellInfoNr){
+            val identity = cell.cellIdentity as CellIdentityNr
+            info.networkType = "5G"
+            info.mcc = identity.mccString ?: ""
+            info.mnc = identity.mncString ?: ""
+            info.areaCode = identity.tac.toString()
+            info.cellId = identity.nci.toString()
+            result.add(info)
+            continue
+        }
+        result.add(info)
     }
-    return null
+    return result
 }
 
-
+/** 获取当前连接的基站信息 */
+@RequiresPermission(allOf = [Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_PHONE_STATE])
+fun Context.getCellInfoRegistered(): OperatorInfo? = getCellInfos().firstOrNull{ it.isRegistered }
