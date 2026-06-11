@@ -24,7 +24,7 @@ import java.util.ArrayList
  */
 
 /** 获取APN名称 */
-@RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
+@RequiresPermission(Manifest.permission.ACCESS_NETWORK_STATE)
 fun Context.getApnName(): String {
     val manager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     val info: NetworkInfo = manager.activeNetworkInfo ?: return ""
@@ -154,10 +154,14 @@ fun Context.getDeviceIdCompat(): String {
 /** 获取运营商代号 */
 fun Context.getSimOperator(): String {
     val telephonyManager = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-    val operator = telephonyManager.simOperator
-    return if (operator.isNullOrEmpty()) "" else operator
+    return telephonyManager.simOperator
 }
 
+/** 获取运营商名称 */
+fun Context.getSimOperatorName(): String {
+    val telephonyManager = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+    return telephonyManager.simOperatorName
+}
 
 /** 获取运营商类型（0：未知 1：移动 2：联通 3：电信 4：广电） */
 @OperatorInfo.OperatorType
@@ -172,11 +176,11 @@ fun Context.getSimOperatorType(): Int {
     }
 }
 
-/** 获取运营商名称 */
-fun Context.getSimOperatorName(): String {
+/** 通过MNC获取运营商名称 */
+fun Context.getSimOperatorNameByMNC(): String {
     return when (getSimOperatorType()) {
         OperatorInfo.OPERATOR_CMCC -> "中国移动"
-        OperatorInfo.OPERATOR_CUCC -> "联通"
+        OperatorInfo.OPERATOR_CUCC -> "中国联通"
         OperatorInfo.OPERATOR_CTCC -> "中国电信"
         OperatorInfo.OPERATOR_CBN -> "中国广电"
         else -> "未知"
