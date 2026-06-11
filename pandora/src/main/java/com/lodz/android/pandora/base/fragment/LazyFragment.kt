@@ -9,7 +9,6 @@ import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 import com.lodz.android.corekt.anko.getSize
 import com.lodz.android.corekt.log.PrintLog
-import com.lodz.android.pandora.base.activity.UseAnkoLayout
 import com.trello.rxlifecycle4.LifecycleTransformer
 import com.trello.rxlifecycle4.android.FragmentEvent
 import com.trello.rxlifecycle4.components.support.RxFragment
@@ -23,9 +22,6 @@ abstract class LazyFragment : RxFragment(), IFragmentBackPressed {
     companion object {
         const val LOG_TAG = "LazyFragment"
     }
-
-    /** 是否使用Anko Layout */
-    private var isPdrUseAnko = false
 
     /** 父控件布局 */
     private var mPdrParentView: View? = null
@@ -46,36 +42,23 @@ abstract class LazyFragment : RxFragment(), IFragmentBackPressed {
     /** 是否使用lifecycle判断懒加载 */
     private var isPdrUseLifecycle = true
 
-    /** 是否使用AnkoLayout */
-    protected fun isUseAnkoLayout(): Boolean = isPdrUseAnko
-
     final override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        isPdrUseAnko = injectAnko()
-        if (!isPdrUseAnko) {//不使用AnkoLayout再加载布局
-            val layoutId = getAbsLayoutId()
-            val view = if (layoutId != 0) {
-                inflater.inflate(layoutId, container, false)
-            } else {
-                getAbsViewBindingLayout(inflater, container, savedInstanceState)
-            }
-            if (view == null){
-                throw NullPointerException("please override getAbsLayoutId() or getAbsViewBindingLayout() to set layout")
-            }
-            return view
+        val layoutId = getAbsLayoutId()
+        val view = if (layoutId != 0) {
+            inflater.inflate(layoutId, container, false)
+        } else {
+            getAbsViewBindingLayout(inflater, container, savedInstanceState)
         }
-        val view = getAnkoLayoutView()
-        if (view != null) {
-            return view
+        if (view == null){
+            throw NullPointerException("please override getAbsLayoutId() or getAbsViewBindingLayout() to set layout")
         }
-        return super.onCreateView(inflater, container, savedInstanceState)
+        return view
     }
 
     @LayoutRes
     protected open fun getAbsLayoutId(): Int = 0
 
     protected open fun getAbsViewBindingLayout(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? = null
-
-    protected open fun getAnkoLayoutView(): View? = null
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
@@ -252,21 +235,6 @@ abstract class LazyFragment : RxFragment(), IFragmentBackPressed {
             return ctx
         }
         return requireContext()
-    }
-
-    /** 解析AnkoLayout注解 */
-    private fun injectAnko(): Boolean {
-        try {
-            if (!javaClass.isAnnotationPresent(UseAnkoLayout::class.java)) {
-                return false
-            }
-            // 进行了UseAnkoLayout注解
-            val inject = javaClass.getAnnotation(UseAnkoLayout::class.java) ?: return false
-            return inject.value
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        return false
     }
 
     /** 绑定Fragment的DestroyView生命周期 */

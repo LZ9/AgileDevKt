@@ -49,8 +49,8 @@ abstract class BaseActivity : AbsActivity() {
 
     final override fun afterSetContentView() {
         super.afterSetContentView()
-        if (isUseAnkoLayout()) {
-            throw RuntimeException("you already use anko layout , please extends AbsActivity and use @UseAnkoLayout annotation")
+        if (isUseCompose()) {
+            throw RuntimeException("you already use compose , please extends AbsActivity and use @AbsCompose annotation")
         }
         showStatusLoading()
         setContainerView()

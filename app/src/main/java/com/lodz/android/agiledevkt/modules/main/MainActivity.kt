@@ -120,7 +120,6 @@ class MainActivity : BaseActivity() {
             "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "#")
 
     private val MAIN_DATA_LIST = arrayListOf(
-//        MainBean("AnkoLayout测试类", "A", AnkoLayoutActivity::class.java),
         MainBean("文件测试类", "W", FileTestActivity::class.java),
         MainBean("加密测试类", "J", EncryptTestActivity::class.java),
         MainBean("Bitmap图片测试类", "B", BitmapTestActivity::class.java),

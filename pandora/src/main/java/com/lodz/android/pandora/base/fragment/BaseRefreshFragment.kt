@@ -47,8 +47,6 @@ abstract class BaseRefreshFragment : LazyFragment() {
     /** 内容布局 */
     private val mPdrContentLayout by bindView<LinearLayout>(R.id.pdr_content_layout)
 
-    final override fun getAnkoLayoutView(): View? = super.getAnkoLayoutView()
-
     final override fun getAbsViewBindingLayout(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -59,9 +57,6 @@ abstract class BaseRefreshFragment : LazyFragment() {
 
     final override fun beforeFindViews(view: View) {
         super.beforeFindViews(view)
-        if (isUseAnkoLayout()) {
-            throw RuntimeException("you already use anko layout , please extends LazyFragment and use @UseAnkoLayout annotation")
-        }
         showStatusLoading()
         setContainerView()
         initSwipeRefreshLayout()

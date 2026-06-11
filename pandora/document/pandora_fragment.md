@@ -7,7 +7,7 @@
 使用方法可以参考[MvcFragmentActivity.kt](https://github.com/LZ9/AgileDevKt/blob/master/app/src/main/java/com/lodz/android/agiledevkt/modules/mvc/MvcFragmentActivity.kt)。
 
 ## 一、LazyFragment
-LazyFragment是Pandora里所有Fragment封装类的基础，内部实现了Rx的生命周期绑定，懒加载以及AnkoLayout的使用。
+LazyFragment是Pandora里所有Fragment封装类的基础，内部实现了Rx的生命周期绑定，懒加载的使用。
 
 ### 1. 可重写方法
 为了实现fragment的懒加载，我对内部的回调机制进行了重新梳理，建议大家使用时重写我提供的方法。
@@ -15,7 +15,6 @@ LazyFragment是Pandora里所有Fragment封装类的基础，内部实现了Rx的
 
 方法名称|描述|备注
 :---|:---|:---
-getAbsLayoutId()|获取布局layoutId|如果使用AnkoLayout这里可以传0
 startCreate()|懒加载首先回调的方法|一般可以在这个方法内去获取Arguments带过来的Bundle参数
 beforeFindViews(view: View)|配置ContentView里的控件|一般由二级封装类使用，在内部对控件进行处理
 findViews(view: View, savedInstanceState: Bundle?)|获取控件|可以在该方法内获取控件对象或者进行控件方法设置
@@ -38,38 +37,8 @@ onFragmentPause()|替代onPause()|Fragment Pause时调用，与activity生命周
 方法名称|描述|备注
 :---|:---|:---
 getContext()|获取上下文|如果Context为空会抛出IllegalStateException异常
-isUseAnkoLayout()|是否使用AnkoLayout|无
 
-### 3. 使用AnkoLayout
- - LazyFragment支持AnkoLayout，你只需要加上 **@UseAnkoLayout** 注解并且 **override fun getAbsLayoutId(): Int = 0** 然后重写 **getAnkoLayoutView()** 方法，比如：
-```
-    override fun getAnkoLayoutView(): View? {
-        return UI {
-            verticalLayout {
-                padding = dip(30)
-                mAccountTv = textView {
-                    textSize = 16f
-                }
-                mNameTv = textView {
-                    textSize = 16f
-                    text = getString(R.string.al_name) + "  Jack"
-                }
-                mChangeBtn = button {
-                    setText(R.string.al_change_detail)
-                    setOnClickListener { view ->
-                        mListener?.invoke(view)
-                    }
-                }
-            }
-        }.view
-    }
-```
- - 了解官方 **Anko Layouts ([wiki](https://github.com/Kotlin/anko/wiki/Anko-Layouts))**
- - 了解如何继承LazyFragment使用AnkoLayout可以参考[AnkoAccountFragment.kt](https://github.com/LZ9/AgileDevKt/blob/7ce5bcfcf3796567106f6539c355b15d42130c40/app/src/main/java/com/lodz/android/agiledevkt/modules/anko/fragment/AnkoAccountFragment.kt)
- 或[AnkoDetailFragment.kt](https://github.com/LZ9/AgileDevKt/blob/7ce5bcfcf3796567106f6539c355b15d42130c40/app/src/main/java/com/lodz/android/agiledevkt/modules/anko/fragment/AnkoDetailFragment.kt)
- - 除了LazyFragment以外的Fragment基类**均不支持**AnkoLayout
-
-### 4. 使用Rx绑定生命周期
+### 3. 使用Rx绑定生命周期
 如果在LazyFragment的继承类里使用RxJava调用可以直接链上生命周期方法来指定何时停止订阅，例如：
 ```
     Observable.interval(1, TimeUnit.SECONDS)
@@ -96,7 +65,6 @@ BaseFragment继承自LazyFragment。
 :---|:---
 getAbsLayoutId()|已由内部实现，用getLayoutId()替代
 beforeFindViews()|已由内部实现
-getAnkoLayoutView()|不支持AnkoLayout不再让子类重写该方法
 
  - 新增的可重写的方法
 

@@ -10,6 +10,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import com.lodz.android.pandora.base.activity.AbsActivity
+import com.lodz.android.pandora.base.activity.AbsCompose
 import com.lodz.android.pandora.widget.base.compose.base.BaseContent
 import com.lodz.android.pandora.widget.base.compose.base.BaseContentState
 import com.lodz.android.pandora.widget.base.compose.error.ErrorPage
@@ -39,7 +41,8 @@ import com.lodz.android.pandora.widget.base.compose.titlebar.titleBarOptionUpdat
  * @author zhouL
  * @date 2026/5/9
  */
-abstract class BaseCpsActivity : AbsCpsActivity() {
+@AbsCompose
+abstract class BaseCpsActivity : AbsActivity() {
 
     /** 标题栏配置项 */
     private var mPdrTitleBarOption by mutableStateOf(TitleBarOption())

@@ -7,10 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.ColorInt
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
+import androidx.compose.runtime.Composable
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
@@ -41,18 +43,19 @@ abstract class AbsActivity : RxAppCompatActivity() {
     /** 系统底部导航栏 */
     protected val WINDOW_INSETS_TYPE_NAVIGATION_BARS = WindowInsetsCompat.Type.navigationBars()
 
-    /** 是否使用Anko Layout */
-    private var isPdrUseAnko = false
+    /** 是否使用Compose */
+    private var isPdrUseCompose = false
 
     private var mPdrWrapperLayout: FrameLayout? = null
 
     final override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()//状态栏透明，且忽略状态栏高度将页面顶到手机屏幕上方
-        isPdrUseAnko = injectAnko()
+        isPdrUseCompose = injectAbsCompose()
         EventBus.getDefault().register(this)
         startCreate()
-        if (!isPdrUseAnko) {//不使用AnkoLayout再加载布局
+        beforeSetContent()
+        if (!isPdrUseCompose) {//不使用Compose再加载布局
             val layoutId = getAbsLayoutId()
             val view = if (layoutId != 0) LayoutInflater.from(this).inflate(layoutId, null) else getAbsViewBindingLayout()
             if (view != null) {
@@ -70,6 +73,8 @@ abstract class AbsActivity : RxAppCompatActivity() {
             } else {
                 throw NullPointerException("please override getAbsLayoutId() or getViewBindingLayout() to set layout")
             }
+        }else{
+            setContent { RootContentUI() }
         }
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -96,6 +101,8 @@ abstract class AbsActivity : RxAppCompatActivity() {
 
     protected open fun startCreate() {}
 
+    protected open fun beforeSetContent() {}
+
     @LayoutRes
     protected open fun getAbsLayoutId(): Int = 0
 
@@ -116,6 +123,9 @@ abstract class AbsActivity : RxAppCompatActivity() {
     protected open fun getContext(): Context = this
 
     protected fun getWrapperLayout() = mPdrWrapperLayout
+
+    @Composable
+    protected open fun RootContentUI(){}
 
     /** 配置跟布局的背景颜色，可以重写配置，优先获取TitleBarLayout的背景颜色，若都不设置则为白色 */
     @ColorInt
@@ -247,17 +257,17 @@ abstract class AbsActivity : RxAppCompatActivity() {
         supportFragmentManager.beginTransaction().addToBackStack(name).commit()
     }
 
-    /** 是否使用AnkoLayout */
-    protected fun isUseAnkoLayout(): Boolean = isPdrUseAnko
+    /** 是否使用Compose */
+    protected fun isUseCompose(): Boolean = isPdrUseCompose
 
-    /** 解析AnkoLayout注解 */
-    private fun injectAnko(): Boolean {
+    /** 解析AbsCompose注解 */
+    private fun injectAbsCompose(): Boolean {
         try {
-            if (!javaClass.isAnnotationPresent(UseAnkoLayout::class.java)) {
+            if (!javaClass.isAnnotationPresent(AbsCompose::class.java)) {
                 return false
             }
-            // 进行了UseAnkoLayout注解
-            val inject = javaClass.getAnnotation(UseAnkoLayout::class.java) ?: return false
+            // 进行了AbsCompose注解
+            val inject = javaClass.getAnnotation(AbsCompose::class.java) ?: return false
             return inject.value
         } catch (e: Exception) {
             e.printStackTrace()

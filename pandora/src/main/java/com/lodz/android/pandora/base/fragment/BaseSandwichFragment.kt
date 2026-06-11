@@ -47,8 +47,6 @@ abstract class BaseSandwichFragment : LazyFragment() {
     /** 根目录布局 */
     private val mPdrRootLayout by bindView<ViewGroup>(R.id.pdr_base_root_layout)
 
-    final override fun getAnkoLayoutView(): View? = super.getAnkoLayoutView()
-
     final override fun getAbsViewBindingLayout(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -59,9 +57,6 @@ abstract class BaseSandwichFragment : LazyFragment() {
 
     final override fun beforeFindViews(view: View) {
         super.beforeFindViews(view)
-        if (isUseAnkoLayout()) {
-            throw RuntimeException("you already use anko layout , please extends LazyFragment and use @UseAnkoLayout annotation")
-        }
         showStatusLoading()
         setTopView()
         setBottomView()
