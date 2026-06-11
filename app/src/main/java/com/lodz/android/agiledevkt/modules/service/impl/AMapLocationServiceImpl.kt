@@ -1,7 +1,9 @@
 package com.lodz.android.agiledevkt.modules.service.impl
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
+import androidx.annotation.RequiresPermission
 import com.amap.api.location.AMapLocation
 import com.amap.api.location.AMapLocationClient
 import com.amap.api.location.AMapLocationClientOption
@@ -10,7 +12,7 @@ import com.lodz.android.agiledevkt.App
 import com.lodz.android.agiledevkt.modules.location.LocationTestActivity
 import com.lodz.android.agiledevkt.modules.location.LocationUpdateEvent
 import com.lodz.android.agiledevkt.modules.service.ServiceContract
-import com.lodz.android.corekt.network.NetworkManager
+import com.lodz.android.corekt.anko.getOperatorInfo
 import org.greenrobot.eventbus.EventBus
 
 /**
@@ -69,6 +71,7 @@ class AMapLocationServiceImpl : ServiceContract {
     }
 
     private val mAMapLocationListener = object : AMapLocationListener {
+        @RequiresPermission(Manifest.permission.ACCESS_FINE_LOCATION)
         override fun onLocationChanged(location: AMapLocation?) {
             if (null == location) {
                 EventBus.getDefault().post(LocationUpdateEvent(false, "", "", "", "", "", "", "定位失败，定位结果为null"))
@@ -82,7 +85,7 @@ class AMapLocationServiceImpl : ServiceContract {
 
             val longitude = location.longitude.toString() // 经度
             val latitude = location.latitude.toString() // 纬度
-            val info = NetworkManager.get().getOperatorInfo(App.get())
+            val info = App.get().getOperatorInfo()
             val mcc = info?.mcc ?: ""
             val mnc = info?.mnc ?: ""
             val lac = info?.lac ?: ""

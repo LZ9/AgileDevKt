@@ -14,7 +14,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
@@ -22,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -148,6 +151,12 @@ fun MainPage(nav: NavController?) {
     /** 是否显示索引提示 */
     var isShowIndexTips by remember { mutableStateOf(false) }
 
+    /** 列表状态 */
+    val listState = rememberLazyListState()
+
+    /** 协程对象 */
+    val scope = rememberCoroutineScope()
+
     /** 主页列表 */
     val mainDataList = arrayListOf(
         MainBean("文件测试类", "W", FileTestActivity::class.java),
@@ -269,6 +278,7 @@ fun MainPage(nav: NavController?) {
                         top.linkTo(parent.top)
                         bottom.linkTo(parent.bottom)
                     },
+                state = listState,
                 data = mainDataList,
                 navController = nav
             )
@@ -324,9 +334,20 @@ fun MainPage(nav: NavController?) {
 }
 
 @Composable
-private fun StickyList(modifier: Modifier, data: List<MainBean>, navController: NavController?) {
+private fun StickyList(modifier: Modifier, state: LazyListState, data: List<MainBean>, navController: NavController?) {
     val grouped = remember(data) { data.groupBy {it.getSortStr().first().toString()} }
-    LazyColumn(modifier) {
+    val headerPositionMap = remember(grouped) {
+        val map = mutableMapOf<String, Int>()
+        var index = 0
+        grouped.forEach { (title, items) ->
+            map[title] = index
+            index++ // header占一个
+            index += items.size
+        }
+        map
+    }
+
+    LazyColumn(modifier, state) {
         grouped.forEach { (title, items) ->
             stickyHeader {
                 Box(

@@ -383,6 +383,14 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/sim_operator_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/info_phone_sim_operator"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+            <TextView
                 android:id="@+id/sim_data_state_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -399,6 +407,14 @@
                 android:textSize="14sp" />
 
             <TextView
+                android:id="@+id/data_network_type_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/info_phone_data_network_type"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+            <TextView
                 android:id="@+id/apn_name_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -411,6 +427,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/info_ipv4_name"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/is_wifi_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/info_in_wifi"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/is_cellular_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/info_in_cellular"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
         </LinearLayout>

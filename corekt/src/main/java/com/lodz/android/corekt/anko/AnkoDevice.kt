@@ -1,13 +1,18 @@
 package com.lodz.android.corekt.anko
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.provider.Settings
+import android.telephony.CellLocation
 import android.telephony.TelephonyManager
+import android.telephony.cdma.CdmaCellLocation
+import android.telephony.gsm.GsmCellLocation
 import androidx.annotation.RequiresPermission
 import androidx.core.telephony.TelephonyManagerCompat
+import com.lodz.android.corekt.network.OperatorInfo
 import com.lodz.android.corekt.utils.ReflectUtils
 import java.net.Inet4Address
 import java.net.NetworkInterface
@@ -145,3 +150,77 @@ fun Context.getDeviceIdCompat(): String {
     val imei: String = getIMEI1()
     return imei.ifEmpty { getAndroidId() }
 }
+
+/** 获取运营商代号 */
+fun Context.getSimOperator(): String {
+    val telephonyManager = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+    val operator = telephonyManager.simOperator
+    return if (operator.isNullOrEmpty()) "" else operator
+}
+
+
+/** 获取运营商类型（0：未知 1：移动 2：联通 3：电信 4：广电） */
+@OperatorInfo.OperatorType
+fun Context.getSimOperatorType(): Int {
+    val operator = getSimOperator()
+    if (operator == "46000" || operator == "46002" || operator == "46004" || operator == "46007" || operator == "46008" || operator == "46013") {// 中国移动
+        return OperatorInfo.OPERATOR_CMCC
+    } else if (operator == "46001" || operator == "46006" || operator == "46009") {// 中国联通
+        return OperatorInfo.OPERATOR_CUCC
+    } else if (operator == "46003" || operator == "46005" || operator == "46011") {// 中国电信
+        return OperatorInfo.OPERATOR_CTCC
+    } else if (operator == "46015") {// 中国广电
+        return OperatorInfo.OPERATOR_CBN
+    }
+    return OperatorInfo.OPERATOR_UNKNOWN
+}
+
+/** 获取运营商名称 */
+fun Context.getSimOperatorName(): String {
+    return when (getSimOperatorType()) {
+        OperatorInfo.OPERATOR_CMCC -> "中国移动"
+        OperatorInfo.OPERATOR_CUCC -> "联通"
+        OperatorInfo.OPERATOR_CTCC -> "中国电信"
+        OperatorInfo.OPERATOR_CBN -> "中国广电"
+        else -> "未知"
+    }
+}
+
+/** 获取运营商（基站）信息 */
+@RequiresPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+fun Context.getOperatorInfo(): OperatorInfo? {
+    val telephonyManager = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+    val info = OperatorInfo()
+    info.type = getSimOperatorType()
+    if (!info.isSuccess()) {
+        return null
+    }
+
+    try {
+        val location: CellLocation = telephonyManager.cellLocation ?: return null
+
+        // 电信
+        if (info.type == OperatorInfo.OPERATOR_CTCC && location is CdmaCellLocation) {
+            val cdma: CdmaCellLocation = location
+            info.cid = cdma.baseStationId.toString()
+            info.lac = cdma.networkId.toString()
+            info.mcc = telephonyManager.networkOperator.substring(0, 3)
+            info.mnc = telephonyManager.networkOperator
+        }
+
+        // 其他情况
+        if (location is GsmCellLocation) {
+            val gsm: GsmCellLocation = location
+            info.cid = gsm.cid.toString()
+            info.lac = gsm.lac.toString()
+            info.mcc = telephonyManager.networkOperator.substring(0, 3)
+            info.mnc = telephonyManager.networkOperator.substring(3)
+            return info
+        }
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
+    return null
+}
+
+

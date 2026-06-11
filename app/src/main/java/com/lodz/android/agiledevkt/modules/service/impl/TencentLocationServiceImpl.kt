@@ -1,12 +1,14 @@
 package com.lodz.android.agiledevkt.modules.service.impl
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
+import androidx.annotation.RequiresPermission
 import com.lodz.android.agiledevkt.App
 import com.lodz.android.agiledevkt.modules.location.LocationTestActivity
 import com.lodz.android.agiledevkt.modules.location.LocationUpdateEvent
 import com.lodz.android.agiledevkt.modules.service.ServiceContract
-import com.lodz.android.corekt.network.NetworkManager
+import com.lodz.android.corekt.anko.getOperatorInfo
 import com.tencent.map.geolocation.TencentLocation
 import com.tencent.map.geolocation.TencentLocationListener
 import com.tencent.map.geolocation.TencentLocationManager
@@ -44,12 +46,13 @@ class TencentLocationServiceImpl : ServiceContract {
         }
 
         mTencentLocationListener = object : TencentLocationListener {
+            @RequiresPermission(Manifest.permission.ACCESS_FINE_LOCATION)
             override fun onLocationChanged(location: TencentLocation?, type: Int, reason: String?) {
                 if (type == TencentLocation.ERROR_OK && location != null) {// 定位成功
 
                     val longitude = location.longitude.toString() // 经度
                     val latitude = location.latitude.toString() // 纬度
-                    val info = NetworkManager.get().getOperatorInfo(App.get())
+                    val info = App.get().getOperatorInfo()
                     val mcc = info?.mcc ?: ""
                     val mnc = info?.mnc ?: ""
                     val lac = info?.lac ?: ""

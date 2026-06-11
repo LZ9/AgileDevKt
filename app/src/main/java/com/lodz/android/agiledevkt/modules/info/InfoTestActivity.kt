@@ -1,5 +1,6 @@
 package com.lodz.android.agiledevkt.modules.info
 
+import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -26,6 +27,7 @@ import kotlin.random.Random
  * 信息展示测试类
  * Created by zhouL on 2018/7/27.
  */
+@SuppressLint("MissingPermission")
 class InfoTestActivity : BaseActivity() {
 
     companion object {
@@ -118,14 +120,22 @@ class InfoTestActivity : BaseActivity() {
         mBinding.imsi2Tv.text = getString(R.string.info_phone_imsi2).format(getIMSI2())
         // sim2可用
         mBinding.sim2ReadyTv.text = getString(R.string.info_phone_sim2_ready).format(isSim2Ready())
+        // 运营商名称
+        mBinding.simOperatorTv.text = getString(R.string.info_phone_sim_operator).format(getSimOperatorName())
         // sim卡数据连接状态
         mBinding.simDataStateTv.text = getString(R.string.info_phone_sim_data_state).format(getSimDataState())
         // sim卡是否已连接数据
         mBinding.simConnectedDataTv.text = getString(R.string.info_phone_is_connected_data).format(isSimDataConnected())
+        // 数据网络类型
+        mBinding.dataNetworkTypeTv.text = getString(R.string.info_phone_data_network_type).format(NetworkManager.get().getDataNetworkTypeName())
         // APN名称
         mBinding.apnNameTv.text = getString(R.string.info_apn_name).format(getApnName())
         // IP地址
         mBinding.ipv4Tv.text = getString(R.string.info_ipv4_name).format(getIpv4List().toJsonString())
+        // 是否WIFI
+        mBinding.isWifiTv.text = getString(R.string.info_in_wifi).format(NetworkManager.get().isWifi().toString())
+        // 是否流量
+        mBinding.isCellularTv.text = getString(R.string.info_in_cellular).format(NetworkManager.get().isCellular().toString())
     }
 
     /** 显示屏幕信息 */
@@ -241,12 +251,15 @@ class InfoTestActivity : BaseActivity() {
         super.finish()
     }
 
-    /** 网络监听器 */
-    private val mNetworkListener = NetworkManager.NetworkListener { isNetworkAvailable, netInfo ->
+    private val mNetworkListener = NetworkManager.NetworkListener { isNetworkAvailable, network, networkCapabilities ->  // 运营商名称
+        mBinding.simOperatorTv.text = getString(R.string.info_phone_sim_operator).format(getSimOperatorName())
         mBinding.simDataStateTv.text = getString(R.string.info_phone_sim_data_state).format(getSimDataState())
-        mBinding.simConnectedDataTv.text = getString(R.string.info_phone_is_connected_data).format(isSimDataConnected())
+        mBinding.simConnectedDataTv.text = getString(R.string.info_phone_is_connected_data).format(isSimDataConnected())        // 数据网络类型
+        mBinding.dataNetworkTypeTv.text = getString(R.string.info_phone_data_network_type).format(NetworkManager.get().getDataNetworkTypeName())
         mBinding.apnNameTv.text = getString(R.string.info_apn_name).format(getApnName())
         mBinding.ipv4Tv.text = getString(R.string.info_ipv4_name).format(getIpv4List().toJsonString())
+        mBinding.isWifiTv.text = getString(R.string.info_in_wifi).format(NetworkManager.get().isWifi().toString())
+        mBinding.isCellularTv.text = getString(R.string.info_in_cellular).format(NetworkManager.get().isCellular().toString())
     }
 
     /** GPS广播接收器 */

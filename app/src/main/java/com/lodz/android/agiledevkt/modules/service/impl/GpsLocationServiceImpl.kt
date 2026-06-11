@@ -1,5 +1,6 @@
 package com.lodz.android.agiledevkt.modules.service.impl
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
@@ -7,11 +8,12 @@ import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
+import androidx.annotation.RequiresPermission
 import com.lodz.android.agiledevkt.App
 import com.lodz.android.agiledevkt.modules.location.LocationTestActivity
 import com.lodz.android.agiledevkt.modules.location.LocationUpdateEvent
 import com.lodz.android.agiledevkt.modules.service.ServiceContract
-import com.lodz.android.corekt.network.NetworkManager
+import com.lodz.android.corekt.anko.getOperatorInfo
 import org.greenrobot.eventbus.EventBus
 
 /**
@@ -58,10 +60,11 @@ class GpsLocationServiceImpl : ServiceContract {
     }
 
     private val mLocationListener = object : LocationListener {
+        @RequiresPermission(Manifest.permission.ACCESS_FINE_LOCATION)
         override fun onLocationChanged(location: Location) {
             val longitude = location.longitude.toString() // 经度
             val latitude = location.latitude.toString() // 纬度
-            val info = NetworkManager.get().getOperatorInfo(App.get())
+            val info = App.get().getOperatorInfo()
             val mcc = info?.mcc ?: ""
             val mnc = info?.mnc ?: ""
             val lac = info?.lac ?: ""

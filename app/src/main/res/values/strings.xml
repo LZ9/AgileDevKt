@@ -218,10 +218,14 @@
     <string name="info_phone_imsi2">IMSI2：%s</string>
     <string name="info_phone_sim1_ready">sim1可用：%s</string>
     <string name="info_phone_sim2_ready">sim2可用：%s</string>
+    <string name="info_phone_sim_operator">运营商名称：%s</string>
     <string name="info_phone_sim_data_state">sim卡数据连接状态：%s</string>
     <string name="info_phone_is_connected_data">是否已连接数据：%s</string>
+    <string name="info_phone_data_network_type">数据网络类型：%s</string>
     <string name="info_apn_name">APN名称：%s</string>
     <string name="info_ipv4_name">IPV4列表：%s</string>
+    <string name="info_in_wifi">是否WIFI：%s</string>
+    <string name="info_in_cellular">是否流量：%s</string>
     <string name="info_screen_height">屏幕高度：%s</string>
     <string name="info_screen_width">屏幕宽度：%s</string>
     <string name="info_status_bar_height">状态栏高度：%s</string>

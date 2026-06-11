@@ -18,13 +18,15 @@ class OperatorInfo {
         const val OPERATOR_CUCC = 2
         /** 电信 */
         const val OPERATOR_CTCC = 3
+        /** 广电 */
+        const val OPERATOR_CBN = 4
     }
 
-    @IntDef(OPERATOR_UNKNOWN, OPERATOR_CMCC, OPERATOR_CUCC, OPERATOR_CTCC)
+    @IntDef(OPERATOR_UNKNOWN, OPERATOR_CMCC, OPERATOR_CUCC, OPERATOR_CTCC, OPERATOR_CBN)
     @Retention(AnnotationRetention.SOURCE)
     annotation class OperatorType
 
-    /** 网络类型 */
+    /** 网络运营商 */
     @OperatorType
     var type = OPERATOR_UNKNOWN
 

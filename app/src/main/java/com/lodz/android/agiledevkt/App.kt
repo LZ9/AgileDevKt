@@ -109,7 +109,7 @@ class App : BaseApplication() {
     override fun onExit() {
         // todo 待完善
         ThreadPoolManager.get().releaseAll()
-        NetworkManager.get().release(this)
+        NetworkManager.get().release()
         NetworkManager.get().clearNetworkListener()
     }
 
