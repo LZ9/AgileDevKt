@@ -1,14 +1,22 @@
 package com.lodz.android.corekt.network
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.IntentFilter
 import android.net.ConnectivityManager
+import android.net.LinkProperties
+import android.net.Network
+import android.net.NetworkCapabilities
 import android.net.NetworkInfo
+import android.net.NetworkRequest
+import android.os.Build
+import android.os.ext.SdkExtensions
 import android.telephony.CellLocation
 import android.telephony.TelephonyManager
 import android.telephony.cdma.CdmaCellLocation
 import android.telephony.gsm.GsmCellLocation
+import androidx.annotation.RequiresPermission
 
 /**
  * 网络管理
@@ -22,44 +30,39 @@ class NetworkManager private constructor() {
         fun get(): NetworkManager = sInstance
     }
 
-    /** 网络广播 */
-    private var mReceiver: ConnectBroadcastReceiver? = null
-    /** 网络信息 */
-    private val mNetInfo = NetInfo()
     /** 网络监听器 */
-    private val mNetworkListeners = ArrayList<NetworkListener>()
+    private val mNetworkListeners = ArrayList<ConnectivityManager.NetworkCallback>()
+    /** 7.0及以上网络状态管理器 */
+    private var mConnectivityManager: ConnectivityManager? = null
+    /** 网络是否可用 */
+    private var isNetworkAvailable = false
+    /** 网络功能 */
+    private var mNetworkCapabilities: NetworkCapabilities? = null
 
     /** 注册网络监听广播 */
-    fun init(context: Context) {
-        try {
-            val filter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
-            mReceiver = ConnectBroadcastReceiver()
-            context.applicationContext.registerReceiver(mReceiver, filter)
-        } catch (e: Exception) {
-            e.printStackTrace()
+    @RequiresPermission(Manifest.permission.ACCESS_NETWORK_STATE)
+    fun init(context: Context, request: NetworkRequest? = null) {
+        mConnectivityManager = context.getSystemService(ConnectivityManager::class.java)
+        if (request != null) {
+            mConnectivityManager?.registerNetworkCallback(request, mNetworkCallback)
+        } else {
+            mConnectivityManager?.registerDefaultNetworkCallback(mNetworkCallback)
         }
     }
 
     /** 解除网络监听广播 */
-    fun release(context: Context) {
-        try {
-            if (mReceiver != null) {
-                context.applicationContext.unregisterReceiver(mReceiver)
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+    fun release() {
+        mConnectivityManager?.unregisterNetworkCallback(mNetworkCallback)
     }
 
     /** 网络是否可用 */
-    fun isNetworkAvailable(): Boolean = mNetInfo.type != NetInfo.NETWORK_TYPE_NONE
+    fun isNetworkAvailable(): Boolean = mNetworkCapabilities?.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED) ?: false
 
     /** 是否在wifi下 */
-    fun isWifi(): Boolean = mNetInfo.type == NetInfo.NETWORK_TYPE_WIFI
+    fun isWifi(): Boolean = mNetworkCapabilities?.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ?: false
 
-    /** 获取当前网络类型（未连接/WIFI/4G/3G/2G） */
-    @NetInfo.NetType
-    fun getNetType(): Int = mNetInfo.type
+    /** 获取当前网络功能对象 */
+    fun getNetworkCapabilities(): NetworkCapabilities? = mNetworkCapabilities
 
     /** 获取运营商代号（0：未知 1：移动 2：联通 3：电信） */
     @OperatorInfo.OperatorType
@@ -117,112 +120,14 @@ class NetworkManager private constructor() {
         return null
     }
 
-    /** 更新网络信息 */
-    @SuppressLint("MissingPermission")
-    internal fun updateNet(manager: ConnectivityManager) {
-        mNetInfo.type = NetInfo.NETWORK_TYPE_NONE
-        mNetInfo.standard = NetInfo.NETWORK_TYPE_NONE
-        var netInfo: NetworkInfo? = null
-        try {
-            netInfo = manager.activeNetworkInfo
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        if (netInfo == null || !netInfo.isAvailable) {//网络未连接
-            return
-        }
-
-        var type = getType(netInfo)
-        if (type == ConnectivityManager.TYPE_WIFI) {// wifi下
-            mNetInfo.type = NetInfo.NETWORK_TYPE_WIFI
-            mNetInfo.standard = NetInfo.NETWORK_TYPE_WIFI
-            return
-        }
-
-        val subType = getSubType(netInfo)
-        type = when (subType) {
-            TelephonyManager.NETWORK_TYPE_1xRTT,
-            TelephonyManager.NETWORK_TYPE_CDMA,
-            TelephonyManager.NETWORK_TYPE_EDGE,
-            TelephonyManager.NETWORK_TYPE_GPRS,
-            TelephonyManager.NETWORK_TYPE_IDEN,
-            TelephonyManager.NETWORK_TYPE_GSM
-            -> NetInfo.NETWORK_TYPE_2G
-            TelephonyManager.NETWORK_TYPE_EVDO_0,
-            TelephonyManager.NETWORK_TYPE_EVDO_A,
-            TelephonyManager.NETWORK_TYPE_HSDPA,
-            TelephonyManager.NETWORK_TYPE_HSPA,
-            TelephonyManager.NETWORK_TYPE_HSUPA,
-            TelephonyManager.NETWORK_TYPE_UMTS,
-            TelephonyManager.NETWORK_TYPE_EVDO_B,
-            TelephonyManager.NETWORK_TYPE_EHRPD,
-            TelephonyManager.NETWORK_TYPE_HSPAP,
-            TelephonyManager.NETWORK_TYPE_TD_SCDMA,
-            TelephonyManager.NETWORK_TYPE_IWLAN
-            -> NetInfo.NETWORK_TYPE_3G
-            TelephonyManager.NETWORK_TYPE_LTE,
-            19
-            -> NetInfo.NETWORK_TYPE_4G
-            else -> NetInfo.NETWORK_TYPE_UNKNOWN
-        }
-        mNetInfo.type = type
-        mNetInfo.standard = subType
-        mNetInfo.extraInfo = netInfo.extraInfo
-    }
-
-    /** 从网络信息[info]中获取网络类型 */
-    private fun getType(info: NetworkInfo): Int {
-        try {
-            //这里做类型判断防止一些ROM被修改这个类型不是int型
-            val type: Any? = info.type
-            if (type is Int) {
-                return type.toInt()
-            }
-            if (type is String && type.isNotEmpty()) {
-                return type.toInt()
-            }
-            if (type is Double) {
-                return type.toInt()
-            }
-            if (type is Float) {
-                return type.toInt()
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        return NetInfo.NETWORK_TYPE_UNKNOWN
-    }
-
-    /** 从网络信息[info]中获取网络制式 */
-    private fun getSubType(info: NetworkInfo): Int {
-        try {
-            //这里做类型判断防止一些ROM被修改这个类型不是int型
-            val type: Any? = info.subtype
-            if (type is Int) {
-                return type.toInt()
-            }
-            if (type is String && type.isNotEmpty()) {
-                return type.toInt()
-            }
-            if (type is Double) {
-                return type.toInt()
-            }
-            if (type is Float) {
-                return type.toInt()
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        return TelephonyManager.NETWORK_TYPE_UNKNOWN
-    }
 
     /** 添加网络监听器[listener] */
-    fun addNetworkListener(listener: NetworkListener) {
+    fun addNetworkListener(listener: ConnectivityManager.NetworkCallback) {
         mNetworkListeners.add(listener)
     }
 
     /** 删除网络监听器[listener] */
-    fun removeNetworkListener(listener: NetworkListener) {
+    fun removeNetworkListener(listener: ConnectivityManager.NetworkCallback) {
         mNetworkListeners.remove(listener)
     }
 
@@ -231,18 +136,123 @@ class NetworkManager private constructor() {
         mNetworkListeners.clear()
     }
 
-    /** 通知监听器回调 */
-    internal fun notifyNetworkListeners() {
+
+    val mNetworkCallback = object : ConnectivityManager.NetworkCallback() {
+
+        override fun onAvailable(network: Network) {
+            super.onAvailable(network)
+            isNetworkAvailable = true
+            notifyOnAvailable(network)
+        }
+
+        override fun onLost(network: Network) {
+            super.onLost(network)
+            isNetworkAvailable = false
+            notifyOnLost(network)
+        }
+
+        override fun onCapabilitiesChanged(network: Network, networkCapabilities: NetworkCapabilities) {
+            super.onCapabilitiesChanged(network, networkCapabilities)
+            mNetworkCapabilities = networkCapabilities
+            isNetworkAvailable = networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
+            notifyOnCapabilitiesChanged(network, networkCapabilities)
+        }
+
+        override fun onBlockedStatusChanged(network: Network, blocked: Boolean) {
+            super.onBlockedStatusChanged(network, blocked)
+            notifyOnBlockedStatusChanged(network, blocked)
+        }
+
+        override fun onLinkPropertiesChanged(network: Network, linkProperties: LinkProperties) {
+            super.onLinkPropertiesChanged(network, linkProperties)
+            notifyOnLinkPropertiesChanged(network, linkProperties)
+        }
+
+        override fun onLosing(network: Network, maxMsToLive: Int) {
+            super.onLosing(network, maxMsToLive)
+            notifyOnLosing(network, maxMsToLive)
+        }
+
+        override fun onReserved(networkCapabilities: NetworkCapabilities) {
+            super.onReserved(networkCapabilities)
+            notifyOnReserved(networkCapabilities)
+        }
+
+        override fun onUnavailable() {
+            super.onUnavailable()
+            notifyOnUnavailable()
+        }
+
+    }
+
+    private fun notifyOnAvailable(network: Network) {
         val iterator = mNetworkListeners.iterator()
         while (iterator.hasNext()) {
-            val listener: NetworkListener = iterator.next()
-            listener.onNetworkStatusChanged(isNetworkAvailable(), mNetInfo)
+            val listener: ConnectivityManager.NetworkCallback = iterator.next()
+            listener.onAvailable(network)
         }
     }
 
-    /** 网络监听器 */
-    fun interface NetworkListener {
-        /** 网络状态变化，网络是否可用[isNetworkAvailable]，网络信息[netInfo] */
-        fun onNetworkStatusChanged(isNetworkAvailable: Boolean, netInfo: NetInfo)
+    private fun notifyOnLost(network: Network) {
+        val iterator = mNetworkListeners.iterator()
+        while (iterator.hasNext()) {
+            val listener: ConnectivityManager.NetworkCallback = iterator.next()
+            listener.onLost(network)
+        }
+    }
+
+
+    private fun notifyOnCapabilitiesChanged(network: Network, networkCapabilities: NetworkCapabilities) {
+        val iterator = mNetworkListeners.iterator()
+        while (iterator.hasNext()) {
+            val listener: ConnectivityManager.NetworkCallback = iterator.next()
+            listener.onCapabilitiesChanged(network, networkCapabilities)
+        }
+    }
+
+    private fun notifyOnBlockedStatusChanged(network: Network, blocked: Boolean) {
+        val iterator = mNetworkListeners.iterator()
+        while (iterator.hasNext()) {
+            val listener: ConnectivityManager.NetworkCallback = iterator.next()
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                listener.onBlockedStatusChanged(network, blocked)
+            }
+        }
+    }
+
+    private fun notifyOnLinkPropertiesChanged(network: Network, linkProperties: LinkProperties) {
+        val iterator = mNetworkListeners.iterator()
+        while (iterator.hasNext()) {
+            val listener: ConnectivityManager.NetworkCallback = iterator.next()
+            listener.onLinkPropertiesChanged(network, linkProperties)
+        }
+    }
+
+    private fun notifyOnLosing(network: Network, maxMsToLive: Int) {
+        val iterator = mNetworkListeners.iterator()
+        while (iterator.hasNext()) {
+            val listener: ConnectivityManager.NetworkCallback = iterator.next()
+            listener.onLosing(network, maxMsToLive)
+        }
+    }
+
+    private fun notifyOnReserved(networkCapabilities: NetworkCapabilities) {
+        val iterator = mNetworkListeners.iterator()
+        while (iterator.hasNext()) {
+            val listener: ConnectivityManager.NetworkCallback = iterator.next()
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && SdkExtensions.getExtensionVersion(Build.VERSION_CODES.UPSIDE_DOWN_CAKE) >= 17) {
+                listener.onReserved(networkCapabilities)
+            }
+        }
+    }
+
+    private fun notifyOnUnavailable() {
+        val iterator = mNetworkListeners.iterator()
+        while (iterator.hasNext()) {
+            val listener: ConnectivityManager.NetworkCallback = iterator.next()
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                listener.onUnavailable()
+            }
+        }
     }
 }
