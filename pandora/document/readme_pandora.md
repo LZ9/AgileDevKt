@@ -15,14 +15,24 @@ Pandora支持Androidx和Kotlin开发插件，内部集成了包括
 如果你的app有重复引用可以选择去掉顶层引用或者保证版本一致
 ```
     dependencies {
-        api 'ink.lodz:core-kt:2.1.5'
+        api 'ink.lodz:core-kt:3.0.0'
         api 'io.reactivex.rxjava3:rxjava:3.1.12'
         api 'com.squareup.retrofit2:retrofit:3.0.0'
         api 'com.squareup.retrofit2:adapter-rxjava3:3.0.0'
         api 'com.squareup.retrofit2:converter-jackson:3.0.0'
         api 'com.fasterxml.jackson.core:jackson-databind:2.21.1'
         api 'com.trello.rxlifecycle4:rxlifecycle-components:4.0.2'
-        api 'org.greenrobot:eventbus:3.3.1'.
+        api 'org.greenrobot:eventbus:3.3.1'
+        api platform('androidx.compose:compose-bom:2026.05.01')
+        api 'androidx.activity:activity-compose:1.13.0'       
+        api 'androidx.navigation:navigation-compose:2.9.8'         
+        api 'androidx.compose.material3:material3:1.4.0'            
+        api 'androidx.compose.ui:ui:1.11.2'           
+        api 'androidx.compose.ui:ui-graphics:1.11.2'         
+        api 'androidx.compose.ui:ui-tooling-preview:1.11.2'     
+        debugImplementation 'androidx.compose.ui:ui-tooling:1.11.2' 
+        api 'androidx.compose.foundation:foundation:1.11.2'                          
+        api 'androidx.constraintlayout:constraintlayout-compose:1.1.1'    
     }
 ```
 

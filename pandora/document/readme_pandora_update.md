@@ -1,5 +1,14 @@
 # Pandora更新记录
 
+##### 2026/06/12
+1. 将最小SDK兼容提高到24（7.0）
+2. 引入Compose相关依赖
+3. 改造AbsActivity，支持继承后使用Compose编写页面
+4. 新增基于Compose的状态组件和标题栏
+5. 新增索引栏的Compose组件
+6. 去掉AnkoLayout的支持
+7. 发布3.0.0版
+
 ##### 2026/03/18
 1. AbsActivity.kt开启enableEdgeToEdge()，并对基类、键盘、图片选择器等进行适配
 2. 增加RxComponentActivity.kt，应对后续compose改造

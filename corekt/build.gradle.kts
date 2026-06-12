@@ -14,7 +14,7 @@ android {
     defaultConfig {
         minSdk = 24
         buildConfigField("int", "versionCode", "61")
-        buildConfigField("String", "versionName", "\"3.0.0\"") //未上传
+        buildConfigField("String", "versionName", "\"3.0.0\"") //成功上传
 
         consumerProguardFiles("consumer-rules.pro")
     }
