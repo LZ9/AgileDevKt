@@ -1,8 +1,8 @@
 [versions]
 #插件
 agp = "9.2.1"
-kotlin = "2.3.21"
-ksp = "2.3.4"
+kotlin = "2.4.0"
+ksp = "2.3.9"
 publish = "0.36.0"
 
 #app依赖
@@ -25,7 +25,7 @@ cardview = "1.0.0"
 viewpager2 = "1.1.0"
 constraintlayout = "2.2.1"
 multidex = "2.0.1"
-coreKtx = "1.18.0"
+coreKtx = "1.19.0"
 activityKtx = "1.13.0"
 fragmentKtx = "1.8.9"
 lifecycleKtx = "2.10.0"
