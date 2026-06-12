@@ -57,7 +57,7 @@ dependencies {
 //----------------------- 发布到 Maven Central  ------------------------------
 val PUBLISH_GROUP_ID = "ink.lodz"
 val PUBLISH_ARTIFACT_ID = "core-kt"
-val PUBLISH_VERSION = "2.1.5"
+val PUBLISH_VERSION = "3.0.0"
 
 mavenPublishing {
     publishToMavenCentral(automaticRelease = true)

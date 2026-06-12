@@ -1,5 +1,15 @@
 # core-kt库更新记录
 
+##### 2026/06/12
+1. 将最小SDK兼容提高到24（7.0）
+2. AnkoDrawable.kt补充Compose调用drawable资源的一些转换方法
+3. AnkoCoroutines.kt部分方法替换为ComponentActivity的扩展
+4. AnkoMedia.kt补充android10以上版本的图片插入多媒体方法
+5. 完成NetworkManager.kt改造，使用registerDefaultNetworkCallback代替ConnectBroadcastReceiver
+6. 补充完善流量数据网络类型判断逻辑
+7. 补充运营商判断逻辑
+8. 发布3.0.0版
+
 ##### 2026/03/18
 1. 添加异常捕获扩展类AnkoCatch.kt
 2. 修复注解扩展AnkoAnnotation.kt的BUG
