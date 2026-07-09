@@ -47,9 +47,19 @@ class NetworkManager private constructor() {
     /** 网络功能 */
     private var mNetworkCapabilities: NetworkCapabilities? = null
 
+    private var mDisplayInfoListener: TelephonyDisplayInfoListener? = null
+
     /** 注册网络监听广播 */
     @RequiresPermission(Manifest.permission.ACCESS_NETWORK_STATE)
     fun init(context: Context, request: NetworkRequest? = null) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            mDisplayInfoListener = object : TelephonyDisplayInfoListener() {
+                override fun onDisplayInfoChanged(telephonyDisplayInfo: TelephonyDisplayInfo) {
+                    mTelephonyDisplayInfo = telephonyDisplayInfo
+                }
+            }
+        }
+
         mConnectivityManager = context.getSystemService(ConnectivityManager::class.java)
         if (request != null) {
             mConnectivityManager?.registerNetworkCallback(request, mNetworkCallback)
@@ -58,7 +68,10 @@ class NetworkManager private constructor() {
         }
         mTelephonyManager = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            mTelephonyManager?.registerTelephonyCallback(context.mainExecutor, mDisplayInfoListener)
+            val callback = mDisplayInfoListener
+            if (callback != null){
+                mTelephonyManager?.registerTelephonyCallback(context.mainExecutor, callback)
+            }
         }
     }
 
@@ -66,7 +79,10 @@ class NetworkManager private constructor() {
     fun release() {
         mConnectivityManager?.unregisterNetworkCallback(mNetworkCallback)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            mTelephonyManager?.unregisterTelephonyCallback(mDisplayInfoListener)
+            val callback = mDisplayInfoListener
+            if (callback != null){
+                mTelephonyManager?.unregisterTelephonyCallback(callback)
+            }
         }
     }
 
@@ -81,12 +97,6 @@ class NetworkManager private constructor() {
 
     /** 获取当前网络功能对象 */
     fun getNetworkCapabilities(): NetworkCapabilities? = mNetworkCapabilities
-
-    private val mDisplayInfoListener = @RequiresApi(Build.VERSION_CODES.S) object : TelephonyDisplayInfoListener() {
-        override fun onDisplayInfoChanged(telephonyDisplayInfo: TelephonyDisplayInfo) {
-            mTelephonyDisplayInfo = telephonyDisplayInfo
-        }
-    }
 
     /** 获取数据网络类型名称，例如4G、5G */
     @RequiresPermission(Manifest.permission.READ_PHONE_STATE)
