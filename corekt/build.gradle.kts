@@ -13,8 +13,8 @@ android {
 
     defaultConfig {
         minSdk = 24
-        buildConfigField("int", "versionCode", "61")
-        buildConfigField("String", "versionName", "\"3.0.0\"") //成功上传
+        buildConfigField("int", "versionCode", "62")
+        buildConfigField("String", "versionName", "\"3.0.1\"") //成功上传
 
         consumerProguardFiles("consumer-rules.pro")
     }
@@ -57,7 +57,7 @@ dependencies {
 //----------------------- 发布到 Maven Central  ------------------------------
 val PUBLISH_GROUP_ID = "ink.lodz"
 val PUBLISH_ARTIFACT_ID = "core-kt"
-val PUBLISH_VERSION = "3.0.0"
+val PUBLISH_VERSION = "3.0.1"
 
 mavenPublishing {
     publishToMavenCentral(automaticRelease = true)

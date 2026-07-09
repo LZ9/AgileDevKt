@@ -1,5 +1,10 @@
 # core-kt库更新记录
 
+##### 2026/07/09
+1. 修复NetworkManager里面的TelephonyDisplayInfoListener对象未进行版本判断导致闪退的BUG
+2. 更新依赖库版本
+3. 发布3.0.1版
+
 ##### 2026/06/12
 1. 将最小SDK兼容提高到24（7.0）
 2. AnkoDrawable.kt补充Compose调用drawable资源的一些转换方法
