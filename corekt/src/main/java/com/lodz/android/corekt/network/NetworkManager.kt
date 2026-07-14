@@ -11,7 +11,6 @@ import android.os.Build
 import android.os.ext.SdkExtensions
 import android.telephony.TelephonyDisplayInfo
 import android.telephony.TelephonyManager
-import androidx.annotation.RequiresApi
 import androidx.annotation.RequiresPermission
 import com.lodz.android.corekt.anko.then
 import com.lodz.android.corekt.log.PrintLog
@@ -174,7 +173,7 @@ class NetworkManager private constructor() {
             isNetworkAvailable = true
             notifyOnAvailable(network)
             onNetworkStatusChanged(network)
-            PrintLog.d("testtag", "onAvailable --- > network : $network")
+            PrintLog.d("network", "onAvailable --- > network : $network")
         }
 
         override fun onLost(network: Network) {
@@ -183,7 +182,7 @@ class NetworkManager private constructor() {
             mNetworkCapabilities = null
             notifyOnLost(network)
             onNetworkStatusChanged(network)
-            PrintLog.e("testtag", "onLost --- > network : $network")
+            PrintLog.e("network", "onLost --- > network : $network")
         }
 
         override fun onCapabilitiesChanged(network: Network, networkCapabilities: NetworkCapabilities) {
@@ -192,37 +191,37 @@ class NetworkManager private constructor() {
             isNetworkAvailable = networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
             notifyOnCapabilitiesChanged(network, networkCapabilities)
             onNetworkStatusChanged(network)
-            PrintLog.i("testtag", "onCapabilitiesChanged --- > network : $network ; networkCapabilities : $networkCapabilities")
+            PrintLog.i("network", "onCapabilitiesChanged --- > network : $network ; networkCapabilities : $networkCapabilities")
         }
 
         override fun onBlockedStatusChanged(network: Network, blocked: Boolean) {
             super.onBlockedStatusChanged(network, blocked)
             notifyOnBlockedStatusChanged(network, blocked)
-            PrintLog.w("testtag", "onBlockedStatusChanged --- > network : $network ; blocked : $blocked")
+            PrintLog.w("network", "onBlockedStatusChanged --- > network : $network ; blocked : $blocked")
         }
 
         override fun onLinkPropertiesChanged(network: Network, linkProperties: LinkProperties) {
             super.onLinkPropertiesChanged(network, linkProperties)
             notifyOnLinkPropertiesChanged(network, linkProperties)
-            PrintLog.v("testtag", "onLinkPropertiesChanged --- > network : $network ; linkProperties : $linkProperties")
+            PrintLog.v("network", "onLinkPropertiesChanged --- > network : $network ; linkProperties : $linkProperties")
         }
 
         override fun onLosing(network: Network, maxMsToLive: Int) {
             super.onLosing(network, maxMsToLive)
             notifyOnLosing(network, maxMsToLive)
-            PrintLog.w("testtag", "onLosing --- > network : $network ; maxMsToLive : $maxMsToLive")
+            PrintLog.w("network", "onLosing --- > network : $network ; maxMsToLive : $maxMsToLive")
         }
 
         override fun onReserved(networkCapabilities: NetworkCapabilities) {
             super.onReserved(networkCapabilities)
             notifyOnReserved(networkCapabilities)
-            PrintLog.d("testtag", "onReserved --- > networkCapabilities : $networkCapabilities")
+            PrintLog.d("network", "onReserved --- > networkCapabilities : $networkCapabilities")
         }
 
         override fun onUnavailable() {
             super.onUnavailable()
             notifyOnUnavailable()
-            PrintLog.e("testtag", "notifyOnUnavailable --- > ")
+            PrintLog.e("network", "notifyOnUnavailable --- > ")
         }
 
     }
