@@ -124,6 +124,20 @@ fun Context.goAppDetailSetting() {
     startActivity(intent)
 }
 
+/** 跳转到系统的设置页面 */
+fun Context.goSysSetting() {
+    startActivity(Intent(Settings.ACTION_SETTINGS))
+}
+
+/** 回到桌面 */
+fun Context.goHome(){
+    val intent = Intent(Intent.ACTION_MAIN).apply {
+        addCategory(Intent.CATEGORY_HOME)
+        flags = Intent.FLAG_ACTIVITY_NEW_TASK
+    }
+    startActivity(intent)
+}
+
 /** 跳转到日期设置页面 */
 fun Context.goDateSetting() {
     startActivity(Intent(Settings.ACTION_DATE_SETTINGS))
