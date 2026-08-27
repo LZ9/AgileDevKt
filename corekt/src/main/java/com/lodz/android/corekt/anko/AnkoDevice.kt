@@ -4,6 +4,8 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.ActivityManager
 import android.content.Context
+import android.content.pm.PackageManager
+import android.media.AudioManager
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.Build
@@ -21,6 +23,7 @@ import androidx.annotation.RequiresPermission
 import androidx.core.telephony.TelephonyManagerCompat
 import com.lodz.android.corekt.network.OperatorInfo
 import com.lodz.android.corekt.utils.ReflectUtils
+import java.io.File
 import java.net.Inet4Address
 import java.net.NetworkInterface
 import java.util.ArrayList
@@ -298,3 +301,39 @@ fun Context.getStorageStr(): String {
         else -> "${gb.toInt()} GB"
     }
 }
+
+/** 是否有麦克风 */
+fun Context.hasMic(): Boolean = packageManager.hasSystemFeature(PackageManager.FEATURE_MICROPHONE)
+
+/** 获取麦克风采样率 */
+fun Context.getMicSampleRates(): List<Pair<Int, IntArray>>{
+    val list = ArrayList<Pair<Int, IntArray>>()
+    val audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
+    val devices = audioManager.getDevices(AudioManager.GET_DEVICES_INPUTS)
+    devices.forEach {
+        list.add(Pair(it.id, it.sampleRates))
+    }
+    return list
+}
+
+/** 获取CPU最大主频列表 */
+fun Context.getCpuMaxFreq(): List<Long> {
+    val result = mutableListOf<Long>()
+    val coreCount = Runtime.getRuntime().availableProcessors()
+    for (i in 0 until coreCount) {
+        val freq = try {
+            val file = File("/sys/devices/system/cpu/cpu$i/cpufreq/cpuinfo_max_freq")
+
+            if (file.exists()) {
+                file.readText().trim().toLongOrNull() ?: -1L
+            } else {
+                -1L
+            }
+        } catch (e: Exception) {
+            -1L
+        }
+        result.add(freq)
+    }
+    return result
+}
+
