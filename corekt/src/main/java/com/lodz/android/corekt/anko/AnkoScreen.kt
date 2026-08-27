@@ -112,3 +112,20 @@ fun Context.isScreenOn(): Boolean {
     val pm: PowerManager = getSystemService(Context.POWER_SERVICE) as PowerManager? ?: return false
     return pm.isInteractive
 }
+
+/** 获取分辨率文字，例如1920 * 1080 */
+fun Context.getResolutionStr(): String = "${getScreenHeight()} * ${getScreenWidth()}"
+
+/** 获取显示比例文字，例如16 : 9 */
+fun Context.getDisplayRatioStr(): String {
+    val width = getScreenWidth()
+    val height = getScreenHeight()
+    val gcd = gcd(width, height)
+    return "${height / gcd} : ${width / gcd}"
+}
+private fun gcd(a: Int, b: Int): Int {
+    return if (b == 0) a else gcd(b, a % b)
+}
+
+/** 获取刷新率文字，例如60.0Hz */
+fun Context.getRefreshRateStr(): String = "${display.refreshRate.format(AnkoNumFormat.TYPE_ONE_DECIMAL)}Hz"

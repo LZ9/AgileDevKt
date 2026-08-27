@@ -2,10 +2,13 @@ package com.lodz.android.corekt.anko
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.ActivityManager
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.Build
+import android.os.Environment
+import android.os.StatFs
 import android.provider.Settings
 import android.telephony.CellIdentityNr
 import android.telephony.CellInfoGsm
@@ -269,3 +272,29 @@ fun Context.getCellInfos(): List<OperatorInfo> {
 /** 获取当前连接的基站信息 */
 @RequiresPermission(allOf = [Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_PHONE_STATE])
 fun Context.getCellInfoRegistered(): OperatorInfo? = getCellInfos().firstOrNull{ it.isRegistered }
+
+/** 获取内存参数文字，例如4G */
+fun Context.getMemoryStr(): String {
+    val activityManager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+    val memoryInfo = ActivityManager.MemoryInfo()
+    activityManager.getMemoryInfo(memoryInfo)
+    return "${memoryInfo.totalMem / 1024 / 1024 / 1024}GB"
+}
+
+/** 获取存储参数文字，例如64G */
+fun Context.getStorageStr(): String {
+    val bytes = StatFs(Environment.getExternalStorageDirectory().path).totalBytes
+    if (bytes <= 0) return "0GB"
+    val gb = bytes / 1024 / 1024 / 1024
+    return when {
+        gb <= 8 -> "8 GB"
+        gb <= 16 -> "16 GB"
+        gb <= 32 -> "32 GB"
+        gb <= 64 -> "64 GB"
+        gb <= 128 -> "128 GB"
+        gb <= 256 -> "256 GB"
+        gb <= 512 -> "512 GB"
+        gb <= 1024 -> "1024 GB"
+        else -> "${gb.toInt()} GB"
+    }
+}
