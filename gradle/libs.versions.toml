@@ -1,7 +1,7 @@
 [versions]
 #插件
-agp = "9.4.0"
-kotlin = "2.4.10"
+agp = "9.4.1"
+kotlin = "2.4.21"
 ksp = "2.3.9"
 publish = "0.37.0"
 
@@ -16,7 +16,7 @@ jsbridge = "1.0.5"
 lottie = "5.2.0"
 
 #core依赖
-annotation = "1.10.0"
+annotation = "1.11.0"
 appcompat = "1.8.0"
 material = "1.14.0"
 swiperefreshlayout = "1.2.0"
