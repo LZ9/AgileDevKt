@@ -15,7 +15,7 @@ object SHA1 {
     fun md(content: String): String? {
         try {
             val digest = MessageDigest.getInstance("SHA-1")
-            digest.update(content.toByteArray())
+            digest.update(content.toByteArray(Charsets.UTF_8))
             val messageDigest = digest.digest()
             // Create Hex String
             val hexString = StringBuilder()
