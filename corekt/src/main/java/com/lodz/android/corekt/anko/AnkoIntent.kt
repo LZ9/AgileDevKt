@@ -14,6 +14,7 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.provider.MediaStore
 import android.provider.Settings
+import androidx.annotation.RequiresApi
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import androidx.core.os.bundleOf
@@ -114,6 +115,14 @@ fun Context.openAppByAction(packageName: String, actionName: String = Intent.ACT
     if (newTask) {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
     }
+    startActivity(intent)
+}
+
+
+/** 打开文件管理授权页面 */
+@RequiresApi(Build.VERSION_CODES.R)
+fun Context.goManageFile() {
+    val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION, Uri.fromParts("package", packageName, null))
     startActivity(intent)
 }
 

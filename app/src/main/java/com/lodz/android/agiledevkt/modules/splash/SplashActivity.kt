@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.view.View
 import com.lodz.android.agiledevkt.App
 import com.lodz.android.agiledevkt.R
@@ -80,15 +81,24 @@ class SplashActivity : AbsActivity() {
             hasReadPhoneStatePermissions.launch()
             return
         }
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.VANILLA_ICE_CREAM) {
-            if (!isPermissionGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE)){
-                hasWriteExternalStoragePermissions.launch()
+        // android11及以上判断文件读写权限
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            if (!Environment.isExternalStorageManager()){
+                showPermissionCheckDialog()
+                goManageFile()
                 return
             }
-            if (!isPermissionGranted(Manifest.permission.READ_EXTERNAL_STORAGE)){
-                hasReadExternalStoragePermissions.launch()
-                return
-            }
+            init()
+            return
+        }
+        // android10及以下判断文件读写权限
+        if (!isPermissionGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            hasWriteExternalStoragePermissions.launch()
+            return
+        }
+        if (!isPermissionGranted(Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            hasReadExternalStoragePermissions.launch()
+            return
         }
         init()
     }
