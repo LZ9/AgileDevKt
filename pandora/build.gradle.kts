@@ -8,14 +8,14 @@ android {
     namespace = "com.lodz.android.pandora"
     compileSdk {
         version = release(37) {
-            minorApiLevel = 0
+            minorApiLevel = 2
         }
     }
 
     defaultConfig {
         minSdk = 24
-        buildConfigField("int", "versionCode", "78")
-        buildConfigField("String", "versionName", "\"3.0.1\"") //成功上传
+        buildConfigField("int", "versionCode", "79")
+        buildConfigField("String", "versionName", "\"3.0.2\"") //未上传
 
         consumerProguardFiles("consumer-rules.pro")
     }

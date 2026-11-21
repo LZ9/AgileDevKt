@@ -8,7 +8,7 @@ android {
     namespace = "com.lodz.android.imageloaderkt"
     compileSdk {
         version = release(37) {
-            minorApiLevel = 0
+            minorApiLevel = 2
         }
     }
 

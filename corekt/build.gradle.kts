@@ -7,7 +7,7 @@ android {
     namespace = "com.lodz.android.corekt"
     compileSdk {
         version = release(37) {
-            minorApiLevel = 0
+            minorApiLevel = 2
         }
     }
 
